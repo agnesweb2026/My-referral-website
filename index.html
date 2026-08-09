@@ -1,76 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Referral Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Referral Website</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 30px 15px;
-      text-align: center;
-    }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px 15px;
+  text-align: center;
+}
 
-    .card {
-      max-width: 420px;
-      margin: auto;
-      background: white;
-      padding: 25px;
-      border-radius: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
+.card {
+  max-width: 420px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
 
-    h1 {
-      margin-top: 0;
-    }
+h1 {
+  margin-top: 0;
+}
 
-    .ref {
-      background: #f0f0f0;
-      padding: 12px;
-      border-radius: 10px;
-      margin: 20px 0;
-      word-break: break-word;
-    }
+.ref {
+  background: #f0f0f0;
+  padding: 12px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
 
-    .button {
-      display: inline-block;
-      padding: 14px 25px;
-      background: #1877f2;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-    }
-  </style>
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 25px;
+  background: #1877f2;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="card">
-    <h1>Welcome!</h1>
+<div class="card">
 
-    <p>Welcome to my referral website.</p>
+<h1>Welcome!</h1>
 
-    <div class="ref">
-      Referral Code: <strong id="refCode">None</strong>
-    </div>
+<p>Welcome to my referral website.</p>
 
-    <a class="button" href="https://example.com" target="_blank">
-      Continue
-    </a>
-  </div>
+<div class="ref">
+Referral Code: <strong id="refCode">None</strong>
+</div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const ref = params.get("ref");
+<div class="gallery">
+  <img src="photo1.jpg" alt="Photo 1">
+  <img src="photo2.jpg" alt="Photo 2">
+  <img src="photo4.jpg" alt="Photo 3">
+  <img src="photo5.jpg" alt="Photo 4">
+</div>
 
-    if (ref) {
-      document.getElementById("refCode").textContent = ref;
-    }
-  </script>
+<a class="button" href="https://example.com" target="_blank">
+Continue
+</a>
+
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const ref = params.get("ref");
+
+if (ref) {
+  document.getElementById("refCode").textContent = ref;
+}
+</script>
 
 </body>
 </html>
