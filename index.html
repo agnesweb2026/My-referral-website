@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Referral Website</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 30px 15px;
+      text-align: center;
+    }
+
+    .card {
+      max-width: 420px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .ref {
+      background: #f0f0f0;
+      padding: 12px;
+      border-radius: 10px;
+      margin: 20px 0;
+      word-break: break-word;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 14px 25px;
+      background: #1877f2;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>Welcome!</h1>
+
+    <p>Welcome to my referral website.</p>
+
+    <div class="ref">
+      Referral Code: <strong id="refCode">None</strong>
+    </div>
+
+    <a class="button" href="https://example.com" target="_blank">
+      Continue
+    </a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+
+    if (ref) {
+      document.getElementById("refCode").textContent = ref;
+    }
+  </script>
+
+</body>
+</html>
