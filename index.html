@@ -99,6 +99,27 @@
     function copyCode() {
       navigator.clipboard.writeText(code);
       alert("Referral code copied!");
+    }let seconds = 60;
+
+const timer = setInterval(() => {
+    seconds--;
+
+    document.getElementById("countdown").textContent = seconds;
+
+    if (seconds <= 0) {
+        clearInterval(timer);
+
+        document.getElementById("countdown").textContent = "0";
+        document.getElementById("accessGate").style.display = "none";
+        document.getElementById("packages").style.display = "block";
+    }
+}, 1000);
+
+function selectPackage(price, minutes) {
+    document.getElementById("selectedPackage").innerHTML =
+        "You selected <strong>KSh " + price +
+        "</strong> for <strong>" + minutes +
+        " minutes</strong>.";
     }
   </script>
 </body>
