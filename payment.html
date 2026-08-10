@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment</title>
+  <title>Choose Access</title>
 
   <style>
     body {
@@ -15,10 +15,10 @@
     }
 
     .card {
-      max-width: 420px;
-      margin: 40px auto;
+      max-width: 430px;
+      margin: 20px auto;
       background: white;
-      padding: 30px 25px;
+      padding: 25px 20px;
       border-radius: 18px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
@@ -31,24 +31,50 @@
       background: #f0f0f0;
       padding: 12px;
       border-radius: 10px;
-      margin: 20px 0;
-      font-size: 18px;
+      margin: 15px 0 25px;
     }
 
-    .message {
-      margin: 20px 0;
-      line-height: 1.5;
-    }
-
-    .button {
-      display: inline-block;
-      background: #1877f2;
-      color: white;
-      text-decoration: none;
-      padding: 14px 35px;
-      border-radius: 10px;
+    .package {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 12px 0;
+      padding: 17px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      background: white;
       font-size: 18px;
       font-weight: bold;
+      cursor: pointer;
+    }
+
+    .package:hover {
+      border-color: #1877f2;
+    }
+
+    .package.selected {
+      border-color: #1877f2;
+      background: #eef5ff;
+    }
+
+    .pay {
+      display: none;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 20px;
+      padding: 15px;
+      border: 0;
+      border-radius: 10px;
+      background: #1877f2;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .selected-info {
+      margin-top: 18px;
+      font-size: 16px;
     }
   </style>
 </head>
@@ -56,19 +82,40 @@
 <body>
 
   <div class="card">
-    <h1>Payment</h1>
+
+    <h1>Choose Access</h1>
 
     <div class="ref">
-      Referral Code: <strong id="refCode">GB3HLT</strong>
+      Referral Code:
+      <strong id="refCode">GB3HLT</strong>
     </div>
 
-    <p class="message">
-      Payment setup will be available here.
-      <br><br>
-      We will add the official M-Pesa payment details once your PayBill is ready.
-    </p>
+    <p>Select your preferred access package:</p>
 
-    <a class="button" href="index.html">Back</a>
+    <button class="package" data-amount="80" data-minutes="25">
+      KSh 80 — 25 Minutes
+    </button>
+
+    <button class="package" data-amount="135" data-minutes="40">
+      KSh 135 — 40 Minutes
+    </button>
+
+    <button class="package" data-amount="200" data-minutes="60">
+      KSh 200 — 60 Minutes
+    </button>
+
+    <button class="package" data-amount="250" data-minutes="100">
+      KSh 250 — 100 Minutes
+    </button>
+
+    <div class="selected-info" id="selectedInfo">
+      No package selected
+    </div>
+
+    <button class="pay" id="payButton">
+      Continue to Payment
+    </button>
+
   </div>
 
   <script>
@@ -78,6 +125,43 @@
     if (ref) {
       document.getElementById("refCode").textContent = ref;
     }
+
+    const packages = document.querySelectorAll(".package");
+    const selectedInfo = document.getElementById("selectedInfo");
+    const payButton = document.getElementById("payButton");
+
+    let selectedAmount = null;
+    let selectedMinutes = null;
+
+    packages.forEach(button => {
+      button.addEventListener("click", () => {
+
+        packages.forEach(item => {
+          item.classList.remove("selected");
+        });
+
+        button.classList.add("selected");
+
+        selectedAmount = button.dataset.amount;
+        selectedMinutes = button.dataset.minutes;
+
+        selectedInfo.textContent =
+          "Selected: KSh " + selectedAmount +
+          " for " + selectedMinutes + " minutes";
+
+        payButton.style.display = "block";
+      });
+    });
+
+    payButton.addEventListener("click", () => {
+      if (!selectedAmount || !selectedMinutes) return;
+
+      alert(
+        "Selected KSh " + selectedAmount +
+        " for " + selectedMinutes +
+        " minutes."
+      );
+    });
   </script>
 
 </body>
