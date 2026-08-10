@@ -57,7 +57,32 @@ h1 {
   text-decoration: none;
   border-radius: 10px;
   font-weight: bold;
+}.live-photo {
+  position: relative;
 }
+
+.live-photo img {
+  display: block;
+  width: 100%;
+}
+
+.live-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #f0184c;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 13px;
+  z-index: 2;
+}
+
+.live-badge::before {
+  content: "●";
+  margin-right: 5px;
+  }
 </style>
 </head>
 
@@ -74,11 +99,34 @@ Referral Code: <strong id="refCode">None</strong>
 </div>
 
 <div class="gallery">
-  <img src="photo1.jpg" alt="Photo 1">
-  <img src="photo2.jpg" alt="Photo 2">
-  <img src="photo4.jpg" alt="Photo 3">
-  <img src="photo5.jpg" alt="Photo 4">
-</div>
+
+  <div class="live-photo">
+    <span class="live-badge">LIVE PREVIEW</span>
+    <img src="photo1.jpg" alt="Photo 1">
+  </div>
+
+  <div class="live-photo">
+    <span class="live-badge">LIVE PREVIEW</span>
+    <img src="photo2.jpg" alt="Photo 2">
+  </div>
+
+  <div class="live-photo">
+    <span class="live-badge">LIVE PREVIEW</span>
+    <img src="photo4.jpg" alt="Photo 3">
+  </div>
+
+  <div class="live-photo">
+    <span class="live-badge">LIVE PREVIEW</span>
+    <img src="photo5.jpg" alt="Photo 4">
+  </div>
+
+  </div>
+  
+  
+  
+  
+  
+
 
 <a class="button" href="https://my-referral-website-x3no.vercel.app/?ref=GB3HLT" target="_blank">
 Continue
