@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px 15px;
+      text-align: center;
+    }
+
+    .card {
+      max-width: 420px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px 25px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .ref {
+      background: #f0f0f0;
+      padding: 12px;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-size: 18px;
+    }
+
+    .message {
+      margin: 20px 0;
+      line-height: 1.5;
+    }
+
+    .button {
+      display: inline-block;
+      background: #1877f2;
+      color: white;
+      text-decoration: none;
+      padding: 14px 35px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>Payment</h1>
+
+    <div class="ref">
+      Referral Code: <strong id="refCode">GB3HLT</strong>
+    </div>
+
+    <p class="message">
+      Payment setup will be available here.
+      <br><br>
+      We will add the official M-Pesa payment details once your PayBill is ready.
+    </p>
+
+    <a class="button" href="index.html">Back</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+
+    if (ref) {
+      document.getElementById("refCode").textContent = ref;
+    }
+  </script>
+
+</body>
+</html>
