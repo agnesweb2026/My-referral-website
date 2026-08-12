@@ -158,10 +158,20 @@
     });
 
     payButton.addEventListener("click", () => {
-      if (!selectedAmount || !selectedMinutes) return;
+    if (!selectedAmount || !selectedMinutes) {
+        alert("Please select a package first.");
+        return;
+    }
+
+    window.location.href =
+        "mpesa.html?amount=" + selectedAmount +
+        "&minutes=" + selectedMinutes +
+        "&ref=" + encodeURIComponent(ref || "");
+});
+      
 
       
-    });
+    
   </script>
 
 </body>
