@@ -99,7 +99,7 @@ export default async function handler(req, res) {
 
     // Send STK Push
     const stkResponse = await fetch(
-      "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+      https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
       {
         method: "POST",
         headers: {
@@ -110,10 +110,10 @@ export default async function handler(req, res) {
           BusinessShortCode: shortcode,
           Password: password,
           Timestamp: timestamp,
-          TransactionType: "CustomerPayBillOnline",
+          TransactionType: "CustomerBuyGoodsOnline",
           Amount: Number(amount),
           PartyA: formattedPhone,
-          PartyB: shortcode,
+          PartyB: 1605854,
           PhoneNumber: formattedPhone,
           CallBackURL: callbackUrl,
           AccountReference: ref || "Website",
