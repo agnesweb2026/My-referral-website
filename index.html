@@ -217,19 +217,19 @@ if (ref) {
 </body>
 </html>
 <div class="sample-timer">
-  60-second sample:
-  <span id="countdown">01:00</span>
+  15-second sample:
+  <span id="countdown">15:00</span>
 </div>
 
 <script>
-let seconds = 60;
+let seconds = 15;
 const countdown = document.getElementById("countdown");
 
 const timer = setInterval(() => {
   seconds--;
 
-  const minutes = Math.floor(seconds / 60);
-  const secs = seconds % 60;
+  const minutes = Math.floor(seconds / 15);
+  const secs = seconds % 15;
 
   countdown.textContent =
     String(minutes).padStart(2, "0") + ":" +
