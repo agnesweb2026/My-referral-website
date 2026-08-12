@@ -216,3 +216,28 @@ if (ref) {
 
 </body>
 </html>
+<div class="sample-timer">
+  60-second sample:
+  <span id="countdown">01:00</span>
+</div>
+
+<script>
+let seconds = 60;
+const countdown = document.getElementById("countdown");
+
+const timer = setInterval(() => {
+  seconds--;
+
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+
+  countdown.textContent =
+    String(minutes).padStart(2, "0") + ":" +
+    String(secs).padStart(2, "0");
+
+  if (seconds <= 0) {
+    clearInterval(timer);
+    window.location.href = "payment.html";
+  }
+}, 1000);
+                          </script>
