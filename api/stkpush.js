@@ -99,7 +99,7 @@ export default async function handler(req, res) {
 
     // Send STK Push
     const stkResponse = await fetch(
-      https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+      "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
       {
         method: "POST",
         headers: {
