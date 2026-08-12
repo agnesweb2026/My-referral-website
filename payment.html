@@ -111,7 +111,7 @@
 <button class="package" data-amount="300" data-minutes="65">
     KSh 300 — 65 Minutes
 </button>
-<input id="phoneNumber" type="tel" placeholder="Enter M-Pesa phone number">
+<input id="phoneNumber" type="tel" placeholder="Pay with Till: 1605854">
     <div class="selected-info" id="selectedInfo">
       No package selected
     </div>
@@ -152,7 +152,7 @@
         selectedInfo.textContent =
           "Selected: KSh " + selectedAmount +
           " for " + selectedMinutes + " minutes";
-
+document.getElementById("phoneNumber").placeholder = "Pay with Till: 1605854";
         payButton.style.display = "block";
       });
     });
