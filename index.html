@@ -222,13 +222,9 @@ function leaveSite() {
 
 <script>
 const previewVideo = document.getElementById("previewVideo");
-function enterSite() {
-  document.getElementById("ageGate").style.display = "none";
-
-  <script>
 let previewTime = 15;
 
-const previewTimer = setInterval(() => {
+const previewTimer = setInterval(function() {
     previewTime--;
 
     document.getElementById("previewSeconds").textContent = previewTime;
@@ -236,18 +232,17 @@ const previewTimer = setInterval(() => {
     if (previewTime <= 0) {
         clearInterval(previewTimer);
 
-        document.getElementById("previewVideo").style.display = "none";
+        previewVideo.pause();
+
+        document.getElementById("videoPreview").style.display = "none";
         document.getElementById("livePhotos").style.display = "grid";
 
-        setTimeout(() => {
+        setTimeout(function() {
             window.location.href = "payment.html";
         }, 15000);
     }
 }, 1000);
 </script>
-</script>
-<h1>Welcome!</h1>
-
 <p>Welcome to my referral website.</p>
 
 <div id="livePhotos" class="gallery" style="display:none;">
