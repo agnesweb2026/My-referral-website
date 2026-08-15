@@ -334,7 +334,7 @@ document.getElementById("videoPreview").style.display = "none";
 document.getElementById("incomingCall").style.display = "none";
 
 setTimeout(function(){
-    document.getElementById("outOfMinutes").remove();
+    document.getElementById("outOfMinutes")?.remove();
     document.getElementById("livePhotos").style.display = "block";
 },1000);
 
