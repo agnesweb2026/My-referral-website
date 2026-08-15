@@ -327,8 +327,8 @@ padding:20px;
 const previewVideo = document.getElementById("previewVideo");
 
 previewVideo.addEventListener("ended", function () {
-document.body.insertAdjacentHTML("beforeend", '<div id="outOfMinutes" style="position:fixed;inset:0;background:#111;color:white;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:bold;z-index:99999;">OUT OF MINUTES</div>');
-    document.getElementById("videoPreview").style.display = "none";
+
+setTimeout(function(){document.getElementById("livePhotos").style.display="block";document.getElementById("videoPreview").style.display="none";document.getElementById("incomingCall").style.display="none";document.getElementById("outOfMinutes")?.remove();},1000);    document.getElementById("videoPreview").style.display = "none";
 
     document.getElementById("incomingCall").style.display = "flex";
 
