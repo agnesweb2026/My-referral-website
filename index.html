@@ -366,7 +366,271 @@ if (ref) {
   document.getElementById("refCode").textContent = ref;
 }
 </script>
+<style>
+/* RESTORED INCOMING VIDEO CALL */
+#restoreCall {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #111;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
 
+.restore-call-box {
+  width: 90%;
+  max-width: 380px;
+  padding: 30px 20px;
+  border-radius: 25px;
+  background: #222;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+
+.restore-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  animation: restorePulse 1.5s infinite;
+}
+
+@keyframes restorePulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.restore-call-box h2 {
+  margin: 10px 0;
+}
+
+.restore-call-box p {
+  color: #bbb;
+}
+
+.restore-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.restore-buttons button {
+  border: none;
+  padding: 14px 25px;
+  border-radius: 30px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.restore-decline {
+  background: #e53935;
+}
+
+.restore-answer {
+  background: #18a558;
+}
+
+/* RESTORED LIVE PHOTOS */
+#restoreGallery {
+  display: none;
+  padding: 20px 12px;
+}
+
+#restoreGallery h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.restore-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.restore-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  perspective: 800px;
+  cursor: pointer;
+  animation: restoreFloat 4s ease-in-out infinite;
+}
+
+.restore-photo:nth-child(2) { animation-delay: .3s; }
+.restore-photo:nth-child(3) { animation-delay: .6s; }
+.restore-photo:nth-child(4) { animation-delay: .9s; }
+.restore-photo:nth-child(5) { animation-delay: 1.2s; }
+.restore-photo:nth-child(6) { animation-delay: 1.5s; }
+.restore-photo:nth-child(7) { animation-delay: 1.8s; }
+.restore-photo:nth-child(8) { animation-delay: 2.1s; }
+
+@keyframes restoreFloat {
+  0%,100% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-7px) rotateX(2deg) rotateY(3deg);
+  }
+}
+
+.restore-photo img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+
+.restore-photo:hover img {
+  transform: scale(1.08) rotateY(5deg);
+}
+
+.restore-live {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  background: #f0184c;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.restore-live::before {
+  content: "●";
+  color: #22ff55;
+  margin-right: 4px;
+  animation: restoreBlink 1s infinite;
+}
+
+@keyframes restoreBlink {
+  50% { opacity: .2; }
+}
+</style>
+
+
+<!-- RESTORED INCOMING CALL -->
+<div id="restoreCall">
+  <div class="restore-call-box">
+
+    <div style="font-size:55px;">📹</div>
+
+    <h2>Incoming Video Call</h2>
+    <p>Incoming call...</p>
+
+    <div class="restore-buttons">
+      <button class="restore-decline" onclick="declineRestoreCall()">
+        Decline
+      </button>
+
+      <button class="restore-answer" onclick="answerRestoreCall()">
+        Answer
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- RESTORED LIVE PHOTOS -->
+<div id="restoreGallery">
+
+  <h2>Live Photos</h2>
+
+  <div class="restore-photo-grid">
+
+    <div class="restore-photo" onclick="openRestorePayment()">
+      <span class="restore-live">LIVE</span>
+      <img src="multixnxx-10 pictures-5.jpg" alt="Live photo">
+    </div>
+
+    <div class="restore-photo" onclick="openRestorePayment()">
+      <span class="restore-live">LIVE</span>
+      <img src="multixnxx-15 pictures-2.jpg" alt="Live photo">
+    </div>
+
+    <div class="restore-photo" onclick="openRestorePayment()">
+      <span class="restore-live">LIVE</span>
+      <img src="multixnxx-Long labios_ big clits-8.jpg" alt="Live photo">
+    </div>
+
+    <div class="restore-photo" onclick="openRestorePayment()">
+      <span class="restore-live">LIVE</span>
+      <img src="multixnxx-My breasts&n-5.jpg" alt="Live photo">
+    </div>
+
+    <div class="restore-photo" onclick="openRestorePayment()">
+      <span class="restore-live">LIVE</span>
+      <img src="multixnxxx-OPEN INVITATION_ FIND THE PEARL.jpg" alt="Live photo">
+    </div>
+
+    <div class="restore-photo" onclick="openRestorePayment()">
+      <span class="restore-live">LIVE</span>
+      <img src="multixnxxx-OPEN INVITATION_ FIND THE PEARL.jpg" alt="Live photo">
+    </div>
+
+    <div class="restore-photo" onclick="openRestorePayment()">
+      <span class="restore-live">LIVE</span>
+      <img src="multixnxxx-OPEN INVITATION_ FIND THE PEARL.jpg" alt="Live photo">
+    </div>
+
+    <div class="restore-photo" onclick="openRestorePayment()">
+      <span class="restore-live">LIVE</span>
+      <img src="multixnxxx-OPEN INVITATION_ FIND THE PEARL.jpg" alt="Live photo">
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+const restoreCall = document.getElementById("restoreCall");
+const restoreGallery = document.getElementById("restoreGallery");
+
+function showRestoreCall() {
+  if (restoreCall) {
+    restoreCall.style.display = "flex";
+  }
+}
+
+function answerRestoreCall() {
+  restoreCall.style.display = "none";
+  restoreGallery.style.display = "block";
+}
+
+function declineRestoreCall() {
+  restoreCall.style.display = "none";
+}
+
+function openRestorePayment() {
+  window.location.href = "payment.html";
+}
+
+
+/* Show the incoming call when the sample video finishes */
+const restoreVideo = document.getElementById("previewVideo");
+
+if (restoreVideo) {
+
+  restoreVideo.addEventListener("ended", showRestoreCall);
+
+  restoreVideo.addEventListener("timeupdate", function () {
+    if (restoreVideo.currentTime >= 20) {
+      restoreVideo.pause();
+      showRestoreCall();
+    }
+  });
+
+}
+</script>
 </body>
 </html>
 
