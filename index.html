@@ -78,10 +78,23 @@ h1 {
   font-size: 11px;
   z-index: 2;
   }
-  
-  .live-photo {
-  position: relative;
-  }
+.live-photo::after {
+  content: "▶";
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 28px;
+  height: 28px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  z-index: 10;
+}  
+
   
   
 
