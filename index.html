@@ -179,7 +179,50 @@ function leaveSite() {
 }
 </script>
 <div class="card">
+<div id="videoPreview" style="
+  max-width:420px;
+  margin:20px auto;
+  background:#111;
+  padding:15px;
+  border-radius:15px;
+  color:white;
+  text-align:center;
+">
+  <h2>Preview</h2>
 
+  <video id="previewVideo"
+         controls
+         playsinline
+         style="width:100%;border-radius:10px;">
+    <source src="YOUR-VIDEO-URL-HERE" type="video/mp4">
+    Your browser does not support video playback.
+  </video>
+
+  <p>Preview available for <span id="previewSeconds">15</span> seconds.</p>
+</div>
+
+<script>
+const previewVideo = document.getElementById("previewVideo");
+function enterSite() {
+  document.getElementById("ageGate").style.display = "none";
+
+  const previewVideo = document.getElementById("previewVideo");
+  let previewTime = 15;
+
+  previewVideo.play().catch(() => {});
+
+  const previewTimer = setInterval(() => {
+    previewTime--;
+    document.getElementById("previewSeconds").textContent = previewTime;
+
+    if (previewTime <= 0) {
+      clearInterval(previewTimer);
+      previewVideo.pause();
+      window.location.href = "payment.html";
+    }
+  }, 1000);
+}
+</script>
 <h1>Welcome!</h1>
 
 <p>Welcome to my referral website.</p>
