@@ -235,9 +235,15 @@ function enterSite() {
     document.getElementById("previewSeconds").textContent = previewTime;
 
     if (previewTime <= 0) {
-      clearInterval(previewTimer);
-      previewVideo.pause();
-      window.location.href = "payment.html";
+  clearInterval(previewTimer);
+  previewVideo.pause();
+
+  document.getElementById("videoPreview").style.display = "none";
+  document.getElementById("livePhotos").style.display = "grid";
+
+  setTimeout(() => {
+    window.location.href = "payment.html";
+  }, 15000);
     }
   }, 1000);
 }
@@ -246,7 +252,7 @@ function enterSite() {
 
 <p>Welcome to my referral website.</p>
 
-<div class="gallery">
+<div id="livePhotos" class="gallery" style="display:none;">
 
 <div class="live-photo">
   <span class="live-badge">LIVE</span>
