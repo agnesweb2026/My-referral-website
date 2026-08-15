@@ -208,6 +208,33 @@ function leaveSite() {
   window.location.href = "https://www.google.com";
 }
 </script>
+  <div id="incomingCall" style="
+position:fixed;
+inset:0;
+background:#111;
+color:white;
+z-index:10000;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+">
+  <div>
+    <div style="font-size:60px;">📹</div>
+    <h2>Incoming Video Call</h2>
+    <p>Someone is calling you...</p>
+    <button id="answerCall" style="
+      padding:15px 30px;
+      border:0;
+      border-radius:30px;
+      background:#18b957;
+      color:white;
+      font-size:18px;
+      font-weight:bold;
+    ">Answer</button>
+  </div>
+  </div>
 <div class="card">
 <div id="videoPreview" style="
   position:fixed;
@@ -253,12 +280,12 @@ function leaveSite() {
 <script>
 const previewVideo = document.getElementById("previewVideo");
 let previewTime = 15;
-let previewTimer;
 
-previewTimer = setInterval(function () {
+const previewTimer = setInterval(function () {
     previewTime--;
 
-    document.getElementById("previewSeconds").textContent = previewTime;
+    const counter = document.getElementById("previewSeconds");
+    if (counter) counter.textContent = previewTime;
 
     if (previewTime <= 0) {
         clearInterval(previewTimer);
@@ -266,9 +293,14 @@ previewTimer = setInterval(function () {
         previewVideo.pause();
 
         document.getElementById("videoPreview").style.display = "none";
-        document.getElementById("incomingCall").style.display = "block";
+        document.getElementById("incomingCall").style.display = "flex";
     }
 }, 1000);
+
+document.getElementById("answerCall").addEventListener("click", function () {
+    document.getElementById("incomingCall").style.display = "none";
+    document.getElementById("livePhotos").style.display = "grid";
+});
 </script>
 
 <p>Welcome to my referral website.</p>
