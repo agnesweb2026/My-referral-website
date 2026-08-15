@@ -125,7 +125,59 @@ h1 {
 </head>
 
 <body>
+<div id="ageGate" style="
+  position:fixed;
+  inset:0;
+  background:#111;
+  color:white;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+">
+  <div style="max-width:380px;">
+    <div style="font-size:60px;">🔞</div>
+    <h1>18+ ONLY</h1>
+    <p>This website contains adult-oriented content.</p>
+    <p>You must be 18 years or older to enter.</p>
 
+    <button onclick="enterSite()" style="
+      padding:14px 25px;
+      margin:10px;
+      border:0;
+      border-radius:10px;
+      background:#22c55e;
+      color:white;
+      font-weight:bold;
+    ">
+      I AM 18+ — ENTER
+    </button>
+
+    <button onclick="leaveSite()" style="
+      padding:14px 25px;
+      margin:10px;
+      border:0;
+      border-radius:10px;
+      background:#777;
+      color:white;
+      font-weight:bold;
+    ">
+      EXIT
+    </button>
+  </div>
+</div>
+
+<script>
+function enterSite() {
+  document.getElementById("ageGate").style.display = "none";
+}
+
+function leaveSite() {
+  window.location.href = "https://www.google.com";
+}
+</script>
 <div class="card">
 
 <h1>Welcome!</h1>
