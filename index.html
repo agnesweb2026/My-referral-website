@@ -3,264 +3,465 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Preview</title>
+<title>My Referral Website</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
-  background: #000;
-  color: white;
   font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px 15px;
   text-align: center;
 }
 
-#preview {
-  width: 100%;
-  height: 100vh;
-  object-fit: cover;
-  display: block;
-}
-
-#payment,
-#gallery {
-  display: none;
-  padding: 20px;
+.card {
+  max-width: 420px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 h1 {
-  margin-top: 20px;
+  margin-top: 0;
 }
 
-.price {
-  background: #171717;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 15px;
-  margin: 12px 0;
-  font-size: 18px;
-}
-
-.till {
-  background: white;
-  color: black;
-  padding: 14px;
-  border-radius: 8px;
-  margin: 15px 0;
-  font-weight: bold;
-}
-
-.message {
-  width: 100%;
-  min-height: 90px;
+.ref {
+  background: #f0f0f0;
   padding: 12px;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
-}
-
-button {
-  width: 100%;
-  padding: 15px;
-  margin-top: 12px;
-  border: none;
   border-radius: 10px;
-  background: #1683ff;
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
+  margin: 20px 0;
 }
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
   margin-top: 20px;
 }
 
-.photo {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  background: #222;
-}
-
-.photo img {
+.gallery img {
   width: 100%;
   height: 220px;
   object-fit: cover;
-  display: block;
+  border-radius: 12px;
 }
 
-.live {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: red;
-  padding: 5px 9px;
-  border-radius: 20px;
-  font-size: 12px;
+.button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 25px;
+  background: #1877f2;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
   font-weight: bold;
 }
 
-.video-icon {
+.live-photo {
+  position: relative;
+}
+
+.live-photo img {
+  display: block;
+  width: 100%;
+}
+
+.live-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #f0184c;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 7px;
+  font-weight: bold;
+  font-size: 11px;
+  z-index: 2;
+}
+
+.live-photo::after {
+  content: "▶";
   position: absolute;
   right: 8px;
   bottom: 8px;
-  width: 35px;
-  height: 35px;
-  background: rgba(0,0,0,.75);
+  width: 28px;
+  height: 28px;
+  background: rgba(0,0,0,0.7);
+  color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 17px;
+  font-size: 13px;
+  z-index: 10;
 }
 
-.lock {
+.live-badge::before {
+  content: "●";
+  margin-right: 5px;
+}
+
+.live-status {
   position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.85);
+  color: white;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 3;
 }
 
-.small {
-  color: #aaa;
-  font-size: 14px;
+.live-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+  margin-right: 7px;
+  border: 1px solid white;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- 60 SECOND PREVIEW -->
-<video id="preview" autoplay muted playsinline>
-  <source src="preview_60_seconds.mp4" type="video/mp4">
-</video>
+<div id="ageGate" style="
+  position:fixed;
+  inset:0;
+  background:#111;
+  color:white;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+">
+  <div style="max-width:380px;">
 
-<!-- PAYMENT PAGE -->
-<div id="payment">
+    <div style="font-size:60px;">🔞</div>
 
-  <h1>🔒 Continue Access</h1>
+    <h1>18+ ONLY</h1>
 
-  <p>Choose your access time:</p>
+    <p>This website contains adult-oriented content.</p>
 
-  <div class="price">KSh 80 — 10 minutes</div>
-  <div class="price">KSh 135 — 25 minutes</div>
-  <div class="price">KSh 200 — 40 minutes</div>
-  <div class="price">KSh 250 — 55 minutes</div>
-  <div class="price">KSh 300 — 65 minutes</div>
+    <p>You must be 18 years or older to enter.</p>
 
-  <div class="till">
-    PAY WITH TILL: XXXX
-  </div>
+    <button onclick="enterSite()" style="
+      padding:14px 25px;
+      margin:10px;
+      border:0;
+      border-radius:10px;
+      background:#22c55e;
+      color:white;
+      font-weight:bold;
+    ">
+      I AM 18+ — ENTER
+    </button>
 
-  <p>Copy your M-Pesa payment message below:</p>
-
-  <textarea
-    id="message"
-    class="message"
-    placeholder="Paste M-Pesa message here..."
-  ></textarea>
-
-  <button onclick="openGallery()">Continue</button>
-
-</div>
-
-<!-- GALLERY -->
-<div id="gallery">
-
-  <h1>LIVE PHOTOS</h1>
-  <p class="small">Tap a photo to continue.</p>
-
-  <div class="gallery">
-
-    <div class="photo" onclick="openPayment()">
-      <img src="photo1.jpg">
-      <div class="live">● LIVE</div>
-      <div class="video-icon">▶</div>
-      <div class="lock">🔒</div>
-    </div>
-
-    <div class="photo" onclick="openPayment()">
-      <img src="photo2.jpg">
-      <div class="live">● LIVE</div>
-      <div class="video-icon">▶</div>
-      <div class="lock">🔒</div>
-    </div>
-
-    <div class="photo" onclick="openPayment()">
-      <img src="photo3.jpg">
-      <div class="live">● LIVE</div>
-      <div class="video-icon">▶</div>
-      <div class="lock">🔒</div>
-    </div>
-
-    <div class="photo" onclick="openPayment()">
-      <img src="photo4.jpg">
-      <div class="live">● LIVE</div>
-      <div class="video-icon">▶</div>
-      <div class="lock">🔒</div>
-    </div>
-
-    <div class="photo" onclick="openPayment()">
-      <img src="photo5.jpg">
-      <div class="live">● LIVE</div>
-      <div class="video-icon">▶</div>
-      <div class="lock">🔒</div>
-    </div>
-
-    <div class="photo" onclick="openPayment()">
-      <img src="photo6.jpg">
-      <div class="live">● LIVE</div>
-      <div class="video-icon">▶</div>
-      <div class="lock">🔒</div>
-    </div>
-
-    <div class="photo" onclick="openPayment()">
-      <img src="photo7.jpg">
-      <div class="live">● LIVE</div>
-      <div class="video-icon">▶</div>
-      <div class="lock">🔒</div>
-    </div>
-
-    <div class="photo" onclick="openPayment()">
-      <img src="photo8.jpg">
-      <div class="live">● LIVE</div>
-      <div class="video-icon">▶</div>
-      <div class="lock">🔒</div>
-    </div>
+    <button onclick="leaveSite()" style="
+      padding:14px 25px;
+      margin:10px;
+      border:0;
+      border-radius:10px;
+      background:#777;
+      color:white;
+      font-weight:bold;
+    ">
+      EXIT
+    </button>
 
   </div>
 </div>
 
 <script>
-
-const preview = document.getElementById("preview");
-
-preview.addEventListener("ended", function() {
-  preview.style.display = "none";
-  document.getElementById("payment").style.display = "block";
-});
-
-function openPayment() {
-  document.getElementById("gallery").style.display = "none";
-  document.getElementById("payment").style.display = "block";
+function enterSite() {
+  document.getElementById("ageGate").style.display = "none";
 }
 
-function openGallery() {
-  document.getElementById("payment").style.display = "none";
-  document.getElementById("gallery").style.display = "block";
+function leaveSite() {
+  window.location.href = "https://www.google.com";
+}
+</script>
+
+
+<!-- INCOMING VIDEO CALL -->
+
+<div id="incomingCall" style="
+position:fixed;
+inset:0;
+background:#111;
+color:white;
+z-index:10000;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+">
+
+  <div style="text-align:center;">
+
+    <div style="
+        width:150px;
+        height:150px;
+        border-radius:50%;
+        border:2px solid #444;
+        margin:0 auto 25px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:70px;
+    ">📵</div>
+
+    <div style="font-size:60px;">📞</div>
+
+    <h2>Incoming Video Call</h2>
+
+    <p>incoming call...</p>
+
+    <div style="
+        display:flex;
+        justify-content:center;
+        gap:60px;
+        margin-top:35px;
+    ">
+
+      <div>
+        <button style="
+          width:90px;
+          height:90px;
+          border-radius:50%;
+          border:0;
+          background:#ff2020;
+          color:white;
+          font-size:38px;
+        ">📵</button>
+
+        <div style="margin-top:10px;">Decline</div>
+      </div>
+
+      <div>
+        <button id="answerCall" style="
+          width:90px;
+          height:90px;
+          border-radius:50%;
+          border:0;
+          background:#18c957;
+          color:white;
+          font-size:38px;
+        ">📞</button>
+
+        <div style="margin-top:10px;">Answer</div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<div class="card">
+
+<!-- VIDEO PREVIEW -->
+
+<div id="videoPreview" style="
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  background:#000;
+  z-index:9999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  text-align:center;
+  margin:0;
+  padding:0;
+">
+
+  <video id="previewVideo"
+       autoplay
+       muted
+       playsinline
+       style="
+         width:100%;
+         height:100%;
+         object-fit:contain;
+         background:#000;
+       ">
+
+    <source src="/preview_20_seconds.mp4" type="video/mp4">
+
+  </video>
+
+  <div style="
+    position:absolute;
+    bottom:20px;
+    left:0;
+    right:0;
+    font-size:16px;
+    text-shadow:0 1px 3px #000;
+  ">
+    Preview: <span id="previewSeconds">15</span> seconds
+  </div>
+
+</div>
+
+
+<script>
+
+const previewVideo = document.getElementById("previewVideo");
+
+previewVideo.addEventListener("ended", function () {
+
+    document.getElementById("videoPreview").style.display = "none";
+
+    document.getElementById("incomingCall").style.display = "flex";
+
+});
+
+document.getElementById("answerCall").addEventListener("click", function () {
+
+    document.getElementById("incomingCall").style.display = "none";
+
+    document.getElementById("livePhotos").style.display = "grid";
+
+});
+
+</script>
+
+
+<p>Welcome to my referral website.</p>
+
+
+<!-- LIVE PHOTOS -->
+
+<div id="livePhotos" class="gallery" style="display:none;">
+
+<div class="live-photo">
+  <span class="live-badge">LIVE</span>
+  <span class="live-status">
+    <span class="live-dot"></span>Live now
+  </span>
+  <img src="multixnxx-10 pictures-0.jpg" alt="Photo 1">
+</div>
+
+
+<div class="live-photo">
+  <span class="live-badge">LIVE</span>
+  <span class="live-status">
+    <span class="live-dot"></span>Live now
+  </span>
+  <img src="multixnxx-10 pictures-5.jpg" alt="Photo 2">
+</div>
+
+
+<div class="live-photo">
+  <span class="live-badge">LIVE</span>
+  <span class="live-status">
+    <span class="live-dot"></span>Live now
+  </span>
+  <img src="multixnxx-15 pictures-2.jpg" alt="Photo 3">
+</div>
+
+
+<div class="live-photo">
+  <span class="live-badge">LIVE</span>
+  <span class="live-status">
+    <span class="live-dot"></span>Live now
+  </span>
+  <img src="multixnxx-Long labias_ big clits-8.jpg" alt="Photo 4">
+</div>
+
+
+<div class="live-photo">
+  <span class="live-badge">LIVE</span>
+  <span class="live-status">
+    <span class="live-dot"></span>Live now
+  </span>
+  <img src="multixnxx-My breasts&n-5.jpg" alt="Photo 5">
+</div>
+
+
+<div class="live-photo">
+  <span class="live-badge">LIVE</span>
+  <span class="live-status">
+    <span class="live-dot"></span>Live now
+  </span>
+  <img src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -10.jpg" alt="Photo 6">
+</div>
+
+
+<div class="live-photo">
+  <span class="live-badge">LIVE</span>
+  <span class="live-status">
+    <span class="live-dot"></span>Live now
+  </span>
+  <img src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -12.jpg" alt="Photo 7">
+</div>
+
+
+<div class="live-photo">
+  <span class="live-badge">LIVE</span>
+  <span class="live-status">
+    <span class="live-dot"></span>Live now
+  </span>
+  <img src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -15.jpg" alt="Photo 8">
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+document.querySelectorAll('.live-photo').forEach(function(photo) {
+
+    photo.style.cursor = 'pointer';
+
+    photo.addEventListener('click', function() {
+
+        window.location.href = 'payment.html';
+
+    });
+
+});
+
+</script>
+
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const ref = params.get("ref");
+
+if (ref) {
+
+  const refCode = document.getElementById("refCode");
+
+  if (refCode) {
+    refCode.textContent = ref;
+  }
+
 }
 
 </script>
 
 </body>
-        </html>
+</html>
