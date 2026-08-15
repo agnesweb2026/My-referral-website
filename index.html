@@ -273,14 +273,8 @@ const previewVideo = document.getElementById("previewVideo");
 
 previewVideo.addEventListener("ended", function () {
     document.getElementById("videoPreview").style.display = "none";
-    document.getElementById("incomingCall").style.display = "flex";
-});
-
-document.getElementById("answerCall").addEventListener("click", function () {
-    document.getElementById("incomingCall").style.display = "none";
     document.getElementById("livePhotos").style.display = "grid";
 });
-</script>
 
 
 
