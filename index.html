@@ -252,33 +252,23 @@ function leaveSite() {
 
 <script>
 const previewVideo = document.getElementById("previewVideo");
-
-  let previewTime = 15;
+let previewTime = 15;
 let previewTimer;
 
-answerCall.addEventListener("click", function () {
-  incomingCall.style.display = "none";
-  previewVideo.play();
-
-  previewTimer = setInterval(function () {
+previewTimer = setInterval(function () {
     previewTime--;
 
     document.getElementById("previewSeconds").textContent = previewTime;
 
     if (previewTime <= 0) {
-      clearInterval(previewTimer);
+        clearInterval(previewTimer);
 
-      previewVideo.pause();
+        previewVideo.pause();
 
-      document.getElementById("videoPreview").style.display = "none";
-      document.getElementById("incomingCall").style.display = "block";
-
-      setTimeout(function () {
-        window.location.href = "payment.html";
-      }, 60000);
+        document.getElementById("videoPreview").style.display = "none";
+        document.getElementById("incomingCall").style.display = "block";
     }
-  }, 1000);
-});
+}, 1000);
 </script>
 
 <p>Welcome to my referral website.</p>
