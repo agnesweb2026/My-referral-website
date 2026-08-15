@@ -20,18 +20,7 @@ body {
   background: white;
   padding: 25px;
   border-radius: 18px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-h1 {
-  margin-top: 0;
-}
-
-.ref {
-  background: #f0f0f0;
-  padding: 12px;
-  border-radius: 10px;
-  margin: 20px 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,.1);
 }
 
 .gallery {
@@ -41,26 +30,509 @@ h1 {
   margin-top: 20px;
 }
 
-.gallery img {
+.live-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  animation: floatPhoto 4s ease-in-out infinite;
+}
+
+@keyframes floatPhoto {
+  0%,100% {
+    transform: translateY(0) rotateY(0);
+  }
+  50% {
+    transform: translateY(-5px) rotateY(3deg);
+  }
+}
+
+.live-photo img {
+  display: block;
   width: 100%;
   height: 220px;
   object-fit: cover;
-  border-radius: 12px;
 }
 
-.button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 14px 25px;
-  background: #1877f2;
+.live-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #f0184c;
   color: white;
-  text-decoration: none;
-  border-radius: 10px;
+  padding: 5px 8px;
+  border-radius: 7px;
   font-weight: bold;
-.live-photo {
-    position: relative;
-    perspective: 1000px;
-    transform-style: preserve-3d;
+  font-size: 11px;
+  z-index: 2;
+}
+
+.live-badge::before {
+  content: "●";
+  color: #22c55e;
+  margin-right: 5px;
+  animation: blink 1s infinite;
+}
+
+.live-status {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0,0,0,.85);
+  color: white;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 3;
+}
+
+.live-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+  margin-right: 7px;
+  border: 1px solid white;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: .2;
+  }
+}
+
+/* AGE SCREEN */
+#ageGate {
+  position: fixed;
+  inset: 0;
+  background: #111;
+  color: white;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+/* VIDEO */
+#videoPreview {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#previewVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* INCOMING CALL */
+#incomingCall {
+  position: fixed;
+  inset: 0;
+  background: #111;
+  color: white;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.call-box {
+  width: 90%;
+  max-width: 380px;
+  padding: 30px 20px;
+  border-radius: 25px;
+  background: #222;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+
+.call-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 45px;
+  margin-top: 30px;
+}
+
+.call-buttons button {
+  width: 85px;
+  height: 85px;
+  border: 0;
+  border-radius: 50%;
+  color: white;
+  font-size: 32px;
+}
+
+.decline {
+  background: #e53935;
+}
+
+.answer {
+  background: #18c957;
+}
+</style>
+</head>
+
+<body>
+
+<!-- AGE SCREEN -->
+<div id="ageGate">
+  <div style="max-width:380px;">
+
+    <div style="font-size:60px;">🔞</div>
+
+    <h1>18+ ONLY</h1>
+
+    <p>This website contains adult-oriented content.</p>
+
+    <p>You must be 18 years or older to enter.</p>
+
+    <button onclick="enterSite()" style="
+      padding:14px 25px;
+      margin:10px;
+      border:0;
+      border-radius:10px;
+      background:#22c55e;
+      color:white;
+      font-weight:bold;
+    ">
+      I AM 18+ — ENTER
+    </button>
+
+    <button onclick="leaveSite()" style="
+      padding:14px 25px;
+      margin:10px;
+      border:0;
+      border-radius:10px;
+      background:#777;
+      color:white;
+      font-weight:bold;
+    ">
+      EXIT
+    </button>
+
+  </div>
+</div>
+
+
+<!-- VIDEO PREVIEW -->
+<div id="videoPreview">
+
+  <video id="previewVideo"
+         autoplay
+         muted
+         playsinline>
+
+    <source src="/preview_20_seconds.mp4" type="video/mp4">
+
+  </video>
+
+  <div style="
+    position:absolute;
+    bottom:20px;
+    left:0;
+    right:0;
+    color:white;
+    font-size:16px;
+    text-shadow:0 1px 3px #000;
+  ">
+    Preview
+  </div>
+
+</div>
+
+
+<!-- INCOMING VIDEO CALL -->
+<div id="incomingCall">
+
+  <div class="call-box">
+
+    <div style="font-size:60px;">
+      📹
+    </div>
+
+    <h2>Incoming Video Call</h2>
+
+    <p>incoming call...</p>
+
+    <div class="call-buttons">
+
+      <div>
+        <button class="decline"
+                onclick="declineCall()">
+          📵
+        </button>
+
+        <div style="margin-top:8px;">
+          Decline
+        </div>
+      </div>
+
+
+      <div>
+        <button class="answer"
+                onclick="answerCall()">
+          📞
+        </button>
+
+        <div style="margin-top:8px;">
+          Answer
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- MAIN PAGE -->
+<div class="card">
+
+  <p>
+    Welcome to my referral website.
+  </p>
+
+
+  <!-- LIVE PHOTOS -->
+  <div id="livePhotos"
+       class="gallery"
+       style="display:none;">
+
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+        <span class="live-dot"></span>
+        Live now
+      </span>
+
+      <img src="multixnxx-10 pictures-0.jpg"
+           alt="Photo 1">
+
+    </div>
+
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+        <span class="live-dot"></span>
+        Live now
+      </span>
+
+      <img src="multixnxx-10 pictures-5.jpg"
+           alt="Photo 2">
+
+    </div>
+
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+        <span class="live-dot"></span>
+        Live now
+      </span>
+
+      <img src="multixnxx-15 pictures-2.jpg"
+           alt="Photo 3">
+
+    </div>
+
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+        <span class="live-dot"></span>
+        Live now
+      </span>
+
+      <img src="multixnxx-Long labias_ big clits-8.jpg"
+           alt="Photo 4">
+
+    </div>
+
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+        <span class="live-dot"></span>
+        Live now
+      </span>
+
+      <img src="multixnxx-My breasts&n-5.jpg"
+           alt="Photo 5">
+
+    </div>
+
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+        <span class="live-dot"></span>
+        Live now
+      </span>
+
+      <img src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -10.jpg"
+           alt="Photo 6">
+
+    </div>
+
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+        <span class="live-dot"></span>
+        Live now
+      </span>
+
+      <img src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -12.jpg"
+           alt="Photo 7">
+
+    </div>
+
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+        <span class="live-dot"></span>
+        Live now
+      </span>
+
+      <img src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -15.jpg"
+           alt="Photo 8">
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function enterSite() {
+
+  document.getElementById("ageGate").style.display = "none";
+
+  document.getElementById("videoPreview").style.display = "flex";
+
+  const video =
+    document.getElementById("previewVideo");
+
+  video.currentTime = 0;
+
+  video.play().catch(function() {});
+
+}
+
+
+function leaveSite() {
+
+  window.location.href =
+    "https://www.google.com";
+
+}
+
+
+const previewVideo =
+  document.getElementById("previewVideo");
+
+
+previewVideo.addEventListener("ended", function() {
+
+  document.getElementById("videoPreview")
+    .style.display = "none";
+
+  document.getElementById("incomingCall")
+    .style.display = "flex";
+
+});
+
+
+function answerCall() {
+
+  document.getElementById("incomingCall")
+    .style.display = "none";
+
+  document.getElementById("livePhotos")
+    .style.display = "grid";
+
+}
+
+
+function declineCall() {
+
+  document.getElementById("incomingCall")
+    .style.display = "none";
+
+  document.getElementById("livePhotos")
+    .style.display = "grid";
+
+}
+
+
+document
+  .querySelectorAll(".live-photo")
+  .forEach(function(photo) {
+
+    photo.addEventListener("click", function() {
+
+      window.location.href =
+        "payment.html";
+
+    });
+
+  });
+
+</script>
+
+</body>
+        </html>    transform-style: preserve-3d;
     animation: photo3D 4s ease-in-out infinite;
 }
 
