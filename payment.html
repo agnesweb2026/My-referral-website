@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Choose Access</title>
 
-  <!-- IntaSend -->
+  <!-- IntaSend Checkout SDK -->
   <script src="https://unpkg.com/intasend-checkout-sdk"></script>
 
   <style>
@@ -53,10 +52,6 @@
       cursor: pointer;
     }
 
-    .package:hover {
-      border-color: #1877f2;
-    }
-
     .package.selected {
       border-color: #1877f2;
       background: #eef5ff;
@@ -95,7 +90,6 @@
       opacity: 0.9;
     }
   </style>
-
 </head>
 
 <body>
@@ -140,6 +134,7 @@
     </div>
 
     <button
+      type="button"
       class="pay intaSendPayButton"
       id="payButton"
       data-currency="KES"
@@ -149,10 +144,12 @@
 
   </div>
 
-
   <script>
 
-    /* Referral code */
+    /* =========================
+       REFERRAL CODE
+    ========================= */
+
     const params = new URLSearchParams(window.location.search);
     const ref = params.get("ref");
 
@@ -161,7 +158,10 @@
     }
 
 
-    /* Package selection */
+    /* =========================
+       PACKAGE SELECTION
+    ========================= */
+
     const packages = document.querySelectorAll(".package");
     const selectedInfo = document.getElementById("selectedInfo");
     const payButton = document.getElementById("payButton");
@@ -169,19 +169,18 @@
     let selectedAmount = null;
     let selectedMinutes = null;
 
+    packages.forEach((button) => {
 
-    packages.forEach(button => {
+      button.addEventListener("click", function () {
 
-      button.addEventListener("click", () => {
-
-        packages.forEach(item => {
+        packages.forEach((item) => {
           item.classList.remove("selected");
         });
 
-        button.classList.add("selected");
+        this.classList.add("selected");
 
-        selectedAmount = button.dataset.amount;
-        selectedMinutes = button.dataset.minutes;
+        selectedAmount = this.dataset.amount;
+        selectedMinutes = this.dataset.minutes;
 
         selectedInfo.textContent =
           "Selected: KSh " +
@@ -190,53 +189,62 @@
           selectedMinutes +
           " minutes";
 
-        /* Give IntaSend the selected package */
-        payButton.dataset.amount = selectedAmount;
-        payButton.dataset.currency = "KES";
-        payButton.dataset.method = "M-PESA";
+        /*
+          Give IntaSend the selected payment information.
+        */
 
-        payButton.dataset.api_ref =
-          "access-" +
-          selectedMinutes +
-          "min-" +
-          Date.now();
+        payButton.setAttribute("data-amount", selectedAmount);
+        payButton.setAttribute("data-currency", "KES");
+        payButton.setAttribute("data-method", "M-PESA");
 
-                payButton.style.display = "block";
+        payButton.setAttribute(
+          "data-api_ref",
+          "access-" + selectedMinutes + "min-" + Date.now()
+        );
+
+        payButton.style.display = "block";
       });
+
     });
 
 
+    /* =========================
+       INTASEND
+    ========================= */
 
-    /*
-      Make sure the selected package is ready
-      before IntaSend processes the payment.
-    */
-    
+    const intasend = new window.IntaSend({
 
-
-    /* IntaSend */
-    new window.IntaSend({
       publicAPIKey:
         "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
 
       live: true
 
-    })
-    .on("COMPLETE", (results) => {
-
-      console.log("Payment successful:", results);
-
-    })
-    .on("FAILED", (results) => {
-
-      console.log("Payment failed:", results);
-
-    })
-    .on("IN-PROGRESS", (results) => {
-
-      console.log("Payment in progress:", results);
-
     });
+
+
+    intasend
+
+      .on("COMPLETE", function (results) {
+
+        console.log("Payment successful:", results);
+
+        alert("Payment successful!");
+
+      })
+
+      .on("FAILED", function (results) {
+
+        console.log("Payment failed:", results);
+
+        alert("Payment failed. Please try again.");
+
+      })
+
+      .on("IN-PROGRESS", function (results) {
+
+        console.log("M-PESA payment in progress:", results);
+
+      });
 
   </script>
 
