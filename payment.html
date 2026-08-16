@@ -6,8 +6,7 @@
 
   <title>Choose Access</title>
 
-  <!-- IntaSend Inline Checkout SDK -->
-  <script src="https://unpkg.com/intasend-inlinejs-sdk@4.0.5/build/intasend-inline.js"></script>
+  <script src="https://unpkg.com/intasend-checkout-sdk"></script>
 
   <style>
     body {
@@ -78,166 +77,136 @@
       font-weight: bold;
       cursor: pointer;
     }
-
-    .pay:hover {
-      opacity: 0.9;
-    }
   </style>
 </head>
 
 <body>
 
-  <div class="card">
+<div class="card">
 
-    <h1>Choose Access</h1>
+  <h1>Choose Access</h1>
 
-    <p>Select your preferred access package:</p>
+  <p>Select your preferred access package:</p>
 
-    <button class="package" data-amount="80" data-minutes="10">
-      KSh 80 — 10 Minutes
-    </button>
+  <button class="package" data-amount="80" data-minutes="10">
+    KSh 80 — 10 Minutes
+  </button>
 
-    <button class="package" data-amount="135" data-minutes="25">
-      KSh 135 — 25 Minutes
-    </button>
+  <button class="package" data-amount="135" data-minutes="25">
+    KSh 135 — 25 Minutes
+  </button>
 
-    <button class="package" data-amount="200" data-minutes="40">
-      KSh 200 — 40 Minutes
-    </button>
+  <button class="package" data-amount="200" data-minutes="40">
+    KSh 200 — 40 Minutes
+  </button>
 
-    <button class="package" data-amount="250" data-minutes="55">
-      KSh 250 — 55 Minutes
-    </button>
+  <button class="package" data-amount="250" data-minutes="55">
+    KSh 250 — 55 Minutes
+  </button>
 
-    <button class="package" data-amount="300" data-minutes="65">
-      KSh 300 — 65 Minutes
-    </button>
+  <button class="package" data-amount="300" data-minutes="65">
+    KSh 300 — 65 Minutes
+  </button>
 
-    <div class="till">
-      Pay with Till: 1605854
-    </div>
-
-    <div class="selected-info" id="selectedInfo">
-      No package selected
-    </div>
-
-    <button
-      type="button"
-      class="pay intaSendPayButton"
-      id="payButton"
-      data-currency="KES"
-      data-method="M-PESA">
-      Pay with M-PESA
-    </button>
-
+  <div class="till">
+    Pay with Till: 1605854
   </div>
 
-  <script>
+  <div class="selected-info" id="selectedInfo">
+    No package selected
+  </div>
 
-    const packages = document.querySelectorAll(".package");
-    const selectedInfo = document.getElementById("selectedInfo");
-    const payButton = document.getElementById("payButton");
+  <button
+    type="button"
+    class="pay intaSendPayButton"
+    id="payButton"
+    data-currency="KES"
+    data-method="M-PESA">
+    Pay with M-PESA
+  </button>
 
-    let selectedAmount = null;
-    let selectedMinutes = null;
+</div>
 
-    packages.forEach(function(button) {
+<script>
 
-      button.addEventListener("click", function() {
+const packages = document.querySelectorAll(".package");
+const selectedInfo = document.getElementById("selectedInfo");
+const payButton = document.getElementById("payButton");
 
-        packages.forEach(function(item) {
-          item.classList.remove("selected");
-        });
+let selectedAmount = null;
+let selectedMinutes = null;
 
-        this.classList.add("selected");
+packages.forEach(function(button) {
 
-        selectedAmount = this.dataset.amount;
-        selectedMinutes = this.dataset.minutes;
+  button.addEventListener("click", function() {
 
-        selectedInfo.textContent =
-          "Selected: KSh " +
-          selectedAmount +
-          " for " +
-          selectedMinutes +
-          " minutes";
-
-        payButton.setAttribute(
-          "data-amount",
-          selectedAmount
-        );
-
-        payButton.setAttribute(
-          "data-currency",
-          "KES"
-        );
-
-        payButton.setAttribute(
-          "data-method",
-          "M-PESA"
-        );
-
-        payButton.setAttribute(
-          "data-api_ref",
-          "access-" +
-          selectedMinutes +
-          "min-" +
-          Date.now()
-        );
-
-        payButton.style.display = "block";
-
-      });
-
+    packages.forEach(function(item) {
+      item.classList.remove("selected");
     });
 
+    this.classList.add("selected");
 
-    /* =========================
-       INTASEND
-       ========================= */
+    selectedAmount = this.dataset.amount;
+    selectedMinutes = this.dataset.minutes;
 
-    new window.IntaSend({
+    selectedInfo.textContent =
+      "Selected: KSh " +
+      selectedAmount +
+      " for " +
+      selectedMinutes +
+      " minutes";
 
-      publicAPIKey:
-        "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
+    payButton.dataset.amount = selectedAmount;
+    payButton.dataset.currency = "KES";
+    payButton.dataset.method = "M-PESA";
 
-      live: true
+    payButton.dataset.api_ref =
+      "access-" +
+      selectedMinutes +
+      "min-" +
+      Date.now();
 
-    })
+    payButton.style.display = "block";
 
-    .on("COMPLETE", function(results) {
+  });
 
-      console.log(
-        "Payment successful:",
-        results
-      );
+});
 
-      alert("Payment successful!");
 
-    })
+new window.IntaSend({
 
-    .on("FAILED", function(results) {
+  publicAPIKey:
+    "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
 
-      console.log(
-        "Payment failed:",
-        results
-      );
+  live: true
 
-      alert(
-        "Payment failed. Please try again."
-      );
+})
 
-    })
+.on("COMPLETE", function(results) {
 
-    .on("IN-PROGRESS", function(results) {
+  console.log("Payment successful:", results);
 
-      console.log(
-        "M-PESA payment in progress:",
-        results
-      );
+  alert("Payment successful!");
 
-    });
+  window.location.href = "index.html";
 
-  </script>
+})
+
+.on("FAILED", function(results) {
+
+  console.log("Payment failed:", results);
+
+  alert("Payment failed. Please try again.");
+
+})
+
+.on("IN-PROGRESS", function(results) {
+
+  console.log("Payment in progress:", results);
+
+});
+
+</script>
 
 </body>
 </html>
