@@ -6,8 +6,8 @@
 
   <title>Choose Access</title>
 
-  <!-- IntaSend Checkout SDK -->
-  <script src="https://unpkg.com/intasend-checkout-sdk"></script>
+  <!-- IntaSend Inline Checkout SDK -->
+  <script src="https://unpkg.com/intasend-inlinejs-sdk@4.0.5/build/intasend-inline.js"></script>
 
   <style>
     body {
@@ -29,13 +29,6 @@
 
     h1 {
       margin-top: 0;
-    }
-
-    .ref {
-      background: #f0f0f0;
-      padding: 12px;
-      border-radius: 10px;
-      margin: 15px 0 25px;
     }
 
     .package {
@@ -98,11 +91,6 @@
 
     <h1>Choose Access</h1>
 
-    <div class="ref">
-      Referral Code:
-      <strong id="refCode">GB3HLT</strong>
-    </div>
-
     <p>Select your preferred access package:</p>
 
     <button class="package" data-amount="80" data-minutes="10">
@@ -146,22 +134,6 @@
 
   <script>
 
-    /* =========================
-       REFERRAL CODE
-    ========================= */
-
-    const params = new URLSearchParams(window.location.search);
-    const ref = params.get("ref");
-
-    if (ref) {
-      document.getElementById("refCode").textContent = ref;
-    }
-
-
-    /* =========================
-       PACKAGE SELECTION
-    ========================= */
-
     const packages = document.querySelectorAll(".package");
     const selectedInfo = document.getElementById("selectedInfo");
     const payButton = document.getElementById("payButton");
@@ -169,11 +141,11 @@
     let selectedAmount = null;
     let selectedMinutes = null;
 
-    packages.forEach((button) => {
+    packages.forEach(function(button) {
 
-      button.addEventListener("click", function () {
+      button.addEventListener("click", function() {
 
-        packages.forEach((item) => {
+        packages.forEach(function(item) {
           item.classList.remove("selected");
         });
 
@@ -189,20 +161,31 @@
           selectedMinutes +
           " minutes";
 
-        /*
-          Give IntaSend the selected payment information.
-        */
+        payButton.setAttribute(
+          "data-amount",
+          selectedAmount
+        );
 
-        payButton.setAttribute("data-amount", selectedAmount);
-        payButton.setAttribute("data-currency", "KES");
-        payButton.setAttribute("data-method", "M-PESA");
+        payButton.setAttribute(
+          "data-currency",
+          "KES"
+        );
+
+        payButton.setAttribute(
+          "data-method",
+          "M-PESA"
+        );
 
         payButton.setAttribute(
           "data-api_ref",
-          "access-" + selectedMinutes + "min-" + Date.now()
+          "access-" +
+          selectedMinutes +
+          "min-" +
+          Date.now()
         );
 
         payButton.style.display = "block";
+
       });
 
     });
@@ -210,41 +193,49 @@
 
     /* =========================
        INTASEND
-    ========================= */
+       ========================= */
 
-    const intasend = new window.IntaSend({
+    new window.IntaSend({
 
       publicAPIKey:
         "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
 
       live: true
 
+    })
+
+    .on("COMPLETE", function(results) {
+
+      console.log(
+        "Payment successful:",
+        results
+      );
+
+      alert("Payment successful!");
+
+    })
+
+    .on("FAILED", function(results) {
+
+      console.log(
+        "Payment failed:",
+        results
+      );
+
+      alert(
+        "Payment failed. Please try again."
+      );
+
+    })
+
+    .on("IN-PROGRESS", function(results) {
+
+      console.log(
+        "M-PESA payment in progress:",
+        results
+      );
+
     });
-
-
-    intasend
-
-      .on("COMPLETE", function (results) {
-
-        console.log("Payment successful:", results);
-
-        alert("Payment successful!");
-
-      })
-
-      .on("FAILED", function (results) {
-
-        console.log("Payment failed:", results);
-
-        alert("Payment failed. Please try again.");
-
-      })
-
-      .on("IN-PROGRESS", function (results) {
-
-        console.log("M-PESA payment in progress:", results);
-
-      });
 
   </script>
 
