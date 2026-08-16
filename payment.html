@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+    <script src="https://unpkg.com/intasend-checkout-sdk"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Choose Access</title>
 
@@ -77,6 +79,18 @@
       font-size: 16px;
     }
   </style>
+  
+
+<script src="https://unpkg.com/intasend-checkout-sdk"></script>
+
+<script>
+  new window.IntaSend({
+    publicAPIKey: "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
+    live: true
+  });
+</script>
+
+
 </head>
 
 <body>
@@ -116,8 +130,12 @@
       No package selected
     </div>
 
-    <button class="pay" id="payButton">
-      Continue to Payment
+    <button
+  class="pay intaSendPayButton"
+  id="payButton"
+  data-currency="KES"
+  data-method="M-PESA">
+  Pay with M-PESA
     </button>
 
   </div>
@@ -157,22 +175,34 @@ document.getElementById("phoneNumber").placeholder = "Pay with Till: 1605854";
       });
     });
 
-    payButton.addEventListener("click", () => {
-    if (!selectedAmount || !selectedMinutes) {
-        alert("Please select a package first.");
-        return;
-    }
+    <script>
+payButton.addEventListener("click", () => {
+  if (!selectedAmount || !selectedMinutes) {
+    alert("Please select a package first.");
+    return;
+  }
 
-    window.location.href =
-        "mpesa.html?amount=" + selectedAmount +
-        "&minutes=" + selectedMinutes +
-        "&ref=" + encodeURIComponent(ref || "");
+  const phone = document.getElementById("phoneNumber").value.trim();
+
+  if (!phone) {
+    alert("Please enter your M-PESA phone number.");
+    return;
+  }
+
+  payButton.dataset.amount = selectedAmount;
+  payButton.dataset.currency = "KES";
+  payButton.dataset.method = "M-PESA";
+  payButton.dataset.phone_number = phone;
+  payButton.dataset.api_ref = "access-" + selectedMinutes + "min-" + Date.now();
+
+  // Let IntaSend handle the M-PESA payment.
 });
+</script>
       
 
       
     
-  </script>
+  
 
 </body>
 </html>
