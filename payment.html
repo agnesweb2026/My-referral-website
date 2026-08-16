@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <script src="https://unpkg.com/intasend-checkout-sdk"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Choose Access</title>
+
+  <!-- IntaSend -->
+  <script src="https://unpkg.com/intasend-checkout-sdk"></script>
 
   <style>
     body {
@@ -59,6 +62,20 @@
       background: #eef5ff;
     }
 
+    .till {
+      margin-top: 18px;
+      padding: 13px;
+      background: #f0f0f0;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .selected-info {
+      margin-top: 18px;
+      font-size: 16px;
+    }
+
     .pay {
       display: none;
       width: 100%;
@@ -74,22 +91,10 @@
       cursor: pointer;
     }
 
-    .selected-info {
-      margin-top: 18px;
-      font-size: 16px;
+    .pay:hover {
+      opacity: 0.9;
     }
   </style>
-  
-
-<script src="https://unpkg.com/intasend-checkout-sdk"></script>
-
-<script>
-  new window.IntaSend({
-    publicAPIKey: "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
-    live: true
-  });
-</script>
-
 
 </head>
 
@@ -107,40 +112,47 @@
     <p>Select your preferred access package:</p>
 
     <button class="package" data-amount="80" data-minutes="10">
-    KSh 50 — 18 Minutes
-</button>
+      KSh 80 — 10 Minutes
+    </button>
 
-<button class="package" data-amount="135" data-minutes="25">
-    KSh 70 — 25 Minutes
-</button>
+    <button class="package" data-amount="135" data-minutes="25">
+      KSh 135 — 25 Minutes
+    </button>
 
-<button class="package" data-amount="200" data-minutes="40">
-    KSh 100 — 40 Minutes
-</button>
+    <button class="package" data-amount="200" data-minutes="40">
+      KSh 200 — 40 Minutes
+    </button>
 
-<button class="package" data-amount="250" data-minutes="55">
-    KSh 150 — 55 Minutes
-</button>
+    <button class="package" data-amount="250" data-minutes="55">
+      KSh 250 — 55 Minutes
+    </button>
 
-<button class="package" data-amount="300" data-minutes="65">
-    KSh 275 — 65 Minutes
-</button>
-<input id="phoneNumber" type="tel" placeholder="Pay with Till: 1605854">
+    <button class="package" data-amount="300" data-minutes="65">
+      KSh 300 — 65 Minutes
+    </button>
+
+    <div class="till">
+      Pay with Till: 1605854
+    </div>
+
     <div class="selected-info" id="selectedInfo">
       No package selected
     </div>
 
     <button
-  class="pay intaSendPayButton"
-  id="payButton"
-  data-currency="KES"
-  data-method="M-PESA">
-  Pay with M-PESA
+      class="pay intaSendPayButton"
+      id="payButton"
+      data-currency="KES"
+      data-method="M-PESA">
+      Pay with M-PESA
     </button>
 
   </div>
 
+
   <script>
+
+    /* Referral code */
     const params = new URLSearchParams(window.location.search);
     const ref = params.get("ref");
 
@@ -148,6 +160,8 @@
       document.getElementById("refCode").textContent = ref;
     }
 
+
+    /* Package selection */
     const packages = document.querySelectorAll(".package");
     const selectedInfo = document.getElementById("selectedInfo");
     const payButton = document.getElementById("payButton");
@@ -155,7 +169,9 @@
     let selectedAmount = null;
     let selectedMinutes = null;
 
+
     packages.forEach(button => {
+
       button.addEventListener("click", () => {
 
         packages.forEach(item => {
@@ -168,41 +184,60 @@
         selectedMinutes = button.dataset.minutes;
 
         selectedInfo.textContent =
-          "Selected: KSh " + selectedAmount +
-          " for " + selectedMinutes + " minutes";
-document.getElementById("phoneNumber").placeholder = "Pay with Till: 1605854";
+          "Selected: KSh " +
+          selectedAmount +
+          " for " +
+          selectedMinutes +
+          " minutes";
+
+        /* Give IntaSend the selected package */
+        payButton.dataset.amount = selectedAmount;
+        payButton.dataset.currency = "KES";
+        payButton.dataset.method = "M-PESA";
+
+        payButton.dataset.api_ref =
+          "access-" +
+          selectedMinutes +
+          "min-" +
+          Date.now();
+
         payButton.style.display = "block";
       });
+
+
+
+    /*
+      Make sure the selected package is ready
+      before IntaSend processes the payment.
+    */
+    
+
+
+    /* IntaSend */
+    new window.IntaSend({
+      publicAPIKey:
+        "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
+
+      live: true
+
+    })
+    .on("COMPLETE", (results) => {
+
+      console.log("Payment successful:", results);
+
+    })
+    .on("FAILED", (results) => {
+
+      console.log("Payment failed:", results);
+
+    })
+    .on("IN-PROGRESS", (results) => {
+
+      console.log("Payment in progress:", results);
+
     });
 
-    <script>
-payButton.addEventListener("click", () => {
-  if (!selectedAmount || !selectedMinutes) {
-    alert("Please select a package first.");
-    return;
-  }
-
-  const phone = document.getElementById("phoneNumber").value.trim();
-
-  if (!phone) {
-    alert("Please enter your M-PESA phone number.");
-    return;
-  }
-
-  payButton.dataset.amount = selectedAmount;
-  payButton.dataset.currency = "KES";
-  payButton.dataset.method = "M-PESA";
-  payButton.dataset.phone_number = phone;
-  payButton.dataset.api_ref = "access-" + selectedMinutes + "min-" + Date.now();
-
-  // Let IntaSend handle the M-PESA payment.
-});
-</script>
-      
-
-      
-    
-  
+  </script>
 
 </body>
 </html>
