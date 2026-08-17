@@ -7,6 +7,7 @@
 <title>My Referral Website</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -31,6 +32,7 @@ h1{
 p{
   color:#ccc;
 }
+
 
 /* =========================
    AGE GATE
@@ -74,6 +76,7 @@ p{
   background:#666;
 }
 
+
 /* =========================
    INCOMING CALL
 ========================= */
@@ -92,6 +95,7 @@ p{
 .callBackground{
   position:absolute;
   inset:-30px;
+
   background:
     radial-gradient(
       circle,
@@ -99,6 +103,7 @@ p{
       #302b2e 45%,
       #101014 100%
     );
+
   filter:blur(20px);
   transform:scale(1.1);
 }
@@ -112,10 +117,12 @@ p{
 .callContent{
   position:relative;
   z-index:2;
+
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
+
   height:100%;
   width:100%;
 }
@@ -123,8 +130,10 @@ p{
 .profileRing{
   width:155px;
   height:155px;
+
   border-radius:50%;
   border:3px solid #8b5cf6;
+
   display:flex;
   align-items:center;
   justify-content:center;
@@ -133,8 +142,10 @@ p{
 .profilePhoto{
   width:125px;
   height:125px;
+
   border-radius:50%;
   object-fit:cover;
+
   background:#222;
 }
 
@@ -146,8 +157,10 @@ p{
 
 .callTitle{
   margin-top:5px;
+
   font-size:13px;
   color:#aaa;
+
   letter-spacing:1px;
 }
 
@@ -158,22 +171,30 @@ p{
 
 .ringDot{
   display:inline-block;
+
   width:9px;
   height:9px;
+
   border-radius:50%;
+
   background:#22c55e;
+
   animation:blink 1s infinite;
 }
 
 @keyframes blink{
+
   50%{
     opacity:.2;
   }
+
 }
 
 .callButtons{
   display:flex;
+
   gap:70px;
+
   margin-top:100px;
 }
 
@@ -184,9 +205,12 @@ p{
 .callButton{
   width:78px;
   height:78px;
+
   border:0;
   border-radius:50%;
+
   color:#fff;
+
   font-size:30px;
 }
 
@@ -203,6 +227,7 @@ p{
   color:#ccc;
 }
 
+
 /* =========================
    VIDEO SAMPLE
 ========================= */
@@ -210,9 +235,13 @@ p{
 #videoPreview{
   position:fixed;
   inset:0;
+
   z-index:9500;
+
   background:#000;
+
   display:none;
+
   align-items:center;
   justify-content:center;
 }
@@ -220,18 +249,25 @@ p{
 #previewVideo{
   width:100%;
   height:100%;
+
   object-fit:contain;
 }
 
 .previewCounter{
   position:absolute;
+
   bottom:20px;
+
   left:0;
   right:0;
+
   color:#fff;
+
   font-size:18px;
+
   text-shadow:0 1px 4px #000;
 }
+
 
 /* =========================
    GALLERY
@@ -239,73 +275,110 @@ p{
 
 #gallery{
   display:none;
+
   grid-template-columns:1fr 1fr;
+
   gap:18px;
+
   margin-top:25px;
 }
 
 .photoCard{
   position:relative;
+
   height:230px;
+
   background:#111;
+
   border-radius:14px;
+
   overflow:hidden;
+
   cursor:pointer;
+
   border:1px solid #222;
 }
 
 .photoCard img{
   width:100%;
   height:100%;
-  object-fit:cover;
-}
 
-.photoPlaceholder{
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#181818;
-  color:#777;
-  font-size:14px;
+  object-fit:cover;
+
+  display:block;
 }
 
 .liveBadge{
   position:absolute;
+
   top:9px;
   left:9px;
+
   z-index:2;
+
   background:#f0184c;
+
   color:#fff;
+
   padding:7px 10px;
+
   border-radius:8px;
+
   font-size:12px;
+
   font-weight:bold;
 }
 
 .liveStatus{
   position:absolute;
+
   left:9px;
   right:9px;
   bottom:9px;
+
   z-index:2;
+
   background:rgba(0,0,0,.82);
+
   padding:8px;
+
   border-radius:8px;
+
   text-align:left;
+
   font-size:12px;
 }
 
 .liveDot{
   display:inline-block;
+
   width:9px;
   height:9px;
+
   border-radius:50%;
+
   background:#22c55e;
+
   margin-right:5px;
+
   animation:blink 1s infinite;
 }
+
+
+/* =========================
+   LOADING
+========================= */
+
+.galleryLoading{
+  display:none;
+
+  margin-top:30px;
+
+  color:#aaa;
+
+  font-size:15px;
+}
+
 
 /* =========================
    MOBILE
@@ -329,11 +402,15 @@ p{
     width:70px;
     height:70px;
   }
+
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <!-- =========================
      AGE SCREEN
@@ -347,7 +424,9 @@ p{
       🔞
     </div>
 
-    <h1>18+ ONLY</h1>
+    <h1>
+      18+ ONLY
+    </h1>
 
     <p>
       You must be 18 years or older to enter.
@@ -374,6 +453,7 @@ p{
 </div>
 
 
+
 <!-- =========================
      INCOMING CALL
 ========================= -->
@@ -386,6 +466,7 @@ p{
 
   <div class="callContent">
 
+
     <div class="profileRing">
 
       <img
@@ -395,6 +476,7 @@ p{
 
     </div>
 
+
     <div
       id="callerName"
       class="callerName">
@@ -403,9 +485,13 @@ p{
 
     </div>
 
+
     <div class="callTitle">
+
       INCOMING VIDEO CALL
+
     </div>
+
 
     <div class="ringing">
 
@@ -415,7 +501,9 @@ p{
 
     </div>
 
+
     <div class="callButtons">
+
 
       <div class="callOption">
 
@@ -450,11 +538,13 @@ p{
 
       </div>
 
+
     </div>
 
   </div>
 
 </div>
+
 
 
 <!-- =========================
@@ -475,17 +565,21 @@ p{
 
   </video>
 
+
   <div class="previewCounter">
 
     Sample:
+
     <span id="previewSeconds">
       60
     </span>
+
     seconds
 
   </div>
 
 </div>
+
 
 
 <h1>
@@ -497,232 +591,31 @@ p{
 </p>
 
 
+
 <!-- =========================
-     24 PHOTO GALLERY
+     GALLERY LOADING
 ========================= -->
 
-<div id="gallery">
+<div
+  id="galleryLoading"
+  class="galleryLoading">
 
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 01</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 02</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 03</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 04</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 05</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 06</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 07</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 08</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 09</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 10</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 11</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 12</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 13</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 14</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 15</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 16</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 17</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 18</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 19</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 20</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 21</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 22</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 23</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
-
-  <div class="photoCard" onclick="openPayment()">
-    <div class="photoPlaceholder">PHOTO 24</div>
-    <div class="liveBadge">● LIVE</div>
-    <div class="liveStatus">
-      <span class="liveDot"></span>
-      Live now
-    </div>
-  </div>
+  Loading photos...
 
 </div>
 
 
+
+<!-- =========================
+     REAL PHOTO GALLERY
+========================= -->
+
+<div id="gallery"></div>
+
+
+
 <script>
+
 
 /* =========================
    ELEMENTS
@@ -733,12 +626,6 @@ const ageGate =
 
 const incomingCall =
   document.getElementById("incomingCall");
-
-const callerPhoto =
-  document.getElementById("callerPhoto");
-
-const callerName =
-  document.getElementById("callerName");
 
 const videoPreview =
   document.getElementById("videoPreview");
@@ -752,12 +639,18 @@ const previewSeconds =
 const gallery =
   document.getElementById("gallery");
 
+const galleryLoading =
+  document.getElementById("galleryLoading");
+
 
 /* =========================
-   SAMPLE LENGTH
+   SETTINGS
 ========================= */
 
 const SAMPLE_DURATION = 60;
+
+const GITHUB_API =
+  "https://api.github.com/repos/agnesweb2026/My-referral-website/contents/";
 
 
 /* =========================
@@ -766,9 +659,11 @@ const SAMPLE_DURATION = 60;
 
 function enterSite(){
 
-  ageGate.style.display = "none";
+  ageGate.style.display =
+    "none";
 
-  incomingCall.style.display = "flex";
+  incomingCall.style.display =
+    "flex";
 
 }
 
@@ -791,15 +686,19 @@ function leaveSite(){
 
 function startSample(){
 
-  incomingCall.style.display = "none";
+  incomingCall.style.display =
+    "none";
 
-  videoPreview.style.display = "flex";
+  videoPreview.style.display =
+    "flex";
 
-  gallery.style.display = "none";
+  gallery.style.display =
+    "none";
 
   previewVideo.pause();
 
-  previewVideo.currentTime = 0;
+  previewVideo.currentTime =
+    0;
 
   previewSeconds.textContent =
     SAMPLE_DURATION;
@@ -818,8 +717,7 @@ function startSample(){
 
 
 /* =========================
-   VIDEO ENDED
-   LOOP UNTIL 60 SECONDS
+   VIDEO LOOP
 ========================= */
 
 previewVideo.addEventListener(
@@ -831,7 +729,8 @@ previewVideo.addEventListener(
       SAMPLE_DURATION
     ){
 
-      previewVideo.currentTime = 0;
+      previewVideo.currentTime =
+        0;
 
       previewVideo.play();
 
@@ -856,7 +755,8 @@ previewVideo.addEventListener(
       Math.max(
         0,
         Math.ceil(
-          SAMPLE_DURATION - elapsed
+          SAMPLE_DURATION -
+          elapsed
         )
       );
 
@@ -876,13 +776,188 @@ previewVideo.addEventListener(
       videoPreview.style.display =
         "none";
 
-      gallery.style.display =
-        "grid";
+      loadGallery();
 
     }
 
   }
 );
+
+
+/* =========================
+   CREATE PHOTO CARD
+========================= */
+
+function createPhotoCard(
+  imageUrl,
+  number
+){
+
+  const card =
+    document.createElement("div");
+
+  card.className =
+    "photoCard";
+
+  card.onclick =
+    openPayment;
+
+
+  const image =
+    document.createElement("img");
+
+  image.src =
+    imageUrl;
+
+  image.alt =
+    "Photo " + number;
+
+  image.loading =
+    "lazy";
+
+
+  const liveBadge =
+    document.createElement("div");
+
+  liveBadge.className =
+    "liveBadge";
+
+  liveBadge.innerHTML =
+    "● LIVE";
+
+
+  const liveStatus =
+    document.createElement("div");
+
+  liveStatus.className =
+    "liveStatus";
+
+  liveStatus.innerHTML =
+    '<span class="liveDot"></span> Live now';
+
+
+  card.appendChild(image);
+
+  card.appendChild(liveBadge);
+
+  card.appendChild(liveStatus);
+
+
+  return card;
+
+}
+
+
+/* =========================
+   LOAD REAL GITHUB PHOTOS
+========================= */
+
+async function loadGallery(){
+
+  gallery.innerHTML =
+    "";
+
+  galleryLoading.style.display =
+    "block";
+
+  try{
+
+    const response =
+      await fetch(
+        GITHUB_API
+      );
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "Unable to load GitHub files"
+      );
+
+    }
+
+
+    const files =
+      await response.json();
+
+
+    /*
+      Only use JPG/JPEG photos.
+      This prevents unrelated files
+      such as the sample video or
+      website screenshots from appearing.
+    */
+
+    const photos =
+      files.filter(function(file){
+
+        if(
+          file.type !== "file"
+        ){
+
+          return false;
+
+        }
+
+
+        const name =
+          file.name.toLowerCase();
+
+
+        return(
+          name.endsWith(".jpg") ||
+          name.endsWith(".jpeg")
+        );
+
+      });
+
+
+    /*
+      Show a maximum of 24 real photos.
+    */
+
+    const selectedPhotos =
+      photos.slice(0,24);
+
+
+    selectedPhotos.forEach(
+      function(file,index){
+
+        const card =
+          createPhotoCard(
+            file.download_url,
+            index + 1
+          );
+
+        gallery.appendChild(card);
+
+      }
+    );
+
+
+    galleryLoading.style.display =
+      "none";
+
+
+    gallery.style.display =
+      "grid";
+
+
+  }catch(error){
+
+    console.error(error);
+
+
+    galleryLoading.textContent =
+      "Photos could not be loaded. Please refresh.";
+
+
+    galleryLoading.style.display =
+      "block";
+
+  }
+
+}
 
 
 /* =========================
@@ -896,7 +971,30 @@ function openPayment(){
 
 }
 
+
+/* =========================
+   PRELOAD PHOTOS
+========================= */
+
+window.addEventListener(
+  "load",
+  function(){
+
+    /*
+      We don't display the gallery yet.
+      The gallery appears after the
+      60-second sample.
+    */
+
+    console.log(
+      "Website ready"
+    );
+
+  }
+);
+
 </script>
 
+
 </body>
-  </html>
+</html>
