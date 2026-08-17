@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0">
 
 <title>My Referral Website</title>
 
@@ -32,49 +36,72 @@ body{
 ========================= */
 
 #ageGate{
+
   position:fixed;
+
   inset:0;
+
   z-index:9999;
+
   background:#111;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   padding:20px;
 }
 
 .ageBox{
+
   max-width:380px;
+
   text-align:center;
 }
 
 .ageIcon{
+
   font-size:60px;
 }
 
 .ageBox h1{
+
   margin:10px 0;
 }
 
 .ageBox p{
+
   color:#ccc;
 }
 
 .ageBox button{
+
   border:0;
+
   border-radius:12px;
+
   padding:15px 22px;
+
   margin:8px;
+
   color:#fff;
+
   font-weight:bold;
+
   font-size:15px;
+
   cursor:pointer;
 }
 
 .enterButton{
+
   background:#22c55e;
 }
 
 .exitButton{
+
   background:#666;
 }
 
@@ -84,18 +111,28 @@ body{
 ========================= */
 
 #incomingCall{
+
   position:fixed;
+
   inset:0;
+
   z-index:9000;
+
   display:none;
+
   background:#17161b;
+
   align-items:center;
+
   justify-content:center;
+
   overflow:hidden;
 }
 
 .callBackground{
+
   position:absolute;
+
   inset:-30px;
 
   background:
@@ -107,72 +144,101 @@ body{
     );
 
   filter:blur(20px);
+
   transform:scale(1.1);
 }
 
 .callOverlay{
+
   position:absolute;
+
   inset:0;
+
   background:rgba(0,0,0,.55);
 }
 
 .callContent{
+
   position:relative;
+
   z-index:2;
 
   display:flex;
+
   flex-direction:column;
+
   align-items:center;
+
   justify-content:center;
 
   height:100%;
+
   width:100%;
 }
 
 .profileRing{
+
   width:155px;
+
   height:155px;
 
   border-radius:50%;
+
   border:3px solid #8b5cf6;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
 }
 
 .profilePhoto{
+
   width:125px;
+
   height:125px;
 
   border-radius:50%;
+
   object-fit:cover;
 
   background:#222;
 }
 
 .callerName{
+
   margin-top:15px;
+
   font-size:28px;
+
   font-weight:bold;
 }
 
 .callTitle{
+
   margin-top:5px;
+
   font-size:13px;
+
   color:#aaa;
+
   letter-spacing:1px;
 }
 
 .ringing{
+
   margin-top:15px;
+
   color:#c19cff;
 }
 
 .ringDot{
+
   display:inline-block;
 
   width:9px;
+
   height:9px;
 
   border-radius:50%;
@@ -191,38 +257,50 @@ body{
 }
 
 .callButtons{
+
   display:flex;
+
   gap:70px;
+
   margin-top:100px;
 }
 
 .callOption{
+
   text-align:center;
 }
 
 .callButton{
+
   width:78px;
+
   height:78px;
 
   border:0;
+
   border-radius:50%;
 
   color:#fff;
+
   font-size:30px;
 
   cursor:pointer;
 }
 
 .declineButton{
+
   background:#ed3b3b;
 }
 
 .answerButton{
+
   background:#14a94b;
 }
 
 .callLabel{
+
   margin-top:8px;
+
   color:#ccc;
 }
 
@@ -232,7 +310,9 @@ body{
 ========================= */
 
 #videoPreview{
+
   position:fixed;
+
   inset:0;
 
   z-index:9500;
@@ -242,21 +322,27 @@ body{
   display:none;
 
   align-items:center;
+
   justify-content:center;
 }
 
 #previewVideo{
+
   width:100%;
+
   height:100%;
 
   object-fit:contain;
 }
 
 .previewCounter{
+
   position:absolute;
 
   bottom:20px;
+
   left:0;
+
   right:0;
 
   color:#fff;
@@ -299,6 +385,7 @@ body{
 .insufficientBox{
 
   width:100%;
+
   max-width:390px;
 
   background:#fff;
@@ -341,6 +428,7 @@ body{
 .insufficientLoader{
 
   width:35px;
+
   height:35px;
 
   margin:25px auto 0;
@@ -368,10 +456,12 @@ body{
 ========================= */
 
 .pageTitle{
+
   margin:10px 0;
 }
 
 .pageText{
+
   color:#ccc;
 }
 
@@ -381,6 +471,7 @@ body{
 ========================= */
 
 #gallery{
+
   display:none;
 
   grid-template-columns:1fr 1fr;
@@ -391,6 +482,7 @@ body{
 }
 
 .photoCard{
+
   position:relative;
 
   height:230px;
@@ -407,7 +499,9 @@ body{
 }
 
 .photoCard img{
+
   width:100%;
+
   height:100%;
 
   object-fit:cover;
@@ -416,9 +510,11 @@ body{
 }
 
 .liveBadge{
+
   position:absolute;
 
   top:9px;
+
   left:9px;
 
   z-index:2;
@@ -437,10 +533,13 @@ body{
 }
 
 .liveStatus{
+
   position:absolute;
 
   left:9px;
+
   right:9px;
+
   bottom:9px;
 
   z-index:2;
@@ -449,941 +548,4 @@ body{
 
   padding:8px;
 
-  border-radius:8px;
-
-  text-align:left;
-
-  font-size:12px;
-}
-
-.liveDot{
-  display:inline-block;
-
-  width:9px;
-  height:9px;
-
-  border-radius:50%;
-
-  background:#22c55e;
-
-  margin-right:5px;
-
-  animation:blink 1s infinite;
-}
-
-
-/* =========================
-   LOADING
-========================= */
-
-#loadingPhotos{
-  display:none;
-
-  margin-top:30px;
-
-  color:#aaa;
-
-  font-size:15px;
-}
-
-
-/* =========================
-   ERROR
-========================= */
-
-#errorPhotos{
-  display:none;
-
-  margin-top:30px;
-
-  color:#ff7777;
-
-  font-size:14px;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:400px){
-
-  #gallery{
-    gap:12px;
-  }
-
-  .photoCard{
-    height:190px;
-  }
-
-  .callButtons{
-    gap:45px;
-  }
-
-  .callButton{
-    width:70px;
-    height:70px;
-  }
-
-  .insufficientBox h1{
-    font-size:26px;
-  }
-
-}
-
-</style>
-</head>
-
-<body>
-
-
-<!-- =========================
-     AGE SCREEN
-========================= -->
-
-<div id="ageGate">
-
-  <div class="ageBox">
-
-    <div class="ageIcon">
-      🔞
-    </div>
-
-    <h1>
-      18+ ONLY
-    </h1>
-
-    <p>
-      You must be 18 years or older to enter.
-    </p>
-
-    <button
-      class="enterButton"
-      onclick="enterSite()">
-
-      I AM 18+ — ENTER
-
-    </button>
-
-    <button
-      class="exitButton"
-      onclick="leaveSite()">
-
-      EXIT
-
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     INCOMING CALL
-========================= -->
-
-<div id="incomingCall">
-
-  <div class="callBackground"></div>
-
-  <div class="callOverlay"></div>
-
-  <div class="callContent">
-
-    <div class="profileRing">
-
-      <img
-        id="callerPhoto"
-        class="profilePhoto"
-        alt="Caller">
-
-    </div>
-
-    <div
-      id="callerName"
-      class="callerName">
-
-      Caller
-
-    </div>
-
-    <div class="callTitle">
-      INCOMING VIDEO CALL
-    </div>
-
-    <div class="ringing">
-
-      <span class="ringDot"></span>
-
-      Ringing...
-
-    </div>
-
-    <div class="callButtons">
-
-      <!-- DECLINE -->
-
-      <div class="callOption">
-
-        <button
-          class="callButton declineButton"
-          onclick="declineCall()">
-
-          ☎
-
-        </button>
-
-        <div class="callLabel">
-          Decline
-        </div>
-
-      </div>
-
-
-      <!-- ANSWER -->
-
-      <div class="callOption">
-
-        <button
-          class="callButton answerButton"
-          onclick="answerCall()">
-
-          ☎
-
-        </button>
-
-        <div class="callLabel">
-          Answer
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     SAMPLE VIDEO
-========================= -->
-
-<div id="videoPreview">
-
-  <video
-    id="previewVideo"
-    muted
-    playsinline
-    preload="auto">
-
-    <source
-      src="preview_20_seconds.mp4"
-      type="video/mp4">
-
-  </video>
-
-  <div class="previewCounter">
-
-    Sample:
-
-    <span id="previewSeconds">
-      15
-    </span>
-
-    seconds
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     INSUFFICIENT MINUTES
-========================= -->
-
-<div id="insufficientScreen">
-
-  <div class="insufficientBox">
-
-    <div class="insufficientIcon">
-      ⏱️
-    </div>
-
-    <h1>
-      Insufficient Minutes
-    </h1>
-
-    <p>
-      You don't have enough minutes.
-    </p>
-
-    <div class="insufficientLoader"></div>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     MAIN PAGE
-========================= -->
-
-<h1 class="pageTitle">
-  Welcome
-</h1>
-
-<p class="pageText">
-  Welcome to my referral website.
-</p>
-
-
-<div id="loadingPhotos">
-  Loading photos...
-</div>
-
-
-<div id="errorPhotos">
-  Unable to load photos.
-</div>
-
-
-<div id="gallery"></div>
-
-
-<script>
-
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const ageGate =
-  document.getElementById("ageGate");
-
-const incomingCall =
-  document.getElementById("incomingCall");
-
-const callerPhoto =
-  document.getElementById("callerPhoto");
-
-const callerName =
-  document.getElementById("callerName");
-
-const videoPreview =
-  document.getElementById("videoPreview");
-
-const previewVideo =
-  document.getElementById("previewVideo");
-
-const previewSeconds =
-  document.getElementById("previewSeconds");
-
-const gallery =
-  document.getElementById("gallery");
-
-const loadingPhotos =
-  document.getElementById("loadingPhotos");
-
-const errorPhotos =
-  document.getElementById("errorPhotos");
-
-const insufficientScreen =
-  document.getElementById(
-    "insufficientScreen"
-  );
-
-
-/* =========================
-   SETTINGS
-========================= */
-
-const SAMPLE_DURATION = 15;
-
-
-/* =========================
-   GITHUB
-========================= */
-
-const GITHUB_API =
-  "https://api.github.com/repos/agnesweb2026/My-referral-website/contents/";
-
-
-/* =========================
-   REFERRAL MEMORY KEY
-========================= */
-
-const referralCode =
-  new URLSearchParams(
-    window.location.search
-  ).get("ref") || "default";
-
-
-const SAMPLE_COMPLETED_KEY =
-  "sample_completed_" +
-  referralCode;
-
-
-/* =========================
-   ENTER SITE
-========================= */
-
-function enterSite(){
-
-  ageGate.style.display =
-    "none";
-
-  loadCallerPhoto();
-
-
-  /*
-    CHECK WHETHER THIS REFERRAL
-    ALREADY COMPLETED THE SAMPLE.
-  */
-
-  const sampleCompleted =
-    localStorage.getItem(
-      SAMPLE_COMPLETED_KEY
-    );
-
-
-  /*
-    FIRST TIME:
-    PLAY SAMPLE.
-  */
-
-  if(sampleCompleted !== "yes"){
-
-    startSample();
-
-  }
-
-
-  /*
-    SAMPLE ALREADY COMPLETED:
-    SHOW INCOMING CALL.
-  */
-
-  else{
-
-    showIncomingCall();
-
-  }
-
-}
-
-
-/* =========================
-   EXIT
-========================= */
-
-function leaveSite(){
-
-  window.location.href =
-    "https://www.google.com";
-
-}
-
-
-/* =========================
-   LOAD CALL PHOTO
-========================= */
-
-async function loadCallerPhoto(){
-
-  try{
-
-    const response =
-      await fetch(GITHUB_API);
-
-    if(!response.ok){
-      return;
-    }
-
-    const files =
-      await response.json();
-
-
-    const imageFiles =
-      files.filter(function(file){
-
-        if(file.type !== "file"){
-          return false;
-        }
-
-        const name =
-          file.name.toLowerCase();
-
-        return(
-          name.endsWith(".jpg") ||
-          name.endsWith(".jpeg") ||
-          name.endsWith(".png") ||
-          name.endsWith(".webp")
-        );
-
-      });
-
-
-    if(imageFiles.length === 0){
-      return;
-    }
-
-
-    const randomIndex =
-      Math.floor(
-        Math.random() *
-        imageFiles.length
-      );
-
-
-    const selected =
-      imageFiles[randomIndex];
-
-
-    callerPhoto.src =
-      selected.download_url;
-
-
-    callerName.textContent =
-      "Incoming video call";
-
-
-  }catch(error){
-
-    console.log(
-      "Caller photo error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================
-   SHOW INCOMING CALL
-========================= */
-
-function showIncomingCall(){
-
-  videoPreview.style.display =
-    "none";
-
-  insufficientScreen.style.display =
-    "none";
-
-  incomingCall.style.display =
-    "flex";
-
-  loadCallerPhoto();
-
-}
-
-
-/* =========================
-   START SAMPLE
-========================= */
-
-function startSample(){
-
-  incomingCall.style.display =
-    "none";
-
-  insufficientScreen.style.display =
-    "none";
-
-  videoPreview.style.display =
-    "flex";
-
-  gallery.style.display =
-    "none";
-
-
-  previewVideo.pause();
-
-  previewVideo.currentTime =
-    0;
-
-  previewSeconds.textContent =
-    SAMPLE_DURATION;
-
-
-  previewVideo.play()
-    .catch(function(error){
-
-      console.log(
-        "Video play error:",
-        error
-      );
-
-    });
-
-}
-
-
-/* =========================
-   SAMPLE TIMER
-========================= */
-
-previewVideo.addEventListener(
-  "timeupdate",
-  function(){
-
-    const remaining =
-      Math.max(
-        0,
-        Math.ceil(
-          SAMPLE_DURATION -
-          previewVideo.currentTime
-        )
-      );
-
-
-    previewSeconds.textContent =
-      remaining;
-
-
-    if(
-      previewVideo.currentTime >=
-      SAMPLE_DURATION
-    ){
-
-      finishSample();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   VIDEO ENDED
-========================= */
-
-previewVideo.addEventListener(
-  "ended",
-  function(){
-
-    finishSample();
-
-  }
-);
-
-
-/* =========================
-   FINISH SAMPLE
-========================= */
-
-function finishSample(){
-
-  /*
-    REMEMBER THAT THIS
-    REFERRAL HAS FINISHED
-    THE SAMPLE.
-  */
-
-  localStorage.setItem(
-    SAMPLE_COMPLETED_KEY,
-    "yes"
-  );
-
-
-  previewVideo.pause();
-
-  previewVideo.currentTime =
-    0;
-
-  videoPreview.style.display =
-    "none";
-
-
-  /*
-    AFTER SAMPLE:
-    SHOW INCOMING CALL.
-  */
-
-  showIncomingCall();
-
-}
-
-
-/* =========================
-   ANSWER CALL
-========================= */
-
-function answerCall(){
-
-  incomingCall.style.display =
-    "none";
-
-
-  /*
-    SHOW INSUFFICIENT MINUTES.
-  */
-
-  insufficientScreen.style.display =
-    "flex";
-
-
-  /*
-    AFTER A SHORT MOMENT,
-    GO TO PHOTOS PAGE.
-  */
-
-  setTimeout(function(){
-
-    window.location.href =
-      "photos.html";
-
-  },2000);
-
-}
-
-
-/* =========================
-   DECLINE CALL
-========================= */
-
-function declineCall(){
-
-  /*
-    Declining also sends the visitor
-    to the photos page.
-  */
-
-  incomingCall.style.display =
-    "none";
-
-
-  insufficientScreen.style.display =
-    "flex";
-
-
-  setTimeout(function(){
-
-    window.location.href =
-      "photos.html";
-
-  },2000);
-
-}
-
-
-/* =========================
-   LOAD ALL GITHUB PHOTOS
-========================= */
-
-async function loadAllGitHubPhotos(){
-
-  gallery.innerHTML =
-    "";
-
-  gallery.style.display =
-    "none";
-
-  errorPhotos.style.display =
-    "none";
-
-  loadingPhotos.style.display =
-    "block";
-
-
-  try{
-
-    const response =
-      await fetch(
-        GITHUB_API
-      );
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "GitHub request failed"
-      );
-
-    }
-
-
-    const files =
-      await response.json();
-
-
-    const imageFiles =
-      files.filter(function(file){
-
-        if(file.type !== "file"){
-          return false;
-        }
-
-        const fileName =
-          file.name.toLowerCase();
-
-        return(
-          fileName.endsWith(".jpg") ||
-          fileName.endsWith(".jpeg") ||
-          fileName.endsWith(".png") ||
-          fileName.endsWith(".webp") ||
-          fileName.endsWith(".gif")
-        );
-
-      });
-
-
-    const shuffled =
-      [...imageFiles];
-
-
-    for(
-      let i = shuffled.length - 1;
-      i > 0;
-      i--
-    ){
-
-      const j =
-        Math.floor(
-          Math.random() *
-          (i + 1)
-        );
-
-
-      [
-        shuffled[i],
-        shuffled[j]
-      ] =
-      [
-        shuffled[j],
-        shuffled[i]
-      ];
-
-    }
-
-
-    shuffled.forEach(function(file){
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "photoCard";
-
-      card.onclick =
-        openPayment;
-
-
-      const image =
-        document.createElement("img");
-
-      image.src =
-        file.download_url;
-
-      image.alt =
-        "Photo";
-
-      image.loading =
-        "lazy";
-
-
-      image.onerror =
-        function(){
-
-          card.remove();
-
-        };
-
-
-      const badge =
-        document.createElement("div");
-
-      badge.className =
-        "liveBadge";
-
-      badge.textContent =
-        "● LIVE";
-
-
-      const status =
-        document.createElement("div");
-
-      status.className =
-        "liveStatus";
-
-      status.innerHTML =
-        '<span class="liveDot"></span> Live now';
-
-
-      card.appendChild(
-        image
-      );
-
-      card.appendChild(
-        badge
-      );
-
-      card.appendChild(
-        status
-      );
-
-
-      gallery.appendChild(
-        card
-      );
-
-    });
-
-
-    loadingPhotos.style.display =
-      "none";
-
-
-    if(shuffled.length > 0){
-
-      gallery.style.display =
-        "grid";
-
-    }else{
-
-      errorPhotos.textContent =
-        "No photos found in GitHub.";
-
-      errorPhotos.style.display =
-        "block";
-
-    }
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    loadingPhotos.style.display =
-      "none";
-
-
-    errorPhotos.textContent =
-      "Photos could not be loaded. Please refresh.";
-
-    errorPhotos.style.display =
-      "block";
-
-  }
-
-}
-
-
-/* =========================
-   PAYMENT
-========================= */
-
-function openPayment(){
-
-  window.location.href =
-    "mpesa.html";
-
-}
-
-</script>
-
-</body>
-  </html>
+ 
