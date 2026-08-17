@@ -1,150 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M-Pesa Payment</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      text-align: center;
-      padding: 20px;
-    }
+<meta charset="UTF-8">
 
-    .card {
-      max-width: 430px;
-      margin: 40px auto;
-      background: white;
-      padding: 25px 20px;
-      border-radius: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0">
 
-    input {
-      width: 90%;
-      padding: 15px;
-      margin: 15px 0;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-    }
+<title>M-Pesa Payment</title>
 
-    button {
-      width: 95%;
-      padding: 15px;
-      background: #20a83e;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: bold;
-    }
+<style>
 
-    #message {
-    margin-top: 25px;
+*{
+  box-sizing:border-box;
 }
 
-#copyMessage {
-    margin-top: 12px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 12px;
-    background: #f8f8f8;
+body{
+  margin:0;
+  padding:20px 15px;
+  background:#f4f4f4;
+  font-family:Arial,sans-serif;
+  color:#111;
 }
 
-#continueButton {
-    width: 95%;
-    padding: 15px;
-    margin-top: 12px;
-    background: #1976d2;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
+.container{
+  max-width:600px;
+  margin:0 auto;
 }
-  </style>
+
+.paymentBox{
+  background:#fff;
+  border-radius:22px;
+  padding:25px 18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.12);
+}
+
+h1{
+  text-align:center;
+  margin:5px 0 8px;
+  font-size:34px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#555;
+  margin-bottom:25px;
+}
+
+/* =========================
+   PACKAGES
+========================= */
+
+.packages{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.package{
+  border:2px solid #ddd;
+  border-radius:15px;
+  padding:18px 10px;
+  background:#fafafa;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.package:hover{
+  border-color:#22a447;
+}
+
+.package.selected{
+  border-color:#22a447;
+  background:#eaffef;
+}
+
+.price{
+  font-size:24px;
+  font-weight:bold;
+}
+
+.minutes{
+  margin-top:6px;
+  color:#555;
+  font-size:15px;
+}
+
+.selectText{
+  margin-top:12px;
+  font-size:13px;
+  font-weight:bold;
+  color:#22a447;
+}
+
+/* =========================
+   SELECTED PACKAGE
+========================= */
+
+.selectedBox{
+  margin-top:22px;
+  padding:15px;
+  border-radius:12px;
+  background:#f1f1f1;
+  text-align:center;
+  font-size:18px;
+}
+
+#selectedPrice{
+  font-weight:bold;
+}
+
+/* =========================
+   MPESA
+========================= */
+
+#paymentSection{
+  display:none;
+  margin-top:22px;
+}
+
+.tillBox{
+  text-align:center;
+  font-size:20px;
+  margin:15px 0;
+}
+
+.tillNumber{
+  font-weight:bold;
+}
+
+.mpesaButton{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:18px;
+  background:#20a943;
+  color:#fff;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.messageBox{
+  margin-top:15px;
+  padding:15px;
+  background:#f7f7f7;
+  border:1px solid #ddd;
+  border-radius:13px;
+}
+
+.messageBox textarea{
+  width:100%;
+  min-height:100px;
+  resize:none;
+  padding:12px;
+  font-size:15px;
+  border:1px solid #aaa;
+  border-radius:8px;
+}
+
+.continueButton{
+  width:100%;
+  margin-top:15px;
+  border:0;
+  border-radius:14px;
+  padding:17px;
+  background:#1976d2;
+  color:#fff;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.note{
+  text-align:center;
+  color:#777;
+  font-size:13px;
+  margin-top:15px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:400px){
+
+  .packages{
+    grid-template-columns:1fr 1fr;
+  }
+
+  h1{
+    font-size:30px;
+  }
+
+  .price{
+    font-size:21px;
+  }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-<div class="card">
+<div class="container">
 
-  <h1>M-Pesa Payment</h1>
+<div class="paymentBox">
 
-  <p id="packageInfo">Loading package...</p>
+<h1>
+M-Pesa Payment
+</h1>
 
-  <div id="phoneNumber">Till: 1605854</div>
+<div class="subtitle">
+Choose your access package
+</div>
 
-  <button id="payButton">
-    Pay with M-Pesa
-  </button>
-<div id="copyMessage">
-    <textarea
-        id="mpesaMessage"
-        placeholder="paste m-pesa message & continue!"
-        rows="4"
-    ></textarea>
+
+<!-- =========================
+     PACKAGES
+========================= -->
+
+<div class="packages">
+
+
+<div
+  class="package"
+  onclick="selectPackage(80,10,this)">
+
+  <div class="price">
+    KSh 80
   </div>
-  <button id="continueButton">Continue</button>
+
+  <div class="minutes">
+    10 Minutes
+  </div>
+
+  <div class="selectText">
+    SELECT
   </div>
 
 </div>
 
+
+<div
+  class="package"
+  onclick="selectPackage(135,25,this)">
+
+  <div class="price">
+    KSh 135
+  </div>
+
+  <div class="minutes">
+    25 Minutes
+  </div>
+
+  <div class="selectText">
+    SELECT
+  </div>
+
+</div>
+
+
+<div
+  class="package"
+  onclick="selectPackage(200,40,this)">
+
+  <div class="price">
+    KSh 200
+  </div>
+
+  <div class="minutes">
+    40 Minutes
+  </div>
+
+  <div class="selectText">
+    SELECT
+  </div>
+
+</div>
+
+
+<div
+  class="package"
+  onclick="selectPackage(250,55,this)">
+
+  <div class="price">
+    KSh 250
+  </div>
+
+  <div class="minutes">
+    55 Minutes
+  </div>
+
+  <div class="selectText">
+    SELECT
+  </div>
+
+</div>
+
+
+<div
+  class="package"
+  onclick="selectPackage(300,65,this)">
+
+  <div class="price">
+    KSh 300
+  </div>
+
+  <div class="minutes">
+    65 Minutes
+  </div>
+
+  <div class="selectText">
+    SELECT
+  </div>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     SELECTED
+========================= -->
+
+<div
+  id="selectedBox"
+  class="selectedBox">
+
+  Select a package above
+
+</div>
+
+
+<!-- =========================
+     PAYMENT
+========================= -->
+
+<div id="paymentSection">
+
+  <div class="tillBox">
+
+    Pay with M-Pesa Till:
+
+    <span class="tillNumber">
+      1605854
+    </span>
+
+  </div>
+
+
+  <button
+    class="mpesaButton"
+    onclick="showPaymentInstructions()">
+
+    Pay with M-Pesa
+
+  </button>
+
+
+  <div
+    id="messageArea"
+    class="messageBox"
+    style="display:none;">
+
+    <textarea
+      id="mpesaMessage"
+      placeholder="Paste M-Pesa message here..."></textarea>
+
+    <button
+      class="continueButton"
+      onclick="continuePayment()">
+
+      Continue
+
+    </button>
+
+  </div>
+
+
+  <div class="note">
+
+    Select your package, make the payment,
+    then paste the M-Pesa confirmation message.
+
+  </div>
+
+</div>
+
+</div>
+
+</div>
+
+
 <script>
-  const params = new URLSearchParams(window.location.search);
 
-  const amount = params.get("amount");
-  const minutes = params.get("minutes");
-  const ref = params.get("ref");
+/* =========================
+   VARIABLES
+========================= */
 
-  document.getElementById("packageInfo").textContent =
-    "KSh " + amount + " — " + minutes + " Minutes";
+let selectedPrice = null;
+let selectedMinutes = null;
 
-  document.getElementById("payButton").addEventListener("click", async () => {
 
-    const phone = document.getElementById("phoneNumber").value.trim();
-    const message = document.getElementById("message");
+/* =========================
+   SELECT PACKAGE
+========================= */
 
-    if (!phone) {
-      message.textContent = "Please enter your M-Pesa phone number.";
-      return;
-    }
+function selectPackage(price,minutes,element){
 
-    message.textContent = "Sending payment request...";
+  selectedPrice =
+    price;
 
-    try {
-      const response = await fetch("/api/stkpush", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          phone: phone,
-          amount: amount,
-          minutes: minutes,
-          ref: ref
-        })
-      });
+  selectedMinutes =
+    minutes;
 
-      const result = await response.json();
 
-      if (result.success) {
-        message.textContent =
-          "Check your phone and enter your M-Pesa PIN.";
-      } else {
-        message.textContent =
-          result.message || "Payment request failed.";
-      }
+  const packages =
+    document.querySelectorAll(".package");
 
-    } catch (error) {
-      message.textContent =
-        "Unable to connect to the payment service.";
-    }
+
+  packages.forEach(function(item){
+
+    item.classList.remove(
+      "selected"
+    );
+
   });
+
+
+  element.classList.add(
+    "selected"
+  );
+
+
+  document.getElementById(
+    "selectedBox"
+  ).innerHTML =
+
+    "Selected: <strong>KSh " +
+    price +
+    "</strong> — " +
+    minutes +
+    " Minutes";
+
+
+  document.getElementById(
+    "paymentSection"
+  ).style.display =
+    "block";
+
+}
+
+
+/* =========================
+   PAYMENT INSTRUCTIONS
+========================= */
+
+function showPaymentInstructions(){
+
+  if(
+    selectedPrice === null ||
+    selectedMinutes === null
+  ){
+
+    alert(
+      "Please select a package first."
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "messageArea"
+  ).style.display =
+    "block";
+
+}
+
+
+/* =========================
+   CONTINUE
+========================= */
+
+function continuePayment(){
+
+  const message =
+    document.getElementById(
+      "mpesaMessage"
+    ).value.trim();
+
+
+  if(message === ""){
+
+    alert(
+      "Please paste the M-Pesa confirmation message."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Save selected package.
+  */
+
+  localStorage.setItem(
+    "selectedPrice",
+    selectedPrice
+  );
+
+  localStorage.setItem(
+    "selectedMinutes",
+    selectedMinutes
+  );
+
+  localStorage.setItem(
+    "mpesaMessage",
+    message
+  );
+
+
+  /*
+    Continue to the next page.
+  */
+
+  window.location.href =
+    "photos.html";
+
+}
+
 </script>
 
 </body>
