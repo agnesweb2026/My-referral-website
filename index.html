@@ -939,58 +939,141 @@ async function loadPhotos() {
     }
 
 
-    /* CREATE PHOTO OBJECTS */
+/* =====================================================
+   LOAD PHOTOS FROM GITHUB
+===================================================== */
 
-    callers =
-      selectedFiles.map(
-        function(file) {
+async function loadPhotos() {
 
-          return {
+  livePhotos.innerHTML = `
+    <div class="loading">
+      Loading photos...
+    </div>
+  `;
 
-            name:
-              makeDisplayName(
-                file.name
-              ),
+  const apiUrl =
+    "https://api.github.com/repos/" +
+    GITHUB_OWNER +
+    "/" +
+    GITHUB_REPO +
+    "/contents/" +
+    GALLERY_FOLDER +
+    "?ref=" +
+    GITHUB_BRANCH;
 
-            photo:
-              "https://raw.githubusercontent.com/" +
-              GITHUB_OWNER +
-              "/" +
-              GITHUB_REPO +
-              "/" +
-              GITHUB_BRANCH +
-              "/" +
-              GALLERY_FOLDER +
-              "/" +
-              encodeURIComponent(
-                file.name
-              )
+  try {
 
-          };
+    const response = await fetch(apiUrl, {
+      cache: "no-store"
+    });
 
-        }
+    if (!response.ok) {
+
+      throw new Error(
+        "GitHub gallery could not be loaded. HTTP " +
+        response.status
       );
 
+    }
 
-    /* RANDOM ORDER */
+    const files = await response.json();
+
+    if (!Array.isArray(files)) {
+
+      throw new Error(
+        "The gallery folder did not return files."
+      );
+
+    }
+
+    /* ONLY IMAGE FILES */
+
+    const imageFiles = files.filter(function(file) {
+
+      return (
+        file.type === "file" &&
+        /\.(jpg|jpeg|png|webp|gif)$/i.test(file.name)
+      );
+
+    });
+
+
+    /* MAXIMUM 24 PHOTOS */
+
+    const selectedFiles =
+      imageFiles.slice(0, MAX_PHOTOS);
+
+
+    if (selectedFiles.length === 0) {
+
+      livePhotos.innerHTML = `
+
+        <div class="error">
+
+          No photos found.
+
+          <br><br>
+
+          Make sure your photos are inside:
+
+          <br>
+
+          <b>${GALLERY_FOLDER}</b>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    /* CREATE CALLER OBJECTS */
+
+    callers = selectedFiles.map(function(file) {
+
+      return {
+
+        name:
+          makeDisplayName(file.name),
+
+        /*
+         * Use GitHub's own download_url.
+         * This is more reliable than manually
+         * building the raw.githubusercontent URL.
+         */
+
+        photo:
+          file.download_url
+
+      };
+
+    });
+
+
+    /* RANDOMIZE PHOTOS */
 
     callers =
       shuffleArray(callers);
 
 
-    /* DISPLAY */
+    /* CREATE GALLERY */
 
     createGallery();
 
 
-    /* SHOW CALL */
+    /* SHOW RANDOM INCOMING CALL */
 
     showRandomCaller();
 
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Gallery error:",
+      error
+    );
 
 
     livePhotos.innerHTML = `
@@ -1001,11 +1084,17 @@ async function loadPhotos() {
 
         <br><br>
 
-        Make sure the folder
+        Please check that the folder
 
         <b>gallery</b>
 
-        exists in GitHub.
+        exists in your GitHub repository.
+
+        <br><br>
+
+        <small>
+          ${error.message}
+        </small>
 
       </div>
 
@@ -1013,7 +1102,7 @@ async function loadPhotos() {
 
   }
 
-}
+  }
 
 
 /* =====================================================
