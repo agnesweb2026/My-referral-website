@@ -25,8 +25,7 @@ body{
   padding:15px 10px;
 }
 
-/* ================= AGE GATE ================= */
-
+/* AGE GATE */
 #ageGate{
   position:fixed;
   inset:0;
@@ -79,8 +78,11 @@ body{
   background:#666;
 }
 
-/* ================= MAIN ================= */
+.ageBox button:active{
+  transform:scale(.95);
+}
 
+/* MAIN */
 #mainPage{
   display:none;
   width:100%;
@@ -96,8 +98,7 @@ body{
   color:#ccc;
 }
 
-/* ================= INCOMING CALL ================= */
-
+/* INCOMING CALL */
 #incomingCall{
   position:fixed;
   inset:0;
@@ -113,12 +114,7 @@ body{
   position:absolute;
   inset:-30px;
   background:
-    radial-gradient(
-      circle,
-      #665454 0%,
-      #302b2e 45%,
-      #08080a 100%
-    );
+    radial-gradient(circle,#665454 0%,#302b2e 45%,#08080a 100%);
   filter:blur(20px);
   transform:scale(1.1);
 }
@@ -212,6 +208,10 @@ body{
   cursor:pointer;
 }
 
+.callButton:active{
+  transform:scale(.90);
+}
+
 .declineButton{
   background:#ed3b3b;
 }
@@ -225,8 +225,7 @@ body{
   color:#ddd;
 }
 
-/* ================= VIDEO ================= */
-
+/* VIDEO */
 #videoPreview{
   position:fixed;
   inset:0;
@@ -256,8 +255,7 @@ body{
   pointer-events:none;
 }
 
-/* ================= INSUFFICIENT ================= */
-
+/* INSUFFICIENT */
 #insufficientScreen{
   position:fixed;
   inset:0;
@@ -266,12 +264,7 @@ body{
   align-items:center;
   justify-content:center;
   background:
-    radial-gradient(
-      circle,
-      #302342 0%,
-      #111018 45%,
-      #050507 100%
-    );
+    radial-gradient(circle,#302342 0%,#111018 45%,#050507 100%);
   padding:25px;
 }
 
@@ -313,8 +306,7 @@ body{
   to{transform:rotate(360deg)}
 }
 
-/* ================= GALLERY ================= */
-
+/* GALLERY */
 #gallery{
   display:none;
   grid-template-columns:1fr 1fr;
@@ -376,8 +368,7 @@ body{
   animation:blink 1s infinite;
 }
 
-/* ================= PAYMENT ================= */
-
+/* PAYMENT */
 #paymentPage{
   display:none;
   min-height:100vh;
@@ -547,8 +538,7 @@ body{
   display:none;
 }
 
-/* ================= PHOTO VIEWER ================= */
-
+/* PHOTO VIEWER */
 #photoViewer{
   position:fixed;
   inset:0;
@@ -581,8 +571,7 @@ body{
   cursor:pointer;
 }
 
-/* ================= MOBILE ================= */
-
+/* MOBILE */
 @media(max-width:500px){
 
   .packages{
@@ -591,10 +580,6 @@ body{
 
   .packageTop{
     min-height:130px;
-  }
-
-  .packageBottom{
-    font-size:20px;
   }
 
   .callButtons{
@@ -622,8 +607,7 @@ body{
 
 <body>
 
-<!-- ================= AGE ================= -->
-
+<!-- AGE GATE -->
 <div id="ageGate">
   <div class="ageBox">
 
@@ -633,15 +617,22 @@ body{
 
     <p>You must be 18 or older to continue.</p>
 
-    <button type="button"
-            id="enterButton"
-            class="enterButton">
+    <!-- INLINE ACTION: WORKS EVEN IF OTHER JS HAS AN ERROR -->
+    <button
+      type="button"
+      id="enterButton"
+      class="enterButton"
+      onclick="
+        document.getElementById('ageGate').style.display='none';
+        document.getElementById('incomingCall').style.display='flex';
+      ">
       I am 18+
     </button>
 
-    <button type="button"
-            id="exitButton"
-            class="exitButton">
+    <button
+      type="button"
+      id="exitButton"
+      class="exitButton">
       Exit
     </button>
 
@@ -649,8 +640,7 @@ body{
 </div>
 
 
-<!-- ================= MAIN ================= -->
-
+<!-- MAIN -->
 <div id="mainPage">
 
   <h1 class="pageTitle">Live Photos</h1>
@@ -661,168 +651,144 @@ body{
 
   <div id="gallery">
 
-    <!-- 1 -->
     <div class="photoCard">
       <img src="/images/1.jpg" alt="Photo 1">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 2 -->
     <div class="photoCard">
       <img src="/images/2.jpg" alt="Photo 2">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 3 -->
     <div class="photoCard">
       <img src="/images/3.jpg" alt="Photo 3">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 4 -->
     <div class="photoCard">
       <img src="/images/4.jpg" alt="Photo 4">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 5 -->
     <div class="photoCard">
       <img src="/images/5.jpg" alt="Photo 5">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 6 -->
     <div class="photoCard">
       <img src="/images/6.jpg" alt="Photo 6">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 7 -->
     <div class="photoCard">
       <img src="/images/7.jpg" alt="Photo 7">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 8 -->
     <div class="photoCard">
       <img src="/images/8.jpg" alt="Photo 8">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 9 -->
     <div class="photoCard">
       <img src="/images/9.jpg" alt="Photo 9">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 10 -->
     <div class="photoCard">
       <img src="/images/10.jpg" alt="Photo 10">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 11 -->
     <div class="photoCard">
       <img src="/images/11.jpg" alt="Photo 11">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 12 -->
     <div class="photoCard">
       <img src="/images/12.jpg" alt="Photo 12">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 13 -->
     <div class="photoCard">
       <img src="/images/13.jpg" alt="Photo 13">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 14 -->
     <div class="photoCard">
       <img src="/images/14.jpg" alt="Photo 14">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 15 -->
     <div class="photoCard">
       <img src="/images/15.jpg" alt="Photo 15">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 16 -->
     <div class="photoCard">
       <img src="/images/16.jpg" alt="Photo 16">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 17 -->
     <div class="photoCard">
       <img src="/images/17.jpg" alt="Photo 17">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 18 -->
     <div class="photoCard">
       <img src="/images/18.jpg" alt="Photo 18">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 19 -->
     <div class="photoCard">
       <img src="/images/19.jpg" alt="Photo 19">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 20 -->
     <div class="photoCard">
       <img src="/images/20.jpg" alt="Photo 20">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 21 -->
     <div class="photoCard">
       <img src="/images/21.jpg" alt="Photo 21">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 22 -->
     <div class="photoCard">
       <img src="/images/22.jpg" alt="Photo 22">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 23 -->
     <div class="photoCard">
       <img src="/images/23.jpg" alt="Photo 23">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
-    <!-- 24 -->
     <div class="photoCard">
       <img src="/images/24.jpg" alt="Photo 24">
       <div class="liveBadge">LIVE</div>
@@ -833,8 +799,7 @@ body{
 </div>
 
 
-<!-- ================= INCOMING CALL ================= -->
-
+<!-- INCOMING CALL -->
 <div id="incomingCall">
 
   <div class="callBackground"></div>
@@ -900,8 +865,7 @@ body{
 </div>
 
 
-<!-- ================= SAMPLE VIDEO ================= -->
-
+<!-- SAMPLE VIDEO -->
 <div id="videoPreview">
 
   <video
@@ -916,15 +880,16 @@ body{
 
   </video>
 
-  <div class="previewCounter" id="previewCounter">
-    Sample: 20 seconds
+  <div
+    class="previewCounter"
+    id="previewCounter">
+    Sample video
   </div>
 
 </div>
 
 
-<!-- ================= INSUFFICIENT ================= -->
-
+<!-- INSUFFICIENT -->
 <div id="insufficientScreen">
 
   <div class="insufficientBox">
@@ -934,7 +899,7 @@ body{
     <h1>Insufficient Minutes</h1>
 
     <p>
-      Your sample has ended. Opening the photos...
+      Your sample has ended. Opening the access page...
     </p>
 
     <div class="insufficientLoader"></div>
@@ -944,8 +909,7 @@ body{
 </div>
 
 
-<!-- ================= PAYMENT ================= -->
-
+<!-- PAYMENT -->
 <div id="paymentPage">
 
   <div class="paymentTitle">
@@ -1039,8 +1003,10 @@ body{
       class="mpesaInput"
       placeholder="Paste your M-Pesa confirmation message here..."></textarea>
 
-    <div id="accepted" class="accepted">
-      ✓ M-Pesa message format accepted
+    <div
+      id="accepted"
+      class="accepted">
+      ✓ Message received
     </div>
 
     <button
@@ -1050,15 +1016,16 @@ body{
       Continue
     </button>
 
-    <div id="paymentMessage" class="message"></div>
+    <div
+      id="paymentMessage"
+      class="message">
+    </div>
 
   </div>
-
 </div>
 
 
-<!-- ================= PHOTO VIEWER ================= -->
-
+<!-- PHOTO VIEWER -->
 <div id="photoViewer">
 
   <button
@@ -1077,11 +1044,7 @@ body{
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-
-  /* =========================
-     ELEMENTS
-  ========================= */
+document.addEventListener("DOMContentLoaded",function(){
 
   const ageGate =
     document.getElementById("ageGate");
@@ -1095,9 +1058,6 @@ document.addEventListener("DOMContentLoaded", function(){
   const incomingCall =
     document.getElementById("incomingCall");
 
-  const enterButton =
-    document.getElementById("enterButton");
-
   const exitButton =
     document.getElementById("exitButton");
 
@@ -1107,7 +1067,7 @@ document.addEventListener("DOMContentLoaded", function(){
   const answerButton =
     document.getElementById("answerButton");
 
-    const videoPreview =
+  const videoPreview =
     document.getElementById("videoPreview");
 
   const previewVideo =
@@ -1147,409 +1107,4 @@ document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("viewerImage");
 
   const closeViewer =
-    document.getElementById("closeViewer");
-
-
-  /* =========================
-     SETTINGS
-  ========================= */
-
-  const SAMPLE_DURATION = 20;
-
-  let selectedPrice = 80;
-  let selectedMinutes = 10;
-
-  let sampleStarted = false;
-  let sampleFinished = false;
-  let finishTimer = null;
-
-
-  /* =========================
-     INITIAL STATE
-  ========================= */
-
-  ageGate.style.display = "flex";
-  mainPage.style.display = "none";
-  incomingCall.style.display = "none";
-  videoPreview.style.display = "none";
-  insufficientScreen.style.display = "none";
-  paymentPage.style.display = "none";
-  photoViewer.style.display = "none";
-
-
-  /* =========================
-     AGE ENTER
-  ========================= */
-
-  enterButton.addEventListener("click", function(){
-
-    ageGate.style.display = "none";
-    incomingCall.style.display = "flex";
-
-  });
-
-
-  /* =========================
-     EXIT
-  ========================= */
-
-  exitButton.addEventListener("click", function(){
-
-    window.location.href = "https://www.google.com/";
-
-  });
-
-
-  /* =========================
-     START SAMPLE
-  ========================= */
-
-  function startSample(){
-
-    if(sampleStarted && !sampleFinished){
-      return;
-    }
-
-    sampleStarted = true;
-    sampleFinished = false;
-
-    incomingCall.style.display = "none";
-    mainPage.style.display = "none";
-    paymentPage.style.display = "none";
-    insufficientScreen.style.display = "none";
-
-    videoPreview.style.display = "flex";
-
-    clearTimeout(finishTimer);
-
-    previewVideo.pause();
-    previewVideo.currentTime = 0;
-
-    previewCounter.textContent =
-      "Sample: 20 seconds";
-
-    previewVideo.play().catch(function(error){
-      console.log("Video play error:", error);
-    });
-
-    finishTimer = setTimeout(
-      finishSample,
-      SAMPLE_DURATION * 1000
-    );
-
-  }
-
-
-  /* =========================
-     ANSWER / DECLINE
-  ========================= */
-
-  answerButton.addEventListener(
-    "click",
-    startSample
-  );
-
-  declineButton.addEventListener(
-    "click",
-    startSample
-  );
-
-
-  /* =========================
-     VIDEO TIMER
-  ========================= */
-
-  previewVideo.addEventListener(
-    "timeupdate",
-    function(){
-
-      if(sampleFinished){
-        return;
-      }
-
-      const elapsed =
-        previewVideo.currentTime;
-
-      const remaining =
-        Math.max(
-          0,
-          Math.ceil(
-            SAMPLE_DURATION - elapsed
-          )
-        );
-
-      previewCounter.textContent =
-        "Sample: " +
-        remaining +
-        " seconds";
-
-      if(elapsed >= SAMPLE_DURATION){
-        finishSample();
-      }
-
-    }
-  );
-
-
-  /* =========================
-     FINISH SAMPLE
-  ========================= */
-
-  function finishSample(){
-
-    if(sampleFinished){
-      return;
-    }
-
-    sampleFinished = true;
-
-    clearTimeout(finishTimer);
-
-    previewVideo.pause();
-
-    try{
-      previewVideo.currentTime = 0;
-    }catch(error){}
-
-    videoPreview.style.display = "none";
-
-    insufficientScreen.style.display = "flex";
-
-    setTimeout(function(){
-
-      insufficientScreen.style.display = "none";
-
-      paymentPage.style.display = "block";
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }, 2200);
-
-  }
-
-
-  /* =========================
-     PACKAGE SELECTION
-  ========================= */
-
-  const packages =
-    document.querySelectorAll(".package");
-
-  packages.forEach(function(pkg){
-
-    pkg.addEventListener(
-      "click",
-      function(){
-
-        selectedPrice =
-          Number(pkg.dataset.price);
-
-        selectedMinutes =
-          Number(pkg.dataset.minutes);
-
-        selectedText.textContent =
-          "KSh " +
-          selectedPrice +
-          " — " +
-          selectedMinutes +
-          " Minutes";
-
-        packages.forEach(function(item){
-          item.style.outline = "none";
-        });
-
-        pkg.style.outline =
-          "4px solid #237fd0";
-
-        paymentMessage.style.display = "none";
-
-      }
-    );
-
-  });
-
-
-  /* =========================
-     MPESA BUTTON
-  ========================= */
-
-  payButton.addEventListener(
-    "click",
-    function(){
-
-      paymentMessage.style.display = "block";
-
-      paymentMessage.style.color = "#176b35";
-
-      paymentMessage.textContent =
-        "Pay KSh " +
-        selectedPrice +
-        " to Till 1605854, then paste your M-Pesa confirmation message below.";
-
-      mpesaMessage.focus();
-
-    }
-  );
-
-
-  /* =========================
-     MPESA MESSAGE
-  ========================= */
-
-  mpesaMessage.addEventListener(
-    "input",
-    function(){
-
-      const text =
-        mpesaMessage.value.trim();
-
-      if(text.length > 5){
-
-        accepted.style.display = "block";
-        paymentMessage.style.display = "none";
-
-      }else{
-
-        accepted.style.display = "none";
-
-      }
-
-    }
-  );
-
-
-  /* =========================
-     CONTINUE
-  ========================= */
-
-  continueButton.addEventListener(
-    "click",
-    function(){
-
-      const message =
-        mpesaMessage.value.trim();
-
-      if(message.length < 6){
-
-        accepted.style.display = "none";
-
-        paymentMessage.style.display = "block";
-
-        paymentMessage.style.color = "#d11";
-
-        paymentMessage.textContent =
-          "Please paste your M-Pesa confirmation message first.";
-
-        mpesaMessage.focus();
-
-        return;
-      }
-
-      paymentPage.style.display = "none";
-
-      mainPage.style.display = "block";
-
-      gallery.style.display = "grid";
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
-  );
-
-
-  /* =========================
-     PHOTO VIEWER
-  ========================= */
-
-  const photoCards =
-    document.querySelectorAll(".photoCard");
-
-  photoCards.forEach(function(card){
-
-    card.addEventListener(
-      "click",
-      function(){
-
-        const image =
-          card.querySelector("img");
-
-        if(!image){
-          return;
-        }
-
-        viewerImage.src =
-          image.src;
-
-        photoViewer.style.display = "flex";
-
-      }
-    );
-
-  });
-
-
-  /* =========================
-     CLOSE PHOTO VIEWER
-  ========================= */
-
-  closeViewer.addEventListener(
-    "click",
-    function(){
-
-      photoViewer.style.display = "none";
-
-      viewerImage.src = "";
-
-    }
-  );
-
-
-  photoViewer.addEventListener(
-    "click",
-    function(event){
-
-      if(event.target === photoViewer){
-
-        photoViewer.style.display = "none";
-
-        viewerImage.src = "";
-
-      }
-
-    }
-  );
-
-
-  /* =========================
-     ESCAPE
-  ========================= */
-
-  document.addEventListener(
-    "keydown",
-    function(event){
-
-      if(
-        event.key === "Escape" &&
-        photoViewer.style.display === "flex"
-      ){
-
-        photoViewer.style.display = "none";
-
-        viewerImage.src = "";
-
-      }
-
-    }
-  );
-
-});
-</script>
-
-</body>
-</html>
+    documen
