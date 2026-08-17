@@ -8,7 +8,7 @@
   name="viewport"
   content="width=device-width, initial-scale=1.0">
 
-<title>M-Pesa Payment</title>
+<title>Buy Minutes</title>
 
 <style>
 
@@ -16,37 +16,144 @@
   box-sizing:border-box;
 }
 
+html,
 body{
   margin:0;
-  padding:20px 15px;
-  background:#f4f4f4;
+  padding:0;
+  width:100%;
+  min-height:100%;
   font-family:Arial,sans-serif;
+  background:#09090f;
+  color:#fff;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background{
+  min-height:100vh;
+  padding:25px 18px 110px;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #292342 0%,
+      #100f18 45%,
+      #050507 100%
+    );
+}
+
+.backgroundContent{
+  filter:blur(4px);
+  opacity:.55;
+}
+
+.backgroundContent h1{
+  font-size:32px;
+}
+
+
+/* =========================
+   BOTTOM SHEET
+========================= */
+
+.sheet{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+
+  z-index:1000;
+
+  background:#f8f8fa;
   color:#111;
+
+  border-radius:28px 28px 0 0;
+
+  max-height:90vh;
+  overflow-y:auto;
+
+  padding:18px 18px 30px;
+
+  box-shadow:
+    0 -10px 40px rgba(0,0,0,.45);
 }
 
-.container{
-  max-width:600px;
-  margin:0 auto;
+
+/* HANDLE */
+
+.handle{
+  width:68px;
+  height:6px;
+
+  border-radius:10px;
+
+  background:#d0d0d0;
+
+  margin:0 auto 18px;
 }
 
-.paymentBox{
-  background:#fff;
-  border-radius:22px;
-  padding:25px 18px;
-  box-shadow:0 8px 30px rgba(0,0,0,.12);
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 5px 15px;
 }
 
-h1{
-  text-align:center;
-  margin:5px 0 8px;
-  font-size:34px;
+.headerText h1{
+  margin:0;
+
+  font-size:30px;
+  font-weight:800;
 }
 
-.subtitle{
-  text-align:center;
-  color:#555;
-  margin-bottom:25px;
+.headerText p{
+  margin:7px 0 0;
+
+  color:#888;
+  font-size:16px;
 }
+
+.closeButton{
+  width:48px;
+  height:48px;
+
+  border:0;
+  border-radius:50%;
+
+  background:#ededed;
+
+  color:#666;
+
+  font-size:25px;
+
+  cursor:pointer;
+}
+
+
+/* =========================
+   LINE
+========================= */
+
+.line{
+  height:1px;
+  background:#e4e4e4;
+
+  margin:0 0 14px;
+}
+
 
 /* =========================
    PACKAGES
@@ -54,149 +161,357 @@ h1{
 
 .packages{
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:12px;
 }
 
+
+/* =========================
+   PACKAGE CARD
+========================= */
+
 .package{
-  border:2px solid #ddd;
-  border-radius:15px;
-  padding:18px 10px;
-  background:#fafafa;
-  text-align:center;
+  position:relative;
+
+  min-height:210px;
+
+  border-radius:22px;
+
+  overflow:hidden;
+
+  background:#1a1a2e;
+
+  border:2px solid #282842;
+
   cursor:pointer;
-  transition:.2s;
+
+  transition:
+    transform .15s,
+    border-color .15s;
+
+  display:flex;
+  flex-direction:column;
 }
 
-.package:hover{
-  border-color:#22a447;
+.package:active{
+  transform:scale(.97);
 }
 
 .package.selected{
-  border-color:#22a447;
-  background:#eaffef;
+  border-color:#ffae00;
+
+  box-shadow:
+    0 0 0 2px
+    rgba(255,174,0,.2);
+}
+
+
+/* =========================
+   HOT BADGE
+========================= */
+
+.hot{
+  position:absolute;
+
+  top:10px;
+  right:8px;
+
+  background:#ff3b68;
+
+  color:#fff;
+
+  padding:7px 11px;
+
+  border-radius:18px;
+
+  font-size:12px;
+  font-weight:bold;
+
+  z-index:3;
+}
+
+
+/* =========================
+   VIDEO ICON
+========================= */
+
+.iconArea{
+  height:105px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.videoCircle{
+  width:62px;
+  height:62px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#302b36;
+
+  border:2px solid #6b5123;
+
+  color:#ffe000;
+
+  font-size:28px;
+}
+
+
+/* =========================
+   MINUTES
+========================= */
+
+.minutes{
+  text-align:center;
+
+  color:#fff;
+
+  font-size:18px;
+  font-weight:bold;
+
+  padding:0 5px 14px;
+}
+
+
+/* =========================
+   PRICE
+========================= */
+
+.priceArea{
+  margin-top:auto;
+
+  background:#ff9f0a;
+
+  color:#151515;
+
+  text-align:center;
+
+  padding:16px 5px 13px;
 }
 
 .price{
-  font-size:24px;
-  font-weight:bold;
+  font-size:19px;
+  font-weight:800;
 }
 
-.minutes{
-  margin-top:6px;
-  color:#555;
-  font-size:15px;
+.approx{
+  margin-top:5px;
+
+  font-size:12px;
+
+  color:#744d00;
 }
 
-.selectText{
-  margin-top:12px;
-  font-size:13px;
-  font-weight:bold;
-  color:#22a447;
-}
 
 /* =========================
    SELECTED PACKAGE
 ========================= */
 
-.selectedBox{
-  margin-top:22px;
-  padding:15px;
-  border-radius:12px;
-  background:#f1f1f1;
+.selectedInfo{
+  display:none;
+
+  margin-top:16px;
+
+  padding:16px;
+
+  background:#fff;
+
+  border-radius:15px;
+
+  box-shadow:
+    0 2px 10px rgba(0,0,0,.08);
+
   text-align:center;
-  font-size:18px;
 }
 
-#selectedPrice{
-  font-weight:bold;
+.selectedInfo strong{
+  font-size:20px;
 }
+
 
 /* =========================
-   MPESA
+   PAYMENT SECTION
 ========================= */
 
-#paymentSection{
+.paymentSection{
   display:none;
-  margin-top:22px;
+
+  margin-top:16px;
+
+  background:#fff;
+
+  border-radius:18px;
+
+  padding:18px;
+
+  box-shadow:
+    0 3px 15px rgba(0,0,0,.08);
 }
 
-.tillBox{
-  text-align:center;
+.paymentTitle{
   font-size:20px;
-  margin:15px 0;
+  font-weight:bold;
+
+  text-align:center;
+
+  margin-bottom:12px;
 }
 
-.tillNumber{
-  font-weight:bold;
+.till{
+  text-align:center;
+
+  padding:12px;
+
+  background:#f2f2f2;
+
+  border-radius:10px;
+
+  font-size:17px;
 }
+
+.till strong{
+  font-size:21px;
+}
+
+
+/* =========================
+   MPESA BUTTON
+========================= */
 
 .mpesaButton{
   width:100%;
-  border:0;
-  border-radius:14px;
-  padding:18px;
-  background:#20a943;
-  color:#fff;
-  font-size:20px;
-  font-weight:bold;
-  cursor:pointer;
-}
 
-.messageBox{
-  margin-top:15px;
-  padding:15px;
-  background:#f7f7f7;
-  border:1px solid #ddd;
+  margin-top:14px;
+
+  padding:16px;
+
+  border:0;
+
   border-radius:13px;
-}
 
-.messageBox textarea{
-  width:100%;
-  min-height:100px;
-  resize:none;
-  padding:12px;
-  font-size:15px;
-  border:1px solid #aaa;
-  border-radius:8px;
-}
+  background:#20a943;
 
-.continueButton{
-  width:100%;
-  margin-top:15px;
-  border:0;
-  border-radius:14px;
-  padding:17px;
-  background:#1976d2;
   color:#fff;
-  font-size:20px;
+
+  font-size:18px;
+
   font-weight:bold;
+
   cursor:pointer;
 }
 
-.note{
-  text-align:center;
-  color:#777;
-  font-size:13px;
-  margin-top:15px;
+
+/* =========================
+   MESSAGE
+========================= */
+
+.messageArea{
+  display:none;
+
+  margin-top:14px;
 }
+
+.messageArea textarea{
+  width:100%;
+
+  min-height:105px;
+
+  resize:none;
+
+  padding:13px;
+
+  border:1px solid #ccc;
+
+  border-radius:10px;
+
+  font-size:15px;
+}
+
+.continue{
+  width:100%;
+
+  margin-top:12px;
+
+  padding:16px;
+
+  border:0;
+
+  border-radius:13px;
+
+  background:#1976d2;
+
+  color:#fff;
+
+  font-size:18px;
+
+  font-weight:bold;
+
+  cursor:pointer;
+}
+
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:400px){
+@media(max-width:500px){
 
-  .packages{
-    grid-template-columns:1fr 1fr;
+  .sheet{
+    padding-left:14px;
+    padding-right:14px;
   }
 
-  h1{
-    font-size:30px;
+  .packages{
+    grid-template-columns:
+      repeat(3,1fr);
+
+    gap:8px;
+  }
+
+  .package{
+    min-height:185px;
+
+    border-radius:18px;
+  }
+
+  .iconArea{
+    height:85px;
+  }
+
+  .videoCircle{
+    width:50px;
+    height:50px;
+
+    font-size:22px;
+  }
+
+  .minutes{
+    font-size:15px;
+  }
+
+  .priceArea{
+    padding:13px 3px;
   }
 
   .price{
-    font-size:21px;
+    font-size:16px;
+  }
+
+  .approx{
+    font-size:10px;
+  }
+
+  .headerText h1{
+    font-size:27px;
   }
 
 }
@@ -207,193 +522,309 @@ h1{
 
 <body>
 
-<div class="container">
-
-<div class="paymentBox">
-
-<h1>
-M-Pesa Payment
-</h1>
-
-<div class="subtitle">
-Choose your access package
-</div>
-
 
 <!-- =========================
-     PACKAGES
+     BACKGROUND
 ========================= -->
 
-<div class="packages">
+<div class="background">
 
+  <div class="backgroundContent">
 
-<div
-  class="package"
-  onclick="selectPackage(80,10,this)">
+    <h1>
+      People
+    </h1>
 
-  <div class="price">
-    KSh 80
+    <p>
+      Live now
+    </p>
+
   </div>
-
-  <div class="minutes">
-    10 Minutes
-  </div>
-
-  <div class="selectText">
-    SELECT
-  </div>
-
-</div>
-
-
-<div
-  class="package"
-  onclick="selectPackage(135,25,this)">
-
-  <div class="price">
-    KSh 135
-  </div>
-
-  <div class="minutes">
-    25 Minutes
-  </div>
-
-  <div class="selectText">
-    SELECT
-  </div>
-
-</div>
-
-
-<div
-  class="package"
-  onclick="selectPackage(200,40,this)">
-
-  <div class="price">
-    KSh 200
-  </div>
-
-  <div class="minutes">
-    40 Minutes
-  </div>
-
-  <div class="selectText">
-    SELECT
-  </div>
-
-</div>
-
-
-<div
-  class="package"
-  onclick="selectPackage(250,55,this)">
-
-  <div class="price">
-    KSh 250
-  </div>
-
-  <div class="minutes">
-    55 Minutes
-  </div>
-
-  <div class="selectText">
-    SELECT
-  </div>
-
-</div>
-
-
-<div
-  class="package"
-  onclick="selectPackage(300,65,this)">
-
-  <div class="price">
-    KSh 300
-  </div>
-
-  <div class="minutes">
-    65 Minutes
-  </div>
-
-  <div class="selectText">
-    SELECT
-  </div>
-
-</div>
-
 
 </div>
 
 
 <!-- =========================
-     SELECTED
+     BUY MINUTES SHEET
 ========================= -->
 
-<div
-  id="selectedBox"
-  class="selectedBox">
+<div class="sheet">
 
-  Select a package above
-
-</div>
+  <div class="handle"></div>
 
 
-<!-- =========================
-     PAYMENT
-========================= -->
+  <div class="header">
 
-<div id="paymentSection">
+    <div class="headerText">
 
-  <div class="tillBox">
+      <h1>
+        Buy Minutes
+      </h1>
 
-    Pay with M-Pesa Till:
+      <p>
+        Choose a plan that works for you
+      </p>
 
-    <span class="tillNumber">
-      1605854
-    </span>
+    </div>
 
-  </div>
-
-
-  <button
-    class="mpesaButton"
-    onclick="showPaymentInstructions()">
-
-    Pay with M-Pesa
-
-  </button>
-
-
-  <div
-    id="messageArea"
-    class="messageBox"
-    style="display:none;">
-
-    <textarea
-      id="mpesaMessage"
-      placeholder="Paste M-Pesa message here..."></textarea>
 
     <button
-      class="continueButton"
-      onclick="continuePayment()">
+      class="closeButton"
+      onclick="goBack()">
 
-      Continue
+      ×
 
     </button>
 
   </div>
 
 
-  <div class="note">
+  <div class="line"></div>
 
-    Select your package, make the payment,
-    then paste the M-Pesa confirmation message.
+
+  <!-- =========================
+       PACKAGES
+  ========================= -->
+
+  <div class="packages">
+
+
+    <!-- 10 MIN -->
+    <div
+      class="package"
+      onclick="selectPackage(80,10,this)">
+
+      <div class="hot">
+        🔥 HOT
+      </div>
+
+      <div class="iconArea">
+
+        <div class="videoCircle">
+          ▮▶
+        </div>
+
+      </div>
+
+      <div class="minutes">
+        10 Mins
+      </div>
+
+      <div class="priceArea">
+
+        <div class="price">
+          KSh 80
+        </div>
+
+        <div class="approx">
+          ≈ $0.62
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 25 MIN -->
+    <div
+      class="package"
+      onclick="selectPackage(135,25,this)">
+
+      <div class="iconArea">
+
+        <div class="videoCircle">
+          ▮▶
+        </div>
+
+      </div>
+
+      <div class="minutes">
+        25 Mins
+      </div>
+
+      <div class="priceArea">
+
+        <div class="price">
+          KSh 135
+        </div>
+
+        <div class="approx">
+          ≈ $1.04
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 40 MIN -->
+    <div
+      class="package"
+      onclick="selectPackage(200,40,this)">
+
+      <div class="iconArea">
+
+        <div class="videoCircle">
+          ▮▶
+        </div>
+
+      </div>
+
+      <div class="minutes">
+        40 Mins
+      </div>
+
+      <div class="priceArea">
+
+        <div class="price">
+          KSh 200
+        </div>
+
+        <div class="approx">
+          ≈ $1.55
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 55 MIN -->
+    <div
+      class="package"
+      onclick="selectPackage(250,55,this)">
+
+      <div class="iconArea">
+
+        <div class="videoCircle">
+          ▮▶
+        </div>
+
+      </div>
+
+      <div class="minutes">
+        55 Mins
+      </div>
+
+      <div class="priceArea">
+
+        <div class="price">
+          KSh 250
+        </div>
+
+        <div class="approx">
+          ≈ $1.94
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 65 MIN -->
+    <div
+      class="package"
+      onclick="selectPackage(300,65,this)">
+
+      <div class="iconArea">
+
+        <div class="videoCircle">
+          ▮▶
+        </div>
+
+      </div>
+
+      <div class="minutes">
+        65 Mins
+      </div>
+
+      <div class="priceArea">
+
+        <div class="price">
+          KSh 300
+        </div>
+
+        <div class="approx">
+          ≈ $2.32
+        </div>
+
+      </div>
+
+    </div>
+
 
   </div>
 
-</div>
 
-</div>
+  <!-- =========================
+       SELECTED
+  ========================= -->
+
+  <div
+    id="selectedInfo"
+    class="selectedInfo">
+
+    Selected:
+
+    <strong id="selectedText">
+    </strong>
+
+  </div>
+
+
+  <!-- =========================
+       PAYMENT
+  ========================= -->
+
+  <div
+    id="paymentSection"
+    class="paymentSection">
+
+    <div class="paymentTitle">
+      M-Pesa Payment
+    </div>
+
+
+    <div class="till">
+
+      Pay with Till:
+
+      <strong>
+        1605854
+      </strong>
+
+    </div>
+
+
+    <button
+      class="mpesaButton"
+      onclick="showMessageBox()">
+
+      Pay with M-Pesa
+
+    </button>
+
+
+    <div
+      id="messageArea"
+      class="messageArea">
+
+      <textarea
+        id="mpesaMessage"
+        placeholder="Paste M-Pesa message here..."></textarea>
+
+
+      <button
+        class="continue"
+        onclick="continuePayment()">
+
+        Continue
+
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
 
@@ -405,6 +836,7 @@ Choose your access package
 ========================= */
 
 let selectedPrice = null;
+
 let selectedMinutes = null;
 
 
@@ -412,7 +844,11 @@ let selectedMinutes = null;
    SELECT PACKAGE
 ========================= */
 
-function selectPackage(price,minutes,element){
+function selectPackage(
+  price,
+  minutes,
+  element
+){
 
   selectedPrice =
     price;
@@ -421,17 +857,15 @@ function selectPackage(price,minutes,element){
     minutes;
 
 
-  const packages =
-    document.querySelectorAll(".package");
+  document
+    .querySelectorAll(".package")
+    .forEach(function(card){
 
+      card.classList.remove(
+        "selected"
+      );
 
-  packages.forEach(function(item){
-
-    item.classList.remove(
-      "selected"
-    );
-
-  });
+    });
 
 
   element.classList.add(
@@ -440,12 +874,18 @@ function selectPackage(price,minutes,element){
 
 
   document.getElementById(
-    "selectedBox"
-  ).innerHTML =
+    "selectedInfo"
+  ).style.display =
+    "block";
 
-    "Selected: <strong>KSh " +
+
+  document.getElementById(
+    "selectedText"
+  ).textContent =
+
+    "KSh " +
     price +
-    "</strong> — " +
+    " — " +
     minutes +
     " Minutes";
 
@@ -455,18 +895,25 @@ function selectPackage(price,minutes,element){
   ).style.display =
     "block";
 
+
+  document.getElementById(
+    "paymentSection"
+  ).scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+
 }
 
 
 /* =========================
-   PAYMENT INSTRUCTIONS
+   SHOW MESSAGE
 ========================= */
 
-function showPaymentInstructions(){
+function showMessageBox(){
 
   if(
-    selectedPrice === null ||
-    selectedMinutes === null
+    selectedPrice === null
   ){
 
     alert(
@@ -474,7 +921,6 @@ function showPaymentInstructions(){
     );
 
     return;
-
   }
 
 
@@ -509,19 +955,17 @@ function continuePayment(){
   }
 
 
-  /*
-    Save selected package.
-  */
-
   localStorage.setItem(
     "selectedPrice",
     selectedPrice
   );
 
+
   localStorage.setItem(
     "selectedMinutes",
     selectedMinutes
   );
+
 
   localStorage.setItem(
     "mpesaMessage",
@@ -530,7 +974,7 @@ function continuePayment(){
 
 
   /*
-    Continue to the next page.
+    Continue to your next page.
   */
 
   window.location.href =
@@ -538,7 +982,18 @@ function continuePayment(){
 
 }
 
+
+/* =========================
+   CLOSE
+========================= */
+
+function goBack(){
+
+  history.back();
+
+}
+
 </script>
 
 </body>
-</html>
+  </html>
