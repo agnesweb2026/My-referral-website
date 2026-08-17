@@ -2,36 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Referral Website</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box}
 
 html,body{
   margin:0;
   padding:0;
-  width:100%;
-  min-height:100%;
   background:#000;
   color:#fff;
   font-family:Arial,sans-serif;
 }
 
 body{
-  padding:18px 10px;
+  padding:20px 12px;
   text-align:center;
 }
+
+h1{margin:10px 0}
+p{color:#ccc}
 
 /* AGE */
 #ageGate{
   position:fixed;
   inset:0;
-  z-index:99999;
+  z-index:9999;
   background:#111;
   display:flex;
   align-items:center;
@@ -40,56 +37,29 @@ body{
 }
 
 .ageBox{
-  width:100%;
-  max-width:390px;
+  max-width:380px;
 }
 
 .ageIcon{
   font-size:60px;
-  margin-bottom:15px;
 }
 
-.ageBox h1{
-  margin:10px 0;
-  font-size:30px;
-}
-
-.ageBox p{
-  color:#ccc;
-  font-size:18px;
-  margin:15px 0 25px;
-}
-
-.ageBox button{
+button{
   border:0;
   border-radius:12px;
-  padding:16px 25px;
-  margin:7px;
-  color:#fff;
+  padding:15px 22px;
+  margin:8px;
+  color:white;
   font-weight:bold;
-  font-size:16px;
   cursor:pointer;
 }
 
-.enterButton{
+.enter{
   background:#22c55e;
 }
 
-.exitButton{
+.exit{
   background:#666;
-}
-
-/* MAIN */
-#mainPage{
-  display:none;
-}
-
-.pageTitle{
-  margin:10px 0;
-}
-
-.pageText{
-  color:#ccc;
 }
 
 /* CALL */
@@ -98,22 +68,21 @@ body{
   inset:0;
   z-index:9000;
   display:none;
+  background:#151419;
   align-items:center;
   justify-content:center;
   overflow:hidden;
-  background:#17161b;
 }
 
-.callBackground{
+.callBg{
   position:absolute;
   inset:-30px;
-  background:
-    radial-gradient(circle,#5d5050 0%,#302b2e 45%,#101014 100%);
+  background:radial-gradient(circle,#5d5050,#302b2e,#101014);
   filter:blur(20px);
   transform:scale(1.1);
 }
 
-.callOverlay{
+.callDark{
   position:absolute;
   inset:0;
   background:rgba(0,0,0,.55);
@@ -122,52 +91,39 @@ body{
 .callContent{
   position:relative;
   z-index:2;
-  width:100%;
-  height:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
 }
 
-.profileRing{
-  width:155px;
-  height:155px;
+.profile{
+  width:150px;
+  height:150px;
   border-radius:50%;
   border:3px solid #8b5cf6;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.profilePhoto{
-  width:125px;
-  height:125px;
-  border-radius:50%;
   object-fit:cover;
   background:#222;
 }
 
 .callerName{
-  margin-top:15px;
-  font-size:28px;
+  font-size:27px;
   font-weight:bold;
+  margin-top:15px;
 }
 
 .callTitle{
-  margin-top:5px;
   color:#aaa;
   font-size:13px;
+  margin-top:5px;
   letter-spacing:1px;
 }
 
 .ringing{
   margin-top:15px;
-  color:#c19cff;
+  color:#b98cff;
 }
 
-.ringDot,
-.liveDot{
+.ringDot{
   display:inline-block;
   width:9px;
   height:9px;
@@ -182,39 +138,27 @@ body{
 
 .callButtons{
   display:flex;
-  gap:65px;
-  margin-top:90px;
-}
-
-.callOption{
-  text-align:center;
+  gap:70px;
+  margin-top:100px;
 }
 
 .callButton{
   width:78px;
   height:78px;
-  border:0;
   border-radius:50%;
-  color:#fff;
   font-size:30px;
-  cursor:pointer;
 }
 
-.declineButton{
+.red{
   background:#ed3b3b;
 }
 
-.answerButton{
+.green{
   background:#14a94b;
 }
 
-.callLabel{
-  margin-top:8px;
-  color:#ccc;
-}
-
-/* VIDEO */
-#videoPreview{
+/* SAMPLE */
+#sample{
   position:fixed;
   inset:0;
   z-index:9500;
@@ -224,336 +168,99 @@ body{
   justify-content:center;
 }
 
-#previewVideo{
+#sample video{
   width:100%;
   height:100%;
   object-fit:contain;
-  background:#000;
 }
 
-.previewCounter{
+.counter{
   position:absolute;
+  bottom:20px;
   left:0;
   right:0;
-  bottom:25px;
-  color:#fff;
-  font-size:17px;
-  text-shadow:0 1px 5px #000;
-  pointer-events:none;
-}
-
-/* INSUFFICIENT */
-#insufficientScreen{
-  position:fixed;
-  inset:0;
-  z-index:9800;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:25px;
-  background:
-    radial-gradient(circle at center,#302342 0%,#111018 45%,#050507 100%);
-}
-
-.insufficientBox{
-  width:100%;
-  max-width:390px;
-  background:#fff;
-  color:#111;
-  border-radius:24px;
-  padding:35px 25px;
-  text-align:center;
-  box-shadow:0 10px 40px rgba(0,0,0,.5);
-}
-
-.insufficientIcon{
-  font-size:55px;
-}
-
-.insufficientBox h1{
-  font-size:30px;
-}
-
-.insufficientBox p{
-  color:#777;
-}
-
-.insufficientLoader{
-  width:35px;
-  height:35px;
-  margin:25px auto 0;
-  border:4px solid #ddd;
-  border-top-color:#8b5cf6;
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-/* PACKAGES */
-#paymentArea{
-  display:none;
-  max-width:700px;
-  margin:25px auto 0;
-}
-
-.packageGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-
-.package{
-  overflow:hidden;
-  border-radius:22px;
-  background:#19192e;
-  border:3px solid #252544;
-  cursor:pointer;
-}
-
-.package.selected{
-  border-color:#ffad00;
-  box-shadow:0 0 12px rgba(255,173,0,.45);
-}
-
-.packageTop{
-  padding:28px 8px;
-}
-
-.playCircle{
-  width:62px;
-  height:62px;
-  margin:auto;
-  border:2px solid #8b6b20;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#ffe000;
-  font-size:27px;
-}
-
-.minutes{
-  margin-top:20px;
-  font-size:21px;
-  font-weight:bold;
-}
-
-.price{
-  background:#ff9f0a;
-  color:#000;
-  padding:16px 5px;
-  font-size:21px;
-  font-weight:bold;
-}
-
-.usd{
-  margin-top:5px;
-  font-size:13px;
-  font-weight:normal;
-  color:#555;
-}
-
-.selectedBox{
-  background:#fff;
-  color:#111;
-  margin-top:25px;
-  padding:24px 10px;
-  border-radius:24px;
-  font-size:20px;
-  box-shadow:0 5px 20px rgba(255,255,255,.08);
-}
-
-/* PAYMENT */
-.paymentBox{
-  background:#fff;
-  color:#111;
-  margin-top:25px;
-  border-radius:24px;
-  padding:28px 18px;
-}
-
-.paymentBox h2{
-  margin:0 0 25px;
-  font-size:30px;
-}
-
-.tillBox{
-  background:#f1f1f1;
-  padding:22px 10px;
-  border-radius:18px;
-  font-size:22px;
-}
-
-.tillBox strong{
-  font-size:28px;
-}
-
-.mpesaButton{
-  width:100%;
-  border:0;
-  border-radius:18px;
-  background:#20ad48;
-  color:#fff;
-  padding:20px 10px;
-  margin-top:20px;
-  font-size:22px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.messageBox{
-  width:100%;
-  min-height:130px;
-  margin-top:20px;
-  padding:16px;
-  border:2px solid #22aa50;
-  border-radius:18px;
-  background:#effff3;
-  color:#237b3d;
-  font-size:17px;
-  resize:none;
-  outline:none;
-}
-
-.accepted{
-  display:none;
-  color:#209b45;
-  font-weight:bold;
-  margin:12px 0;
-}
-
-.continueButton{
-  width:100%;
-  border:0;
-  border-radius:18px;
-  background:#1976d2;
-  color:#fff;
-  padding:20px 10px;
-  font-size:22px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:10px;
-}
-
-.continueButton:disabled{
-  background:#aaa;
+  color:white;
 }
 
 /* GALLERY */
 #gallery{
   display:none;
   grid-template-columns:1fr 1fr;
-  gap:12px;
+  gap:18px;
   margin-top:25px;
 }
 
-.photoCard{
+.photo{
   position:relative;
-  height:210px;
+  height:230px;
   background:#111;
   border-radius:14px;
   overflow:hidden;
   cursor:pointer;
-  border:1px solid #222;
 }
 
-.photoCard img{
+.photo img{
   width:100%;
   height:100%;
   object-fit:cover;
-  display:block;
 }
 
-.liveBadge{
+.live{
   position:absolute;
   top:9px;
   left:9px;
-  z-index:2;
   background:#f0184c;
-  color:#fff;
   padding:7px 10px;
   border-radius:8px;
   font-size:12px;
   font-weight:bold;
 }
 
-.liveStatus{
+.status{
   position:absolute;
+  bottom:9px;
   left:9px;
   right:9px;
-  bottom:9px;
-  z-index:2;
-  background:rgba(0,0,0,.82);
-  padding:8px;
+  background:rgba(0,0,0,.8);
+  padding:7px;
   border-radius:8px;
-  color:#fff;
-  font-size:12px;
   text-align:left;
+  font-size:12px;
 }
 
-/* VIEWER */
-#photoViewer{
-  position:fixed;
-  inset:0;
-  z-index:100000;
-  background:rgba(0,0,0,.97);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
-}
-
-#viewerImage{
-  max-width:100%;
-  max-height:90vh;
-  object-fit:contain;
-  border-radius:10px;
-}
-
-.closeViewer{
-  position:absolute;
-  top:20px;
-  right:20px;
-  width:45px;
-  height:45px;
-  border:0;
+.liveDot{
+  display:inline-block;
+  width:9px;
+  height:9px;
+  background:#22c55e;
   border-radius:50%;
-  background:#fff;
-  color:#000;
-  font-size:28px;
-  z-index:5;
+  margin-right:5px;
+  animation:blink 1s infinite;
 }
 
-@media(max-width:500px){
-  .packageGrid{
-    grid-template-columns:1fr 1fr;
+.loading{
+  grid-column:1/-1;
+  padding:30px;
+  color:#aaa;
+}
+
+@media(max-width:400px){
+
+  #gallery{
+    gap:12px;
+  }
+
+  .photo{
+    height:190px;
   }
 
   .callButtons{
     gap:45px;
-    margin-top:80px;
   }
 
   .callButton{
     width:70px;
     height:70px;
-  }
-
-  .profileRing{
-    width:140px;
-    height:140px;
-  }
-
-  .profilePhoto{
-    width:112px;
-    height:112px;
-  }
-
-  .photoCard{
-    height:190px;
   }
 }
 </style>
@@ -563,572 +270,539 @@ body{
 
 <!-- AGE -->
 <div id="ageGate">
+
   <div class="ageBox">
+
     <div class="ageIcon">🔞</div>
-    <h1>Age Confirmation</h1>
-    <p>You must be 18 or older to continue.</p>
 
-    <button id="enterButton" class="enterButton">
-      I am 18+
+    <h1>18+ ONLY</h1>
+
+    <p>You must be 18 years or older to enter.</p>
+
+    <button
+      class="enter"
+      onclick="enterSite()">
+      I AM 18+ — ENTER
     </button>
 
-    <button id="exitButton" class="exitButton">
-      Exit
+    <button
+      class="exit"
+      onclick="leaveSite()">
+      EXIT
     </button>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div id="mainPage">
-
-  <h1 class="pageTitle">Welcome</h1>
-
-  <p class="pageText">
-    Choose your access package
-  </p>
-
-  <!-- PAYMENT AREA -->
-  <div id="paymentArea">
-
-    <div class="packageGrid">
-
-      <div class="package" data-price="80" data-minutes="10">
-        <div class="packageTop">
-          <div class="playCircle">▶</div>
-          <div class="minutes">10 Mins</div>
-        </div>
-        <div class="price">
-          KSh 80
-          <div class="usd">≈ $0.62</div>
-        </div>
-      </div>
-
-      <div class="package" data-price="135" data-minutes="25">
-        <div class="packageTop">
-          <div class="playCircle">▶</div>
-          <div class="minutes">25 Mins</div>
-        </div>
-        <div class="price">
-          KSh 135
-          <div class="usd">≈ $1.04</div>
-        </div>
-      </div>
-
-      <div class="package" data-price="200" data-minutes="40">
-        <div class="packageTop">
-          <div class="playCircle">▶</div>
-          <div class="minutes">40 Mins</div>
-        </div>
-        <div class="price">
-          KSh 200
-          <div class="usd">≈ $1.55</div>
-        </div>
-      </div>
-
-      <div class="package" data-price="250" data-minutes="55">
-        <div class="packageTop">
-          <div class="playCircle">▶</div>
-          <div class="minutes">55 Mins</div>
-        </div>
-        <div class="price">
-          KSh 250
-          <div class="usd">≈ $1.94</div>
-        </div>
-      </div>
-
-      <div class="package" data-price="300" data-minutes="65">
-        <div class="packageTop">
-          <div class="playCircle">▶</div>
-          <div class="minutes">65 Mins</div>
-        </div>
-        <div class="price">
-          KSh 300
-          <div class="usd">≈ $2.32</div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="selectedBox">
-      Selected:
-      <strong id="selectedPrice">KSh 80</strong>
-      —
-      <strong id="selectedMinutes">10 Minutes</strong>
-    </div>
-
-    <div class="paymentBox">
-
-      <h2>M-Pesa Payment</h2>
-
-      <div class="tillBox">
-        Pay with Till:
-        <strong>1605854</strong>
-      </div>
-
-      <button id="mpesaButton" class="mpesaButton">
-        Pay with M-Pesa
-      </button>
-
-      <textarea
-        id="mpesaMessage"
-        class="messageBox"
-        placeholder="Paste your M-Pesa confirmation message here..."
-      ></textarea>
-
-      <div id="accepted" class="accepted">
-        ✓ M-Pesa message format accepted
-      </div>
-
-      <button
-        id="continueButton"
-        class="continueButton"
-        disabled>
-        Continue
-      </button>
-
-    </div>
 
   </div>
 
-  <!-- GALLERY -->
-  <div id="gallery"></div>
-
 </div>
+
 
 <!-- INCOMING CALL -->
 <div id="incomingCall">
 
-  <div class="callBackground"></div>
-  <div class="callOverlay"></div>
+  <div class="callBg"></div>
+
+  <div class="callDark"></div>
 
   <div class="callContent">
 
-    <div class="profileRing">
-      <img
-        class="profilePhoto"
-        src="/images/1.jpg"
-        alt="Profile">
-    </div>
+    <img
+      id="callerPhoto"
+      class="profile">
 
-    <div class="callerName">
-      Incoming Video Call
+    <div
+      id="callerName"
+      class="callerName">
+      Caller
     </div>
 
     <div class="callTitle">
-      VIDEO CALL
+      INCOMING VIDEO CALL
     </div>
 
     <div class="ringing">
+
       <span class="ringDot"></span>
+
       Ringing...
+
     </div>
 
     <div class="callButtons">
 
-      <div class="callOption">
-        <button
-          id="declineButton"
-          class="callButton declineButton">
-          ✕
-        </button>
-        <div class="callLabel">Decline</div>
-      </div>
+      <div>
 
-      <div class="callOption">
         <button
-          id="answerButton"
-          class="callButton answerButton">
+          class="callButton red"
+          onclick="startSample()">
           ☎
         </button>
-        <div class="callLabel">Answer</div>
+
+        <div>
+          Decline
+        </div>
+
+      </div>
+
+
+      <div>
+
+        <button
+          class="callButton green"
+          onclick="startSample()">
+          ☎
+        </button>
+
+        <div>
+          Answer
+        </div>
+
       </div>
 
     </div>
 
   </div>
+
 </div>
 
-<!-- VIDEO -->
-<div id="videoPreview">
+
+<!-- SAMPLE -->
+<div id="sample">
 
   <video
-    id="previewVideo"
+    id="sampleVideo"
     playsinline
-    controls
-    preload="auto">
+    preload="auto"
+    muted>
 
-    <!-- DO NOT CHANGE THIS VIDEO -->
     <source
-      src="/172687-849651731.mp4"
+      src="172687-849651731.mp4"
       type="video/mp4">
 
   </video>
 
-  <div class="previewCounter">
-    Sample video
-  </div>
+  <div class="counter">
 
-</div>
+    Sample:
 
-<!-- INSUFFICIENT -->
-<div id="insufficientScreen">
+    <span id="counter">
+      20
+    </span>
 
-  <div class="insufficientBox">
-
-    <div class="insufficientIcon">⏳</div>
-
-    <h1>Insufficient Minutes</h1>
-
-    <p>
-      Your sample has ended. Opening the photos...
-    </p>
-
-    <div class="insufficientLoader"></div>
+    seconds
 
   </div>
 
 </div>
 
-<!-- PHOTO VIEWER -->
-<div id="photoViewer">
 
-  <button
-    id="closeViewer"
-    class="closeViewer">
-    ×
-  </button>
+<h1>
+  Welcome
+</h1>
 
-  <img
-    id="viewerImage"
-    alt="Photo">
+<p>
+  Welcome to my referral website.
+</p>
+
+
+<!-- GALLERY -->
+<div id="gallery">
+
+  <div class="loading">
+    Loading photos...
+  </div>
 
 </div>
+
 
 <script>
 
-document.addEventListener("DOMContentLoaded",function(){
+/* =========================
+   GITHUB SETTINGS
+========================= */
 
-  const ageGate=document.getElementById("ageGate");
-  const mainPage=document.getElementById("mainPage");
-  const incomingCall=document.getElementById("incomingCall");
-  const videoPreview=document.getElementById("videoPreview");
-  const previewVideo=document.getElementById("previewVideo");
-  const insufficientScreen=document.getElementById("insufficientScreen");
-  const gallery=document.getElementById("gallery");
-  const paymentArea=document.getElementById("paymentArea");
+const OWNER = "agnesweb2026";
+const REPO = "My-referral-website";
+const BRANCH = "main";
 
-  const enterButton=document.getElementById("enterButton");
-  const exitButton=document.getElementById("exitButton");
-  const answerButton=document.getElementById("answerButton");
-  const declineButton=document.getElementById("declineButton");
+const MAX_PHOTOS = 24;
 
-  const selectedPrice=document.getElementById("selectedPrice");
-  const selectedMinutes=document.getElementById("selectedMinutes");
 
-  const mpesaButton=document.getElementById("mpesaButton");
-  const mpesaMessage=document.getElementById("mpesaMessage");
-  const accepted=document.getElementById("accepted");
-  const continueButton=document.getElementById("continueButton");
+/* =========================
+   ELEMENTS
+========================= */
 
-  const photoViewer=document.getElementById("photoViewer");
-  const viewerImage=document.getElementById("viewerImage");
-  const closeViewer=document.getElementById("closeViewer");
+const ageGate =
+  document.getElementById("ageGate");
 
-  let selectedPackage={
-    price:80,
-    minutes:10
-  };
+const incomingCall =
+  document.getElementById("incomingCall");
 
-  let sampleTimer=null;
-  let sampleFinished=false;
+const callerPhoto =
+  document.getElementById("callerPhoto");
 
-  /* INITIAL */
+const callerName =
+  document.getElementById("callerName");
 
-  ageGate.style.display="flex";
-  mainPage.style.display="none";
-  incomingCall.style.display="none";
-  videoPreview.style.display="none";
-  insufficientScreen.style.display="none";
-  paymentArea.style.display="none";
-  gallery.style.display="none";
+const sample =
+  document.getElementById("sample");
 
-  /* CREATE ALL 24 PHOTOS */
+const sampleVideo =
+  document.getElementById("sampleVideo");
 
-  for(let i=1;i<=24;i++){
+const counter =
+  document.getElementById("counter");
 
-    const card=document.createElement("div");
+const gallery =
+  document.getElementById("gallery");
 
-    card.className="photoCard";
 
-    card.innerHTML=`
-      <img src="/images/${i}.jpg" alt="Photo ${i}">
-      <div class="liveBadge">LIVE</div>
-      <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+let photos = [];
+
+
+/* =========================
+   RANDOMIZE
+========================= */
+
+function shuffle(array){
+
+  const result = [...array];
+
+  for(
+    let i = result.length - 1;
+    i > 0;
+    i--
+  ){
+
+    const j =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+
+    [
+      result[i],
+      result[j]
+    ] =
+    [
+      result[j],
+      result[i]
+    ];
+
+  }
+
+  return result;
+
+}
+
+
+/* =========================
+   GITHUB IMAGE URL
+========================= */
+
+function imageURL(filename){
+
+  return (
+    "https://raw.githubusercontent.com/" +
+    OWNER +
+    "/" +
+    REPO +
+    "/" +
+    BRANCH +
+    "/" +
+    encodeURIComponent(filename)
+  );
+
+}
+
+
+/* =========================
+   LOAD ALL IMAGES
+========================= */
+
+async function loadPhotos(){
+
+  gallery.innerHTML =
+    '<div class="loading">Loading 24 photos...</div>';
+
+  try{
+
+    const url =
+      `https://api.github.com/repos/${OWNER}/${REPO}/contents/?ref=${BRANCH}`;
+
+    const response =
+      await fetch(url);
+
+    if(!response.ok){
+
+      throw new Error(
+        "GitHub loading failed"
+      );
+
+    }
+
+    const files =
+      await response.json();
+
+
+    photos =
+      files.filter(file =>
+
+        file.type === "file" &&
+
+        /\.(jpg|jpeg|png|webp|gif)$/i
+          .test(file.name)
+
+      );
+
+
+    if(!photos.length){
+
+      throw new Error(
+        "No photos found"
+      );
+
+    }
+
+
+    photos =
+      shuffle(photos)
+      .slice(0,MAX_PHOTOS);
+
+
+    showGallery();
+
+    chooseCaller();
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    gallery.innerHTML =
+      `
+      <div class="loading">
+        Photos could not load.<br><br>
+        Please refresh the page.
       </div>
-    `;
-
-    card.addEventListener("click",function(){
-
-      const img=card.querySelector("img");
-
-      if(img){
-
-        viewerImage.src=img.src;
-        photoViewer.style.display="flex";
-
-      }
-
-    });
-
-    gallery.appendChild(card);
-  }
-
-  /* AGE BUTTON */
-
-  enterButton.addEventListener("click",function(){
-
-    ageGate.style.display="none";
-
-    mainPage.style.display="block";
-
-    incomingCall.style.display="flex";
-
-  });
-
-  /* EXIT */
-
-  exitButton.addEventListener("click",function(){
-
-    window.location.href="https://www.google.com/";
-
-  });
-
-  /* ANSWER */
-
-  answerButton.addEventListener("click",function(){
-
-    incomingCall.style.display="none";
-
-    mainPage.style.display="none";
-
-    videoPreview.style.display="flex";
-
-    sampleFinished=false;
-
-    clearTimeout(sampleTimer);
-
-    previewVideo.pause();
-
-    previewVideo.currentTime=0;
-
-    previewVideo.muted=false;
-
-    const p=previewVideo.play();
-
-    if(p){
-      p.catch(function(){});
-    }
-
-  });
-
-  /* DECLINE */
-
-  declineButton.addEventListener("click",function(){
-
-    incomingCall.style.display="none";
-
-    mainPage.style.display="block";
-
-    paymentArea.style.display="block";
-
-  });
-
-  /* PACKAGES */
-
-  const packages=document.querySelectorAll(".package");
-
-  packages.forEach(function(pkg){
-
-    pkg.addEventListener("click",function(){
-
-      packages.forEach(function(p){
-        p.classList.remove("selected");
-      });
-
-      pkg.classList.add("selected");
-
-      selectedPackage.price=Number(pkg.dataset.price);
-      selectedPackage.minutes=Number(pkg.dataset.minutes);
-
-      selectedPrice.textContent=
-        "KSh "+selectedPackage.price;
-
-      selectedMinutes.textContent=
-        selectedPackage.minutes+" Minutes";
-
-    });
-
-  });
-
-  packages[0].classList.add("selected");
-
-  /* MPESA BUTTON */
-
-  mpesaButton.addEventListener("click",function(){
-
-    alert(
-      "Open M-Pesa on your phone and pay KSh "+
-      selectedPackage.price+
-      " to Till Number 1605854. Then paste the M-Pesa confirmation message below."
-    );
-
-    mpesaMessage.focus();
-
-  });
-
-  /* MESSAGE CHECK */
-
-  mpesaMessage.addEventListener("input",function(){
-
-    const text=mpesaMessage.value.trim();
-
-    const looksLikeMpesa=
-      /confirmed|ksh|sent to|mpesa|m-pesa|balance/i.test(text);
-
-    if(text.length>=15 && looksLikeMpesa){
-
-      accepted.style.display="block";
-
-      continueButton.disabled=false;
-
-    }else{
-
-      accepted.style.display="none";
-
-      continueButton.disabled=true;
-
-    }
-
-  });
-
-  /* CONTINUE */
-
-  continueButton.addEventListener("click",function(){
-
-    if(continueButton.disabled){
-      return;
-    }
-
-    paymentArea.style.display="none";
-
-    gallery.style.display="grid";
-
-    mainPage.style.display="block";
-
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
-
-  });
-
-  /* SAMPLE TIMER */
-
-  previewVideo.addEventListener("play",function(){
-
-    clearTimeout(sampleTimer);
-
-    sampleFinished=false;
-
-    sampleTimer=setTimeout(function(){
-
-      finishSample();
-
-    },60000);
-
-  });
-
-  previewVideo.addEventListener("ended",function(){
-
-    finishSample();
-
-  });
-
-  function finishSample(){
-
-    if(sampleFinished){
-      return;
-    }
-
-    sampleFinished=true;
-
-    clearTimeout(sampleTimer);
-
-    previewVideo.pause();
-
-    try{
-      previewVideo.currentTime=0;
-    }catch(e){}
-
-    videoPreview.style.display="none";
-
-    insufficientScreen.style.display="flex";
-
-    setTimeout(function(){
-
-      insufficientScreen.style.display="none";
-
-      mainPage.style.display="block";
-
-      paymentArea.style.display="block";
-
-      gallery.style.display="none";
-
-      window.scrollTo({
-        top:0,
-        behavior:"smooth"
-      });
-
-    },2200);
+      `;
 
   }
 
-  /* CLOSE PHOTO */
+}
 
-  closeViewer.addEventListener("click",function(){
 
-    photoViewer.style.display="none";
-    viewerImage.src="";
+/* =========================
+   SHOW 24 PHOTOS
+========================= */
+
+function showGallery(){
+
+  gallery.innerHTML = "";
+
+  photos.forEach((file,index)=>{
+
+    const box =
+      document.createElement("div");
+
+    box.className = "photo";
+
+
+    const img =
+      document.createElement("img");
+
+    img.src =
+      imageURL(file.name);
+
+    img.alt =
+      "Photo " + (index + 1);
+
+    img.loading = "lazy";
+
+
+    img.onerror = function(){
+
+      this.style.display = "none";
+
+    };
+
+
+    const live =
+      document.createElement("div");
+
+    live.className = "live";
+
+    live.textContent =
+      "● LIVE";
+
+
+    const status =
+      document.createElement("div");
+
+    status.className = "status";
+
+    status.innerHTML =
+      `
+      <span class="liveDot"></span>
+      Live now
+      `;
+
+
+    box.appendChild(img);
+
+    box.appendChild(live);
+
+    box.appendChild(status);
+
+
+    box.onclick = function(){
+
+      window.location.href =
+        "mpesa.html";
+
+    };
+
+
+    gallery.appendChild(box);
 
   });
 
-  photoViewer.addEventListener("click",function(e){
 
-    if(e.target===photoViewer){
+  gallery.style.display =
+    "grid";
 
-      photoViewer.style.display="none";
-      viewerImage.src="";
+}
+
+
+/* =========================
+   RANDOM CALLER
+========================= */
+
+function chooseCaller(){
+
+  if(!photos.length)
+    return;
+
+
+  const person =
+    photos[
+      Math.floor(
+        Math.random() * photos.length
+      )
+    ];
+
+
+  callerPhoto.src =
+    imageURL(person.name);
+
+
+  callerName.textContent =
+    person.name
+      .replace(/\.[^/.]+$/,"")
+      .replace(/[-_]+/g," ");
+
+
+  incomingCall.style.display =
+    "flex";
+
+}
+
+
+/* =========================
+   ENTER
+========================= */
+
+function enterSite(){
+
+  ageGate.style.display =
+    "none";
+
+  loadPhotos();
+
+}
+
+
+/* =========================
+   EXIT
+========================= */
+
+function leaveSite(){
+
+  window.location.href =
+    "https://www.google.com";
+
+}
+
+
+/* =========================
+   SAMPLE
+========================= */
+
+function startSample(){
+
+  incomingCall.style.display =
+    "none";
+
+  sample.style.display =
+    "flex";
+
+
+  sampleVideo.currentTime =
+    0;
+
+
+  sampleVideo.play()
+    .catch(error => {
+
+      console.log(
+        "Video play waiting for interaction",
+        error
+      );
+
+    });
+
+}
+
+
+/* =========================
+   SAMPLE TIMER
+========================= */
+
+sampleVideo.addEventListener(
+  "timeupdate",
+  function(){
+
+    const remaining =
+      Math.max(
+        0,
+        Math.ceil(
+          20 -
+          sampleVideo.currentTime
+        )
+      );
+
+
+    counter.textContent =
+      remaining;
+
+
+    if(
+      sampleVideo.currentTime >= 20
+    ){
+
+      sampleVideo.pause();
+
+      sample.style.display =
+        "none";
+
+      gallery.style.display =
+        "grid";
 
     }
 
-  });
-
-  document.addEventListener("keydown",function(e){
-
-    if(e.key==="Escape"){
-
-      photoViewer.style.display="none";
-      viewerImage.src="";
-
-    }
-
-  });
-
-});
+  }
+);
 
 </script>
 
 </body>
-    </html>
+</html>
