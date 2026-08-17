@@ -9,7 +9,7 @@
 <style>
 
 /* =========================
-   BASIC PAGE
+   GENERAL PAGE
 ========================= */
 
 * {
@@ -39,84 +39,6 @@ h1 {
 
 
 /* =========================
-   GALLERY
-========================= */
-
-.gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-  margin-top: 20px;
-}
-
-.gallery img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.live-photo {
-  position: relative;
-  cursor: pointer;
-}
-
-.live-photo img {
-  display: block;
-  width: 100%;
-}
-
-.live-badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: #f0184c;
-  color: white;
-  padding: 5px 8px;
-  border-radius: 7px;
-  font-weight: bold;
-  font-size: 11px;
-  z-index: 2;
-}
-
-.live-badge::before {
-  content: "●";
-  margin-right: 5px;
-}
-
-.live-status {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  background: rgba(0,0,0,0.85);
-  color: white;
-  padding: 7px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  z-index: 3;
-}
-
-.live-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: #22c55e;
-  border-radius: 50%;
-  margin-right: 7px;
-  border: 1px solid white;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-
-  50% {
-    opacity: 0.2;
-  }
-
-}
-
-
-/* =========================
    AGE GATE
 ========================= */
 
@@ -125,12 +47,42 @@ h1 {
   inset: 0;
   background: #111;
   color: white;
-  z-index: 100000;
+  z-index: 99999;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   text-align: center;
   padding: 20px;
+}
+
+.age-box {
+  max-width: 380px;
+}
+
+.age-icon {
+  font-size: 60px;
+}
+
+.age-box button {
+  padding: 14px 25px;
+  margin: 8px;
+
+  border: 0;
+  border-radius: 10px;
+
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.enter-button {
+  background: #22c55e;
+}
+
+.exit-button {
+  background: #777;
 }
 
 
@@ -141,12 +93,19 @@ h1 {
 #incomingCall {
   position: fixed;
   inset: 0;
+
   background: #17161b;
   color: white;
+
   z-index: 90000;
+
   display: none;
+
   overflow: hidden;
 }
+
+
+/* Background */
 
 .call-background {
   position: absolute;
@@ -155,7 +114,7 @@ h1 {
   background:
     radial-gradient(
       circle at center,
-      #655757 0%,
+      #5d5050 0%,
       #302b2e 45%,
       #101014 100%
     );
@@ -168,46 +127,57 @@ h1 {
 .call-dark-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.42);
+
+  background: rgba(0,0,0,0.48);
 }
+
+
+/* Call content */
 
 .call-content {
   position: relative;
+
   z-index: 2;
 
   width: 100%;
   height: 100%;
 
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
 
   text-align: center;
 }
 
 
-/* PROFILE */
+/* =========================
+   SMALL PROFILE
+========================= */
 
 .profile-ring {
-  width: 230px;
-  height: 230px;
+  width: 155px;
+  height: 155px;
 
   border-radius: 50%;
 
-  border: 2px solid rgba(125,80,210,0.7);
+  border: 2px solid rgba(125,80,210,0.75);
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   box-shadow:
-    0 0 0 10px rgba(125,80,210,0.08);
+    0 0 0 7px rgba(125,80,210,0.08);
 }
 
 .profile-photo {
-  width: 190px;
-  height: 190px;
+  width: 125px;
+  height: 125px;
 
   border-radius: 50%;
 
@@ -221,44 +191,63 @@ h1 {
     );
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   color: white;
-  font-size: 75px;
+
+  font-size: 52px;
+
   font-weight: bold;
 }
 
+
+/* Name */
+
 .caller-name {
-  margin-top: 18px;
-  font-size: 42px;
+  margin-top: 12px;
+
+  font-size: 30px;
+
   font-weight: normal;
 }
 
+
+/* Call title */
+
 .call-title {
-  margin-top: 8px;
-  font-size: 18px;
+  margin-top: 5px;
+
+  font-size: 14px;
+
   letter-spacing: 1px;
+
   color: rgba(255,255,255,0.65);
 }
 
+
+/* Ringing */
+
 .ringing {
-  margin-top: 27px;
-  font-size: 20px;
+  margin-top: 16px;
+
+  font-size: 16px;
+
   color: #b98cff;
 }
 
 .ringing-dot {
   display: inline-block;
 
-  width: 9px;
-  height: 9px;
+  width: 7px;
+  height: 7px;
 
   border-radius: 50%;
 
   background: #a66cff;
 
-  margin-right: 8px;
+  margin-right: 6px;
 
   animation: ringBlink 1s infinite;
 }
@@ -281,76 +270,102 @@ h1 {
 
   left: 0;
   right: 0;
-  bottom: 105px;
+
+  bottom: 95px;
 
   display: flex;
+
   justify-content: center;
 
-  gap: 100px;
+  gap: 70px;
 }
 
 .call-option {
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
 }
 
+
+/* Buttons */
+
 .call-button {
-  width: 110px;
-  height: 110px;
+  width: 78px;
+  height: 78px;
 
   border-radius: 50%;
 
-  border: 4px solid rgba(255,255,255,0.18);
+  border: 3px solid rgba(255,255,255,0.18);
 
   color: white;
 
-  font-size: 42px;
+  font-size: 30px;
 
   cursor: pointer;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   box-shadow:
-    0 5px 18px rgba(0,0,0,0.45);
+    0 4px 12px rgba(0,0,0,0.45);
+
+  transition: transform 0.15s;
 }
+
+.call-button:active {
+  transform: scale(0.92);
+}
+
+
+/* Red */
 
 .decline-button {
   background: #ed3b3b;
 }
 
+
+/* Green */
+
 .answer-button {
   background: #14a94b;
 }
 
-.call-label {
-  margin-top: 11px;
 
-  font-size: 18px;
+/* Labels */
+
+.call-label {
+  margin-top: 8px;
+
+  font-size: 15px;
 
   color: rgba(255,255,255,0.72);
 }
 
+
+/* Swipe message */
+
 .swipe-message {
   position: absolute;
 
-  bottom: 43px;
+  bottom: 38px;
 
   left: 0;
   right: 0;
 
   color: rgba(255,255,255,0.27);
 
-  font-size: 14px;
+  font-size: 12px;
 
   letter-spacing: 1px;
 }
 
 
 /* =========================
-   SAMPLE VIDEO
+   VIDEO PREVIEW
 ========================= */
 
 #videoPreview {
@@ -363,12 +378,19 @@ h1 {
 
   background: #000;
 
-  z-index: 89999;
+  z-index: 80000;
 
   display: none;
 
+  flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
+
+  color: white;
+
+  text-align: center;
 }
 
 #previewVideo {
@@ -378,6 +400,21 @@ h1 {
   object-fit: contain;
 
   background: #000;
+}
+
+.preview-counter {
+  position: absolute;
+
+  bottom: 20px;
+
+  left: 0;
+  right: 0;
+
+  font-size: 16px;
+
+  color: white;
+
+  text-shadow: 0 1px 3px #000;
 }
 
 
@@ -390,32 +427,152 @@ h1 {
 
   inset: 0;
 
-  z-index: 89998;
-
-  display: none;
-
-  align-items: center;
-  justify-content: center;
-
   background: #111;
 
   color: white;
 
-  text-align: center;
-}
+  z-index: 85000;
 
-.insufficient-box {
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
   padding: 25px;
 }
 
-.insufficient-icon {
-  font-size: 55px;
-  margin-bottom: 15px;
+.insufficient-box {
+  max-width: 350px;
 }
 
-.insufficient-text {
-  font-size: 29px;
+.insufficient-box h2 {
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.insufficient-box p {
+  color: #ccc;
+  font-size: 17px;
+}
+
+
+/* =========================
+   MAIN GALLERY
+========================= */
+
+#livePhotos {
+  display: none;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 18px;
+
+  margin-top: 20px;
+}
+
+.live-photo {
+  position: relative;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  background: #ddd;
+}
+
+.live-photo img {
+  display: block;
+
+  width: 100%;
+
+  height: 200px;
+
+  object-fit: cover;
+}
+
+
+/* LIVE badge */
+
+.live-badge {
+  position: absolute;
+
+  top: 8px;
+  left: 8px;
+
+  background: #f0184c;
+
+  color: white;
+
+  padding: 5px 8px;
+
+  border-radius: 7px;
+
   font-weight: bold;
+
+  font-size: 11px;
+
+  z-index: 2;
+}
+
+.live-badge::before {
+  content: "●";
+
+  margin-right: 5px;
+}
+
+
+/* Live status */
+
+.live-status {
+  position: absolute;
+
+  bottom: 8px;
+  left: 8px;
+
+  background: rgba(0,0,0,0.85);
+
+  color: white;
+
+  padding: 7px 12px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  z-index: 3;
+}
+
+
+/* Green blinking dot */
+
+.live-dot {
+  display: inline-block;
+
+  width: 10px;
+  height: 10px;
+
+  background: #22c55e;
+
+  border-radius: 50%;
+
+  margin-right: 7px;
+
+  border: 1px solid white;
+
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+  50% {
+    opacity: 0.2;
+  }
+
 }
 
 
@@ -426,34 +583,51 @@ h1 {
 @media (max-width: 380px) {
 
   .profile-ring {
-    width: 190px;
-    height: 190px;
+    width: 140px;
+    height: 140px;
   }
 
   .profile-photo {
-    width: 155px;
-    height: 155px;
+    width: 112px;
+    height: 112px;
+
+    font-size: 46px;
   }
 
   .caller-name {
-    font-size: 36px;
+    font-size: 28px;
+  }
+
+  .call-title {
+    font-size: 13px;
+  }
+
+  .ringing {
+    font-size: 15px;
   }
 
   .call-buttons {
-    gap: 60px;
+    gap: 55px;
+
+    bottom: 90px;
   }
 
   .call-button {
-    width: 95px;
-    height: 95px;
-    font-size: 36px;
+    width: 70px;
+    height: 70px;
+
+    font-size: 27px;
   }
 
-  .gallery {
-    gap: 15px;
+  .call-label {
+    font-size: 14px;
   }
 
-  .gallery img {
+  #livePhotos {
+    gap: 12px;
+  }
+
+  .live-photo img {
     height: 170px;
   }
 
@@ -472,15 +646,11 @@ h1 {
 
 <div id="ageGate">
 
-  <div style="max-width:380px;">
+  <div class="age-box">
 
-    <div style="font-size:60px;">
-      🔞
-    </div>
+    <div class="age-icon">🔞</div>
 
-    <h1>
-      18+ ONLY
-    </h1>
+    <h1>18+ ONLY</h1>
 
     <p>
       This website contains adult-oriented content.
@@ -491,32 +661,14 @@ h1 {
     </p>
 
     <button
-      onclick="enterSite()"
-      style="
-        padding:14px 25px;
-        margin:10px;
-        border:0;
-        border-radius:10px;
-        background:#22c55e;
-        color:white;
-        font-weight:bold;
-      "
-    >
+      class="enter-button"
+      onclick="enterSite()">
       I AM 18+ — ENTER
     </button>
 
     <button
-      onclick="leaveSite()"
-      style="
-        padding:14px 25px;
-        margin:10px;
-        border:0;
-        border-radius:10px;
-        background:#777;
-        color:white;
-        font-weight:bold;
-      "
-    >
+      class="exit-button"
+      onclick="leaveSite()">
       EXIT
     </button>
 
@@ -525,8 +677,9 @@ h1 {
 </div>
 
 
+
 <!-- =========================
-     INCOMING CALL
+     INCOMING VIDEO CALL
 ========================= -->
 
 <div id="incomingCall">
@@ -557,7 +710,7 @@ h1 {
     </div>
 
 
-    <!-- CALL TITLE -->
+    <!-- TITLE -->
 
     <div class="call-title">
       INCOMING VIDEO CALL
@@ -587,9 +740,10 @@ h1 {
         <button
           id="declineCall"
           class="call-button decline-button"
-          type="button"
-        >
+          type="button">
+
           ☎
+
         </button>
 
         <div class="call-label">
@@ -606,9 +760,10 @@ h1 {
         <button
           id="answerCall"
           class="call-button answer-button"
-          type="button"
-        >
+          type="button">
+
           ☎
+
         </button>
 
         <div class="call-label">
@@ -625,31 +780,42 @@ h1 {
       SWIPE UP TO MESSAGE
     </div>
 
+
   </div>
 
 </div>
 
 
+
 <!-- =========================
-     SAMPLE VIDEO
+     VIDEO PREVIEW
 ========================= -->
 
 <div id="videoPreview">
 
   <video
     id="previewVideo"
+    autoplay
     muted
-    playsinline
-  >
+    playsinline>
 
     <source
       src="/preview_20_seconds.mp4"
-      type="video/mp4"
-    >
+      type="video/mp4">
 
   </video>
 
+
+  <div class="preview-counter">
+
+    Preview:
+    <span id="previewSeconds">20</span>
+    seconds
+
+  </div>
+
 </div>
+
 
 
 <!-- =========================
@@ -660,24 +826,33 @@ h1 {
 
   <div class="insufficient-box">
 
-    <div class="insufficient-icon">
-      ⏱️
-    </div>
-
-    <div class="insufficient-text">
+    <h2>
       INSUFFICIENT MINUTES
-    </div>
+    </h2>
+
+    <p>
+      Your preview has ended.
+    </p>
+
+    <p>
+      Please purchase minutes to continue.
+    </p>
 
   </div>
 
 </div>
 
 
+
 <!-- =========================
      MAIN PAGE
 ========================= -->
 
-<div class="card" id="mainContent">
+<div class="card">
+
+  <h1>
+    Welcome
+  </h1>
 
   <p>
     Welcome to my referral website.
@@ -690,9 +865,7 @@ h1 {
 
   <div
     id="livePhotos"
-    class="gallery"
-    style="display:none;"
-  >
+    class="gallery">
 
 
     <!-- PHOTO 1 -->
@@ -713,8 +886,7 @@ h1 {
 
       <img
         src="multixnxx-10 pictures-0.jpg"
-        alt="Photo 1"
-      >
+        alt="Photo 1">
 
     </div>
 
@@ -737,8 +909,7 @@ h1 {
 
       <img
         src="multixnxx-10 pictures-5.jpg"
-        alt="Photo 2"
-      >
+        alt="Photo 2">
 
     </div>
 
@@ -761,8 +932,7 @@ h1 {
 
       <img
         src="multixnxx-15 pictures-2.jpg"
-        alt="Photo 3"
-      >
+        alt="Photo 3">
 
     </div>
 
@@ -785,8 +955,7 @@ h1 {
 
       <img
         src="multixnxx-Long labias_ big clits-8.jpg"
-        alt="Photo 4"
-      >
+        alt="Photo 4">
 
     </div>
 
@@ -809,8 +978,7 @@ h1 {
 
       <img
         src="multixnxx-My breasts&n-5.jpg"
-        alt="Photo 5"
-      >
+        alt="Photo 5">
 
     </div>
 
@@ -833,8 +1001,7 @@ h1 {
 
       <img
         src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -10.jpg"
-        alt="Photo 6"
-      >
+        alt="Photo 6">
 
     </div>
 
@@ -857,8 +1024,7 @@ h1 {
 
       <img
         src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -12.jpg"
-        alt="Photo 7"
-      >
+        alt="Photo 7">
 
     </div>
 
@@ -881,8 +1047,7 @@ h1 {
 
       <img
         src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -15.jpg"
-        alt="Photo 8"
-      >
+        alt="Photo 8">
 
     </div>
 
@@ -892,28 +1057,37 @@ h1 {
 </div>
 
 
-<!-- =========================
-     JAVASCRIPT
-========================= -->
 
 <script>
 
-
 /* =========================
-   GET ELEMENTS
+   AGE GATE
 ========================= */
 
-const ageGate =
-  document.getElementById("ageGate");
+function enterSite() {
+
+  document.getElementById("ageGate").style.display = "none";
+
+  startIncomingCall();
+
+}
+
+
+function leaveSite() {
+
+  window.location.href =
+    "https://www.google.com";
+
+}
+
+
+
+/* =========================
+   ELEMENTS
+========================= */
 
 const incomingCall =
   document.getElementById("incomingCall");
-
-const answerCall =
-  document.getElementById("answerCall");
-
-const declineCall =
-  document.getElementById("declineCall");
 
 const videoPreview =
   document.getElementById("videoPreview");
@@ -927,221 +1101,175 @@ const insufficientMinutes =
 const livePhotos =
   document.getElementById("livePhotos");
 
-const mainContent =
-  document.getElementById("mainContent");
+const answerCall =
+  document.getElementById("answerCall");
 
+const declineCall =
+  document.getElementById("declineCall");
 
-/* =========================
-   START
-========================= */
+const previewSeconds =
+  document.getElementById("previewSeconds");
 
-window.addEventListener("load", function() {
-
-  /* Hide everything except age gate */
-
-  incomingCall.style.display = "none";
-
-  videoPreview.style.display = "none";
-
-  insufficientMinutes.style.display = "none";
-
-  livePhotos.style.display = "none";
-
-});
 
 
 /* =========================
-   AGE ENTER
+   START CALL
 ========================= */
 
-function enterSite() {
-
-  ageGate.style.display = "none";
-
-  /*
-    Call appears FIRST.
-    Video does NOT start yet.
-  */
+function startIncomingCall() {
 
   incomingCall.style.display = "block";
 
 }
 
 
-/* =========================
-   EXIT
-========================= */
-
-function leaveSite() {
-
-  window.location.href =
-    "https://www.google.com";
-
-}
-
 
 /* =========================
    ANSWER CALL
 ========================= */
 
-answerCall.addEventListener("click", function() {
+answerCall.addEventListener(
+  "click",
+  function() {
 
-  /* Hide incoming call */
+    incomingCall.style.display = "none";
 
-  incomingCall.style.display = "none";
+    videoPreview.style.display = "flex";
 
+    previewVideo.currentTime = 0;
 
-  /* Show video */
+    previewVideo.play().catch(function(error) {
 
-  videoPreview.style.display = "flex";
+      console.log(
+        "Video autoplay requires user interaction.",
+        error
+      );
 
+    });
 
-  /* Start from beginning */
+  }
+);
 
-  previewVideo.currentTime = 0;
-
-
-  /*
-    Start video after user interaction.
-    This allows mobile browsers to play it.
-  */
-
-  previewVideo.play().catch(function(error) {
-
-    console.log(
-      "Video playback error:",
-      error
-    );
-
-  });
-
-});
 
 
 /* =========================
    DECLINE CALL
 ========================= */
 
-declineCall.addEventListener("click", function() {
+declineCall.addEventListener(
+  "click",
+  function() {
 
-  /*
-    Stop video if it is playing.
-  */
+    incomingCall.style.display = "none";
 
-  previewVideo.pause();
+    /*
+      If declined, show the preview directly.
+    */
 
-  previewVideo.currentTime = 0;
+    videoPreview.style.display = "flex";
 
+    previewVideo.currentTime = 0;
 
-  /* Hide all other screens */
+    previewVideo.play().catch(function(error) {
 
-  incomingCall.style.display = "none";
+      console.log(error);
 
-  videoPreview.style.display = "none";
+    });
 
-  insufficientMinutes.style.display = "none";
+  }
+);
 
-  livePhotos.style.display = "none";
-
-
-  /*
-    Show incoming call again
-    after a short pause.
-  */
-
-  setTimeout(function() {
-
-    incomingCall.style.display = "block";
-
-  }, 500);
-
-});
 
 
 /* =========================
-   VIDEO FINISHED
+   VIDEO ENDS
 ========================= */
 
-previewVideo.addEventListener("ended", function() {
+previewVideo.addEventListener(
+  "ended",
+  function() {
 
-  /*
-    Hide video.
-  */
+    videoPreview.style.display = "none";
 
-  videoPreview.style.display = "none";
-
-
-  /*
-    Show insufficient minutes.
-  */
-
-  insufficientMinutes.style.display = "flex";
+    insufficientMinutes.style.display = "flex";
 
 
-  /*
-    After 1.5 seconds,
-    show the photo page.
-  */
+    /*
+      Show insufficient minutes
+      for 1.5 seconds.
+    */
 
-  setTimeout(function() {
+    setTimeout(
+      function() {
 
-    insufficientMinutes.style.display = "none";
+        insufficientMinutes.style.display =
+          "none";
 
-    livePhotos.style.display = "grid";
+        livePhotos.style.display =
+          "grid";
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
 
-  }, 1500);
+      },
+      1500
+    );
 
-});
+  }
+);
+
+
+
+/* =========================
+   VIDEO COUNTDOWN
+========================= */
+
+previewVideo.addEventListener(
+  "timeupdate",
+  function() {
+
+    const remaining =
+      Math.max(
+        0,
+        Math.ceil(
+          previewVideo.duration -
+          previewVideo.currentTime
+        )
+      );
+
+    previewSeconds.textContent =
+      remaining;
+
+  }
+);
+
 
 
 /* =========================
    PHOTO → PAYMENT
 ========================= */
 
-document.querySelectorAll(".live-photo").forEach(function(photo) {
+document
+  .querySelectorAll(".live-photo")
+  .forEach(function(photo) {
 
-  photo.addEventListener("click", function() {
+    photo.addEventListener(
+      "click",
+      function() {
 
-    window.location.href =
-      "payment.html";
+        window.location.href =
+          "payment.html";
+
+      }
+    );
 
   });
 
-});
-
-
-/* =========================
-   REFERRAL CODE
-========================= */
-
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
-
-const ref =
-  params.get("ref");
-
-if (ref) {
-
-  const refCode =
-    document.getElementById("refCode");
-
-  if (refCode) {
-
-    refCode.textContent =
-      ref;
-
-  }
-
-}
 
 </script>
 
+
 </body>
-        </html>
+   </html>
