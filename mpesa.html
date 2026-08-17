@@ -513,12 +513,13 @@ body{
   transition:
     border-color .2s,
     background .2s,
-    color .2s;
+    color .2s,
+    box-shadow .2s;
 }
 
 
 /* =========================
-   INVALID / RED
+   RED / REJECTED
 ========================= */
 
 #mpesaMessage.invalid{
@@ -532,24 +533,6 @@ body{
   box-shadow:
     0 0 0 2px
     rgba(229,57,53,.08);
-}
-
-
-/* =========================
-   VALID / GREEN
-========================= */
-
-#mpesaMessage.valid{
-
-  border-color:#20a943;
-
-  background:#effff3;
-
-  color:#08752b;
-
-  box-shadow:
-    0 0 0 2px
-    rgba(32,169,67,.08);
 }
 
 
@@ -573,11 +556,6 @@ body{
 .statusRejected{
 
   color:#e53935;
-}
-
-.statusAccepted{
-
-  color:#20a943;
 }
 
 
@@ -656,6 +634,7 @@ body{
   .videoCircle{
 
     width:50px;
+
     height:50px;
 
     font-size:22px;
@@ -988,7 +967,9 @@ body{
     </button>
 
 
-    <!-- MESSAGE -->
+    <!-- =========================
+         MESSAGE
+    ========================= -->
 
     <div
       id="messageArea"
@@ -1051,11 +1032,6 @@ function selectPackage(
     minutes;
 
 
-  /*
-    Remove selection
-    from every package.
-  */
-
   document
     .querySelectorAll(".package")
     .forEach(function(card){
@@ -1067,18 +1043,10 @@ function selectPackage(
     });
 
 
-  /*
-    Select clicked package.
-  */
-
   element.classList.add(
     "selected"
   );
 
-
-  /*
-    Show selected package.
-  */
 
   document.getElementById(
     "selectedInfo"
@@ -1097,19 +1065,11 @@ function selectPackage(
     " Minutes";
 
 
-  /*
-    Show payment.
-  */
-
   document.getElementById(
     "paymentSection"
   ).style.display =
     "block";
 
-
-  /*
-    Scroll down.
-  */
 
   setTimeout(function(){
 
@@ -1162,7 +1122,7 @@ function showMessageBox(){
 
 
 /* =========================
-   VALIDATE MPESA MESSAGE
+   MESSAGE INPUT
 ========================= */
 
 function validateMpesaMessage(){
@@ -1172,12 +1132,10 @@ function validateMpesaMessage(){
       "mpesaMessage"
     );
 
-
   const status =
     document.getElementById(
       "messageStatus"
     );
-
 
   const button =
     document.getElementById(
@@ -1185,12 +1143,17 @@ function validateMpesaMessage(){
     );
 
 
+  /*
+    ANY message is allowed
+    to be entered or pasted.
+  */
+
   const message =
     box.value.trim();
 
 
   /*
-    EMPTY
+    Nothing entered.
   */
 
   if(message === ""){
@@ -1199,124 +1162,36 @@ function validateMpesaMessage(){
       "invalid"
     );
 
-    box.classList.remove(
-      "valid"
-    );
-
-
     status.textContent =
       "";
 
     status.className =
       "";
 
-
     button.disabled =
       true;
-
 
     return;
-
   }
 
 
   /*
-    LOOK FOR AN M-PESA STYLE
-    CONFIRMATION MESSAGE.
+    Message entered.
+    Allow Continue.
   */
 
-  const hasReceipt =
-    /\b[A-Z0-9]{8,12}\b/i.test(
-      message
-    );
+  box.classList.remove(
+    "invalid"
+  );
 
+  status.textContent =
+    "";
 
-  const hasAmount =
-    /(?:KSh|KES)\s?[\d,]+(?:\.\d{1,2})?/i.test(
-      message
-    );
+  status.className =
+    "";
 
-
-  const hasMpesaWord =
-    /M-?PESA|MPESA|SAFARICOM/i.test(
-      message
-    );
-
-
-  const hasTransactionWords =
-    /received|paid|sent|confirmed|transaction|payment/i.test(
-      message
-    );
-
-
-  /*
-    ACCEPT ONLY IF ALL
-    REQUIRED PARTS EXIST.
-  */
-
-  const valid =
-    hasReceipt &&
-    hasAmount &&
-    hasMpesaWord &&
-    hasTransactionWords;
-
-
-  /* =========================
-     ACCEPTED
-  ========================= */
-
-  if(valid){
-
-    box.classList.remove(
-      "invalid"
-    );
-
-    box.classList.add(
-      "valid"
-    );
-
-
-    status.textContent =
-      "✓ M-Pesa message format accepted";
-
-
-    status.className =
-      "statusAccepted";
-
-
-    button.disabled =
-      false;
-
-  }
-
-
-  /* =========================
-     REJECTED
-  ========================= */
-
-  else{
-
-    box.classList.remove(
-      "valid"
-    );
-
-    box.classList.add(
-      "invalid"
-    );
-
-
-    status.textContent =
-      "✕ REJECTED — invalid M-Pesa message";
-
-
-    status.className =
-      "statusRejected";
-
-
-    button.disabled =
-      true;
-
-  }
+  button.disabled =
+    false;
 
 }
 
@@ -1332,73 +1207,92 @@ function continuePayment(){
       "mpesaMessage"
     );
 
+  const status =
+    document.getElementById(
+      "messageStatus"
+    );
+
+  const button =
+    document.getElementById(
+      "continueButton"
+    );
+
 
   const message =
     box.value.trim();
 
 
   /*
-    EMPTY CHECK
+    EMPTY MESSAGE
   */
 
   if(message === ""){
 
-    alert(
-      "Please paste the M-Pesa confirmation message."
+    box.classList.add(
+      "invalid"
     );
 
-    return;
+    status.textContent =
+      "✕ Please enter an M-Pesa message.";
 
+    status.className =
+      "statusRejected";
+
+    return;
   }
 
 
   /*
-    VALIDATION CHECK
+    ==================================
+    REJECT THE MESSAGE
+    ==================================
   */
 
-  if(
-    !box.classList.contains(
-      "valid"
-    )
-  ){
-
-    alert(
-      "REJECTED: Please paste a valid M-Pesa confirmation message."
-    );
-
-    return;
-
-  }
+  box.value = "";
 
 
   /*
-    SAVE PACKAGE
+    Turn the box RED.
   */
 
-  localStorage.setItem(
-    "selectedPrice",
-    selectedPrice
+  box.classList.remove(
+    "valid"
   );
 
-
-  localStorage.setItem(
-    "selectedMinutes",
-    selectedMinutes
-  );
-
-
-  localStorage.setItem(
-    "mpesaMessage",
-    message
+  box.classList.add(
+    "invalid"
   );
 
 
   /*
-    GO TO NEXT PAGE
+    Show rejection.
   */
 
-  window.location.href =
-    "photos.html";
+  status.textContent =
+    "✕ REJECTED — M-Pesa message was not accepted.";
+
+  status.className =
+    "statusRejected";
+
+
+  /*
+    Keep Continue available for
+    another message.
+  */
+
+  button.disabled =
+    true;
+
+
+  /*
+    IMPORTANT:
+    Do not save the message.
+    Do not open photos.html.
+  */
+
+  localStorage.removeItem(
+    "mpesaMessage"
+  );
 
 }
 
@@ -1418,4 +1312,4 @@ function goBack(){
 
 </body>
 
-        </html>
+          </html>
