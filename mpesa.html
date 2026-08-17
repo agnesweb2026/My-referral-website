@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -9,6 +10,7 @@
   content="width=device-width, initial-scale=1.0">
 
 <title>Buy Minutes</title>
+
 
 <style>
 
@@ -37,7 +39,9 @@ body{
 ========================= */
 
 .background{
+
   min-height:100vh;
+
   padding:25px 18px 110px;
 
   background:
@@ -50,8 +54,8 @@ body{
 }
 
 .backgroundContent{
-  filter:blur(4px);
-  opacity:.55;
+  filter:blur(5px);
+  opacity:.45;
 }
 
 .backgroundContent h1{
@@ -64,7 +68,9 @@ body{
 ========================= */
 
 .sheet{
+
   position:fixed;
+
   left:0;
   right:0;
   bottom:0;
@@ -72,23 +78,28 @@ body{
   z-index:1000;
 
   background:#f8f8fa;
+
   color:#111;
 
   border-radius:28px 28px 0 0;
 
-  max-height:90vh;
+  max-height:94vh;
+
   overflow-y:auto;
 
-  padding:18px 18px 30px;
+  padding:16px 18px 30px;
 
   box-shadow:
     0 -10px 40px rgba(0,0,0,.45);
 }
 
 
-/* HANDLE */
+/* =========================
+   HANDLE
+========================= */
 
 .handle{
+
   width:68px;
   height:6px;
 
@@ -105,39 +116,48 @@ body{
 ========================= */
 
 .header{
+
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
 
   padding:0 5px 15px;
 }
 
 .headerText h1{
+
   margin:0;
 
   font-size:30px;
+
   font-weight:800;
 }
 
 .headerText p{
+
   margin:7px 0 0;
 
   color:#888;
+
   font-size:16px;
 }
 
 .closeButton{
+
   width:48px;
   height:48px;
 
   border:0;
+
   border-radius:50%;
 
   background:#ededed;
 
   color:#666;
 
-  font-size:25px;
+  font-size:27px;
 
   cursor:pointer;
 }
@@ -148,7 +168,9 @@ body{
 ========================= */
 
 .line{
+
   height:1px;
+
   background:#e4e4e4;
 
   margin:0 0 14px;
@@ -160,6 +182,7 @@ body{
 ========================= */
 
 .packages{
+
   display:grid;
 
   grid-template-columns:
@@ -174,6 +197,7 @@ body{
 ========================= */
 
 .package{
+
   position:relative;
 
   min-height:210px;
@@ -193,30 +217,35 @@ body{
     border-color .15s;
 
   display:flex;
+
   flex-direction:column;
 }
 
 .package:active{
+
   transform:scale(.97);
 }
 
 .package.selected{
+
   border-color:#ffae00;
 
   box-shadow:
     0 0 0 2px
-    rgba(255,174,0,.2);
+    rgba(255,174,0,.25);
 }
 
 
 /* =========================
-   HOT BADGE
+   HOT
 ========================= */
 
 .hot{
+
   position:absolute;
 
   top:10px;
+
   right:8px;
 
   background:#ff3b68;
@@ -228,6 +257,7 @@ body{
   border-radius:18px;
 
   font-size:12px;
+
   font-weight:bold;
 
   z-index:3;
@@ -235,25 +265,31 @@ body{
 
 
 /* =========================
-   VIDEO ICON
+   ICON
 ========================= */
 
 .iconArea{
+
   height:105px;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
 }
 
 .videoCircle{
+
   width:62px;
   height:62px;
 
   border-radius:50%;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
 
   background:#302b36;
@@ -262,7 +298,7 @@ body{
 
   color:#ffe000;
 
-  font-size:28px;
+  font-size:27px;
 }
 
 
@@ -271,11 +307,13 @@ body{
 ========================= */
 
 .minutes{
+
   text-align:center;
 
   color:#fff;
 
   font-size:18px;
+
   font-weight:bold;
 
   padding:0 5px 14px;
@@ -287,6 +325,7 @@ body{
 ========================= */
 
 .priceArea{
+
   margin-top:auto;
 
   background:#ff9f0a;
@@ -299,11 +338,14 @@ body{
 }
 
 .price{
+
   font-size:19px;
+
   font-weight:800;
 }
 
 .approx{
+
   margin-top:5px;
 
   font-size:12px;
@@ -317,23 +359,27 @@ body{
 ========================= */
 
 .selectedInfo{
+
   display:none;
 
   margin-top:16px;
 
-  padding:16px;
+  padding:18px;
 
   background:#fff;
 
-  border-radius:15px;
+  border-radius:16px;
 
   box-shadow:
     0 2px 10px rgba(0,0,0,.08);
 
   text-align:center;
+
+  font-size:18px;
 }
 
 .selectedInfo strong{
+
   font-size:20px;
 }
 
@@ -343,13 +389,14 @@ body{
 ========================= */
 
 .paymentSection{
+
   display:none;
 
   margin-top:16px;
 
   background:#fff;
 
-  border-radius:18px;
+  border-radius:20px;
 
   padding:18px;
 
@@ -358,28 +405,37 @@ body{
 }
 
 .paymentTitle{
-  font-size:20px;
+
+  font-size:27px;
+
   font-weight:bold;
 
   text-align:center;
 
-  margin-bottom:12px;
+  margin-bottom:18px;
 }
 
+
+/* =========================
+   TILL
+========================= */
+
 .till{
+
   text-align:center;
 
-  padding:12px;
+  padding:15px;
 
-  background:#f2f2f2;
+  background:#f1f1f1;
 
-  border-radius:10px;
+  border-radius:12px;
 
-  font-size:17px;
+  font-size:18px;
 }
 
 .till strong{
-  font-size:21px;
+
+  font-size:22px;
 }
 
 
@@ -388,74 +444,179 @@ body{
 ========================= */
 
 .mpesaButton{
+
   width:100%;
 
-  margin-top:14px;
+  margin-top:15px;
 
-  padding:16px;
+  padding:17px;
 
   border:0;
 
-  border-radius:13px;
+  border-radius:14px;
 
   background:#20a943;
 
   color:#fff;
 
-  font-size:18px;
+  font-size:20px;
 
   font-weight:bold;
 
   cursor:pointer;
 }
 
+.mpesaButton:active{
+
+  transform:scale(.98);
+}
+
 
 /* =========================
-   MESSAGE
+   MESSAGE AREA
 ========================= */
 
 .messageArea{
+
   display:none;
 
-  margin-top:14px;
+  margin-top:15px;
 }
 
-.messageArea textarea{
+
+/* =========================
+   TEXTAREA
+========================= */
+
+#mpesaMessage{
+
   width:100%;
 
-  min-height:105px;
+  min-height:115px;
 
   resize:none;
 
-  padding:13px;
+  padding:15px;
 
-  border:1px solid #ccc;
+  border:2px solid #ccc;
 
-  border-radius:10px;
+  border-radius:12px;
 
-  font-size:15px;
+  font-size:16px;
+
+  outline:none;
+
+  background:#fff;
+
+  color:#111;
+
+  transition:
+    border-color .2s,
+    background .2s,
+    color .2s;
 }
 
+
+/* =========================
+   INVALID / RED
+========================= */
+
+#mpesaMessage.invalid{
+
+  border-color:#e53935;
+
+  background:#fff0f0;
+
+  color:#c40000;
+
+  box-shadow:
+    0 0 0 2px
+    rgba(229,57,53,.08);
+}
+
+
+/* =========================
+   VALID / GREEN
+========================= */
+
+#mpesaMessage.valid{
+
+  border-color:#20a943;
+
+  background:#effff3;
+
+  color:#08752b;
+
+  box-shadow:
+    0 0 0 2px
+    rgba(32,169,67,.08);
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+#messageStatus{
+
+  min-height:24px;
+
+  margin-top:8px;
+
+  text-align:center;
+
+  font-size:14px;
+
+  font-weight:bold;
+}
+
+.statusRejected{
+
+  color:#e53935;
+}
+
+.statusAccepted{
+
+  color:#20a943;
+}
+
+
+/* =========================
+   CONTINUE
+========================= */
+
 .continue{
+
   width:100%;
 
   margin-top:12px;
 
-  padding:16px;
+  padding:17px;
 
   border:0;
 
-  border-radius:13px;
+  border-radius:14px;
 
   background:#1976d2;
 
   color:#fff;
 
-  font-size:18px;
+  font-size:20px;
 
   font-weight:bold;
 
   cursor:pointer;
+}
+
+.continue:disabled{
+
+  background:#999;
+
+  color:#ddd;
+
+  cursor:not-allowed;
+
+  opacity:.7;
 }
 
 
@@ -466,11 +627,14 @@ body{
 @media(max-width:500px){
 
   .sheet{
+
     padding-left:14px;
+
     padding-right:14px;
   }
 
   .packages{
+
     grid-template-columns:
       repeat(3,1fr);
 
@@ -478,16 +642,19 @@ body{
   }
 
   .package{
+
     min-height:185px;
 
     border-radius:18px;
   }
 
   .iconArea{
+
     height:85px;
   }
 
   .videoCircle{
+
     width:50px;
     height:50px;
 
@@ -495,23 +662,33 @@ body{
   }
 
   .minutes{
+
     font-size:15px;
   }
 
   .priceArea{
+
     padding:13px 3px;
   }
 
   .price{
+
     font-size:16px;
   }
 
   .approx{
+
     font-size:10px;
   }
 
   .headerText h1{
+
     font-size:27px;
+  }
+
+  .paymentTitle{
+
+    font-size:25px;
   }
 
 }
@@ -519,6 +696,7 @@ body{
 </style>
 
 </head>
+
 
 <body>
 
@@ -536,7 +714,7 @@ body{
     </h1>
 
     <p>
-      Live now
+      ● Live now
     </p>
 
   </div>
@@ -545,13 +723,15 @@ body{
 
 
 <!-- =========================
-     BUY MINUTES SHEET
+     BUY MINUTES
 ========================= -->
 
 <div class="sheet">
 
   <div class="handle"></div>
 
+
+  <!-- HEADER -->
 
   <div class="header">
 
@@ -589,7 +769,8 @@ body{
   <div class="packages">
 
 
-    <!-- 10 MIN -->
+    <!-- 10 MINUTES -->
+
     <div
       class="package"
       onclick="selectPackage(80,10,this)">
@@ -625,7 +806,8 @@ body{
     </div>
 
 
-    <!-- 25 MIN -->
+    <!-- 25 MINUTES -->
+
     <div
       class="package"
       onclick="selectPackage(135,25,this)">
@@ -657,7 +839,8 @@ body{
     </div>
 
 
-    <!-- 40 MIN -->
+    <!-- 40 MINUTES -->
+
     <div
       class="package"
       onclick="selectPackage(200,40,this)">
@@ -689,7 +872,8 @@ body{
     </div>
 
 
-    <!-- 55 MIN -->
+    <!-- 55 MINUTES -->
+
     <div
       class="package"
       onclick="selectPackage(250,55,this)">
@@ -721,7 +905,8 @@ body{
     </div>
 
 
-    <!-- 65 MIN -->
+    <!-- 65 MINUTES -->
+
     <div
       class="package"
       onclick="selectPackage(300,65,this)">
@@ -752,7 +937,6 @@ body{
 
     </div>
 
-
   </div>
 
 
@@ -766,8 +950,7 @@ body{
 
     Selected:
 
-    <strong id="selectedText">
-    </strong>
+    <strong id="selectedText"></strong>
 
   </div>
 
@@ -805,18 +988,28 @@ body{
     </button>
 
 
+    <!-- MESSAGE -->
+
     <div
       id="messageArea"
       class="messageArea">
 
       <textarea
         id="mpesaMessage"
-        placeholder="Paste M-Pesa message here..."></textarea>
+        placeholder="Paste M-Pesa message here..."
+        oninput="validateMpesaMessage()"></textarea>
+
+
+      <div
+        id="messageStatus">
+      </div>
 
 
       <button
+        id="continueButton"
         class="continue"
-        onclick="continuePayment()">
+        onclick="continuePayment()"
+        disabled>
 
         Continue
 
@@ -830,6 +1023,7 @@ body{
 
 
 <script>
+
 
 /* =========================
    VARIABLES
@@ -857,6 +1051,11 @@ function selectPackage(
     minutes;
 
 
+  /*
+    Remove selection
+    from every package.
+  */
+
   document
     .querySelectorAll(".package")
     .forEach(function(card){
@@ -868,10 +1067,18 @@ function selectPackage(
     });
 
 
+  /*
+    Select clicked package.
+  */
+
   element.classList.add(
     "selected"
   );
 
+
+  /*
+    Show selected package.
+  */
 
   document.getElementById(
     "selectedInfo"
@@ -890,30 +1097,46 @@ function selectPackage(
     " Minutes";
 
 
+  /*
+    Show payment.
+  */
+
   document.getElementById(
     "paymentSection"
   ).style.display =
     "block";
 
 
-  document.getElementById(
-    "paymentSection"
-  ).scrollIntoView({
-    behavior:"smooth",
-    block:"center"
-  });
+  /*
+    Scroll down.
+  */
+
+  setTimeout(function(){
+
+    document.getElementById(
+      "paymentSection"
+    ).scrollIntoView({
+
+      behavior:"smooth",
+
+      block:"center"
+
+    });
+
+  },100);
 
 }
 
 
 /* =========================
-   SHOW MESSAGE
+   SHOW MESSAGE BOX
 ========================= */
 
 function showMessageBox(){
 
   if(
-    selectedPrice === null
+    selectedPrice === null ||
+    selectedMinutes === null
   ){
 
     alert(
@@ -921,6 +1144,7 @@ function showMessageBox(){
     );
 
     return;
+
   }
 
 
@@ -928,6 +1152,171 @@ function showMessageBox(){
     "messageArea"
   ).style.display =
     "block";
+
+
+  document.getElementById(
+    "mpesaMessage"
+  ).focus();
+
+}
+
+
+/* =========================
+   VALIDATE MPESA MESSAGE
+========================= */
+
+function validateMpesaMessage(){
+
+  const box =
+    document.getElementById(
+      "mpesaMessage"
+    );
+
+
+  const status =
+    document.getElementById(
+      "messageStatus"
+    );
+
+
+  const button =
+    document.getElementById(
+      "continueButton"
+    );
+
+
+  const message =
+    box.value.trim();
+
+
+  /*
+    EMPTY
+  */
+
+  if(message === ""){
+
+    box.classList.remove(
+      "invalid"
+    );
+
+    box.classList.remove(
+      "valid"
+    );
+
+
+    status.textContent =
+      "";
+
+    status.className =
+      "";
+
+
+    button.disabled =
+      true;
+
+
+    return;
+
+  }
+
+
+  /*
+    LOOK FOR AN M-PESA STYLE
+    CONFIRMATION MESSAGE.
+  */
+
+  const hasReceipt =
+    /\b[A-Z0-9]{8,12}\b/i.test(
+      message
+    );
+
+
+  const hasAmount =
+    /(?:KSh|KES)\s?[\d,]+(?:\.\d{1,2})?/i.test(
+      message
+    );
+
+
+  const hasMpesaWord =
+    /M-?PESA|MPESA|SAFARICOM/i.test(
+      message
+    );
+
+
+  const hasTransactionWords =
+    /received|paid|sent|confirmed|transaction|payment/i.test(
+      message
+    );
+
+
+  /*
+    ACCEPT ONLY IF ALL
+    REQUIRED PARTS EXIST.
+  */
+
+  const valid =
+    hasReceipt &&
+    hasAmount &&
+    hasMpesaWord &&
+    hasTransactionWords;
+
+
+  /* =========================
+     ACCEPTED
+  ========================= */
+
+  if(valid){
+
+    box.classList.remove(
+      "invalid"
+    );
+
+    box.classList.add(
+      "valid"
+    );
+
+
+    status.textContent =
+      "✓ M-Pesa message format accepted";
+
+
+    status.className =
+      "statusAccepted";
+
+
+    button.disabled =
+      false;
+
+  }
+
+
+  /* =========================
+     REJECTED
+  ========================= */
+
+  else{
+
+    box.classList.remove(
+      "valid"
+    );
+
+    box.classList.add(
+      "invalid"
+    );
+
+
+    status.textContent =
+      "✕ REJECTED — invalid M-Pesa message";
+
+
+    status.className =
+      "statusRejected";
+
+
+    button.disabled =
+      true;
+
+  }
 
 }
 
@@ -938,11 +1327,19 @@ function showMessageBox(){
 
 function continuePayment(){
 
-  const message =
+  const box =
     document.getElementById(
       "mpesaMessage"
-    ).value.trim();
+    );
 
+
+  const message =
+    box.value.trim();
+
+
+  /*
+    EMPTY CHECK
+  */
 
   if(message === ""){
 
@@ -954,6 +1351,29 @@ function continuePayment(){
 
   }
 
+
+  /*
+    VALIDATION CHECK
+  */
+
+  if(
+    !box.classList.contains(
+      "valid"
+    )
+  ){
+
+    alert(
+      "REJECTED: Please paste a valid M-Pesa confirmation message."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    SAVE PACKAGE
+  */
 
   localStorage.setItem(
     "selectedPrice",
@@ -974,7 +1394,7 @@ function continuePayment(){
 
 
   /*
-    Continue to your next page.
+    GO TO NEXT PAGE
   */
 
   window.location.href =
@@ -995,5 +1415,7 @@ function goBack(){
 
 </script>
 
+
 </body>
-  </html>
+
+        </html>
