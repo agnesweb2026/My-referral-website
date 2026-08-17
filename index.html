@@ -1,176 +1,627 @@
-<!-- INCOMING VIDEO CALL -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div id="incomingCall" style="
-  position:fixed;
-  inset:0;
-  z-index:90000;
-  display:flex;
-  overflow:hidden;
-  color:white;
-  text-align:center;
-  background:#17161b;
-">
+<title>My Referral Website</title>
 
-  <div style="
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-      135deg,
-      #4b4545,
-      #18171b
+<style>
+
+/* =========================
+   BASIC PAGE
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px 15px;
+  text-align: center;
+}
+
+.card {
+  max-width: 420px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h1 {
+  margin-top: 0;
+}
+
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.live-photo {
+  position: relative;
+  cursor: pointer;
+}
+
+.live-photo img {
+  display: block;
+  width: 100%;
+}
+
+.live-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #f0184c;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 7px;
+  font-weight: bold;
+  font-size: 11px;
+  z-index: 2;
+}
+
+.live-badge::before {
+  content: "●";
+  margin-right: 5px;
+}
+
+.live-status {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.85);
+  color: white;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 3;
+}
+
+.live-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+  margin-right: 7px;
+  border: 1px solid white;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+  50% {
+    opacity: 0.2;
+  }
+
+}
+
+
+/* =========================
+   AGE GATE
+========================= */
+
+#ageGate {
+  position: fixed;
+  inset: 0;
+  background: #111;
+  color: white;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+
+/* =========================
+   INCOMING CALL
+========================= */
+
+#incomingCall {
+  position: fixed;
+  inset: 0;
+  background: #17161b;
+  color: white;
+  z-index: 90000;
+  display: none;
+  overflow: hidden;
+}
+
+.call-background {
+  position: absolute;
+  inset: -30px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #655757 0%,
+      #302b2e 45%,
+      #101014 100%
     );
-    filter:blur(18px);
-    transform:scale(1.1);
-  "></div>
 
-  <div style="
-    position:relative;
-    z-index:2;
-    width:100%;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-  ">
+  filter: blur(20px);
 
-    <div style="
-      width:220px;
-      height:220px;
-      border-radius:50%;
-      border:2px solid #7650c9;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    ">
+  transform: scale(1.1);
+}
 
-      <div style="
-        width:180px;
-        height:180px;
-        border-radius:50%;
-        border:3px solid #7650c9;
-        background:#29252d;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:70px;
-      ">
+.call-dark-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.42);
+}
+
+.call-content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+/* PROFILE */
+
+.profile-ring {
+  width: 230px;
+  height: 230px;
+
+  border-radius: 50%;
+
+  border: 2px solid rgba(125,80,210,0.7);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 0 0 10px rgba(125,80,210,0.08);
+}
+
+.profile-photo {
+  width: 190px;
+  height: 190px;
+
+  border-radius: 50%;
+
+  border: 3px solid #7650c9;
+
+  background:
+    linear-gradient(
+      135deg,
+      #51455c,
+      #211d26
+    );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+  font-size: 75px;
+  font-weight: bold;
+}
+
+.caller-name {
+  margin-top: 18px;
+  font-size: 42px;
+  font-weight: normal;
+}
+
+.call-title {
+  margin-top: 8px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.65);
+}
+
+.ringing {
+  margin-top: 27px;
+  font-size: 20px;
+  color: #b98cff;
+}
+
+.ringing-dot {
+  display: inline-block;
+
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #a66cff;
+
+  margin-right: 8px;
+
+  animation: ringBlink 1s infinite;
+}
+
+@keyframes ringBlink {
+
+  50% {
+    opacity: 0.2;
+  }
+
+}
+
+
+/* =========================
+   CALL BUTTONS
+========================= */
+
+.call-buttons {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 105px;
+
+  display: flex;
+  justify-content: center;
+
+  gap: 100px;
+}
+
+.call-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.call-button {
+  width: 110px;
+  height: 110px;
+
+  border-radius: 50%;
+
+  border: 4px solid rgba(255,255,255,0.18);
+
+  color: white;
+
+  font-size: 42px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 5px 18px rgba(0,0,0,0.45);
+}
+
+.decline-button {
+  background: #ed3b3b;
+}
+
+.answer-button {
+  background: #14a94b;
+}
+
+.call-label {
+  margin-top: 11px;
+
+  font-size: 18px;
+
+  color: rgba(255,255,255,0.72);
+}
+
+.swipe-message {
+  position: absolute;
+
+  bottom: 43px;
+
+  left: 0;
+  right: 0;
+
+  color: rgba(255,255,255,0.27);
+
+  font-size: 14px;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================
+   SAMPLE VIDEO
+========================= */
+
+#videoPreview {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #000;
+
+  z-index: 89999;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+}
+
+#previewVideo {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  background: #000;
+}
+
+
+/* =========================
+   INSUFFICIENT MINUTES
+========================= */
+
+#insufficientMinutes {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 89998;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #111;
+
+  color: white;
+
+  text-align: center;
+}
+
+.insufficient-box {
+  padding: 25px;
+}
+
+.insufficient-icon {
+  font-size: 55px;
+  margin-bottom: 15px;
+}
+
+.insufficient-text {
+  font-size: 29px;
+  font-weight: bold;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 380px) {
+
+  .profile-ring {
+    width: 190px;
+    height: 190px;
+  }
+
+  .profile-photo {
+    width: 155px;
+    height: 155px;
+  }
+
+  .caller-name {
+    font-size: 36px;
+  }
+
+  .call-buttons {
+    gap: 60px;
+  }
+
+  .call-button {
+    width: 95px;
+    height: 95px;
+    font-size: 36px;
+  }
+
+  .gallery {
+    gap: 15px;
+  }
+
+  .gallery img {
+    height: 170px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     AGE GATE
+========================= -->
+
+<div id="ageGate">
+
+  <div style="max-width:380px;">
+
+    <div style="font-size:60px;">
+      🔞
+    </div>
+
+    <h1>
+      18+ ONLY
+    </h1>
+
+    <p>
+      This website contains adult-oriented content.
+    </p>
+
+    <p>
+      You must be 18 years or older to enter.
+    </p>
+
+    <button
+      onclick="enterSite()"
+      style="
+        padding:14px 25px;
+        margin:10px;
+        border:0;
+        border-radius:10px;
+        background:#22c55e;
+        color:white;
+        font-weight:bold;
+      "
+    >
+      I AM 18+ — ENTER
+    </button>
+
+    <button
+      onclick="leaveSite()"
+      style="
+        padding:14px 25px;
+        margin:10px;
+        border:0;
+        border-radius:10px;
+        background:#777;
+        color:white;
+        font-weight:bold;
+      "
+    >
+      EXIT
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     INCOMING CALL
+========================= -->
+
+<div id="incomingCall">
+
+  <div class="call-background"></div>
+
+  <div class="call-dark-overlay"></div>
+
+
+  <div class="call-content">
+
+
+    <!-- PROFILE -->
+
+    <div class="profile-ring">
+
+      <div class="profile-photo">
         M
       </div>
 
     </div>
 
-    <div style="
-      margin-top:18px;
-      font-size:42px;
-    ">
+
+    <!-- NAME -->
+
+    <div class="caller-name">
       Maya
     </div>
 
-    <div style="
-      margin-top:8px;
-      font-size:18px;
-      color:#aaa;
-      letter-spacing:1px;
-    ">
+
+    <!-- CALL TITLE -->
+
+    <div class="call-title">
       INCOMING VIDEO CALL
     </div>
 
-    <div style="
-      margin-top:25px;
-      color:#b98cff;
-      font-size:20px;
-    ">
-      <span style="color:#a66cff;">●</span>
+
+    <!-- RINGING -->
+
+    <div class="ringing">
+
+      <span class="ringing-dot"></span>
+
       Ringing...
+
     </div>
 
 
     <!-- BUTTONS -->
 
-    <div style="
-      position:absolute;
-      bottom:105px;
-      left:0;
-      right:0;
-      display:flex;
-      justify-content:center;
-      gap:100px;
-    ">
+    <div class="call-buttons">
 
 
-      <!-- RED -->
+      <!-- DECLINE -->
 
-      <div>
+      <div class="call-option">
 
         <button
           id="declineCall"
+          class="call-button decline-button"
           type="button"
-          style="
-            width:105px;
-            height:105px;
-            border-radius:50%;
-            border:4px solid rgba(255,255,255,.15);
-            background:#ed3b3b;
-            color:white;
-            font-size:42px;
-            cursor:pointer;
-          "
         >
           ☎
         </button>
 
-        <div style="
-          margin-top:10px;
-          font-size:18px;
-          color:#ccc;
-        ">
+        <div class="call-label">
           Decline
         </div>
 
       </div>
 
 
-      <!-- GREEN -->
+      <!-- ANSWER -->
 
-      <div>
+      <div class="call-option">
 
         <button
           id="answerCall"
+          class="call-button answer-button"
           type="button"
-          style="
-            width:105px;
-            height:105px;
-            border-radius:50%;
-            border:4px solid rgba(255,255,255,.15);
-            background:#14a94b;
-            color:white;
-            font-size:42px;
-            cursor:pointer;
-          "
         >
           ☎
         </button>
 
-        <div style="
-          margin-top:10px;
-          font-size:18px;
-          color:#ccc;
-        ">
+        <div class="call-label">
           Answer
         </div>
 
       </div>
 
+
     </div>
 
-    <div style="
-      position:absolute;
-      bottom:45px;
-      color:rgba(255,255,255,.3);
-      font-size:14px;
-      letter-spacing:1px;
-    ">
+
+    <div class="swipe-message">
       SWIPE UP TO MESSAGE
     </div>
 
@@ -179,30 +630,16 @@
 </div>
 
 
-<!-- SAMPLE VIDEO -->
+<!-- =========================
+     SAMPLE VIDEO
+========================= -->
 
-<div id="videoPreview" style="
-  position:fixed;
-  inset:0;
-  width:100vw;
-  height:100vh;
-  background:#000;
-  z-index:89999;
-  display:none;
-  align-items:center;
-  justify-content:center;
-">
+<div id="videoPreview">
 
   <video
     id="previewVideo"
     muted
     playsinline
-    style="
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      background:#000;
-    "
   >
 
     <source
@@ -215,33 +652,19 @@
 </div>
 
 
-<!-- INSUFFICIENT MINUTES -->
+<!-- =========================
+     INSUFFICIENT MINUTES
+========================= -->
 
-<div id="insufficientMinutes" style="
-  position:fixed;
-  inset:0;
-  z-index:89998;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:#111;
-  color:white;
-  text-align:center;
-">
+<div id="insufficientMinutes">
 
-  <div>
+  <div class="insufficient-box">
 
-    <div style="
-      font-size:55px;
-      margin-bottom:15px;
-    ">
+    <div class="insufficient-icon">
       ⏱️
     </div>
 
-    <div style="
-      font-size:30px;
-      font-weight:bold;
-    ">
+    <div class="insufficient-text">
       INSUFFICIENT MINUTES
     </div>
 
@@ -250,7 +673,238 @@
 </div>
 
 
+<!-- =========================
+     MAIN PAGE
+========================= -->
+
+<div class="card" id="mainContent">
+
+  <p>
+    Welcome to my referral website.
+  </p>
+
+
+  <!-- =========================
+       LIVE PHOTOS
+  ========================= -->
+
+  <div
+    id="livePhotos"
+    class="gallery"
+    style="display:none;"
+  >
+
+
+    <!-- PHOTO 1 -->
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+
+        <span class="live-dot"></span>
+
+        Live now
+
+      </span>
+
+      <img
+        src="multixnxx-10 pictures-0.jpg"
+        alt="Photo 1"
+      >
+
+    </div>
+
+
+    <!-- PHOTO 2 -->
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+
+        <span class="live-dot"></span>
+
+        Live now
+
+      </span>
+
+      <img
+        src="multixnxx-10 pictures-5.jpg"
+        alt="Photo 2"
+      >
+
+    </div>
+
+
+    <!-- PHOTO 3 -->
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+
+        <span class="live-dot"></span>
+
+        Live now
+
+      </span>
+
+      <img
+        src="multixnxx-15 pictures-2.jpg"
+        alt="Photo 3"
+      >
+
+    </div>
+
+
+    <!-- PHOTO 4 -->
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+
+        <span class="live-dot"></span>
+
+        Live now
+
+      </span>
+
+      <img
+        src="multixnxx-Long labias_ big clits-8.jpg"
+        alt="Photo 4"
+      >
+
+    </div>
+
+
+    <!-- PHOTO 5 -->
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+
+        <span class="live-dot"></span>
+
+        Live now
+
+      </span>
+
+      <img
+        src="multixnxx-My breasts&n-5.jpg"
+        alt="Photo 5"
+      >
+
+    </div>
+
+
+    <!-- PHOTO 6 -->
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+
+        <span class="live-dot"></span>
+
+        Live now
+
+      </span>
+
+      <img
+        src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -10.jpg"
+        alt="Photo 6"
+      >
+
+    </div>
+
+
+    <!-- PHOTO 7 -->
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+
+        <span class="live-dot"></span>
+
+        Live now
+
+      </span>
+
+      <img
+        src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -12.jpg"
+        alt="Photo 7"
+      >
+
+    </div>
+
+
+    <!-- PHOTO 8 -->
+
+    <div class="live-photo">
+
+      <span class="live-badge">
+        LIVE
+      </span>
+
+      <span class="live-status">
+
+        <span class="live-dot"></span>
+
+        Live now
+
+      </span>
+
+      <img
+        src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -15.jpg"
+        alt="Photo 8"
+      >
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
 <script>
+
+
+/* =========================
+   GET ELEMENTS
+========================= */
+
+const ageGate =
+  document.getElementById("ageGate");
 
 const incomingCall =
   document.getElementById("incomingCall");
@@ -273,14 +927,66 @@ const insufficientMinutes =
 const livePhotos =
   document.getElementById("livePhotos");
 
+const mainContent =
+  document.getElementById("mainContent");
 
-/* ==========================
-   GREEN ANSWER
-========================== */
+
+/* =========================
+   START
+========================= */
+
+window.addEventListener("load", function() {
+
+  /* Hide everything except age gate */
+
+  incomingCall.style.display = "none";
+
+  videoPreview.style.display = "none";
+
+  insufficientMinutes.style.display = "none";
+
+  livePhotos.style.display = "none";
+
+});
+
+
+/* =========================
+   AGE ENTER
+========================= */
+
+function enterSite() {
+
+  ageGate.style.display = "none";
+
+  /*
+    Call appears FIRST.
+    Video does NOT start yet.
+  */
+
+  incomingCall.style.display = "block";
+
+}
+
+
+/* =========================
+   EXIT
+========================= */
+
+function leaveSite() {
+
+  window.location.href =
+    "https://www.google.com";
+
+}
+
+
+/* =========================
+   ANSWER CALL
+========================= */
 
 answerCall.addEventListener("click", function() {
 
-  /* Hide call */
+  /* Hide incoming call */
 
   incomingCall.style.display = "none";
 
@@ -290,14 +996,20 @@ answerCall.addEventListener("click", function() {
   videoPreview.style.display = "flex";
 
 
-  /* Start sample ONLY after answer */
+  /* Start from beginning */
 
   previewVideo.currentTime = 0;
+
+
+  /*
+    Start video after user interaction.
+    This allows mobile browsers to play it.
+  */
 
   previewVideo.play().catch(function(error) {
 
     console.log(
-      "Video could not autoplay:",
+      "Video playback error:",
       error
     );
 
@@ -306,11 +1018,22 @@ answerCall.addEventListener("click", function() {
 });
 
 
-/* ==========================
-   RED DECLINE
-========================== */
+/* =========================
+   DECLINE CALL
+========================= */
 
 declineCall.addEventListener("click", function() {
+
+  /*
+    Stop video if it is playing.
+  */
+
+  previewVideo.pause();
+
+  previewVideo.currentTime = 0;
+
+
+  /* Hide all other screens */
 
   incomingCall.style.display = "none";
 
@@ -318,26 +1041,47 @@ declineCall.addEventListener("click", function() {
 
   insufficientMinutes.style.display = "none";
 
+  livePhotos.style.display = "none";
+
+
+  /*
+    Show incoming call again
+    after a short pause.
+  */
+
+  setTimeout(function() {
+
+    incomingCall.style.display = "block";
+
+  }, 500);
+
 });
 
 
-/* ==========================
-   VIDEO ENDS
-========================== */
+/* =========================
+   VIDEO FINISHED
+========================= */
 
 previewVideo.addEventListener("ended", function() {
 
-  /* Hide video */
+  /*
+    Hide video.
+  */
 
   videoPreview.style.display = "none";
 
 
-  /* Show insufficient minutes */
+  /*
+    Show insufficient minutes.
+  */
 
   insufficientMinutes.style.display = "flex";
 
 
-  /* After 1 second show photos */
+  /*
+    After 1.5 seconds,
+    show the photo page.
+  */
 
   setTimeout(function() {
 
@@ -345,25 +1089,59 @@ previewVideo.addEventListener("ended", function() {
 
     livePhotos.style.display = "grid";
 
-  }, 1000);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }, 1500);
 
 });
 
 
-/* ==========================
+/* =========================
    PHOTO → PAYMENT
-========================== */
+========================= */
 
 document.querySelectorAll(".live-photo").forEach(function(photo) {
 
-  photo.style.cursor = "pointer";
-
   photo.addEventListener("click", function() {
 
-    window.location.href = "payment.html";
+    window.location.href =
+      "payment.html";
 
   });
 
 });
 
+
+/* =========================
+   REFERRAL CODE
+========================= */
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const ref =
+  params.get("ref");
+
+if (ref) {
+
+  const refCode =
+    document.getElementById("refCode");
+
+  if (refCode) {
+
+    refCode.textContent =
+      ref;
+
+  }
+
+}
+
 </script>
+
+</body>
+        </html>
