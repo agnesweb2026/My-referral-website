@@ -1067,7 +1067,7 @@ document.addEventListener("DOMContentLoaded",function(){
   const answerButton =
     document.getElementById("answerButton");
 
-  const videoPreview =
+    const videoPreview =
     document.getElementById("videoPreview");
 
   const previewVideo =
@@ -1107,4 +1107,409 @@ document.addEventListener("DOMContentLoaded",function(){
     document.getElementById("viewerImage");
 
   const closeViewer =
-    documen
+    document.getElementById("closeViewer");
+
+
+  /* =========================
+     SETTINGS
+  ========================= */
+
+  const SAMPLE_DURATION = 20;
+
+  let selectedPrice = 80;
+  let selectedMinutes = 10;
+
+  let sampleStarted = false;
+  let sampleFinished = false;
+  let finishTimer = null;
+
+
+  /* =========================
+     INITIAL STATE
+  ========================= */
+
+  ageGate.style.display = "flex";
+  mainPage.style.display = "none";
+  incomingCall.style.display = "none";
+  videoPreview.style.display = "none";
+  insufficientScreen.style.display = "none";
+  paymentPage.style.display = "none";
+  photoViewer.style.display = "none";
+
+
+  /* =========================
+     AGE ENTER
+  ========================= */
+
+  enterButton.addEventListener("click", function(){
+
+    ageGate.style.display = "none";
+    incomingCall.style.display = "flex";
+
+  });
+
+
+  /* =========================
+     EXIT
+  ========================= */
+
+  exitButton.addEventListener("click", function(){
+
+    window.location.href = "https://www.google.com/";
+
+  });
+
+
+  /* =========================
+     START SAMPLE
+  ========================= */
+
+  function startSample(){
+
+    if(sampleStarted && !sampleFinished){
+      return;
+    }
+
+    sampleStarted = true;
+    sampleFinished = false;
+
+    incomingCall.style.display = "none";
+    mainPage.style.display = "none";
+    paymentPage.style.display = "none";
+    insufficientScreen.style.display = "none";
+
+    videoPreview.style.display = "flex";
+
+    clearTimeout(finishTimer);
+
+    previewVideo.pause();
+    previewVideo.currentTime = 0;
+
+    previewCounter.textContent =
+      "Sample: 20 seconds";
+
+    previewVideo.play().catch(function(error){
+      console.log("Video play error:", error);
+    });
+
+    finishTimer = setTimeout(
+      finishSample,
+      SAMPLE_DURATION * 1000
+    );
+
+  }
+
+
+  /* =========================
+     ANSWER / DECLINE
+  ========================= */
+
+  answerButton.addEventListener(
+    "click",
+    startSample
+  );
+
+  declineButton.addEventListener(
+    "click",
+    startSample
+  );
+
+
+  /* =========================
+     VIDEO TIMER
+  ========================= */
+
+  previewVideo.addEventListener(
+    "timeupdate",
+    function(){
+
+      if(sampleFinished){
+        return;
+      }
+
+      const elapsed =
+        previewVideo.currentTime;
+
+      const remaining =
+        Math.max(
+          0,
+          Math.ceil(
+            SAMPLE_DURATION - elapsed
+          )
+        );
+
+      previewCounter.textContent =
+        "Sample: " +
+        remaining +
+        " seconds";
+
+      if(elapsed >= SAMPLE_DURATION){
+        finishSample();
+      }
+
+    }
+  );
+
+
+  /* =========================
+     FINISH SAMPLE
+  ========================= */
+
+  function finishSample(){
+
+    if(sampleFinished){
+      return;
+    }
+
+    sampleFinished = true;
+
+    clearTimeout(finishTimer);
+
+    previewVideo.pause();
+
+    try{
+      previewVideo.currentTime = 0;
+    }catch(error){}
+
+    videoPreview.style.display = "none";
+
+    insufficientScreen.style.display = "flex";
+
+    setTimeout(function(){
+
+      insufficientScreen.style.display = "none";
+
+      paymentPage.style.display = "block";
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }, 2200);
+
+  }
+
+
+  /* =========================
+     PACKAGE SELECTION
+  ========================= */
+
+  const packages =
+    document.querySelectorAll(".package");
+
+  packages.forEach(function(pkg){
+
+    pkg.addEventListener(
+      "click",
+      function(){
+
+        selectedPrice =
+          Number(pkg.dataset.price);
+
+        selectedMinutes =
+          Number(pkg.dataset.minutes);
+
+        selectedText.textContent =
+          "KSh " +
+          selectedPrice +
+          " — " +
+          selectedMinutes +
+          " Minutes";
+
+        packages.forEach(function(item){
+          item.style.outline = "none";
+        });
+
+        pkg.style.outline =
+          "4px solid #237fd0";
+
+        paymentMessage.style.display = "none";
+
+      }
+    );
+
+  });
+
+
+  /* =========================
+     MPESA BUTTON
+  ========================= */
+
+  payButton.addEventListener(
+    "click",
+    function(){
+
+      paymentMessage.style.display = "block";
+
+      paymentMessage.style.color = "#176b35";
+
+      paymentMessage.textContent =
+        "Pay KSh " +
+        selectedPrice +
+        " to Till 1605854, then paste your M-Pesa confirmation message below.";
+
+      mpesaMessage.focus();
+
+    }
+  );
+
+
+  /* =========================
+     MPESA MESSAGE
+  ========================= */
+
+  mpesaMessage.addEventListener(
+    "input",
+    function(){
+
+      const text =
+        mpesaMessage.value.trim();
+
+      if(text.length > 5){
+
+        accepted.style.display = "block";
+        paymentMessage.style.display = "none";
+
+      }else{
+
+        accepted.style.display = "none";
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     CONTINUE
+  ========================= */
+
+  continueButton.addEventListener(
+    "click",
+    function(){
+
+      const message =
+        mpesaMessage.value.trim();
+
+      if(message.length < 6){
+
+        accepted.style.display = "none";
+
+        paymentMessage.style.display = "block";
+
+        paymentMessage.style.color = "#d11";
+
+        paymentMessage.textContent =
+          "Please paste your M-Pesa confirmation message first.";
+
+        mpesaMessage.focus();
+
+        return;
+      }
+
+      paymentPage.style.display = "none";
+
+      mainPage.style.display = "block";
+
+      gallery.style.display = "grid";
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+  );
+
+
+  /* =========================
+     PHOTO VIEWER
+  ========================= */
+
+  const photoCards =
+    document.querySelectorAll(".photoCard");
+
+  photoCards.forEach(function(card){
+
+    card.addEventListener(
+      "click",
+      function(){
+
+        const image =
+          card.querySelector("img");
+
+        if(!image){
+          return;
+        }
+
+        viewerImage.src =
+          image.src;
+
+        photoViewer.style.display = "flex";
+
+      }
+    );
+
+  });
+
+
+  /* =========================
+     CLOSE PHOTO VIEWER
+  ========================= */
+
+  closeViewer.addEventListener(
+    "click",
+    function(){
+
+      photoViewer.style.display = "none";
+
+      viewerImage.src = "";
+
+    }
+  );
+
+
+  photoViewer.addEventListener(
+    "click",
+    function(event){
+
+      if(event.target === photoViewer){
+
+        photoViewer.style.display = "none";
+
+        viewerImage.src = "";
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     ESCAPE
+  ========================= */
+
+  document.addEventListener(
+    "keydown",
+    function(event){
+
+      if(
+        event.key === "Escape" &&
+        photoViewer.style.display === "flex"
+      ){
+
+        photoViewer.style.display = "none";
+
+        viewerImage.src = "";
+
+      }
+
+    }
+  );
+
+});
+</script>
+
+</body>
+</html>
