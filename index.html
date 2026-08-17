@@ -155,7 +155,7 @@ h1 {
 
 
 /* =========================
-   SMALL PROFILE
+   PROFILE
 ========================= */
 
 .profile-ring {
@@ -183,23 +183,11 @@ h1 {
 
   border: 3px solid #7650c9;
 
-  background:
-    linear-gradient(
-      135deg,
-      #51455c,
-      #211d26
-    );
+  object-fit: cover;
 
-  display: flex;
+  display: block;
 
-  align-items: center;
-  justify-content: center;
-
-  color: white;
-
-  font-size: 52px;
-
-  font-weight: bold;
+  background: #211d26;
 }
 
 
@@ -596,8 +584,6 @@ h1 {
   .profile-photo {
     width: 112px;
     height: 112px;
-
-    font-size: 46px;
   }
 
   .caller-name {
@@ -698,28 +684,36 @@ h1 {
   <div class="call-content">
 
 
-    <!-- PROFILE -->
+    <!-- PROFILE PHOTO -->
 
     <div class="profile-ring">
 
-      <div class="profile-photo">
-        M
-      </div>
+      <img
+        id="callerPhoto"
+        class="profile-photo"
+        src="multixnxx-My breasts&n-5.jpg"
+        alt="Caller">
 
     </div>
 
 
-    <!-- NAME -->
+    <!-- CALLER NAME -->
 
-    <div class="caller-name">
-      Maya
+    <div
+      class="caller-name"
+      id="callerName">
+
+      Maya 🖤🤎❤️
+
     </div>
 
 
     <!-- TITLE -->
 
     <div class="call-title">
+
       INCOMING VIDEO CALL
+
     </div>
 
 
@@ -753,7 +747,9 @@ h1 {
         </button>
 
         <div class="call-label">
+
           Decline
+
         </div>
 
       </div>
@@ -773,7 +769,9 @@ h1 {
         </button>
 
         <div class="call-label">
+
           Answer
+
         </div>
 
       </div>
@@ -783,7 +781,9 @@ h1 {
 
 
     <div class="swipe-message">
+
       SWIPE UP TO MESSAGE
+
     </div>
 
 
@@ -833,15 +833,21 @@ h1 {
   <div class="insufficient-box">
 
     <h2>
+
       INSUFFICIENT MINUTES
+
     </h2>
 
     <p>
+
       Your preview has ended.
+
     </p>
 
     <p>
+
       Please purchase minutes to continue.
+
     </p>
 
   </div>
@@ -857,11 +863,15 @@ h1 {
 <div class="card">
 
   <h1>
+
     Welcome
+
   </h1>
 
   <p>
+
     Welcome to my referral website.
+
   </p>
 
 
@@ -879,7 +889,9 @@ h1 {
     <div class="live-photo">
 
       <span class="live-badge">
+
         LIVE
+
       </span>
 
       <span class="live-status">
@@ -904,7 +916,9 @@ h1 {
     <div class="live-photo">
 
       <span class="live-badge">
+
         LIVE
+
       </span>
 
       <span class="live-status">
@@ -929,7 +943,9 @@ h1 {
     <div class="live-photo">
 
       <span class="live-badge">
+
         LIVE
+
       </span>
 
       <span class="live-status">
@@ -954,7 +970,9 @@ h1 {
     <div class="live-photo">
 
       <span class="live-badge">
+
         LIVE
+
       </span>
 
       <span class="live-status">
@@ -979,7 +997,9 @@ h1 {
     <div class="live-photo">
 
       <span class="live-badge">
+
         LIVE
+
       </span>
 
       <span class="live-status">
@@ -1004,7 +1024,9 @@ h1 {
     <div class="live-photo">
 
       <span class="live-badge">
+
         LIVE
+
       </span>
 
       <span class="live-status">
@@ -1029,7 +1051,9 @@ h1 {
     <div class="live-photo">
 
       <span class="live-badge">
+
         LIVE
+
       </span>
 
       <span class="live-status">
@@ -1054,7 +1078,9 @@ h1 {
     <div class="live-photo">
 
       <span class="live-badge">
+
         LIVE
+
       </span>
 
       <span class="live-status">
@@ -1088,7 +1114,8 @@ h1 {
 
 function enterSite() {
 
-  document.getElementById("ageGate").style.display = "none";
+  document.getElementById("ageGate").style.display =
+    "none";
 
   startIncomingCall();
 
@@ -1132,6 +1159,109 @@ const declineCall =
 const previewSeconds =
   document.getElementById("previewSeconds");
 
+const callerPhoto =
+  document.getElementById("callerPhoto");
+
+const callerName =
+  document.getElementById("callerName");
+
+
+
+/* =========================
+   CALLERS
+========================= */
+
+const callers = [
+
+  {
+    name: "Judy 💖❣️",
+    photo: "multixnxx-10 pictures-0.jpg"
+  },
+
+  {
+    name: "Vanessa 🤪🥰",
+    photo: "multixnxx-10 pictures-5.jpg"
+  },
+
+  {
+    name: "June 🎀🎁",
+    photo: "multixnxx-15 pictures-2.jpg"
+  },
+
+  {
+    name: "Clara 🫦👄",
+    photo: "multixnxx-Long labias_ big clits-8.jpg"
+  },
+
+  {
+    name: "Maya 🖤🤎❤️",
+    photo: "multixnxx-My breasts&n-5.jpg"
+  },
+
+  {
+    name: "Val 💋❤️‍🔥",
+    photo: "multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -10.jpg"
+  },
+
+  {
+    name: "Bella 💘💓",
+    photo: "multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -12.jpg"
+  },
+
+  {
+    name: "Lizziy 🔥🔥",
+    photo: "multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -15.jpg"
+  }
+
+];
+
+
+let lastCaller = -1;
+
+
+
+/* =========================
+   SHOW RANDOM CALLER
+========================= */
+
+function showRandomCaller() {
+
+  let randomIndex;
+
+
+  do {
+
+    randomIndex =
+      Math.floor(
+        Math.random() * callers.length
+      );
+
+  } while (
+    callers.length > 1 &&
+    randomIndex === lastCaller
+  );
+
+
+  lastCaller = randomIndex;
+
+
+  const caller =
+    callers[randomIndex];
+
+
+  callerName.textContent =
+    caller.name;
+
+
+  callerPhoto.src =
+    caller.photo;
+
+
+  callerPhoto.alt =
+    caller.name;
+
+}
+
 
 
 /* =========================
@@ -1140,7 +1270,10 @@ const previewSeconds =
 
 function startIncomingCall() {
 
-  incomingCall.style.display = "block";
+  showRandomCaller();
+
+  incomingCall.style.display =
+    "block";
 
 }
 
@@ -1154,20 +1287,25 @@ answerCall.addEventListener(
   "click",
   function() {
 
-    incomingCall.style.display = "none";
+    incomingCall.style.display =
+      "none";
 
-    videoPreview.style.display = "flex";
+    videoPreview.style.display =
+      "flex";
 
-    previewVideo.currentTime = 0;
+    previewVideo.currentTime =
+      0;
 
-    previewVideo.play().catch(function(error) {
+    previewVideo.play().catch(
+      function(error) {
 
-      console.log(
-        "Video autoplay requires user interaction.",
-        error
-      );
+        console.log(
+          "Video autoplay requires user interaction.",
+          error
+        );
 
-    });
+      }
+    );
 
   }
 );
@@ -1182,17 +1320,22 @@ declineCall.addEventListener(
   "click",
   function() {
 
-    incomingCall.style.display = "none";
+    incomingCall.style.display =
+      "none";
 
-    videoPreview.style.display = "flex";
+    videoPreview.style.display =
+      "flex";
 
-    previewVideo.currentTime = 0;
+    previewVideo.currentTime =
+      0;
 
-    previewVideo.play().catch(function(error) {
+    previewVideo.play().catch(
+      function(error) {
 
-      console.log(error);
+        console.log(error);
 
-    });
+      }
+    );
 
   }
 );
@@ -1207,9 +1350,11 @@ previewVideo.addEventListener(
   "ended",
   function() {
 
-    videoPreview.style.display = "none";
+    videoPreview.style.display =
+      "none";
 
-    insufficientMinutes.style.display = "flex";
+    insufficientMinutes.style.display =
+      "flex";
 
 
     setTimeout(
@@ -1222,8 +1367,11 @@ previewVideo.addEventListener(
           "grid";
 
         window.scrollTo({
+
           top: 0,
+
           behavior: "smooth"
+
         });
 
       },
@@ -1252,6 +1400,7 @@ previewVideo.addEventListener(
         )
       );
 
+
     previewSeconds.textContent =
       remaining;
 
@@ -1266,23 +1415,25 @@ previewVideo.addEventListener(
 
 document
   .querySelectorAll(".live-photo")
-  .forEach(function(photo) {
+  .forEach(
+    function(photo) {
 
-    photo.addEventListener(
-      "click",
-      function() {
+      photo.addEventListener(
+        "click",
+        function() {
 
-        window.location.href =
-          "payment.html";
+          window.location.href =
+            "payment.html";
 
-      }
-    );
+        }
+      );
 
-  });
+    }
+  );
 
 
 </script>
 
 
 </body>
-</html>
+   </html>
