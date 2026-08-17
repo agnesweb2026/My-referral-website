@@ -1,514 +1,176 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Referral Website</title>
+<!-- INCOMING VIDEO CALL -->
 
-<style>
-* {
-  box-sizing: border-box;
-}
+<div id="incomingCall" style="
+  position:fixed;
+  inset:0;
+  z-index:90000;
+  display:flex;
+  overflow:hidden;
+  color:white;
+  text-align:center;
+  background:#17161b;
+">
 
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  margin: 0;
-  padding: 20px 15px;
-  text-align: center;
-}
-
-.card {
-  max-width: 420px;
-  margin: auto;
-  background: white;
-  padding: 25px;
-  border-radius: 18px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-h1 {
-  margin-top: 0;
-}
-
-.ref {
-  background: #f0f0f0;
-  padding: 12px;
-  border-radius: 10px;
-  margin: 20px 0;
-}
-
-.gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-  margin-top: 20px;
-}
-
-.gallery img {
-  width: 90%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 14px 25px;
-  background: #1877f2;
-  color: white;
-  text-decoration: none;
-  border-radius: 10px;
-  font-weight: bold;
-}
-
-.live-photo {
-  position: relative;
-}
-
-.live-photo img {
-  display: block;
-  width: 100%;
-}
-
-.live-badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: #f0184c;
-  color: white;
-  padding: 5px 8px;
-  border-radius: 7px;
-  font-weight: bold;
-  font-size: 11px;
-  z-index: 2;
-}
-
-.live-photo::after {
-  content: "▶";
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  width: 28px;
-  height: 28px;
-  background: rgba(0,0,0,0.7);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  z-index: 10;
-}
-
-.live-badge::before {
-  content: "●";
-  margin-right: 5px;
-}
-
-.live-status {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  background: rgba(0,0,0,0.85);
-  color: white;
-  padding: 7px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  z-index: 3;
-}
-
-.live-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: #22c55e;
-  border-radius: 50%;
-  margin-right: 7px;
-  border: 1px solid white;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0.2;
-  }
-}
-
-
-/* =========================
-   AGE GATE
-========================= */
-
-#ageGate {
-  position: fixed;
-  inset: 0;
-  background: #111;
-  color: white;
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
-}
-
-
-/* =========================
-   INCOMING CALL
-========================= */
-
-#incomingCall {
-  position: fixed;
-  inset: 0;
-  z-index: 90000;
-  display: none;
-  overflow: hidden;
-  color: white;
-  text-align: center;
-  background: #17161b;
-}
-
-/* blurred background */
-#incomingCall::before {
-  content: "";
-  position: absolute;
-  inset: -25px;
-  background:
-    radial-gradient(
-      circle at center,
-      #5a5050 0%,
-      #29262a 45%,
-      #111116 100%
-    );
-  filter: blur(18px);
-  transform: scale(1.1);
-}
-
-/* dark overlay */
-#incomingCall::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.38);
-}
-
-.call-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 25px;
-}
-
-/* profile picture */
-.profile-ring {
-  width: 230px;
-  height: 230px;
-  border-radius: 50%;
-  border: 2px solid rgba(146,88,255,0.65);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: ringPulse 2s infinite;
-}
-
-.profile-photo {
-  width: 190px;
-  height: 190px;
-  border-radius: 50%;
-  border: 3px solid #7650c9;
-  background:
-    linear-gradient(
+  <div style="
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
       135deg,
-      #3b3150,
-      #17151d
+      #4b4545,
+      #18171b
     );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 75px;
-  font-weight: bold;
-  color: white;
-}
+    filter:blur(18px);
+    transform:scale(1.1);
+  "></div>
 
-@keyframes ringPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(145,85,255,0.35);
-  }
+  <div style="
+    position:relative;
+    z-index:2;
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  ">
 
-  70% {
-    box-shadow: 0 0 0 18px rgba(145,85,255,0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(145,85,255,0);
-  }
-}
-
-.caller-name {
-  margin-top: 18px;
-  font-size: 42px;
-  font-weight: 400;
-}
-
-.call-title {
-  margin-top: 8px;
-  font-size: 19px;
-  letter-spacing: 1px;
-  color: rgba(255,255,255,0.65);
-}
-
-.ringing {
-  margin-top: 28px;
-  color: #b98cff;
-  font-size: 20px;
-}
-
-.ringing-dot {
-  display: inline-block;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #a66cff;
-  margin-right: 8px;
-  animation: ringDot 1s infinite;
-}
-
-@keyframes ringDot {
-  50% {
-    opacity: 0.25;
-  }
-}
-
-
-/* CALL BUTTONS */
-
-.call-buttons {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 105px;
-  display: flex;
-  justify-content: center;
-  gap: 105px;
-}
-
-.call-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.call-button {
-  width: 112px;
-  height: 112px;
-  border-radius: 50%;
-  border: 4px solid rgba(255,255,255,0.18);
-  color: white;
-  font-size: 43px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow:
-    0 4px 15px rgba(0,0,0,0.45),
-    inset 0 0 0 2px rgba(0,0,0,0.2);
-}
-
-.decline-button {
-  background: #ed3b3b;
-}
-
-.answer-button {
-  background: #14a94b;
-}
-
-.call-label {
-  margin-top: 12px;
-  font-size: 18px;
-  color: rgba(255,255,255,0.7);
-}
-
-.swipe-message {
-  position: absolute;
-  bottom: 45px;
-  left: 0;
-  right: 0;
-  color: rgba(255,255,255,0.25);
-  font-size: 15px;
-  letter-spacing: 1px;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 380px) {
-
-  .profile-ring {
-    width: 190px;
-    height: 190px;
-  }
-
-  .profile-photo {
-    width: 155px;
-    height: 155px;
-  }
-
-  .caller-name {
-    font-size: 36px;
-  }
-
-  .call-buttons {
-    gap: 65px;
-  }
-
-  .call-button {
-    width: 95px;
-    height: 95px;
-    font-size: 36px;
-  }
-}
-
-</style>
-</head>
-
-
-<body>
-
-
-<!-- =========================
-     AGE GATE
-========================= -->
-
-<div id="ageGate">
-
-  <div style="max-width:380px;">
-
-    <div style="font-size:60px;">🔞</div>
-
-    <h1>18+ ONLY</h1>
-
-    <p>This website contains adult-oriented content.</p>
-
-    <p>You must be 18 years or older to enter.</p>
-
-    <button onclick="enterSite()" style="
-      padding:14px 25px;
-      margin:10px;
-      border:0;
-      border-radius:10px;
-      background:#22c55e;
-      color:white;
-      font-weight:bold;
+    <div style="
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      border:2px solid #7650c9;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     ">
-      I AM 18+ — ENTER
-    </button>
 
-    <button onclick="leaveSite()" style="
-      padding:14px 25px;
-      margin:10px;
-      border:0;
-      border-radius:10px;
-      background:#777;
-      color:white;
-      font-weight:bold;
-    ">
-      EXIT
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     INCOMING VIDEO CALL
-========================= -->
-
-<div id="incomingCall">
-
-  <div class="call-content">
-
-    <div class="profile-ring">
-
-      <div class="profile-photo">
+      <div style="
+        width:180px;
+        height:180px;
+        border-radius:50%;
+        border:3px solid #7650c9;
+        background:#29252d;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:70px;
+      ">
         M
       </div>
 
     </div>
 
-
-    <div class="caller-name">
+    <div style="
+      margin-top:18px;
+      font-size:42px;
+    ">
       Maya
     </div>
 
-
-    <div class="call-title">
+    <div style="
+      margin-top:8px;
+      font-size:18px;
+      color:#aaa;
+      letter-spacing:1px;
+    ">
       INCOMING VIDEO CALL
     </div>
 
-
-    <div class="ringing">
-      <span class="ringing-dot"></span>
+    <div style="
+      margin-top:25px;
+      color:#b98cff;
+      font-size:20px;
+    ">
+      <span style="color:#a66cff;">●</span>
       Ringing...
     </div>
 
 
-    <div class="call-buttons">
+    <!-- BUTTONS -->
+
+    <div style="
+      position:absolute;
+      bottom:105px;
+      left:0;
+      right:0;
+      display:flex;
+      justify-content:center;
+      gap:100px;
+    ">
 
 
-      <!-- RED DECLINE -->
+      <!-- RED -->
 
-      <div class="call-option">
+      <div>
 
         <button
           id="declineCall"
-          class="call-button decline-button"
           type="button"
-          aria-label="Decline call">
-
+          style="
+            width:105px;
+            height:105px;
+            border-radius:50%;
+            border:4px solid rgba(255,255,255,.15);
+            background:#ed3b3b;
+            color:white;
+            font-size:42px;
+            cursor:pointer;
+          "
+        >
           ☎
-
         </button>
 
-        <div class="call-label">
+        <div style="
+          margin-top:10px;
+          font-size:18px;
+          color:#ccc;
+        ">
           Decline
         </div>
 
       </div>
 
 
-      <!-- GREEN ANSWER -->
+      <!-- GREEN -->
 
-      <div class="call-option">
+      <div>
 
         <button
           id="answerCall"
-          class="call-button answer-button"
           type="button"
-          aria-label="Answer call">
-
+          style="
+            width:105px;
+            height:105px;
+            border-radius:50%;
+            border:4px solid rgba(255,255,255,.15);
+            background:#14a94b;
+            color:white;
+            font-size:42px;
+            cursor:pointer;
+          "
+        >
           ☎
-
         </button>
 
-        <div class="call-label">
+        <div style="
+          margin-top:10px;
+          font-size:18px;
+          color:#ccc;
+        ">
           Answer
         </div>
 
       </div>
 
-
     </div>
 
-
-    <div class="swipe-message">
+    <div style="
+      position:absolute;
+      bottom:45px;
+      color:rgba(255,255,255,.3);
+      font-size:14px;
+      letter-spacing:1px;
+    ">
       SWIPE UP TO MESSAGE
     </div>
 
@@ -517,14 +179,7 @@ h1 {
 </div>
 
 
-<!-- =========================
-     MAIN CARD
-========================= -->
-
-<div class="card">
-
-
-<!-- VIDEO PREVIEW -->
+<!-- SAMPLE VIDEO -->
 
 <div id="videoPreview" style="
   position:fixed;
@@ -532,20 +187,14 @@ h1 {
   width:100vw;
   height:100vh;
   background:#000;
-  z-index:9999;
-  display:flex;
-  flex-direction:column;
+  z-index:89999;
+  display:none;
   align-items:center;
   justify-content:center;
-  color:white;
-  text-align:center;
-  margin:0;
-  padding:0;
 ">
 
   <video
     id="previewVideo"
-    autoplay
     muted
     playsinline
     style="
@@ -563,223 +212,45 @@ h1 {
 
   </video>
 
+</div>
 
-  <div style="
-    position:absolute;
-    bottom:20px;
-    left:0;
-    right:0;
-    font-size:16px;
-    text-shadow:0 1px 3px #000;
-  ">
 
-    Preview:
-    <span id="previewSeconds">
-      15
-    </span>
-    seconds
+<!-- INSUFFICIENT MINUTES -->
+
+<div id="insufficientMinutes" style="
+  position:fixed;
+  inset:0;
+  z-index:89998;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:#111;
+  color:white;
+  text-align:center;
+">
+
+  <div>
+
+    <div style="
+      font-size:55px;
+      margin-bottom:15px;
+    ">
+      ⏱️
+    </div>
+
+    <div style="
+      font-size:30px;
+      font-weight:bold;
+    ">
+      INSUFFICIENT MINUTES
+    </div>
 
   </div>
 
 </div>
 
 
-<p>
-  Welcome to my referral website.
-</p>
-
-
-<!-- =========================
-     LIVE PHOTOS
-========================= -->
-
-<div
-  id="livePhotos"
-  class="gallery"
-  style="display:none;"
->
-
-
-<div class="live-photo">
-
-  <span class="live-badge">
-    LIVE
-  </span>
-
-  <span class="live-status">
-    <span class="live-dot"></span>
-    Live now
-  </span>
-
-  <img
-    src="multixnxx-10 pictures-0.jpg"
-    alt="Photo 1"
-  >
-
-</div>
-
-
-<div class="live-photo">
-
-  <span class="live-badge">
-    LIVE
-  </span>
-
-  <span class="live-status">
-    <span class="live-dot"></span>
-    Live now
-  </span>
-
-  <img
-    src="multixnxx-10 pictures-5.jpg"
-    alt="Photo 2"
-  >
-
-</div>
-
-
-<div class="live-photo">
-
-  <span class="live-badge">
-    LIVE
-  </span>
-
-  <span class="live-status">
-    <span class="live-dot"></span>
-    Live now
-  </span>
-
-  <img
-    src="multixnxx-15 pictures-2.jpg"
-    alt="Photo 3"
-  >
-
-</div>
-
-
-<div class="live-photo">
-
-  <span class="live-badge">
-    LIVE
-  </span>
-
-  <span class="live-status">
-    <span class="live-dot"></span>
-    Live now
-  </span>
-
-  <img
-    src="multixnxx-Long labias_ big clits-8.jpg"
-    alt="Photo 4"
-  >
-
-</div>
-
-
-<div class="live-photo">
-
-  <span class="live-badge">
-    LIVE
-  </span>
-
-  <span class="live-status">
-    <span class="live-dot"></span>
-    Live now
-  </span>
-
-  <img
-    src="multixnxx-My breasts&n-5.jpg"
-    alt="Photo 5"
-  >
-
-</div>
-
-
-<div class="live-photo">
-
-  <span class="live-badge">
-    LIVE
-  </span>
-
-  <span class="live-status">
-    <span class="live-dot"></span>
-    Live now
-  </span>
-
-  <img
-    src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -10.jpg"
-    alt="Photo 6"
-  >
-
-</div>
-
-
-<div class="live-photo">
-
-  <span class="live-badge">
-    LIVE
-  </span>
-
-  <span class="live-status">
-    <span class="live-dot"></span>
-    Live now
-  </span>
-
-  <img
-    src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -12.jpg"
-    alt="Photo 7"
-  >
-
-</div>
-
-
-<div class="live-photo">
-
-  <span class="live-badge">
-    LIVE
-  </span>
-
-  <span class="live-status">
-    <span class="live-dot"></span>
-    Live now
-  </span>
-
-  <img
-    src="multixnxx-OPEN INVITATION_ FIND THE PEARL and WIN A -15.jpg"
-    alt="Photo 8"
-  >
-
-</div>
-
-</div>
-
-</div>
-
-
 <script>
-
-/* =========================
-   AGE GATE
-========================= */
-
-function enterSite() {
-
-  document.getElementById("ageGate").style.display =
-    "none";
-
-}
-
-function leaveSite() {
-
-  window.location.href =
-    "https://www.google.com";
-
-}
-
-
-/* =========================
-   ELEMENTS
-========================= */
 
 const incomingCall =
   document.getElementById("incomingCall");
@@ -790,156 +261,109 @@ const answerCall =
 const declineCall =
   document.getElementById("declineCall");
 
-const livePhotos =
-  document.getElementById("livePhotos");
-
 const videoPreview =
   document.getElementById("videoPreview");
 
 const previewVideo =
   document.getElementById("previewVideo");
 
+const insufficientMinutes =
+  document.getElementById("insufficientMinutes");
 
-/* =========================
-   SHOW INCOMING CALL
-========================= */
-
-function showIncomingCall() {
-
-  incomingCall.style.display =
-    "block";
-
-}
+const livePhotos =
+  document.getElementById("livePhotos");
 
 
-/* =========================
-   ANSWER BUTTON
-========================= */
+/* ==========================
+   GREEN ANSWER
+========================== */
 
-answerCall.addEventListener(
-  "click",
-  function() {
+answerCall.addEventListener("click", function() {
 
-    incomingCall.style.display =
-      "none";
+  /* Hide call */
 
-    livePhotos.style.display =
-      "grid";
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-  }
-);
+  incomingCall.style.display = "none";
 
 
-/* =========================
-   RED DECLINE BUTTON
-========================= */
+  /* Show video */
 
-declineCall.addEventListener(
-  "click",
-  function() {
+  videoPreview.style.display = "flex";
 
-    incomingCall.style.display =
-      "none";
 
-    /*
-      Return to the beginning:
-      show the preview again.
-    */
+  /* Start sample ONLY after answer */
 
-    livePhotos.style.display =
-      "none";
+  previewVideo.currentTime = 0;
 
-    videoPreview.style.display =
-      "flex";
+  previewVideo.play().catch(function(error) {
 
-    previewVideo.currentTime = 0;
-
-    previewVideo.play().catch(
-      function() {}
+    console.log(
+      "Video could not autoplay:",
+      error
     );
 
-  }
-);
-
-
-/* =========================
-   VIDEO FINISHED
-========================= */
-
-previewVideo.addEventListener(
-  "ended",
-  function() {
-
-    videoPreview.style.display =
-      "none";
-
-    livePhotos.style.display =
-      "none";
-
-    showIncomingCall();
-
-  }
-);
-
-
-/* =========================
-   LIVE PHOTOS
-========================= */
-
-document.querySelectorAll(
-  ".live-photo"
-).forEach(function(photo) {
-
-  photo.style.cursor =
-    "pointer";
-
-  photo.addEventListener(
-    "click",
-    function() {
-
-      window.location.href =
-        "payment.html";
-
-    }
-  );
+  });
 
 });
 
 
-/* =========================
-   REFERRAL
-========================= */
+/* ==========================
+   RED DECLINE
+========================== */
 
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
+declineCall.addEventListener("click", function() {
 
-const ref =
-  params.get("ref");
+  incomingCall.style.display = "none";
 
-if (ref) {
+  videoPreview.style.display = "none";
 
-  const refCode =
-    document.getElementById(
-      "refCode"
-    );
+  insufficientMinutes.style.display = "none";
 
-  if (refCode) {
+});
 
-    refCode.textContent =
-      ref;
 
-  }
+/* ==========================
+   VIDEO ENDS
+========================== */
 
-}
+previewVideo.addEventListener("ended", function() {
+
+  /* Hide video */
+
+  videoPreview.style.display = "none";
+
+
+  /* Show insufficient minutes */
+
+  insufficientMinutes.style.display = "flex";
+
+
+  /* After 1 second show photos */
+
+  setTimeout(function() {
+
+    insufficientMinutes.style.display = "none";
+
+    livePhotos.style.display = "grid";
+
+  }, 1000);
+
+});
+
+
+/* ==========================
+   PHOTO → PAYMENT
+========================== */
+
+document.querySelectorAll(".live-photo").forEach(function(photo) {
+
+  photo.style.cursor = "pointer";
+
+  photo.addEventListener("click", function() {
+
+    window.location.href = "payment.html";
+
+  });
+
+});
 
 </script>
-
-</body>
-</html>
