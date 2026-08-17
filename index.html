@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0">
 
 <title>My Referral Website</title>
 
+
 <style>
+
+/* =========================
+   BASIC
+========================= */
 
 *{
   box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
   margin:0;
   padding:0;
   background:#000;
@@ -25,54 +35,76 @@ body{
   text-align:center;
 }
 
-h1{
-  margin:10px 0;
-}
-
-p{
-  color:#ccc;
-}
-
 
 /* =========================
    AGE GATE
 ========================= */
 
 #ageGate{
+
   position:fixed;
   inset:0;
+
   z-index:9999;
+
   background:#111;
+
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   padding:20px;
 }
 
 .ageBox{
+
   max-width:380px;
+
   text-align:center;
 }
 
 .ageIcon{
+
   font-size:60px;
 }
 
+.ageBox h1{
+
+  margin:10px 0;
+}
+
+.ageBox p{
+
+  color:#ccc;
+}
+
 .ageBox button{
+
   border:0;
+
   border-radius:12px;
+
   padding:15px 22px;
+
   margin:8px;
+
   color:#fff;
+
   font-weight:bold;
+
   font-size:15px;
+
+  cursor:pointer;
 }
 
 .enterButton{
+
   background:#22c55e;
 }
 
 .exitButton{
+
   background:#666;
 }
 
@@ -82,18 +114,28 @@ p{
 ========================= */
 
 #incomingCall{
+
   position:fixed;
+
   inset:0;
+
   z-index:9000;
+
   display:none;
+
   background:#17161b;
+
   align-items:center;
+
   justify-content:center;
+
   overflow:hidden;
 }
 
 .callBackground{
+
   position:absolute;
+
   inset:-30px;
 
   background:
@@ -105,74 +147,101 @@ p{
     );
 
   filter:blur(20px);
+
   transform:scale(1.1);
 }
 
 .callOverlay{
+
   position:absolute;
+
   inset:0;
+
   background:rgba(0,0,0,.55);
 }
 
 .callContent{
+
   position:relative;
+
   z-index:2;
 
   display:flex;
+
   flex-direction:column;
+
   align-items:center;
+
   justify-content:center;
 
   height:100%;
+
   width:100%;
 }
 
 .profileRing{
+
   width:155px;
+
   height:155px;
 
   border-radius:50%;
+
   border:3px solid #8b5cf6;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
 }
 
 .profilePhoto{
+
   width:125px;
+
   height:125px;
 
   border-radius:50%;
+
   object-fit:cover;
 
   background:#222;
 }
 
 .callerName{
+
   margin-top:15px;
+
   font-size:28px;
+
   font-weight:bold;
 }
 
 .callTitle{
+
   margin-top:5px;
 
   font-size:13px;
+
   color:#aaa;
 
   letter-spacing:1px;
 }
 
 .ringing{
+
   margin-top:15px;
+
   color:#c19cff;
 }
 
 .ringDot{
+
   display:inline-block;
 
   width:9px;
+
   height:9px;
 
   border-radius:50%;
@@ -191,6 +260,7 @@ p{
 }
 
 .callButtons{
+
   display:flex;
 
   gap:70px;
@@ -199,31 +269,41 @@ p{
 }
 
 .callOption{
+
   text-align:center;
 }
 
 .callButton{
+
   width:78px;
+
   height:78px;
 
   border:0;
+
   border-radius:50%;
 
   color:#fff;
 
   font-size:30px;
+
+  cursor:pointer;
 }
 
 .declineButton{
+
   background:#ed3b3b;
 }
 
 .answerButton{
+
   background:#14a94b;
 }
 
 .callLabel{
+
   margin-top:8px;
+
   color:#ccc;
 }
 
@@ -233,7 +313,9 @@ p{
 ========================= */
 
 #videoPreview{
+
   position:fixed;
+
   inset:0;
 
   z-index:9500;
@@ -243,22 +325,27 @@ p{
   display:none;
 
   align-items:center;
+
   justify-content:center;
 }
 
 #previewVideo{
+
   width:100%;
+
   height:100%;
 
   object-fit:contain;
 }
 
 .previewCounter{
+
   position:absolute;
 
   bottom:20px;
 
   left:0;
+
   right:0;
 
   color:#fff;
@@ -270,13 +357,30 @@ p{
 
 
 /* =========================
+   PAGE
+========================= */
+
+.pageTitle{
+
+  margin-top:10px;
+}
+
+.pageText{
+
+  color:#ccc;
+}
+
+
+/* =========================
    GALLERY
 ========================= */
 
 #gallery{
+
   display:none;
 
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:
+    repeat(2,1fr);
 
   gap:18px;
 
@@ -284,6 +388,7 @@ p{
 }
 
 .photoCard{
+
   position:relative;
 
   height:230px;
@@ -300,7 +405,9 @@ p{
 }
 
 .photoCard img{
+
   width:100%;
+
   height:100%;
 
   object-fit:cover;
@@ -309,9 +416,11 @@ p{
 }
 
 .liveBadge{
+
   position:absolute;
 
   top:9px;
+
   left:9px;
 
   z-index:2;
@@ -330,10 +439,13 @@ p{
 }
 
 .liveStatus{
+
   position:absolute;
 
   left:9px;
+
   right:9px;
+
   bottom:9px;
 
   z-index:2;
@@ -350,9 +462,11 @@ p{
 }
 
 .liveDot{
+
   display:inline-block;
 
   width:9px;
+
   height:9px;
 
   border-radius:50%;
@@ -369,7 +483,8 @@ p{
    LOADING
 ========================= */
 
-.galleryLoading{
+#loadingPhotos{
+
   display:none;
 
   margin-top:30px;
@@ -381,31 +496,53 @@ p{
 
 
 /* =========================
+   ERROR
+========================= */
+
+#errorPhotos{
+
+  display:none;
+
+  margin-top:30px;
+
+  color:#ff7777;
+
+  font-size:14px;
+}
+
+
+/* =========================
    MOBILE
 ========================= */
 
 @media(max-width:400px){
 
   #gallery{
+
     gap:12px;
   }
 
   .photoCard{
+
     height:190px;
   }
 
   .callButtons{
+
     gap:45px;
   }
 
   .callButton{
+
     width:70px;
+
     height:70px;
   }
 
 }
 
 </style>
+
 </head>
 
 
@@ -516,10 +653,13 @@ p{
         </button>
 
         <div class="callLabel">
+
           Decline
+
         </div>
 
       </div>
+
 
 
       <div class="callOption">
@@ -533,7 +673,9 @@ p{
         </button>
 
         <div class="callLabel">
+
           Answer
+
         </div>
 
       </div>
@@ -582,23 +724,25 @@ p{
 
 
 
-<h1>
+<!-- =========================
+     MAIN PAGE
+========================= -->
+
+<h1 class="pageTitle">
+
   Welcome
+
 </h1>
 
-<p>
+<p class="pageText">
+
   Welcome to my referral website.
+
 </p>
 
 
 
-<!-- =========================
-     GALLERY LOADING
-========================= -->
-
-<div
-  id="galleryLoading"
-  class="galleryLoading">
+<div id="loadingPhotos">
 
   Loading photos...
 
@@ -606,8 +750,16 @@ p{
 
 
 
+<div id="errorPhotos">
+
+  Unable to load photos.
+
+</div>
+
+
+
 <!-- =========================
-     REAL PHOTO GALLERY
+     ALL GITHUB PHOTOS
 ========================= -->
 
 <div id="gallery"></div>
@@ -622,25 +774,54 @@ p{
 ========================= */
 
 const ageGate =
-  document.getElementById("ageGate");
+  document.getElementById(
+    "ageGate"
+  );
 
 const incomingCall =
-  document.getElementById("incomingCall");
+  document.getElementById(
+    "incomingCall"
+  );
 
 const videoPreview =
-  document.getElementById("videoPreview");
+  document.getElementById(
+    "videoPreview"
+  );
 
 const previewVideo =
-  document.getElementById("previewVideo");
+  document.getElementById(
+    "previewVideo"
+  );
 
 const previewSeconds =
-  document.getElementById("previewSeconds");
+  document.getElementById(
+    "previewSeconds"
+  );
 
 const gallery =
-  document.getElementById("gallery");
+  document.getElementById(
+    "gallery"
+  );
 
-const galleryLoading =
-  document.getElementById("galleryLoading");
+const loadingPhotos =
+  document.getElementById(
+    "loadingPhotos"
+  );
+
+const errorPhotos =
+  document.getElementById(
+    "errorPhotos"
+  );
+
+const callerPhoto =
+  document.getElementById(
+    "callerPhoto"
+  );
+
+const callerName =
+  document.getElementById(
+    "callerName"
+  );
 
 
 /* =========================
@@ -649,12 +830,18 @@ const galleryLoading =
 
 const SAMPLE_DURATION = 60;
 
+
+/*
+   YOUR ACTUAL GITHUB
+   REPOSITORY
+*/
+
 const GITHUB_API =
   "https://api.github.com/repos/agnesweb2026/My-referral-website/contents/";
 
 
 /* =========================
-   ENTER SITE
+   ENTER
 ========================= */
 
 function enterSite(){
@@ -664,6 +851,8 @@ function enterSite(){
 
   incomingCall.style.display =
     "flex";
+
+  loadCallerPhoto();
 
 }
 
@@ -676,6 +865,96 @@ function leaveSite(){
 
   window.location.href =
     "https://www.google.com";
+
+}
+
+
+/* =========================
+   RANDOM CALLER PHOTO
+========================= */
+
+async function loadCallerPhoto(){
+
+  try{
+
+    const response =
+      await fetch(
+        GITHUB_API
+      );
+
+    if(!response.ok){
+
+      return;
+
+    }
+
+    const files =
+      await response.json();
+
+
+    const imageFiles =
+      files.filter(
+        function(file){
+
+          if(
+            file.type !== "file"
+          ){
+
+            return false;
+
+          }
+
+
+          const name =
+            file.name.toLowerCase();
+
+
+          return(
+            name.endsWith(".jpg") ||
+            name.endsWith(".jpeg") ||
+            name.endsWith(".png") ||
+            name.endsWith(".webp")
+          );
+
+        }
+      );
+
+
+    if(
+      imageFiles.length === 0
+    ){
+
+      return;
+
+    }
+
+
+    const randomIndex =
+      Math.floor(
+        Math.random() *
+        imageFiles.length
+      );
+
+
+    const selected =
+      imageFiles[randomIndex];
+
+
+    callerPhoto.src =
+      selected.download_url;
+
+
+    callerName.textContent =
+      "Incoming video call";
+
+  }catch(error){
+
+    console.log(
+      "Caller photo error:",
+      error
+    );
+
+  }
 
 }
 
@@ -703,26 +982,34 @@ function startSample(){
   previewSeconds.textContent =
     SAMPLE_DURATION;
 
+
   previewVideo.play()
-    .catch(function(error){
+    .catch(
+      function(error){
 
-      console.log(
-        "Video requires interaction",
-        error
-      );
+        console.log(
+          "Video play error:",
+          error
+        );
 
-    });
+      }
+    );
 
 }
 
 
 /* =========================
-   VIDEO LOOP
+   VIDEO ENDED
 ========================= */
 
 previewVideo.addEventListener(
   "ended",
   function(){
+
+    /*
+      If the video itself ends
+      before 60 seconds, restart it.
+    */
 
     if(
       previewVideo.currentTime <
@@ -741,7 +1028,7 @@ previewVideo.addEventListener(
 
 
 /* =========================
-   SAMPLE TIMER
+   60 SECOND TIMER
 ========================= */
 
 previewVideo.addEventListener(
@@ -750,6 +1037,7 @@ previewVideo.addEventListener(
 
     const elapsed =
       previewVideo.currentTime;
+
 
     const remaining =
       Math.max(
@@ -760,12 +1048,14 @@ previewVideo.addEventListener(
         )
       );
 
+
     previewSeconds.textContent =
       remaining;
 
 
     if(
-      elapsed >= SAMPLE_DURATION
+      elapsed >=
+      SAMPLE_DURATION
     ){
 
       previewVideo.pause();
@@ -776,7 +1066,7 @@ previewVideo.addEventListener(
       videoPreview.style.display =
         "none";
 
-      loadGallery();
+      loadAllGitHubPhotos();
 
     }
 
@@ -785,80 +1075,23 @@ previewVideo.addEventListener(
 
 
 /* =========================
-   CREATE PHOTO CARD
+   LOAD ALL GITHUB PHOTOS
 ========================= */
 
-function createPhotoCard(
-  imageUrl,
-  number
-){
-
-  const card =
-    document.createElement("div");
-
-  card.className =
-    "photoCard";
-
-  card.onclick =
-    openPayment;
-
-
-  const image =
-    document.createElement("img");
-
-  image.src =
-    imageUrl;
-
-  image.alt =
-    "Photo " + number;
-
-  image.loading =
-    "lazy";
-
-
-  const liveBadge =
-    document.createElement("div");
-
-  liveBadge.className =
-    "liveBadge";
-
-  liveBadge.innerHTML =
-    "● LIVE";
-
-
-  const liveStatus =
-    document.createElement("div");
-
-  liveStatus.className =
-    "liveStatus";
-
-  liveStatus.innerHTML =
-    '<span class="liveDot"></span> Live now';
-
-
-  card.appendChild(image);
-
-  card.appendChild(liveBadge);
-
-  card.appendChild(liveStatus);
-
-
-  return card;
-
-}
-
-
-/* =========================
-   LOAD REAL GITHUB PHOTOS
-========================= */
-
-async function loadGallery(){
+async function loadAllGitHubPhotos(){
 
   gallery.innerHTML =
     "";
 
-  galleryLoading.style.display =
+  gallery.style.display =
+    "none";
+
+  errorPhotos.style.display =
+    "none";
+
+  loadingPhotos.style.display =
     "block";
+
 
   try{
 
@@ -871,7 +1104,7 @@ async function loadGallery(){
     if(!response.ok){
 
       throw new Error(
-        "Unable to load GitHub files"
+        "GitHub request failed"
       );
 
     }
@@ -882,77 +1115,211 @@ async function loadGallery(){
 
 
     /*
-      Only use JPG/JPEG photos.
-      This prevents unrelated files
-      such as the sample video or
-      website screenshots from appearing.
+      TAKE EVERY IMAGE FILE
+      FROM YOUR GITHUB
     */
 
-    const photos =
-      files.filter(function(file){
+    const imageFiles =
+      files.filter(
+        function(file){
 
-        if(
-          file.type !== "file"
-        ){
+          if(
+            file.type !== "file"
+          ){
 
-          return false;
+            return false;
+
+          }
+
+
+          const fileName =
+            file.name.toLowerCase();
+
+
+          return(
+            fileName.endsWith(".jpg") ||
+            fileName.endsWith(".jpeg") ||
+            fileName.endsWith(".png") ||
+            fileName.endsWith(".webp") ||
+            fileName.endsWith(".gif")
+          );
 
         }
-
-
-        const name =
-          file.name.toLowerCase();
-
-
-        return(
-          name.endsWith(".jpg") ||
-          name.endsWith(".jpeg")
-        );
-
-      });
+      );
 
 
     /*
-      Show a maximum of 24 real photos.
+      RANDOMIZE THE ORDER
+      EVERY TIME GALLERY LOADS
     */
 
-    const selectedPhotos =
-      photos.slice(0,24);
+    const shuffled =
+      [...imageFiles];
 
 
-    selectedPhotos.forEach(
-      function(file,index){
+    for(
+      let i =
+        shuffled.length - 1;
+
+      i > 0;
+
+      i--
+    ){
+
+      const j =
+        Math.floor(
+          Math.random() *
+          (i + 1)
+        );
+
+
+      [
+        shuffled[i],
+        shuffled[j]
+      ] =
+      [
+        shuffled[j],
+        shuffled[i]
+      ];
+
+    }
+
+
+    /*
+      CREATE EVERY PHOTO
+    */
+
+    shuffled.forEach(
+      function(file){
 
         const card =
-          createPhotoCard(
-            file.download_url,
-            index + 1
+          document.createElement(
+            "div"
           );
 
-        gallery.appendChild(card);
+
+        card.className =
+          "photoCard";
+
+
+        card.onclick =
+          openPayment;
+
+
+        const image =
+          document.createElement(
+            "img"
+          );
+
+
+        image.src =
+          file.download_url;
+
+
+        image.alt =
+          "Live photo";
+
+
+        image.loading =
+          "lazy";
+
+
+        image.onerror =
+          function(){
+
+            card.remove();
+
+          };
+
+
+        const badge =
+          document.createElement(
+            "div"
+          );
+
+
+        badge.className =
+          "liveBadge";
+
+
+        badge.textContent =
+          "● LIVE";
+
+
+        const status =
+          document.createElement(
+            "div"
+          );
+
+
+        status.className =
+          "liveStatus";
+
+
+        status.innerHTML =
+          '<span class="liveDot"></span> Live now';
+
+
+        card.appendChild(
+          image
+        );
+
+
+        card.appendChild(
+          badge
+        );
+
+
+        card.appendChild(
+          status
+        );
+
+
+        gallery.appendChild(
+          card
+        );
 
       }
     );
 
 
-    galleryLoading.style.display =
+    loadingPhotos.style.display =
       "none";
 
 
-    gallery.style.display =
-      "grid";
+    if(
+      shuffled.length > 0
+    ){
+
+      gallery.style.display =
+        "grid";
+
+    }else{
+
+      errorPhotos.textContent =
+        "No image files found in GitHub.";
+
+      errorPhotos.style.display =
+        "block";
+
+    }
 
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
-    galleryLoading.textContent =
+    loadingPhotos.style.display =
+      "none";
+
+
+    errorPhotos.textContent =
       "Photos could not be loaded. Please refresh.";
 
-
-    galleryLoading.style.display =
+    errorPhotos.style.display =
       "block";
 
   }
@@ -970,28 +1337,6 @@ function openPayment(){
     "mpesa.html";
 
 }
-
-
-/* =========================
-   PRELOAD PHOTOS
-========================= */
-
-window.addEventListener(
-  "load",
-  function(){
-
-    /*
-      We don't display the gallery yet.
-      The gallery appears after the
-      60-second sample.
-    */
-
-    console.log(
-      "Website ready"
-    );
-
-  }
-);
 
 </script>
 
