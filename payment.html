@@ -78,7 +78,60 @@
       cursor: pointer;
     }
 
-    /* PAYMENT STATUS MESSAGE */
+    /* MESSAGE AREA */
+    .message-area {
+      display: none;
+      margin-top: 12px;
+      padding: 10px;
+      border: 2px dashed #1877f2;
+      border-radius: 10px;
+      background: #f8fbff;
+    }
+
+    .message-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .message-input {
+      flex: 1;
+      min-width: 0;
+      box-sizing: border-box;
+      padding: 13px;
+      border: 2px solid #ccc;
+      border-radius: 9px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .message-input:focus {
+      border-color: #1877f2;
+    }
+
+    /* RED WHEN ANY MESSAGE IS ENTERED */
+    .message-input.rejected {
+      border-color: #e32626;
+      background: #fff0f0;
+      color: #d00000;
+    }
+
+    .paste-text {
+      width: 125px;
+      color: #1877f2;
+      font-size: 15px;
+      font-weight: bold;
+      line-height: 1.3;
+    }
+
+    .message-error {
+      display: none;
+      margin-top: 8px;
+      color: #d00000;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
     .payment-status {
       display: none;
       margin-top: 12px;
@@ -145,7 +198,32 @@
     Pay with M-PESA
   </button>
 
-  <!-- THIS APPEARS AFTER PAY WITH M-PESA IS TAPPED -->
+  <!-- PASTE MESSAGE AREA -->
+  <div class="message-area" id="messageArea">
+
+    <div class="message-row">
+
+      <input
+        type="text"
+        id="messageInput"
+        class="message-input"
+        placeholder="Paste M-PESA message here..."
+        autocomplete="off">
+
+      <div class="paste-text">
+        Paste mpesa<br>
+        message &amp; continue
+      </div>
+
+    </div>
+
+    <div class="message-error" id="messageError">
+      ❌ Message not accepted. Payment must be completed through M-PESA.
+    </div>
+
+  </div>
+
+  <!-- PAYMENT STATUS -->
   <div class="payment-status" id="paymentStatus">
     ❌ No payment is done
     <small>Please complete the M-PESA payment to continue.</small>
@@ -158,6 +236,11 @@
 const packages = document.querySelectorAll(".package");
 const selectedInfo = document.getElementById("selectedInfo");
 const payButton = document.getElementById("payButton");
+
+const messageArea = document.getElementById("messageArea");
+const messageInput = document.getElementById("messageInput");
+const messageError = document.getElementById("messageError");
+
 const paymentStatus = document.getElementById("paymentStatus");
 
 let selectedAmount = null;
@@ -197,18 +280,44 @@ packages.forEach(function(button) {
 
     payButton.style.display = "block";
 
-    /* Hide old payment message when changing package */
+    messageArea.style.display = "none";
     paymentStatus.style.display = "none";
+
+    messageInput.value = "";
+    messageInput.classList.remove("rejected");
+    messageError.style.display = "none";
 
   });
 
 });
 
 
-/* SHOW MESSAGE WHEN M-PESA BUTTON IS TAPPED */
+/* TAP PAY WITH M-PESA */
 payButton.addEventListener("click", function() {
 
   paymentStatus.style.display = "block";
+
+  messageArea.style.display = "flex";
+
+});
+
+
+/* ANY TEXT ENTERED = RED / REJECTED */
+messageInput.addEventListener("input", function() {
+
+  if (this.value.trim().length > 0) {
+
+    this.classList.add("rejected");
+
+    messageError.style.display = "block";
+
+  } else {
+
+    this.classList.remove("rejected");
+
+    messageError.style.display = "none";
+
+  }
 
 });
 
