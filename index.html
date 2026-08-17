@@ -7,53 +7,51 @@
 <title>My Referral Website</title>
 
 <style>
-
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #000;
   margin: 0;
   padding: 20px 15px;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
   text-align: center;
-  color: white;
 }
 
 .card {
-  max-width: 420px;
+  max-width: 450px;
   margin: auto;
-  background: #000;
-  padding: 25px;
-  border-radius: 18px;
 }
 
 h1 {
-  margin-top: 0;
+  margin-top: 10px;
 }
 
-/* =========================
-   AGE GATE
-========================= */
+p {
+  color: #ccc;
+}
+
+/* AGE GATE */
 
 #ageGate {
   position: fixed;
   inset: 0;
-  background: #111;
-  color: white;
   z-index: 99999;
+
+  background: #111;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  text-align: center;
   padding: 20px;
 }
 
 .age-box {
   max-width: 380px;
+  text-align: center;
 }
 
 .age-icon {
@@ -61,15 +59,15 @@ h1 {
 }
 
 .age-box button {
-  padding: 14px 25px;
-  margin: 8px;
-
   border: 0;
   border-radius: 10px;
 
-  color: white;
+  padding: 14px 22px;
+  margin: 8px;
+
+  color: #fff;
   font-weight: bold;
-  cursor: pointer;
+  font-size: 15px;
 }
 
 .enter-button {
@@ -77,23 +75,19 @@ h1 {
 }
 
 .exit-button {
-  background: #777;
+  background: #666;
 }
 
-/* =========================
-   INCOMING CALL
-========================= */
+/* INCOMING CALL */
 
 #incomingCall {
   position: fixed;
   inset: 0;
-
-  background: #17161b;
-  color: white;
-
   z-index: 90000;
 
   display: none;
+
+  background: #17161b;
 
   overflow: hidden;
 }
@@ -111,7 +105,6 @@ h1 {
     );
 
   filter: blur(20px);
-
   transform: scale(1.1);
 }
 
@@ -119,31 +112,21 @@ h1 {
   position: absolute;
   inset: 0;
 
-  background: rgba(0,0,0,0.48);
+  background: rgba(0,0,0,.5);
 }
 
 .call-content {
   position: relative;
-
   z-index: 2;
 
-  width: 100%;
   height: 100%;
 
   display: flex;
-
   flex-direction: column;
 
   align-items: center;
-
   justify-content: center;
-
-  text-align: center;
 }
-
-/* =========================
-   PROFILE
-========================= */
 
 .profile-ring {
   width: 155px;
@@ -151,15 +134,14 @@ h1 {
 
   border-radius: 50%;
 
-  border: 2px solid rgba(125,80,210,0.75);
+  border: 2px solid rgba(125,80,210,.75);
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
   box-shadow:
-    0 0 0 7px rgba(125,80,210,0.08);
+    0 0 0 7px rgba(125,80,210,.08);
 }
 
 .profile-photo {
@@ -172,37 +154,26 @@ h1 {
 
   object-fit: cover;
 
-  display: block;
-
   background: #211d26;
 }
 
 .caller-name {
   margin-top: 12px;
 
-  font-size: 30px;
-
-  font-weight: normal;
+  font-size: 28px;
 }
 
 .call-title {
   margin-top: 5px;
 
-  font-size: 14px;
-
+  font-size: 13px;
   letter-spacing: 1px;
 
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,.65);
 }
-
-/* =========================
-   RINGING
-========================= */
 
 .ringing {
   margin-top: 16px;
-
-  font-size: 16px;
 
   color: #b98cff;
 }
@@ -210,8 +181,8 @@ h1 {
 .ringing-dot {
   display: inline-block;
 
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
 
   border-radius: 50%;
 
@@ -223,27 +194,19 @@ h1 {
 }
 
 @keyframes ringBlink {
-
   50% {
-    opacity: 0.2;
+    opacity: .2;
   }
-
 }
-
-/* =========================
-   CALL BUTTONS
-========================= */
 
 .call-buttons {
   position: absolute;
 
   left: 0;
   right: 0;
-
   bottom: 95px;
 
   display: flex;
-
   justify-content: center;
 
   gap: 70px;
@@ -251,9 +214,7 @@ h1 {
 
 .call-option {
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
 }
 
@@ -261,29 +222,19 @@ h1 {
   width: 78px;
   height: 78px;
 
+  border: 3px solid rgba(255,255,255,.18);
+
   border-radius: 50%;
 
-  border: 3px solid rgba(255,255,255,0.18);
-
-  color: white;
+  color: #fff;
 
   font-size: 30px;
 
-  cursor: pointer;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
 
-  box-shadow:
-    0 4px 12px rgba(0,0,0,0.45);
-
-  transition: transform 0.15s;
-}
-
-.call-button:active {
-  transform: scale(0.92);
+  cursor: pointer;
 }
 
 .decline-button {
@@ -297,9 +248,7 @@ h1 {
 .call-label {
   margin-top: 8px;
 
-  font-size: 15px;
-
-  color: rgba(255,255,255,0.72);
+  color: rgba(255,255,255,.72);
 }
 
 .swipe-message {
@@ -307,43 +256,25 @@ h1 {
 
   bottom: 38px;
 
-  left: 0;
-  right: 0;
-
-  color: rgba(255,255,255,0.27);
+  color: rgba(255,255,255,.3);
 
   font-size: 12px;
-
-  letter-spacing: 1px;
 }
 
-/* =========================
-   VIDEO PREVIEW
-========================= */
+/* VIDEO */
 
 #videoPreview {
   position: fixed;
-
   inset: 0;
-
-  width: 100vw;
-  height: 100vh;
-
-  background: #000;
 
   z-index: 80000;
 
   display: none;
 
-  flex-direction: column;
+  background: #000;
 
   align-items: center;
-
   justify-content: center;
-
-  color: white;
-
-  text-align: center;
 }
 
 #previewVideo {
@@ -351,70 +282,43 @@ h1 {
   height: 100%;
 
   object-fit: contain;
-
-  background: #000;
 }
 
 .preview-counter {
   position: absolute;
 
   bottom: 20px;
-
   left: 0;
   right: 0;
 
-  font-size: 16px;
-
-  color: white;
+  color: #fff;
 
   text-shadow: 0 1px 3px #000;
 }
 
-/* =========================
-   INSUFFICIENT MINUTES
-========================= */
+/* MINUTES */
 
 #insufficientMinutes {
   position: fixed;
-
   inset: 0;
-
-  background: #111;
-
-  color: white;
 
   z-index: 85000;
 
   display: none;
 
-  align-items: center;
+  background: #111;
 
+  align-items: center;
   justify-content: center;
 
-  text-align: center;
-
-  padding: 25px;
+  padding: 20px;
 }
 
 .insufficient-box {
   max-width: 350px;
 }
 
-.insufficient-box h2 {
-  font-size: 30px;
-
-  margin-bottom: 12px;
-}
-
-.insufficient-box p {
-  color: #ccc;
-
-  font-size: 17px;
-}
-
-/* =========================
-   MAIN GALLERY
-========================= */
+/* GALLERY */
 
 #livePhotos {
   display: none;
@@ -423,36 +327,35 @@ h1 {
 
   gap: 18px;
 
-  margin-top: 20px;
-
-  background: #000;
+  margin-top: 25px;
 }
 
 .live-photo {
   position: relative;
 
-  cursor: pointer;
-
   overflow: hidden;
 
   border-radius: 12px;
 
-  background: #000;
+  background: #111;
+
+  cursor: pointer;
+
+  min-height: 210px;
 }
 
 .live-photo img {
   display: block;
 
   width: 100%;
-
-  height: 200px;
+  height: 210px;
 
   object-fit: cover;
+
+  background: #111;
 }
 
-/* =========================
-   LIVE BADGE
-========================= */
+/* LIVE */
 
 .live-badge {
   position: absolute;
@@ -460,19 +363,19 @@ h1 {
   top: 8px;
   left: 8px;
 
+  z-index: 5;
+
   background: #f0184c;
 
-  color: white;
+  color: #fff;
 
-  padding: 5px 8px;
+  padding: 7px 10px;
 
-  border-radius: 7px;
+  border-radius: 8px;
+
+  font-size: 12px;
 
   font-weight: bold;
-
-  font-size: 11px;
-
-  z-index: 2;
 }
 
 .live-badge::before {
@@ -481,111 +384,99 @@ h1 {
   margin-right: 5px;
 }
 
-/* =========================
-   LIVE STATUS
-========================= */
-
 .live-status {
   position: absolute;
 
-  bottom: 8px;
   left: 8px;
+  bottom: 8px;
 
-  background: rgba(0,0,0,0.85);
+  z-index: 5;
 
-  color: white;
+  display: flex;
+  align-items: center;
 
-  padding: 7px 12px;
+  gap: 6px;
+
+  max-width: calc(100% - 16px);
+
+  background: rgba(0,0,0,.82);
+
+  padding: 7px 10px;
 
   border-radius: 8px;
 
   font-size: 12px;
 
-  z-index: 3;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 5px;
+  white-space: nowrap;
 }
 
-/* =========================
-   GREEN BLINKING DOT
-========================= */
-
 .live-dot {
-  display: inline-block;
-
   width: 10px;
   height: 10px;
 
-  background: #22c55e;
+  flex-shrink: 0;
 
   border-radius: 50%;
 
-  border: 1px solid white;
+  background: #22c55e;
 
   animation: liveBlink 1s infinite;
 }
 
 @keyframes liveBlink {
-
   50% {
-    opacity: 0.2;
+    opacity: .2;
   }
-
 }
 
-/* =========================
-   MOBILE
-========================= */
+.loading {
+  grid-column: 1 / -1;
+
+  padding: 30px;
+
+  color: #aaa;
+}
+
+.error {
+  grid-column: 1 / -1;
+
+  padding: 30px;
+
+  color: #ff6b6b;
+}
+
+/* MOBILE */
 
 @media (max-width: 380px) {
 
-  .profile-ring {
-    width: 140px;
-    height: 140px;
-  }
-
-  .profile-photo {
-    width: 112px;
-    height: 112px;
-  }
-
-  .caller-name {
-    font-size: 28px;
-  }
-
-  .call-buttons {
-    gap: 55px;
-    bottom: 90px;
-  }
-
-  .call-button {
-    width: 70px;
-    height: 70px;
-    font-size: 27px;
-  }
-
   #livePhotos {
     gap: 12px;
+  }
+
+  .live-photo {
+    min-height: 170px;
   }
 
   .live-photo img {
     height: 170px;
   }
 
-}
+  .call-buttons {
+    gap: 55px;
+  }
 
+  .call-button {
+    width: 70px;
+    height: 70px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     AGE GATE
-========================= -->
+
+<!-- AGE GATE -->
 
 <div id="ageGate">
 
@@ -620,9 +511,7 @@ h1 {
 </div>
 
 
-<!-- =========================
-     INCOMING CALL
-========================= -->
+<!-- INCOMING CALL -->
 
 <div id="incomingCall">
 
@@ -637,14 +526,14 @@ h1 {
       <img
         id="callerPhoto"
         class="profile-photo"
-        src="photo1.jpg"
+        src=""
         alt="Caller">
 
     </div>
 
     <div
-      class="caller-name"
-      id="callerName">
+      id="callerName"
+      class="caller-name">
 
       Caller
 
@@ -670,8 +559,7 @@ h1 {
 
         <button
           id="declineCall"
-          class="call-button decline-button"
-          type="button">
+          class="call-button decline-button">
 
           ☎
 
@@ -683,12 +571,12 @@ h1 {
 
       </div>
 
+
       <div class="call-option">
 
         <button
           id="answerCall"
-          class="call-button answer-button"
-          type="button">
+          class="call-button answer-button">
 
           ☎
 
@@ -713,9 +601,7 @@ h1 {
 </div>
 
 
-<!-- =========================
-     VIDEO PREVIEW
-========================= -->
+<!-- VIDEO PREVIEW -->
 
 <div id="videoPreview">
 
@@ -734,7 +620,9 @@ h1 {
   <div class="preview-counter">
 
     Preview:
-    <span id="previewSeconds">20</span>
+    <span id="previewSeconds">
+      20
+    </span>
     seconds
 
   </div>
@@ -742,9 +630,7 @@ h1 {
 </div>
 
 
-<!-- =========================
-     INSUFFICIENT MINUTES
-========================= -->
+<!-- INSUFFICIENT MINUTES -->
 
 <div id="insufficientMinutes">
 
@@ -767,9 +653,7 @@ h1 {
 </div>
 
 
-<!-- =========================
-     MAIN PAGE
-========================= -->
+<!-- MAIN WEBSITE -->
 
 <div class="card">
 
@@ -781,9 +665,11 @@ h1 {
     Welcome to my referral website.
   </p>
 
-  <div
-    id="livePhotos"
-    class="gallery">
+  <div id="livePhotos">
+
+    <div class="loading">
+      Loading photos...
+    </div>
 
   </div>
 
@@ -792,9 +678,33 @@ h1 {
 
 <script>
 
-/* =========================
+/* =====================================================
+   GITHUB SETTINGS
+===================================================== */
+
+const GITHUB_OWNER =
+  "agnesweb2026";
+
+const GITHUB_REPO =
+  "My-referral-website";
+
+const GITHUB_BRANCH =
+  "main";
+
+const GALLERY_FOLDER =
+  "gallery";
+
+
+/* =====================================================
+   MAXIMUM PHOTOS
+===================================================== */
+
+const MAX_PHOTOS = 24;
+
+
+/* =====================================================
    SAMPLE
-========================= */
+===================================================== */
 
 const SAMPLE_LINK_ID =
   "referral-001";
@@ -804,147 +714,37 @@ const SAMPLE_WATCHED_KEY =
   SAMPLE_LINK_ID;
 
 
-/* =========================
-   24 PHOTOS
-========================= */
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-const callers = [
+let callers = [];
 
-  /* ORIGINAL 8 */
-
-  {
-    name: "Photo 1",
-    photo: "photo1.jpg"
-  },
-
-  {
-    name: "Photo 2",
-    photo: "photo2.jpg"
-  },
-
-  {
-    name: "Photo 3",
-    photo: "photo3.jpg"
-  },
-
-  {
-    name: "Photo 4",
-    photo: "photo4.jpg"
-  },
-
-  {
-    name: "Photo 5",
-    photo: "photo5.jpg"
-  },
-
-  {
-    name: "Photo 6",
-    photo: "photo6.jpg"
-  },
-
-  {
-    name: "Photo 7",
-    photo: "photo7.jpg"
-  },
-
-  {
-    name: "Photo 8",
-    photo: "photo8.jpg"
-  },
+let lastCaller = -1;
 
 
-  /* NEW 16 */
-
-  {
-    name: "Jennifer❤️‍🔥❤️‍🔥💓",
-    photo: "photo9.jpg"
-  },
-
-  {
-    name: "Beck❣️❤️💋",
-    photo: "photo10.jpg"
-  },
-
-  {
-    name: "Brick 🔥🔥🔥",
-    photo: "photo11.jpg"
-  },
-
-  {
-    name: "Dorry💓❤️‍🔥",
-    photo: "photo12.jpg"
-  },
-
-  {
-    name: "Caro💘❣️",
-    photo: "photo13.jpg"
-  },
-
-  {
-    name: "Bety💋💋💋",
-    photo: "photo14.jpg"
-  },
-
-  {
-    name: "Bianca🌷🥀🌹",
-    photo: "photo15.jpg"
-  },
-
-  {
-    name: "Chelly🌹🔥🫦",
-    photo: "photo16.jpg"
-  },
-
-  {
-    name: "Candy✅💋🌷",
-    photo: "photo17.jpg"
-  },
-
-  {
-    name: "Bella❤️💓❤️‍🔥",
-    photo: "photo18.jpg"
-  },
-
-  {
-    name: "Faith💦❤️‍🔥",
-    photo: "photo19.jpg"
-  },
-
-  {
-    name: "Phamy💦❤️‍🔥🔥🥀",
-    photo: "photo20.jpg"
-  },
-
-  {
-    name: "Chachtpy💦🥰💖",
-    photo: "photo21.jpg"
-  },
-
-  {
-    name: "Baby ❤️😘",
-    photo: "photo22.jpg"
-  },
-
-  {
-    name: "Sweet👋💘🌷❤️‍🔥",
-    photo: "photo23.jpg"
-  },
-
-  {
-    name: "Jenny🔥🫦🫦👄",
-    photo: "photo24.jpg"
-  }
-
-];
-
-
-/* =========================
+/* =====================================================
    ELEMENTS
-========================= */
+===================================================== */
+
+const ageGate =
+  document.getElementById(
+    "ageGate"
+  );
 
 const incomingCall =
   document.getElementById(
     "incomingCall"
+  );
+
+const callerPhoto =
+  document.getElementById(
+    "callerPhoto"
+  );
+
+const callerName =
+  document.getElementById(
+    "callerName"
   );
 
 const videoPreview =
@@ -955,6 +755,11 @@ const videoPreview =
 const previewVideo =
   document.getElementById(
     "previewVideo"
+  );
+
+const previewSeconds =
+  document.getElementById(
+    "previewSeconds"
   );
 
 const insufficientMinutes =
@@ -977,25 +782,25 @@ const declineCall =
     "declineCall"
   );
 
-const previewSeconds =
-  document.getElementById(
-    "previewSeconds"
-  );
 
-const callerPhoto =
-  document.getElementById(
-    "callerPhoto"
-  );
+/* =====================================================
+   CLEAN FILE NAME
+===================================================== */
 
-const callerName =
-  document.getElementById(
-    "callerName"
-  );
+function makeDisplayName(filename) {
+
+  return filename
+    .replace(/\.[^/.]+$/, "")
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+}
 
 
-/* =========================
+/* =====================================================
    SHUFFLE
-========================= */
+===================================================== */
 
 function shuffleArray(array) {
 
@@ -1030,29 +835,213 @@ function shuffleArray(array) {
 }
 
 
-/* =========================
-   CREATE 24 PHOTO GALLERY
-========================= */
+/* =====================================================
+   LOAD PHOTOS FROM GITHUB
+===================================================== */
 
-function createRandomGallery() {
+async function loadPhotos() {
+
+  livePhotos.innerHTML = `
+
+    <div class="loading">
+      Loading photos...
+    </div>
+
+  `;
+
+
+  const apiUrl =
+    "https://api.github.com/repos/" +
+    GITHUB_OWNER +
+    "/" +
+    GITHUB_REPO +
+    "/contents/" +
+    GALLERY_FOLDER +
+    "?ref=" +
+    GITHUB_BRANCH;
+
+
+  try {
+
+    const response =
+      await fetch(apiUrl);
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "GitHub folder could not be read."
+      );
+
+    }
+
+
+    const files =
+      await response.json();
+
+
+    if (!Array.isArray(files)) {
+
+      throw new Error(
+        "Gallery folder is not available."
+      );
+
+    }
+
+
+    /* ONLY IMAGE FILES */
+
+    const imageFiles =
+      files.filter(
+        function(file) {
+
+          return (
+            file.type === "file" &&
+            /\.(jpg|jpeg|png|webp|gif)$/i
+              .test(file.name)
+          );
+
+        }
+      );
+
+
+    /* MAXIMUM 24 */
+
+    const selectedFiles =
+      imageFiles.slice(
+        0,
+        MAX_PHOTOS
+      );
+
+
+    if (!selectedFiles.length) {
+
+      livePhotos.innerHTML = `
+
+        <div class="error">
+
+          No photos found.
+
+          <br><br>
+
+          Put your 24 photos inside:
+
+          <br>
+
+          <b>/gallery</b>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    /* CREATE PHOTO OBJECTS */
+
+    callers =
+      selectedFiles.map(
+        function(file) {
+
+          return {
+
+            name:
+              makeDisplayName(
+                file.name
+              ),
+
+            photo:
+              "https://raw.githubusercontent.com/" +
+              GITHUB_OWNER +
+              "/" +
+              GITHUB_REPO +
+              "/" +
+              GITHUB_BRANCH +
+              "/" +
+              GALLERY_FOLDER +
+              "/" +
+              encodeURIComponent(
+                file.name
+              )
+
+          };
+
+        }
+      );
+
+
+    /* RANDOM ORDER */
+
+    callers =
+      shuffleArray(callers);
+
+
+    /* DISPLAY */
+
+    createGallery();
+
+
+    /* SHOW CALL */
+
+    showRandomCaller();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    livePhotos.innerHTML = `
+
+      <div class="error">
+
+        Unable to load the photos.
+
+        <br><br>
+
+        Make sure the folder
+
+        <b>gallery</b>
+
+        exists in GitHub.
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =====================================================
+   CREATE GALLERY
+===================================================== */
+
+function createGallery() {
 
   livePhotos.innerHTML = "";
 
-  const randomCallers =
+  const randomPhotos =
     shuffleArray(callers);
 
-  randomCallers.forEach(
+
+  randomPhotos.forEach(
     function(person) {
 
-      const photoBox =
+      const box =
         document.createElement(
           "div"
         );
 
-      photoBox.className =
+
+      box.className =
         "live-photo";
 
-      photoBox.innerHTML = `
+
+      box.innerHTML = `
 
         <span class="live-badge">
           LIVE
@@ -1060,7 +1049,8 @@ function createRandomGallery() {
 
         <img
           src="${person.photo}"
-          alt="${person.name}">
+          alt="${person.name}"
+          loading="lazy">
 
         <span class="live-status">
 
@@ -1072,7 +1062,8 @@ function createRandomGallery() {
 
       `;
 
-      photoBox.addEventListener(
+
+      box.addEventListener(
         "click",
         function() {
 
@@ -1082,8 +1073,9 @@ function createRandomGallery() {
         }
       );
 
+
       livePhotos.appendChild(
-        photoBox
+        box
       );
 
     }
@@ -1092,15 +1084,19 @@ function createRandomGallery() {
 }
 
 
-/* =========================
+/* =====================================================
    RANDOM CALLER
-========================= */
-
-let lastCaller = -1;
+===================================================== */
 
 function showRandomCaller() {
 
+  if (!callers.length) {
+    return;
+  }
+
+
   let randomIndex;
+
 
   do {
 
@@ -1115,14 +1111,14 @@ function showRandomCaller() {
     randomIndex === lastCaller
   );
 
+
   lastCaller =
     randomIndex;
+
 
   const caller =
     callers[randomIndex];
 
-  callerName.textContent =
-    caller.name;
 
   callerPhoto.src =
     caller.photo;
@@ -1130,45 +1126,31 @@ function showRandomCaller() {
   callerPhoto.alt =
     caller.name;
 
-}
+  callerName.textContent =
+    caller.name;
 
 
-/* =========================
-   SAMPLE CHECK
-========================= */
-
-function hasWatchedSample() {
-
-  return (
-    localStorage.getItem(
-      SAMPLE_WATCHED_KEY
-    ) === "yes"
-  );
-
-}
-
-function markSampleAsWatched() {
-
-  localStorage.setItem(
-    SAMPLE_WATCHED_KEY,
-    "yes"
-  );
+  incomingCall.style.display =
+    "block";
 
 }
 
 
-/* =========================
+/* =====================================================
    AGE GATE
-========================= */
+===================================================== */
 
 function enterSite() {
 
-  document.getElementById(
-    "ageGate"
-  ).style.display =
+  ageGate.style.display =
     "none";
 
-  startIncomingCall();
+
+  if (callers.length) {
+
+    showRandomCaller();
+
+  }
 
 }
 
@@ -1181,31 +1163,44 @@ function leaveSite() {
 }
 
 
-/* =========================
-   START CALL
-========================= */
+/* =====================================================
+   SAMPLE CHECK
+===================================================== */
 
-function startIncomingCall() {
+function hasWatchedSample() {
 
-  showRandomCaller();
-
-  incomingCall.style.display =
-    "block";
+  return (
+    localStorage.getItem(
+      SAMPLE_WATCHED_KEY
+    ) === "yes"
+  );
 
 }
 
 
-/* =========================
-   INSUFFICIENT MINUTES
-========================= */
+function markSampleAsWatched() {
+
+  localStorage.setItem(
+    SAMPLE_WATCHED_KEY,
+    "yes"
+  );
+
+}
+
+
+/* =====================================================
+   SHOW INSUFFICIENT MINUTES
+===================================================== */
 
 function showInsufficientMinutes() {
 
   videoPreview.style.display =
     "none";
 
+
   insufficientMinutes.style.display =
     "flex";
+
 
   setTimeout(
     function() {
@@ -1213,10 +1208,13 @@ function showInsufficientMinutes() {
       insufficientMinutes.style.display =
         "none";
 
+
       livePhotos.style.display =
         "grid";
 
-      createRandomGallery();
+
+      createGallery();
+
 
       window.scrollTo({
 
@@ -1233,89 +1231,78 @@ function showInsufficientMinutes() {
 }
 
 
-/* =========================
+/* =====================================================
+   PLAY SAMPLE
+===================================================== */
+
+function playSample() {
+
+  incomingCall.style.display =
+    "none";
+
+
+  if (hasWatchedSample()) {
+
+    showInsufficientMinutes();
+
+    return;
+
+  }
+
+
+  videoPreview.style.display =
+    "flex";
+
+
+  previewVideo.currentTime =
+    0;
+
+
+  previewVideo.play().catch(
+    function(error) {
+
+      console.log(
+        "Video playback:",
+        error
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
    ANSWER
-========================= */
+===================================================== */
 
 answerCall.addEventListener(
   "click",
   function() {
 
-    incomingCall.style.display =
-      "none";
-
-    if (hasWatchedSample()) {
-
-      showInsufficientMinutes();
-
-      return;
-
-    }
-
-    videoPreview.style.display =
-      "flex";
-
-    previewVideo.currentTime =
-      0;
-
-    previewVideo.play().catch(
-      function(error) {
-
-        console.log(
-          "Video playback error:",
-          error
-        );
-
-      }
-    );
+    playSample();
 
   }
 );
 
 
-/* =========================
+/* =====================================================
    DECLINE
-========================= */
+===================================================== */
 
 declineCall.addEventListener(
   "click",
   function() {
 
-    incomingCall.style.display =
-      "none";
-
-    if (hasWatchedSample()) {
-
-      showInsufficientMinutes();
-
-      return;
-
-    }
-
-    videoPreview.style.display =
-      "flex";
-
-    previewVideo.currentTime =
-      0;
-
-    previewVideo.play().catch(
-      function(error) {
-
-        console.log(
-          "Video playback error:",
-          error
-        );
-
-      }
-    );
+    playSample();
 
   }
 );
 
 
-/* =========================
-   SAMPLE PLAYED
-========================= */
+/* =====================================================
+   SAMPLE PLAY
+===================================================== */
 
 previewVideo.addEventListener(
   "play",
@@ -1330,9 +1317,9 @@ previewVideo.addEventListener(
 );
 
 
-/* =========================
-   SAMPLE ENDED
-========================= */
+/* =====================================================
+   SAMPLE END
+===================================================== */
 
 previewVideo.addEventListener(
   "ended",
@@ -1344,9 +1331,9 @@ previewVideo.addEventListener(
 );
 
 
-/* =========================
+/* =====================================================
    COUNTDOWN
-========================= */
+===================================================== */
 
 previewVideo.addEventListener(
   "timeupdate",
@@ -1367,6 +1354,7 @@ previewVideo.addEventListener(
           )
         );
 
+
       previewSeconds.textContent =
         remaining;
 
@@ -1376,11 +1364,11 @@ previewVideo.addEventListener(
 );
 
 
-/* =========================
-   INITIALIZE
-========================= */
+/* =====================================================
+   START
+===================================================== */
 
-createRandomGallery();
+loadPhotos();
 
 </script>
 
