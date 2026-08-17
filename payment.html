@@ -77,6 +77,26 @@
       font-weight: bold;
       cursor: pointer;
     }
+
+    /* PAYMENT STATUS MESSAGE */
+    .payment-status {
+      display: none;
+      margin-top: 12px;
+      padding: 14px;
+      border: 2px solid #f5b5b5;
+      border-radius: 10px;
+      background: #fff0f0;
+      color: #d92525;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .payment-status small {
+      display: block;
+      margin-top: 5px;
+      color: #333;
+      font-weight: normal;
+    }
   </style>
 </head>
 
@@ -125,6 +145,12 @@
     Pay with M-PESA
   </button>
 
+  <!-- THIS APPEARS AFTER PAY WITH M-PESA IS TAPPED -->
+  <div class="payment-status" id="paymentStatus">
+    ❌ No payment is done
+    <small>Please complete the M-PESA payment to continue.</small>
+  </div>
+
 </div>
 
 <script>
@@ -132,10 +158,13 @@
 const packages = document.querySelectorAll(".package");
 const selectedInfo = document.getElementById("selectedInfo");
 const payButton = document.getElementById("payButton");
+const paymentStatus = document.getElementById("paymentStatus");
 
 let selectedAmount = null;
 let selectedMinutes = null;
 
+
+/* SELECT PACKAGE */
 packages.forEach(function(button) {
 
   button.addEventListener("click", function() {
@@ -168,11 +197,23 @@ packages.forEach(function(button) {
 
     payButton.style.display = "block";
 
+    /* Hide old payment message when changing package */
+    paymentStatus.style.display = "none";
+
   });
 
 });
 
 
+/* SHOW MESSAGE WHEN M-PESA BUTTON IS TAPPED */
+payButton.addEventListener("click", function() {
+
+  paymentStatus.style.display = "block";
+
+});
+
+
+/* INTASEND */
 new window.IntaSend({
 
   publicAPIKey:
@@ -182,9 +223,13 @@ new window.IntaSend({
 
 })
 
+
+/* PAYMENT SUCCESS */
 .on("COMPLETE", function(results) {
 
   console.log("Payment successful:", results);
+
+  paymentStatus.style.display = "none";
 
   alert("Payment successful!");
 
@@ -192,17 +237,27 @@ new window.IntaSend({
 
 })
 
+
+/* PAYMENT FAILED */
 .on("FAILED", function(results) {
 
   console.log("Payment failed:", results);
 
-  alert("Payment failed. Please try again.");
+  paymentStatus.style.display = "block";
+
+  paymentStatus.innerHTML =
+    "❌ No payment is done" +
+    "<small>Payment was not completed. Please try again.</small>";
 
 })
 
+
+/* PAYMENT IN PROGRESS */
 .on("IN-PROGRESS", function(results) {
 
   console.log("Payment in progress:", results);
+
+  paymentStatus.style.display = "block";
 
 });
 
