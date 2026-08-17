@@ -9,68 +9,140 @@
   <script src="https://unpkg.com/intasend-checkout-sdk"></script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
       margin: 0;
-      padding: 20px 15px;
+      padding: 20px 12px 100px;
+      font-family: Arial, sans-serif;
+      background: #0d0d18;
+      color: white;
       text-align: center;
     }
 
     .card {
       max-width: 430px;
-      margin: 20px auto;
-      background: white;
-      padding: 25px 20px;
-      border-radius: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin: 0 auto;
+      background: #11111f;
+      padding: 20px 12px 25px;
+      border-radius: 22px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.4);
     }
 
     h1 {
-      margin-top: 0;
+      margin: 5px 0 8px;
+      font-size: 30px;
+    }
+
+    .subtitle {
+      color: #aaa;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    /* PACKAGE GRID */
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
 
     .package {
-      display: block;
+      position: relative;
       width: 100%;
-      box-sizing: border-box;
-      margin: 12px 0;
-      padding: 17px;
-      border: 2px solid #ddd;
-      border-radius: 12px;
-      background: white;
-      font-size: 18px;
-      font-weight: bold;
+      min-height: 185px;
+      padding: 0;
+      overflow: hidden;
+      border: 2px solid #292943;
+      border-radius: 18px;
+      background: #19192d;
+      color: white;
       cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .package:hover {
+      transform: translateY(-2px);
     }
 
     .package.selected {
       border-color: #1877f2;
-      background: #eef5ff;
+      box-shadow: 0 0 0 2px rgba(24,119,242,0.25);
     }
 
-    .till {
-      margin-top: 18px;
-      padding: 13px;
-      background: #f0f0f0;
-      border-radius: 10px;
+    .hot {
+      position: absolute;
+      top: 8px;
+      right: 6px;
+      padding: 6px 9px;
+      border-radius: 20px;
+      background: #ff3d69;
+      color: white;
+      font-size: 11px;
+      font-weight: bold;
+      z-index: 2;
+    }
+
+    .camera-circle {
+      width: 55px;
+      height: 55px;
+      margin: 25px auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #342d35;
+      border: 2px solid #755a25;
+      font-size: 26px;
+    }
+
+    .minutes {
+      display: block;
+      min-height: 42px;
+      padding: 0 4px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .price {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 3px;
+      background: #ff9f1c;
+      color: #111;
       font-size: 17px;
       font-weight: bold;
     }
 
-    .selected-info {
-      margin-top: 18px;
+    /* PAYMENT AREA */
+    .payment-section {
+      display: none;
+      margin-top: 22px;
+    }
+
+    .till {
+      padding: 13px;
+      background: #242433;
+      border-radius: 10px;
       font-size: 16px;
+      font-weight: bold;
+    }
+
+    .selected-info {
+      margin: 15px 0;
+      color: #ddd;
+      font-size: 15px;
     }
 
     .pay {
-      display: none;
       width: 100%;
-      box-sizing: border-box;
-      margin-top: 20px;
       padding: 15px;
       border: 0;
-      border-radius: 10px;
+      border-radius: 11px;
       background: #1877f2;
       color: white;
       font-size: 18px;
@@ -78,14 +150,14 @@
       cursor: pointer;
     }
 
-    /* MESSAGE AREA */
+    /* MESSAGE BOX */
     .message-area {
       display: none;
       margin-top: 12px;
       padding: 10px;
-      border: 2px solid #ddd;
+      border: 2px solid #444;
       border-radius: 10px;
-      background: #f8fbff;
+      background: #19192d;
     }
 
     .message-row {
@@ -97,11 +169,12 @@
     .message-input {
       flex: 1;
       min-width: 0;
-      box-sizing: border-box;
-      padding: 13px;
-      border: 2px solid #ccc;
+      padding: 13px 10px;
+      border: 2px solid #777;
       border-radius: 9px;
-      font-size: 15px;
+      background: white;
+      color: #111;
+      font-size: 14px;
       outline: none;
     }
 
@@ -109,7 +182,6 @@
       border-color: #1877f2;
     }
 
-    /* RED WHEN MESSAGE IS ENTERED */
     .message-input.rejected {
       border-color: #e32626;
       background: #fff0f0;
@@ -117,9 +189,9 @@
     }
 
     .paste-text {
-      width: 125px;
+      width: 120px;
       color: #1877f2;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: bold;
       line-height: 1.3;
     }
@@ -127,17 +199,17 @@
     .message-error {
       display: none;
       margin-top: 8px;
-      color: #d00000;
-      font-size: 14px;
+      color: #ff3b3b;
+      font-size: 13px;
       font-weight: bold;
     }
 
-    /* PAYMENT STATUS */
+    /* NO PAYMENT */
     .payment-status {
       display: none;
       margin-top: 12px;
       padding: 14px;
-      border: 2px solid #f5b5b5;
+      border: 2px solid #f5a8a8;
       border-radius: 10px;
       background: #fff0f0;
       color: #d92525;
@@ -151,6 +223,31 @@
       color: #333;
       font-weight: normal;
     }
+
+    /* SMALL PHONES */
+    @media (max-width: 350px) {
+
+      .package-grid {
+        gap: 7px;
+      }
+
+      .package {
+        min-height: 170px;
+      }
+
+      .minutes {
+        font-size: 14px;
+      }
+
+      .price {
+        font-size: 15px;
+      }
+
+      .paste-text {
+        width: 105px;
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 
@@ -158,97 +255,193 @@
 
 <div class="card">
 
-  <h1>Choose Access</h1>
+  <h1>Buy Minutes</h1>
 
-  <p>Select your preferred access package:</p>
-
-  <button class="package" data-amount="80" data-minutes="10">
-    KSh 80 — 10 Minutes
-  </button>
-
-  <button class="package" data-amount="135" data-minutes="25">
-    KSh 135 — 25 Minutes
-  </button>
-
-  <button class="package" data-amount="200" data-minutes="40">
-    KSh 200 — 40 Minutes
-  </button>
-
-  <button class="package" data-amount="250" data-minutes="55">
-    KSh 250 — 55 Minutes
-  </button>
-
-  <button class="package" data-amount="300" data-minutes="65">
-    KSh 300 — 65 Minutes
-  </button>
-
-  <div class="till">
-    Pay with Till: 1605854
+  <div class="subtitle">
+    Choose a plan that works for you
   </div>
 
-  <div class="selected-info" id="selectedInfo">
-    No package selected
+  <div class="package-grid">
+
+    <button class="package" data-amount="80" data-minutes="10">
+
+      <span class="hot">🔥 HOT</span>
+
+      <div class="camera-circle">📹</div>
+
+      <span class="minutes">
+        10 Mins
+      </span>
+
+      <div class="price">
+        KSh 80
+      </div>
+
+    </button>
+
+
+    <button class="package" data-amount="135" data-minutes="25">
+
+      <div class="camera-circle">📹</div>
+
+      <span class="minutes">
+        25 Mins
+      </span>
+
+      <div class="price">
+        KSh 135
+      </div>
+
+    </button>
+
+
+    <button class="package" data-amount="200" data-minutes="40">
+
+      <div class="camera-circle">📹</div>
+
+      <span class="minutes">
+        40 Mins
+      </span>
+
+      <div class="price">
+        KSh 200
+      </div>
+
+    </button>
+
+
+    <button class="package" data-amount="250" data-minutes="55">
+
+      <div class="camera-circle">📹</div>
+
+      <span class="minutes">
+        55 Mins
+      </span>
+
+      <div class="price">
+        KSh 250
+      </div>
+
+    </button>
+
+
+    <button class="package" data-amount="300" data-minutes="65">
+
+      <div class="camera-circle">📹</div>
+
+      <span class="minutes">
+        65 Mins
+      </span>
+
+      <div class="price">
+        KSh 300
+      </div>
+
+    </button>
+
   </div>
 
-  <button
-    type="button"
-    class="pay intaSendPayButton"
-    id="payButton"
-    data-currency="KES"
-    data-method="M-PESA">
-    Pay with M-PESA
-  </button>
 
-  <!-- PASTE M-PESA MESSAGE -->
-  <div class="message-area" id="messageArea">
+  <!-- PAYMENT SECTION -->
 
-    <div class="message-row">
+  <div class="payment-section" id="paymentSection">
 
-      <input
-        type="text"
-        id="messageInput"
-        class="message-input"
-        placeholder="Paste M-PESA message here..."
-        autocomplete="off">
+    <div class="till">
+      Pay with Till: 1605854
+    </div>
 
-      <div class="paste-text">
-        Paste mpesa<br>
-        message &amp; continue
+    <div class="selected-info" id="selectedInfo">
+      No package selected
+    </div>
+
+
+    <button
+      type="button"
+      class="pay intaSendPayButton"
+      id="payButton"
+      data-currency="KES"
+      data-method="M-PESA">
+
+      Pay with M-PESA
+
+    </button>
+
+
+    <!-- MESSAGE BOX -->
+
+    <div class="message-area" id="messageArea">
+
+      <div class="message-row">
+
+        <input
+          type="text"
+          id="messageInput"
+          class="message-input"
+          placeholder="Paste M-PESA message here..."
+          autocomplete="off">
+
+        <div class="paste-text">
+          Paste mpesa<br>
+          message &amp; continue
+        </div>
+
+      </div>
+
+      <div class="message-error" id="messageError">
+        ❌ Message not accepted.
       </div>
 
     </div>
 
-    <div class="message-error" id="messageError">
-      ❌ Message not accepted. Payment must be completed through M-PESA.
+
+    <!-- NO PAYMENT MESSAGE -->
+
+    <div class="payment-status" id="paymentStatus">
+
+      ❌ No payment is done
+
+      <small>
+        Please complete the M-PESA payment to continue.
+      </small>
+
     </div>
 
   </div>
 
-  <!-- NO PAYMENT MESSAGE -->
-  <div class="payment-status" id="paymentStatus">
-    ❌ No payment is done
-    <small>Please complete the M-PESA payment to continue.</small>
-  </div>
-
 </div>
+
 
 <script>
 
 const packages = document.querySelectorAll(".package");
-const selectedInfo = document.getElementById("selectedInfo");
-const payButton = document.getElementById("payButton");
 
-const messageArea = document.getElementById("messageArea");
-const messageInput = document.getElementById("messageInput");
-const messageError = document.getElementById("messageError");
+const paymentSection =
+  document.getElementById("paymentSection");
 
-const paymentStatus = document.getElementById("paymentStatus");
+const selectedInfo =
+  document.getElementById("selectedInfo");
+
+const payButton =
+  document.getElementById("payButton");
+
+const messageArea =
+  document.getElementById("messageArea");
+
+const messageInput =
+  document.getElementById("messageInput");
+
+const messageError =
+  document.getElementById("messageError");
+
+const paymentStatus =
+  document.getElementById("paymentStatus");
 
 let selectedAmount = null;
 let selectedMinutes = null;
 
 
 /* SELECT PACKAGE */
+
 packages.forEach(function(button) {
 
   button.addEventListener("click", function() {
@@ -259,8 +452,12 @@ packages.forEach(function(button) {
 
     this.classList.add("selected");
 
-    selectedAmount = this.dataset.amount;
-    selectedMinutes = this.dataset.minutes;
+    selectedAmount =
+      this.dataset.amount;
+
+    selectedMinutes =
+      this.dataset.minutes;
+
 
     selectedInfo.textContent =
       "Selected: KSh " +
@@ -269,9 +466,16 @@ packages.forEach(function(button) {
       selectedMinutes +
       " minutes";
 
-    payButton.dataset.amount = selectedAmount;
-    payButton.dataset.currency = "KES";
-    payButton.dataset.method = "M-PESA";
+
+    payButton.dataset.amount =
+      selectedAmount;
+
+    payButton.dataset.currency =
+      "KES";
+
+    payButton.dataset.method =
+      "M-PESA";
+
 
     payButton.dataset.api_ref =
       "access-" +
@@ -279,14 +483,26 @@ packages.forEach(function(button) {
       "min-" +
       Date.now();
 
-    payButton.style.display = "block";
 
-    messageArea.style.display = "none";
-    paymentStatus.style.display = "none";
+    paymentSection.style.display =
+      "block";
+
+
+    messageArea.style.display =
+      "none";
+
+    paymentStatus.style.display =
+      "none";
+
 
     messageInput.value = "";
-    messageInput.classList.remove("rejected");
-    messageError.style.display = "none";
+
+    messageInput.classList.remove(
+      "rejected"
+    );
+
+    messageError.style.display =
+      "none";
 
   });
 
@@ -294,36 +510,53 @@ packages.forEach(function(button) {
 
 
 /* PAY WITH M-PESA */
-payButton.addEventListener("click", function() {
 
-  paymentStatus.style.display = "block";
+payButton.addEventListener(
+  "click",
+  function() {
 
-  messageArea.style.display = "block";
+    paymentStatus.style.display =
+      "block";
 
-});
-
-
-/* REJECT ANY TYPED OR PASTED MESSAGE */
-messageInput.addEventListener("input", function() {
-
-  if (this.value.trim().length > 0) {
-
-    this.classList.add("rejected");
-
-    messageError.style.display = "block";
-
-  } else {
-
-    this.classList.remove("rejected");
-
-    messageError.style.display = "none";
+    messageArea.style.display =
+      "block";
 
   }
+);
 
-});
+
+/* REJECT ANY TYPED / PASTED MESSAGE */
+
+messageInput.addEventListener(
+  "input",
+  function() {
+
+    if (this.value.trim().length > 0) {
+
+      this.classList.add(
+        "rejected"
+      );
+
+      messageError.style.display =
+        "block";
+
+    } else {
+
+      this.classList.remove(
+        "rejected"
+      );
+
+      messageError.style.display =
+        "none";
+
+    }
+
+  }
+);
 
 
 /* INTASEND */
+
 new window.IntaSend({
 
   publicAPIKey:
@@ -335,41 +568,70 @@ new window.IntaSend({
 
 
 /* PAYMENT SUCCESS */
-.on("COMPLETE", function(results) {
 
-  console.log("Payment successful:", results);
+.on(
+  "COMPLETE",
+  function(results) {
 
-  paymentStatus.style.display = "none";
+    console.log(
+      "Payment successful:",
+      results
+    );
 
-  alert("Payment successful!");
+    paymentStatus.style.display =
+      "none";
 
-  window.location.href = "index.html";
+    alert(
+      "Payment successful!"
+    );
 
-})
+    window.location.href =
+      "index.html";
+
+  }
+)
 
 
 /* PAYMENT FAILED */
-.on("FAILED", function(results) {
 
-  console.log("Payment failed:", results);
+.on(
+  "FAILED",
+  function(results) {
 
-  paymentStatus.style.display = "block";
+    console.log(
+      "Payment failed:",
+      results
+    );
 
-  paymentStatus.innerHTML =
-    "❌ No payment is done" +
-    "<small>Payment was not completed. Please try again.</small>";
+    paymentStatus.style.display =
+      "block";
 
-})
+    paymentStatus.innerHTML =
+      "❌ No payment is done" +
+      "<small>" +
+      "Payment was not completed. Please try again." +
+      "</small>";
+
+  }
+)
 
 
 /* PAYMENT IN PROGRESS */
-.on("IN-PROGRESS", function(results) {
 
-  console.log("Payment in progress:", results);
+.on(
+  "IN-PROGRESS",
+  function(results) {
 
-  paymentStatus.style.display = "block";
+    console.log(
+      "Payment in progress:",
+      results
+    );
 
-});
+    paymentStatus.style.display =
+      "block";
+
+  }
+);
 
 </script>
 
