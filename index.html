@@ -7,14 +7,12 @@
 <title>My Referral Website</title>
 
 <style>
-
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
   margin:0;
   padding:0;
   width:100%;
@@ -25,14 +23,11 @@ body{
 }
 
 body{
-  padding:20px 12px;
+  padding:15px 10px;
   text-align:center;
 }
 
-/* =========================
-   AGE GATE
-========================= */
-
+/* AGE GATE */
 #ageGate{
   position:fixed;
   inset:0;
@@ -90,10 +85,7 @@ body{
   transform:scale(.96);
 }
 
-/* =========================
-   MAIN PAGE
-========================= */
-
+/* MAIN */
 #mainPage{
   display:none;
   width:100%;
@@ -107,10 +99,7 @@ body{
   color:#ccc;
 }
 
-/* =========================
-   INCOMING CALL
-========================= */
-
+/* INCOMING CALL */
 #incomingCall{
   position:fixed;
   inset:0;
@@ -125,7 +114,6 @@ body{
 .callBackground{
   position:absolute;
   inset:-30px;
-
   background:
     radial-gradient(
       circle,
@@ -133,7 +121,6 @@ body{
       #302b2e 45%,
       #101014 100%
     );
-
   filter:blur(20px);
   transform:scale(1.1);
 }
@@ -147,12 +134,10 @@ body{
 .callContent{
   position:relative;
   z-index:2;
-
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-
   width:100%;
   height:100%;
 }
@@ -162,11 +147,9 @@ body{
   height:155px;
   border-radius:50%;
   border:3px solid #8b5cf6;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   box-shadow:0 0 25px rgba(139,92,246,.4);
 }
 
@@ -206,9 +189,7 @@ body{
 }
 
 @keyframes blink{
-  50%{
-    opacity:.2;
-  }
+  50%{opacity:.2;}
 }
 
 .callButtons{
@@ -248,17 +229,12 @@ body{
   color:#ccc;
 }
 
-/* =========================
-   VIDEO SAMPLE
-========================= */
-
+/* VIDEO */
 #videoPreview{
   position:fixed;
   inset:0;
   z-index:9500;
-
   background:#000;
-
   display:none;
   align-items:center;
   justify-content:center;
@@ -276,27 +252,20 @@ body{
   left:0;
   right:0;
   bottom:25px;
-
   color:#fff;
   font-size:17px;
   text-shadow:0 1px 5px #000;
-
   pointer-events:none;
 }
 
-/* =========================
-   INSUFFICIENT MINUTES
-========================= */
-
+/* INSUFFICIENT */
 #insufficientScreen{
   position:fixed;
   inset:0;
   z-index:9800;
-
   display:none;
   align-items:center;
   justify-content:center;
-
   background:
     radial-gradient(
       circle at center,
@@ -304,24 +273,17 @@ body{
       #111018 45%,
       #050507 100%
     );
-
   padding:25px;
 }
 
 .insufficientBox{
   width:100%;
   max-width:390px;
-
   background:#fff;
   color:#111;
-
   border-radius:24px;
-
   padding:35px 25px;
-
-  box-shadow:
-    0 10px 40px rgba(0,0,0,.5);
-
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
   text-align:center;
 }
 
@@ -344,177 +306,115 @@ body{
 .insufficientLoader{
   width:35px;
   height:35px;
-
   margin:25px auto 0;
-
   border:4px solid #ddd;
   border-top-color:#8b5cf6;
-
   border-radius:50%;
-
   animation:spin .8s linear infinite;
 }
 
 @keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
+  to{transform:rotate(360deg);}
 }
 
-/* =========================
-   GALLERY
-========================= */
-
+/* GALLERY */
 #gallery{
   display:none;
-
   grid-template-columns:1fr 1fr;
-
   gap:12px;
-
   margin-top:25px;
 }
 
 .photoCard{
   position:relative;
-
   height:210px;
-
   background:#111;
-
   border-radius:14px;
-
   overflow:hidden;
-
   cursor:pointer;
-
   border:1px solid #222;
 }
 
 .photoCard img{
   width:100%;
   height:100%;
-
   object-fit:cover;
-
   display:block;
-
   background:#111;
 }
 
 .liveBadge{
   position:absolute;
-
   top:9px;
   left:9px;
-
   z-index:2;
-
   background:#f0184c;
-
   color:#fff;
-
   padding:7px 10px;
-
   border-radius:8px;
-
   font-size:12px;
-
   font-weight:bold;
 }
 
 .liveStatus{
   position:absolute;
-
   left:9px;
   right:9px;
   bottom:9px;
-
   z-index:2;
-
   background:rgba(0,0,0,.82);
-
   padding:8px;
-
   border-radius:8px;
-
   color:#fff;
-
   font-size:12px;
-
   text-align:left;
 }
 
 .liveDot{
   display:inline-block;
-
   width:9px;
   height:9px;
-
   margin-right:6px;
-
   border-radius:50%;
-
   background:#22c55e;
-
   animation:blink 1s infinite;
 }
 
-/* =========================
-   PHOTO VIEWER
-========================= */
-
+/* PHOTO VIEWER */
 #photoViewer{
   position:fixed;
   inset:0;
-
   z-index:100000;
-
   background:rgba(0,0,0,.97);
-
   display:none;
-
   align-items:center;
   justify-content:center;
-
   padding:15px;
 }
 
 #viewerImage{
   max-width:100%;
   max-height:90vh;
-
   object-fit:contain;
-
   border-radius:10px;
 }
 
 .closeViewer{
   position:absolute;
-
   top:20px;
   right:20px;
-
   width:45px;
   height:45px;
-
   border:0;
   border-radius:50%;
-
   background:#fff;
   color:#000;
-
   font-size:28px;
-
   cursor:pointer;
-
   z-index:5;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
+/* MOBILE */
 @media(max-width:500px){
 
   body{
@@ -544,20 +444,14 @@ body{
     width:112px;
     height:112px;
   }
-
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     AGE CONFIRMATION
-========================= -->
-
+<!-- AGE GATE -->
 <div id="ageGate">
-
   <div class="ageBox">
 
     <div class="ageIcon">🔞</div>
@@ -583,19 +477,13 @@ body{
     </button>
 
   </div>
-
 </div>
 
 
-<!-- =========================
-     MAIN PAGE
-========================= -->
-
+<!-- MAIN PAGE -->
 <div id="mainPage">
 
-  <h1 class="pageTitle">
-    Welcome
-  </h1>
+  <h1 class="pageTitle">Welcome</h1>
 
   <p class="pageText">
     Loading your access...
@@ -603,246 +491,239 @@ body{
 
   <div id="gallery">
 
+    <!-- 1 -->
     <div class="photoCard">
       <img src="/images/1.jpg" alt="Photo 1">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 2 -->
     <div class="photoCard">
       <img src="/images/2.jpg" alt="Photo 2">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 3 -->
     <div class="photoCard">
       <img src="/images/3.jpg" alt="Photo 3">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 4 -->
     <div class="photoCard">
       <img src="/images/4.jpg" alt="Photo 4">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 5 -->
     <div class="photoCard">
       <img src="/images/5.jpg" alt="Photo 5">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 6 -->
     <div class="photoCard">
       <img src="/images/6.jpg" alt="Photo 6">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 7 -->
     <div class="photoCard">
       <img src="/images/7.jpg" alt="Photo 7">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 8 -->
     <div class="photoCard">
       <img src="/images/8.jpg" alt="Photo 8">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 9 -->
     <div class="photoCard">
       <img src="/images/9.jpg" alt="Photo 9">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 10 -->
     <div class="photoCard">
       <img src="/images/10.jpg" alt="Photo 10">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 11 -->
     <div class="photoCard">
       <img src="/images/11.jpg" alt="Photo 11">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 12 -->
     <div class="photoCard">
       <img src="/images/12.jpg" alt="Photo 12">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 13 -->
     <div class="photoCard">
       <img src="/images/13.jpg" alt="Photo 13">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 14 -->
     <div class="photoCard">
       <img src="/images/14.jpg" alt="Photo 14">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 15 -->
     <div class="photoCard">
       <img src="/images/15.jpg" alt="Photo 15">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 16 -->
     <div class="photoCard">
       <img src="/images/16.jpg" alt="Photo 16">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 17 -->
     <div class="photoCard">
       <img src="/images/17.jpg" alt="Photo 17">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 18 -->
     <div class="photoCard">
       <img src="/images/18.jpg" alt="Photo 18">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 19 -->
     <div class="photoCard">
       <img src="/images/19.jpg" alt="Photo 19">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 20 -->
     <div class="photoCard">
       <img src="/images/20.jpg" alt="Photo 20">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 21 -->
     <div class="photoCard">
       <img src="/images/21.jpg" alt="Photo 21">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 22 -->
     <div class="photoCard">
       <img src="/images/22.jpg" alt="Photo 22">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 23 -->
     <div class="photoCard">
       <img src="/images/23.jpg" alt="Photo 23">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
+    <!-- 24 -->
     <div class="photoCard">
       <img src="/images/24.jpg" alt="Photo 24">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
+        <span class="liveDot"></span>Live now
       </div>
     </div>
 
   </div>
-
 </div>
 
 
-<!-- =========================
-     INCOMING CALL
-========================= -->
-
+<!-- INCOMING CALL -->
 <div id="incomingCall">
 
   <div class="callBackground"></div>
-
   <div class="callOverlay"></div>
 
   <div class="callContent">
 
     <div class="profileRing">
-
       <img
         class="profilePhoto"
         src="/images/1.jpg"
         alt="Profile">
-
     </div>
 
     <div class="callerName">
@@ -893,14 +774,10 @@ body{
     </div>
 
   </div>
-
 </div>
 
 
-<!-- =========================
-     SAMPLE VIDEO
-========================= -->
-
+<!-- SAMPLE VIDEO -->
 <div id="videoPreview">
 
   <video
@@ -909,29 +786,25 @@ body{
     controls
     preload="auto">
 
-    <!-- YOUR ACTUAL VIDEO FILE -->
+    <!-- DO NOT CHANGE THIS MP4 -->
     <source
       src="/172687-849651731.mp4"
       type="video/mp4">
 
     Your browser does not support video.
+
   </video>
 
   <div
     id="previewCounter"
     class="previewCounter">
-
     Sample video
-
   </div>
 
 </div>
 
 
-<!-- =========================
-     INSUFFICIENT MINUTES
-========================= -->
-
+<!-- INSUFFICIENT MINUTES -->
 <div id="insufficientScreen">
 
   <div class="insufficientBox">
@@ -955,10 +828,7 @@ body{
 </div>
 
 
-<!-- =========================
-     PHOTO VIEWER
-========================= -->
-
+<!-- PHOTO VIEWER -->
 <div id="photoViewer">
 
   <button
@@ -979,10 +849,6 @@ body{
 <script>
 
 document.addEventListener("DOMContentLoaded", function(){
-
-  /* =========================
-     GET ELEMENTS
-  ========================= */
 
   const ageGate =
     document.getElementById("ageGate");
@@ -1040,14 +906,14 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
   /* =========================
-     AGE: I AM 18+
+     I AM 18+
   ========================= */
 
   enterButton.addEventListener("click", function(){
 
     ageGate.style.display = "none";
 
-    mainPage.style.display = "block";
+    mainPage.style.display = "none";
 
     incomingCall.style.display = "flex";
 
@@ -1067,7 +933,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
   /* =========================
-     ANSWER CALL
+     ANSWER
   ========================= */
 
   answerButton.addEventListener("click", function(){
@@ -1082,23 +948,20 @@ document.addEventListener("DOMContentLoaded", function(){
 
     previewVideo.currentTime = 0;
 
-    /*
-      Setting muted=false is okay because
-      this happens directly after the user's tap.
-    */
-
     previewVideo.muted = false;
+
+    previewVideo.load();
 
     const playPromise =
       previewVideo.play();
 
-    if(playPromise !== undefined){
+    if(playPromise){
 
       playPromise.catch(function(){
 
         /*
-          If Chrome blocks audio,
-          the video controls remain available.
+          Chrome may require a second tap
+          for audio in some situations.
         */
 
       });
@@ -1109,12 +972,14 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
   /* =========================
-     DECLINE CALL
+     DECLINE
   ========================= */
 
   declineButton.addEventListener("click", function(){
 
     incomingCall.style.display = "none";
+
+    videoPreview.style.display = "none";
 
     mainPage.style.display = "block";
 
@@ -1138,15 +1003,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
     sampleFinished = false;
 
-    /*
-      Maximum sample time = 60 seconds
-    */
+    sampleTimer =
+      setTimeout(function(){
 
-    sampleTimer = setTimeout(function(){
+        finishSample();
 
-      finishSample();
-
-    },60000);
+      },60000);
 
   });
 
@@ -1180,20 +1042,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
     try{
       previewVideo.currentTime = 0;
-    }catch(e){}
+    }catch(error){}
 
     videoPreview.style.display = "none";
 
-    /*
-      Show INSUFFICIENT MINUTES
-    */
-
     insufficientScreen.style.display = "flex";
 
-    /*
-      Then automatically open
-      the 24-photo gallery.
-    */
 
     setTimeout(function(){
 
@@ -1258,7 +1112,57 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
   /* =========================
-     CLOSE PHOTO BACKGROUND
+     CLOSE BY BACKGROUND
   ========================= */
 
-  photoViewer.addEventLi
+  photoViewer.addEventListener("click", function(event){
+
+    if(event.target === photoViewer){
+
+      photoViewer.style.display =
+        "none";
+
+      viewerImage.src = "";
+
+    }
+
+  });
+
+
+  /* =========================
+     ESCAPE KEY
+  ========================= */
+
+  document.addEventListener("keydown", function(event){
+
+    if(event.key === "Escape"){
+
+      photoViewer.style.display =
+        "none";
+
+      viewerImage.src = "";
+
+    }
+
+  });
+
+
+  /* =========================
+     VIDEO ERROR CHECK
+  ========================= */
+
+  previewVideo.addEventListener("error", function(){
+
+    console.log(
+      "Video could not be loaded:",
+      previewVideo.currentSrc
+    );
+
+  });
+
+});
+
+</script>
+
+</body>
+  </html>
