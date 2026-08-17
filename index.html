@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>My Referral Website</title>
 
 <style>
@@ -23,12 +22,10 @@ html,body{
 }
 
 body{
-  text-align:center;
+  padding:15px 10px;
 }
 
-/* =========================
-   AGE GATE
-========================= */
+/* ================= AGE GATE ================= */
 
 #ageGate{
   position:fixed;
@@ -38,22 +35,22 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  text-align:center;
   padding:20px;
 }
 
 .ageBox{
   width:100%;
   max-width:390px;
-  text-align:center;
 }
 
 .ageIcon{
-  font-size:65px;
-  margin-bottom:18px;
+  font-size:70px;
+  margin-bottom:15px;
 }
 
 .ageBox h1{
-  font-size:34px;
+  font-size:30px;
   margin:10px 0;
 }
 
@@ -66,11 +63,11 @@ body{
 .ageBox button{
   border:0;
   border-radius:12px;
-  padding:17px 25px;
+  padding:17px 28px;
   margin:6px;
-  font-size:17px;
-  font-weight:bold;
   color:#fff;
+  font-weight:bold;
+  font-size:17px;
   cursor:pointer;
 }
 
@@ -83,19 +80,164 @@ body{
 }
 
 .ageBox button:active{
-  transform:scale(.96);
+  transform:scale(.95);
 }
 
-/* =========================
-   SAMPLE PAGE
-========================= */
+/* ================= MAIN ================= */
 
-#samplePage{
+#mainPage{
   display:none;
+  width:100%;
+}
+
+.pageTitle{
+  text-align:center;
+  margin:10px 0;
+}
+
+.pageText{
+  text-align:center;
+  color:#ccc;
+}
+
+/* ================= INCOMING CALL ================= */
+
+#incomingCall{
   position:fixed;
   inset:0;
-  background:#000;
   z-index:9000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:#111;
+}
+
+.callBackground{
+  position:absolute;
+  inset:-30px;
+  background:
+    radial-gradient(circle,#665454 0%,#302b2e 45%,#08080a 100%);
+  filter:blur(20px);
+  transform:scale(1.1);
+}
+
+.callOverlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.58);
+}
+
+.callContent{
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.profileRing{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  border:3px solid #8b5cf6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 30px rgba(139,92,246,.5);
+}
+
+.profilePhoto{
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  object-fit:cover;
+  background:#222;
+}
+
+.callerName{
+  margin-top:17px;
+  font-size:27px;
+  font-weight:bold;
+}
+
+.callTitle{
+  margin-top:6px;
+  color:#aaa;
+  font-size:13px;
+  letter-spacing:1px;
+}
+
+.ringing{
+  margin-top:15px;
+  color:#c19cff;
+}
+
+.ringDot{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  margin-right:5px;
+  border-radius:50%;
+  background:#22c55e;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  50%{opacity:.2}
+}
+
+.callButtons{
+  display:flex;
+  gap:65px;
+  margin-top:85px;
+}
+
+.callOption{
+  text-align:center;
+}
+
+.callButton{
+  width:76px;
+  height:76px;
+  border:0;
+  border-radius:50%;
+  color:#fff;
+  font-size:30px;
+  cursor:pointer;
+}
+
+.callButton:active{
+  transform:scale(.90);
+}
+
+.declineButton{
+  background:#ed3b3b;
+}
+
+.answerButton{
+  background:#14a94b;
+}
+
+.callLabel{
+  margin-top:8px;
+  color:#ddd;
+}
+
+/* ================= VIDEO ================= */
+
+#videoPreview{
+  position:fixed;
+  inset:0;
+  z-index:9500;
+  background:#000;
+  display:none;
+  align-items:center;
+  justify-content:center;
 }
 
 #previewVideo{
@@ -105,99 +247,121 @@ body{
   background:#000;
 }
 
-.sampleText{
+.previewCounter{
   position:absolute;
+  bottom:25px;
   left:0;
   right:0;
-  bottom:20px;
-  z-index:5;
+  text-align:center;
   color:#fff;
   font-size:17px;
-  font-weight:bold;
-  text-shadow:0 2px 5px #000;
+  text-shadow:0 1px 5px #000;
   pointer-events:none;
 }
 
-/* =========================
-   MAIN PAGE
-========================= */
+/* ================= INSUFFICIENT ================= */
 
-#mainPage{
+#insufficientScreen{
+  position:fixed;
+  inset:0;
+  z-index:9800;
   display:none;
-  min-height:100vh;
-  background:#000;
-  padding:18px 10px 30px;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle,#302342 0%,#111018 45%,#050507 100%);
+  padding:25px;
 }
 
-.pageTitle{
-  margin:8px 0;
-  font-size:28px;
+.insufficientBox{
+  width:100%;
+  max-width:390px;
+  background:#fff;
+  color:#111;
+  border-radius:24px;
+  padding:35px 25px;
+  text-align:center;
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
 }
 
-.pageText{
-  color:#bbb;
-  margin:0 0 20px;
+.insufficientIcon{
+  font-size:55px;
 }
 
-/* =========================
-   GALLERY
-========================= */
+.insufficientBox h1{
+  font-size:29px;
+  margin:10px 0;
+}
+
+.insufficientBox p{
+  color:#777;
+}
+
+.insufficientLoader{
+  width:36px;
+  height:36px;
+  margin:25px auto 0;
+  border:4px solid #ddd;
+  border-top-color:#8b5cf6;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* ================= GALLERY ================= */
 
 #gallery{
-  display:grid;
+  display:none;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  width:100%;
-  max-width:700px;
-  margin:0 auto;
+  margin-top:25px;
 }
 
 .photoCard{
   position:relative;
-  height:205px;
+  height:190px;
+  background:#111;
   border-radius:14px;
   overflow:hidden;
-  background:#151515;
-  border:1px solid #292929;
   cursor:pointer;
+  border:1px solid #292929;
 }
 
 .photoCard img{
   width:100%;
   height:100%;
-  display:block;
   object-fit:cover;
-}
-
-.photoCard:active{
-  transform:scale(.98);
+  display:block;
+  background:#111;
 }
 
 .liveBadge{
   position:absolute;
   top:9px;
   left:9px;
+  z-index:2;
   background:#f0184c;
   color:#fff;
   padding:7px 10px;
   border-radius:8px;
   font-size:12px;
   font-weight:bold;
-  z-index:2;
 }
 
 .liveStatus{
   position:absolute;
-  left:8px;
-  right:8px;
-  bottom:8px;
+  left:9px;
+  right:9px;
+  bottom:9px;
+  z-index:2;
+  background:rgba(0,0,0,.82);
   padding:8px;
   border-radius:8px;
-  background:rgba(0,0,0,.8);
   color:#fff;
-  text-align:left;
   font-size:12px;
-  z-index:2;
 }
 
 .liveDot{
@@ -210,274 +374,253 @@ body{
   animation:blink 1s infinite;
 }
 
-@keyframes blink{
-  50%{
-    opacity:.2;
-  }
-}
-
-/* =========================
-   PAYMENT PAGE
-========================= */
+/* ================= PAYMENT ================= */
 
 #paymentPage{
   display:none;
-  position:fixed;
-  inset:0;
-  z-index:9500;
-  overflow-y:auto;
+  min-height:100vh;
   background:#f5f5f5;
   color:#111;
-  padding:20px 15px 35px;
-}
-
-.paymentContainer{
-  width:100%;
-  max-width:500px;
-  margin:0 auto;
+  margin:-15px -10px;
+  padding:25px 18px;
 }
 
 .paymentTitle{
   font-size:30px;
-  margin:15px 0 8px;
-}
-
-.paymentSubtitle{
-  color:#666;
-  margin-bottom:22px;
+  font-weight:bold;
+  margin:5px 0 20px;
+  text-align:center;
 }
 
 .packages{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1fr 1fr 1fr;
   gap:12px;
 }
 
 .package{
-  border:3px solid #1c1d35;
-  border-radius:18px;
+  border:3px solid #1b1c32;
+  border-radius:22px;
   overflow:hidden;
-  background:#1c1d35;
+  background:#1b1c32;
+  color:#fff;
   cursor:pointer;
+  text-align:center;
+  box-shadow:0 3px 5px rgba(0,0,0,.2);
+}
+
+.package:active{
+  transform:scale(.97);
 }
 
 .packageTop{
-  padding:25px 8px;
-  color:#fff;
-  font-size:20px;
-  font-weight:bold;
+  padding:25px 5px;
+  min-height:120px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
 
-.playIcon{
+.playCircle{
   width:55px;
   height:55px;
-  margin:0 auto 12px;
-  border:2px solid #9b7b28;
+  border:2px solid #9b7620;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#ffd400;
-  font-size:24px;
+  color:#ffe500;
+  font-size:26px;
+  margin-bottom:12px;
 }
 
-.packageBottom{
-  background:#ff9f0a;
-  padding:14px 5px;
-  color:#111;
+.minutes{
+  font-size:22px;
   font-weight:bold;
 }
 
-.packagePrice{
-  font-size:20px;
+.packageBottom{
+  background:#ffa313;
+  color:#111;
+  padding:13px 4px;
+  font-size:21px;
+  font-weight:bold;
 }
 
-.packageUsd{
+.usd{
+  display:block;
   font-size:13px;
+  font-weight:normal;
   color:#555;
   margin-top:4px;
 }
 
-.package.selected{
-  box-shadow:0 0 0 4px #22c55e;
-}
-
 .selectedBox{
+  margin:25px 0;
   background:#fff;
-  border-radius:18px;
-  padding:20px;
-  margin-top:22px;
+  border-radius:20px;
+  padding:24px 12px;
+  text-align:center;
   font-size:20px;
-  box-shadow:0 5px 20px rgba(0,0,0,.08);
-}
-
-.selectedBox strong{
-  font-weight:800;
+  box-shadow:0 3px 18px rgba(0,0,0,.08);
 }
 
 .paymentBox{
   background:#fff;
   border-radius:22px;
-  padding:22px 18px;
-  margin-top:20px;
-  box-shadow:0 5px 20px rgba(0,0,0,.08);
+  padding:25px 20px;
+  box-shadow:0 3px 18px rgba(0,0,0,.08);
 }
 
 .paymentBox h2{
-  margin:5px 0 20px;
-  font-size:29px;
+  text-align:center;
+  font-size:30px;
+  margin:0 0 22px;
 }
 
 .tillBox{
-  background:#f0f0f0;
-  border-radius:15px;
-  padding:18px 10px;
-  font-size:20px;
+  background:#eee;
+  border-radius:18px;
+  padding:20px 10px;
+  text-align:center;
+  font-size:21px;
   margin-bottom:18px;
 }
 
-.tillBox strong{
+.tillNumber{
+  font-weight:bold;
   font-size:25px;
 }
 
-.mpesaButton{
+.payButton{
   width:100%;
   border:0;
-  border-radius:14px;
-  padding:18px;
-  background:#20ad4b;
+  border-radius:17px;
+  padding:19px 10px;
+  background:#20ad49;
   color:#fff;
-  font-size:20px;
+  font-size:22px;
   font-weight:bold;
   cursor:pointer;
 }
 
-.mpesaButton:active{
+.payButton:active{
   transform:scale(.98);
 }
 
-.messageBox{
+.mpesaInput{
   width:100%;
-  min-height:130px;
+  min-height:120px;
   margin-top:18px;
+  border:3px solid #28a957;
+  border-radius:15px;
   padding:15px;
-  border:2px solid #20ad4b;
-  border-radius:14px;
-  background:#f0fff4;
-  color:#18733a;
-  font-family:monospace;
-  font-size:15px;
+  font-size:16px;
   resize:none;
+  outline:none;
+  color:#176b35;
+  background:#f0fff4;
+}
+
+.accepted{
+  color:#209b48;
+  font-weight:bold;
+  margin:12px 0;
+  display:none;
 }
 
 .continueButton{
   width:100%;
   border:0;
-  border-radius:14px;
-  padding:18px;
-  margin-top:15px;
-  background:#1976d2;
+  border-radius:17px;
+  padding:19px 10px;
+  background:#237fd0;
   color:#fff;
-  font-size:20px;
+  font-size:22px;
   font-weight:bold;
   cursor:pointer;
 }
 
-.backButton{
-  width:100%;
-  border:0;
-  background:#ddd;
-  color:#111;
-  border-radius:14px;
-  padding:15px;
+.continueButton:active{
+  transform:scale(.98);
+}
+
+.message{
   margin-top:12px;
-  font-size:17px;
+  color:#d11;
   font-weight:bold;
-  cursor:pointer;
-}
-
-.paymentNotice{
-  margin-top:15px;
-  color:#666;
-  font-size:13px;
-  line-height:1.5;
-}
-
-/* =========================
-   SUCCESS
-========================= */
-
-#successPage{
   display:none;
+}
+
+/* ================= PHOTO VIEWER ================= */
+
+#photoViewer{
   position:fixed;
   inset:0;
-  z-index:10000;
-  background:#000;
+  z-index:100000;
+  display:none;
   align-items:center;
   justify-content:center;
-  padding:20px;
+  background:rgba(0,0,0,.97);
+  padding:15px;
 }
 
-.successBox{
-  background:#fff;
-  color:#111;
-  width:100%;
-  max-width:390px;
-  border-radius:22px;
-  padding:30px 22px;
+#viewerImage{
+  max-width:100%;
+  max-height:90vh;
+  object-fit:contain;
+  border-radius:10px;
 }
 
-.successIcon{
-  font-size:60px;
-}
-
-.successBox h2{
-  font-size:28px;
-  margin:12px 0;
-}
-
-.successBox p{
-  color:#666;
-  line-height:1.5;
-}
-
-.closeSuccess{
-  width:100%;
+.closeViewer{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:45px;
+  height:45px;
   border:0;
-  border-radius:12px;
-  padding:16px;
-  background:#22c55e;
-  color:#fff;
-  font-size:18px;
-  font-weight:bold;
-  margin-top:15px;
+  border-radius:50%;
+  background:#fff;
+  color:#000;
+  font-size:28px;
+  cursor:pointer;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* ================= MOBILE ================= */
 
 @media(max-width:500px){
 
-  #gallery{
-    gap:10px;
-  }
-
-  .photoCard{
-    height:185px;
-  }
-
   .packages{
-    gap:10px;
+    grid-template-columns:1fr 1fr;
   }
 
   .packageTop{
-    padding:22px 5px;
-    font-size:18px;
+    min-height:130px;
   }
 
-  .paymentTitle{
-    font-size:27px;
+  .packageBottom{
+    font-size:20px;
+  }
+
+  .callButtons{
+    gap:45px;
+    margin-top:75px;
+  }
+
+  .callButton{
+    width:70px;
+    height:70px;
+  }
+
+  .profileRing{
+    width:145px;
+    height:145px;
+  }
+
+  .profilePhoto{
+    width:115px;
+    height:115px;
   }
 }
 </style>
@@ -485,225 +628,207 @@ body{
 
 <body>
 
-<!-- =========================
-     AGE GATE
-========================= -->
+<!-- ================= AGE ================= -->
 
 <div id="ageGate">
-
   <div class="ageBox">
 
     <div class="ageIcon">🔞</div>
 
     <h1>Age Confirmation</h1>
 
-    <p>
-      You must be 18 or older to continue.
-    </p>
+    <p>You must be 18 or older to continue.</p>
 
-    <button
-      id="enterButton"
-      class="enterButton"
-      type="button">
+    <button type="button"
+            id="enterButton"
+            class="enterButton">
       I am 18+
     </button>
 
-    <button
-      id="exitButton"
-      class="exitButton"
-      type="button">
+    <button type="button"
+            id="exitButton"
+            class="exitButton">
       Exit
     </button>
 
   </div>
-
 </div>
 
 
-<!-- =========================
-     SAMPLE VIDEO
-========================= -->
-
-<div id="samplePage">
-
-  <video
-    id="previewVideo"
-    playsinline
-    controls
-    preload="auto">
-
-    <source
-      src="/172687-849651731.mp4"
-      type="video/mp4">
-
-    Your browser does not support video.
-
-  </video>
-
-  <div class="sampleText">
-    Sample video
-  </div>
-
-</div>
-
-
-<!-- =========================
-     MAIN PAGE
-========================= -->
+<!-- ================= MAIN ================= -->
 
 <div id="mainPage">
 
-  <h1 class="pageTitle">
-    Live Photos
-  </h1>
+  <h1 class="pageTitle">Live Photos</h1>
 
   <p class="pageText">
-    Tap any photo to continue
+    Tap any photo to continue.
   </p>
 
   <div id="gallery">
 
+    <!-- 1 -->
     <div class="photoCard">
       <img src="/images/1.jpg" alt="Photo 1">
       <div class="liveBadge">LIVE</div>
-      <div class="liveStatus">
-        <span class="liveDot"></span>
-        Live now
-      </div>
+      <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 2 -->
     <div class="photoCard">
       <img src="/images/2.jpg" alt="Photo 2">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 3 -->
     <div class="photoCard">
       <img src="/images/3.jpg" alt="Photo 3">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 4 -->
     <div class="photoCard">
       <img src="/images/4.jpg" alt="Photo 4">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 5 -->
     <div class="photoCard">
       <img src="/images/5.jpg" alt="Photo 5">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 6 -->
     <div class="photoCard">
       <img src="/images/6.jpg" alt="Photo 6">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 7 -->
     <div class="photoCard">
       <img src="/images/7.jpg" alt="Photo 7">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 8 -->
     <div class="photoCard">
       <img src="/images/8.jpg" alt="Photo 8">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 9 -->
     <div class="photoCard">
       <img src="/images/9.jpg" alt="Photo 9">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 10 -->
     <div class="photoCard">
       <img src="/images/10.jpg" alt="Photo 10">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 11 -->
     <div class="photoCard">
       <img src="/images/11.jpg" alt="Photo 11">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 12 -->
     <div class="photoCard">
       <img src="/images/12.jpg" alt="Photo 12">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 13 -->
     <div class="photoCard">
       <img src="/images/13.jpg" alt="Photo 13">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 14 -->
     <div class="photoCard">
       <img src="/images/14.jpg" alt="Photo 14">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 15 -->
     <div class="photoCard">
       <img src="/images/15.jpg" alt="Photo 15">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 16 -->
     <div class="photoCard">
       <img src="/images/16.jpg" alt="Photo 16">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 17 -->
     <div class="photoCard">
       <img src="/images/17.jpg" alt="Photo 17">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 18 -->
     <div class="photoCard">
       <img src="/images/18.jpg" alt="Photo 18">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 19 -->
     <div class="photoCard">
       <img src="/images/19.jpg" alt="Photo 19">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 20 -->
     <div class="photoCard">
       <img src="/images/20.jpg" alt="Photo 20">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 21 -->
     <div class="photoCard">
       <img src="/images/21.jpg" alt="Photo 21">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 22 -->
     <div class="photoCard">
       <img src="/images/22.jpg" alt="Photo 22">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 23 -->
     <div class="photoCard">
       <img src="/images/23.jpg" alt="Photo 23">
       <div class="liveBadge">LIVE</div>
       <div class="liveStatus"><span class="liveDot"></span>Live now</div>
     </div>
 
+    <!-- 24 -->
     <div class="photoCard">
       <img src="/images/24.jpg" alt="Photo 24">
       <div class="liveBadge">LIVE</div>
@@ -711,174 +836,257 @@ body{
     </div>
 
   </div>
+</div>
+
+
+<!-- ================= INCOMING CALL ================= -->
+
+<div id="incomingCall">
+
+  <div class="callBackground"></div>
+  <div class="callOverlay"></div>
+
+  <div class="callContent">
+
+    <div class="profileRing">
+      <img
+        class="profilePhoto"
+        src="/images/1.jpg"
+        alt="Profile">
+    </div>
+
+    <div class="callerName">
+      Incoming Video Call
+    </div>
+
+    <div class="callTitle">
+      VIDEO CALL
+    </div>
+
+    <div class="ringing">
+      <span class="ringDot"></span>
+      Ringing...
+    </div>
+
+    <div class="callButtons">
+
+      <div class="callOption">
+
+        <button
+          type="button"
+          id="declineButton"
+          class="callButton declineButton">
+          ✕
+        </button>
+
+        <div class="callLabel">
+          Decline
+        </div>
+
+      </div>
+
+      <div class="callOption">
+
+        <button
+          type="button"
+          id="answerButton"
+          class="callButton answerButton">
+          ☎
+        </button>
+
+        <div class="callLabel">
+          Answer
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ================= SAMPLE VIDEO ================= -->
+
+<div id="videoPreview">
+
+  <video
+    id="previewVideo"
+    playsinline
+    controls
+    preload="auto">
+
+    <!-- DO NOT CHANGE THIS -->
+    <source
+      src="/172687-849651731.mp4"
+      type="video/mp4">
+
+  </video>
+
+  <div class="previewCounter" id="previewCounter">
+    Sample video
+  </div>
 
 </div>
 
 
-<!-- =========================
-     PAYMENT
-========================= -->
+<!-- ================= INSUFFICIENT ================= -->
+
+<div id="insufficientScreen">
+
+  <div class="insufficientBox">
+
+    <div class="insufficientIcon">⏳</div>
+
+    <h1>Insufficient Minutes</h1>
+
+    <p>
+      Your sample has ended. Opening the photos...
+    </p>
+
+    <div class="insufficientLoader"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= PAYMENT ================= -->
 
 <div id="paymentPage">
 
-  <div class="paymentContainer">
+  <div class="paymentTitle">
+    Choose Access
+  </div>
 
-    <h1 class="paymentTitle">
-      Choose Access
-    </h1>
+  <div class="packages">
 
-    <div class="paymentSubtitle">
-      Select your preferred access time
+    <div class="package" data-price="80" data-minutes="10">
+      <div class="packageTop">
+        <div class="playCircle">▶</div>
+        <div class="minutes">10 Mins</div>
+      </div>
+      <div class="packageBottom">
+        KSh 80
+        <span class="usd">≈ $0.62</span>
+      </div>
     </div>
 
-    <div class="packages">
-
-      <div class="package" data-price="80" data-minutes="10">
-        <div class="packageTop">
-          <div class="playIcon">▶</div>
-          10 Mins
-        </div>
-        <div class="packageBottom">
-          <div class="packagePrice">KSh 80</div>
-          <div class="packageUsd">≈ $0.62</div>
-        </div>
+    <div class="package" data-price="135" data-minutes="25">
+      <div class="packageTop">
+        <div class="playCircle">▶</div>
+        <div class="minutes">25 Mins</div>
       </div>
-
-      <div class="package" data-price="135" data-minutes="25">
-        <div class="packageTop">
-          <div class="playIcon">▶</div>
-          25 Mins
-        </div>
-        <div class="packageBottom">
-          <div class="packagePrice">KSh 135</div>
-          <div class="packageUsd">≈ $1.04</div>
-        </div>
+      <div class="packageBottom">
+        KSh 135
+        <span class="usd">≈ $1.04</span>
       </div>
-
-      <div class="package" data-price="200" data-minutes="40">
-        <div class="packageTop">
-          <div class="playIcon">▶</div>
-          40 Mins
-        </div>
-        <div class="packageBottom">
-          <div class="packagePrice">KSh 200</div>
-          <div class="packageUsd">≈ $1.55</div>
-        </div>
-      </div>
-
-      <div class="package" data-price="250" data-minutes="55">
-        <div class="packageTop">
-          <div class="playIcon">▶</div>
-          55 Mins
-        </div>
-        <div class="packageBottom">
-          <div class="packagePrice">KSh 250</div>
-          <div class="packageUsd">≈ $1.94</div>
-        </div>
-      </div>
-
-      <div class="package" data-price="300" data-minutes="65">
-        <div class="packageTop">
-          <div class="playIcon">▶</div>
-          65 Mins
-        </div>
-        <div class="packageBottom">
-          <div class="packagePrice">KSh 300</div>
-          <div class="packageUsd">≈ $2.32</div>
-        </div>
-      </div>
-
     </div>
 
-
-    <div class="selectedBox">
-      Selected:
-      <strong id="selectedText">
-        KSh 80 – 10 Minutes
-      </strong>
+    <div class="package" data-price="200" data-minutes="40">
+      <div class="packageTop">
+        <div class="playCircle">▶</div>
+        <div class="minutes">40 Mins</div>
+      </div>
+      <div class="packageBottom">
+        KSh 200
+        <span class="usd">≈ $1.55</span>
+      </div>
     </div>
 
-
-    <div class="paymentBox">
-
-      <h2>
-        M-Pesa Payment
-      </h2>
-
-      <div class="tillBox">
-        Pay with Till:
-        <strong>1605854</strong>
+    <div class="package" data-price="250" data-minutes="55">
+      <div class="packageTop">
+        <div class="playCircle">▶</div>
+        <div class="minutes">55 Mins</div>
       </div>
-
-      <button
-        id="mpesaButton"
-        class="mpesaButton"
-        type="button">
-        Pay with M-Pesa
-      </button>
-
-      <textarea
-        id="mpesaMessage"
-        class="messageBox"
-        placeholder="Paste your M-Pesa confirmation message here..."></textarea>
-
-      <button
-        id="continueButton"
-        class="continueButton"
-        type="button">
-        Continue
-      </button>
-
-      <button
-        id="backButton"
-        class="backButton"
-        type="button">
-        Back to Photos
-      </button>
-
-      <div class="paymentNotice">
-        Send the selected amount to the Till shown above,
-        then paste the confirmation message and press Continue.
+      <div class="packageBottom">
+        KSh 250
+        <span class="usd">≈ $1.94</span>
       </div>
-
     </div>
+
+    <div class="package" data-price="300" data-minutes="65">
+      <div class="packageTop">
+        <div class="playCircle">▶</div>
+        <div class="minutes">65 Mins</div>
+      </div>
+      <div class="packageBottom">
+        KSh 300
+        <span class="usd">≈ $2.32</span>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="selectedBox">
+    Selected:
+    <strong id="selectedText">
+      KSh 80 — 10 Minutes
+    </strong>
+  </div>
+
+
+  <div class="paymentBox">
+
+    <h2>M-Pesa Payment</h2>
+
+    <div class="tillBox">
+      Pay with Till:
+      <span class="tillNumber">1605854</span>
+    </div>
+
+    <button
+      type="button"
+      id="payButton"
+      class="payButton">
+      Pay with M-Pesa
+    </button>
+
+    <textarea
+      id="mpesaMessage"
+      class="mpesaInput"
+      placeholder="Paste your M-Pesa confirmation message here..."></textarea>
+
+    <div id="accepted" class="accepted">
+      ✓ M-Pesa message format accepted
+    </div>
+
+    <button
+      type="button"
+      id="continueButton"
+      class="continueButton">
+      Continue
+    </button>
+
+    <div id="paymentMessage" class="message"></div>
 
   </div>
 
 </div>
 
 
-<!-- =========================
-     SUCCESS
-========================= -->
+<!-- ================= PHOTO VIEWER ================= -->
 
-<div id="successPage">
+<div id="photoViewer">
 
-  <div class="successBox">
+  <button
+    type="button"
+    id="closeViewer"
+    class="closeViewer">
+    ×
+  </button>
 
-    <div class="successIcon">✓</div>
-
-    <h2>Payment Message Received</h2>
-
-    <p>
-      Your confirmation message has been received.
-      Access can be provided after the payment is verified.
-    </p>
-
-    <button
-      id="closeSuccess"
-      class="closeSuccess"
-      type="button">
-      Back
-    </button>
-
-  </div>
+  <img
+    id="viewerImage"
+    src=""
+    alt="Photo">
 
 </div>
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded",function(){
 
   /* =========================
      ELEMENTS
@@ -887,210 +1095,19 @@ document.addEventListener("DOMContentLoaded", function(){
   const ageGate =
     document.getElementById("ageGate");
 
-  const enterButton =
-    document.getElementById("enterButton");
+  const mainPage =
+    document.getElementById("mainPage");
 
-  const exitButton =
-    document.getElementById("exitButton");
+  const incomingCall =
+    document.getElementById("incomingCall");
 
-  const samplePage =
-    document.getElementById("samplePage");
+  const videoPreview =
+    document.getElementById("videoPreview");
 
   const previewVideo =
     document.getElementById("previewVideo");
 
-  const mainPage =
-    document.getElementById("mainPage");
+  const insufficientScreen =
+    document.getElementById("insufficientScreen");
 
-  const gallery =
-    document.getElementById("gallery");
-
-  const paymentPage =
-    document.getElementById("paymentPage");
-
-  const successPage =
-    document.getElementById("successPage");
-
-  const selectedText =
-    document.getElementById("selectedText");
-
-  const mpesaButton =
-    document.getElementById("mpesaButton");
-
-  const mpesaMessage =
-    document.getElementById("mpesaMessage");
-
-  const continueButton =
-    document.getElementById("continueButton");
-
-  const backButton =
-    document.getElementById("backButton");
-
-  const closeSuccess =
-    document.getElementById("closeSuccess");
-
-  const packages =
-    document.querySelectorAll(".package");
-
-  const photoCards =
-    document.querySelectorAll(".photoCard");
-
-
-  /* =========================
-     INITIAL STATE
-  ========================= */
-
-  ageGate.style.display = "flex";
-  samplePage.style.display = "none";
-  mainPage.style.display = "none";
-  paymentPage.style.display = "none";
-  successPage.style.display = "none";
-
-
-  /* =========================
-     AGE BUTTON
-  ========================= */
-
-  enterButton.addEventListener("click", function(){
-
-    ageGate.style.display = "none";
-
-    samplePage.style.display = "block";
-
-    previewVideo.currentTime = 0;
-
-    previewVideo.muted = false;
-
-    const playAttempt =
-      previewVideo.play();
-
-    if(playAttempt){
-      playAttempt.catch(function(){
-        /*
-          Chrome may require the user to
-          press the video play control.
-        */
-      });
-    }
-
-  });
-
-
-  /* =========================
-     EXIT
-  ========================= */
-
-  exitButton.addEventListener("click", function(){
-
-    window.location.href =
-      "https://www.google.com/";
-
-  });
-
-
-  /* =========================
-     20 SECOND SAMPLE
-  ========================= */
-
-  let sampleTimer = null;
-  let sampleFinished = false;
-
-  function startTwentySecondTimer(){
-
-    clearTimeout(sampleTimer);
-
-    sampleFinished = false;
-
-    sampleTimer = setTimeout(function(){
-
-      finishSample();
-
-    },20000);
-
-  }
-
-
-  previewVideo.addEventListener("play", function(){
-
-    startTwentySecondTimer();
-
-  });
-
-
-  previewVideo.addEventListener("ended", function(){
-
-    finishSample();
-
-  });
-
-
-  function finishSample(){
-
-    if(sampleFinished){
-      return;
-    }
-
-    sampleFinished = true;
-
-    clearTimeout(sampleTimer);
-
-    previewVideo.pause();
-
-    try{
-      previewVideo.currentTime = 0;
-    }catch(error){}
-
-    samplePage.style.display = "none";
-
-    mainPage.style.display = "block";
-
-    gallery.style.display = "grid";
-
-    window.scrollTo(0,0);
-
-  }
-
-
-  /* =========================
-     PHOTO → PAYMENT
-  ========================= */
-
-  photoCards.forEach(function(card){
-
-    card.addEventListener("click", function(){
-
-      mainPage.style.display = "none";
-
-      paymentPage.style.display = "block";
-
-      window.scrollTo(0,0);
-
-    });
-
-  });
-
-
-  /* =========================
-     PACKAGE SELECTION
-  ========================= */
-
-  let selectedPrice = 80;
-  let selectedMinutes = 10;
-
-  packages.forEach(function(packageCard){
-
-    packageCard.addEventListener("click", function(){
-
-      packages.forEach(function(item){
-        item.classList.remove("selected");
-      });
-
-      packageCard.classList.add("selected");
-
-      selectedPrice =
-        packageCard.getAttribute("data-price");
-
-      selectedMinutes =
-        packageCard.getAttribute("data-minutes");
-
-        
+  co
