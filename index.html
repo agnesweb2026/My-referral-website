@@ -8,10 +8,6 @@
 
 <style>
 
-/* =========================
-   GENERAL PAGE
-========================= */
-
 * {
   box-sizing: border-box;
 }
@@ -104,9 +100,6 @@ h1 {
   overflow: hidden;
 }
 
-
-/* Background */
-
 .call-background {
   position: absolute;
   inset: -30px;
@@ -130,9 +123,6 @@ h1 {
 
   background: rgba(0,0,0,0.48);
 }
-
-
-/* Call content */
 
 .call-content {
   position: relative;
@@ -190,9 +180,6 @@ h1 {
   background: #211d26;
 }
 
-
-/* Name */
-
 .caller-name {
   margin-top: 12px;
 
@@ -200,9 +187,6 @@ h1 {
 
   font-weight: normal;
 }
-
-
-/* Call title */
 
 .call-title {
   margin-top: 5px;
@@ -215,7 +199,9 @@ h1 {
 }
 
 
-/* Ringing */
+/* =========================
+   RINGING
+========================= */
 
 .ringing {
   margin-top: 16px;
@@ -276,9 +262,6 @@ h1 {
   align-items: center;
 }
 
-
-/* Buttons */
-
 .call-button {
   width: 78px;
   height: 78px;
@@ -308,22 +291,13 @@ h1 {
   transform: scale(0.92);
 }
 
-
-/* Red */
-
 .decline-button {
   background: #ed3b3b;
 }
 
-
-/* Green */
-
 .answer-button {
   background: #14a94b;
 }
-
-
-/* Labels */
 
 .call-label {
   margin-top: 8px;
@@ -332,9 +306,6 @@ h1 {
 
   color: rgba(255,255,255,0.72);
 }
-
-
-/* Swipe message */
 
 .swipe-message {
   position: absolute;
@@ -438,11 +409,13 @@ h1 {
 
 .insufficient-box h2 {
   font-size: 30px;
+
   margin-bottom: 12px;
 }
 
 .insufficient-box p {
   color: #ccc;
+
   font-size: 17px;
 }
 
@@ -484,7 +457,9 @@ h1 {
 }
 
 
-/* LIVE badge */
+/* =========================
+   LIVE BADGE
+========================= */
 
 .live-badge {
   position: absolute;
@@ -514,7 +489,9 @@ h1 {
 }
 
 
-/* Live status */
+/* =========================
+   LIVE STATUS
+========================= */
 
 .live-status {
   position: absolute;
@@ -542,7 +519,9 @@ h1 {
 }
 
 
-/* Green blinking dot */
+/* =========================
+   GREEN BLINKING DOT
+========================= */
 
 .live-dot {
   display: inline-block;
@@ -655,13 +634,17 @@ h1 {
     <button
       class="enter-button"
       onclick="enterSite()">
+
       I AM 18+ — ENTER
+
     </button>
 
     <button
       class="exit-button"
       onclick="leaveSite()">
+
       EXIT
+
     </button>
 
   </div>
@@ -684,8 +667,6 @@ h1 {
   <div class="call-content">
 
 
-    <!-- PROFILE PHOTO -->
-
     <div class="profile-ring">
 
       <img
@@ -697,8 +678,6 @@ h1 {
     </div>
 
 
-    <!-- CALLER NAME -->
-
     <div
       class="caller-name"
       id="callerName">
@@ -708,16 +687,12 @@ h1 {
     </div>
 
 
-    <!-- TITLE -->
-
     <div class="call-title">
 
       INCOMING VIDEO CALL
 
     </div>
 
-
-    <!-- RINGING -->
 
     <div class="ringing">
 
@@ -728,12 +703,8 @@ h1 {
     </div>
 
 
-    <!-- BUTTONS -->
-
     <div class="call-buttons">
 
-
-      <!-- DECLINE -->
 
       <div class="call-option">
 
@@ -754,8 +725,6 @@ h1 {
 
       </div>
 
-
-      <!-- ANSWER -->
 
       <div class="call-option">
 
@@ -833,21 +802,15 @@ h1 {
   <div class="insufficient-box">
 
     <h2>
-
       INSUFFICIENT MINUTES
-
     </h2>
 
     <p>
-
       Your preview has ended.
-
     </p>
 
     <p>
-
       Please purchase minutes to continue.
-
     </p>
 
   </div>
@@ -863,35 +826,25 @@ h1 {
 <div class="card">
 
   <h1>
-
     Welcome
-
   </h1>
 
   <p>
-
     Welcome to my referral website.
-
   </p>
 
-
-  <!-- =========================
-       LIVE PHOTOS
-  ========================= -->
 
   <div
     id="livePhotos"
     class="gallery">
 
 
-    <!-- PHOTO 1 - JUDY -->
+    <!-- PHOTO 1 -->
 
     <div class="live-photo">
 
       <span class="live-badge">
-
         LIVE
-
       </span>
 
       <span class="live-status">
@@ -911,14 +864,12 @@ h1 {
     </div>
 
 
-    <!-- PHOTO 2 - VANESSA -->
+    <!-- PHOTO 2 -->
 
     <div class="live-photo">
 
       <span class="live-badge">
-
         LIVE
-
       </span>
 
       <span class="live-status">
@@ -938,14 +889,12 @@ h1 {
     </div>
 
 
-    <!-- PHOTO 3 - JUNE -->
+    <!-- PHOTO 3 -->
 
     <div class="live-photo">
 
       <span class="live-badge">
-
         LIVE
-
       </span>
 
       <span class="live-status">
@@ -965,14 +914,12 @@ h1 {
     </div>
 
 
-    <!-- PHOTO 4 - CLARA -->
+    <!-- PHOTO 4 -->
 
     <div class="live-photo">
 
       <span class="live-badge">
-
         LIVE
-
       </span>
 
       <span class="live-status">
@@ -992,14 +939,12 @@ h1 {
     </div>
 
 
-    <!-- PHOTO 5 - MAYA -->
+    <!-- PHOTO 5 -->
 
     <div class="live-photo">
 
       <span class="live-badge">
-
         LIVE
-
       </span>
 
       <span class="live-status">
@@ -1019,14 +964,12 @@ h1 {
     </div>
 
 
-    <!-- PHOTO 6 - VAL -->
+    <!-- PHOTO 6 -->
 
     <div class="live-photo">
 
       <span class="live-badge">
-
         LIVE
-
       </span>
 
       <span class="live-status">
@@ -1046,14 +989,12 @@ h1 {
     </div>
 
 
-    <!-- PHOTO 7 - BELLA -->
+    <!-- PHOTO 7 -->
 
     <div class="live-photo">
 
       <span class="live-badge">
-
         LIVE
-
       </span>
 
       <span class="live-status">
@@ -1073,14 +1014,12 @@ h1 {
     </div>
 
 
-    <!-- PHOTO 8 - LIZZIY -->
+    <!-- PHOTO 8 -->
 
     <div class="live-photo">
 
       <span class="live-badge">
-
         LIVE
-
       </span>
 
       <span class="live-status">
@@ -1107,6 +1046,56 @@ h1 {
 
 
 <script>
+
+/* =========================
+   LINK / SAMPLE ID
+========================= */
+
+/*
+   Put a different value here for a new link.
+
+   Example:
+
+   referral-001
+   referral-002
+   referral-003
+
+   A person who reloads the SAME link
+   keeps the same sample status.
+
+   A link with a DIFFERENT ID gets
+   a fresh sample.
+*/
+
+const SAMPLE_LINK_ID = "referral-001";
+
+const SAMPLE_WATCHED_KEY =
+  "sampleWatched_" + SAMPLE_LINK_ID;
+
+
+/* =========================
+   CHECK SAMPLE STATUS
+========================= */
+
+function hasWatchedSample() {
+
+  return localStorage.getItem(
+    SAMPLE_WATCHED_KEY
+  ) === "yes";
+
+}
+
+
+function markSampleAsWatched() {
+
+  localStorage.setItem(
+    SAMPLE_WATCHED_KEY,
+    "yes"
+  );
+
+}
+
+
 
 /* =========================
    AGE GATE
@@ -1265,6 +1254,44 @@ function showRandomCaller() {
 
 
 /* =========================
+   SHOW INSUFFICIENT MINUTES
+========================= */
+
+function showInsufficientMinutes() {
+
+  videoPreview.style.display =
+    "none";
+
+  insufficientMinutes.style.display =
+    "flex";
+
+
+  setTimeout(
+    function() {
+
+      insufficientMinutes.style.display =
+        "none";
+
+      livePhotos.style.display =
+        "grid";
+
+      window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+      });
+
+    },
+    1500
+  );
+
+}
+
+
+
+/* =========================
    START CALL
 ========================= */
 
@@ -1290,6 +1317,26 @@ answerCall.addEventListener(
     incomingCall.style.display =
       "none";
 
+
+    /*
+      If this link has already shown
+      the sample, DO NOT play it again.
+    */
+
+    if (hasWatchedSample()) {
+
+      showInsufficientMinutes();
+
+      return;
+
+    }
+
+
+    /*
+      First time only:
+      play the sample.
+    */
+
     videoPreview.style.display =
       "flex";
 
@@ -1300,7 +1347,7 @@ answerCall.addEventListener(
       function(error) {
 
         console.log(
-          "Video autoplay requires user interaction.",
+          "Video playback error:",
           error
         );
 
@@ -1323,6 +1370,24 @@ declineCall.addEventListener(
     incomingCall.style.display =
       "none";
 
+
+    /*
+      Declining also does NOT
+      consume the sample.
+
+      The sample only becomes watched
+      after the video actually starts.
+    */
+
+    if (hasWatchedSample()) {
+
+      showInsufficientMinutes();
+
+      return;
+
+    }
+
+
     videoPreview.style.display =
       "flex";
 
@@ -1343,6 +1408,29 @@ declineCall.addEventListener(
 
 
 /* =========================
+   SAMPLE STARTED
+========================= */
+
+previewVideo.addEventListener(
+  "play",
+  function() {
+
+    /*
+      Mark it immediately when the
+      sample actually starts playing.
+    */
+
+    markSampleAsWatched();
+
+  },
+  {
+    once: true
+  }
+);
+
+
+
+/* =========================
    VIDEO ENDS
 ========================= */
 
@@ -1350,33 +1438,7 @@ previewVideo.addEventListener(
   "ended",
   function() {
 
-    videoPreview.style.display =
-      "none";
-
-    insufficientMinutes.style.display =
-      "flex";
-
-
-    setTimeout(
-      function() {
-
-        insufficientMinutes.style.display =
-          "none";
-
-        livePhotos.style.display =
-          "grid";
-
-        window.scrollTo({
-
-          top: 0,
-
-          behavior: "smooth"
-
-        });
-
-      },
-      1500
-    );
+    showInsufficientMinutes();
 
   }
 );
@@ -1391,18 +1453,22 @@ previewVideo.addEventListener(
   "timeupdate",
   function() {
 
-    const remaining =
-      Math.max(
-        0,
-        Math.ceil(
-          previewVideo.duration -
-          previewVideo.currentTime
-        )
-      );
+    if (!isNaN(previewVideo.duration)) {
+
+      const remaining =
+        Math.max(
+          0,
+          Math.ceil(
+            previewVideo.duration -
+            previewVideo.currentTime
+          )
+        );
 
 
-    previewSeconds.textContent =
-      remaining;
+      previewSeconds.textContent =
+        remaining;
+
+    }
 
   }
 );
