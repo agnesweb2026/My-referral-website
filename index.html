@@ -26,6 +26,7 @@ body{
   text-align:center;
 }
 
+
 /* =========================
    AGE GATE
 ========================= */
@@ -76,6 +77,7 @@ body{
 .exitButton{
   background:#666;
 }
+
 
 /* =========================
    INCOMING CALL
@@ -224,6 +226,7 @@ body{
   color:#ccc;
 }
 
+
 /* =========================
    VIDEO SAMPLE
 ========================= */
@@ -263,6 +266,103 @@ body{
   text-shadow:0 1px 4px #000;
 }
 
+
+/* =========================
+   INSUFFICIENT MINUTES
+========================= */
+
+#insufficientScreen{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:9800;
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #302342 0%,
+      #111018 45%,
+      #050507 100%
+    );
+
+  padding:25px;
+}
+
+.insufficientBox{
+
+  width:100%;
+  max-width:390px;
+
+  background:#fff;
+
+  color:#111;
+
+  border-radius:24px;
+
+  padding:35px 25px;
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,.5);
+
+  text-align:center;
+}
+
+.insufficientIcon{
+
+  font-size:55px;
+
+  margin-bottom:10px;
+}
+
+.insufficientBox h1{
+
+  margin:8px 0;
+
+  font-size:30px;
+}
+
+.insufficientBox p{
+
+  margin:10px 0 0;
+
+  color:#777;
+
+  font-size:16px;
+}
+
+.insufficientLoader{
+
+  width:35px;
+  height:35px;
+
+  margin:25px auto 0;
+
+  border:4px solid #ddd;
+
+  border-top-color:#8b5cf6;
+
+  border-radius:50%;
+
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+
+  to{
+    transform:rotate(360deg);
+  }
+
+}
+
+
 /* =========================
    MAIN PAGE
 ========================= */
@@ -274,6 +374,7 @@ body{
 .pageText{
   color:#ccc;
 }
+
 
 /* =========================
    GALLERY
@@ -370,6 +471,7 @@ body{
   animation:blink 1s infinite;
 }
 
+
 /* =========================
    LOADING
 ========================= */
@@ -384,6 +486,7 @@ body{
   font-size:15px;
 }
 
+
 /* =========================
    ERROR
 ========================= */
@@ -397,6 +500,7 @@ body{
 
   font-size:14px;
 }
+
 
 /* =========================
    MOBILE
@@ -419,6 +523,10 @@ body{
   .callButton{
     width:70px;
     height:70px;
+  }
+
+  .insufficientBox h1{
+    font-size:26px;
   }
 
 }
@@ -513,11 +621,13 @@ body{
 
     <div class="callButtons">
 
+      <!-- DECLINE -->
+
       <div class="callOption">
 
         <button
           class="callButton declineButton"
-          onclick="startSample()">
+          onclick="declineCall()">
 
           ☎
 
@@ -529,11 +639,14 @@ body{
 
       </div>
 
+
+      <!-- ANSWER -->
+
       <div class="callOption">
 
         <button
           class="callButton answerButton"
-          onclick="startSample()">
+          onclick="answerCall()">
 
           ☎
 
@@ -586,6 +699,33 @@ body{
 
 
 <!-- =========================
+     INSUFFICIENT MINUTES
+========================= -->
+
+<div id="insufficientScreen">
+
+  <div class="insufficientBox">
+
+    <div class="insufficientIcon">
+      ⏱️
+    </div>
+
+    <h1>
+      Insufficient Minutes
+    </h1>
+
+    <p>
+      You don't have enough minutes.
+    </p>
+
+    <div class="insufficientLoader"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
      MAIN PAGE
 ========================= -->
 
@@ -608,14 +748,11 @@ body{
 </div>
 
 
-<!-- =========================
-     GALLERY
-========================= -->
-
 <div id="gallery"></div>
 
 
 <script>
+
 
 /* =========================
    ELEMENTS
@@ -651,6 +788,11 @@ const loadingPhotos =
 const errorPhotos =
   document.getElementById("errorPhotos");
 
+const insufficientScreen =
+  document.getElementById(
+    "insufficientScreen"
+  );
+
 
 /* =========================
    SETTINGS
@@ -668,6 +810,21 @@ const GITHUB_API =
 
 
 /* =========================
+   REFERRAL MEMORY KEY
+========================= */
+
+const referralCode =
+  new URLSearchParams(
+    window.location.search
+  ).get("ref") || "default";
+
+
+const SAMPLE_COMPLETED_KEY =
+  "sample_completed_" +
+  referralCode;
+
+
+/* =========================
    ENTER SITE
 ========================= */
 
@@ -676,10 +833,42 @@ function enterSite(){
   ageGate.style.display =
     "none";
 
-  incomingCall.style.display =
-    "flex";
-
   loadCallerPhoto();
+
+
+  /*
+    CHECK WHETHER THIS REFERRAL
+    ALREADY COMPLETED THE SAMPLE.
+  */
+
+  const sampleCompleted =
+    localStorage.getItem(
+      SAMPLE_COMPLETED_KEY
+    );
+
+
+  /*
+    FIRST TIME:
+    PLAY SAMPLE.
+  */
+
+  if(sampleCompleted !== "yes"){
+
+    startSample();
+
+  }
+
+
+  /*
+    SAMPLE ALREADY COMPLETED:
+    SHOW INCOMING CALL.
+  */
+
+  else{
+
+    showIncomingCall();
+
+  }
 
 }
 
@@ -713,6 +902,7 @@ async function loadCallerPhoto(){
 
     const files =
       await response.json();
+
 
     const imageFiles =
       files.filter(function(file){
@@ -771,6 +961,26 @@ async function loadCallerPhoto(){
 
 
 /* =========================
+   SHOW INCOMING CALL
+========================= */
+
+function showIncomingCall(){
+
+  videoPreview.style.display =
+    "none";
+
+  insufficientScreen.style.display =
+    "none";
+
+  incomingCall.style.display =
+    "flex";
+
+  loadCallerPhoto();
+
+}
+
+
+/* =========================
    START SAMPLE
 ========================= */
 
@@ -779,11 +989,15 @@ function startSample(){
   incomingCall.style.display =
     "none";
 
+  insufficientScreen.style.display =
+    "none";
+
   videoPreview.style.display =
     "flex";
 
   gallery.style.display =
     "none";
+
 
   previewVideo.pause();
 
@@ -843,28 +1057,14 @@ previewVideo.addEventListener(
 
 
 /* =========================
-   IF VIDEO ENDS EARLY
+   VIDEO ENDED
 ========================= */
 
 previewVideo.addEventListener(
   "ended",
   function(){
 
-    if(
-      previewVideo.currentTime <
-      SAMPLE_DURATION
-    ){
-
-      previewVideo.currentTime = 0;
-
-      previewVideo.play()
-        .catch(function(error){
-
-          console.log(error);
-
-        });
-
-    }
+    finishSample();
 
   }
 );
@@ -876,6 +1076,18 @@ previewVideo.addEventListener(
 
 function finishSample(){
 
+  /*
+    REMEMBER THAT THIS
+    REFERRAL HAS FINISHED
+    THE SAMPLE.
+  */
+
+  localStorage.setItem(
+    SAMPLE_COMPLETED_KEY,
+    "yes"
+  );
+
+
   previewVideo.pause();
 
   previewVideo.currentTime =
@@ -884,7 +1096,75 @@ function finishSample(){
   videoPreview.style.display =
     "none";
 
-  loadAllGitHubPhotos();
+
+  /*
+    AFTER SAMPLE:
+    SHOW INCOMING CALL.
+  */
+
+  showIncomingCall();
+
+}
+
+
+/* =========================
+   ANSWER CALL
+========================= */
+
+function answerCall(){
+
+  incomingCall.style.display =
+    "none";
+
+
+  /*
+    SHOW INSUFFICIENT MINUTES.
+  */
+
+  insufficientScreen.style.display =
+    "flex";
+
+
+  /*
+    AFTER A SHORT MOMENT,
+    GO TO PHOTOS PAGE.
+  */
+
+  setTimeout(function(){
+
+    window.location.href =
+      "photos.html";
+
+  },2000);
+
+}
+
+
+/* =========================
+   DECLINE CALL
+========================= */
+
+function declineCall(){
+
+  /*
+    Declining also sends the visitor
+    to the photos page.
+  */
+
+  incomingCall.style.display =
+    "none";
+
+
+  insufficientScreen.style.display =
+    "flex";
+
+
+  setTimeout(function(){
+
+    window.location.href =
+      "photos.html";
+
+  },2000);
 
 }
 
@@ -929,10 +1209,6 @@ async function loadAllGitHubPhotos(){
       await response.json();
 
 
-    /*
-      GET ALL IMAGE FILES
-    */
-
     const imageFiles =
       files.filter(function(file){
 
@@ -953,10 +1229,6 @@ async function loadAllGitHubPhotos(){
 
       });
 
-
-    /*
-      RANDOM ORDER
-    */
 
     const shuffled =
       [...imageFiles];
@@ -986,10 +1258,6 @@ async function loadAllGitHubPhotos(){
 
     }
 
-
-    /*
-      CREATE ALL PHOTO CARDS
-    */
 
     shuffled.forEach(function(file){
 
@@ -1118,4 +1386,4 @@ function openPayment(){
 </script>
 
 </body>
-</html>
+  </html>
