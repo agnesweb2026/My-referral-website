@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>My Referral Website</title>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
@@ -20,6 +15,8 @@ html,
 body{
   margin:0;
   padding:0;
+  width:100%;
+  min-height:100%;
   background:#000;
   color:#fff;
   font-family:Arial,sans-serif;
@@ -30,109 +27,94 @@ body{
   text-align:center;
 }
 
-
 /* =========================
    AGE GATE
 ========================= */
 
 #ageGate{
-
   position:fixed;
-
   inset:0;
-
-  z-index:9999;
-
+  z-index:99999;
   background:#111;
-
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
   padding:20px;
 }
 
 .ageBox{
-
+  width:100%;
   max-width:380px;
-
   text-align:center;
 }
 
 .ageIcon{
-
   font-size:60px;
 }
 
 .ageBox h1{
-
   margin:10px 0;
+  font-size:28px;
 }
 
 .ageBox p{
-
   color:#ccc;
+  line-height:1.5;
 }
 
 .ageBox button{
-
   border:0;
-
   border-radius:12px;
-
   padding:15px 22px;
-
   margin:8px;
-
   color:#fff;
-
   font-weight:bold;
-
   font-size:15px;
-
   cursor:pointer;
 }
 
 .enterButton{
-
   background:#22c55e;
 }
 
 .exitButton{
-
   background:#666;
 }
 
+/* =========================
+   MAIN PAGE
+========================= */
+
+#mainPage{
+  display:none;
+}
+
+.pageTitle{
+  margin:10px 0;
+  font-size:26px;
+}
+
+.pageText{
+  color:#ccc;
+}
 
 /* =========================
    INCOMING CALL
 ========================= */
 
 #incomingCall{
-
   position:fixed;
-
   inset:0;
-
   z-index:9000;
-
   display:none;
-
   background:#17161b;
-
   align-items:center;
-
   justify-content:center;
-
   overflow:hidden;
 }
 
 .callBackground{
-
   position:absolute;
-
   inset:-30px;
 
   background:
@@ -144,231 +126,156 @@ body{
     );
 
   filter:blur(20px);
-
   transform:scale(1.1);
 }
 
 .callOverlay{
-
   position:absolute;
-
   inset:0;
-
   background:rgba(0,0,0,.55);
 }
 
 .callContent{
-
   position:relative;
-
   z-index:2;
 
   display:flex;
-
   flex-direction:column;
-
   align-items:center;
-
   justify-content:center;
 
   height:100%;
-
   width:100%;
 }
 
 .profileRing{
-
   width:155px;
-
   height:155px;
-
   border-radius:50%;
-
   border:3px solid #8b5cf6;
 
   display:flex;
-
   align-items:center;
-
   justify-content:center;
 }
 
 .profilePhoto{
-
   width:125px;
-
   height:125px;
-
   border-radius:50%;
-
   object-fit:cover;
-
   background:#222;
 }
 
 .callerName{
-
   margin-top:15px;
-
   font-size:28px;
-
   font-weight:bold;
 }
 
 .callTitle{
-
   margin-top:5px;
-
   font-size:13px;
-
   color:#aaa;
-
   letter-spacing:1px;
 }
 
 .ringing{
-
   margin-top:15px;
-
   color:#c19cff;
 }
 
 .ringDot{
-
   display:inline-block;
-
   width:9px;
-
   height:9px;
-
   border-radius:50%;
-
   background:#22c55e;
-
   animation:blink 1s infinite;
 }
 
 @keyframes blink{
-
   50%{
     opacity:.2;
   }
-
 }
 
 .callButtons{
-
   display:flex;
-
   gap:70px;
-
   margin-top:100px;
 }
 
 .callOption{
-
   text-align:center;
 }
 
 .callButton{
-
   width:78px;
-
   height:78px;
-
   border:0;
-
   border-radius:50%;
-
   color:#fff;
-
   font-size:30px;
-
   cursor:pointer;
 }
 
 .declineButton{
-
   background:#ed3b3b;
 }
 
 .answerButton{
-
   background:#14a94b;
 }
 
 .callLabel{
-
   margin-top:8px;
-
   color:#ccc;
 }
-
 
 /* =========================
    VIDEO SAMPLE
 ========================= */
 
 #videoPreview{
-
   position:fixed;
-
   inset:0;
-
   z-index:9500;
-
   background:#000;
 
   display:none;
-
   align-items:center;
-
   justify-content:center;
 }
 
 #previewVideo{
-
   width:100%;
-
   height:100%;
-
   object-fit:contain;
+  background:#000;
 }
 
 .previewCounter{
-
   position:absolute;
-
   bottom:20px;
-
   left:0;
-
   right:0;
-
   color:#fff;
-
   font-size:18px;
-
   text-shadow:0 1px 4px #000;
 }
-
 
 /* =========================
    INSUFFICIENT MINUTES
 ========================= */
 
 #insufficientScreen{
-
   position:fixed;
-
   inset:0;
-
   z-index:9800;
 
   display:none;
-
   align-items:center;
-
   justify-content:center;
 
   background:
@@ -383,17 +290,13 @@ body{
 }
 
 .insufficientBox{
-
   width:100%;
-
   max-width:390px;
 
   background:#fff;
-
   color:#111;
 
   border-radius:24px;
-
   padding:35px 25px;
 
   box-shadow:
@@ -403,38 +306,28 @@ body{
 }
 
 .insufficientIcon{
-
   font-size:55px;
-
   margin-bottom:10px;
 }
 
 .insufficientBox h1{
-
   margin:8px 0;
-
   font-size:30px;
 }
 
 .insufficientBox p{
-
   margin:10px 0 0;
-
   color:#777;
-
   font-size:16px;
 }
 
 .insufficientLoader{
-
   width:35px;
-
   height:35px;
 
   margin:25px auto 0;
 
   border:4px solid #ddd;
-
   border-top-color:#8b5cf6;
 
   border-radius:50%;
@@ -443,49 +336,29 @@ body{
 }
 
 @keyframes spin{
-
   to{
     transform:rotate(360deg);
   }
-
 }
-
-
-/* =========================
-   MAIN PAGE
-========================= */
-
-.pageTitle{
-
-  margin:10px 0;
-}
-
-.pageText{
-
-  color:#ccc;
-}
-
 
 /* =========================
    GALLERY
 ========================= */
 
 #gallery{
-
   display:none;
 
   grid-template-columns:1fr 1fr;
 
-  gap:18px;
+  gap:12px;
 
   margin-top:25px;
 }
 
 .photoCard{
-
   position:relative;
 
-  height:230px;
+  height:220px;
 
   background:#111;
 
@@ -499,9 +372,7 @@ body{
 }
 
 .photoCard img{
-
   width:100%;
-
   height:100%;
 
   object-fit:cover;
@@ -510,17 +381,14 @@ body{
 }
 
 .liveBadge{
-
   position:absolute;
 
   top:9px;
-
   left:9px;
 
   z-index:2;
 
   background:#f0184c;
-
   color:#fff;
 
   padding:7px 10px;
@@ -528,18 +396,14 @@ body{
   border-radius:8px;
 
   font-size:12px;
-
   font-weight:bold;
 }
 
 .liveStatus{
-
   position:absolute;
 
   left:9px;
-
   right:9px;
-
   bottom:9px;
 
   z-index:2;
@@ -548,4 +412,941 @@ body{
 
   padding:8px;
 
- 
+  border-radius:8px;
+
+  color:#fff;
+
+  font-size:12px;
+
+  text-align:left;
+}
+
+.liveDot{
+  display:inline-block;
+
+  width:9px;
+  height:9px;
+
+  margin-right:6px;
+
+  border-radius:50%;
+
+  background:#22c55e;
+
+  animation:blink 1s infinite;
+}
+
+/* =========================
+   PHOTO VIEWER
+========================= */
+
+#photoViewer{
+  position:fixed;
+  inset:0;
+
+  z-index:100000;
+
+  background:rgba(0,0,0,.97);
+
+  display:none;
+
+  align-items:center;
+  justify-content:center;
+
+  padding:15px;
+}
+
+#viewerImage{
+  max-width:100%;
+  max-height:90vh;
+
+  object-fit:contain;
+
+  border-radius:10px;
+}
+
+.closeViewer{
+  position:absolute;
+
+  top:20px;
+  right:20px;
+
+  width:45px;
+  height:45px;
+
+  border:0;
+  border-radius:50%;
+
+  background:#fff;
+  color:#000;
+
+  font-size:25px;
+
+  cursor:pointer;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:500px){
+
+  body{
+    padding:15px 10px;
+  }
+
+  .photoCard{
+    height:190px;
+  }
+
+  .callButtons{
+    gap:45px;
+    margin-top:80px;
+  }
+
+  .callButton{
+    width:70px;
+    height:70px;
+  }
+
+  .profileRing{
+    width:140px;
+    height:140px;
+  }
+
+  .profilePhoto{
+    width:112px;
+    height:112px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     AGE GATE
+========================= -->
+
+<div id="ageGate">
+
+  <div class="ageBox">
+
+    <div class="ageIcon">
+      🔞
+    </div>
+
+    <h1>Age Confirmation</h1>
+
+    <p>
+      You must be 18 or older to continue.
+    </p>
+
+    <button
+      class="enterButton"
+      onclick="enterWebsite()">
+      I am 18+
+    </button>
+
+    <button
+      class="exitButton"
+      onclick="leaveWebsite()">
+      Exit
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     MAIN PAGE
+========================= -->
+
+<div id="mainPage">
+
+  <h1 class="pageTitle">
+    Welcome
+  </h1>
+
+  <p class="pageText">
+    Loading your access...
+  </p>
+
+  <div id="gallery">
+
+    <!-- PHOTO 1 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/1.jpg')">
+
+      <img
+        src="images/1.jpg"
+        alt="Photo 1"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 2 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/2.jpg')">
+
+      <img
+        src="images/2.jpg"
+        alt="Photo 2"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 3 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/3.jpg')">
+
+      <img
+        src="images/3.jpg"
+        alt="Photo 3"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 4 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/4.jpg')">
+
+      <img
+        src="images/4.jpg"
+        alt="Photo 4"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 5 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/5.jpg')">
+
+      <img
+        src="images/5.jpg"
+        alt="Photo 5"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 6 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/6.jpg')">
+
+      <img
+        src="images/6.jpg"
+        alt="Photo 6"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 7 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/7.jpg')">
+
+      <img
+        src="images/7.jpg"
+        alt="Photo 7"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 8 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/8.jpg')">
+
+      <img
+        src="images/8.jpg"
+        alt="Photo 8"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 9 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/9.jpg')">
+
+      <img
+        src="images/9.jpg"
+        alt="Photo 9"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 10 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/10.jpg')">
+
+      <img
+        src="images/10.jpg"
+        alt="Photo 10"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 11 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/11.jpg')">
+
+      <img
+        src="images/11.jpg"
+        alt="Photo 11"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 12 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/12.jpg')">
+
+      <img
+        src="images/12.jpg"
+        alt="Photo 12"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 13 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/13.jpg')">
+
+      <img
+        src="images/13.jpg"
+        alt="Photo 13"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 14 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/14.jpg')">
+
+      <img
+        src="images/14.jpg"
+        alt="Photo 14"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 15 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/15.jpg')">
+
+      <img
+        src="images/15.jpg"
+        alt="Photo 15"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 16 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/16.jpg')">
+
+      <img
+        src="images/16.jpg"
+        alt="Photo 16"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 17 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/17.jpg')">
+
+      <img
+        src="images/17.jpg"
+        alt="Photo 17"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 18 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/18.jpg')">
+
+      <img
+        src="images/18.jpg"
+        alt="Photo 18"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 19 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/19.jpg')">
+
+      <img
+        src="images/19.jpg"
+        alt="Photo 19"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 20 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/20.jpg')">
+
+      <img
+        src="images/20.jpg"
+        alt="Photo 20"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 21 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/21.jpg')">
+
+      <img
+        src="images/21.jpg"
+        alt="Photo 21"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 22 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/22.jpg')">
+
+      <img
+        src="images/22.jpg"
+        alt="Photo 22"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 23 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/23.jpg')">
+
+      <img
+        src="images/23.jpg"
+        alt="Photo 23"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+
+    <!-- PHOTO 24 -->
+    <div class="photoCard"
+         onclick="openPhoto('images/24.jpg')">
+
+      <img
+        src="images/24.jpg"
+        alt="Photo 24"
+        onerror="this.style.display='none';">
+
+      <div class="liveBadge">
+        LIVE
+      </div>
+
+      <div class="liveStatus">
+        <span class="liveDot"></span>
+        Live now
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     INCOMING CALL
+========================= -->
+
+<div id="incomingCall">
+
+  <div class="callBackground"></div>
+
+  <div class="callOverlay"></div>
+
+  <div class="callContent">
+
+    <div class="profileRing">
+
+      <img
+        class="profilePhoto"
+        src="images/1.jpg"
+        alt="Profile">
+
+    </div>
+
+    <div class="callerName">
+      Incoming Video Call
+    </div>
+
+    <div class="callTitle">
+      VIDEO CALL
+    </div>
+
+    <div class="ringing">
+      <span class="ringDot"></span>
+      Ringing...
+    </div>
+
+    <div class="callButtons">
+
+      <div class="callOption">
+
+        <button
+          class="callButton declineButton"
+          onclick="declineCall()">
+          ✕
+        </button>
+
+        <div class="callLabel">
+          Decline
+        </div>
+
+      </div>
+
+
+      <div class="callOption">
+
+        <button
+          class="callButton answerButton"
+          onclick="answerCall()">
+          ☎
+        </button>
+
+        <div class="callLabel">
+          Answer
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     VIDEO PREVIEW
+========================= -->
+
+<div id="videoPreview">
+
+  <video
+    id="previewVideo"
+    playsinline
+    controls>
+    <source
+      src="sample.mp4"
+      type="video/mp4">
+  </video>
+
+  <div
+    id="previewCounter"
+    class="previewCounter">
+    Sample video
+  </div>
+
+</div>
+
+
+<!-- =========================
+     INSUFFICIENT SCREEN
+========================= -->
+
+<div id="insufficientScreen">
+
+  <div class="insufficientBox">
+
+    <div class="insufficientIcon">
+      ⏳
+    </div>
+
+    <h1>
+      Insufficient Minutes
+    </h1>
+
+    <p>
+      Your sample has ended. Opening the photos...
+    </p>
+
+    <div class="insufficientLoader"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     PHOTO VIEWER
+========================= -->
+
+<div id="photoViewer">
+
+  <button
+    class="closeViewer"
+    onclick="closePhoto()">
+    ×
+  </button>
+
+  <img
+    id="viewerImage"
+    src=""
+    alt="Photo">
+
+</div>
+
+
+<script>
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const ageGate =
+  document.getElementById("ageGate");
+
+const mainPage =
+  document.getElementById("mainPage");
+
+const incomingCall =
+  document.getElementById("incomingCall");
+
+const videoPreview =
+  document.getElementById("videoPreview");
+
+const previewVideo =
+  document.getElementById("previewVideo");
+
+const insufficientScreen =
+  document.getElementById("insufficientScreen");
+
+const gallery =
+  document.getElementById("gallery");
+
+const photoViewer =
+  document.getElementById("photoViewer");
+
+const viewerImage =
+  document.getElementById("viewerImage");
+
+const previewCounter =
+  document.getElementById("previewCounter");
+
+
+/* =========================
+   STATE
+========================= */
+
+let samplePlayed = false;
+let callTimer = null;
+let videoTimer = null;
+
+
+/* =========================
+   AGE GATE
+========================= */
+
+function enterWebsite(){
+
+  ageGate.style.display = "none";
+
+  mainPage.style.display = "block";
+
+  startIncomingCall();
+
+}
+
+
+function leaveWebsite(){
+
+  window.location.href =
+    "https://www.google.com/";
+
+}
+
+
+/* =========================
+   INCOMING CALL
+========================= */
+
+function startIncomingCall(){
+
+  incomingCall.style.display = "flex";
+
+  clearTimeout(callTimer);
+
+  callTimer = setTimeout(function(){
+
+    /* Keep the call visible until
+       the visitor answers or declines */
+
+  },100);
+
+}
+
+
+function declineCall(){
+
+  incomingCall.style.display = "none";
+
+  mainPage.style.display = "block";
+
+  gallery.style.display = "grid";
+
+}
+
+
+/* =========================
+   ANSWER CALL
+========================= */
+
+function answerCall(){
+
+  incomingCall.style.display = "none";
+
+  if(samplePlayed){
+
+    showInsufficient();
+
+    return;
+  }
+
+  samplePlayed = true;
+
+  startSampleVideo();
+
+}
+
+
+/* ==================
