@@ -11,16 +11,24 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  padding: 20px 15px;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
   background: #000;
   color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
 }
 
+body {
+  padding: 20px 15px;
+}
+
 .card {
+  width: 100%;
   max-width: 450px;
   margin: auto;
 }
@@ -41,6 +49,10 @@ p {
   position: fixed;
   inset: 0;
   z-index: 99999;
+
+  width: 100%;
+  height: 100%;
+
   background: #111;
 
   display: flex;
@@ -51,12 +63,26 @@ p {
 }
 
 .age-box {
+  width: 100%;
   max-width: 380px;
   text-align: center;
 }
 
 .age-icon {
   font-size: 60px;
+  margin-bottom: 10px;
+}
+
+.age-box h1 {
+  font-size: 42px;
+  margin: 10px 0 25px;
+  color: #fff;
+}
+
+.age-box p {
+  font-size: 18px;
+  color: #ccc;
+  margin-bottom: 30px;
 }
 
 .age-box button {
@@ -69,6 +95,10 @@ p {
   color: #fff;
   font-weight: bold;
   font-size: 15px;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .enter-button {
@@ -77,6 +107,11 @@ p {
 
 .exit-button {
   background: #666;
+}
+
+.enter-button:active,
+.exit-button:active {
+  transform: scale(.97);
 }
 
 /* =========================
@@ -89,6 +124,9 @@ p {
   z-index: 90000;
 
   display: none;
+
+  width: 100%;
+  height: 100%;
 
   background: #17161b;
   overflow: hidden;
@@ -121,6 +159,7 @@ p {
   position: relative;
   z-index: 2;
 
+  width: 100%;
   height: 100%;
 
   display: flex;
@@ -235,6 +274,8 @@ p {
   justify-content: center;
 
   cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .decline-button {
@@ -271,6 +312,9 @@ p {
   z-index: 80000;
 
   display: none;
+
+  width: 100%;
+  height: 100%;
 
   background: #000;
 
@@ -309,6 +353,9 @@ p {
 
   display: none;
 
+  width: 100%;
+  height: 100%;
+
   background: #111;
 
   align-items: center;
@@ -346,7 +393,7 @@ p {
 
   cursor: pointer;
 
-  min-height: 250px;
+  min-height: 255px;
 
   padding-bottom: 45px;
 }
@@ -432,8 +479,8 @@ p {
 .live-status {
   position: absolute;
 
-  left: 8px;
   top: 8px;
+  right: 8px;
 
   z-index: 5;
 
@@ -499,7 +546,7 @@ p {
   }
 
   .live-photo {
-    min-height: 210px;
+    min-height: 215px;
   }
 
   .live-photo img {
@@ -541,16 +588,18 @@ p {
     </p>
 
     <button
+      id="enterButton"
       class="enter-button"
-      onclick="enterSite()">
+      type="button">
 
       I AM 18+ — ENTER
 
     </button>
 
     <button
+      id="exitButton"
       class="exit-button"
-      onclick="leaveSite()">
+      type="button">
 
       EXIT
 
@@ -609,7 +658,8 @@ p {
 
         <button
           id="declineCall"
-          class="call-button decline-button">
+          class="call-button decline-button"
+          type="button">
 
           ☎
 
@@ -626,7 +676,8 @@ p {
 
         <button
           id="answerCall"
-          class="call-button answer-button">
+          class="call-button answer-button"
+          type="button">
 
           ☎
 
@@ -731,6 +782,15 @@ p {
 <script>
 
 /* =====================================================
+   VARIABLES
+===================================================== */
+
+let callers = [];
+
+let lastCaller = -1;
+
+
+/* =====================================================
    GITHUB SETTINGS
 ===================================================== */
 
@@ -743,20 +803,11 @@ const GITHUB_REPO =
 const GITHUB_BRANCH =
   "main";
 
-const GALLERY_FOLDER =
-  "";
-
-
-/* =====================================================
-   MAXIMUM PHOTOS
-===================================================== */
-
 const MAX_PHOTOS = 24;
 
 
 /* =====================================================
    PHOTO NAMES
-   THE NAME MATCHES THE PHOTO ORDER
 ===================================================== */
 
 const PHOTO_NAMES = [
@@ -825,21 +876,22 @@ const SAMPLE_WATCHED_KEY =
 
 
 /* =====================================================
-   VARIABLES
-===================================================== */
-
-let callers = [];
-
-let lastCaller = -1;
-
-
-/* =====================================================
-   ELEMENTS
+   GET ELEMENTS
 ===================================================== */
 
 const ageGate =
   document.getElementById(
     "ageGate"
+  );
+
+const enterButton =
+  document.getElementById(
+    "enterButton"
+  );
+
+const exitButton =
+  document.getElementById(
+    "exitButton"
   );
 
 const incomingCall =
@@ -899,8 +951,7 @@ const declineCall =
 
 function shuffleArray(array) {
 
-  const shuffled =
-    [...array];
+  const shuffled = [...array];
 
   for (
     let i = shuffled.length - 1;
@@ -931,7 +982,7 @@ function shuffleArray(array) {
 
 
 /* =====================================================
-   LOAD PHOTOS FROM GITHUB ROOT
+   LOAD PHOTOS
 ===================================================== */
 
 async function loadPhotos() {
@@ -944,16 +995,13 @@ async function loadPhotos() {
 
   `;
 
-
   const apiUrl =
     "https://api.github.com/repos/" +
     GITHUB_OWNER +
     "/" +
     GITHUB_REPO +
-    "/contents/" +
-    "?ref=" +
+    "/contents/?ref=" +
     GITHUB_BRANCH;
-
 
   try {
 
@@ -965,33 +1013,25 @@ async function loadPhotos() {
         }
       );
 
-
     if (!response.ok) {
 
       throw new Error(
-        "GitHub gallery could not be loaded. HTTP " +
+        "GitHub error: HTTP " +
         response.status
       );
 
     }
 
-
     const files =
       await response.json();
-
 
     if (!Array.isArray(files)) {
 
       throw new Error(
-        "GitHub did not return a file list."
+        "GitHub did not return files."
       );
 
     }
-
-
-    /*
-     * ONLY IMAGE FILES
-     */
 
     const imageFiles =
       files.filter(
@@ -1006,17 +1046,11 @@ async function loadPhotos() {
         }
       );
 
-
-    /*
-     * TAKE FIRST 24 PHOTOS
-     */
-
     const selectedFiles =
       imageFiles.slice(
         0,
         MAX_PHOTOS
       );
-
 
     if (
       selectedFiles.length === 0
@@ -1030,8 +1064,8 @@ async function loadPhotos() {
 
           <br><br>
 
-          The image files must be in
-          the main repository.
+          Make sure your 24 image files
+          are in the main GitHub repository.
 
         </div>
 
@@ -1042,14 +1076,9 @@ async function loadPhotos() {
     }
 
 
-    /*
-     * CREATE PHOTO + NAME
-     *
-     * PHOTO 1  = Cute
-     * PHOTO 2  = Becky
-     * PHOTO 3  = Dorry
-     * etc.
-     */
+    /* =========================================
+       CONNECT EACH PHOTO TO ITS NAME
+    ========================================= */
 
     callers =
       selectedFiles.map(
@@ -1071,10 +1100,9 @@ async function loadPhotos() {
 
 
     /*
-     * RANDOMIZE THE COMPLETE OBJECT
-     *
-     * This keeps the correct name
-     * attached to the correct photo.
+     * Shuffle the complete object.
+     * This means the name stays attached
+     * to its correct picture.
      */
 
     callers =
@@ -1083,16 +1111,7 @@ async function loadPhotos() {
       );
 
 
-    /*
-     * CREATE GALLERY
-     */
-
     createGallery();
-
-
-    /*
-     * SHOW RANDOM CALLER
-     */
 
     showRandomCaller();
 
@@ -1100,10 +1119,8 @@ async function loadPhotos() {
   } catch (error) {
 
     console.error(
-      "Gallery error:",
       error
     );
-
 
     livePhotos.innerHTML = `
 
@@ -1113,13 +1130,7 @@ async function loadPhotos() {
 
         <br><br>
 
-        Please check your GitHub repository.
-
-        <br><br>
-
-        <small>
-          ${error.message}
-        </small>
+        ${error.message}
 
       </div>
 
@@ -1138,12 +1149,10 @@ function createGallery() {
 
   livePhotos.innerHTML = "";
 
-
   const randomPhotos =
     shuffleArray(
       callers
     );
-
 
   randomPhotos.forEach(
     function(person) {
@@ -1153,14 +1162,11 @@ function createGallery() {
           "div"
         );
 
-
       box.className =
         "live-photo";
 
 
-      /*
-       * LIVE BADGE
-       */
+      /* LIVE BADGE */
 
       const badge =
         document.createElement(
@@ -1174,28 +1180,7 @@ function createGallery() {
         "LIVE";
 
 
-      /*
-       * IMAGE
-       */
-
-      const image =
-        document.createElement(
-          "img"
-        );
-
-      image.src =
-        person.photo;
-
-      image.alt =
-        person.name;
-
-      image.loading =
-        "lazy";
-
-
-      /*
-       * GREEN LIVE DOT
-       */
+      /* LIVE STATUS */
 
       const status =
         document.createElement(
@@ -1219,7 +1204,6 @@ function createGallery() {
         dot
       );
 
-
       status.appendChild(
         document.createTextNode(
           "Live"
@@ -1227,9 +1211,24 @@ function createGallery() {
       );
 
 
-      /*
-       * NAME UNDER PHOTO
-       */
+      /* IMAGE */
+
+      const image =
+        document.createElement(
+          "img"
+        );
+
+      image.src =
+        person.photo;
+
+      image.alt =
+        person.name;
+
+      image.loading =
+        "lazy";
+
+
+      /* NAME BELOW PHOTO */
 
       const name =
         document.createElement(
@@ -1243,9 +1242,7 @@ function createGallery() {
         person.name;
 
 
-      /*
-       * ADD EVERYTHING
-       */
+      /* ADD */
 
       box.appendChild(
         badge
@@ -1264,9 +1261,7 @@ function createGallery() {
       );
 
 
-      /*
-       * PHOTO CLICK
-       */
+      /* CLICK */
 
       box.addEventListener(
         "click",
@@ -1301,9 +1296,7 @@ function showRandomCaller() {
 
   }
 
-
   let randomIndex;
-
 
   do {
 
@@ -1318,14 +1311,11 @@ function showRandomCaller() {
     randomIndex === lastCaller
   );
 
-
   lastCaller =
     randomIndex;
 
-
   const caller =
     callers[randomIndex];
-
 
   callerPhoto.src =
     caller.photo;
@@ -1336,7 +1326,6 @@ function showRandomCaller() {
   callerName.textContent =
     caller.name;
 
-
   incomingCall.style.display =
     "block";
 
@@ -1344,35 +1333,65 @@ function showRandomCaller() {
 
 
 /* =====================================================
-   AGE GATE
+   AGE GATE - FIXED
 ===================================================== */
 
-function enterSite() {
+enterButton.addEventListener(
+  "click",
+  function(event) {
 
-  ageGate.style.display =
-    "none";
+    event.preventDefault();
+
+    event.stopPropagation();
+
+    /*
+     * REMOVE AGE SCREEN IMMEDIATELY
+     */
+
+    ageGate.style.display =
+      "none";
+
+    ageGate.style.visibility =
+      "hidden";
+
+    ageGate.style.pointerEvents =
+      "none";
 
 
-  if (callers.length) {
+    /*
+     * SHOW INCOMING CALL
+     */
 
-    showRandomCaller();
+    if (callers.length > 0) {
 
-  } else {
+      showRandomCaller();
 
-    livePhotos.style.display =
-      "grid";
+    } else {
+
+      livePhotos.style.display =
+        "grid";
+
+    }
 
   }
+);
 
-}
 
+/* =====================================================
+   EXIT
+===================================================== */
 
-function leaveSite() {
+exitButton.addEventListener(
+  "click",
+  function(event) {
 
-  window.location.href =
-    "https://www.google.com";
+    event.preventDefault();
 
-}
+    window.location.href =
+      "https://www.google.com";
+
+  }
+);
 
 
 /* =====================================================
@@ -1409,10 +1428,8 @@ function showInsufficientMinutes() {
   videoPreview.style.display =
     "none";
 
-
   insufficientMinutes.style.display =
     "flex";
-
 
   setTimeout(
     function() {
@@ -1420,13 +1437,10 @@ function showInsufficientMinutes() {
       insufficientMinutes.style.display =
         "none";
 
-
       livePhotos.style.display =
         "grid";
 
-
       createGallery();
-
 
       window.scrollTo({
 
@@ -1452,7 +1466,6 @@ function playSample() {
   incomingCall.style.display =
     "none";
 
-
   if (hasWatchedSample()) {
 
     showInsufficientMinutes();
@@ -1461,14 +1474,11 @@ function playSample() {
 
   }
 
-
   videoPreview.style.display =
     "flex";
 
-
   previewVideo.currentTime =
     0;
-
 
   previewVideo.play().catch(
     function(error) {
@@ -1485,7 +1495,7 @@ function playSample() {
 
 
 /* =====================================================
-   ANSWER CALL
+   ANSWER
 ===================================================== */
 
 answerCall.addEventListener(
@@ -1499,7 +1509,7 @@ answerCall.addEventListener(
 
 
 /* =====================================================
-   DECLINE CALL
+   DECLINE
 ===================================================== */
 
 declineCall.addEventListener(
@@ -1507,45 +1517,4 @@ declineCall.addEventListener(
   function() {
 
     playSample();
-
-  }
-);
-
-
-/* =====================================================
-   SAMPLE PLAY
-===================================================== */
-
-previewVideo.addEventListener(
-  "play",
-  function() {
-
-    markSampleAsWatched();
-
-  },
-  {
-    once: true
-  }
-);
-
-
-/* =====================================================
-   SAMPLE END
-===================================================== */
-
-previewVideo.addEventListener(
-  "ended",
-  function() {
-
-    showInsufficientMinutes();
-
-  }
-);
-
-
-/* =====================================================
-   COUNTDOWN
-===================================================== */
-
-previewVideo.addEventListener(
- 
+  
