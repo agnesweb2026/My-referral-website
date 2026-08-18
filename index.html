@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>My Referral Website</title>
 
 <style>
+
+/* ==========================================
+   BASIC
+========================================== */
 
 * {
   box-sizing: border-box;
@@ -33,255 +42,422 @@ body {
   margin: 0 auto;
 }
 
-/* =========================
+
+/* ==========================================
    SAMPLE PAGE
-========================= */
+========================================== */
 
 #samplePage {
-  display: flex;
+
+  display: none;
+
   width: 100%;
   min-height: calc(100vh - 30px);
+
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
+
   text-align: center;
+
 }
 
 .sample-title {
+
   font-size: 22px;
   font-weight: bold;
+
   margin-bottom: 15px;
+
 }
 
 .sample-subtitle {
+
   color: #aaa;
+
   font-size: 14px;
+
   margin-bottom: 15px;
+
 }
 
 #sampleVideo {
+
   width: 100%;
   max-width: 450px;
+
   max-height: 70vh;
+
   display: block;
+
   background: #111;
+
   border-radius: 14px;
+
   object-fit: contain;
+
 }
 
 .sample-timer {
+
   margin-top: 12px;
+
   color: #aaa;
+
   font-size: 13px;
+
 }
 
-/* =========================
+
+/* ==========================================
    INSUFFICIENT PAGE
-========================= */
+========================================== */
 
 #insufficientPage {
+
   display: none;
+
   width: 100%;
+
   min-height: calc(100vh - 30px);
+
   align-items: center;
   justify-content: center;
+
   text-align: center;
+
 }
 
 .insufficient-box {
+
   width: 100%;
+
   background: #111;
+
   border: 1px solid #292929;
+
   border-radius: 14px;
+
   padding: 30px 20px;
+
 }
 
 .insufficient-title {
+
   font-size: 25px;
+
   font-weight: bold;
+
   color: #ff5252;
+
   margin-bottom: 10px;
+
 }
 
 .insufficient-text {
+
   color: #aaa;
+
   font-size: 14px;
+
   line-height: 1.5;
+
 }
 
-/* =========================
+
+/* ==========================================
    PHOTOS PAGE
-========================= */
+========================================== */
 
 #photosPage {
+
   display: none;
+
+  width: 100%;
+
 }
 
 .top-bar {
+
   width: 100%;
+
   display: flex;
+
   justify-content: flex-start;
+
   align-items: center;
+
   margin-bottom: 15px;
+
 }
 
 .online-box {
+
   display: inline-flex;
+
   align-items: center;
+
   gap: 7px;
+
   background: #111;
+
   border: 1px solid #292929;
+
   color: #fff;
+
   padding: 7px 11px;
+
   border-radius: 8px;
+
   font-size: 13px;
+
   font-weight: bold;
+
 }
 
 .online-dot {
+
   width: 9px;
   height: 9px;
+
   border-radius: 50%;
+
   background: #22c55e;
+
   animation: onlineBlink 1.2s infinite;
+
 }
 
 @keyframes onlineBlink {
+
   50% {
     opacity: .35;
   }
+
 }
 
 h1 {
+
   margin: 8px 0 5px;
+
   font-size: 25px;
+
 }
 
 .subtitle {
+
   color: #aaa;
+
   margin: 0 0 15px;
+
   font-size: 14px;
+
 }
 
 #livePhotos {
+
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 14px;
+
   margin-top: 15px;
+
 }
 
 .live-photo {
+
   position: relative;
+
   overflow: hidden;
+
   border-radius: 12px;
+
   background: #111;
+
   cursor: pointer;
+
   min-height: 250px;
+
   padding-bottom: 45px;
+
   border: 1px solid #1e1e1e;
+
   transition: transform .15s ease;
+
 }
 
 .live-photo:active {
+
   transform: scale(.98);
+
 }
 
 .live-photo img {
+
   display: block;
+
   width: 100%;
+
   height: 205px;
+
   object-fit: cover;
+
   background: #111;
+
 }
 
 .photo-name {
+
   position: absolute;
+
   left: 0;
   right: 0;
   bottom: 0;
+
   min-height: 45px;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   padding: 7px 5px;
+
   background: #111;
+
   color: #fff;
+
   font-size: 13px;
+
   font-weight: bold;
+
   text-align: center;
+
 }
 
 .live-badge {
+
   position: absolute;
+
   top: 7px;
   left: 7px;
+
   z-index: 5;
+
   background: #f0184c;
+
   color: #fff;
+
   padding: 6px 9px;
+
   border-radius: 7px;
+
   font-size: 11px;
+
   font-weight: bold;
+
 }
 
 .live-badge::before {
+
   content: "●";
+
   margin-right: 4px;
+
 }
 
 .live-status {
+
   position: absolute;
+
   top: 7px;
   right: 7px;
+
   z-index: 5;
+
   display: flex;
+
   align-items: center;
+
   gap: 5px;
+
   background: rgba(0,0,0,.82);
+
   padding: 5px 7px;
+
   border-radius: 7px;
+
   font-size: 10px;
+
 }
 
 .live-dot {
+
   width: 8px;
   height: 8px;
+
   flex-shrink: 0;
+
   border-radius: 50%;
+
   background: #22c55e;
+
   animation: liveBlink 1s infinite;
+
 }
 
 @keyframes liveBlink {
+
   50% {
     opacity: .35;
   }
+
 }
 
 .loading {
+
   grid-column: 1 / -1;
+
   padding: 45px 20px;
+
   color: #aaa;
+
   text-align: center;
+
 }
 
 .error {
+
   grid-column: 1 / -1;
+
   padding: 35px 15px;
+
   color: #ff6b6b;
+
   text-align: center;
+
   line-height: 1.5;
+
 }
 
-/* =========================
+
+/* ==========================================
    INCOMING CALL
-========================= */
+========================================== */
 
 #incomingCall {
+
   display: none;
+
   position: fixed;
+
   inset: 0;
+
   z-index: 99999;
+
   background:
     radial-gradient(
       circle at center,
@@ -289,81 +465,151 @@ h1 {
       #080808 55%,
       #000 100%
     );
+
   align-items: center;
+
   justify-content: center;
+
   padding: 20px;
+
   text-align: center;
+
 }
 
 .call-box {
+
   width: 100%;
+
   max-width: 360px;
+
   background: #111;
+
   border: 1px solid #292929;
+
   border-radius: 22px;
+
   padding: 28px 20px 25px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.8);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.8);
+
 }
 
 .call-avatar {
-  width: 105px;
-  height: 105px;
+
+  width: 115px;
+  height: 115px;
+
   margin: 0 auto 18px;
+
   border-radius: 50%;
-  background: linear-gradient(135deg,#333,#111);
+
+  overflow: hidden;
+
+  background: #222;
+
   border: 3px solid #22c55e;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
-  font-size: 48px;
+
+}
+
+.call-avatar img {
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
 }
 
 .call-incoming {
+
   color: #22c55e;
+
   font-size: 14px;
+
   font-weight: bold;
+
   margin-bottom: 8px;
+
 }
 
 .call-name {
+
   font-size: 23px;
+
   font-weight: bold;
+
   margin-bottom: 7px;
+
 }
 
 .call-type {
+
   color: #aaa;
+
   font-size: 13px;
+
   margin-bottom: 25px;
+
 }
 
 .call-buttons {
+
   display: flex;
+
   justify-content: center;
+
   gap: 35px;
+
 }
 
 .call-action {
+
   border: none;
+
   width: 65px;
   height: 65px;
+
   border-radius: 50%;
+
   color: #fff;
+
   font-size: 27px;
+
   cursor: pointer;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
 }
 
 .call-answer {
+
   background: #22c55e;
+
 }
 
 .call-end {
+
   background: #ef4444;
+
   transform: rotate(135deg);
+
 }
+
+
+/* ==========================================
+   MOBILE
+========================================== */
 
 @media (max-width: 380px) {
 
@@ -390,13 +636,16 @@ h1 {
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="card">
 
-  <!-- SAMPLE -->
+  <!-- ================================
+       SAMPLE
+  ================================= -->
 
   <div id="samplePage">
 
@@ -434,7 +683,10 @@ h1 {
 
   </div>
 
-  <!-- INSUFFICIENT -->
+
+  <!-- ================================
+       INSUFFICIENT
+  ================================= -->
 
   <div id="insufficientPage">
 
@@ -446,15 +698,16 @@ h1 {
 
       <div class="insufficient-text">
         Buy more minutes!
-        <br>
-        Opening live video call...
       </div>
 
     </div>
 
   </div>
 
-  <!-- PHOTOS -->
+
+  <!-- ================================
+       PHOTOS
+  ================================= -->
 
   <div id="photosPage">
 
@@ -486,21 +739,33 @@ h1 {
 
 </div>
 
-<!-- INCOMING CALL -->
+
+<!-- ================================
+     INCOMING CALL
+================================= -->
 
 <div id="incomingCall">
 
   <div class="call-box">
 
     <div class="call-avatar">
-      📞
+
+      <img
+        id="callPhoto"
+        src=""
+        alt="Profile"
+      >
+
     </div>
 
     <div class="call-incoming">
       INCOMING VIDEO CALL
     </div>
 
-    <div class="call-name">
+    <div
+      class="call-name"
+      id="callName"
+    >
       Live Video
     </div>
 
@@ -532,17 +797,39 @@ h1 {
 
 </div>
 
-<script>
 
-/* ==========================================
+<script>
+  /* ==========================================
    WEBSITE SETTINGS
 ========================================== */
 
-const GITHUB_OWNER = "agnesweb2026";
-const GITHUB_REPO = "My-referral-website";
-const GITHUB_BRANCH = "main";
+const GITHUB_OWNER =
+  "agnesweb2026";
 
-const MAX_PHOTOS = 24;
+const GITHUB_REPO =
+  "My-referral-website";
+
+const GITHUB_BRANCH =
+  "main";
+
+const MAX_PHOTOS =
+  24;
+
+
+/*
+  IMPORTANT:
+  Change this to the URL/path of
+  your existing payment page.
+
+  Example:
+  const PAYMENT_PAGE_URL = "payment.html";
+
+  If your payment page has another
+  name, put that name here.
+*/
+
+const PAYMENT_PAGE_URL =
+  "payment.html";
 
 
 /* ==========================================
@@ -580,281 +867,273 @@ const PHOTO_NAMES = [
 
 
 /* ==========================================
-   GET ELEMENTS
+   ELEMENTS
 ========================================== */
 
 const samplePage =
-  document.getElementById("samplePage");
+  document.getElementById(
+    "samplePage"
+  );
 
 const insufficientPage =
-  document.getElementById("insufficientPage");
+  document.getElementById(
+    "insufficientPage"
+  );
 
 const photosPage =
-  document.getElementById("photosPage");
+  document.getElementById(
+    "photosPage"
+  );
 
 const sampleVideo =
-  document.getElementById("sampleVideo");
+  document.getElementById(
+    "sampleVideo"
+  );
 
 const sampleTimer =
-  document.getElementById("sampleTimer");
+  document.getElementById(
+    "sampleTimer"
+  );
 
 const livePhotos =
-  document.getElementById("livePhotos");
+  document.getElementById(
+    "livePhotos"
+  );
 
 const incomingCall =
-  document.getElementById("incomingCall");
+  document.getElementById(
+    "incomingCall"
+  );
 
 const answerCall =
-  document.getElementById("answerCall");
+  document.getElementById(
+    "answerCall"
+  );
 
 const rejectCall =
-  document.getElementById("rejectCall");
+  document.getElementById(
+    "rejectCall"
+  );
+
+const callPhoto =
+  document.getElementById(
+    "callPhoto"
+  );
+
+const callName =
+  document.getElementById(
+    "callName"
+  );
 
 
 /* ==========================================
-   SAMPLE SETTINGS
+   FLOW SETTINGS
 ========================================== */
 
-let sampleRunning = false;
+const SAMPLE_DURATION =
+  20;
 
-let secondsLeft = 20;
+const INSUFFICIENT_DURATION =
+  2000;
 
-let sampleTimerInterval = null;
+const PHOTO_WAIT_DURATION =
+  10000;
 
 
 /* ==========================================
-   SHOW SAMPLE
+   FLOW STATE
 ========================================== */
 
-function showSample() {
+let currentFlow =
+  "START";
 
-  samplePage.style.display = "flex";
+let sampleRunning =
+  false;
 
-  insufficientPage.style.display = "none";
+let secondsLeft =
+  SAMPLE_DURATION;
 
-  photosPage.style.display = "none";
+let sampleTimerInterval =
+  null;
 
-  incomingCall.style.display = "none";
+let insufficientTimer =
+  null;
+
+let photoWaitTimer =
+  null;
+
+
+/*
+  This number controls which photo
+  will be used for the next incoming
+  call.
+
+  0 = first photo
+  1 = second photo
+  2 = third photo
+  etc.
+*/
+
+let incomingPhotoIndex =
+  0;
+
+
+/*
+  These hold the photos discovered
+  from GitHub.
+*/
+
+let availablePhotos =
+  [];
+
+
+/*
+  Prevent duplicate clicks/listeners.
+*/
+
+let photosLoaded =
+  false;
+
+
+/* ==========================================
+   LOCAL STORAGE
+========================================== */
+
+/*
+  We use localStorage only to remember
+  that the visitor has already entered
+  the first sample flow.
+
+  This prevents the initial call/sample
+  sequence from restarting from the
+  beginning after a normal reload.
+*/
+
+const FLOW_STORAGE_KEY =
+  "myReferralFlowStarted";
+
+
+/* ==========================================
+   BASIC PAGE HELPERS
+========================================== */
+
+function hideAllPages() {
+
+  samplePage.style.display =
+    "none";
+
+  insufficientPage.style.display =
+    "none";
+
+  photosPage.style.display =
+    "none";
+
+  incomingCall.style.display =
+    "none";
 
 }
 
 
 /* ==========================================
-   START SAMPLE
+   SHOW SAMPLE PAGE
 ========================================== */
 
-function startSample() {
+function showSamplePage() {
 
-  if (sampleRunning) {
-    return;
-  }
+  hideAllPages();
 
-  sampleRunning = true;
-
-  secondsLeft = 20;
-
-  sampleTimer.textContent =
-    "Sample: 20 seconds";
-
-  showSample();
-
-  clearInterval(sampleTimerInterval);
-
-  try {
-
-    sampleVideo.currentTime = 0;
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-  sampleVideo.muted = true;
-
-  const playPromise =
-    sampleVideo.play();
-
-  if (playPromise !== undefined) {
-
-    playPromise.catch(function(error) {
-
-      console.log(
-        "Video autoplay blocked:",
-        error
-      );
-
-    });
-
-  }
-
-  sampleTimerInterval =
-    setInterval(function() {
-
-      secondsLeft--;
-
-      if (secondsLeft > 0) {
-
-        sampleTimer.textContent =
-          "Sample: " +
-          secondsLeft +
-          " seconds";
-
-      }
-
-      if (secondsLeft <= 0) {
-
-        clearInterval(
-          sampleTimerInterval
-        );
-
-        finishSample();
-
-      }
-
-    }, 1000);
+  samplePage.style.display =
+    "flex";
 
 }
-  /* ==========================================
-   FINISH SAMPLE
+
+
+/* ==========================================
+   SHOW PHOTOS PAGE
 ========================================== */
 
-function finishSample() {
+function showPhotosPage() {
 
-  if (!sampleRunning) {
-    return;
-  }
+  hideAllPages();
 
-  sampleRunning = false;
+  photosPage.style.display =
+    "block";
+
+}
+
+
+/* ==========================================
+   SHOW INSUFFICIENT PAGE
+========================================== */
+
+function showInsufficientPage() {
+
+  hideAllPages();
+
+  insufficientPage.style.display =
+    "flex";
+
+}
+
+
+/* ==========================================
+   CLEAR ALL TIMERS
+========================================== */
+
+function clearAllTimers() {
 
   clearInterval(
     sampleTimerInterval
   );
 
-  sampleVideo.pause();
+  clearTimeout(
+    insufficientTimer
+  );
 
-  /*
-    Hide sample.
-  */
+  clearTimeout(
+    photoWaitTimer
+  );
 
-  samplePage.style.display =
-    "none";
+  sampleTimerInterval =
+    null;
 
-  /*
-    Show insufficient minutes.
-  */
+  insufficientTimer =
+    null;
 
-  insufficientPage.style.display =
-    "flex";
-
-  /*
-    Keep message for 2 seconds.
-  */
-
-  setTimeout(function() {
-
-    insufficientPage.style.display =
-      "none";
-
-    photosPage.style.display =
-      "block";
-
-    loadPhotos();
-
-    /*
-      Incoming call appears
-      shortly after photos load.
-    */
-
-    setTimeout(function() {
-
-      showIncomingCall();
-
-    }, 1000);
-
-  }, 2000);
+  photoWaitTimer =
+    null;
 
 }
 
 
 /* ==========================================
-   VIDEO ENDED EVENT
+   STOP SAMPLE VIDEO
 ========================================== */
 
-sampleVideo.addEventListener(
-  "ended",
-  function() {
+function stopSampleVideo() {
 
-    finishSample();
+  try {
+
+    sampleVideo.pause();
+
+    sampleVideo.currentTime =
+      0;
+
+  } catch (error) {
+
+    console.log(
+      "Video reset error:",
+      error
+    );
 
   }
-);
-
-
-/* ==========================================
-   SHOW INCOMING CALL
-========================================== */
-
-function showIncomingCall() {
-
-  incomingCall.style.display =
-    "flex";
-
-}
-
-
-/* ==========================================
-   HIDE INCOMING CALL
-========================================== */
-
-function hideIncomingCall() {
-
-  incomingCall.style.display =
-    "none";
-
-}
-
-
-/* ==========================================
-   ANSWER CALL
-========================================== */
-
-answerCall.addEventListener(
-  "click",
-  function() {
-
-    hideIncomingCall();
-
-    photosPage.style.display =
-      "block";
 
   }
-);
-
-
-/* ==========================================
-   REJECT CALL
+  /* ==========================================
+   IMAGE URL
 ========================================== */
 
-rejectCall.addEventListener(
-  "click",
-  function() {
-
-    hideIncomingCall();
-
-    startSample();
-
-  }
-);
-
-
-/* ==========================================
-   PHOTO IMAGE URL
-========================================== */
-
-function getImageUrl(
-  fileName
-) {
+function getImageUrl(fileName) {
 
   return (
     "https://raw.githubusercontent.com/" +
@@ -871,7 +1150,7 @@ function getImageUrl(
 
 
 /* ==========================================
-   LOAD PHOTOS
+   LOAD PHOTOS FROM GITHUB
 ========================================== */
 
 async function loadPhotos() {
@@ -899,7 +1178,8 @@ async function loadPhotos() {
         GITHUB_OWNER +
         "/" +
         GITHUB_REPO +
-        "/contents"
+        "/contents?ref=" +
+        GITHUB_BRANCH
       );
 
     if (!response.ok) {
@@ -914,11 +1194,6 @@ async function loadPhotos() {
     const files =
       await response.json();
 
-    /*
-      Make sure GitHub returned
-      an array.
-    */
-
     if (!Array.isArray(files)) {
 
       throw new Error(
@@ -927,44 +1202,66 @@ async function loadPhotos() {
 
     }
 
-    /*
-      Find image files.
-    */
+
+    /* ================================
+       FIND IMAGE FILES
+    ================================= */
 
     const imageFiles =
-      files.filter(function(file) {
+      files.filter(
+        function(file) {
 
-        if (!file || !file.name) {
-          return false;
+          if (
+            !file ||
+            !file.name
+          ) {
+
+            return false;
+
+          }
+
+          const name =
+            file.name.toLowerCase();
+
+          return (
+
+            name.endsWith(".jpg") ||
+
+            name.endsWith(".jpeg") ||
+
+            name.endsWith(".png") ||
+
+            name.endsWith(".webp") ||
+
+            name.endsWith(".gif")
+
+          );
+
         }
+      );
 
-        const name =
-          file.name.toLowerCase();
-
-        return (
-          name.endsWith(".jpg") ||
-          name.endsWith(".jpeg") ||
-          name.endsWith(".png") ||
-          name.endsWith(".webp") ||
-          name.endsWith(".gif")
-        );
-
-      });
 
     /*
-      Limit photos.
+      Save the photos globally so
+      incoming calls can use them.
     */
 
-    const selectedFiles =
+    availablePhotos =
       imageFiles.slice(
         0,
         MAX_PHOTOS
       );
 
+
     livePhotos.innerHTML = "";
 
+
+    /* ================================
+       NO PHOTOS
+    ================================= */
+
     if (
-      selectedFiles.length === 0
+      availablePhotos.length === 0
     ) {
 
       livePhotos.innerHTML =
@@ -978,7 +1275,12 @@ async function loadPhotos() {
 
     }
 
-    selectedFiles.forEach(
+
+    /* ================================
+       CREATE PHOTO CARDS
+    ================================= */
+
+    availablePhotos.forEach(
       function(file, index) {
 
         createPhotoCard(
@@ -988,6 +1290,19 @@ async function loadPhotos() {
 
       }
     );
+
+
+    photosLoaded =
+      true;
+
+
+    /*
+      Make sure every new photo
+      has a click event.
+    */
+
+    attachPhotoClickEvents();
+
 
   } catch (error) {
 
@@ -1023,6 +1338,11 @@ function createPhotoCard(
   card.className =
     "live-photo";
 
+
+  /* ================================
+     IMAGE
+  ================================= */
+
   const image =
     document.createElement("img");
 
@@ -1037,13 +1357,19 @@ function createPhotoCard(
     file.download_url ||
     getImageUrl(file.name);
 
+
   image.onerror =
     function() {
 
-      image.style.display =
-        "none";
+      image.alt =
+        "Photo unavailable";
 
     };
+
+
+  /* ================================
+     LIVE BADGE
+  ================================= */
 
   const badge =
     document.createElement("div");
@@ -1053,6 +1379,11 @@ function createPhotoCard(
 
   badge.textContent =
     "LIVE";
+
+
+  /* ================================
+     LIVE STATUS
+  ================================= */
 
   const status =
     document.createElement("div");
@@ -1064,6 +1395,11 @@ function createPhotoCard(
     '<span class="live-dot"></span>' +
     '<span>Live now</span>';
 
+
+  /* ================================
+     PHOTO NAME
+  ================================= */
+
   const name =
     document.createElement("div");
 
@@ -1073,6 +1409,11 @@ function createPhotoCard(
   name.textContent =
     PHOTO_NAMES[index] ||
     "Live";
+
+
+  /* ================================
+     BUILD CARD
+  ================================= */
 
   card.appendChild(
     image
@@ -1090,12 +1431,15 @@ function createPhotoCard(
     name
   );
 
+
   livePhotos.appendChild(
     card
   );
 
-      }
-  /* ==========================================
+}
+
+
+/* ==========================================
    PHOTO CLICK
 ========================================== */
 
@@ -1105,12 +1449,17 @@ function handlePhotoClick(card) {
     return;
   }
 
+
   /*
-    Open incoming call screen
-    when a live photo is tapped.
+    IMPORTANT:
+    Tapping any live photo goes
+    directly to the payment page.
+
+    It does NOT open another
+    incoming call.
   */
 
-  showIncomingCall();
+  openPaymentPage();
 
 }
 
@@ -1126,328 +1475,668 @@ function attachPhotoClickEvents() {
       ".live-photo"
     );
 
-  cards.forEach(function(card) {
 
-    /*
-      Prevent attaching the
-      same listener twice.
-    */
+  cards.forEach(
+    function(card) {
 
-    if (
-      card.dataset.clickAttached ===
-      "true"
-    ) {
-      return;
-    }
+      if (
+        card.dataset.clickAttached ===
+        "true"
+      ) {
 
-    card.dataset.clickAttached =
-      "true";
-
-    card.addEventListener(
-      "click",
-      function() {
-
-        handlePhotoClick(card);
+        return;
 
       }
-    );
 
-  });
+
+      card.dataset.clickAttached =
+        "true";
+
+
+      card.addEventListener(
+        "click",
+        function() {
+
+          handlePhotoClick(
+            card
+          );
+
+        }
+      );
+
+    }
+  );
 
 }
 
 
 /* ==========================================
-   WATCH FOR NEW PHOTO CARDS
+   PAYMENT PAGE
 ========================================== */
 
-const photoObserver =
-  new MutationObserver(
-    function() {
+function openPaymentPage() {
 
-      attachPhotoClickEvents();
+  /*
+    Stop the 10-second timer.
+  */
 
-    }
+  clearTimeout(
+    photoWaitTimer
   );
 
-photoObserver.observe(
-  livePhotos,
-  {
-    childList: true,
-    subtree: true
+
+  /*
+    Open your existing payment page.
+  */
+
+  window.location.href =
+    PAYMENT_PAGE_URL;
+
+        }
+  /* ==========================================
+   GET NEXT UNIQUE INCOMING-CALL PHOTO
+========================================== */
+
+function getNextIncomingPhoto() {
+
+  if (
+    !availablePhotos ||
+    availablePhotos.length === 0
+  ) {
+
+    return null;
+
   }
-);
+
+
+  /*
+    Use the current index.
+
+    Then move to the next photo so
+    the next incoming call gets a
+    different image.
+  */
+
+  const photo =
+    availablePhotos[
+      incomingPhotoIndex %
+      availablePhotos.length
+    ];
+
+
+  incomingPhotoIndex =
+    (
+      incomingPhotoIndex + 1
+    ) %
+    availablePhotos.length;
+
+
+  return photo;
+
+}
 
 
 /* ==========================================
-   INITIAL PAGE FLOW
+   SHOW INCOMING CALL
 ========================================== */
 
-function initializeWebsite() {
+function showIncomingCall() {
 
   /*
-    Always start with the sample
-    when the page opens.
+    Stop any existing photo timer.
   */
 
-  samplePage.style.display =
+  clearTimeout(
+    photoWaitTimer
+  );
+
+
+  /*
+    Select a NEW photo for this
+    incoming call.
+  */
+
+  const photo =
+    getNextIncomingPhoto();
+
+
+  /*
+    If photos are not loaded yet,
+    show the call with a simple
+    fallback avatar.
+  */
+
+  if (photo) {
+
+    callPhoto.src =
+      photo.download_url ||
+      getImageUrl(
+        photo.name
+      );
+
+
+    const photoIndex =
+      availablePhotos.indexOf(
+        photo
+      );
+
+
+    callName.textContent =
+      PHOTO_NAMES[
+        photoIndex
+      ] ||
+      "Live Video";
+
+  } else {
+
+    callPhoto.removeAttribute(
+      "src"
+    );
+
+    callName.textContent =
+      "Live Video";
+
+  }
+
+
+  /*
+    Show incoming call.
+  */
+
+  incomingCall.style.display =
     "flex";
 
-  insufficientPage.style.display =
-    "none";
+}
 
-  photosPage.style.display =
-    "none";
+
+/* ==========================================
+   HIDE INCOMING CALL
+========================================== */
+
+function hideIncomingCall() {
 
   incomingCall.style.display =
     "none";
 
-  /*
-    Reset sample.
-  */
+}
 
-  sampleRunning =
-    false;
 
-  secondsLeft =
-    20;
+/* ==========================================
+   SHOW INSUFFICIENT THEN CALLBACK
+========================================== */
 
-  sampleTimer.textContent =
-    "Sample: 20 seconds";
-
-  clearInterval(
-    sampleTimerInterval
-  );
+function insufficientThen(
+  callback
+) {
 
   /*
-    Reset video.
+    Show insufficient minutes.
   */
 
-  try {
+  showInsufficientPage();
 
-    sampleVideo.pause();
-
-    sampleVideo.currentTime =
-      0;
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
 
   /*
-    Start sample after
-    page has rendered.
+    Keep it visible for 2 seconds.
   */
 
-  setTimeout(
-    function() {
+  insufficientTimer =
+    setTimeout(
+      function() {
 
-      startSample();
+        if (
+          typeof callback ===
+          "function"
+        ) {
 
-    },
-    300
-  );
+          callback();
+
+        }
+
+      },
+      INSUFFICIENT_DURATION
+    );
 
 }
 
 
 /* ==========================================
-   PAGE VISIBILITY
+   SHOW PHOTOS AND START 10 SECOND TIMER
 ========================================== */
 
-document.addEventListener(
-  "visibilitychange",
-  function() {
+function showPhotosAndStartTimer() {
 
-    /*
-      Pause sample when the user
-      leaves the browser tab.
-    */
+  /*
+    Show the live photos.
+  */
 
-    if (
-      document.hidden &&
-      sampleRunning
-    ) {
-
-      sampleVideo.pause();
-
-    }
-
-  }
-);
+  showPhotosPage();
 
 
-/* ==========================================
-   RETURN TO SAMPLE
-========================================== */
+  /*
+    Make sure photos exist.
+  */
 
-function returnToSample() {
+  if (
+    !photosLoaded
+  ) {
 
-  hideIncomingCall();
-
-  photosPage.style.display =
-    "none";
-
-  insufficientPage.style.display =
-    "none";
-
-  samplePage.style.display =
-    "flex";
-
-  clearInterval(
-    sampleTimerInterval
-  );
-
-  sampleRunning =
-    false;
-
-  secondsLeft =
-    20;
-
-  sampleTimer.textContent =
-    "Sample: 20 seconds";
-
-  try {
-
-    sampleVideo.pause();
-
-    sampleVideo.currentTime =
-      0;
-
-  } catch (error) {
-
-    console.log(error);
+    loadPhotos();
 
   }
 
-  setTimeout(
-    function() {
 
-      startSample();
+  /*
+    Start the 10-second timer.
 
-    },
-    200
+    If the visitor does not tap
+    any photo, a new incoming call
+    will appear.
+  */
+
+  clearTimeout(
+    photoWaitTimer
   );
+
+
+  photoWaitTimer =
+    setTimeout(
+      function() {
+
+        showIncomingCall();
+
+      },
+      PHOTO_WAIT_DURATION
+    );
 
 }
-
-
-/* ==========================================
-   REJECT CALL
-========================================== */
-
-rejectCall.onclick =
-  function() {
-
-    returnToSample();
-
-  };
 
 
 /* ==========================================
    ANSWER CALL
 ========================================== */
 
-answerCall.onclick =
+answerCall.addEventListener(
+  "click",
   function() {
+
+    /*
+      Hide the incoming call first.
+    */
 
     hideIncomingCall();
 
-    photosPage.style.display =
-      "block";
-
-  };
-  /* ==========================================
-   SAMPLE VIDEO ERROR
-========================================== */
-
-sampleVideo.addEventListener(
-  "error",
-  function() {
-
-    console.error(
-      "The sample video could not be loaded."
-    );
-
-    sampleTimer.textContent =
-      "Sample video could not load.";
-
-  }
-);
-
-
-/* ==========================================
-   SAMPLE VIDEO LOADED
-========================================== */
-
-sampleVideo.addEventListener(
-  "loadedmetadata",
-  function() {
-
-    console.log(
-      "Sample video loaded successfully."
-    );
-
-  }
-);
-
-
-/* ==========================================
-   SAMPLE VIDEO PLAYING
-========================================== */
-
-sampleVideo.addEventListener(
-  "playing",
-  function() {
-
-    console.log(
-      "Sample video is playing."
-    );
-
-  }
-);
-
-
-/* ==========================================
-   SAMPLE VIDEO PAUSED
-========================================== */
-
-sampleVideo.addEventListener(
-  "pause",
-  function() {
-
-    console.log(
-      "Sample video paused."
-    );
-
-  }
-);
-
-
-/* ==========================================
-   KEEP SAMPLE TIMER SYNCHRONIZED
-========================================== */
-
-sampleVideo.addEventListener(
-  "timeupdate",
-  function() {
-
-    if (!sampleRunning) {
-      return;
-    }
-
-    const currentTime =
-      sampleVideo.currentTime;
 
     /*
-      If the actual video reaches
-      20 seconds, finish the sample.
+      Decide what happens according
+      to the current stage.
     */
 
     if (
-      currentTime >= 20
+      currentFlow ===
+      "FIRST_CALL"
+    ) {
+
+      /*
+        First incoming call:
+
+        Answer
+        ↓
+        Sample
+      */
+
+      currentFlow =
+        "SAMPLE";
+
+      startSample();
+
+      return;
+
+    }
+
+
+    /*
+      Every later incoming call:
+
+      Answer
+      ↓
+      Insufficient minutes
+      ↓
+      Photos
+    */
+
+    currentFlow =
+      "PHOTOS";
+
+    insufficientThen(
+      function() {
+
+        showPhotosAndStartTimer();
+
+      }
+    );
+
+  }
+);
+
+
+/* ==========================================
+   REJECT CALL
+========================================== */
+
+rejectCall.addEventListener(
+  "click",
+  function() {
+
+    /*
+      Hide the call.
+
+      The user remains on the
+      current page.
+    */
+
+    hideIncomingCall();
+
+
+    /*
+      If the call appeared while
+      waiting on the Photos page,
+      restart the 10-second timer.
+    */
+
+    if (
+      currentFlow ===
+      "PHOTOS"
+    ) {
+
+      showPhotosAndStartTimer();
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   RESET SAMPLE VIDEO
+========================================== */
+
+function resetSampleVideo() {
+
+  try {
+
+    sampleVideo.pause();
+
+    sampleVideo.currentTime =
+      0;
+
+  } catch (error) {
+
+    console.log(
+      "Sample reset error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   UPDATE SAMPLE TIMER
+========================================== */
+
+function updateSampleTimer() {
+
+  sampleTimer.textContent =
+    "Sample: " +
+    secondsLeft +
+    " seconds";
+
+}
+  /* ==========================================
+   START SAMPLE
+========================================== */
+
+function startSample() {
+
+  /*
+    Prevent two sample timers from
+    running at the same time.
+  */
+
+  if (
+    sampleRunning
+  ) {
+
+    return;
+
+  }
+
+
+  clearAllTimers();
+
+
+  currentFlow =
+    "SAMPLE";
+
+
+  sampleRunning =
+    true;
+
+
+  secondsLeft =
+    SAMPLE_DURATION;
+
+
+  updateSampleTimer();
+
+
+  /*
+    Show sample page.
+  */
+
+  showSamplePage();
+
+
+  /*
+    Reset video to beginning.
+  */
+
+  resetSampleVideo();
+
+
+  /*
+    Make autoplay possible on
+    mobile browsers.
+  */
+
+  sampleVideo.muted =
+    true;
+
+  sampleVideo.playsInline =
+    true;
+
+
+  /*
+    Start video.
+  */
+
+  const playPromise =
+    sampleVideo.play();
+
+
+  if (
+    playPromise !== undefined
+  ) {
+
+    playPromise.catch(
+      function(error) {
+
+        console.log(
+          "Autoplay was blocked:",
+          error
+        );
+
+      }
+    );
+
+  }
+
+
+  /*
+    Start the 20-second countdown.
+  */
+
+  sampleTimerInterval =
+    setInterval(
+      function() {
+
+        if (
+          !sampleRunning
+        ) {
+
+          return;
+
+        }
+
+
+        secondsLeft--;
+
+
+        if (
+          secondsLeft > 0
+        ) {
+
+          updateSampleTimer();
+
+        }
+
+
+        if (
+          secondsLeft <= 0
+        ) {
+
+          finishSample();
+
+        }
+
+      },
+      1000
+    );
+
+}
+
+
+/* ==========================================
+   FINISH SAMPLE
+========================================== */
+
+function finishSample() {
+
+  if (
+    !sampleRunning
+  ) {
+
+    return;
+
+  }
+
+
+  sampleRunning =
+    false;
+
+
+  clearInterval(
+    sampleTimerInterval
+  );
+
+
+  sampleTimerInterval =
+    null;
+
+
+  /*
+    Stop the video.
+  */
+
+  try {
+
+    sampleVideo.pause();
+
+  } catch (error) {
+
+    console.log(
+      error
+    );
+
+  }
+
+
+  /*
+    Sample is now completed.
+
+    Save this state so a normal
+    page reload does NOT send the
+    visitor back to the beginning
+    of the sample flow.
+  */
+
+  localStorage.setItem(
+    FLOW_STORAGE_KEY,
+    "sample-completed"
+  );
+
+
+  /*
+    First sample ends with
+    Insufficient minutes.
+  */
+
+  currentFlow =
+    "AFTER_SAMPLE";
+
+
+  insufficientThen(
+    function() {
+
+      /*
+        After insufficient minutes,
+        show the SECOND incoming call.
+
+        A new photo is automatically
+        selected.
+      */
+
+      currentFlow =
+        "SECOND_CALL";
+
+      showIncomingCall();
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   VIDEO ENDED EVENT
+========================================== */
+
+sampleVideo.addEventListener(
+  "ended",
+  function() {
+
+    /*
+      The timer normally controls
+      the 20-second limit.
+
+      This event is a safety backup
+      if the video itself ends first.
+    */
+
+    if (
+      sampleRunning
     ) {
 
       finishSample();
@@ -1459,8 +2148,43 @@ sampleVideo.addEventListener(
 
 
 /* ==========================================
-   PREVENT VIDEO FROM GOING
-   BEYOND 20 SECONDS
+   VIDEO LOADED
+========================================== */
+
+sampleVideo.addEventListener(
+  "loadedmetadata",
+  function() {
+
+    console.log(
+      "Sample video loaded."
+    );
+
+  }
+);
+
+
+/* ==========================================
+   VIDEO ERROR
+========================================== */
+
+sampleVideo.addEventListener(
+  "error",
+  function() {
+
+    console.error(
+      "Sample video could not load."
+    );
+
+
+    sampleTimer.textContent =
+      "Sample video could not load.";
+
+  }
+);
+
+
+/* ==========================================
+   VIDEO TIME SAFETY
 ========================================== */
 
 sampleVideo.addEventListener(
@@ -1468,10 +2192,25 @@ sampleVideo.addEventListener(
   function() {
 
     if (
-      sampleVideo.currentTime >= 20
+      !sampleRunning
     ) {
 
-      sampleVideo.pause();
+      return;
+
+    }
+
+
+    /*
+      Never allow the sample to
+      continue beyond 20 seconds.
+    */
+
+    if (
+      sampleVideo.currentTime >=
+      SAMPLE_DURATION
+    ) {
+
+      finishSample();
 
     }
 
@@ -1480,7 +2219,1380 @@ sampleVideo.addEventListener(
 
 
 /* ==========================================
-   START WEBSITE
+   SAMPLE VISIBILITY
+========================================== */
+
+document.addEventListener(
+  "visibilitychange",
+  function() {
+
+    /*
+      If the visitor leaves the tab,
+      pause the video.
+
+      The countdown continues so the
+      flow cannot be bypassed simply
+      by switching tabs.
+    */
+
+    if (
+      document.hidden &&
+      sampleRunning
+    ) {
+
+      try {
+
+        sampleVideo.pause();
+
+      } catch (error) {
+
+        console.log(
+          error
+        );
+
+      }
+
+    }
+
+  }
+);
+  /* ==========================================
+   PHOTO PAGE TIMER
+========================================== */
+
+function startPhotoPageTimer() {
+
+  clearTimeout(
+    photoWaitTimer
+  );
+
+  photoWaitTimer =
+    setTimeout(
+      function() {
+
+        /*
+          If the visitor has not tapped
+          a photo after 10 seconds,
+          show another incoming call.
+
+          This automatically gets the
+          next unused photo.
+        */
+
+        if (
+          currentFlow ===
+          "PHOTOS"
+        ) {
+
+          currentFlow =
+            "NEXT_CALL";
+
+          showIncomingCall();
+
+        }
+
+      },
+      PHOTO_WAIT_DURATION
+    );
+
+}
+
+
+/* ==========================================
+   SHOW PHOTOS
+========================================== */
+
+function openPhotosPage() {
+
+  clearTimeout(
+    photoWaitTimer
+  );
+
+
+  currentFlow =
+    "PHOTOS";
+
+
+  showPhotosPage();
+
+
+  /*
+    If photos haven't been loaded,
+    load them now.
+  */
+
+  if (
+    !photosLoaded
+  ) {
+
+    loadPhotos();
+
+  }
+
+
+  /*
+    Start the 10-second waiting
+    period.
+  */
+
+  startPhotoPageTimer();
+
+}
+
+
+/* ==========================================
+   RE-OPEN PHOTOS AFTER CALL
+========================================== */
+
+function returnToPhotosAfterCall() {
+
+  hideIncomingCall();
+
+
+  /*
+    The visitor has already passed
+    the incoming-call stage.
+
+    Show Insufficient minutes for
+    exactly 2 seconds first.
+  */
+
+  currentFlow =
+    "AFTER_CALL";
+
+
+  insufficientThen(
+    function() {
+
+      openPhotosPage();
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   HANDLE SECOND INCOMING CALL
+========================================== */
+
+function handleSecondIncomingCall() {
+
+  hideIncomingCall();
+
+
+  /*
+    Second call answer:
+
+    Answer
+    ↓
+    Insufficient minutes
+    ↓
+    Photos
+  */
+
+  currentFlow =
+    "SECOND_CALL_ANSWERED";
+
+
+  insufficientThen(
+    function() {
+
+      openPhotosPage();
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   HANDLE LATER INCOMING CALL
+========================================== */
+
+function handleLaterIncomingCall() {
+
+  hideIncomingCall();
+
+
+  /*
+    Later calls use the same flow:
+
+    Answer
+    ↓
+    Insufficient minutes
+    ↓
+    Photos
+  */
+
+  currentFlow =
+    "LATER_CALL_ANSWERED";
+
+
+  insufficientThen(
+    function() {
+
+      openPhotosPage();
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   REPLACE ANSWER BUTTON HANDLER
+========================================== */
+
+answerCall.onclick =
+  function() {
+
+    /*
+      Always stop the 10-second
+      Photos timer when a call
+      is answered.
+    */
+
+    clearTimeout(
+      photoWaitTimer
+    );
+
+
+    /*
+      Hide incoming call.
+    */
+
+    hideIncomingCall();
+
+
+    /* ================================
+       FIRST CALL
+    ================================= */
+
+    if (
+      currentFlow ===
+      "FIRST_CALL"
+    ) {
+
+      currentFlow =
+        "SAMPLE";
+
+      startSample();
+
+      return;
+
+    }
+
+
+    /* ================================
+       SECOND CALL
+    ================================= */
+
+    if (
+      currentFlow ===
+      "SECOND_CALL"
+    ) {
+
+      handleSecondIncomingCall();
+
+      return;
+
+    }
+
+
+    /* ================================
+       ALL LATER CALLS
+    ================================= */
+
+    handleLaterIncomingCall();
+
+  };
+
+
+/* ==========================================
+   REPLACE REJECT BUTTON HANDLER
+========================================== */
+
+rejectCall.onclick =
+  function() {
+
+    clearTimeout(
+      photoWaitTimer
+    );
+
+
+    hideIncomingCall();
+
+
+    /*
+      If the call appeared while
+      the visitor was on Photos,
+      return to Photos and restart
+      the 10-second timer.
+    */
+
+    if (
+      currentFlow ===
+      "NEXT_CALL"
+      ||
+      currentFlow ===
+      "LATER_CALL"
+    ) {
+
+      openPhotosPage();
+
+      return;
+
+    }
+
+
+    /*
+      For other stages, simply
+      return to the appropriate
+      current flow.
+    */
+
+    if (
+      currentFlow ===
+      "FIRST_CALL"
+    ) {
+
+      currentFlow =
+        "FIRST_CALL";
+
+      showIncomingCall();
+
+      return;
+
+    }
+
+
+    if (
+      currentFlow ===
+      "SECOND_CALL"
+    ) {
+
+      currentFlow =
+        "SECOND_CALL";
+
+      showIncomingCall();
+
+      return;
+
+    }
+
+  };
+  /* ==========================================
+   PHOTO OBSERVER
+========================================== */
+
+const photoObserver =
+  new MutationObserver(
+    function() {
+
+      attachPhotoClickEvents();
+
+    }
+  );
+
+
+photoObserver.observe(
+  livePhotos,
+  {
+    childList: true,
+    subtree: true
+  }
+);
+
+
+/* ==========================================
+   INITIAL PHOTO CLICK CHECK
+========================================== */
+
+function refreshPhotoClicks() {
+
+  attachPhotoClickEvents();
+
+}
+
+
+/* ==========================================
+   OPEN PAYMENT SAFELY
+========================================== */
+
+function openPaymentPageSafely() {
+
+  /*
+    Stop the Photos 10-second timer
+    before opening payment.
+  */
+
+  clearTimeout(
+    photoWaitTimer
+  );
+
+
+  /*
+    Stop any incoming call.
+  */
+
+  hideIncomingCall();
+
+
+  /*
+    Stop any sample timer.
+  */
+
+  clearInterval(
+    sampleTimerInterval
+  );
+
+
+  /*
+    Open the existing payment page.
+  */
+
+  if (
+    PAYMENT_PAGE_URL &&
+    PAYMENT_PAGE_URL.trim() !== ""
+  ) {
+
+    window.location.href =
+      PAYMENT_PAGE_URL;
+
+    return;
+
+  }
+
+
+  /*
+    Fallback message if a payment
+    page has not been configured.
+  */
+
+  alert(
+    "Payment page is not configured yet."
+  );
+
+}
+
+
+/* ==========================================
+   FINAL PHOTO CLICK HANDLER
+========================================== */
+
+function handlePhotoClick(card) {
+
+  if (!card) {
+
+    return;
+
+  }
+
+
+  /*
+    Every photo goes directly to
+    payment.
+
+    It does NOT open an incoming
+    call.
+  */
+
+  openPaymentPageSafely();
+
+}
+
+
+/* ==========================================
+   ATTACH PHOTO CLICKS
+========================================== */
+
+function attachPhotoClickEvents() {
+
+  const cards =
+    document.querySelectorAll(
+      ".live-photo"
+    );
+
+
+  cards.forEach(
+    function(card) {
+
+      /*
+        Prevent duplicate listeners.
+      */
+
+      if (
+        card.dataset.paymentClickAttached ===
+        "true"
+      ) {
+
+        return;
+
+      }
+
+
+      card.dataset.paymentClickAttached =
+        "true";
+
+
+      card.addEventListener(
+        "click",
+        function(event) {
+
+          event.preventDefault();
+
+          event.stopPropagation();
+
+          handlePhotoClick(
+            card
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   HANDLE PHOTOS LOADED
+========================================== */
+
+function photosReady() {
+
+  photosLoaded =
+    true;
+
+
+  refreshPhotoClicks();
+
+}
+
+
+/* ==========================================
+   UPDATE LOAD PHOTOS RESULT
+========================================== */
+
+const originalLoadPhotos =
+  loadPhotos;
+
+
+/*
+  Wrap the existing loadPhotos()
+  function so the click handlers
+  are attached after photos arrive.
+*/
+
+loadPhotos =
+  async function() {
+
+    await originalLoadPhotos();
+
+    photosReady();
+
+  };
+
+
+/* ==========================================
+   KEEP PHOTO PAGE ACTIVE
+========================================== */
+
+function keepPhotosPageVisible() {
+
+  if (
+    currentFlow ===
+    "PHOTOS"
+  ) {
+
+    showPhotosPage();
+
+  }
+
+}
+
+
+/* ==========================================
+   START PHOTO WAIT
+========================================== */
+
+function restartPhotoWaiting() {
+
+  clearTimeout(
+    photoWaitTimer
+  );
+
+
+  if (
+    currentFlow !==
+    "PHOTOS"
+  ) {
+
+    return;
+
+  }
+
+
+  photoWaitTimer =
+    setTimeout(
+      function() {
+
+        /*
+          10 seconds passed without
+          a photo being tapped.
+
+          Show another incoming call.
+        */
+
+        currentFlow =
+          "LATER_CALL";
+
+        showIncomingCall();
+
+      },
+      PHOTO_WAIT_DURATION
+    );
+
+}
+
+
+/* ==========================================
+   PHOTO PAGE ENTERED
+========================================== */
+
+function enterPhotosPage() {
+
+  currentFlow =
+    "PHOTOS";
+
+
+  hideIncomingCall();
+
+
+  showPhotosPage();
+
+
+  /*
+    Load photos if necessary.
+  */
+
+  if (
+    !photosLoaded
+  ) {
+
+    loadPhotos();
+
+  } else {
+
+    refreshPhotoClicks();
+
+  }
+
+
+  /*
+    Start the 10-second timer.
+  */
+
+  restartPhotoWaiting();
+
+}
+
+
+/* ==========================================
+   PAYMENT CLICK TEST
+========================================== */
+
+livePhotos.addEventListener(
+  "click",
+  function(event) {
+
+    const photoCard =
+      event.target.closest(
+        ".live-photo"
+      );
+
+
+    if (!photoCard) {
+
+      return;
+
+    }
+
+
+    /*
+      Any tap inside a photo card
+      opens payment.
+    */
+
+    openPaymentPageSafely();
+
+  }
+);
+  /* ==========================================
+   FLOW START
+========================================== */
+
+function startWebsiteFlow() {
+
+  /*
+    Clear old timers first.
+  */
+
+  clearAllTimers();
+
+
+  /*
+    Reset state.
+  */
+
+  sampleRunning =
+    false;
+
+  secondsLeft =
+    SAMPLE_DURATION;
+
+  incomingPhotoIndex =
+    0;
+
+
+  /*
+    Load photos first so the FIRST
+    incoming call can already have
+    a real photo.
+  */
+
+  loadPhotos()
+    .then(
+      function() {
+
+        /*
+          First incoming call.
+        */
+
+        currentFlow =
+          "FIRST_CALL";
+
+
+        showIncomingCall();
+
+      }
+    )
+    .catch(
+      function(error) {
+
+        console.error(
+          "Initial photo loading failed:",
+          error
+        );
+
+
+        /*
+          Even if photos fail to load,
+          the call screen still appears.
+        */
+
+        currentFlow =
+          "FIRST_CALL";
+
+
+        showIncomingCall();
+
+      }
+    );
+
+}
+
+
+/* ==========================================
+   FIRST CALL PHOTO FALLBACK
+========================================== */
+
+function updateIncomingCallPhoto() {
+
+  /*
+    Select the next unique photo.
+  */
+
+  const photo =
+    getNextIncomingPhoto();
+
+
+  if (!photo) {
+
+    callPhoto.removeAttribute(
+      "src"
+    );
+
+    callName.textContent =
+      "Live Video";
+
+    return;
+
+  }
+
+
+  const imageUrl =
+    photo.download_url ||
+    getImageUrl(
+      photo.name
+    );
+
+
+  callPhoto.src =
+    imageUrl;
+
+
+  const index =
+    availablePhotos.indexOf(
+      photo
+    );
+
+
+  callName.textContent =
+    PHOTO_NAMES[index] ||
+    "Live Video";
+
+}
+
+
+/* ==========================================
+   SHOW NEW INCOMING CALL
+========================================== */
+
+function showNewIncomingCall() {
+
+  /*
+    Hide any previous call.
+  */
+
+  hideIncomingCall();
+
+
+  /*
+    Get a new photo for this call.
+  */
+
+  updateIncomingCallPhoto();
+
+
+  /*
+    Show the new call.
+  */
+
+  incomingCall.style.display =
+    "flex";
+
+}
+
+
+/* ==========================================
+   FIRST CALL OVERRIDE
+========================================== */
+
+function showFirstIncomingCall() {
+
+  currentFlow =
+    "FIRST_CALL";
+
+
+  showNewIncomingCall();
+
+}
+
+
+/* ==========================================
+   SECOND CALL OVERRIDE
+========================================== */
+
+function showSecondIncomingCall() {
+
+  currentFlow =
+    "SECOND_CALL";
+
+
+  showNewIncomingCall();
+
+}
+
+
+/* ==========================================
+   LATER CALL OVERRIDE
+========================================== */
+
+function showLaterIncomingCall() {
+
+  currentFlow =
+    "LATER_CALL";
+
+
+  showNewIncomingCall();
+
+}
+
+
+/* ==========================================
+   ANSWER FLOW
+========================================== */
+
+answerCall.onclick =
+  function() {
+
+    clearTimeout(
+      photoWaitTimer
+    );
+
+
+    hideIncomingCall();
+
+
+    /* ================================
+       FIRST INCOMING CALL
+    ================================= */
+
+    if (
+      currentFlow ===
+      "FIRST_CALL"
+    ) {
+
+      currentFlow =
+        "SAMPLE";
+
+
+      /*
+        Answering the first call
+        starts the 20-second sample.
+      */
+
+      startSample();
+
+      return;
+
+    }
+
+
+    /* ================================
+       SECOND INCOMING CALL
+    ================================= */
+
+    if (
+      currentFlow ===
+      "SECOND_CALL"
+    ) {
+
+      currentFlow =
+        "SECOND_CALL_ANSWERED";
+
+
+      /*
+        Answering second call:
+        Insufficient for 2 seconds,
+        then Photos.
+      */
+
+      insufficientThen(
+        function() {
+
+          enterPhotosPage();
+
+        }
+      );
+
+      return;
+
+    }
+
+
+    /* ================================
+       LATER INCOMING CALL
+    ================================= */
+
+    if (
+      currentFlow ===
+      "LATER_CALL"
+    ) {
+
+      currentFlow =
+        "LATER_CALL_ANSWERED";
+
+
+      /*
+        Answering later calls:
+        Insufficient for 2 seconds,
+        then Photos.
+      */
+
+      insufficientThen(
+        function() {
+
+          enterPhotosPage();
+
+        }
+      );
+
+      return;
+
+    }
+
+  };
+
+
+/* ==========================================
+   REJECT FLOW
+========================================== */
+
+rejectCall.onclick =
+  function() {
+
+    clearTimeout(
+      photoWaitTimer
+    );
+
+
+    hideIncomingCall();
+
+
+    /*
+      If the call came from the
+      Photos page, return to Photos
+      and restart the 10-second timer.
+    */
+
+    if (
+      currentFlow ===
+      "LATER_CALL"
+    ) {
+
+      enterPhotosPage();
+
+      return;
+
+    }
+
+
+    /*
+      If first/second call is rejected,
+      show the same stage again.
+    */
+
+    if (
+      currentFlow ===
+      "FIRST_CALL"
+    ) {
+
+      showFirstIncomingCall();
+
+      return;
+
+    }
+
+
+    if (
+      currentFlow ===
+      "SECOND_CALL"
+    ) {
+
+      showSecondIncomingCall();
+
+      return;
+
+    }
+
+  };
+
+
+/* ==========================================
+   INSUFFICIENT PAGE COMPLETE
+========================================== */
+
+function showInsufficientThenPhotos() {
+
+  insufficientThen(
+    function() {
+
+      enterPhotosPage();
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   SAMPLE COMPLETE FLOW
+========================================== */
+
+function afterSampleComplete() {
+
+  currentFlow =
+    "AFTER_SAMPLE";
+
+
+  /*
+    First sample finishes:
+    Insufficient 2 seconds
+    ↓
+    New incoming call
+  */
+
+  insufficientThen(
+    function() {
+
+      showSecondIncomingCall();
+
+    }
+  );
+
+      }
+  /* ==========================================
+   FINAL FLOW CONTROLLER
+========================================== */
+
+function runFinalFlow() {
+
+  /*
+    Start everything cleanly.
+  */
+
+  clearAllTimers();
+
+
+  hideAllPages();
+
+
+  /*
+    Make sure the incoming call
+    is hidden before starting.
+  */
+
+  hideIncomingCall();
+
+
+  /*
+    Reset sample state.
+  */
+
+  sampleRunning =
+    false;
+
+  secondsLeft =
+    SAMPLE_DURATION;
+
+
+  sampleTimer.textContent =
+    "Sample: " +
+    SAMPLE_DURATION +
+    " seconds";
+
+
+  /*
+    Reset the incoming-photo
+    sequence.
+
+    Call #1 gets photo 1,
+    Call #2 gets photo 2,
+    etc.
+  */
+
+  incomingPhotoIndex =
+    0;
+
+
+  /*
+    Start with the FIRST incoming
+    video call.
+  */
+
+  currentFlow =
+    "FIRST_CALL";
+
+
+  /*
+    Load photos before displaying
+    the first incoming call.
+  */
+
+  if (
+    !photosLoaded
+  ) {
+
+    loadPhotos()
+      .then(
+        function() {
+
+          showFirstIncomingCall();
+
+        }
+      )
+      .catch(
+        function() {
+
+          showFirstIncomingCall();
+
+        }
+      );
+
+  } else {
+
+    showFirstIncomingCall();
+
+  }
+
+}
+
+
+/* ==========================================
+   SAMPLE SAFETY
+========================================== */
+
+function forceFinishSample() {
+
+  if (
+    sampleRunning
+  ) {
+
+    finishSample();
+
+  }
+
+}
+
+
+/* ==========================================
+   PAGE RELOAD PROTECTION
+========================================== */
+
+/*
+  We intentionally do NOT use
+  localStorage to skip the first
+  incoming call.
+
+  Every fresh public-page visit starts
+  with a new incoming call.
+
+  The sample itself is only started
+  after the visitor answers that call.
+*/
+
+
+/* ==========================================
+   BROWSER BACK BUTTON
+========================================== */
+
+window.addEventListener(
+  "pageshow",
+  function() {
+
+    /*
+      If the browser restores the page
+      from its cache, make sure the
+      visual state is consistent.
+    */
+
+    if (
+      currentFlow ===
+      "PHOTOS"
+    ) {
+
+      showPhotosPage();
+
+      refreshPhotoClicks();
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   WINDOW FOCUS
+========================================== */
+
+window.addEventListener(
+  "focus",
+  function() {
+
+    /*
+      Do not automatically restart
+      the sample or call when the user
+      returns to the browser.
+
+      This prevents duplicate calls.
+    */
+
+    if (
+      sampleRunning
+    ) {
+
+      console.log(
+        "Sample is already running."
+      );
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   ONLINE / OFFLINE
+========================================== */
+
+window.addEventListener(
+  "online",
+  function() {
+
+    console.log(
+      "Internet connection restored."
+    );
+
+
+    /*
+      If photos failed earlier,
+      try loading them again.
+    */
+
+    if (
+      !photosLoaded
+    ) {
+
+      loadPhotos();
+
+    }
+
+  }
+);
+
+
+window.addEventListener(
+  "offline",
+  function() {
+
+    console.log(
+      "Internet connection lost."
+    );
+
+  }
+);
+
+
+/* ==========================================
+   PREVENT ACCIDENTAL FORM SUBMISSION
+========================================== */
+
+document.addEventListener(
+  "submit",
+  function(event) {
+
+    event.preventDefault();
+
+  }
+);
+
+
+/* ==========================================
+   START WHEN DOM IS READY
 ========================================== */
 
 if (
@@ -1492,38 +3604,312 @@ if (
     "DOMContentLoaded",
     function() {
 
-      initializeWebsite();
+      setTimeout(
+        function() {
+
+          runFinalFlow();
+
+        },
+        300
+      );
 
     }
   );
 
 } else {
 
-  initializeWebsite();
+  setTimeout(
+    function() {
+
+      runFinalFlow();
+
+    },
+    300
+  );
 
 }
 
 
 /* ==========================================
-   END OF JAVASCRIPT
+   FINAL GLOBAL ERROR HANDLER
 ========================================== */
-  /*
-  This final section intentionally
-  contains no additional functions.
 
-  The complete JavaScript is already
-  initialized by initializeWebsite()
-  in Part 4.
-*/
+window.addEventListener(
+  "error",
+  function(event) {
 
+    console.error(
+      "Website error:",
+      event.error ||
+      event.message
+    );
 
-console.log(
-  "My Referral Website started successfully."
+  }
 );
 
 
 /* ==========================================
-   END SCRIPT
+   FINAL UNHANDLED PROMISE HANDLER
+========================================== */
+
+window.addEventListener(
+  "unhandledrejection",
+  function(event) {
+
+    console.error(
+      "Unhandled promise error:",
+      event.reason
+    );
+
+  }
+);
+  /* ==========================================
+   FINAL CLEANUP & SAFETY
+========================================== */
+
+/*
+  Make sure the page never gets stuck
+  showing two screens at once.
+*/
+
+function resetVisualState() {
+
+  if (
+    currentFlow === "FIRST_CALL" ||
+    currentFlow === "SECOND_CALL" ||
+    currentFlow === "LATER_CALL"
+  ) {
+
+    samplePage.style.display =
+      "none";
+
+    insufficientPage.style.display =
+      "none";
+
+    photosPage.style.display =
+      "none";
+
+    incomingCall.style.display =
+      "flex";
+
+    return;
+
+  }
+
+
+  if (
+    currentFlow === "SAMPLE"
+  ) {
+
+    samplePage.style.display =
+      "flex";
+
+    insufficientPage.style.display =
+      "none";
+
+    photosPage.style.display =
+      "none";
+
+    incomingCall.style.display =
+      "none";
+
+    return;
+
+  }
+
+
+  if (
+    currentFlow === "PHOTOS"
+  ) {
+
+    samplePage.style.display =
+      "none";
+
+    insufficientPage.style.display =
+      "none";
+
+    photosPage.style.display =
+      "block";
+
+    incomingCall.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* ==========================================
+   MAKE SURE PHOTO CLICKS WORK
+========================================== */
+
+setInterval(
+  function() {
+
+    if (
+      photosPage.style.display ===
+      "block"
+    ) {
+
+      attachPhotoClickEvents();
+
+    }
+
+  },
+  1000
+);
+
+
+/* ==========================================
+   PRELOAD CURRENT CALL PHOTO
+========================================== */
+
+function preloadCallPhoto(url) {
+
+  if (!url) {
+    return;
+  }
+
+  const img =
+    new Image();
+
+  img.src =
+    url;
+
+}
+
+
+/* ==========================================
+   PRELOAD AVAILABLE PHOTOS
+========================================== */
+
+function preloadPhotos() {
+
+  if (
+    !availablePhotos ||
+    availablePhotos.length === 0
+  ) {
+
+    return;
+
+  }
+
+
+  availablePhotos.forEach(
+    function(file) {
+
+      const url =
+        file.download_url ||
+        getImageUrl(
+          file.name
+        );
+
+      preloadCallPhoto(
+        url
+      );
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   AFTER PHOTOS LOAD
+========================================== */
+
+const originalPhotosReady =
+  photosReady;
+
+photosReady =
+  function() {
+
+    originalPhotosReady();
+
+    preloadPhotos();
+
+  };
+
+
+/* ==========================================
+   FINAL CLICK PROTECTION
+========================================== */
+
+document.addEventListener(
+  "click",
+  function(event) {
+
+    const photo =
+      event.target.closest(
+        ".live-photo"
+      );
+
+    if (!photo) {
+      return;
+    }
+
+
+    /*
+      Any tap on any live photo
+      goes directly to payment.
+    */
+
+    event.preventDefault();
+
+    event.stopPropagation();
+
+    openPaymentPageSafely();
+
+  },
+  true
+);
+
+
+/* ==========================================
+   FINAL VIDEO SAFETY
+========================================== */
+
+setInterval(
+  function() {
+
+    if (
+      sampleRunning &&
+      sampleVideo.currentTime >=
+      SAMPLE_DURATION
+    ) {
+
+      finishSample();
+
+    }
+
+  },
+  250
+);
+
+
+/* ==========================================
+   FINAL PAGE INITIALIZATION
+========================================== */
+
+console.log(
+  "My Referral Website flow loaded."
+);
+
+console.log(
+  "Flow:",
+  "Incoming Call → Answer → 20s Sample → " +
+  "Insufficient → New Incoming Call → " +
+  "Insufficient → Photos → 10s → New Call"
+);
+
+console.log(
+  "Photo taps:",
+  "Payment page"
+);
+
+
+/* ==========================================
+   END OF WEBSITE SCRIPT
 ========================================== */
 
 </script>
