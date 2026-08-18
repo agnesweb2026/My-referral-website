@@ -1737,6 +1737,36 @@ document.addEventListener(
 
 
 </script>
+// CONNECT INCOMING CALL
+const incomingCall = document.getElementById("incomingCall");
+const rejectCall = document.getElementById("rejectCall");
+const answerCall = document.getElementById("answerCall");
 
+// Show incoming call after photos appear
+setTimeout(() => {
+  incomingCall.style.display = "flex";
+}, 1000);
+
+// Reject call
+rejectCall.onclick = function () {
+  incomingCall.style.display = "none";
+};
+
+// Answer call
+answerCall.onclick = function () {
+  incomingCall.style.display = "none";
+
+  const photosPage = document.getElementById("photosPage");
+  const samplePage = document.getElementById("samplePage");
+  const sampleVideo = document.getElementById("sampleVideo");
+
+  photosPage.style.display = "none";
+  samplePage.style.display = "flex";
+
+  sampleVideo.currentTime = 0;
+  sampleVideo.play().catch(function(error) {
+    console.log("Video could not autoplay:", error);
+  });
+};
 </body>
 </html>
