@@ -33,10 +33,12 @@ body {
   margin: 0 auto;
 }
 
-/* SAMPLE */
+/* =========================
+   SAMPLE PAGE
+========================= */
 
 #samplePage {
-  display: none;
+  display: flex;
   width: 100%;
   min-height: calc(100vh - 30px);
   flex-direction: column;
@@ -73,7 +75,9 @@ body {
   font-size: 13px;
 }
 
-/* INSUFFICIENT */
+/* =========================
+   INSUFFICIENT PAGE
+========================= */
 
 #insufficientPage {
   display: none;
@@ -105,7 +109,9 @@ body {
   line-height: 1.5;
 }
 
-/* PHOTOS */
+/* =========================
+   PHOTOS PAGE
+========================= */
 
 #photosPage {
   display: none;
@@ -141,11 +147,9 @@ body {
 }
 
 @keyframes onlineBlink {
-
   50% {
     opacity: .35;
   }
-
 }
 
 h1 {
@@ -248,11 +252,9 @@ h1 {
 }
 
 @keyframes liveBlink {
-
   50% {
     opacity: .35;
   }
-
 }
 
 .loading {
@@ -270,7 +272,9 @@ h1 {
   line-height: 1.5;
 }
 
-/* INCOMING CALL */
+/* =========================
+   INCOMING CALL
+========================= */
 
 #incomingCall {
   display: none;
@@ -386,11 +390,12 @@ h1 {
 
 </style>
 </head>
+
 <body>
 
 <div class="card">
 
-  <!-- SAMPLE VIDEO PAGE -->
+  <!-- SAMPLE -->
 
   <div id="samplePage">
 
@@ -399,7 +404,7 @@ h1 {
     </div>
 
     <div class="sample-subtitle">
-      join💦💦💦🫦
+      join
     </div>
 
     <video
@@ -407,15 +412,14 @@ h1 {
       muted
       playsinline
       preload="auto"
+      controls
     >
-
       <source
         src="preview_20_seconds.mp4"
         type="video/mp4"
       >
 
       Your browser does not support video.
-
     </video>
 
     <div
@@ -427,8 +431,7 @@ h1 {
 
   </div>
 
-
-  <!-- INSUFFICIENT MINUTES PAGE -->
+  <!-- INSUFFICIENT -->
 
   <div id="insufficientPage">
 
@@ -439,7 +442,7 @@ h1 {
       </div>
 
       <div class="insufficient-text">
-        buy more minutes!
+        Buy more minutes!
         <br>
         Opening live video call...
       </div>
@@ -448,8 +451,7 @@ h1 {
 
   </div>
 
-
-  <!-- PHOTOS PAGE -->
+  <!-- PHOTOS -->
 
   <div id="photosPage">
 
@@ -467,31 +469,21 @@ h1 {
 
     </div>
 
-
     <h1>
       Welcome
     </h1>
-
 
     <p class="subtitle">
       People live now
     </p>
 
-
-    <div id="livePhotos">
-
-      <div class="loading">
-        Loading live now...
-      </div>
-
-    </div>
+    <div id="livePhotos"></div>
 
   </div>
 
 </div>
 
-
-<!-- INCOMING VIDEO CALL -->
+<!-- INCOMING CALL -->
 
 <div id="incomingCall">
 
@@ -501,37 +493,32 @@ h1 {
       📹
     </div>
 
-
     <div class="call-incoming">
       INCOMING VIDEO CALL
     </div>
-
 
     <div class="call-name">
       Live Video
     </div>
 
-
     <div class="call-type">
       Someone wants to start a video call
     </div>
-
 
     <div class="call-buttons">
 
       <button
         class="call-action call-end"
         id="rejectCall"
-        aria-label="Reject call"
+        type="button"
       >
         ☎
       </button>
 
-
       <button
         class="call-action call-answer"
         id="answerCall"
-        aria-label="Answer call"
+        type="button"
       >
         📹
       </button>
@@ -542,24 +529,16 @@ h1 {
 
 </div>
 
-
 <script>
-
-/* ==========================================
+  /* ==========================================
    WEBSITE SETTINGS
 ========================================== */
 
-const GITHUB_OWNER =
-  "agnesweb2026";
+const GITHUB_OWNER = "agnesweb2026";
+const GITHUB_REPO = "My-referral-website";
+const GITHUB_BRANCH = "main";
 
-const GITHUB_REPO =
-  "My-referral-website";
-
-const GITHUB_BRANCH =
-  "main";
-
-const MAX_PHOTOS =
-  24;
+const MAX_PHOTOS = 24;
 
 
 /* ==========================================
@@ -569,138 +548,93 @@ const MAX_PHOTOS =
 const PHOTO_NAMES = [
 
   "Cute 😍❤️",
-
   "Becky 💦❤️‍🔥",
-
   "Dorry 🔥✅",
-
   "Jenny 💦❤️‍🔥",
-
   "Caro 💦❤️‍🔥❤️",
-
   "Juck 💦❤️‍🔥",
-
   "Bella 🥀👄",
-
   "Faith 🌟",
-
   "Chepto 😜🔥",
-
   "Shelley",
-
   "Phapy 🥰😍",
-
   "Chris 💖💘",
-
   "Juphio 😴💦💦",
-
   "Judy 💖",
-
   "Kandy 💦😴",
-
   "Jennifer ❤️‍🔥🔥",
-
   "Pento 🥀👄",
-
   "Shallow ❤️‍🔥🔥🥀",
-
   "Grees 🌟",
-
   "Betty 🔥❤️‍🔥",
-
   "Maria 🌟🥀💦",
-
   "Kitty 💦❤️",
-
   "Sweetgy 😍🥰",
-
   "Fellow 💦❤️"
-
 ];
 
 
 /* ==========================================
-   GET HTML ELEMENTS
+   GET ELEMENTS
 ========================================== */
 
 const samplePage =
-  document.getElementById(
-    "samplePage"
-  );
-
+  document.getElementById("samplePage");
 
 const insufficientPage =
-  document.getElementById(
-    "insufficientPage"
-  );
-
+  document.getElementById("insufficientPage");
 
 const photosPage =
-  document.getElementById(
-    "photosPage"
-  );
-
+  document.getElementById("photosPage");
 
 const sampleVideo =
-  document.getElementById(
-    "sampleVideo"
-  );
-
+  document.getElementById("sampleVideo");
 
 const sampleTimer =
-  document.getElementById(
-    "sampleTimer"
-  );
-
+  document.getElementById("sampleTimer");
 
 const livePhotos =
-  document.getElementById(
-    "livePhotos"
-  );
-
+  document.getElementById("livePhotos");
 
 const incomingCall =
-  document.getElementById(
-    "incomingCall"
-  );
-
+  document.getElementById("incomingCall");
 
 const answerCall =
-  document.getElementById(
-    "answerCall"
-  );
-
+  document.getElementById("answerCall");
 
 const rejectCall =
-  document.getElementById(
-    "rejectCall"
-  );
+  document.getElementById("rejectCall");
 
 
 /* ==========================================
-   SAMPLE STORAGE
+   SAMPLE SETTINGS
 ========================================== */
 
 const SAMPLE_STORAGE_KEY =
   "myReferralSampleWatched";
 
+let sampleRunning = false;
 
-let sampleFinished =
-  localStorage.getItem(
-    SAMPLE_STORAGE_KEY
-  ) === "true";
+let secondsLeft = 20;
 
-
-let sampleRunning =
-  false;
+let sampleTimerInterval = null;
 
 
-let secondsLeft =
-  20;
+/* ==========================================
+   SHOW SAMPLE
+========================================== */
 
+function showSample() {
 
-let sampleTimerInterval =
-  null;
+  samplePage.style.display = "flex";
+
+  insufficientPage.style.display = "none";
+
+  photosPage.style.display = "none";
+
+  incomingCall.style.display = "none";
+
+}
 
 
 /* ==========================================
@@ -713,93 +647,86 @@ function startSample() {
     return;
   }
 
+  sampleRunning = true;
 
-  sampleRunning =
-    true;
-
-
-  secondsLeft =
-    20;
-
+  secondsLeft = 20;
 
   sampleTimer.textContent =
     "Sample: 20 seconds";
 
+  showSample();
 
-  samplePage.style.display =
-    "flex";
+  clearInterval(sampleTimerInterval);
 
+  /*
+    Start video from beginning.
+  */
 
-  photosPage.style.display =
-    "none";
+  try {
+    sampleVideo.currentTime = 0;
+  } catch (error) {
+    console.log(error);
+  }
 
+  sampleVideo.muted = true;
 
-  insufficientPage.style.display =
-    "none";
+  /*
+    Autoplay.
+    If the browser blocks it,
+    the controls remain available.
+  */
 
+  const playPromise =
+    sampleVideo.play();
 
-  sampleVideo.currentTime =
-    0;
+  if (playPromise !== undefined) {
 
-
-  sampleVideo.muted =
-    true;
-
-
-  sampleVideo.play()
-    .catch(function(error) {
+    playPromise.catch(function(error) {
 
       console.log(
-        "Autoplay blocked:",
+        "Video autoplay blocked:",
         error
       );
 
     });
 
+  }
 
-  clearInterval(
-    sampleTimerInterval
-  );
 
+  /*
+    20-second timer.
+  */
 
   sampleTimerInterval =
-    setInterval(
-      function() {
+    setInterval(function() {
 
-        secondsLeft--;
+      secondsLeft--;
 
+      if (secondsLeft > 0) {
 
-        if (
-          secondsLeft > 0
-        ) {
+        sampleTimer.textContent =
+          "Sample: " +
+          secondsLeft +
+          " seconds";
 
-          sampleTimer.textContent =
-            "Sample: " +
-            secondsLeft +
-            " seconds";
+      }
 
-        }
+      if (secondsLeft <= 0) {
 
+        clearInterval(
+          sampleTimerInterval
+        );
 
-        if (
-          secondsLeft <= 0
-        ) {
+        finishSample();
 
-          clearInterval(
-            sampleTimerInterval
-          );
+      }
 
-
-          finishSample();
-
-        }
-
-      },
-      1000
-    );
+    }, 1000);
 
 }
-  /* ==========================================
+
+
+/* ==========================================
    FINISH SAMPLE
 ========================================== */
 
@@ -809,77 +736,60 @@ function finishSample() {
     return;
   }
 
-
-  sampleRunning =
-    false;
-
+  sampleRunning = false;
 
   clearInterval(
     sampleTimerInterval
   );
 
-
   sampleVideo.pause();
 
-
   /*
-    Remember that the sample
-    has already been watched.
+    Hide sample.
   */
-
-  localStorage.setItem(
-    SAMPLE_STORAGE_KEY,
-    "true"
-  );
-
-
-  sampleFinished =
-    true;
-
 
   samplePage.style.display =
     "none";
 
-
   /*
-    Show insufficient minutes
-    for 2 seconds.
+    Show insufficient minutes.
   */
 
   insufficientPage.style.display =
     "flex";
 
+  /*
+    Keep message for 2 seconds.
+  */
 
-  setTimeout(
-    function() {
+  setTimeout(function() {
 
-      insufficientPage.style.display =
-        "none";
+    insufficientPage.style.display =
+      "none";
 
+    photosPage.style.display =
+      "block";
 
-      photosPage.style.display =
-        "block";
+    loadPhotos();
 
+    /*
+      Incoming call appears
+      shortly after photos load.
+    */
 
-      loadPhotos();
+    setTimeout(function() {
 
+      showIncomingCall();
 
-      /*
-        After the sample flow,
-        show the incoming call.
-      */
+    }, 1000);
 
-      scheduleNextIncomingCall();
-
-    },
-    2000
-  );
+  }, 2000);
 
 }
 
 
 /* ==========================================
-   VIDEO ENDED
+   VIDEO ENDED EVENT
 ========================================== */
 
 sampleVideo.addEventListener(
@@ -917,42 +827,6 @@ function hideIncomingCall() {
 
 
 /* ==========================================
-   FIRST INCOMING CALL
-========================================== */
-
-function scheduleFirstIncomingCall() {
-
-  setTimeout(
-    function() {
-
-      showIncomingCall();
-
-    },
-    1000
-  );
-
-}
-
-
-/* ==========================================
-   NEXT INCOMING CALL
-========================================== */
-
-function scheduleNextIncomingCall() {
-
-  setTimeout(
-    function() {
-
-      showIncomingCall();
-
-    },
-    1000
-  );
-
-}
-
-
-/* ==========================================
    ANSWER CALL
 ========================================== */
 
@@ -962,34 +836,12 @@ answerCall.addEventListener(
 
     hideIncomingCall();
 
-
     /*
-      If the visitor has NOT watched
-      the sample yet, start it.
+      Keep the user on the photos page.
     */
 
-    if (
-      !sampleFinished &&
-      localStorage.getItem(
-        SAMPLE_STORAGE_KEY
-      ) !== "true"
-    ) {
-
-      startSample();
-
-      return;
-
-    }
-
-
-    /*
-      If the sample was already watched,
-      do NOT play it again.
-
-      Instead show insufficient minutes.
-    */
-
-    showInsufficientDirectly();
+    photosPage.style.display =
+      "block";
 
   }
 );
@@ -1005,86 +857,34 @@ rejectCall.addEventListener(
 
     hideIncomingCall();
 
+    /*
+      Return to the first/sample page.
+    */
+
+    startSample();
+
   }
 );
 
 
 /* ==========================================
-   SHOW INSUFFICIENT DIRECTLY
+   PHOTO IMAGE URL
 ========================================== */
 
-function showInsufficientDirectly() {
-
-  photosPage.style.display =
-    "none";
-
-
-  samplePage.style.display =
-    "none";
-
-
-  insufficientPage.style.display =
-    "flex";
-
-
-  setTimeout(
-    function() {
-
-      insufficientPage.style.display =
-        "none";
-
-
-      photosPage.style.display =
-        "block";
-
-
-      loadPhotos();
-
-    },
-    2000
-  );
-
-}
-
-
-/* ==========================================
-   SHUFFLE PHOTOS
-========================================== */
-
-function shuffleArray(
-  array
+function getImageUrl(
+  fileName
 ) {
 
-  const shuffled =
-    [...array];
-
-
-  for (
-    let i = shuffled.length - 1;
-    i > 0;
-    i--
-  ) {
-
-    const j =
-      Math.floor(
-        Math.random() *
-        (i + 1)
-      );
-
-
-    [
-      shuffled[i],
-      shuffled[j]
-    ] =
-    [
-      shuffled[j],
-      shuffled[i]
-    ];
-
-  }
-
-
-  return shuffled;
+  return (
+    "https://raw.githubusercontent.com/" +
+    GITHUB_OWNER +
+    "/" +
+    GITHUB_REPO +
+    "/" +
+    GITHUB_BRANCH +
+    "/" +
+    encodeURIComponent(fileName)
+  );
 
 }
 
@@ -1095,98 +895,71 @@ function shuffleArray(
 
 async function loadPhotos() {
 
-  livePhotos.innerHTML = `
+  livePhotos.innerHTML = "";
 
-    <div class="loading">
-      Loading photos...
-    </div>
+  const loading =
+    document.createElement("div");
 
-  `;
+  loading.className =
+    "loading";
 
+  loading.textContent =
+    "Loading live now...";
 
-  const apiUrl =
-    "https://api.github.com/repos/" +
-    GITHUB_OWNER +
-    "/" +
-    GITHUB_REPO +
-    "/contents/?ref=" +
-    GITHUB_BRANCH;
-
+  livePhotos.appendChild(
+    loading
+  );
 
   try {
 
     const response =
       await fetch(
-        apiUrl,
-        {
-          cache: "no-store"
-        }
+        "https://api.github.com/repos/" +
+        GITHUB_OWNER +
+        "/" +
+        GITHUB_REPO +
+        "/contents"
       );
-
 
     if (!response.ok) {
 
       throw new Error(
-        "GitHub HTTP " +
-        response.status
+        "GitHub request failed"
       );
 
     }
-
 
     const files =
       await response.json();
 
-
-    if (
-      !Array.isArray(files)
-    ) {
-
-      throw new Error(
-        "GitHub did not return a file list."
-      );
-
-    }
-
+    /*
+      Find image files in the
+      repository.
+    */
 
     const imageFiles =
-      files.filter(
-        function(file) {
+      files.filter(function(file) {
 
-          return (
-            file.type === "file" &&
-            /\.(jpg|jpeg|png|webp|gif)$/i
-              .test(file.name)
-          );
-
+        if (!file || !file.name) {
+          return false;
         }
-      );
 
+        const name =
+          file.name.toLowerCase();
 
-    if (
-      imageFiles.length === 0
-    ) {
+        return (
+          name.endsWith(".jpg") ||
+          name.endsWith(".jpeg") ||
+          name.endsWith(".png") ||
+          name.endsWith(".webp") ||
+          name.endsWith(".gif")
+        );
 
-      livePhotos.innerHTML = `
+      });
 
-        <div class="error">
-
-          No photos found.
-
-          <br><br>
-
-          Put your image files
-          in the main GitHub folder.
-
-        </div>
-
-      `;
-
-
-      return;
-
-    }
-
+    /*
+      Limit the number of photos.
+    */
 
     const selectedFiles =
       imageFiles.slice(
@@ -1194,351 +967,826 @@ async function loadPhotos() {
         MAX_PHOTOS
       );
 
+    livePhotos.innerHTML = "";
 
-    const photos =
-      selectedFiles.map(
-        function(
+    if (
+      selectedFiles.length === 0
+    ) {
+
+      livePhotos.innerHTML =
+        '<div class="error">' +
+        'No photos were found in the repository.' +
+        '</div>';
+
+      return;
+
+    }
+
+    selectedFiles.forEach(
+      function(file, index) {
+
+        createPhotoCard(
           file,
           index
-        ) {
+        );
 
-          return {
-
-            name:
-              PHOTO_NAMES[index] ||
-              "Photo",
-
-            photo:
-              file.download_url
-
-          };
-
-        }
-      );
-
-
-    const shuffledPhotos =
-      shuffleArray(
-        photos
-      );
-
-
-    createGallery(
-      shuffledPhotos
+      }
     );
-
 
   } catch (error) {
 
     console.error(
-      "PHOTO ERROR:",
+      "Photo loading error:",
       error
     );
 
-
-    livePhotos.innerHTML = `
-
-      <div class="error">
-
-        Unable to load photos.
-
-        <br><br>
-
-        ${error.message}
-
-      </div>
-
-    `;
+    livePhotos.innerHTML =
+      '<div class="error">' +
+      'Unable to load live photos right now.' +
+      '<br><br>' +
+      'Please try again.' +
+      '</div>';
 
   }
+
+}
+
+
+/* ==========================================
+   CREATE PHOTO CARD
+========================================== */
+
+function createPhotoCard(
+  file,
+  index
+) {
+
+  const card =
+    document.createElement("div");
+
+  card.className =
+    "live-photo";
+
+  const image =
+    document.createElement("img");
+
+  image.loading = "lazy";
+
+  image.alt =
+    PHOTO_NAMES[index] ||
+    "Live photo";
+
+  image.src =
+    file.download_url ||
+    getImageUrl(file.name);
+
+  const badge =
+    document.createElement("div");
+
+  badge.className =
+    "live-badge";
+
+  badge.textContent =
+    "LIVE";
+
+  const status =
+    document.createElement("div");
+
+  status.className =
+    "live-status";
+
+  status.innerHTML =
+    '<span class="live-dot"></span>' +
+    '<span>Live now</span>';
+
+  const name =
+    document.createElement("div");
+
+  name.className =
+    "photo-name";
+
+  name.textContent =
+    PHOTO_NAMES[index] ||
+    "Live";
+
+  card.appendChild(image);
+
+  card.appendChild(badge);
+
+  card.appendChild(status);
+
+  card.appendChild(name);
+
+  livePhotos.appendChild(card);
 
   }
   /* ==========================================
-   CREATE PHOTO GALLERY
+   PHOTO CLICK
 ========================================== */
 
-function createGallery(
-  photos
-) {
+function handlePhotoClick(card) {
 
-  livePhotos.innerHTML =
-    "";
+  if (!card) {
+    return;
+  }
 
+  /*
+    Open the incoming call screen
+    when a live photo is tapped.
+  */
 
-  photos.forEach(
-    function(person) {
+  showIncomingCall();
 
-      /* Create photo box */
+}
 
-      const box =
-        document.createElement(
-          "div"
-        );
 
+/* ==========================================
+   ATTACH PHOTO CLICK EVENTS
+========================================== */
 
-      box.className =
-        "live-photo";
+function attachPhotoClickEvents() {
 
+  const cards =
+    document.querySelectorAll(
+      ".live-photo"
+    );
 
-      /* LIVE badge */
+  cards.forEach(function(card) {
 
-      const badge =
-        document.createElement(
-          "span"
-        );
+    card.addEventListener(
+      "click",
+      function() {
 
+        handlePhotoClick(card);
 
-      badge.className =
-        "live-badge";
+      }
+    );
 
+  });
 
-      badge.textContent =
-        "LIVE";
+}
 
 
-      /* Live status */
+/* ==========================================
+   WATCH FOR NEW PHOTO CARDS
+========================================== */
 
-      const status =
-        document.createElement(
-          "span"
-        );
+const photoObserver =
+  new MutationObserver(
+    function() {
 
-
-      status.className =
-        "live-status";
-
-
-      /* Green live dot */
-
-      const dot =
-        document.createElement(
-          "span"
-        );
-
-
-      dot.className =
-        "live-dot";
-
-
-      status.appendChild(
-        dot
-      );
-
-
-      status.appendChild(
-        document.createTextNode(
-          "Live"
-        )
-      );
-
-
-      /* Photo */
-
-      const image =
-        document.createElement(
-          "img"
-        );
-
-
-      image.src =
-        person.photo;
-
-
-      image.alt =
-        person.name;
-
-
-      image.loading =
-        "lazy";
-
-
-      /*
-        If an image cannot load,
-        hide the broken image.
-      */
-
-      image.onerror =
-        function() {
-
-          image.style.display =
-            "none";
-
-
-          box.style.background =
-            "#171717";
-
-        };
-
-
-      /* Photo name */
-
-      const name =
-        document.createElement(
-          "div"
-        );
-
-
-      name.className =
-        "photo-name";
-
-
-      name.textContent =
-        person.name;
-
-
-      /* Put everything together */
-
-      box.appendChild(
-        badge
-      );
-
-
-      box.appendChild(
-        status
-      );
-
-
-      box.appendChild(
-        image
-      );
-
-
-      box.appendChild(
-        name
-      );
-
-
-      /*
-        When a photo is tapped,
-        open payment page.
-      */
-
-      box.addEventListener(
-        "click",
-        function() {
-
-          window.location.href =
-            "payment.html";
-
-        }
-      );
-
-
-      livePhotos.appendChild(
-        box
-      );
+      attachPhotoClickEvents();
 
     }
+  );
+
+photoObserver.observe(
+  livePhotos,
+  {
+    childList: true,
+    subtree: true
+  }
+);
+
+
+/* ==========================================
+   INITIAL PAGE FLOW
+========================================== */
+
+function initializeWebsite() {
+
+  /*
+    Always start with the sample
+    when the page is opened.
+  */
+
+  samplePage.style.display =
+    "flex";
+
+  insufficientPage.style.display =
+    "none";
+
+  photosPage.style.display =
+    "none";
+
+  incomingCall.style.display =
+    "none";
+
+  /*
+    Reset sample.
+  */
+
+  sampleRunning = false;
+
+  secondsLeft = 20;
+
+  sampleTimer.textContent =
+    "Sample: 20 seconds";
+
+  clearInterval(
+    sampleTimerInterval
+  );
+
+  /*
+    Make sure the video starts
+    from the beginning.
+  */
+
+  try {
+
+    sampleVideo.pause();
+
+    sampleVideo.currentTime = 0;
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+  /*
+    Start sample after the page
+    has rendered.
+  */
+
+  setTimeout(
+    function() {
+
+      startSample();
+
+    },
+    300
   );
 
 }
 
 
 /* ==========================================
-   PAGE START
+   PAGE VISIBILITY
 ========================================== */
 
 document.addEventListener(
-  "DOMContentLoaded",
+  "visibilitychange",
   function() {
 
     /*
-      Check whether the sample
-      was already watched.
+      Do not restart the sample
+      just because the user changes
+      browser tabs.
     */
-
-    const alreadyWatched =
-      localStorage.getItem(
-        SAMPLE_STORAGE_KEY
-      ) === "true";
-
-
-    /*
-      FIRST VISIT
-    */
-
-    if (!alreadyWatched) {
-
-      sampleFinished =
-        false;
-
-
-      startSample();
-
-
-      return;
-
-    }
-
-
-    /*
-      SAMPLE WAS ALREADY WATCHED
-    */
-
-    sampleFinished =
-      true;
-
-
-    samplePage.style.display =
-      "none";
-
-
-    insufficientPage.style.display =
-      "none";
-
-
-    photosPage.style.display =
-      "block";
-
-
-    loadPhotos();
-
-
-    /*
-      Show incoming call again
-      without replaying the sample.
-    */
-
-    scheduleFirstIncomingCall();
-
-  });
-
-
-/* ==========================================
-   PREVENT VIDEO FROM RESTARTING
-========================================== */
-
-sampleVideo.addEventListener(
-  "play",
-  function() {
 
     if (
-      sampleFinished &&
-      !sampleRunning
+      document.hidden &&
+      sampleRunning
     ) {
 
       sampleVideo.pause();
 
     }
 
-  });
+  }
+);
 
 
 /* ==========================================
-   SAFETY CHECK
+   RETURN TO SAMPLE
+========================================== */
+
+function returnToSample() {
+
+  hideIncomingCall();
+
+  photosPage.style.display =
+    "none";
+
+  insufficientPage.style.display =
+    "none";
+
+  samplePage.style.display =
+    "flex";
+
+  clearInterval(
+    sampleTimerInterval
+  );
+
+  sampleRunning = false;
+
+  secondsLeft = 20;
+
+  sampleTimer.textContent =
+    "Sample: 20 seconds";
+
+  try {
+
+    sampleVideo.pause();
+
+    sampleVideo.currentTime = 0;
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+  setTimeout(
+    function() {
+
+      startSample();
+
+    },
+    200
+  );
+
+}
+
+
+/* ==========================================
+   DOUBLE SAFETY FOR REJECT
+========================================== */
+
+rejectCall.onclick =
+  function() {
+
+    returnToSample();
+
+  };
+
+
+/* ==========================================
+   DOUBLE SAFETY FOR ANSWER
+========================================== */
+
+answerCall.onclick =
+  function() {
+
+    hideIncomingCall();
+
+    photosPage.style.display =
+      "block";
+
+  };
+
+
+/* ==========================================
+   HANDLE VIDEO ERROR
+========================================== */
+
+sampleVideo.addEventListener(
+  "error",
+  function() {
+
+    console.error(
+      "The sample video could not be loaded."
+    );
+
+    sampleTimer.textContent =
+      "Sample video could not load.";
+
+  }
+);
+
+
+/* ==========================================
+   HANDLE VIDEO LOADED
+========================================== */
+
+sampleVideo.addEventListener(
+  "loadedmetadata",
+  function() {
+
+    console.log(
+      "Sample video loaded successfully."
+    );
+
+  }
+);
+
+
+/* ==========================================
+   START WEBSITE
+========================================== */
+
+if (
+  document.readyState ===
+  "loading"
+) {
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeWebsite
+  );
+
+} else {
+
+  initializeWebsite();
+
+  }
+  /* ==========================================
+   FALLBACK IMAGE LOADER
+========================================== */
+
+function loadPhotosFallback() {
+
+  livePhotos.innerHTML = "";
+
+  /*
+    Try common image filenames from
+    the repository.
+  */
+
+  let found = 0;
+
+  for (
+    let i = 1;
+    i <= MAX_PHOTOS;
+    i++
+  ) {
+
+    const extensions = [
+      ".jpg",
+      ".jpeg",
+      ".png",
+      ".webp"
+    ];
+
+    /*
+      Try the common numbered
+      filename format.
+    */
+
+    const possibleNames = [];
+
+    extensions.forEach(
+      function(ext) {
+
+        possibleNames.push(
+          "photo" + i + ext
+        );
+
+        possibleNames.push(
+          "image" + i + ext
+        );
+
+        possibleNames.push(
+          i + ext
+        );
+
+      }
+    );
+
+    tryImageNames(
+      possibleNames,
+      i
+    );
+
+  }
+
+
+  /*
+    If nothing loads, show a useful
+    message instead of a blank page.
+  */
+
+  setTimeout(
+    function() {
+
+      if (found === 0 &&
+          livePhotos.children.length === 0) {
+
+        livePhotos.innerHTML =
+          '<div class="error">' +
+          'Photos could not be found.' +
+          '<br><br>' +
+          'Make sure your image files are inside the GitHub repository.' +
+          '</div>';
+
+      }
+
+    },
+    3000
+  );
+
+
+  function tryImageNames(
+    names,
+    number
+  ) {
+
+    let current = 0;
+
+    function tryNext() {
+
+      if (
+        current >= names.length
+      ) {
+
+        return;
+
+      }
+
+      const fileName =
+        names[current];
+
+      current++;
+
+      const testImage =
+        new Image();
+
+      testImage.onload =
+        function() {
+
+          found++;
+
+          createFallbackPhoto(
+            fileName,
+            number
+          );
+
+        };
+
+      testImage.onerror =
+        function() {
+
+          tryNext();
+
+        };
+
+      testImage.src =
+        getImageUrl(fileName);
+
+    }
+
+    tryNext();
+
+  }
+
+}
+
+
+/* ==========================================
+   CREATE FALLBACK PHOTO
+========================================== */
+
+function createFallbackPhoto(
+  fileName,
+  number
+) {
+
+  /*
+    Prevent duplicate photos.
+  */
+
+  const existing =
+    document.querySelector(
+      '[data-photo="' +
+      fileName +
+      '"]'
+    );
+
+  if (existing) {
+    return;
+  }
+
+  const card =
+    document.createElement("div");
+
+  card.className =
+    "live-photo";
+
+  card.setAttribute(
+    "data-photo",
+    fileName
+  );
+
+  const image =
+    document.createElement("img");
+
+  image.src =
+    getImageUrl(fileName);
+
+  image.alt =
+    PHOTO_NAMES[number - 1] ||
+    "Live photo";
+
+  image.loading =
+    "lazy";
+
+  const badge =
+    document.createElement("div");
+
+  badge.className =
+    "live-badge";
+
+  badge.textContent =
+    "LIVE";
+
+  const status =
+    document.createElement("div");
+
+  status.className =
+    "live-status";
+
+  status.innerHTML =
+    '<span class="live-dot"></span>' +
+    '<span>Live now</span>';
+
+  const name =
+    document.createElement("div");
+
+  name.className =
+    "photo-name";
+
+  name.textContent =
+    PHOTO_NAMES[number - 1] ||
+    "Live";
+
+  card.appendChild(image);
+
+  card.appendChild(badge);
+
+  card.appendChild(status);
+
+  card.appendChild(name);
+
+  livePhotos.appendChild(card);
+
+}
+
+
+/* ==========================================
+   RETRY PHOTO LOADING
+========================================== */
+
+function retryPhotos() {
+
+  livePhotos.innerHTML =
+    '<div class="loading">' +
+    'Loading live now...' +
+    '</div>';
+
+  setTimeout(
+    function() {
+
+      loadPhotos();
+
+    },
+    500
+  );
+
+}
+
+
+/* ==========================================
+   ONLINE NUMBER
+========================================== */
+
+function updateOnlineNumber() {
+
+  const onlineBox =
+    document.querySelector(
+      ".online-box span:last-child"
+    );
+
+  if (!onlineBox) {
+    return;
+  }
+
+  const number =
+    Math.floor(
+      Math.random() * 6
+    ) + 20;
+
+  onlineBox.textContent =
+    number + " online";
+
+}
+
+
+/* ==========================================
+   UPDATE ONLINE STATUS
+========================================== */
+
+setInterval(
+  function() {
+
+    updateOnlineNumber();
+
+  },
+  8000
+);
+
+
+/* ==========================================
+   KEEP CALL SCREEN CORRECT
 ========================================== */
 
 window.addEventListener(
-  "beforeunload",
+  "resize",
   function() {
 
-    clearInterval(
-      sampleTimerInterval
-    );
+    if (
+      incomingCall.style.display ===
+      "flex"
+    ) {
 
-  });
-  </script>
+      incomingCall.style.alignItems =
+        "center";
+
+      incomingCall.style.justifyContent =
+        "center";
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   PREVENT BROKEN IMAGE ICON
+========================================== */
+
+document.addEventListener(
+  "error",
+  function(event) {
+
+    if (
+      event.target &&
+      event.target.tagName === "IMG"
+    ) {
+
+      event.target.style.background =
+        "#111";
+
+    }
+
+  },
+  true
+);
+  <script>
+/*
+  Final safety check.
+
+  If something prevents the normal
+  initialization from running, make
+  sure the sample page is still visible.
+*/
+
+(function () {
+
+  const sample =
+    document.getElementById("samplePage");
+
+  const video =
+    document.getElementById("sampleVideo");
+
+  if (!sample) {
+    return;
+  }
+
+  /*
+    Never leave the whole page blank.
+  */
+
+  sample.style.display = "flex";
+
+  /*
+    Try to start the video again
+    after the browser has rendered.
+  */
+
+  setTimeout(function () {
+
+    if (
+      video &&
+      typeof video.play === "function"
+    ) {
+
+      video.muted = true;
+
+      const play =
+        video.play();
+
+      if (
+        play &&
+        typeof play.catch === "function"
+      ) {
+
+        play.catch(function () {
+          /*
+            Some mobile browsers block
+            autoplay. The video remains
+            visible so the user can tap it.
+          */
+        });
+
+      }
+
+    }
+
+  }, 500);
+
+})();
+</script>
 
 </body>
-
 </html>
