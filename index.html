@@ -7,6 +7,7 @@
 <title>My Referral Website</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -41,14 +42,16 @@ p {
   color: #ccc;
 }
 
-/* =========================
+
+/* =====================================================
    AGE GATE
-========================= */
+===================================================== */
 
 #ageGate {
   position: fixed;
   inset: 0;
-  z-index: 99999;
+
+  z-index: 999999;
 
   width: 100%;
   height: 100%;
@@ -56,6 +59,7 @@ p {
   background: #111;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -65,6 +69,7 @@ p {
 .age-box {
   width: 100%;
   max-width: 380px;
+
   text-align: center;
 }
 
@@ -75,28 +80,38 @@ p {
 
 .age-box h1 {
   font-size: 42px;
+
   margin: 10px 0 25px;
+
   color: #fff;
 }
 
 .age-box p {
   font-size: 18px;
+
   color: #ccc;
+
   margin-bottom: 30px;
 }
 
 .age-box button {
   border: 0;
+
   border-radius: 10px;
 
   padding: 14px 22px;
+
   margin: 8px;
 
   color: #fff;
+
   font-weight: bold;
+
   font-size: 15px;
 
   cursor: pointer;
+
+  touch-action: manipulation;
 
   -webkit-tap-highlight-color: transparent;
 }
@@ -109,18 +124,19 @@ p {
   background: #666;
 }
 
-.enter-button:active,
-.exit-button:active {
+.age-box button:active {
   transform: scale(.97);
 }
 
-/* =========================
+
+/* =====================================================
    INCOMING CALL
-========================= */
+===================================================== */
 
 #incomingCall {
   position: fixed;
   inset: 0;
+
   z-index: 90000;
 
   display: none;
@@ -129,6 +145,7 @@ p {
   height: 100%;
 
   background: #17161b;
+
   overflow: hidden;
 }
 
@@ -145,6 +162,7 @@ p {
     );
 
   filter: blur(20px);
+
   transform: scale(1.1);
 }
 
@@ -157,15 +175,18 @@ p {
 
 .call-content {
   position: relative;
+
   z-index: 2;
 
   width: 100%;
   height: 100%;
 
   display: flex;
+
   flex-direction: column;
 
   align-items: center;
+
   justify-content: center;
 }
 
@@ -178,6 +199,7 @@ p {
   border: 2px solid rgba(125,80,210,.75);
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -200,6 +222,7 @@ p {
 
 .caller-name {
   margin-top: 12px;
+
   font-size: 28px;
 }
 
@@ -207,6 +230,7 @@ p {
   margin-top: 5px;
 
   font-size: 13px;
+
   letter-spacing: 1px;
 
   color: rgba(255,255,255,.65);
@@ -214,6 +238,7 @@ p {
 
 .ringing {
   margin-top: 16px;
+
   color: #b98cff;
 }
 
@@ -233,9 +258,11 @@ p {
 }
 
 @keyframes ringBlink {
+
   50% {
     opacity: .2;
   }
+
 }
 
 .call-buttons {
@@ -243,9 +270,11 @@ p {
 
   left: 0;
   right: 0;
+
   bottom: 95px;
 
   display: flex;
+
   justify-content: center;
 
   gap: 70px;
@@ -253,7 +282,9 @@ p {
 
 .call-option {
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
 }
 
@@ -270,12 +301,14 @@ p {
   font-size: 30px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   cursor: pointer;
 
-  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .decline-button {
@@ -288,6 +321,7 @@ p {
 
 .call-label {
   margin-top: 8px;
+
   color: rgba(255,255,255,.72);
 }
 
@@ -301,9 +335,10 @@ p {
   font-size: 12px;
 }
 
-/* =========================
+
+/* =====================================================
    VIDEO
-========================= */
+===================================================== */
 
 #videoPreview {
   position: fixed;
@@ -333,6 +368,7 @@ p {
   position: absolute;
 
   bottom: 20px;
+
   left: 0;
   right: 0;
 
@@ -341,9 +377,10 @@ p {
   text-shadow: 0 1px 3px #000;
 }
 
-/* =========================
+
+/* =====================================================
    INSUFFICIENT MINUTES
-========================= */
+===================================================== */
 
 #insufficientMinutes {
   position: fixed;
@@ -368,9 +405,10 @@ p {
   max-width: 350px;
 }
 
-/* =========================
+
+/* =====================================================
    GALLERY
-========================= */
+===================================================== */
 
 #livePhotos {
   display: none;
@@ -409,9 +447,10 @@ p {
   background: #111;
 }
 
-/* =========================
-   NAME UNDER PHOTO
-========================= */
+
+/* =====================================================
+   NAME BELOW PHOTO
+===================================================== */
 
 .photo-name {
   position: absolute;
@@ -442,9 +481,10 @@ p {
   text-align: center;
 }
 
-/* =========================
+
+/* =====================================================
    LIVE BADGE
-========================= */
+===================================================== */
 
 .live-badge {
   position: absolute;
@@ -469,12 +509,14 @@ p {
 
 .live-badge::before {
   content: "●";
+
   margin-right: 5px;
 }
 
-/* =========================
+
+/* =====================================================
    LIVE STATUS
-========================= */
+===================================================== */
 
 .live-status {
   position: absolute;
@@ -485,6 +527,7 @@ p {
   z-index: 5;
 
   display: flex;
+
   align-items: center;
 
   gap: 6px;
@@ -514,9 +557,11 @@ p {
 }
 
 @keyframes liveBlink {
+
   50% {
     opacity: .2;
   }
+
 }
 
 .loading {
@@ -535,9 +580,10 @@ p {
   color: #ff6b6b;
 }
 
-/* =========================
+
+/* =====================================================
    MOBILE
-========================= */
+===================================================== */
 
 @media (max-width: 380px) {
 
@@ -565,41 +611,58 @@ p {
   .photo-name {
     font-size: 13px;
   }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
-<!-- =========================
+
+<!-- =====================================================
      AGE GATE
-========================= -->
+===================================================== -->
 
 <div id="ageGate">
 
   <div class="age-box">
 
-    <div class="age-icon">🔞</div>
+    <div class="age-icon">
+      🔞
+    </div>
 
-    <h1>18+ ONLY</h1>
+    <h1>
+      18+ ONLY
+    </h1>
 
     <p>
       You must be 18 years or older to enter.
     </p>
 
+    <!--
+      IMPORTANT:
+      This button uses direct JavaScript.
+      It does NOT depend on another function.
+    -->
+
     <button
       id="enterButton"
       class="enter-button"
-      type="button">
+      type="button"
+      onclick="openWebsite()">
 
       I AM 18+ — ENTER
 
     </button>
 
+
     <button
       id="exitButton"
       class="exit-button"
-      type="button">
+      type="button"
+      onclick="exitWebsite()">
 
       EXIT
 
@@ -610,9 +673,9 @@ p {
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      INCOMING CALL
-========================= -->
+===================================================== -->
 
 <div id="incomingCall">
 
@@ -632,6 +695,7 @@ p {
 
     </div>
 
+
     <div
       id="callerName"
       class="caller-name">
@@ -640,9 +704,11 @@ p {
 
     </div>
 
+
     <div class="call-title">
       INCOMING VIDEO CALL
     </div>
+
 
     <div class="ringing">
 
@@ -651,6 +717,7 @@ p {
       Ringing...
 
     </div>
+
 
     <div class="call-buttons">
 
@@ -691,6 +758,7 @@ p {
 
     </div>
 
+
     <div class="swipe-message">
       SWIPE UP TO MESSAGE
     </div>
@@ -700,9 +768,9 @@ p {
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      VIDEO PREVIEW
-========================= -->
+===================================================== -->
 
 <div id="videoPreview">
 
@@ -718,10 +786,15 @@ p {
 
   </video>
 
+
   <div class="preview-counter">
 
     Preview:
-    <span id="previewSeconds">20</span>
+
+    <span id="previewSeconds">
+      20
+    </span>
+
     seconds
 
   </div>
@@ -729,9 +802,9 @@ p {
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      INSUFFICIENT MINUTES
-========================= -->
+===================================================== -->
 
 <div id="insufficientMinutes">
 
@@ -754,9 +827,9 @@ p {
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      MAIN WEBSITE
-========================= -->
+===================================================== -->
 
 <div class="card">
 
@@ -767,6 +840,7 @@ p {
   <p>
     Welcome to my referral website.
   </p>
+
 
   <div id="livePhotos">
 
@@ -781,17 +855,9 @@ p {
 
 <script>
 
-/* =====================================================
-   VARIABLES
-===================================================== */
-
-let callers = [];
-
-let lastCaller = -1;
-
 
 /* =====================================================
-   GITHUB SETTINGS
+   GITHUB
 ===================================================== */
 
 const GITHUB_OWNER =
@@ -803,11 +869,13 @@ const GITHUB_REPO =
 const GITHUB_BRANCH =
   "main";
 
-const MAX_PHOTOS = 24;
+
+const MAX_PHOTOS =
+  24;
 
 
 /* =====================================================
-   PHOTO NAMES
+   YOUR 24 PHOTO NAMES
 ===================================================== */
 
 const PHOTO_NAMES = [
@@ -876,22 +944,21 @@ const SAMPLE_WATCHED_KEY =
 
 
 /* =====================================================
-   GET ELEMENTS
+   VARIABLES
+===================================================== */
+
+let callers = [];
+
+let lastCaller = -1;
+
+
+/* =====================================================
+   ELEMENTS
 ===================================================== */
 
 const ageGate =
   document.getElementById(
     "ageGate"
-  );
-
-const enterButton =
-  document.getElementById(
-    "enterButton"
-  );
-
-const exitButton =
-  document.getElementById(
-    "exitButton"
   );
 
 const incomingCall =
@@ -946,12 +1013,65 @@ const declineCall =
 
 
 /* =====================================================
+   AGE GATE - DIRECT FUNCTIONS
+===================================================== */
+
+function openWebsite() {
+
+  /*
+   * Hide the age gate immediately.
+   */
+
+  ageGate.style.display =
+    "none";
+
+  ageGate.style.visibility =
+    "hidden";
+
+  ageGate.style.pointerEvents =
+    "none";
+
+
+  /*
+   * If a caller is ready,
+   * show incoming call.
+   */
+
+  if (callers.length > 0) {
+
+    showRandomCaller();
+
+  } else {
+
+    /*
+     * If photos are still loading,
+     * show the main page.
+     */
+
+    livePhotos.style.display =
+      "grid";
+
+  }
+
+}
+
+
+function exitWebsite() {
+
+  window.location.href =
+    "https://www.google.com";
+
+}
+
+
+/* =====================================================
    SHUFFLE
 ===================================================== */
 
 function shuffleArray(array) {
 
-  const shuffled = [...array];
+  const shuffled =
+    [...array];
 
   for (
     let i = shuffled.length - 1;
@@ -982,7 +1102,7 @@ function shuffleArray(array) {
 
 
 /* =====================================================
-   LOAD PHOTOS
+   LOAD PHOTOS FROM GITHUB
 ===================================================== */
 
 async function loadPhotos() {
@@ -995,6 +1115,7 @@ async function loadPhotos() {
 
   `;
 
+
   const apiUrl =
     "https://api.github.com/repos/" +
     GITHUB_OWNER +
@@ -1002,6 +1123,7 @@ async function loadPhotos() {
     GITHUB_REPO +
     "/contents/?ref=" +
     GITHUB_BRANCH;
+
 
   try {
 
@@ -1013,6 +1135,7 @@ async function loadPhotos() {
         }
       );
 
+
     if (!response.ok) {
 
       throw new Error(
@@ -1022,8 +1145,10 @@ async function loadPhotos() {
 
     }
 
+
     const files =
       await response.json();
+
 
     if (!Array.isArray(files)) {
 
@@ -1032,6 +1157,11 @@ async function loadPhotos() {
       );
 
     }
+
+
+    /*
+     * FIND IMAGE FILES ONLY
+     */
 
     const imageFiles =
       files.filter(
@@ -1046,11 +1176,17 @@ async function loadPhotos() {
         }
       );
 
+
+    /*
+     * FIRST 24 IMAGES
+     */
+
     const selectedFiles =
       imageFiles.slice(
         0,
         MAX_PHOTOS
       );
+
 
     if (
       selectedFiles.length === 0
@@ -1064,8 +1200,8 @@ async function loadPhotos() {
 
           <br><br>
 
-          Make sure your 24 image files
-          are in the main GitHub repository.
+          Make sure your images are
+          in the main GitHub repository.
 
         </div>
 
@@ -1076,9 +1212,9 @@ async function loadPhotos() {
     }
 
 
-    /* =========================================
-       CONNECT EACH PHOTO TO ITS NAME
-    ========================================= */
+    /*
+     * CONNECT NAME TO PHOTO
+     */
 
     callers =
       selectedFiles.map(
@@ -1100,9 +1236,10 @@ async function loadPhotos() {
 
 
     /*
-     * Shuffle the complete object.
-     * This means the name stays attached
-     * to its correct picture.
+     * Shuffle complete objects.
+     *
+     * This keeps each name attached
+     * to its correct photo.
      */
 
     callers =
@@ -1111,7 +1248,16 @@ async function loadPhotos() {
       );
 
 
+    /*
+     * Create gallery.
+     */
+
     createGallery();
+
+
+    /*
+     * Prepare incoming call.
+     */
 
     showRandomCaller();
 
@@ -1119,14 +1265,16 @@ async function loadPhotos() {
   } catch (error) {
 
     console.error(
+      "Gallery error:",
       error
     );
+
 
     livePhotos.innerHTML = `
 
       <div class="error">
 
-        Unable to load the photos.
+        Unable to load photos.
 
         <br><br>
 
@@ -1147,26 +1295,33 @@ async function loadPhotos() {
 
 function createGallery() {
 
-  livePhotos.innerHTML = "";
+  livePhotos.innerHTML =
+    "";
+
 
   const randomPhotos =
     shuffleArray(
       callers
     );
 
+
   randomPhotos.forEach(
     function(person) {
+
 
       const box =
         document.createElement(
           "div"
         );
 
+
       box.className =
         "live-photo";
 
 
-      /* LIVE BADGE */
+      /* =================================
+         LIVE BADGE
+      ================================= */
 
       const badge =
         document.createElement(
@@ -1180,7 +1335,9 @@ function createGallery() {
         "LIVE";
 
 
-      /* LIVE STATUS */
+      /* =================================
+         LIVE STATUS
+      ================================= */
 
       const status =
         document.createElement(
@@ -1204,6 +1361,7 @@ function createGallery() {
         dot
       );
 
+
       status.appendChild(
         document.createTextNode(
           "Live"
@@ -1211,7 +1369,9 @@ function createGallery() {
       );
 
 
-      /* IMAGE */
+      /* =================================
+         PHOTO
+      ================================= */
 
       const image =
         document.createElement(
@@ -1228,7 +1388,9 @@ function createGallery() {
         "lazy";
 
 
-      /* NAME BELOW PHOTO */
+      /* =================================
+         NAME BELOW PHOTO
+      ================================= */
 
       const name =
         document.createElement(
@@ -1242,7 +1404,9 @@ function createGallery() {
         person.name;
 
 
-      /* ADD */
+      /* =================================
+         ADD TO PHOTO BOX
+      ================================= */
 
       box.appendChild(
         badge
@@ -1261,7 +1425,9 @@ function createGallery() {
       );
 
 
-      /* CLICK */
+      /* =================================
+         PHOTO CLICK
+      ================================= */
 
       box.addEventListener(
         "click",
@@ -1296,7 +1462,9 @@ function showRandomCaller() {
 
   }
 
+
   let randomIndex;
+
 
   do {
 
@@ -1311,87 +1479,35 @@ function showRandomCaller() {
     randomIndex === lastCaller
   );
 
+
   lastCaller =
     randomIndex;
+
 
   const caller =
     callers[randomIndex];
 
+
   callerPhoto.src =
     caller.photo;
+
 
   callerPhoto.alt =
     caller.name;
 
+
   callerName.textContent =
     caller.name;
 
-  incomingCall.style.display =
-    "block";
+
+  /*
+   * Do not force it over the
+   * age gate.
+   *
+   * It is ready behind the gate.
+   */
 
 }
-
-
-/* =====================================================
-   AGE GATE - FIXED
-===================================================== */
-
-enterButton.addEventListener(
-  "click",
-  function(event) {
-
-    event.preventDefault();
-
-    event.stopPropagation();
-
-    /*
-     * REMOVE AGE SCREEN IMMEDIATELY
-     */
-
-    ageGate.style.display =
-      "none";
-
-    ageGate.style.visibility =
-      "hidden";
-
-    ageGate.style.pointerEvents =
-      "none";
-
-
-    /*
-     * SHOW INCOMING CALL
-     */
-
-    if (callers.length > 0) {
-
-      showRandomCaller();
-
-    } else {
-
-      livePhotos.style.display =
-        "grid";
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   EXIT
-===================================================== */
-
-exitButton.addEventListener(
-  "click",
-  function(event) {
-
-    event.preventDefault();
-
-    window.location.href =
-      "https://www.google.com";
-
-  }
-);
 
 
 /* =====================================================
@@ -1419,102 +1535,4 @@ function markSampleAsWatched() {
 }
 
 
-/* =====================================================
-   SHOW INSUFFICIENT MINUTES
-===================================================== */
-
-function showInsufficientMinutes() {
-
-  videoPreview.style.display =
-    "none";
-
-  insufficientMinutes.style.display =
-    "flex";
-
-  setTimeout(
-    function() {
-
-      insufficientMinutes.style.display =
-        "none";
-
-      livePhotos.style.display =
-        "grid";
-
-      createGallery();
-
-      window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-      });
-
-    },
-    1500
-  );
-
-}
-
-
-/* =====================================================
-   PLAY SAMPLE
-===================================================== */
-
-function playSample() {
-
-  incomingCall.style.display =
-    "none";
-
-  if (hasWatchedSample()) {
-
-    showInsufficientMinutes();
-
-    return;
-
-  }
-
-  videoPreview.style.display =
-    "flex";
-
-  previewVideo.currentTime =
-    0;
-
-  previewVideo.play().catch(
-    function(error) {
-
-      console.log(
-        "Video playback:",
-        error
-      );
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   ANSWER
-===================================================== */
-
-answerCall.addEventListener(
-  "click",
-  function() {
-
-    playSample();
-
-  }
-);
-
-
-/* =====================================================
-   DECLINE
-===================================================== */
-
-declineCall.addEventListener(
-  "click",
-  function() {
-
-    playSample();
-  
+/* =================================================
