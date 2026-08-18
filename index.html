@@ -346,7 +346,9 @@ p {
 
   cursor: pointer;
 
-  min-height: 210px;
+  min-height: 250px;
+
+  padding-bottom: 45px;
 }
 
 .live-photo img {
@@ -358,6 +360,39 @@ p {
   object-fit: cover;
 
   background: #111;
+}
+
+/* =========================
+   NAME UNDER PHOTO
+========================= */
+
+.photo-name {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  min-height: 45px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 5px;
+
+  background: #111;
+
+  color: #fff;
+
+  font-size: 14px;
+
+  font-weight: bold;
+
+  line-height: 1.2;
+
+  text-align: center;
 }
 
 /* =========================
@@ -390,11 +425,15 @@ p {
   margin-right: 5px;
 }
 
+/* =========================
+   LIVE STATUS
+========================= */
+
 .live-status {
   position: absolute;
 
   left: 8px;
-  bottom: 8px;
+  top: 8px;
 
   z-index: 5;
 
@@ -403,15 +442,13 @@ p {
 
   gap: 6px;
 
-  max-width: calc(100% - 16px);
-
   background: rgba(0,0,0,.82);
 
-  padding: 7px 10px;
+  padding: 6px 8px;
 
   border-radius: 8px;
 
-  font-size: 12px;
+  font-size: 11px;
 
   white-space: nowrap;
 }
@@ -462,7 +499,7 @@ p {
   }
 
   .live-photo {
-    min-height: 170px;
+    min-height: 210px;
   }
 
   .live-photo img {
@@ -476,6 +513,10 @@ p {
   .call-button {
     width: 70px;
     height: 70px;
+  }
+
+  .photo-name {
+    font-size: 13px;
   }
 }
 </style>
@@ -702,12 +743,6 @@ const GITHUB_REPO =
 const GITHUB_BRANCH =
   "main";
 
-/*
- * IMPORTANT:
- * Your photos are in the ROOT of the repository.
- * Therefore this must be empty.
- */
-
 const GALLERY_FOLDER =
   "";
 
@@ -717,6 +752,64 @@ const GALLERY_FOLDER =
 ===================================================== */
 
 const MAX_PHOTOS = 24;
+
+
+/* =====================================================
+   PHOTO NAMES
+   THE NAME MATCHES THE PHOTO ORDER
+===================================================== */
+
+const PHOTO_NAMES = [
+
+  "Cute 😍❤️",
+
+  "Becky 💦❤️‍🔥",
+
+  "Dorry 🔥✅",
+
+  "Jenny 💦❤️‍🔥",
+
+  "Caro 💦❤️‍🔥❤️",
+
+  "Juck 💦❤️‍🔥",
+
+  "Bella 🥀👄",
+
+  "Faith 🌟",
+
+  "Chepto 😜🔥",
+
+  "Shelley",
+
+  "Phapy 🥰😍",
+
+  "Chris 💖💘",
+
+  "Juphio 😴💦💦",
+
+  "Judy 💖",
+
+  "Kandy 💦😴",
+
+  "Jennifer ❤️‍🔥🔥",
+
+  "Pento 🥀👄",
+
+  "Shallow ❤️‍🔥🔥🥀",
+
+  "Grees 🌟",
+
+  "Betty 🔥❤️‍🔥",
+
+  "Maria 🌟🥀💦",
+
+  "Kitty 💦❤️",
+
+  "Sweetgy 😍🥰",
+
+  "Fellow 💦❤️"
+
+];
 
 
 /* =====================================================
@@ -801,21 +894,6 @@ const declineCall =
 
 
 /* =====================================================
-   CLEAN FILE NAME
-===================================================== */
-
-function makeDisplayName(filename) {
-
-  return filename
-    .replace(/\.[^/.]+$/, "")
-    .replace(/[-_]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-}
-
-
-/* =====================================================
    SHUFFLE
 ===================================================== */
 
@@ -866,10 +944,6 @@ async function loadPhotos() {
 
   `;
 
-
-  /*
-   * ROOT OF REPOSITORY
-   */
 
   const apiUrl =
     "https://api.github.com/repos/" +
@@ -934,7 +1008,7 @@ async function loadPhotos() {
 
 
     /*
-     * MAXIMUM 24 PHOTOS
+     * TAKE FIRST 24 PHOTOS
      */
 
     const selectedFiles =
@@ -969,19 +1043,23 @@ async function loadPhotos() {
 
 
     /*
-     * CREATE CALLERS
+     * CREATE PHOTO + NAME
+     *
+     * PHOTO 1  = Cute
+     * PHOTO 2  = Becky
+     * PHOTO 3  = Dorry
+     * etc.
      */
 
     callers =
       selectedFiles.map(
-        function(file) {
+        function(file, index) {
 
           return {
 
             name:
-              makeDisplayName(
-                file.name
-              ),
+              PHOTO_NAMES[index] ||
+              "Photo",
 
             photo:
               file.download_url
@@ -993,7 +1071,10 @@ async function loadPhotos() {
 
 
     /*
-     * RANDOMIZE
+     * RANDOMIZE THE COMPLETE OBJECT
+     *
+     * This keeps the correct name
+     * attached to the correct photo.
      */
 
     callers =
@@ -1113,7 +1194,7 @@ function createGallery() {
 
 
       /*
-       * LIVE STATUS
+       * GREEN LIVE DOT
        */
 
       const status =
@@ -1141,13 +1222,29 @@ function createGallery() {
 
       status.appendChild(
         document.createTextNode(
-          person.name
+          "Live"
         )
       );
 
 
       /*
-       * ADD TO BOX
+       * NAME UNDER PHOTO
+       */
+
+      const name =
+        document.createElement(
+          "div"
+        );
+
+      name.className =
+        "photo-name";
+
+      name.textContent =
+        person.name;
+
+
+      /*
+       * ADD EVERYTHING
        */
 
       box.appendChild(
@@ -1155,11 +1252,15 @@ function createGallery() {
       );
 
       box.appendChild(
+        status
+      );
+
+      box.appendChild(
         image
       );
 
       box.appendChild(
-        status
+        name
       );
 
 
@@ -1252,21 +1353,11 @@ function enterSite() {
     "none";
 
 
-  /*
-   * If photos have loaded,
-   * show the incoming call.
-   */
-
   if (callers.length) {
 
     showRandomCaller();
 
   } else {
-
-    /*
-     * If GitHub is still loading,
-     * show the gallery once ready.
-     */
 
     livePhotos.style.display =
       "grid";
@@ -1457,41 +1548,4 @@ previewVideo.addEventListener(
 ===================================================== */
 
 previewVideo.addEventListener(
-  "timeupdate",
-  function() {
-
-    if (
-      !isNaN(
-        previewVideo.duration
-      )
-    ) {
-
-      const remaining =
-        Math.max(
-          0,
-          Math.ceil(
-            previewVideo.duration -
-            previewVideo.currentTime
-          )
-        );
-
-
-      previewSeconds.textContent =
-        remaining;
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   START
-===================================================== */
-
-loadPhotos();
-
-</script>
-
-</body>
-</html>
+ 
