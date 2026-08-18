@@ -8,93 +8,93 @@
 
 <style>
 
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
 html,
-body{
-  margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
-  background:#000;
-  color:#fff;
-  font-family:Arial,sans-serif;
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
 }
 
-body{
-  padding:15px;
+body {
+  padding: 15px;
 }
 
-.card{
-  width:100%;
-  max-width:450px;
-  margin:0 auto;
+.card {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
 }
-
 
 /* =====================================================
    TOP BAR
 ===================================================== */
 
-.top-bar{
-  width:100%;
-  display:flex;
-  justify-content:flex-start;
-  align-items:center;
-  margin-bottom:15px;
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.online-box{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
+.online-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
 
-  background:#111;
-  border:1px solid #292929;
+  background: #111;
+  border: 1px solid #292929;
 
-  color:#fff;
+  color: #fff;
 
-  padding:7px 11px;
+  padding: 7px 11px;
 
-  border-radius:8px;
+  border-radius: 8px;
 
-  font-size:13px;
-  font-weight:bold;
+  font-size: 13px;
+  font-weight: bold;
 }
 
-.online-dot{
-  width:9px;
-  height:9px;
+.online-dot {
+  width: 9px;
+  height: 9px;
 
-  border-radius:50%;
+  border-radius: 50%;
 
-  background:#22c55e;
+  background: #22c55e;
 
-  animation:onlineBlink 1.2s infinite;
+  animation: onlineBlink 1.2s infinite;
 }
 
-@keyframes onlineBlink{
-  50%{
-    opacity:.35;
+@keyframes onlineBlink {
+
+  50% {
+    opacity: .35;
   }
-}
 
+}
 
 /* =====================================================
    HEADER
 ===================================================== */
 
-h1{
-  margin:8px 0 5px;
-  font-size:25px;
+h1 {
+  margin: 8px 0 5px;
+  font-size: 25px;
 }
 
-.subtitle{
-  color:#aaa;
-  margin:0 0 15px;
-  font-size:14px;
+.subtitle {
+  color: #aaa;
+  margin: 0 0 15px;
+  font-size: 14px;
 }
 
 
@@ -102,49 +102,49 @@ h1{
    GALLERY
 ===================================================== */
 
-#livePhotos{
-  display:grid;
+#livePhotos {
+  display: grid;
 
-  grid-template-columns:1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 
-  gap:14px;
+  gap: 14px;
 
-  margin-top:15px;
+  margin-top: 15px;
 }
 
-.live-photo{
-  position:relative;
+.live-photo {
+  position: relative;
 
-  overflow:hidden;
+  overflow: hidden;
 
-  border-radius:12px;
+  border-radius: 12px;
 
-  background:#111;
+  background: #111;
 
-  cursor:pointer;
+  cursor: pointer;
 
-  min-height:250px;
+  min-height: 250px;
 
-  padding-bottom:45px;
+  padding-bottom: 45px;
 
-  border:1px solid #1e1e1e;
+  border: 1px solid #1e1e1e;
 
-  -webkit-tap-highlight-color:transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.live-photo:active{
-  transform:scale(.98);
+.live-photo:active {
+  transform: scale(.98);
 }
 
-.live-photo img{
-  display:block;
+.live-photo img {
+  display: block;
 
-  width:100%;
-  height:205px;
+  width: 100%;
+  height: 205px;
 
-  object-fit:cover;
+  object-fit: cover;
 
-  background:#111;
+  background: #111;
 }
 
 
@@ -152,33 +152,33 @@ h1{
    PHOTO NAME
 ===================================================== */
 
-.photo-name{
-  position:absolute;
+.photo-name {
+  position: absolute;
 
-  left:0;
-  right:0;
-  bottom:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-  min-height:45px;
+  min-height: 45px;
 
-  display:flex;
+  display: flex;
 
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
 
-  padding:7px 5px;
+  padding: 7px 5px;
 
-  background:#111;
+  background: #111;
 
-  color:#fff;
+  color: #fff;
 
-  font-size:13px;
+  font-size: 13px;
 
-  font-weight:bold;
+  font-weight: bold;
 
-  line-height:1.2;
+  line-height: 1.2;
 
-  text-align:center;
+  text-align: center;
 }
 
 
@@ -186,30 +186,30 @@ h1{
    LIVE BADGE
 ===================================================== */
 
-.live-badge{
-  position:absolute;
+.live-badge {
+  position: absolute;
 
-  top:7px;
-  left:7px;
+  top: 7px;
+  left: 7px;
 
-  z-index:5;
+  z-index: 5;
 
-  background:#f0184c;
+  background: #f0184c;
 
-  color:#fff;
+  color: #fff;
 
-  padding:6px 9px;
+  padding: 6px 9px;
 
-  border-radius:7px;
+  border-radius: 7px;
 
-  font-size:11px;
+  font-size: 11px;
 
-  font-weight:bold;
+  font-weight: bold;
 }
 
-.live-badge::before{
-  content:"●";
-  margin-right:4px;
+.live-badge::before {
+  content: "●";
+  margin-right: 4px;
 }
 
 
@@ -217,333 +217,42 @@ h1{
    LIVE STATUS
 ===================================================== */
 
-.live-status{
-  position:absolute;
+.live-status {
+  position: absolute;
 
-  top:7px;
-  right:7px;
+  top: 7px;
+  right: 7px;
 
-  z-index:5;
+  z-index: 5;
 
-  display:flex;
+  display: flex;
 
-  align-items:center;
+  align-items: center;
 
-  gap:5px;
+  gap: 5px;
 
-  background:rgba(0,0,0,.82);
+  background: rgba(0,0,0,.82);
 
-  padding:5px 7px;
+  padding: 5px 7px;
 
-  border-radius:7px;
+  border-radius: 7px;
 
-  font-size:10px;
+  font-size: 10px;
 
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
-.live-dot{
-  width:8px;
-  height:8px;
+.live-dot {
+  width: 8px;
+  height: 8px;
 
-  flex-shrink:0;
+  flex-shrink: 0;
 
-  border-radius:50%;
+  border-radius: 50%;
 
-  background:#22c55e;
+  background: #22c55e;
 
-  animation:liveBlink 1s infinite;
-}
-
-@keyframes liveBlink{
-  50%{
-    opacity:.2;
-  }
-}
-
-
-/* =====================================================
-   INCOMING CALL
-===================================================== */
-
-#incomingCall{
-  position:fixed;
-  inset:0;
-
-  z-index:90000;
-
-  display:none;
-
-  width:100%;
-  height:100%;
-
-  background:#17161b;
-
-  overflow:hidden;
-}
-
-.call-background{
-  position:absolute;
-  inset:-30px;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #5d5050 0%,
-      #302b2e 45%,
-      #101014 100%
-    );
-
-  filter:blur(20px);
-
-  transform:scale(1.1);
-}
-
-.call-dark-overlay{
-  position:absolute;
-  inset:0;
-
-  background:rgba(0,0,0,.5);
-}
-
-.call-content{
-  position:relative;
-
-  z-index:2;
-
-  width:100%;
-  height:100%;
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-
-  justify-content:center;
-}
-
-.profile-ring{
-  width:155px;
-  height:155px;
-
-  border-radius:50%;
-
-  border:2px solid rgba(125,80,210,.75);
-
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
-  box-shadow:
-    0 0 0 7px rgba(125,80,210,.08);
-}
-
-.profile-photo{
-  width:125px;
-  height:125px;
-
-  border-radius:50%;
-
-  border:3px solid #7650c9;
-
-  object-fit:cover;
-
-  background:#211d26;
-}
-
-.caller-name{
-  margin-top:12px;
-
-  font-size:28px;
-}
-
-.call-title{
-  margin-top:5px;
-
-  font-size:13px;
-
-  letter-spacing:1px;
-
-  color:rgba(255,255,255,.65);
-}
-
-.ringing{
-  margin-top:16px;
-
-  color:#b98cff;
-}
-
-.ringing-dot{
-  display:inline-block;
-
-  width:8px;
-  height:8px;
-
-  border-radius:50%;
-
-  background:#a66cff;
-
-  margin-right:6px;
-
-  animation:ringBlink 1s infinite;
-}
-
-@keyframes ringBlink{
-  50%{
-    opacity:.2;
-  }
-}
-
-.call-buttons{
-  position:absolute;
-
-  left:0;
-  right:0;
-
-  bottom:95px;
-
-  display:flex;
-
-  justify-content:center;
-
-  gap:70px;
-}
-
-.call-option{
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-}
-
-.call-button{
-  width:78px;
-  height:78px;
-
-  border:3px solid rgba(255,255,255,.18);
-
-  border-radius:50%;
-
-  color:#fff;
-
-  font-size:30px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  cursor:pointer;
-
-  touch-action:manipulation;
-}
-
-.decline-button{
-  background:#ed3b3b;
-}
-
-.answer-button{
-  background:#14a94b;
-}
-
-.call-label{
-  margin-top:8px;
-
-  color:rgba(255,255,255,.72);
-}
-
-.swipe-message{
-  position:absolute;
-
-  bottom:38px;
-
-  color:rgba(255,255,255,.3);
-
-  font-size:12px;
-}
-
-
-/* =====================================================
-   VIDEO PREVIEW
-===================================================== */
-
-#videoPreview{
-  position:fixed;
-  inset:0;
-
-  z-index:80000;
-
-  display:none;
-
-  width:100%;
-  height:100%;
-
-  background:#000;
-
-  align-items:center;
-  justify-content:center;
-}
-
-#previewVideo{
-  width:100%;
-  height:100%;
-
-  object-fit:contain;
-}
-
-.preview-counter{
-  position:absolute;
-
-  bottom:20px;
-
-  left:0;
-  right:0;
-
-  color:#fff;
-
-  text-shadow:0 1px 3px #000;
-
-  font-size:14px;
-}
-
-
-/* =====================================================
-   INSUFFICIENT MINUTES
-===================================================== */
-
-#insufficientMinutes{
-  position:fixed;
-  inset:0;
-
-  z-index:85000;
-
-  display:none;
-
-  width:100%;
-  height:100%;
-
-  background:#111;
-
-  align-items:center;
-  justify-content:center;
-
-  padding:20px;
-}
-
-.insufficient-box{
-  max-width:350px;
-}
-
-.insufficient-box h2{
-  margin-bottom:15px;
-}
-
-.insufficient-box p{
-  color:#ccc;
+  animation: liveBlink 1s infinite;
 }
 
 
@@ -551,14 +260,14 @@ h1{
    LOADING
 ===================================================== */
 
-.loading{
-  grid-column:1 / -1;
+.loading {
+  grid-column: 1 / -1;
 
-  padding:45px 20px;
+  padding: 45px 20px;
 
-  color:#aaa;
+  color: #aaa;
 
-  text-align:center;
+  text-align: center;
 }
 
 
@@ -566,16 +275,16 @@ h1{
    ERROR
 ===================================================== */
 
-.error{
-  grid-column:1 / -1;
+.error {
+  grid-column: 1 / -1;
 
-  padding:35px 15px;
+  padding: 35px 15px;
 
-  color:#ff6b6b;
+  color: #ff6b6b;
 
-  text-align:center;
+  text-align: center;
 
-  line-height:1.5;
+  line-height: 1.5;
 }
 
 
@@ -583,35 +292,26 @@ h1{
    MOBILE
 ===================================================== */
 
-@media(max-width:380px){
+@media (max-width: 380px) {
 
-  body{
-    padding:12px;
+  body {
+    padding: 12px;
   }
 
-  #livePhotos{
-    gap:10px;
+  #livePhotos {
+    gap: 10px;
   }
 
-  .live-photo{
-    min-height:215px;
+  .live-photo {
+    min-height: 215px;
   }
 
-  .live-photo img{
-    height:170px;
+  .live-photo img {
+    height: 170px;
   }
 
-  .photo-name{
-    font-size:12px;
-  }
-
-  .call-buttons{
-    gap:55px;
-  }
-
-  .call-button{
-    width:70px;
-    height:70px;
+  .photo-name {
+    font-size: 12px;
   }
 
 }
@@ -672,177 +372,6 @@ h1{
 </div>
 
 
-<!-- =====================================================
-     INCOMING CALL
-===================================================== -->
-
-<div id="incomingCall">
-
-  <div class="call-background"></div>
-
-  <div class="call-dark-overlay"></div>
-
-  <div class="call-content">
-
-    <div class="profile-ring">
-
-      <img
-        id="callerPhoto"
-        class="profile-photo"
-        src=""
-        alt="Caller">
-
-    </div>
-
-
-    <div
-      id="callerName"
-      class="caller-name">
-
-      Caller
-
-    </div>
-
-
-    <div class="call-title">
-      INCOMING VIDEO CALL
-    </div>
-
-
-    <div class="ringing">
-
-      <span class="ringing-dot"></span>
-
-      Ringing...
-
-    </div>
-
-
-    <div class="call-buttons">
-
-      <div class="call-option">
-
-        <button
-          id="declineCall"
-          class="call-button decline-button"
-          type="button">
-
-          ☎
-
-        </button>
-
-        <div class="call-label">
-          Decline
-        </div>
-
-      </div>
-
-
-      <div class="call-option">
-
-        <button
-          id="answerCall"
-          class="call-button answer-button"
-          type="button">
-
-          ☎
-
-        </button>
-
-        <div class="call-label">
-          Answer
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="swipe-message">
-      SWIPE UP TO MESSAGE
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =====================================================
-     VIDEO PREVIEW
-===================================================== -->
-
-<div id="videoPreview">
-
-  <video
-    id="previewVideo"
-    muted
-    playsinline>
-
-    <source
-      src="/preview_20_seconds.mp4"
-      type="video/mp4">
-
-  </video>
-
-
-  <div class="preview-counter">
-
-    Preview:
-
-    <span id="previewSeconds">
-      20
-    </span>
-
-    seconds
-
-  </div>
-
-</div>
-
-
-<!-- =====================================================
-     INSUFFICIENT MINUTES
-===================================================== -->
-
-<div id="insufficientMinutes">
-
-  <div class="insufficient-box">
-
-    <h2>
-      INSUFFICIENT MINUTES
-    </h2>
-
-    <p>
-      Your preview has ended.
-    </p>
-
-    <p>
-      Please purchase minutes to continue.
-    </p>
-
-    <button
-      id="purchaseButton"
-      type="button"
-      style="
-        margin-top:15px;
-        padding:13px 22px;
-        border:0;
-        border-radius:9px;
-        background:#22c55e;
-        color:#fff;
-        font-weight:bold;
-        cursor:pointer;
-      ">
-
-      Continue
-
-    </button>
-
-  </div>
-
-</div>
-
-
 <script>
 
 
@@ -850,17 +379,13 @@ h1{
    GITHUB SETTINGS
 ===================================================== */
 
-const GITHUB_OWNER =
-  "agnesweb2026";
+const GITHUB_OWNER = "agnesweb2026";
 
-const GITHUB_REPO =
-  "My-referral-website";
+const GITHUB_REPO = "My-referral-website";
 
-const GITHUB_BRANCH =
-  "main";
+const GITHUB_BRANCH = "main";
 
-const MAX_PHOTOS =
-  24;
+const MAX_PHOTOS = 24;
 
 
 /* =====================================================
@@ -921,100 +446,30 @@ const PHOTO_NAMES = [
 
 
 /* =====================================================
-   VARIABLES
-===================================================== */
-
-let callers = [];
-
-let lastCaller = -1;
-
-let previewTimer = null;
-
-let previewTime = 20;
-
-
-/* =====================================================
-   ELEMENTS
+   ELEMENT
 ===================================================== */
 
 const livePhotos =
-  document.getElementById(
-    "livePhotos"
-  );
-
-const incomingCall =
-  document.getElementById(
-    "incomingCall"
-  );
-
-const callerPhoto =
-  document.getElementById(
-    "callerPhoto"
-  );
-
-const callerName =
-  document.getElementById(
-    "callerName"
-  );
-
-const answerCall =
-  document.getElementById(
-    "answerCall"
-  );
-
-const declineCall =
-  document.getElementById(
-    "declineCall"
-  );
-
-const videoPreview =
-  document.getElementById(
-    "videoPreview"
-  );
-
-const previewVideo =
-  document.getElementById(
-    "previewVideo"
-  );
-
-const previewSeconds =
-  document.getElementById(
-    "previewSeconds"
-  );
-
-const insufficientMinutes =
-  document.getElementById(
-    "insufficientMinutes"
-  );
-
-const purchaseButton =
-  document.getElementById(
-    "purchaseButton"
-  );
+  document.getElementById("livePhotos");
 
 
 /* =====================================================
    SHUFFLE
 ===================================================== */
 
-function shuffleArray(array){
+function shuffleArray(array) {
 
-  const shuffled =
-    [...array];
+  const shuffled = [...array];
 
-  for(
-    let i =
-      shuffled.length - 1;
-
+  for (
+    let i = shuffled.length - 1;
     i > 0;
-
     i--
-  ){
+  ) {
 
     const j =
       Math.floor(
-        Math.random() *
-        (i + 1)
+        Math.random() * (i + 1)
       );
 
     [
@@ -1033,10 +488,10 @@ function shuffleArray(array){
 
 
 /* =====================================================
-   LOAD PHOTOS FROM GITHUB
+   LOAD PHOTOS
 ===================================================== */
 
-async function loadPhotos(){
+async function loadPhotos() {
 
   livePhotos.innerHTML = `
 
@@ -1056,18 +511,18 @@ async function loadPhotos(){
     GITHUB_BRANCH;
 
 
-  try{
+  try {
 
     const response =
       await fetch(
         apiUrl,
         {
-          cache:"no-store"
+          cache: "no-store"
         }
       );
 
 
-    if(!response.ok){
+    if (!response.ok) {
 
       throw new Error(
         "GitHub HTTP " +
@@ -1081,7 +536,7 @@ async function loadPhotos(){
       await response.json();
 
 
-    if(!Array.isArray(files)){
+    if (!Array.isArray(files)) {
 
       throw new Error(
         "GitHub did not return a file list."
@@ -1091,14 +546,14 @@ async function loadPhotos(){
 
 
     /* ================================================
-       FIND IMAGE FILES
+       FIND IMAGES
     ================================================ */
 
     const imageFiles =
       files.filter(
-        function(file){
+        function(file) {
 
-          return(
+          return (
             file.type === "file" &&
             /\.(jpg|jpeg|png|webp|gif)$/i
               .test(file.name)
@@ -1108,9 +563,9 @@ async function loadPhotos(){
       );
 
 
-    if(
+    if (
       imageFiles.length === 0
-    ){
+    ) {
 
       livePhotos.innerHTML = `
 
@@ -1133,7 +588,7 @@ async function loadPhotos(){
 
 
     /* ================================================
-       FIRST 24 PHOTOS
+       TAKE FIRST 24
     ================================================ */
 
     const selectedFiles =
@@ -1144,14 +599,14 @@ async function loadPhotos(){
 
 
     /* ================================================
-       CONNECT NAMES
+       CREATE PHOTO OBJECTS
     ================================================ */
 
-    callers =
+    const photos =
       selectedFiles.map(
-        function(file,index){
+        function(file, index) {
 
-          return{
+          return {
 
             name:
               PHOTO_NAMES[index] ||
@@ -1170,29 +625,22 @@ async function loadPhotos(){
        SHUFFLE
     ================================================ */
 
-    callers =
+    const shuffledPhotos =
       shuffleArray(
-        callers
+        photos
       );
 
 
     /* ================================================
-       CREATE GALLERY
+       DISPLAY
     ================================================ */
 
     createGallery(
-      callers
+      shuffledPhotos
     );
 
 
-    /* ================================================
-       PREPARE CALLER
-    ================================================ */
-
-    showRandomCaller();
-
-
-  }catch(error){
+  } catch (error) {
 
     console.error(
       "PHOTO ERROR:",
@@ -1212,7 +660,7 @@ async function loadPhotos(){
 
         <br><br>
 
-        Check that your repository is public
+        Check that the repository is public
         and the images are in the main folder.
 
       </div>
@@ -1230,20 +678,14 @@ async function loadPhotos(){
 
 function createGallery(
   photos
-){
+) {
 
-  livePhotos.innerHTML =
-    "";
-
-
-  const shuffledPhotos =
-    shuffleArray(
-      photos
-    );
+  livePhotos.innerHTML = "";
 
 
-  shuffledPhotos.forEach(
-    function(person){
+  photos.forEach(
+    function(person) {
+
 
       /* ==============================================
          PHOTO BOX
@@ -1327,8 +769,12 @@ function createGallery(
         "lazy";
 
 
+      /* ==============================================
+         IMAGE ERROR
+      ============================================== */
+
       image.onerror =
-        function(){
+        function() {
 
           image.style.display =
             "none";
@@ -1356,7 +802,7 @@ function createGallery(
 
 
       /* ==============================================
-         BUILD PHOTO
+         BUILD
       ============================================== */
 
       box.appendChild(
@@ -1377,12 +823,12 @@ function createGallery(
 
 
       /* ==============================================
-         PHOTO CLICK
+         CLICK
       ============================================== */
 
       box.addEventListener(
         "click",
-        function(){
+        function() {
 
           window.location.href =
             "payment.html";
@@ -1402,73 +848,20 @@ function createGallery(
 
 
 /* =====================================================
-   RANDOM CALLER
+   START WEBSITE
 ===================================================== */
 
-function showRandomCaller(){
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
 
-  if(
-    !callers.length
-  ){
-
-    return;
+    loadPhotos();
 
   }
+);
 
 
-  let randomIndex;
+</script>
 
-
-  do{
-
-    randomIndex =
-      Math.floor(
-        Math.random() *
-        callers.length
-      );
-
-  }while(
-    callers.length > 1 &&
-    randomIndex === lastCaller
-  );
-
-
-  lastCaller =
-    randomIndex;
-
-
-  const caller =
-    callers[randomIndex];
-
-
-  callerPhoto.src =
-    caller.photo;
-
-  callerPhoto.alt =
-    caller.name;
-
-  callerName.textContent =
-    caller.name;
-
-}
-
-
-/* =====================================================
-   SHOW INCOMING CALL
-===================================================== */
-
-function showIncomingCall(){
-
-  if(
-    !callers.length
-  ){
-
-    return;
-
-  }
-
-
-  showRandomCaller();
-
-
-  incomingCall.style.
+</body>
+</html>
