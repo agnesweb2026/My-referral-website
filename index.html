@@ -1536,3 +1536,370 @@ function markSampleAsWatched() {
 
 
 /* =================================================
+function markSampleAsWatched() {
+
+  localStorage.setItem(
+    SAMPLE_WATCHED_KEY,
+    "yes"
+  );
+
+}
+  /* =====================================================
+   ANSWER CALL
+===================================================== */
+
+answerCall.addEventListener(
+  "click",
+  function () {
+
+    playSample();
+
+  }
+);
+
+
+/* =====================================================
+   DECLINE CALL
+===================================================== */
+
+declineCall.addEventListener(
+  "click",
+  function () {
+
+    playSample();
+
+  }
+);
+
+
+/* =====================================================
+   PLAY SAMPLE
+===================================================== */
+
+function playSample() {
+
+  incomingCall.style.display =
+    "none";
+
+  /*
+   * If the sample was already watched,
+   * show insufficient minutes.
+   */
+
+  if (hasWatchedSample()) {
+
+    showInsufficientMinutes();
+
+    return;
+
+  }
+
+  videoPreview.style.display =
+    "flex";
+
+  previewVideo.currentTime =
+    0;
+
+  previewVideo.play().catch(
+    function (error) {
+
+      console.log(
+        "Video playback:",
+        error
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   MARK SAMPLE AS WATCHED
+===================================================== */
+
+previewVideo.addEventListener(
+  "play",
+  function () {
+
+    markSampleAsWatched();
+
+  },
+  {
+    once: true
+  }
+);
+
+
+/* =====================================================
+   VIDEO ENDED
+===================================================== */
+
+previewVideo.addEventListener(
+  "ended",
+  function () {
+
+    showInsufficientMinutes();
+
+  }
+);
+
+
+/* =====================================================
+   20 SECOND LIMIT
+===================================================== */
+
+previewVideo.addEventListener(
+  "timeupdate",
+  function () {
+
+    if (
+      !isNaN(
+        previewVideo.duration
+      )
+    ) {
+
+      const remaining =
+        Math.max(
+          0,
+          Math.ceil(
+            previewVideo.duration -
+            previewVideo.currentTime
+          )
+        );
+
+      previewSeconds.textContent =
+        remaining;
+
+
+      /*
+       * Force stop at 20 seconds.
+       */
+
+      if (
+        previewVideo.currentTime >= 20
+      ) {
+
+        previewVideo.pause();
+
+        previewVideo.currentTime =
+          20;
+
+        showInsufficientMinutes();
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   INSUFFICIENT MINUTES
+===================================================== */
+
+function showInsufficientMinutes() {
+
+  previewVideo.pause();
+
+  videoPreview.style.display =
+    "none";
+
+  insufficientMinutes.style.display =
+    "flex";
+
+
+  setTimeout(
+    function () {
+
+      insufficientMinutes.style.display =
+        "none";
+
+      livePhotos.style.display =
+        "grid";
+
+      createGallery();
+
+      window.scrollTo(
+        {
+          top: 0,
+          behavior: "smooth"
+        }
+      );
+
+    },
+    1500
+  );
+
+}
+
+
+/* =====================================================
+   IMAGE ERROR HANDLING
+===================================================== */
+
+function addImageErrorHandling() {
+
+  const images =
+    livePhotos.querySelectorAll(
+      "img"
+    );
+
+
+  images.forEach(
+    function (img) {
+
+      img.addEventListener(
+        "error",
+        function () {
+
+          img.style.display =
+            "none";
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   OPEN WEBSITE
+===================================================== */
+
+function openWebsite() {
+
+  /*
+   * CLOSE AGE GATE
+   */
+
+  ageGate.style.display =
+    "none";
+
+  ageGate.style.visibility =
+    "hidden";
+
+  ageGate.style.opacity =
+    "0";
+
+  ageGate.style.pointerEvents =
+    "none";
+
+
+  /*
+   * Show incoming call
+   * if photos are ready.
+   */
+
+  if (
+    callers.length > 0
+  ) {
+
+    incomingCall.style.display =
+      "block";
+
+  } else {
+
+    /*
+     * Photos are still loading.
+     */
+
+    livePhotos.style.display =
+      "grid";
+
+  }
+
+}
+
+
+/* =====================================================
+   EXIT WEBSITE
+===================================================== */
+
+function exitWebsite() {
+
+  window.location.href =
+    "https://www.google.com";
+
+}
+
+
+/* =====================================================
+   ENTER BUTTON
+   EXTRA SAFETY FOR MOBILE
+===================================================== */
+
+document
+  .getElementById("enterButton")
+  .addEventListener(
+    "click",
+    function () {
+
+      openWebsite();
+
+    }
+  );
+
+
+/* =====================================================
+   EXIT BUTTON
+===================================================== */
+
+document
+  .getElementById("exitButton")
+  .addEventListener(
+    "click",
+    function () {
+
+      exitWebsite();
+
+    }
+  );
+
+
+/* =====================================================
+   LOAD PHOTOS AFTER PAGE IS READY
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    loadPhotos();
+
+  }
+);
+
+
+/* =====================================================
+   FALLBACK START
+===================================================== */
+
+if (
+  document.readyState ===
+  "loading"
+) {
+
+  /*
+   * DOMContentLoaded above
+   * will start the website.
+   */
+
+} else {
+
+  loadPhotos();
+
+}
+
+
+/* =====================================================
+   END OF SCRIPT
+===================================================== */
+
+</script>
+
+</body>
+</html>
