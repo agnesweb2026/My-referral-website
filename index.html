@@ -179,6 +179,7 @@ h1 {
   min-height: 250px;
   padding-bottom: 45px;
   border: 1px solid #1e1e1e;
+  transition: transform .15s ease;
 }
 
 .live-photo:active {
@@ -414,12 +415,14 @@ h1 {
       preload="auto"
       controls
     >
+
       <source
         src="preview_20_seconds.mp4"
         type="video/mp4"
       >
 
       Your browser does not support video.
+
     </video>
 
     <div
@@ -530,7 +533,8 @@ h1 {
 </div>
 
 <script>
-  /* ==========================================
+
+/* ==========================================
    WEBSITE SETTINGS
 ========================================== */
 
@@ -571,6 +575,7 @@ const PHOTO_NAMES = [
   "Kitty 💦❤️",
   "Sweetgy 😍🥰",
   "Fellow 💦❤️"
+
 ];
 
 
@@ -609,9 +614,6 @@ const rejectCall =
 /* ==========================================
    SAMPLE SETTINGS
 ========================================== */
-
-const SAMPLE_STORAGE_KEY =
-  "myReferralSampleWatched";
 
 let sampleRunning = false;
 
@@ -658,23 +660,17 @@ function startSample() {
 
   clearInterval(sampleTimerInterval);
 
-  /*
-    Start video from beginning.
-  */
-
   try {
+
     sampleVideo.currentTime = 0;
+
   } catch (error) {
+
     console.log(error);
+
   }
 
   sampleVideo.muted = true;
-
-  /*
-    Autoplay.
-    If the browser blocks it,
-    the controls remain available.
-  */
 
   const playPromise =
     sampleVideo.play();
@@ -691,11 +687,6 @@ function startSample() {
     });
 
   }
-
-
-  /*
-    20-second timer.
-  */
 
   sampleTimerInterval =
     setInterval(function() {
@@ -724,9 +715,7 @@ function startSample() {
     }, 1000);
 
 }
-
-
-/* ==========================================
+  /* ==========================================
    FINISH SAMPLE
 ========================================== */
 
@@ -836,10 +825,6 @@ answerCall.addEventListener(
 
     hideIncomingCall();
 
-    /*
-      Keep the user on the photos page.
-    */
-
     photosPage.style.display =
       "block";
 
@@ -856,10 +841,6 @@ rejectCall.addEventListener(
   function() {
 
     hideIncomingCall();
-
-    /*
-      Return to the first/sample page.
-    */
 
     startSample();
 
@@ -924,7 +905,8 @@ async function loadPhotos() {
     if (!response.ok) {
 
       throw new Error(
-        "GitHub request failed"
+        "GitHub request failed: " +
+        response.status
       );
 
     }
@@ -933,8 +915,20 @@ async function loadPhotos() {
       await response.json();
 
     /*
-      Find image files in the
-      repository.
+      Make sure GitHub returned
+      an array.
+    */
+
+    if (!Array.isArray(files)) {
+
+      throw new Error(
+        "GitHub did not return a file list."
+      );
+
+    }
+
+    /*
+      Find image files.
     */
 
     const imageFiles =
@@ -958,7 +952,7 @@ async function loadPhotos() {
       });
 
     /*
-      Limit the number of photos.
+      Limit photos.
     */
 
     const selectedFiles =
@@ -976,6 +970,8 @@ async function loadPhotos() {
       livePhotos.innerHTML =
         '<div class="error">' +
         'No photos were found in the repository.' +
+        '<br><br>' +
+        'Make sure your image files are in the main repository folder.' +
         '</div>';
 
       return;
@@ -1030,7 +1026,8 @@ function createPhotoCard(
   const image =
     document.createElement("img");
 
-  image.loading = "lazy";
+  image.loading =
+    "lazy";
 
   image.alt =
     PHOTO_NAMES[index] ||
@@ -1039,6 +1036,14 @@ function createPhotoCard(
   image.src =
     file.download_url ||
     getImageUrl(file.name);
+
+  image.onerror =
+    function() {
+
+      image.style.display =
+        "none";
+
+    };
 
   const badge =
     document.createElement("div");
@@ -1069,17 +1074,27 @@ function createPhotoCard(
     PHOTO_NAMES[index] ||
     "Live";
 
-  card.appendChild(image);
+  card.appendChild(
+    image
+  );
 
-  card.appendChild(badge);
+  card.appendChild(
+    badge
+  );
 
-  card.appendChild(status);
+  card.appendChild(
+    status
+  );
 
-  card.appendChild(name);
+  card.appendChild(
+    name
+  );
 
-  livePhotos.appendChild(card);
+  livePhotos.appendChild(
+    card
+  );
 
-  }
+      }
   /* ==========================================
    PHOTO CLICK
 ========================================== */
@@ -1091,7 +1106,7 @@ function handlePhotoClick(card) {
   }
 
   /*
-    Open the incoming call screen
+    Open incoming call screen
     when a live photo is tapped.
   */
 
@@ -1112,6 +1127,21 @@ function attachPhotoClickEvents() {
     );
 
   cards.forEach(function(card) {
+
+    /*
+      Prevent attaching the
+      same listener twice.
+    */
+
+    if (
+      card.dataset.clickAttached ===
+      "true"
+    ) {
+      return;
+    }
+
+    card.dataset.clickAttached =
+      "true";
 
     card.addEventListener(
       "click",
@@ -1157,7 +1187,7 @@ function initializeWebsite() {
 
   /*
     Always start with the sample
-    when the page is opened.
+    when the page opens.
   */
 
   samplePage.style.display =
@@ -1176,9 +1206,11 @@ function initializeWebsite() {
     Reset sample.
   */
 
-  sampleRunning = false;
+  sampleRunning =
+    false;
 
-  secondsLeft = 20;
+  secondsLeft =
+    20;
 
   sampleTimer.textContent =
     "Sample: 20 seconds";
@@ -1188,15 +1220,15 @@ function initializeWebsite() {
   );
 
   /*
-    Make sure the video starts
-    from the beginning.
+    Reset video.
   */
 
   try {
 
     sampleVideo.pause();
 
-    sampleVideo.currentTime = 0;
+    sampleVideo.currentTime =
+      0;
 
   } catch (error) {
 
@@ -1205,8 +1237,8 @@ function initializeWebsite() {
   }
 
   /*
-    Start sample after the page
-    has rendered.
+    Start sample after
+    page has rendered.
   */
 
   setTimeout(
@@ -1230,9 +1262,8 @@ document.addEventListener(
   function() {
 
     /*
-      Do not restart the sample
-      just because the user changes
-      browser tabs.
+      Pause sample when the user
+      leaves the browser tab.
     */
 
     if (
@@ -1269,9 +1300,11 @@ function returnToSample() {
     sampleTimerInterval
   );
 
-  sampleRunning = false;
+  sampleRunning =
+    false;
 
-  secondsLeft = 20;
+  secondsLeft =
+    20;
 
   sampleTimer.textContent =
     "Sample: 20 seconds";
@@ -1280,7 +1313,8 @@ function returnToSample() {
 
     sampleVideo.pause();
 
-    sampleVideo.currentTime = 0;
+    sampleVideo.currentTime =
+      0;
 
   } catch (error) {
 
@@ -1301,7 +1335,7 @@ function returnToSample() {
 
 
 /* ==========================================
-   DOUBLE SAFETY FOR REJECT
+   REJECT CALL
 ========================================== */
 
 rejectCall.onclick =
@@ -1313,7 +1347,7 @@ rejectCall.onclick =
 
 
 /* ==========================================
-   DOUBLE SAFETY FOR ANSWER
+   ANSWER CALL
 ========================================== */
 
 answerCall.onclick =
@@ -1325,10 +1359,8 @@ answerCall.onclick =
       "block";
 
   };
-
-
-/* ==========================================
-   HANDLE VIDEO ERROR
+  /* ==========================================
+   SAMPLE VIDEO ERROR
 ========================================== */
 
 sampleVideo.addEventListener(
@@ -1347,7 +1379,7 @@ sampleVideo.addEventListener(
 
 
 /* ==========================================
-   HANDLE VIDEO LOADED
+   SAMPLE VIDEO LOADED
 ========================================== */
 
 sampleVideo.addEventListener(
@@ -1357,6 +1389,91 @@ sampleVideo.addEventListener(
     console.log(
       "Sample video loaded successfully."
     );
+
+  }
+);
+
+
+/* ==========================================
+   SAMPLE VIDEO PLAYING
+========================================== */
+
+sampleVideo.addEventListener(
+  "playing",
+  function() {
+
+    console.log(
+      "Sample video is playing."
+    );
+
+  }
+);
+
+
+/* ==========================================
+   SAMPLE VIDEO PAUSED
+========================================== */
+
+sampleVideo.addEventListener(
+  "pause",
+  function() {
+
+    console.log(
+      "Sample video paused."
+    );
+
+  }
+);
+
+
+/* ==========================================
+   KEEP SAMPLE TIMER SYNCHRONIZED
+========================================== */
+
+sampleVideo.addEventListener(
+  "timeupdate",
+  function() {
+
+    if (!sampleRunning) {
+      return;
+    }
+
+    const currentTime =
+      sampleVideo.currentTime;
+
+    /*
+      If the actual video reaches
+      20 seconds, finish the sample.
+    */
+
+    if (
+      currentTime >= 20
+    ) {
+
+      finishSample();
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   PREVENT VIDEO FROM GOING
+   BEYOND 20 SECONDS
+========================================== */
+
+sampleVideo.addEventListener(
+  "timeupdate",
+  function() {
+
+    if (
+      sampleVideo.currentTime >= 20
+    ) {
+
+      sampleVideo.pause();
+
+    }
 
   }
 );
@@ -1373,419 +1490,42 @@ if (
 
   document.addEventListener(
     "DOMContentLoaded",
-    initializeWebsite
+    function() {
+
+      initializeWebsite();
+
+    }
   );
 
 } else {
 
   initializeWebsite();
 
-  }
-  /* ==========================================
-   FALLBACK IMAGE LOADER
+}
+
+
+/* ==========================================
+   END OF JAVASCRIPT
 ========================================== */
-
-function loadPhotosFallback() {
-
-  livePhotos.innerHTML = "";
-
   /*
-    Try common image filenames from
-    the repository.
-  */
-
-  let found = 0;
-
-  for (
-    let i = 1;
-    i <= MAX_PHOTOS;
-    i++
-  ) {
-
-    const extensions = [
-      ".jpg",
-      ".jpeg",
-      ".png",
-      ".webp"
-    ];
-
-    /*
-      Try the common numbered
-      filename format.
-    */
-
-    const possibleNames = [];
-
-    extensions.forEach(
-      function(ext) {
-
-        possibleNames.push(
-          "photo" + i + ext
-        );
-
-        possibleNames.push(
-          "image" + i + ext
-        );
-
-        possibleNames.push(
-          i + ext
-        );
-
-      }
-    );
-
-    tryImageNames(
-      possibleNames,
-      i
-    );
-
-  }
-
-
-  /*
-    If nothing loads, show a useful
-    message instead of a blank page.
-  */
-
-  setTimeout(
-    function() {
-
-      if (found === 0 &&
-          livePhotos.children.length === 0) {
-
-        livePhotos.innerHTML =
-          '<div class="error">' +
-          'Photos could not be found.' +
-          '<br><br>' +
-          'Make sure your image files are inside the GitHub repository.' +
-          '</div>';
-
-      }
-
-    },
-    3000
-  );
-
-
-  function tryImageNames(
-    names,
-    number
-  ) {
-
-    let current = 0;
-
-    function tryNext() {
-
-      if (
-        current >= names.length
-      ) {
-
-        return;
-
-      }
-
-      const fileName =
-        names[current];
-
-      current++;
-
-      const testImage =
-        new Image();
-
-      testImage.onload =
-        function() {
-
-          found++;
-
-          createFallbackPhoto(
-            fileName,
-            number
-          );
-
-        };
-
-      testImage.onerror =
-        function() {
-
-          tryNext();
-
-        };
-
-      testImage.src =
-        getImageUrl(fileName);
-
-    }
-
-    tryNext();
-
-  }
-
-}
-
-
-/* ==========================================
-   CREATE FALLBACK PHOTO
-========================================== */
-
-function createFallbackPhoto(
-  fileName,
-  number
-) {
-
-  /*
-    Prevent duplicate photos.
-  */
-
-  const existing =
-    document.querySelector(
-      '[data-photo="' +
-      fileName +
-      '"]'
-    );
-
-  if (existing) {
-    return;
-  }
-
-  const card =
-    document.createElement("div");
-
-  card.className =
-    "live-photo";
-
-  card.setAttribute(
-    "data-photo",
-    fileName
-  );
-
-  const image =
-    document.createElement("img");
-
-  image.src =
-    getImageUrl(fileName);
-
-  image.alt =
-    PHOTO_NAMES[number - 1] ||
-    "Live photo";
-
-  image.loading =
-    "lazy";
-
-  const badge =
-    document.createElement("div");
-
-  badge.className =
-    "live-badge";
-
-  badge.textContent =
-    "LIVE";
-
-  const status =
-    document.createElement("div");
-
-  status.className =
-    "live-status";
-
-  status.innerHTML =
-    '<span class="live-dot"></span>' +
-    '<span>Live now</span>';
-
-  const name =
-    document.createElement("div");
-
-  name.className =
-    "photo-name";
-
-  name.textContent =
-    PHOTO_NAMES[number - 1] ||
-    "Live";
-
-  card.appendChild(image);
-
-  card.appendChild(badge);
-
-  card.appendChild(status);
-
-  card.appendChild(name);
-
-  livePhotos.appendChild(card);
-
-}
-
-
-/* ==========================================
-   RETRY PHOTO LOADING
-========================================== */
-
-function retryPhotos() {
-
-  livePhotos.innerHTML =
-    '<div class="loading">' +
-    'Loading live now...' +
-    '</div>';
-
-  setTimeout(
-    function() {
-
-      loadPhotos();
-
-    },
-    500
-  );
-
-}
-
-
-/* ==========================================
-   ONLINE NUMBER
-========================================== */
-
-function updateOnlineNumber() {
-
-  const onlineBox =
-    document.querySelector(
-      ".online-box span:last-child"
-    );
-
-  if (!onlineBox) {
-    return;
-  }
-
-  const number =
-    Math.floor(
-      Math.random() * 6
-    ) + 20;
-
-  onlineBox.textContent =
-    number + " online";
-
-}
-
-
-/* ==========================================
-   UPDATE ONLINE STATUS
-========================================== */
-
-setInterval(
-  function() {
-
-    updateOnlineNumber();
-
-  },
-  8000
-);
-
-
-/* ==========================================
-   KEEP CALL SCREEN CORRECT
-========================================== */
-
-window.addEventListener(
-  "resize",
-  function() {
-
-    if (
-      incomingCall.style.display ===
-      "flex"
-    ) {
-
-      incomingCall.style.alignItems =
-        "center";
-
-      incomingCall.style.justifyContent =
-        "center";
-
-    }
-
-  }
-);
-
-
-/* ==========================================
-   PREVENT BROKEN IMAGE ICON
-========================================== */
-
-document.addEventListener(
-  "error",
-  function(event) {
-
-    if (
-      event.target &&
-      event.target.tagName === "IMG"
-    ) {
-
-      event.target.style.background =
-        "#111";
-
-    }
-
-  },
-  true
-);
-  <script>
-/*
-  Final safety check.
-
-  If something prevents the normal
-  initialization from running, make
-  sure the sample page is still visible.
+  This final section intentionally
+  contains no additional functions.
+
+  The complete JavaScript is already
+  initialized by initializeWebsite()
+  in Part 4.
 */
 
-(function () {
 
-  const sample =
-    document.getElementById("samplePage");
+console.log(
+  "My Referral Website started successfully."
+);
 
-  const video =
-    document.getElementById("sampleVideo");
 
-  if (!sample) {
-    return;
-  }
+/* ==========================================
+   END SCRIPT
+========================================== */
 
-  /*
-    Never leave the whole page blank.
-  */
-
-  sample.style.display = "flex";
-
-  /*
-    Try to start the video again
-    after the browser has rendered.
-  */
-
-  setTimeout(function () {
-
-    if (
-      video &&
-      typeof video.play === "function"
-    ) {
-
-      video.muted = true;
-
-      const play =
-        video.play();
-
-      if (
-        play &&
-        typeof play.catch === "function"
-      ) {
-
-        play.catch(function () {
-          /*
-            Some mobile browsers block
-            autoplay. The video remains
-            visible so the user can tap it.
-          */
-        });
-
-      }
-
-    }
-
-  }, 500);
-
-})();
 </script>
 
 </body>
