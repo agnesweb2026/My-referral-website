@@ -33,16 +33,20 @@ p {
   color: #ccc;
 }
 
-/* AGE GATE */
+/* =========================
+   AGE GATE
+========================= */
 
 #ageGate {
   position: fixed;
   inset: 0;
   z-index: 99999;
   background: #111;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 20px;
 }
 
@@ -58,8 +62,10 @@ p {
 .age-box button {
   border: 0;
   border-radius: 10px;
+
   padding: 14px 22px;
   margin: 8px;
+
   color: #fff;
   font-weight: bold;
   font-size: 15px;
@@ -73,13 +79,17 @@ p {
   background: #666;
 }
 
-/* INCOMING CALL */
+/* =========================
+   INCOMING CALL
+========================= */
 
 #incomingCall {
   position: fixed;
   inset: 0;
   z-index: 90000;
+
   display: none;
+
   background: #17161b;
   overflow: hidden;
 }
@@ -87,6 +97,7 @@ p {
 .call-background {
   position: absolute;
   inset: -30px;
+
   background:
     radial-gradient(
       circle at center,
@@ -94,6 +105,7 @@ p {
       #302b2e 45%,
       #101014 100%
     );
+
   filter: blur(20px);
   transform: scale(1.1);
 }
@@ -101,15 +113,19 @@ p {
 .call-dark-overlay {
   position: absolute;
   inset: 0;
+
   background: rgba(0,0,0,.5);
 }
 
 .call-content {
   position: relative;
   z-index: 2;
+
   height: 100%;
+
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
 }
@@ -117,11 +133,15 @@ p {
 .profile-ring {
   width: 155px;
   height: 155px;
+
   border-radius: 50%;
+
   border: 2px solid rgba(125,80,210,.75);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   box-shadow:
     0 0 0 7px rgba(125,80,210,.08);
 }
@@ -129,9 +149,13 @@ p {
 .profile-photo {
   width: 125px;
   height: 125px;
+
   border-radius: 50%;
+
   border: 3px solid #7650c9;
+
   object-fit: cover;
+
   background: #211d26;
 }
 
@@ -142,8 +166,10 @@ p {
 
 .call-title {
   margin-top: 5px;
+
   font-size: 13px;
   letter-spacing: 1px;
+
   color: rgba(255,255,255,.65);
 }
 
@@ -154,11 +180,16 @@ p {
 
 .ringing-dot {
   display: inline-block;
+
   width: 8px;
   height: 8px;
+
   border-radius: 50%;
+
   background: #a66cff;
+
   margin-right: 6px;
+
   animation: ringBlink 1s infinite;
 }
 
@@ -170,11 +201,14 @@ p {
 
 .call-buttons {
   position: absolute;
+
   left: 0;
   right: 0;
   bottom: 95px;
+
   display: flex;
   justify-content: center;
+
   gap: 70px;
 }
 
@@ -187,13 +221,19 @@ p {
 .call-button {
   width: 78px;
   height: 78px;
+
   border: 3px solid rgba(255,255,255,.18);
+
   border-radius: 50%;
+
   color: #fff;
+
   font-size: 30px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   cursor: pointer;
 }
 
@@ -212,19 +252,28 @@ p {
 
 .swipe-message {
   position: absolute;
+
   bottom: 38px;
+
   color: rgba(255,255,255,.3);
+
   font-size: 12px;
 }
 
-/* VIDEO */
+/* =========================
+   VIDEO
+========================= */
 
 #videoPreview {
   position: fixed;
   inset: 0;
+
   z-index: 80000;
+
   display: none;
+
   background: #000;
+
   align-items: center;
   justify-content: center;
 }
@@ -232,28 +281,39 @@ p {
 #previewVideo {
   width: 100%;
   height: 100%;
+
   object-fit: contain;
 }
 
 .preview-counter {
   position: absolute;
+
   bottom: 20px;
   left: 0;
   right: 0;
+
   color: #fff;
+
   text-shadow: 0 1px 3px #000;
 }
 
-/* MINUTES */
+/* =========================
+   INSUFFICIENT MINUTES
+========================= */
 
 #insufficientMinutes {
   position: fixed;
   inset: 0;
+
   z-index: 85000;
+
   display: none;
+
   background: #111;
+
   align-items: center;
   justify-content: center;
+
   padding: 20px;
 }
 
@@ -261,44 +321,67 @@ p {
   max-width: 350px;
 }
 
-/* GALLERY */
+/* =========================
+   GALLERY
+========================= */
 
 #livePhotos {
   display: none;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 18px;
+
   margin-top: 25px;
 }
 
 .live-photo {
   position: relative;
+
   overflow: hidden;
+
   border-radius: 12px;
+
   background: #111;
+
   cursor: pointer;
+
   min-height: 210px;
 }
 
 .live-photo img {
   display: block;
+
   width: 100%;
   height: 210px;
+
   object-fit: cover;
+
   background: #111;
 }
 
-/* LIVE */
+/* =========================
+   LIVE BADGE
+========================= */
 
 .live-badge {
   position: absolute;
+
   top: 8px;
   left: 8px;
+
   z-index: 5;
+
   background: #f0184c;
+
   color: #fff;
+
   padding: 7px 10px;
+
   border-radius: 8px;
+
   font-size: 12px;
+
   font-weight: bold;
 }
 
@@ -309,26 +392,40 @@ p {
 
 .live-status {
   position: absolute;
+
   left: 8px;
   bottom: 8px;
+
   z-index: 5;
+
   display: flex;
   align-items: center;
+
   gap: 6px;
+
   max-width: calc(100% - 16px);
+
   background: rgba(0,0,0,.82);
+
   padding: 7px 10px;
+
   border-radius: 8px;
+
   font-size: 12px;
+
   white-space: nowrap;
 }
 
 .live-dot {
   width: 10px;
   height: 10px;
+
   flex-shrink: 0;
+
   border-radius: 50%;
+
   background: #22c55e;
+
   animation: liveBlink 1s infinite;
 }
 
@@ -340,17 +437,23 @@ p {
 
 .loading {
   grid-column: 1 / -1;
+
   padding: 30px;
+
   color: #aaa;
 }
 
 .error {
   grid-column: 1 / -1;
+
   padding: 30px;
+
   color: #ff6b6b;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 380px) {
 
@@ -380,7 +483,9 @@ p {
 
 <body>
 
-<!-- AGE GATE -->
+<!-- =========================
+     AGE GATE
+========================= -->
 
 <div id="ageGate">
 
@@ -415,7 +520,9 @@ p {
 </div>
 
 
-<!-- INCOMING CALL -->
+<!-- =========================
+     INCOMING CALL
+========================= -->
 
 <div id="incomingCall">
 
@@ -444,9 +551,7 @@ p {
     </div>
 
     <div class="call-title">
-
       INCOMING VIDEO CALL
-
     </div>
 
     <div class="ringing">
@@ -475,6 +580,7 @@ p {
 
       </div>
 
+
       <div class="call-option">
 
         <button
@@ -494,9 +600,7 @@ p {
     </div>
 
     <div class="swipe-message">
-
       SWIPE UP TO MESSAGE
-
     </div>
 
   </div>
@@ -504,7 +608,9 @@ p {
 </div>
 
 
-<!-- VIDEO PREVIEW -->
+<!-- =========================
+     VIDEO PREVIEW
+========================= -->
 
 <div id="videoPreview">
 
@@ -523,9 +629,7 @@ p {
   <div class="preview-counter">
 
     Preview:
-    <span id="previewSeconds">
-      20
-    </span>
+    <span id="previewSeconds">20</span>
     seconds
 
   </div>
@@ -533,7 +637,9 @@ p {
 </div>
 
 
-<!-- INSUFFICIENT MINUTES -->
+<!-- =========================
+     INSUFFICIENT MINUTES
+========================= -->
 
 <div id="insufficientMinutes">
 
@@ -556,7 +662,9 @@ p {
 </div>
 
 
-<!-- MAIN WEBSITE -->
+<!-- =========================
+     MAIN WEBSITE
+========================= -->
 
 <div class="card">
 
@@ -594,8 +702,14 @@ const GITHUB_REPO =
 const GITHUB_BRANCH =
   "main";
 
+/*
+ * IMPORTANT:
+ * Your photos are in the ROOT of the repository.
+ * Therefore this must be empty.
+ */
+
 const GALLERY_FOLDER =
-  "gallery";
+  "";
 
 
 /* =====================================================
@@ -739,7 +853,7 @@ function shuffleArray(array) {
 
 
 /* =====================================================
-   LOAD PHOTOS FROM GITHUB
+   LOAD PHOTOS FROM GITHUB ROOT
 ===================================================== */
 
 async function loadPhotos() {
@@ -753,13 +867,16 @@ async function loadPhotos() {
   `;
 
 
+  /*
+   * ROOT OF REPOSITORY
+   */
+
   const apiUrl =
     "https://api.github.com/repos/" +
     GITHUB_OWNER +
     "/" +
     GITHUB_REPO +
     "/contents/" +
-    GALLERY_FOLDER +
     "?ref=" +
     GITHUB_BRANCH;
 
@@ -792,13 +909,15 @@ async function loadPhotos() {
     if (!Array.isArray(files)) {
 
       throw new Error(
-        "Gallery folder did not return files."
+        "GitHub did not return a file list."
       );
 
     }
 
 
-    /* ONLY IMAGE FILES */
+    /*
+     * ONLY IMAGE FILES
+     */
 
     const imageFiles =
       files.filter(
@@ -814,7 +933,9 @@ async function loadPhotos() {
       );
 
 
-    /* MAXIMUM 24 PHOTOS */
+    /*
+     * MAXIMUM 24 PHOTOS
+     */
 
     const selectedFiles =
       imageFiles.slice(
@@ -823,7 +944,9 @@ async function loadPhotos() {
       );
 
 
-    if (selectedFiles.length === 0) {
+    if (
+      selectedFiles.length === 0
+    ) {
 
       livePhotos.innerHTML = `
 
@@ -833,11 +956,8 @@ async function loadPhotos() {
 
           <br><br>
 
-          Make sure your photos are inside:
-
-          <br>
-
-          <b>gallery</b>
+          The image files must be in
+          the main repository.
 
         </div>
 
@@ -848,7 +968,9 @@ async function loadPhotos() {
     }
 
 
-    /* CREATE CALLER OBJECTS */
+    /*
+     * CREATE CALLERS
+     */
 
     callers =
       selectedFiles.map(
@@ -870,7 +992,9 @@ async function loadPhotos() {
       );
 
 
-    /* RANDOMIZE */
+    /*
+     * RANDOMIZE
+     */
 
     callers =
       shuffleArray(
@@ -878,12 +1002,16 @@ async function loadPhotos() {
       );
 
 
-    /* CREATE GALLERY */
+    /*
+     * CREATE GALLERY
+     */
 
     createGallery();
 
 
-    /* SHOW RANDOM CALLER */
+    /*
+     * SHOW RANDOM CALLER
+     */
 
     showRandomCaller();
 
@@ -904,11 +1032,7 @@ async function loadPhotos() {
 
         <br><br>
 
-        Please check that the folder
-
-        <b>gallery</b>
-
-        exists in your GitHub repository.
+        Please check your GitHub repository.
 
         <br><br>
 
@@ -953,6 +1077,10 @@ function createGallery() {
         "live-photo";
 
 
+      /*
+       * LIVE BADGE
+       */
+
       const badge =
         document.createElement(
           "span"
@@ -964,6 +1092,10 @@ function createGallery() {
       badge.textContent =
         "LIVE";
 
+
+      /*
+       * IMAGE
+       */
 
       const image =
         document.createElement(
@@ -979,6 +1111,10 @@ function createGallery() {
       image.loading =
         "lazy";
 
+
+      /*
+       * LIVE STATUS
+       */
 
       const status =
         document.createElement(
@@ -1010,6 +1146,10 @@ function createGallery() {
       );
 
 
+      /*
+       * ADD TO BOX
+       */
+
       box.appendChild(
         badge
       );
@@ -1022,6 +1162,10 @@ function createGallery() {
         status
       );
 
+
+      /*
+       * PHOTO CLICK
+       */
 
       box.addEventListener(
         "click",
@@ -1051,7 +1195,9 @@ function createGallery() {
 function showRandomCaller() {
 
   if (!callers.length) {
+
     return;
+
   }
 
 
@@ -1106,9 +1252,24 @@ function enterSite() {
     "none";
 
 
+  /*
+   * If photos have loaded,
+   * show the incoming call.
+   */
+
   if (callers.length) {
 
     showRandomCaller();
+
+  } else {
+
+    /*
+     * If GitHub is still loading,
+     * show the gallery once ready.
+     */
+
+    livePhotos.style.display =
+      "grid";
 
   }
 
@@ -1233,7 +1394,7 @@ function playSample() {
 
 
 /* =====================================================
-   ANSWER
+   ANSWER CALL
 ===================================================== */
 
 answerCall.addEventListener(
@@ -1247,7 +1408,7 @@ answerCall.addEventListener(
 
 
 /* =====================================================
-   DECLINE
+   DECLINE CALL
 ===================================================== */
 
 declineCall.addEventListener(
