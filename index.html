@@ -1621,83 +1621,84 @@
      PHOTO INTERCHANGE
   ========================================== */
 
-  function startPhotoInterchange() {
+ function startPhotoInterchange() {
 
-    stopPhotoInterchange();
+  stopPhotoInterchange();
 
+  photoRotationTimer = setInterval(() => {
 
-    photoRotationTimer =
-      setInterval(
-        () => {
+    const container =
+      document.getElementById("livePhotos");
 
-          const cards =
-            document.querySelectorAll(
-              ".live-photo"
-            );
+    const cards = Array.from(
+      container.querySelectorAll(".live-photo")
+    );
 
+    if (cards.length < 2) {
+      return;
+    }
 
-          if (
-            cards.length < 2
-          ) {
-            return;
-          }
+    // Pick two random photos
+    const firstIndex =
+      Math.floor(Math.random() * cards.length);
 
+    let secondIndex =
+      Math.floor(Math.random() * cards.length);
 
-          cards.forEach(
-            card => {
+    while (secondIndex === firstIndex) {
+      secondIndex =
+        Math.floor(Math.random() * cards.length);
+    }
 
-              card.style.opacity =
-                "1";
+    const firstCard =
+      cards[firstIndex];
 
-            }
-          );
+    const secondCard =
+      cards[secondIndex];
 
+    // Fade during the swap
+    firstCard.style.opacity = "0.3";
+    secondCard.style.opacity = "0.3";
 
-          currentPhotoIndex++;
+    setTimeout(() => {
 
+      const reference =
+        firstCard.nextSibling === secondCard
+          ? secondCard
+          : firstCard;
 
-          if (
-            currentPhotoIndex >=
-            cards.length
-          ) {
+      if (firstCard.nextSibling === secondCard) {
 
-            currentPhotoIndex =
-              0;
+        container.insertBefore(
+          secondCard,
+          firstCard
+        );
 
-          }
+      } else {
 
+        const firstNext =
+          firstCard.nextSibling;
 
-          const currentCard =
-            cards[
-              currentPhotoIndex
-            ];
+        container.insertBefore(
+          firstCard,
+          secondCard
+        );
 
+        container.insertBefore(
+          secondCard,
+          firstNext
+        );
 
-          if (currentCard) {
+      }
 
-            currentCard.style.opacity =
-              "0.55";
+      firstCard.style.opacity = "1";
+      secondCard.style.opacity = "1";
 
+    }, 500);
 
-            setTimeout(
-              () => {
+  }, 4000);
 
-                currentCard.style.opacity =
-                  "1";
-
-              },
-              700
-            );
-
-          }
-
-        },
-
-        PHOTO_INTERCHANGE_DURATION
-
-      );
-
-  }
+  } 
 
 
   function stopPhotoInterchange() {
