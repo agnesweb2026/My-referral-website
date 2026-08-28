@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>My Referral Website</title>
 
+
   <style>
+
+    /* ==========================================
+       BASIC
+    ========================================== */
+
     * {
       box-sizing: border-box;
     }
@@ -32,17 +43,21 @@
       margin: 0 auto;
     }
 
-    /* =========================
+
+    /* ==========================================
        SAMPLE PAGE
-    ========================= */
+    ========================================== */
 
     #samplePage {
       display: none;
+
       width: 100%;
       min-height: calc(100vh - 30px);
+
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
       text-align: center;
     }
 
@@ -62,9 +77,12 @@
       width: 100%;
       max-width: 450px;
       max-height: 70vh;
+
       display: block;
+
       background: #111;
       border-radius: 14px;
+
       object-fit: contain;
     }
 
@@ -72,43 +90,55 @@
       display: none !important;
     }
 
-    /* =========================
+
+    /* ==========================================
        INSUFFICIENT PAGE
-    ========================= */
+    ========================================== */
 
     #insufficientPage {
       display: none;
+
       width: 100%;
       min-height: calc(100vh - 30px);
+
       align-items: center;
       justify-content: center;
+
       text-align: center;
     }
 
     .insufficient-box {
       width: 100%;
+
       background: #111;
+
       border: 1px solid #292929;
       border-radius: 14px;
+
       padding: 30px 20px;
     }
 
     .insufficient-title {
       font-size: 25px;
       font-weight: bold;
+
       color: #ff5252;
+
       margin-bottom: 10px;
     }
 
     .insufficient-text {
       color: #aaa;
+
       font-size: 14px;
+
       line-height: 1.5;
     }
 
-    /* =========================
+
+    /* ==========================================
        PHOTOS PAGE
-    ========================= */
+    ========================================== */
 
     #photosPage {
       display: none;
@@ -117,37 +147,54 @@
 
     .top-bar {
       width: 100%;
+
       display: flex;
+
       justify-content: flex-start;
       align-items: center;
+
       margin-bottom: 15px;
     }
 
     .online-box {
       display: inline-flex;
+
       align-items: center;
+
       gap: 7px;
+
       background: #111;
+
       border: 1px solid #292929;
+
       color: #fff;
+
       padding: 7px 11px;
+
       border-radius: 8px;
+
       font-size: 13px;
+
       font-weight: bold;
     }
 
     .online-dot {
       width: 9px;
       height: 9px;
+
       border-radius: 50%;
+
       background: #22c55e;
+
       animation: onlineBlink 1.2s infinite;
     }
 
     @keyframes onlineBlink {
+
       50% {
         opacity: .35;
       }
+
     }
 
     h1 {
@@ -157,26 +204,39 @@
 
     .subtitle {
       color: #aaa;
+
       margin: 0 0 15px;
+
       font-size: 14px;
     }
 
     #livePhotos {
       display: grid;
+
       grid-template-columns: 1fr 1fr;
+
       gap: 14px;
+
       margin-top: 15px;
     }
 
     .live-photo {
       position: relative;
+
       overflow: hidden;
+
       border-radius: 12px;
+
       background: #111;
+
       cursor: pointer;
+
       min-height: 250px;
+
       padding-bottom: 45px;
+
       border: 1px solid #1e1e1e;
+
       transition: transform .15s ease;
     }
 
@@ -186,39 +246,65 @@
 
     .live-photo img {
       display: block;
+
       width: 100%;
       height: 205px;
+
       object-fit: cover;
+
       background: #111;
     }
 
     .photo-name {
       position: absolute;
+
       left: 0;
       right: 0;
       bottom: 0;
+
       min-height: 45px;
+
       display: flex;
+
       align-items: center;
       justify-content: center;
+
       padding: 7px 5px;
+
       background: #111;
+
       color: #fff;
+
       font-size: 13px;
+
       font-weight: bold;
+
       text-align: center;
     }
 
+
+    /* ==========================================
+       LIVE BADGE
+    ========================================== */
+
     .live-badge {
       position: absolute;
+
       top: 7px;
       left: 7px;
+
       z-index: 5;
+
       background: #f0184c;
+
       color: #fff;
+
       padding: 6px 9px;
+
       border-radius: 7px;
+
       font-size: 11px;
+
       font-weight: bold;
     }
 
@@ -227,59 +313,116 @@
       margin-right: 4px;
     }
 
+
     .live-status {
       position: absolute;
+
       top: 7px;
       right: 7px;
+
       z-index: 5;
+
       display: flex;
+
       align-items: center;
+
       gap: 5px;
+
       background: rgba(0,0,0,.82);
+
       padding: 5px 7px;
+
       border-radius: 7px;
+
       font-size: 10px;
     }
 
     .live-dot {
       width: 8px;
       height: 8px;
+
       flex-shrink: 0;
+
       border-radius: 50%;
+
       background: #22c55e;
+
       animation: liveBlink 1s infinite;
     }
 
-    @keyframes liveBlink {
-      50% {
-        opacity: .35;
-      }
+
+    /* ==========================================
+       FLAG BUTTON
+    ========================================== */
+
+    .flag-button {
+      position: absolute;
+
+      bottom: 6px;
+      right: 6px;
+
+      z-index: 10;
+
+      border: none;
+
+      border-radius: 6px;
+
+      padding: 4px 7px;
+
+      background: rgba(255,255,255,.12);
+
+      color: #fff;
+
+      font-size: 10px;
+
+      cursor: pointer;
     }
+
+    .flag-button:active {
+      transform: scale(.95);
+    }
+
+
+    /* ==========================================
+       LOADING / ERROR
+    ========================================== */
 
     .loading {
       grid-column: 1 / -1;
+
       padding: 45px 20px;
+
       color: #aaa;
+
       text-align: center;
     }
 
     .error {
       grid-column: 1 / -1;
+
       padding: 35px 15px;
+
       color: #ff6b6b;
+
       text-align: center;
+
       line-height: 1.5;
     }
 
-    /* =========================
-       INCOMING CALL UI
-    ========================= */
+
+    /* ==========================================
+       INCOMING VIDEO CALL
+    ========================================== */
 
     #incomingCall {
       display: none;
+
       position: fixed;
+
       inset: 0;
+
       z-index: 99999;
+
       background:
         radial-gradient(
           circle at center,
@@ -287,77 +430,115 @@
           #080808 55%,
           #000 100%
         );
+
       align-items: center;
+
       justify-content: center;
+
       padding: 20px;
+
       text-align: center;
     }
 
     .call-box {
       width: 100%;
+
       max-width: 360px;
+
       background: #111;
+
       border: 1px solid #292929;
+
       border-radius: 22px;
+
       padding: 28px 20px 25px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.8);
+
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.8);
     }
 
     .call-avatar {
       width: 115px;
       height: 115px;
+
       margin: 0 auto 18px;
+
       border-radius: 50%;
+
       overflow: hidden;
+
       background: #222;
+
       border: 3px solid #22c55e;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
     }
 
     .call-avatar img {
       width: 100%;
       height: 100%;
+
       object-fit: cover;
+
       display: block;
     }
 
     .call-incoming {
       color: #22c55e;
+
       font-size: 14px;
+
       font-weight: bold;
+
       margin-bottom: 8px;
     }
 
     .call-name {
       font-size: 23px;
+
       font-weight: bold;
+
       margin-bottom: 7px;
     }
 
     .call-type {
       color: #aaa;
+
       font-size: 13px;
+
       margin-bottom: 25px;
     }
 
     .call-buttons {
       display: flex;
+
       justify-content: center;
+
       gap: 35px;
     }
 
     .call-action {
       border: none;
+
       width: 65px;
       height: 65px;
+
       border-radius: 50%;
+
       color: #fff;
+
       font-size: 27px;
+
       cursor: pointer;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
     }
 
@@ -367,14 +548,17 @@
 
     .call-end {
       background: #ef4444;
+
       transform: rotate(135deg);
     }
 
-    /* =========================
+
+    /* ==========================================
        MOBILE
-    ========================= */
+    ========================================== */
 
     @media (max-width: 380px) {
+
       body {
         padding: 12px;
       }
@@ -394,16 +578,19 @@
       .photo-name {
         font-size: 12px;
       }
+
     }
+
   </style>
+
 </head>
-<body>
+  <body>
 
   <div class="card">
 
-    <!-- ================================
+    <!-- =================================
          SAMPLE PAGE
-    ================================= -->
+    ================================== -->
 
     <div id="samplePage">
 
@@ -421,12 +608,14 @@
         preload="auto"
         controls
       >
+
         <source
           src="preview_20_seconds.mp4"
           type="video/mp4"
         >
 
         Your browser does not support video.
+
       </video>
 
       <div
@@ -437,9 +626,9 @@
     </div>
 
 
-    <!-- ================================
+    <!-- =================================
          INSUFFICIENT PAGE
-    ================================= -->
+    ================================== -->
 
     <div id="insufficientPage">
 
@@ -458,9 +647,9 @@
     </div>
 
 
-    <!-- ================================
+    <!-- =================================
          PHOTOS PAGE
-    ================================= -->
+    ================================== -->
 
     <div id="photosPage">
 
@@ -478,13 +667,16 @@
 
       </div>
 
+
       <h1>
         Welcome
       </h1>
 
+
       <p class="subtitle">
         People live now
       </p>
+
 
       <div id="livePhotos"></div>
 
@@ -493,11 +685,14 @@
   </div>
 
 
-  <!-- ================================
-       INCOMING CALL UI
-  ================================= -->
+  <!-- =================================
+       INCOMING VIDEO CALL
+  ================================== -->
 
-  <div id="incomingCall">
+  <div
+    id="incomingCall"
+    aria-hidden="true"
+  >
 
     <div class="call-box">
 
@@ -506,14 +701,16 @@
         <img
           id="callPhoto"
           src=""
-          alt="Profile"
+          alt="Caller profile"
         >
 
       </div>
 
+
       <div class="call-incoming">
         INCOMING VIDEO CALL
       </div>
+
 
       <div
         class="call-name"
@@ -522,9 +719,11 @@
         Live Video
       </div>
 
+
       <div class="call-type">
         Someone wants to start a video call
       </div>
+
 
       <div class="call-buttons">
 
@@ -536,6 +735,7 @@
         >
           ☎
         </button>
+
 
         <button
           class="call-action call-answer"
@@ -552,18 +752,30 @@
 
   </div>
 
-<script>
+
+  <script>
+
   /* ==========================================
      WEBSITE SETTINGS
   ========================================== */
 
   const GITHUB_OWNER = "agnesweb2026";
-  const GITHUB_REPO = "My-referral-website";
-  const GITHUB_BRANCH = "main";
+
+  const GITHUB_REPO =
+    "My-referral-website";
+
+  const GITHUB_BRANCH =
+    "main";
 
   const MAX_PHOTOS = 24;
 
-  const PAYMENT_PAGE_URL = "payment.html";
+
+  /* ==========================================
+     PAYMENT PAGE
+  ========================================== */
+
+  const PAYMENT_PAGE_URL =
+    "payment.html";
 
 
   /* ==========================================
@@ -571,6 +783,7 @@
   ========================================== */
 
   const PHOTO_NAMES = [
+
     "Cute 😍❤️",
     "Becky 💦❤️‍🔥",
     "Dorry 🔥✅",
@@ -595,42 +808,63 @@
     "Kitty 💦❤️",
     "Sweetgy 😍🥰",
     "Fellow 💦❤️"
+
   ];
 
 
   /* ==========================================
-     ELEMENTS
+     PAGE ELEMENTS
   ========================================== */
 
   const samplePage =
-    document.getElementById("samplePage");
+    document.getElementById(
+      "samplePage"
+    );
 
   const insufficientPage =
-    document.getElementById("insufficientPage");
+    document.getElementById(
+      "insufficientPage"
+    );
 
   const photosPage =
-    document.getElementById("photosPage");
+    document.getElementById(
+      "photosPage"
+    );
 
   const livePhotos =
-    document.getElementById("livePhotos");
+    document.getElementById(
+      "livePhotos"
+    );
 
   const sampleVideo =
-    document.getElementById("sampleVideo");
+    document.getElementById(
+      "sampleVideo"
+    );
 
   const incomingCall =
-    document.getElementById("incomingCall");
+    document.getElementById(
+      "incomingCall"
+    );
 
   const callPhoto =
-    document.getElementById("callPhoto");
+    document.getElementById(
+      "callPhoto"
+    );
 
   const callName =
-    document.getElementById("callName");
+    document.getElementById(
+      "callName"
+    );
 
   const answerCall =
-    document.getElementById("answerCall");
+    document.getElementById(
+      "answerCall"
+    );
 
   const rejectCall =
-    document.getElementById("rejectCall");
+    document.getElementById(
+      "rejectCall"
+    );
 
 
   /* ==========================================
@@ -639,12 +873,31 @@
 
   const SAMPLE_DURATION = 20;
 
-  const INSUFFICIENT_DURATION = 2000;
+  const INSUFFICIENT_DURATION =
+    2000;
 
-  const PHOTO_WAIT_DURATION = 10000;
+  const PHOTO_WAIT_DURATION =
+    10000;
+
+
+  /*
+    This remembers that the visitor
+    already started the flow.
+  */
 
   const FLOW_STORAGE_KEY =
     "myReferralFlowStarted";
+
+
+  /* ==========================================
+     STATE
+  ========================================== */
+
+  let photosLoaded = false;
+
+  let flowRunning = false;
+
+  let callVisible = false;
 
 
   /* ==========================================
@@ -652,28 +905,26 @@
   ========================================== */
 
   let sampleTimer = null;
+
   let insufficientTimer = null;
+
   let photoWaitTimer = null;
-  let callTimer = null;
 
 
   /* ==========================================
-     FLOW STATE
-  ========================================== */
-
-  let photosLoaded = false;
-  let flowRunning = false;
-
-
-  /* ==========================================
-     SHOW ONLY ONE PAGE
+     PAGE CONTROL
   ========================================== */
 
   function hideAllPages() {
 
-    samplePage.style.display = "none";
-    insufficientPage.style.display = "none";
-    photosPage.style.display = "none";
+    samplePage.style.display =
+      "none";
+
+    insufficientPage.style.display =
+      "none";
+
+    photosPage.style.display =
+      "none";
 
   }
 
@@ -682,7 +933,8 @@
 
     hideAllPages();
 
-    samplePage.style.display = "flex";
+    samplePage.style.display =
+      "flex";
 
   }
 
@@ -691,7 +943,8 @@
 
     hideAllPages();
 
-    insufficientPage.style.display = "flex";
+    insufficientPage.style.display =
+      "flex";
 
   }
 
@@ -700,47 +953,58 @@
 
     hideAllPages();
 
-    photosPage.style.display = "block";
+    photosPage.style.display =
+      "block";
 
   }
 
 
   /* ==========================================
-     CLEAR TIMERS
+     TIMER CLEANUP
   ========================================== */
 
-  function clearAllTimers() {
+  function clearTimers() {
 
-    if (sampleTimer) {
+    if (sampleTimer !== null) {
+
       clearTimeout(sampleTimer);
+
       sampleTimer = null;
+
     }
 
-    if (insufficientTimer) {
-      clearTimeout(insufficientTimer);
+
+    if (insufficientTimer !== null) {
+
+      clearTimeout(
+        insufficientTimer
+      );
+
       insufficientTimer = null;
+
     }
 
-    if (photoWaitTimer) {
-      clearTimeout(photoWaitTimer);
+
+    if (photoWaitTimer !== null) {
+
+      clearTimeout(
+        photoWaitTimer
+      );
+
       photoWaitTimer = null;
-    }
 
-    if (callTimer) {
-      clearTimeout(callTimer);
-      callTimer = null;
     }
 
   }
 
 
   /* ==========================================
-     PAYMENT PAGE
+     PAYMENT REDIRECT
   ========================================== */
 
   function openPaymentPage() {
 
-    clearAllTimers();
+    clearTimers();
 
     window.location.href =
       PAYMENT_PAGE_URL;
@@ -754,30 +1018,58 @@
 
   function startSample() {
 
-    clearAllTimers();
+    clearTimers();
 
     showSamplePage();
 
+
     if (!sampleVideo) {
+
       finishSample();
+
       return;
+
     }
 
-    sampleVideo.currentTime = 0;
+
+    try {
+
+      sampleVideo.currentTime = 0;
+
+    } catch (error) {
+
+      console.warn(
+        "Unable to reset video:",
+        error
+      );
+
+    }
+
 
     const playPromise =
       sampleVideo.play();
 
+
     if (
       playPromise &&
-      typeof playPromise.catch === "function"
+      typeof playPromise.catch ===
+        "function"
     ) {
 
-      playPromise.catch(() => {
-        // Browser may block autoplay.
-      });
+      playPromise.catch(
+        () => {
+
+          /*
+            Some mobile browsers block
+            autoplay. The visitor can
+            press play manually.
+          */
+
+        }
+      );
 
     }
+
 
     sampleTimer =
       setTimeout(
@@ -794,28 +1086,46 @@
 
   function finishSample() {
 
-    if (sampleTimer) {
-      clearTimeout(sampleTimer);
+    if (sampleTimer !== null) {
+
+      clearTimeout(
+        sampleTimer
+      );
+
       sampleTimer = null;
+
     }
+
 
     if (sampleVideo) {
+
       sampleVideo.pause();
+
     }
 
+
     showInsufficientPage();
+
 
     insufficientTimer =
       setTimeout(
         () => {
+
+          insufficientTimer =
+            null;
+
           showPhotosPage();
+
           loadPhotos();
+
         },
+
         INSUFFICIENT_DURATION
+
       );
 
   }
-  /* ==========================================
+    /* ==========================================
      LOAD PHOTOS FROM GITHUB
   ========================================== */
 
@@ -825,51 +1135,78 @@
       return;
     }
 
-    photosLoaded = true;
-
     livePhotos.innerHTML = `
       <div class="loading">
-        Loading...
+        Loading photos...
       </div>
     `;
 
+
     const apiUrl =
-      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/?ref=${GITHUB_BRANCH}`;
+      `https://api.github.com/repos/` +
+      `${GITHUB_OWNER}/${GITHUB_REPO}` +
+      `/contents/?ref=${GITHUB_BRANCH}`;
+
 
     try {
 
       const response =
         await fetch(apiUrl);
 
+
       if (!response.ok) {
+
         throw new Error(
           `GitHub API error: ${response.status}`
         );
+
       }
+
 
       const files =
         await response.json();
 
+
+      if (!Array.isArray(files)) {
+
+        throw new Error(
+          "Invalid GitHub response."
+        );
+
+      }
+
+
       const imageFiles =
         files
-          .filter(file => {
+          .filter(
+            file => {
 
-            if (!file || !file.name) {
-              return false;
+              if (
+                !file ||
+                !file.name
+              ) {
+
+                return false;
+
+              }
+
+
+              return /\.(jpg|jpeg|png|webp|gif)$/i
+                .test(file.name);
+
             }
-
-            const name =
-              file.name.toLowerCase();
-
-            return (
-              /\.(jpg|jpeg|png|webp|gif)$/i.test(name)
-            );
-
-          })
-          .slice(0, MAX_PHOTOS);
+          )
+          .slice(
+            0,
+            MAX_PHOTOS
+          );
 
 
-      if (imageFiles.length === 0) {
+      if (
+        imageFiles.length === 0
+      ) {
+
+        photosLoaded = false;
 
         livePhotos.innerHTML = `
           <div class="error">
@@ -878,6 +1215,7 @@
         `;
 
         return;
+
       }
 
 
@@ -887,54 +1225,96 @@
       imageFiles.forEach(
         (file, index) => {
 
+          /* ==========================
+             PHOTO CARD
+          ========================== */
+
           const card =
-            document.createElement("div");
+            document.createElement(
+              "div"
+            );
 
           card.className =
             "live-photo";
 
 
+          /* ==========================
+             PHOTO
+          ========================== */
+
           const image =
-            document.createElement("img");
+            document.createElement(
+              "img"
+            );
+
 
           image.src =
             file.download_url ||
-            `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${encodeURIComponent(file.name)}`;
+            `https://raw.githubusercontent.com/` +
+            `${GITHUB_OWNER}/` +
+            `${GITHUB_REPO}/` +
+            `${GITHUB_BRANCH}/` +
+            `${encodeURIComponent(
+              file.name
+            )}`;
+
 
           image.alt =
             PHOTO_NAMES[index] ||
             `Photo ${index + 1}`;
 
+
           image.loading =
             "lazy";
 
 
+          /* ==========================
+             LIVE BADGE
+          ========================== */
+
           const liveBadge =
-            document.createElement("div");
+            document.createElement(
+              "div"
+            );
+
 
           liveBadge.className =
             "live-badge";
+
 
           liveBadge.textContent =
             "LIVE";
 
 
+          /* ==========================
+             LIVE STATUS
+          ========================== */
+
           const liveStatus =
-            document.createElement("div");
+            document.createElement(
+              "div"
+            );
+
 
           liveStatus.className =
             "live-status";
 
 
           const liveDot =
-            document.createElement("span");
+            document.createElement(
+              "span"
+            );
+
 
           liveDot.className =
             "live-dot";
 
 
           const liveText =
-            document.createElement("span");
+            document.createElement(
+              "span"
+            );
+
 
           liveText.textContent =
             "Live now";
@@ -944,34 +1324,98 @@
             liveDot
           );
 
+
           liveStatus.appendChild(
             liveText
           );
 
 
+          /* ==========================
+             PHOTO NAME
+          ========================== */
+
           const photoName =
-            document.createElement("div");
+            document.createElement(
+              "div"
+            );
+
 
           photoName.className =
             "photo-name";
+
 
           photoName.textContent =
             PHOTO_NAMES[index] ||
             `Photo ${index + 1}`;
 
 
-          card.appendChild(image);
+          /* ==========================
+             FLAG BUTTON
+          ========================== */
+
+          const flagButton =
+            document.createElement(
+              "button"
+            );
+
+
+          flagButton.className =
+            "flag-button";
+
+
+          flagButton.type =
+            "button";
+
+
+          flagButton.textContent =
+            "🚩 Flag";
+
+
+          /*
+            Prevent the flag button from
+            triggering the photo click.
+          */
+
+          flagButton.addEventListener(
+            "click",
+            event => {
+
+              event.stopPropagation();
+
+              alert(
+                "Thanks. This photo has been flagged."
+              );
+
+            }
+          );
+
+
+          /* ==========================
+             ADD ELEMENTS
+          ========================== */
+
+          card.appendChild(
+            image
+          );
+
 
           card.appendChild(
             liveBadge
           );
 
+
           card.appendChild(
             liveStatus
           );
 
+
           card.appendChild(
             photoName
+          );
+
+
+          card.appendChild(
+            flagButton
           );
 
 
@@ -997,8 +1441,11 @@
       );
 
 
+      photosLoaded = true;
+
+
       /* ==========================
-         SHOW INCOMING CALL
+         START INCOMING CALL
       ========================== */
 
       startIncomingCallTimer();
@@ -1010,6 +1457,10 @@
         error
       );
 
+
+      photosLoaded = false;
+
+
       livePhotos.innerHTML = `
         <div class="error">
           Unable to load photos.<br>
@@ -1017,69 +1468,110 @@
         </div>
       `;
 
-      photosLoaded = false;
-
     }
 
   }
 
 
   /* ==========================================
-     INCOMING CALL
+     INCOMING CALL TIMER
   ========================================== */
 
   function startIncomingCallTimer() {
 
-    if (callTimer) {
-      clearTimeout(callTimer);
+    if (photoWaitTimer !== null) {
+
+      clearTimeout(
+        photoWaitTimer
+      );
+
     }
 
-    callTimer =
+
+    photoWaitTimer =
       setTimeout(
-        showIncomingCall,
+        () => {
+
+          photoWaitTimer =
+            null;
+
+          showIncomingCall();
+
+        },
+
         PHOTO_WAIT_DURATION
+
       );
 
   }
 
 
+  /* ==========================================
+     SHOW INCOMING CALL
+  ========================================== */
+
   function showIncomingCall() {
 
-    const cards =
+    if (callVisible) {
+      return;
+    }
+
+
+    const images =
       document.querySelectorAll(
         ".live-photo img"
       );
 
-    if (cards.length === 0) {
+
+    if (
+      !images ||
+      images.length === 0
+    ) {
+
       return;
+
     }
 
 
     const randomIndex =
       Math.floor(
-        Math.random() * cards.length
+        Math.random() *
+        images.length
       );
 
 
     const selectedImage =
-      cards[randomIndex];
+      images[randomIndex];
 
 
-    callPhoto.src =
-      selectedImage.src;
+    if (callPhoto) {
+
+      callPhoto.src =
+        selectedImage.src;
+
+    }
 
 
-    const selectedName =
-      PHOTO_NAMES[randomIndex] ||
-      "Live Video";
+    if (callName) {
+
+      callName.textContent =
+        PHOTO_NAMES[randomIndex] ||
+        "Live Video";
+
+    }
 
 
-    callName.textContent =
-      selectedName;
+    callVisible = true;
 
 
     incomingCall.style.display =
       "flex";
+
+
+    incomingCall.setAttribute(
+      "aria-hidden",
+      "false"
+    );
 
   }
 
@@ -1090,8 +1582,17 @@
 
   function closeIncomingCall() {
 
+    callVisible = false;
+
+
     incomingCall.style.display =
       "none";
+
+
+    incomingCall.setAttribute(
+      "aria-hidden",
+      "true"
+    );
 
   }
 
@@ -1126,10 +1627,8 @@
 
     }
   );
-
-
-  /* ==========================================
-     PREVENT VIDEO FROM RESTARTING
+    /* ==========================================
+     VIDEO EVENTS
   ========================================== */
 
   if (sampleVideo) {
@@ -1138,14 +1637,14 @@
       "ended",
       () => {
 
-        if (flowRunning) {
-          finishSample();
-        }
+        finishSample();
 
       }
     );
 
   }
+
+
   /* ==========================================
      START WEBSITE
   ========================================== */
@@ -1156,7 +1655,9 @@
       return;
     }
 
+
     flowRunning = true;
+
 
     const alreadyStarted =
       localStorage.getItem(
@@ -1165,20 +1666,28 @@
 
 
     /*
-      If the visitor has already started
-      the flow on this browser, go directly
-      to the photos page.
+      Returning visitor:
+      skip the sample and show photos.
     */
 
-    if (alreadyStarted === "true") {
+    if (
+      alreadyStarted === "true"
+    ) {
 
       showPhotosPage();
 
       loadPhotos();
 
       return;
+
     }
 
+
+    /*
+      First visit:
+      remember the flow and
+      start the sample.
+    */
 
     localStorage.setItem(
       FLOW_STORAGE_KEY,
@@ -1192,7 +1701,7 @@
 
 
   /* ==========================================
-     PAGE INITIALIZATION
+     PAGE START
   ========================================== */
 
   document.addEventListener(
@@ -1210,17 +1719,41 @@
 
 
   /* ==========================================
-     SAFETY CLEANUP
+     PAGE CLEANUP
   ========================================== */
 
   window.addEventListener(
     "pagehide",
     () => {
 
-      clearAllTimers();
+      clearTimers();
+
 
       if (sampleVideo) {
+
         sampleVideo.pause();
+
+      }
+
+    }
+  );
+
+
+  /* ==========================================
+     ESCAPE KEY
+  ========================================== */
+
+  document.addEventListener(
+    "keydown",
+    event => {
+
+      if (
+        event.key === "Escape" &&
+        callVisible
+      ) {
+
+        closeIncomingCall();
+
       }
 
     }
@@ -1228,5 +1761,7 @@
 
 </script>
 
+
 </body>
 </html>
+    
