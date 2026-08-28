@@ -14,10 +14,6 @@
 
   <style>
 
-    /* ==========================================
-       BASIC
-    ========================================== */
-
     * {
       box-sizing: border-box;
     }
@@ -81,6 +77,7 @@
       display: block;
 
       background: #111;
+
       border-radius: 14px;
 
       object-fit: contain;
@@ -113,6 +110,7 @@
       background: #111;
 
       border: 1px solid #292929;
+
       border-radius: 14px;
 
       padding: 30px 20px;
@@ -120,6 +118,7 @@
 
     .insufficient-title {
       font-size: 25px;
+
       font-weight: bold;
 
       color: #ff5252;
@@ -142,6 +141,7 @@
 
     #photosPage {
       display: none;
+
       width: 100%;
     }
 
@@ -151,6 +151,7 @@
       display: flex;
 
       justify-content: flex-start;
+
       align-items: center;
 
       margin-bottom: 15px;
@@ -180,6 +181,7 @@
 
     .online-dot {
       width: 9px;
+
       height: 9px;
 
       border-radius: 50%;
@@ -199,6 +201,7 @@
 
     h1 {
       margin: 8px 0 5px;
+
       font-size: 25px;
     }
 
@@ -237,7 +240,9 @@
 
       border: 1px solid #1e1e1e;
 
-      transition: transform .15s ease;
+      transition:
+        transform .2s ease,
+        opacity .4s ease;
     }
 
     .live-photo:active {
@@ -248,18 +253,30 @@
       display: block;
 
       width: 100%;
+
       height: 205px;
 
       object-fit: cover;
 
       background: #111;
+
+      transition:
+        opacity .4s ease,
+        transform .4s ease;
     }
+
+
+    /* ==========================================
+       PHOTO NAME
+    ========================================== */
 
     .photo-name {
       position: absolute;
 
       left: 0;
+
       right: 0;
+
       bottom: 0;
 
       min-height: 45px;
@@ -267,6 +284,7 @@
       display: flex;
 
       align-items: center;
+
       justify-content: center;
 
       padding: 7px 5px;
@@ -291,6 +309,7 @@
       position: absolute;
 
       top: 7px;
+
       left: 7px;
 
       z-index: 5;
@@ -310,6 +329,7 @@
 
     .live-badge::before {
       content: "●";
+
       margin-right: 4px;
     }
 
@@ -318,6 +338,7 @@
       position: absolute;
 
       top: 7px;
+
       right: 7px;
 
       z-index: 5;
@@ -339,6 +360,7 @@
 
     .live-dot {
       width: 8px;
+
       height: 8px;
 
       flex-shrink: 0;
@@ -359,6 +381,7 @@
       position: absolute;
 
       bottom: 6px;
+
       right: 6px;
 
       z-index: 10;
@@ -411,7 +434,55 @@
 
 
     /* ==========================================
-       INCOMING VIDEO CALL
+       INCOMING CALL LOADING
+    ========================================== */
+
+    .call-loading {
+      display: none;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 12px;
+
+      margin-bottom: 20px;
+    }
+
+    .call-loading-spinner {
+      width: 42px;
+
+      height: 42px;
+
+      border: 4px solid #333;
+
+      border-top: 4px solid #22c55e;
+
+      border-radius: 50%;
+
+      animation:
+        callSpin 1s linear infinite;
+    }
+
+    @keyframes callSpin {
+
+      to {
+        transform: rotate(360deg);
+      }
+
+    }
+
+    .call-loading-text {
+      color: #aaa;
+
+      font-size: 13px;
+    }
+
+
+    /* ==========================================
+       INCOMING CALL
     ========================================== */
 
     #incomingCall {
@@ -459,6 +530,7 @@
 
     .call-avatar {
       width: 115px;
+
       height: 115px;
 
       margin: 0 auto 18px;
@@ -480,6 +552,7 @@
 
     .call-avatar img {
       width: 100%;
+
       height: 100%;
 
       object-fit: cover;
@@ -525,6 +598,7 @@
       border: none;
 
       width: 65px;
+
       height: 65px;
 
       border-radius: 50%;
@@ -584,9 +658,10 @@
   </style>
 
 </head>
-  <body>
+<body>
 
   <div class="card">
+
 
     <!-- =================================
          SAMPLE PAGE
@@ -599,8 +674,9 @@
       </div>
 
       <div class="sample-subtitle">
-        welcome 🤗 💦💦💦💦❤️‍🔥❤️‍🔥
+        Welcome 🤗 💦💦💦💦❤️‍🔥❤️‍🔥
       </div>
+
 
       <video
         id="sampleVideo"
@@ -617,6 +693,7 @@
         Your browser does not support video.
 
       </video>
+
 
       <div
         id="sampleTimer"
@@ -686,7 +763,7 @@
 
 
   <!-- =================================
-       INCOMING VIDEO CALL
+       SIMULATED INCOMING VIDEO CALL
   ================================== -->
 
   <div
@@ -695,6 +772,25 @@
   >
 
     <div class="call-box">
+
+
+      <!-- Loading before call -->
+
+      <div
+        class="call-loading"
+        id="callLoading"
+      >
+
+        <div class="call-loading-spinner"></div>
+
+        <div class="call-loading-text">
+          Incoming video call...
+        </div>
+
+      </div>
+
+
+      <!-- Caller photo -->
 
       <div class="call-avatar">
 
@@ -721,27 +817,32 @@
 
 
       <div class="call-type">
-        Someone wants to start a video call
+        Simulated incoming call
       </div>
 
 
       <div class="call-buttons">
 
+
+        <!-- Reject -->
+
         <button
           class="call-action call-end"
           id="rejectCall"
           type="button"
-          aria-label="Reject call"
+          aria-label="Close call"
         >
           ☎
         </button>
 
 
+        <!-- Continue -->
+
         <button
           class="call-action call-answer"
           id="answerCall"
           type="button"
-          aria-label="Answer call"
+          aria-label="Continue"
         >
           📞
         </button>
@@ -752,14 +853,14 @@
 
   </div>
 
-
-  <script>
+<script>
 
   /* ==========================================
      WEBSITE SETTINGS
   ========================================== */
 
-  const GITHUB_OWNER = "agnesweb2026";
+  const GITHUB_OWNER =
+    "agnesweb2026";
 
   const GITHUB_REPO =
     "My-referral-website";
@@ -767,7 +868,8 @@
   const GITHUB_BRANCH =
     "main";
 
-  const MAX_PHOTOS = 24;
+  const MAX_PHOTOS =
+    24;
 
 
   /* ==========================================
@@ -813,7 +915,7 @@
 
 
   /* ==========================================
-     PAGE ELEMENTS
+     ELEMENTS
   ========================================== */
 
   const samplePage =
@@ -846,6 +948,11 @@
       "incomingCall"
     );
 
+  const callLoading =
+    document.getElementById(
+      "callLoading"
+    );
+
   const callPhoto =
     document.getElementById(
       "callPhoto"
@@ -871,7 +978,8 @@
      FLOW SETTINGS
   ========================================== */
 
-  const SAMPLE_DURATION = 20;
+  const SAMPLE_DURATION =
+    20;
 
   const INSUFFICIENT_DURATION =
     2000;
@@ -879,11 +987,16 @@
   const PHOTO_WAIT_DURATION =
     10000;
 
+  const CALL_LOADING_DURATION =
+    2500;
 
-  /*
-    This remembers that the visitor
-    already started the flow.
-  */
+  const PHOTO_INTERCHANGE_DURATION =
+    4000;
+
+
+  /* ==========================================
+     STORAGE
+  ========================================== */
 
   const FLOW_STORAGE_KEY =
     "myReferralFlowStarted";
@@ -893,22 +1006,37 @@
      STATE
   ========================================== */
 
-  let photosLoaded = false;
+  let flowRunning =
+    false;
 
-  let flowRunning = false;
+  let photosLoaded =
+    false;
 
-  let callVisible = false;
+  let callVisible =
+    false;
+
+  let currentPhotoIndex =
+    0;
 
 
   /* ==========================================
      TIMERS
   ========================================== */
 
-  let sampleTimer = null;
+  let sampleTimer =
+    null;
 
-  let insufficientTimer = null;
+  let insufficientTimer =
+    null;
 
-  let photoWaitTimer = null;
+  let photoWaitTimer =
+    null;
+
+  let callLoadingTimer =
+    null;
+
+  let photoRotationTimer =
+    null;
 
 
   /* ==========================================
@@ -967,14 +1095,18 @@
 
     if (sampleTimer !== null) {
 
-      clearTimeout(sampleTimer);
+      clearTimeout(
+        sampleTimer
+      );
 
       sampleTimer = null;
 
     }
 
 
-    if (insufficientTimer !== null) {
+    if (
+      insufficientTimer !== null
+    ) {
 
       clearTimeout(
         insufficientTimer
@@ -985,7 +1117,9 @@
     }
 
 
-    if (photoWaitTimer !== null) {
+    if (
+      photoWaitTimer !== null
+    ) {
 
       clearTimeout(
         photoWaitTimer
@@ -995,16 +1129,31 @@
 
     }
 
+
+    if (
+      callLoadingTimer !== null
+    ) {
+
+      clearTimeout(
+        callLoadingTimer
+      );
+
+      callLoadingTimer = null;
+
+    }
+
   }
 
 
   /* ==========================================
-     PAYMENT REDIRECT
+     PAYMENT
   ========================================== */
 
   function openPaymentPage() {
 
     clearTimers();
+
+    stopPhotoInterchange();
 
     window.location.href =
       PAYMENT_PAGE_URL;
@@ -1013,7 +1162,7 @@
 
 
   /* ==========================================
-     START SAMPLE
+     SAMPLE VIDEO
   ========================================== */
 
   function startSample() {
@@ -1034,12 +1183,13 @@
 
     try {
 
-      sampleVideo.currentTime = 0;
+      sampleVideo.currentTime =
+        0;
 
     } catch (error) {
 
       console.warn(
-        "Unable to reset video:",
+        "Could not reset video.",
         error
       );
 
@@ -1060,9 +1210,9 @@
         () => {
 
           /*
-            Some mobile browsers block
+            Mobile browsers may block
             autoplay. The visitor can
-            press play manually.
+            press the play button.
           */
 
         }
@@ -1080,13 +1230,11 @@
   }
 
 
-  /* ==========================================
-     FINISH SAMPLE
-  ========================================== */
-
   function finishSample() {
 
-    if (sampleTimer !== null) {
+    if (
+      sampleTimer !== null
+    ) {
 
       clearTimeout(
         sampleTimer
@@ -1119,21 +1267,22 @@
           loadPhotos();
 
         },
-
         INSUFFICIENT_DURATION
-
       );
 
   }
-    /* ==========================================
+  /* ==========================================
      LOAD PHOTOS FROM GITHUB
   ========================================== */
 
   async function loadPhotos() {
 
     if (photosLoaded) {
+      startPhotoInterchange();
+      startIncomingCallTimer();
       return;
     }
+
 
     livePhotos.innerHTML = `
       <div class="loading">
@@ -1185,9 +1334,7 @@
                 !file ||
                 !file.name
               ) {
-
                 return false;
-
               }
 
 
@@ -1206,8 +1353,6 @@
         imageFiles.length === 0
       ) {
 
-        photosLoaded = false;
-
         livePhotos.innerHTML = `
           <div class="error">
             No photos found.
@@ -1215,7 +1360,6 @@
         `;
 
         return;
-
       }
 
 
@@ -1224,10 +1368,6 @@
 
       imageFiles.forEach(
         (file, index) => {
-
-          /* ==========================
-             PHOTO CARD
-          ========================== */
 
           const card =
             document.createElement(
@@ -1350,7 +1490,7 @@
 
 
           /* ==========================
-             FLAG BUTTON
+             FLAG
           ========================== */
 
           const flagButton =
@@ -1371,11 +1511,6 @@
             "🚩 Flag";
 
 
-          /*
-            Prevent the flag button from
-            triggering the photo click.
-          */
-
           flagButton.addEventListener(
             "click",
             event => {
@@ -1391,7 +1526,7 @@
 
 
           /* ==========================
-             ADD ELEMENTS
+             ADD CARD CONTENT
           ========================== */
 
           card.appendChild(
@@ -1441,7 +1576,15 @@
       );
 
 
-      photosLoaded = true;
+      photosLoaded =
+        true;
+
+
+      /* ==========================
+         START PHOTO INTERCHANGE
+      ========================== */
+
+      startPhotoInterchange();
 
 
       /* ==========================
@@ -1458,7 +1601,8 @@
       );
 
 
-      photosLoaded = false;
+      photosLoaded =
+        false;
 
 
       livePhotos.innerHTML = `
@@ -1474,12 +1618,115 @@
 
 
   /* ==========================================
+     PHOTO INTERCHANGE
+  ========================================== */
+
+  function startPhotoInterchange() {
+
+    stopPhotoInterchange();
+
+
+    photoRotationTimer =
+      setInterval(
+        () => {
+
+          const cards =
+            document.querySelectorAll(
+              ".live-photo"
+            );
+
+
+          if (
+            cards.length < 2
+          ) {
+            return;
+          }
+
+
+          cards.forEach(
+            card => {
+
+              card.style.opacity =
+                "1";
+
+            }
+          );
+
+
+          currentPhotoIndex++;
+
+
+          if (
+            currentPhotoIndex >=
+            cards.length
+          ) {
+
+            currentPhotoIndex =
+              0;
+
+          }
+
+
+          const currentCard =
+            cards[
+              currentPhotoIndex
+            ];
+
+
+          if (currentCard) {
+
+            currentCard.style.opacity =
+              "0.55";
+
+
+            setTimeout(
+              () => {
+
+                currentCard.style.opacity =
+                  "1";
+
+              },
+              700
+            );
+
+          }
+
+        },
+
+        PHOTO_INTERCHANGE_DURATION
+
+      );
+
+  }
+
+
+  function stopPhotoInterchange() {
+
+    if (
+      photoRotationTimer !== null
+    ) {
+
+      clearInterval(
+        photoRotationTimer
+      );
+
+      photoRotationTimer =
+        null;
+
+    }
+
+  }
+
+
+  /* ==========================================
      INCOMING CALL TIMER
   ========================================== */
 
   function startIncomingCallTimer() {
 
-    if (photoWaitTimer !== null) {
+    if (
+      photoWaitTimer !== null
+    ) {
 
       clearTimeout(
         photoWaitTimer
@@ -1495,7 +1742,24 @@
           photoWaitTimer =
             null;
 
-          showIncomingCall();
+
+          showCallLoading();
+
+
+          callLoadingTimer =
+            setTimeout(
+              () => {
+
+                callLoadingTimer =
+                  null;
+
+                showIncomingCall();
+
+              },
+
+              CALL_LOADING_DURATION
+
+            );
 
         },
 
@@ -1507,15 +1771,63 @@
 
 
   /* ==========================================
+     CALL LOADING
+  ========================================== */
+
+  function showCallLoading() {
+
+    if (
+      callVisible
+    ) {
+      return;
+    }
+
+
+    incomingCall.style.display =
+      "flex";
+
+
+    incomingCall.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+
+    callLoading.style.display =
+      "flex";
+
+
+    callPhoto.style.display =
+      "none";
+
+
+    callName.style.display =
+      "none";
+
+  }
+
+
+  function hideCallLoading() {
+
+    callLoading.style.display =
+      "none";
+
+
+    callPhoto.style.display =
+      "block";
+
+
+    callName.style.display =
+      "block";
+
+  }
+
+
+  /* ==========================================
      SHOW INCOMING CALL
   ========================================== */
 
   function showIncomingCall() {
-
-    if (callVisible) {
-      return;
-    }
-
 
     const images =
       document.querySelectorAll(
@@ -1527,6 +1839,8 @@
       !images ||
       images.length === 0
     ) {
+
+      closeIncomingCall();
 
       return;
 
@@ -1544,24 +1858,20 @@
       images[randomIndex];
 
 
-    if (callPhoto) {
-
-      callPhoto.src =
-        selectedImage.src;
-
-    }
+    callPhoto.src =
+      selectedImage.src;
 
 
-    if (callName) {
-
-      callName.textContent =
-        PHOTO_NAMES[randomIndex] ||
-        "Live Video";
-
-    }
+    callName.textContent =
+      PHOTO_NAMES[randomIndex] ||
+      "Live Video";
 
 
-    callVisible = true;
+    hideCallLoading();
+
+
+    callVisible =
+      true;
 
 
     incomingCall.style.display =
@@ -1577,12 +1887,27 @@
 
 
   /* ==========================================
-     CLOSE INCOMING CALL
+     CLOSE CALL
   ========================================== */
 
   function closeIncomingCall() {
 
-    callVisible = false;
+    callVisible =
+      false;
+
+
+    if (
+      callLoadingTimer !== null
+    ) {
+
+      clearTimeout(
+        callLoadingTimer
+      );
+
+      callLoadingTimer =
+        null;
+
+    }
 
 
     incomingCall.style.display =
@@ -1594,11 +1919,23 @@
       "true"
     );
 
+
+    callLoading.style.display =
+      "none";
+
+
+    callPhoto.style.display =
+      "block";
+
+
+    callName.style.display =
+      "block";
+
   }
 
 
   /* ==========================================
-     ANSWER CALL
+     ANSWER / CONTINUE
   ========================================== */
 
   answerCall.addEventListener(
@@ -1614,7 +1951,7 @@
 
 
   /* ==========================================
-     REJECT CALL
+     REJECT / CLOSE
   ========================================== */
 
   rejectCall.addEventListener(
@@ -1625,9 +1962,11 @@
 
       showPhotosPage();
 
+      startPhotoInterchange();
+
     }
   );
-    /* ==========================================
+  /* ==========================================
      VIDEO EVENTS
   ========================================== */
 
@@ -1656,7 +1995,8 @@
     }
 
 
-    flowRunning = true;
+    flowRunning =
+      true;
 
 
     const alreadyStarted =
@@ -1667,7 +2007,7 @@
 
     /*
       Returning visitor:
-      skip the sample and show photos.
+      skip the preview and show photos.
     */
 
     if (
@@ -1685,8 +2025,7 @@
 
     /*
       First visit:
-      remember the flow and
-      start the sample.
+      remember the flow.
     */
 
     localStorage.setItem(
@@ -1728,6 +2067,8 @@
 
       clearTimers();
 
+      stopPhotoInterchange();
+
 
       if (sampleVideo) {
 
@@ -1754,14 +2095,16 @@
 
         closeIncomingCall();
 
+        showPhotosPage();
+
       }
 
     }
   );
+
 
 </script>
 
 
 </body>
 </html>
-    
