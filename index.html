@@ -1,2122 +1,1099 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>My Referral Website</title>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100%;
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      padding: 15px;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 450px;
-      margin: 0 auto;
-    }
-
-
-    /* ==========================================
-       SAMPLE PAGE
-    ========================================== */
-
-    #samplePage {
-      display: none;
-
-      width: 100%;
-      min-height: calc(100vh - 30px);
-
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
-    }
-
-    .sample-title {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    .sample-subtitle {
-      color: #aaa;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    #sampleVideo {
-      width: 100%;
-      max-width: 450px;
-      max-height: 70vh;
-
-      display: block;
-
-      background: #111;
-      border-radius: 14px;
-
-      object-fit: contain;
-    }
-
-    .sample-timer {
-      display: none !important;
-    }
-
-
-    /* ==========================================
-       INSUFFICIENT PAGE
-    ========================================== */
-
-    #insufficientPage {
-      display: none;
-
-      width: 100%;
-      min-height: calc(100vh - 30px);
-
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
-    }
-
-    .insufficient-box {
-      width: 100%;
-
-      background: #111;
-
-      border: 1px solid #292929;
-
-      border-radius: 14px;
-
-      padding: 30px 20px;
-    }
-
-    .insufficient-title {
-      font-size: 25px;
-      font-weight: bold;
-
-      color: #ff5252;
-
-      margin-bottom: 10px;
-    }
-
-    .insufficient-text {
-      color: #aaa;
-
-      font-size: 14px;
-
-      line-height: 1.5;
-    }
-
-
-    /* ==========================================
-       PHOTOS PAGE
-    ========================================== */
-
-    #photosPage {
-      display: none;
-      width: 100%;
-    }
-
-    .top-bar {
-      width: 100%;
-
-      display: flex;
-
-      justify-content: flex-start;
-      align-items: center;
-
-      margin-bottom: 15px;
-    }
-
-    .online-box {
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 7px;
-
-      background: #111;
-
-      border: 1px solid #292929;
-
-      color: #fff;
-
-      padding: 7px 11px;
-
-      border-radius: 8px;
-
-      font-size: 13px;
-
-      font-weight: bold;
-    }
-
-    .online-dot {
-      width: 9px;
-      height: 9px;
-
-      border-radius: 50%;
-
-      background: #22c55e;
-
-      animation: onlineBlink 1.2s infinite;
-    }
-
-    @keyframes onlineBlink {
-
-      50% {
-        opacity: .35;
-      }
-
-    }
-
-    h1 {
-      margin: 8px 0 5px;
-      font-size: 25px;
-    }
-
-    .subtitle {
-      color: #aaa;
-
-      margin: 0 0 15px;
-
-      font-size: 14px;
-    }
-
-    #livePhotos {
-      display: grid;
-
-      grid-template-columns: 1fr 1fr;
-
-      gap: 14px;
-
-      margin-top: 15px;
-    }
-
-    .live-photo {
-      position: relative;
-
-      overflow: hidden;
-
-      border-radius: 12px;
-
-      background: #111;
-
-      cursor: pointer;
-
-      min-height: 250px;
-
-      padding-bottom: 45px;
-
-      border: 1px solid #1e1e1e;
-
-      transition:
-        transform .2s ease,
-        opacity .4s ease;
-    }
-
-    .live-photo:active {
-      transform: scale(.98);
-    }
-
-    .live-photo img {
-      display: block;
-
-      width: 100%;
-      height: 205px;
-
-      object-fit: cover;
-
-      background: #111;
-
-      transition:
-        opacity .4s ease,
-        transform .4s ease;
-    }
-
-
-    /* ==========================================
-       PHOTO NAME
-    ========================================== */
-
-    .photo-name {
-      position: absolute;
-
-      left: 0;
-      right: 0;
-      bottom: 0;
-
-      min-height: 45px;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      padding: 7px 5px;
-
-      background: #111;
-
-      color: #fff;
-
-      font-size: 13px;
-
-      font-weight: bold;
-
-      text-align: center;
-    }
-
-
-    /* ==========================================
-       LIVE BADGE
-    ========================================== */
-
-    .live-badge {
-      position: absolute;
-
-      top: 7px;
-      left: 7px;
-
-      z-index: 5;
-
-      background: #f0184c;
-
-      color: #fff;
-
-      padding: 6px 9px;
-
-      border-radius: 7px;
-
-      font-size: 11px;
-
-      font-weight: bold;
-    }
-
-    .live-badge::before {
-      content: "●";
-      margin-right: 4px;
-    }
-
-
-    .live-status {
-      position: absolute;
-
-      top: 7px;
-      right: 7px;
-
-      z-index: 5;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 5px;
-
-      background: rgba(0,0,0,.82);
-
-      padding: 5px 7px;
-
-      border-radius: 7px;
-
-      font-size: 10px;
-    }
-
-    .live-dot {
-      width: 8px;
-      height: 8px;
-
-      flex-shrink: 0;
-
-      border-radius: 50%;
-
-      background: #22c55e;
-
-      animation: liveBlink 1s infinite;
-    }
-
-
-    /* ==========================================
-       FLAG BUTTON
-    ========================================== */
-
-    .flag-button {
-      position: absolute;
-
-      bottom: 6px;
-      right: 6px;
-
-      z-index: 10;
-
-      border: none;
-
-      border-radius: 6px;
-
-      padding: 4px 7px;
-
-      background: rgba(255,255,255,.12);
-
-      color: #fff;
-
-      font-size: 10px;
-
-      cursor: pointer;
-    }
-
-    .flag-button:active {
-      transform: scale(.95);
-    }
-
-
-    /* ==========================================
-       LOADING / ERROR
-    ========================================== */
-
-    .loading {
-      grid-column: 1 / -1;
-
-      padding: 45px 20px;
-
-      color: #aaa;
-
-      text-align: center;
-    }
-
-    .error {
-      grid-column: 1 / -1;
-
-      padding: 35px 15px;
-
-      color: #ff6b6b;
-
-      text-align: center;
-
-      line-height: 1.5;
-    }
-
-
-    /* ==========================================
-       INCOMING CALL LOADING
-    ========================================== */
-
-    .call-loading {
-      display: none;
-
-      flex-direction: column;
-
-      align-items: center;
-      justify-content: center;
-
-      gap: 12px;
-
-      margin-bottom: 20px;
-    }
-
-    .call-loading-spinner {
-      width: 42px;
-      height: 42px;
-
-      border: 4px solid #333;
-
-      border-top: 4px solid #22c55e;
-
-      border-radius: 50%;
-
-      animation:
-        callSpin 1s linear infinite;
-    }
-
-    @keyframes callSpin {
-
-      to {
-        transform: rotate(360deg);
-      }
-
-    }
-
-    .call-loading-text {
-      color: #aaa;
-      font-size: 13px;
-    }
-
-
-    /* ==========================================
-       INCOMING CALL
-    ========================================== */
-
-    #incomingCall {
-      display: none;
-
-      position: fixed;
-
-      inset: 0;
-
-      z-index: 99999;
-
-      background:
-        radial-gradient(
-          circle at center,
-          #202020 0%,
-          #080808 55%,
-          #000 100%
-        );
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 20px;
-
-      text-align: center;
-    }
-
-    .call-box {
-      width: 100%;
-      max-width: 370px;
-
-      background: #111;
-
-      border: 1px solid #292929;
-
-      border-radius: 24px;
-
-      padding: 30px 20px 28px;
-
-      box-shadow:
-        0 20px 60px rgba(0,0,0,.85);
-    }
-
-
-    /* ==========================================
-       LARGE ROUND CALLER PHOTO
-    ========================================== */
-
-    .call-avatar {
-      width: 165px;
-      height: 165px;
-
-      margin: 0 auto 20px;
-
-      border-radius: 50%;
-
-      overflow: hidden;
-
-      background: #222;
-
-      border: 4px solid #22c55e;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      box-shadow:
-        0 0 0 8px rgba(34,197,94,.08),
-        0 10px 35px rgba(0,0,0,.6);
-    }
-
-    .call-avatar img {
-      width: 100%;
-      height: 100%;
-
-      object-fit: cover;
-
-      display: block;
-
-      transform-origin: center;
-
-      animation:
-        slowCallerZoom 5s ease-in-out infinite;
-    }
-
-    @keyframes slowCallerZoom {
-
-      0% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.10);
-      }
-
-      100% {
-        transform: scale(1);
-      }
-
-    }
-
-
-    .call-incoming {
-      color: #22c55e;
-
-      font-size: 14px;
-
-      font-weight: bold;
-
-      margin-bottom: 8px;
-
-      letter-spacing: .3px;
-    }
-
-    .call-name {
-      font-size: 24px;
-
-      font-weight: bold;
-
-      margin-bottom: 25px;
-    }
-
-
-    /* ==========================================
-       CALL BUTTONS
-    ========================================== */
-
-    .call-buttons {
-      display: flex;
-
-      justify-content: center;
-
-      gap: 45px;
-    }
-
-    .call-action {
-      border: none;
-
-      width: 68px;
-      height: 68px;
-
-      border-radius: 50%;
-
-      color: #fff;
-
-      font-size: 27px;
-
-      cursor: pointer;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      box-shadow:
-        0 8px 20px rgba(0,0,0,.4);
-    }
-
-    .call-answer {
-      background: #22c55e;
-    }
-
-    .call-end {
-      background: #ef4444;
-
-      transform: rotate(135deg);
-    }
-
-
-    /* ==========================================
-       MOBILE
-    ========================================== */
-
-    @media (max-width: 380px) {
-
-      body {
-        padding: 12px;
-      }
-
-      #livePhotos {
-        gap: 10px;
-      }
-
-      .live-photo {
-        min-height: 215px;
-      }
-
-      .live-photo img {
-        height: 170px;
-      }
-
-      .photo-name {
-        font-size: 12px;
-      }
-
-      .call-avatar {
-        width: 145px;
-        height: 145px;
-      }
-
-    }
-
-  </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Live Referral</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* =========================
+   SAMPLE VIDEO
+========================= */
+
+#samplePage {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: #000;
+}
+
+#sampleVideo {
+  width: 100%;
+  max-width: 520px;
+  max-height: 80vh;
+  border-radius: 14px;
+  background: #000;
+  object-fit: contain;
+}
+
+.sample-title {
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+#loadingPage {
+  display: none;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 4px solid #444;
+  border-top-color: #fff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+/* =========================
+   ONLINE STATUS
+========================= */
+
+.online-status {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.live-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 5px;
+  border-radius: 50%;
+  background: #20c55a;
+  animation: liveBlink 1s infinite;
+}
+
+@keyframes liveBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .25;
+  }
+}
+
+/* =========================
+   INSUFFICIENT MINUTES
+========================= */
+
+#insufficientPage {
+  display: none;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.insufficient-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 25px;
+  border-radius: 16px;
+  background: #1d1d1d;
+}
+
+.insufficient-box h2 {
+  margin-top: 0;
+}
+
+.insufficient-box button {
+  border: 0;
+  padding: 12px 28px;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================
+   PHOTOS
+========================= */
+
+#photosPage {
+  display: none;
+  min-height: 100vh;
+  padding: 15px;
+  background: #111;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.photo-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #222;
+  cursor: pointer;
+}
+
+.photo-card img {
+  display: block;
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+}
+
+.live-badge {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  padding: 5px 9px;
+  border-radius: 7px;
+  background: #e53935;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.photo-name {
+  padding: 9px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* =========================
+   INCOMING VIDEO CALL
+========================= */
+
+.incoming-call {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  background: #111;
+}
+
+.incoming-call-bg {
+  position: absolute;
+  inset: -25px;
+  background-position: center;
+  background-size: cover;
+  filter: blur(20px) brightness(.32);
+  transform: scale(1.12);
+}
+
+.caller-box {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  text-align: center;
+}
+
+.caller-photo-wrap {
+  position: relative;
+  width: 155px;
+  height: 155px;
+  margin: 0 auto 28px;
+}
+
+.caller-photo {
+  width: 155px;
+  height: 155px;
+  object-fit: cover;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  animation: callerZoom 3s ease-in-out infinite;
+}
+
+.call-ring {
+  position: absolute;
+  inset: -15px;
+  border: 2px solid rgba(255,255,255,.7);
+  border-radius: 50%;
+  animation: ringPulse 2s infinite;
+}
+
+.call-ring:nth-child(2) {
+  inset: -30px;
+  animation-delay: .5s;
+}
+
+@keyframes ringPulse {
+  0% {
+    opacity: .8;
+    transform: scale(.8);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes callerZoom {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.caller-name {
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.call-title {
+  margin-top: 8px;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+.call-ringing {
+  margin-top: 8px;
+  font-size: 14px;
+  opacity: .8;
+}
+
+.call-buttons {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  gap: 55px;
+  margin-top: 55px;
+}
+
+.call-btn {
+  width: 66px;
+  height: 66px;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.decline-btn {
+  background: #e53935;
+}
+
+.answer-btn {
+  background: #20c55a;
+}
+
+@media (max-width: 480px) {
+  .photo-card img {
+    height: 200px;
+  }
+
+  .caller-photo-wrap,
+  .caller-photo {
+    width: 140px;
+    height: 140px;
+  }
+}
+</style>
 </head>
 <body>
 
-  <div class="card">
+<!-- =========================
+     SAMPLE PAGE
+========================= -->
+
+<section id="samplePage">
+
+  <video
+    id="sampleVideo"
+    autoplay
+    muted
+    playsinline
+    preload="auto">
+
+    <source
+      src="preview_20_seconds.mp4"
+      type="video/mp4">
+
+  </video>
+
+  <div class="sample-title">
+    Watch preview
+  </div>
+
+</section>
 
 
-    <!-- =================================
-         SAMPLE PAGE
-    ================================== -->
+<!-- =========================
+     LOADING PAGE
+========================= -->
 
-    <div id="samplePage">
+<section id="loadingPage">
 
-      <div class="sample-title">
-        ❤️🥰🥰😍😍😍😍😍😍😍😍😍😍🫦🫦🫦💖🔥🔥🔥
-      </div>
+  <div class="loader"></div>
 
-      <div class="sample-subtitle">
-        Welcome 🤗 💦💦💦💦❤️‍🔥❤️‍🔥
-      </div>
+  <div class="loading-text">
+    Loading...
+  </div>
 
+  <p class="online-status">
+    <span class="live-dot"></span>
+    <span id="loadingOnlineCount">19</span>
+    online
+  </p>
 
-      <video
-        id="sampleVideo"
-        playsinline
-        preload="auto"
-        controls
-      >
-
-        <source
-          src="preview_20_seconds.mp4"
-          type="video/mp4"
-        >
-
-        Your browser does not support video.
-
-      </video>
+</section>
 
 
-      <div
-        id="sampleTimer"
-        class="sample-timer"
-      ></div>
+<!-- =========================
+     INSUFFICIENT MINUTES
+========================= -->
 
-    </div>
+<section id="insufficientPage">
 
+  <div class="insufficient-box">
 
-    <!-- =================================
-         INSUFFICIENT PAGE
-    ================================== -->
+    <h2>
+      Insufficient Minutes
+    </h2>
 
-    <div id="insufficientPage">
+    <p>
+      You need more minutes to continue.
+    </p>
 
-      <div class="insufficient-box">
+    <button
+      id="continuePayment"
+      type="button">
 
-        <div class="insufficient-title">
-          Insufficient minutes
-        </div>
+      Continue
 
-        <div class="insufficient-text">
-          Buy more minutes!
-        </div>
+    </button>
 
-      </div>
+  </div>
 
-    </div>
-
-
-    <!-- =================================
-         PHOTOS PAGE
-    ================================== -->
-
-    <div id="photosPage">
-
-      <div class="top-bar">
-
-        <div class="online-box">
-
-          <span class="online-dot"></span>
-
-          <span>
-            19 online🟢
-          </span>
-
-        </div>
-
-      </div>
+</section>
 
 
-      <h1>
-        Welcome
-      </h1>
+<!-- =========================
+     PHOTOS PAGE
+========================= -->
 
+<section id="photosPage">
 
-      <p class="subtitle">
-        People live now
-      </p>
+  <div class="top-bar">
 
+    <div class="online-status">
 
-      <div id="livePhotos"></div>
+      <span class="live-dot"></span>
+
+      <span id="onlineCount">
+        19
+      </span>
+
+      online
 
     </div>
 
   </div>
 
-
-  <!-- =================================
-       SIMULATED INCOMING VIDEO CALL
-  ================================== -->
 
   <div
-    id="incomingCall"
-    aria-hidden="true"
-  >
+    id="photoGrid"
+    class="photo-grid">
+  </div>
 
-    <div class="call-box">
-
-
-      <!-- Loading before call -->
-
-      <div
-        class="call-loading"
-        id="callLoading"
-      >
-
-        <div class="call-loading-spinner"></div>
-
-        <div class="call-loading-text">
-          Incoming video call...
-        </div>
-
-      </div>
+</section>
 
 
-      <!-- Caller photo -->
+<!-- =========================
+     INCOMING VIDEO CALL
+========================= -->
 
-      <div class="call-avatar">
+<div
+  id="incomingCall"
+  class="incoming-call">
 
-        <img
-          id="callPhoto"
-          src=""
-          alt="Caller profile"
-        >
-
-      </div>
-
-
-      <div class="call-incoming">
-        INCOMING VIDEO CALL
-      </div>
+  <div
+    id="callerBg"
+    class="incoming-call-bg">
+  </div>
 
 
-      <div
-        class="call-name"
-        id="callName"
-      >
-        Live Video
-      </div>
+  <div class="caller-box">
+
+    <div class="caller-photo-wrap">
+
+      <div class="call-ring"></div>
+
+      <div class="call-ring"></div>
+
+      <img
+        id="callerPhoto"
+        class="caller-photo"
+        src="photo1.jpg"
+        alt="Caller">
+
+    </div>
 
 
-  
+    <div
+      id="callerName"
+      class="caller-name">
+
+      Incoming Caller
+
+    </div>
 
 
-      <div class="call-buttons">
+    <div class="call-title">
+
+      INCOMING VIDEO CALL
+
+    </div>
 
 
-        <!-- Reject -->
+    <div class="call-ringing">
 
-        <button
-          class="call-action call-end"
-          id="rejectCall"
-          type="button"
-          aria-label="Close call"
-        >
-          ☎
-        </button>
-
-
-        <!-- Continue -->
-
-        <button
-          class="call-action call-answer"
-          id="answerCall"
-          type="button"
-          aria-label="Continue"
-        >
-          📞
-        </button>
-
-      </div>
+      Ringing...
 
     </div>
 
   </div>
 
+
+  <div class="call-buttons">
+
+    <button
+      id="rejectCall"
+      class="call-btn decline-btn"
+      type="button"
+      aria-label="Decline">
+
+      ☎
+
+    </button>
+
+
+    <button
+      id="answerCall"
+      class="call-btn answer-btn"
+      type="button"
+      aria-label="Answer">
+
+      ☎
+
+    </button>
+
+  </div>
+
+</div>
 <script>
 
-  /* ==========================================
-     WEBSITE SETTINGS
-  ========================================== */
-
-  const GITHUB_OWNER =
-    "agnesweb2026";
-
-  const GITHUB_REPO =
-    "My-referral-website";
-
-  const GITHUB_BRANCH =
-    "main";
-
-  const MAX_PHOTOS =
-    24;
-
-
-  /* ==========================================
-     PAYMENT PAGE
-  ========================================== */
-
-  const PAYMENT_PAGE_URL =
-    "payment.html";
-
-
-  /* ==========================================
-     PHOTO NAMES
-  ========================================== */
-
-  const PHOTO_NAMES = [
-
-    "Cute 😍❤️",
-    "Becky 💦❤️‍🔥",
-    "Dorry 🔥✅",
-    "Jenny 💦❤️‍🔥",
-    "Caro 💦❤️‍🔥❤️",
-    "Juck 💦❤️‍🔥",
-    "Bella 🥀👄",
-    "Faith 🌟",
-    "Chepto 😜🔥",
-    "Shelley",
-    "Phapy 🥰😍",
-    "Chris 💖💘",
-    "Juphio 😴💦💦",
-    "Judy 💖",
-    "Kandy 💦😴",
-    "Jennifer ❤️‍🔥🔥",
-    "Pento 🥀👄",
-    "Shallow ❤️‍🔥🔥🥀",
-    "Grees 🌟",
-    "Betty 🔥❤️‍🔥",
-    "Maria 🌟🥀💦",
-    "Kitty 💦❤️",
-    "Sweetgy 😍🥰",
-    "Fellow 💦❤️"
+/* =========================
+   SETTINGS
+========================= */
 
-  ];
+const SAMPLE_DURATION = 20000;
+const INSUFFICIENT_DURATION = 2000;
 
+const FLOW_KEY = "myReferralFlowStarted";
 
-  /* ==========================================
-     ELEMENTS
-  ========================================== */
+const MAX_PHOTOS = 24;
 
-  const samplePage =
-    document.getElementById(
-      "samplePage"
-    );
 
-  const insufficientPage =
-    document.getElementById(
-      "insufficientPage"
-    );
+/* =========================
+   PAGE ELEMENTS
+========================= */
 
-  const photosPage =
-    document.getElementById(
-      "photosPage"
-    );
+const samplePage =
+  document.getElementById("samplePage");
 
-  const livePhotos =
-    document.getElementById(
-      "livePhotos"
-    );
+const loadingPage =
+  document.getElementById("loadingPage");
 
-  const sampleVideo =
-    document.getElementById(
-      "sampleVideo"
-    );
+const insufficientPage =
+  document.getElementById("insufficientPage");
 
-  const incomingCall =
-    document.getElementById(
-      "incomingCall"
-    );
+const photosPage =
+  document.getElementById("photosPage");
 
-  const callLoading =
-    document.getElementById(
-      "callLoading"
-    );
+const sampleVideo =
+  document.getElementById("sampleVideo");
 
-  const callPhoto =
-    document.getElementById(
-      "callPhoto"
-    );
+const photoGrid =
+  document.getElementById("photoGrid");
 
-  const callName =
-    document.getElementById(
-      "callName"
-    );
+const continuePayment =
+  document.getElementById("continuePayment");
 
-  const answerCall =
-    document.getElementById(
-      "answerCall"
-    );
 
-  const rejectCall =
-    document.getElementById(
-      "rejectCall"
-    );
+/* =========================
+   INCOMING CALL ELEMENTS
+========================= */
 
+const incomingCall =
+  document.getElementById("incomingCall");
 
-  /* ==========================================
-     FLOW SETTINGS
-  ========================================== */
+const callerPhoto =
+  document.getElementById("callerPhoto");
 
-  const SAMPLE_DURATION =
-    20;
+const callerBg =
+  document.getElementById("callerBg");
 
-  const INSUFFICIENT_DURATION =
-    2000;
+const callerName =
+  document.getElementById("callerName");
 
-  const PHOTO_WAIT_DURATION =
-    10000;
+const answerCall =
+  document.getElementById("answerCall");
 
-  const CALL_LOADING_DURATION =
-    2500;
+const rejectCall =
+  document.getElementById("rejectCall");
 
-  const PHOTO_INTERCHANGE_DURATION =
-    4000;
 
+/* =========================
+   PHOTO NAMES
+========================= */
 
-  /* ==========================================
-     STORAGE
-  ========================================== */
+const photoNames = [
+  "Cute",
+  "Becky",
+  "Dorry",
+  "Jenny",
+  "Lynn",
+  "Mercy",
+  "Rose",
+  "Sharon",
+  "Brenda",
+  "Lucy",
+  "Wendy",
+  "Daisy",
+  "Faith",
+  "Grace",
+  "Mary",
+  "Nancy",
+  "Vicky",
+  "Linda",
+  "Stacy",
+  "Joy",
+  "Ann",
+  "Cindy",
+  "Fiona",
+  "Fellow"
+];
 
-  const FLOW_STORAGE_KEY =
-    "myReferralFlowStarted";
 
+/* =========================
+   HELPER
+========================= */
 
-  /* ==========================================
-     STATE
-  ========================================== */
+function hideAllPages() {
 
-  let flowRunning =
-    false;
+  samplePage.style.display = "none";
 
-  let photosLoaded =
-    false;
+  loadingPage.style.display = "none";
 
-  let callVisible =
-    false;
+  insufficientPage.style.display = "none";
 
-  let currentPhotoIndex =
-    0;
+  photosPage.style.display = "none";
+}
 
 
-  /* ==========================================
-     TIMERS
-  ========================================== */
+/* =========================
+   INCOMING CALL
+========================= */
 
-  let sampleTimer =
-    null;
+function showIncomingCall(
+  photo = "photo1.jpg",
+  name = "Incoming Caller"
+) {
 
-  let insufficientTimer =
-    null;
+  callerPhoto.src = photo;
 
-  let photoWaitTimer =
-    null;
+  callerBg.style.backgroundImage =
+    `url("${photo}")`;
 
-  let callLoadingTimer =
-    null;
+  callerName.textContent = name;
 
-  let photoRotationTimer =
-    null;
+  incomingCall.style.display = "flex";
+}
 
 
-  /* ==========================================
-     PAGE CONTROL
-  ========================================== */
+function hideIncomingCall() {
 
-  function hideAllPages() {
+  incomingCall.style.display = "none";
+}
 
-    samplePage.style.display =
-      "none";
 
-    insufficientPage.style.display =
-      "none";
+/* =========================
+   LOADING
+========================= */
 
-    photosPage.style.display =
-      "none";
+function showLoading(
+  photo = "photo1.jpg",
+  name = "Incoming Caller"
+) {
 
-  }
+  hideAllPages();
 
+  loadingPage.style.display = "flex";
 
-  function showSamplePage() {
+  showIncomingCall(photo, name);
+}
 
-    hideAllPages();
 
-    samplePage.style.display =
-      "flex";
+/* =========================
+   SHOW INSUFFICIENT
+========================= */
 
-  }
+function showInsufficient() {
 
+  hideIncomingCall();
 
-  function showInsufficientPage() {
+  hideAllPages();
 
-    hideAllPages();
+  insufficientPage.style.display = "flex";
+}
 
-    insufficientPage.style.display =
-      "flex";
 
-  }
+/* =========================
+   SHOW PHOTOS
+========================= */
 
+function showPhotos() {
 
-  function showPhotosPage() {
+  hideIncomingCall();
 
-    hideAllPages();
+  hideAllPages();
 
-    photosPage.style.display =
-      "block";
+  photosPage.style.display = "block";
 
-  }
+  loadPhotos();
+}
 
 
-  /* ==========================================
-     TIMER CLEANUP
-  ========================================== */
+/* =========================
+   LOAD 24 PHOTOS
+========================= */
 
-  function clearTimers() {
+function loadPhotos() {
 
-    if (sampleTimer !== null) {
+  photoGrid.innerHTML = "";
 
-      clearTimeout(
-        sampleTimer
-      );
+  for (
+    let i = 1;
+    i <= MAX_PHOTOS;
+    i++
+  ) {
 
-      sampleTimer = null;
+    const card =
+      document.createElement("div");
 
-    }
+    card.className =
+      "photo-card";
 
 
-    if (
-      insufficientTimer !== null
-    ) {
+    const name =
+      photoNames[i - 1] ||
+      `Caller ${i}`;
 
-      clearTimeout(
-        insufficientTimer
-      );
 
-      insufficientTimer = null;
+    card.innerHTML = `
 
-    }
+      <img
+        src="photo${i}.jpg"
+        alt="${name}"
+        loading="lazy"
+        onerror="this.style.display='none'"
+      >
 
-
-    if (
-      photoWaitTimer !== null
-    ) {
-
-      clearTimeout(
-        photoWaitTimer
-      );
-
-      photoWaitTimer = null;
-
-    }
-
-
-    if (
-      callLoadingTimer !== null
-    ) {
-
-      clearTimeout(
-        callLoadingTimer
-      );
-
-      callLoadingTimer = null;
-
-    }
-
-  }
-
-
-  /* ==========================================
-     PAYMENT
-  ========================================== */
-
-  function openPaymentPage() {
-
-    clearTimers();
-
-    stopPhotoInterchange();
-
-    window.location.href =
-      PAYMENT_PAGE_URL;
-
-  }
-
-
-  /* ==========================================
-     SAMPLE VIDEO
-  ========================================== */
-
-  function startSample() {
-
-    clearTimers();
-
-    showSamplePage();
-
-
-    if (!sampleVideo) {
-
-      finishSample();
-
-      return;
-
-    }
-
-
-    try {
-
-      sampleVideo.currentTime =
-        0;
-
-    } catch (error) {
-
-      console.warn(
-        "Could not reset video.",
-        error
-      );
-
-    }
-
-
-    const playPromise =
-      sampleVideo.play();
-
-
-    if (
-      playPromise &&
-      typeof playPromise.catch ===
-        "function"
-    ) {
-
-      playPromise.catch(
-        () => {
-
-          /*
-            Mobile browsers may block
-            autoplay. The visitor can
-            press the play button.
-          */
-
-        }
-      );
-
-    }
-
-
-    sampleTimer =
-      setTimeout(
-        finishSample,
-        SAMPLE_DURATION * 1000
-      );
-
-  }
-
-
-  function finishSample() {
-
-    if (
-      sampleTimer !== null
-    ) {
-
-      clearTimeout(
-        sampleTimer
-      );
-
-      sampleTimer = null;
-
-    }
-
-
-    if (sampleVideo) {
-
-      sampleVideo.pause();
-
-    }
-
-
-    showInsufficientPage();
-
-
-    insufficientTimer =
-      setTimeout(
-        () => {
-
-          insufficientTimer =
-            null;
-
-          showPhotosPage();
-
-          loadPhotos();
-
-        },
-        INSUFFICIENT_DURATION
-      );
-
-  }
-  /* ==========================================
-     LOAD PHOTOS FROM GITHUB
-  ========================================== */
-
-  async function loadPhotos() {
-
-    if (photosLoaded) {
-      startPhotoInterchange();
-      startIncomingCallTimer();
-      return;
-    }
-
-
-    livePhotos.innerHTML = `
-      <div class="loading">
-        Loading photos...
+      <div class="live-badge">
+        LIVE
       </div>
+
+      <div class="photo-name">
+        ${name}
+      </div>
+
     `;
 
 
-    const apiUrl =
-      `https://api.github.com/repos/` +
-      `${GITHUB_OWNER}/${GITHUB_REPO}` +
-      `/contents/?ref=${GITHUB_BRANCH}`;
+    card.addEventListener(
+      "click",
+      function() {
 
-
-    try {
-
-      const response =
-        await fetch(apiUrl);
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          `GitHub API error: ${response.status}`
-        );
+        window.location.href =
+          "payment.html";
 
       }
-
-
-      const files =
-        await response.json();
-
-
-      if (!Array.isArray(files)) {
-
-        throw new Error(
-          "Invalid GitHub response."
-        );
-
-      }
-
-
-      const imageFiles =
-        files
-          .filter(
-            file => {
-
-              if (
-                !file ||
-                !file.name
-              ) {
-                return false;
-              }
-
-
-              return /\.(jpg|jpeg|png|webp|gif)$/i
-                .test(file.name);
-
-            }
-          )
-          .slice(
-            0,
-            MAX_PHOTOS
-          );
-
-
-      if (
-        imageFiles.length === 0
-      ) {
-
-        livePhotos.innerHTML = `
-          <div class="error">
-            No photos found.
-          </div>
-        `;
-
-        return;
-      }
-
-
-      livePhotos.innerHTML = "";
-
-
-      imageFiles.forEach(
-        (file, index) => {
-
-          const card =
-            document.createElement(
-              "div"
-            );
-
-          card.className =
-            "live-photo";
-
-
-          /* ==========================
-             PHOTO
-          ========================== */
-
-          const image =
-            document.createElement(
-              "img"
-            );
-
-
-          image.src =
-            file.download_url ||
-            `https://raw.githubusercontent.com/` +
-            `${GITHUB_OWNER}/` +
-            `${GITHUB_REPO}/` +
-            `${GITHUB_BRANCH}/` +
-            `${encodeURIComponent(
-              file.name
-            )}`;
-
-
-          image.alt =
-            PHOTO_NAMES[index] ||
-            `Photo ${index + 1}`;
-
-
-          image.loading =
-            "lazy";
-
-
-          /* ==========================
-             LIVE BADGE
-          ========================== */
-
-          const liveBadge =
-            document.createElement(
-              "div"
-            );
-
-
-          liveBadge.className =
-            "live-badge";
-
-
-          liveBadge.textContent =
-            "LIVE";
-
-
-          /* ==========================
-             LIVE STATUS
-          ========================== */
-
-          const liveStatus =
-            document.createElement(
-              "div"
-            );
-
-
-          liveStatus.className =
-            "live-status";
-
-
-          const liveDot =
-            document.createElement(
-              "span"
-            );
-
-
-          liveDot.className =
-            "live-dot";
-
-
-          const liveText =
-            document.createElement(
-              "span"
-            );
-
-
-          liveText.textContent =
-            "Live now";
-
-
-          liveStatus.appendChild(
-            liveDot
-          );
-
-
-          liveStatus.appendChild(
-            liveText
-          );
-
-
-          /* ==========================
-             PHOTO NAME
-          ========================== */
-
-          const photoName =
-            document.createElement(
-              "div"
-            );
-
-
-          photoName.className =
-            "photo-name";
-
-
-          photoName.textContent =
-            PHOTO_NAMES[index] ||
-            `Photo ${index + 1}`;
-
-
-          /* ==========================
-             FLAG
-          ========================== */
-
-          const flagButton =
-            document.createElement(
-              "button"
-            );
-
-
-          flagButton.className =
-            "flag-button";
-
-
-          flagButton.type =
-            "button";
-
-
-          flagButton.textContent =
-            "🇧🇩 ";
-
-
-          flagButton.addEventListener(
-            "click",
-            event => {
-
-              event.stopPropagation();
-
-              alert(
-                "Thanks. This photo has been flagged."
-              );
-
-            }
-          );
-
-
-          /* ==========================
-             ADD CARD CONTENT
-          ========================== */
-
-          card.appendChild(
-            image
-          );
-
-
-          card.appendChild(
-            liveBadge
-          );
-
-
-          card.appendChild(
-            liveStatus
-          );
-
-
-          card.appendChild(
-            photoName
-          );
-
-
-          card.appendChild(
-            flagButton
-          );
-
-
-          /* ==========================
-             PHOTO CLICK
-          ========================== */
-
-          card.addEventListener(
-            "click",
-            () => {
-
-              openPaymentPage();
-
-            }
-          );
-
-
-          livePhotos.appendChild(
-            card
-          );
-
-        }
-      );
-
-
-      photosLoaded =
-        true;
-
-
-      /* ==========================
-         START PHOTO INTERCHANGE
-      ========================== */
-
-      startPhotoInterchange();
-
-
-      /* ==========================
-         START INCOMING CALL
-      ========================== */
-
-      startIncomingCallTimer();
-
-    } catch (error) {
-
-      console.error(
-        "Photo loading error:",
-        error
-      );
-
-
-      photosLoaded =
-        false;
-
-
-      livePhotos.innerHTML = `
-        <div class="error">
-          Unable to load photos.<br>
-          Please try again later.
-        </div>
-      `;
-
-    }
-
-  }
-
-
-  /* ==========================================
-     PHOTO INTERCHANGE
-  ========================================== */
-
- function startPhotoInterchange() {
-
-  stopPhotoInterchange();
-
-  photoRotationTimer = setInterval(() => {
-
-    const container =
-      document.getElementById("livePhotos");
-
-    const cards = Array.from(
-      container.querySelectorAll(".live-photo")
-    );
-
-    if (cards.length < 2) {
-      return;
-    }
-
-    // Pick two random photos
-    const firstIndex =
-      Math.floor(Math.random() * cards.length);
-
-    let secondIndex =
-      Math.floor(Math.random() * cards.length);
-
-    while (secondIndex === firstIndex) {
-      secondIndex =
-        Math.floor(Math.random() * cards.length);
-    }
-
-    const firstCard =
-      cards[firstIndex];
-
-    const secondCard =
-      cards[secondIndex];
-
-    // Fade during the swap
-    firstCard.style.opacity = "0.3";
-    secondCard.style.opacity = "0.3";
-
-    setTimeout(() => {
-
-      const reference =
-        firstCard.nextSibling === secondCard
-          ? secondCard
-          : firstCard;
-
-      if (firstCard.nextSibling === secondCard) {
-
-        container.insertBefore(
-          secondCard,
-          firstCard
-        );
-
-      } else {
-
-        const firstNext =
-          firstCard.nextSibling;
-
-        container.insertBefore(
-          firstCard,
-          secondCard
-        );
-
-        container.insertBefore(
-          secondCard,
-          firstNext
-        );
-
-      }
-
-      firstCard.style.opacity = "1";
-      secondCard.style.opacity = "1";
-
-    }, 500);
-
-  }, 4000);
-
-  } 
-
-
-  function stopPhotoInterchange() {
-
-    if (
-      photoRotationTimer !== null
-    ) {
-
-      clearInterval(
-        photoRotationTimer
-      );
-
-      photoRotationTimer =
-        null;
-
-    }
-
-  }
-
-
-  /* ==========================================
-     INCOMING CALL TIMER
-  ========================================== */
-
-  function startIncomingCallTimer() {
-
-    if (
-      photoWaitTimer !== null
-    ) {
-
-      clearTimeout(
-        photoWaitTimer
-      );
-
-    }
-
-
-    photoWaitTimer =
-      setTimeout(
-        () => {
-
-          photoWaitTimer =
-            null;
-
-
-          showCallLoading();
-
-
-          callLoadingTimer =
-            setTimeout(
-              () => {
-
-                callLoadingTimer =
-                  null;
-
-                showIncomingCall();
-
-              },
-
-              CALL_LOADING_DURATION
-
-            );
-
-        },
-
-        PHOTO_WAIT_DURATION
-
-      );
-
-  }
-
-
-  /* ==========================================
-     CALL LOADING
-  ========================================== */
-
-  function showCallLoading() {
-
-    if (
-      callVisible
-    ) {
-      return;
-    }
-
-
-    incomingCall.style.display =
-      "flex";
-
-
-    incomingCall.setAttribute(
-      "aria-hidden",
-      "false"
     );
 
 
-    callLoading.style.display =
-      "flex";
+    photoGrid.appendChild(card);
+  }
+}
 
 
-    callPhoto.style.display =
-      "none";
+/* =========================
+   ANSWER BUTTON
+========================= */
+
+answerCall.addEventListener(
+  "click",
+  function() {
+
+    hideIncomingCall();
+
+  }
+);
 
 
-    callName.style.display =
-      "none";
+/* =========================
+   DECLINE BUTTON
+========================= */
 
+rejectCall.addEventListener(
+  "click",
+  function() {
+
+    hideIncomingCall();
+
+  }
+);
+
+
+/* =========================
+   CONTINUE PAYMENT
+========================= */
+
+continuePayment.addEventListener(
+  "click",
+  function() {
+
+    window.location.href =
+      "payment.html";
+
+  }
+);
+
+
+/* =========================
+   START MAIN FLOW
+========================= */
+
+function startMainFlow() {
+
+  /*
+   New visitor:
+   show sample video first.
+  */
+
+  if (
+    !localStorage.getItem(FLOW_KEY)
+  ) {
+
+    hideAllPages();
+
+    samplePage.style.display = "flex";
+
+    return;
   }
 
 
-  function hideCallLoading() {
+  /*
+   Returning visitor:
+   skip sample.
+  */
 
-    callLoading.style.display =
-      "none";
-
-
-    callPhoto.style.display =
-      "block";
-
-
-    callName.style.display =
-      "block";
-
-  }
-
-
-  /* ==========================================
-     SHOW INCOMING CALL
-  ========================================== */
-
-  function showIncomingCall() {
-
-    const images =
-      document.querySelectorAll(
-        ".live-photo img"
-      );
-
-
-    if (
-      !images ||
-      images.length === 0
-    ) {
-
-      closeIncomingCall();
-
-      return;
-
-    }
-
-
-    const randomIndex =
-      Math.floor(
-        Math.random() *
-        images.length
-      );
-
-
-    const selectedImage =
-      images[randomIndex];
-
-
-    callPhoto.src =
-      selectedImage.src;
-
-
-    callName.textContent =
-      PHOTO_NAMES[randomIndex] ||
-      "Live Video";
-
-
-    hideCallLoading();
-
-
-    callVisible =
-      true;
-
-
-    incomingCall.style.display =
-      "flex";
-
-
-    incomingCall.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-  }
-
-
-  /* ==========================================
-     CLOSE CALL
-  ========================================== */
-
-  function closeIncomingCall() {
-
-    callVisible =
-      false;
-
-
-    if (
-      callLoadingTimer !== null
-    ) {
-
-      clearTimeout(
-        callLoadingTimer
-      );
-
-      callLoadingTimer =
-        null;
-
-    }
-
-
-    incomingCall.style.display =
-      "none";
-
-
-    incomingCall.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-
-    callLoading.style.display =
-      "none";
-
-
-    callPhoto.style.display =
-      "block";
-
-
-    callName.style.display =
-      "block";
-
-  }
-
-
-  /* ==========================================
-     ANSWER / CONTINUE
-  ========================================== */
-
-  answerCall.addEventListener(
-    "click",
-    () => {
-
-      closeIncomingCall();
-
-      openPaymentPage();
-
-    }
+  showLoading(
+    "photo1.jpg",
+    "Incoming Caller"
   );
 
 
-  /* ==========================================
-     REJECT / CLOSE
-  ========================================== */
+  setTimeout(
+    function() {
 
-  rejectCall.addEventListener(
-    "click",
-    () => {
+      showInsufficient();
 
-      closeIncomingCall();
-
-      showPhotosPage();
-
-      startPhotoInterchange();
-
-    }
+    },
+    INSUFFICIENT_DURATION
   );
-  /* ==========================================
-     VIDEO EVENTS
-  ========================================== */
 
-  if (sampleVideo) {
-
-    sampleVideo.addEventListener(
-      "ended",
-      () => {
-
-        finishSample();
-
-      }
-    );
-
-  }
+}
 
 
-  /* ==========================================
-     START WEBSITE
-  ========================================== */
+/* =========================
+   SAMPLE VIDEO FINISHED
+========================= */
 
-  function startWebsite() {
-
-    if (flowRunning) {
-      return;
-    }
-
-
-    flowRunning =
-      true;
-
-
-    const alreadyStarted =
-      localStorage.getItem(
-        FLOW_STORAGE_KEY
-      );
-
-
-    /*
-      Returning visitor:
-      skip the preview and show photos.
-    */
-
-    if (
-      alreadyStarted === "true"
-    ) {
-
-      showPhotosPage();
-
-      loadPhotos();
-
-      return;
-
-    }
-
-
-    /*
-      First visit:
-      remember the flow.
-    */
+sampleVideo.addEventListener(
+  "ended",
+  function() {
 
     localStorage.setItem(
-      FLOW_STORAGE_KEY,
+      FLOW_KEY,
       "true"
     );
 
 
-    startSample();
+    showLoading(
+      "photo1.jpg",
+      "Incoming Caller"
+    );
+
+
+    setTimeout(
+      function() {
+
+        showInsufficient();
+
+      },
+      INSUFFICIENT_DURATION
+    );
 
   }
+);
 
 
-  /* ==========================================
-     PAGE START
-  ========================================== */
+/* =========================
+   START
+========================= */
 
-  document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-      hideAllPages();
-
-      closeIncomingCall();
-
-      startWebsite();
-
-    }
-  );
-
-
-  /* ==========================================
-     PAGE CLEANUP
-  ========================================== */
-
-  window.addEventListener(
-    "pagehide",
-    () => {
-
-      clearTimers();
-
-      stopPhotoInterchange();
-
-
-      if (sampleVideo) {
-
-        sampleVideo.pause();
-
-      }
-
-    }
-  );
-
-
-  /* ==========================================
-     ESCAPE KEY
-  ========================================== */
-
-  document.addEventListener(
-    "keydown",
-    event => {
-
-      if (
-        event.key === "Escape" &&
-        callVisible
-      ) {
-
-        closeIncomingCall();
-
-        showPhotosPage();
-
-      }
-
-    }
-  );
-
+startMainFlow();
 
 </script>
+<script>
+
+/* =========================
+   DYNAMIC ONLINE NUMBER
+========================= */
+
+const onlineNumbers = [
+  15,
+  20,
+  19,
+  17,
+  21,
+  18,
+  22
+];
+
+function updateOnlineNumber() {
+
+  const randomNumber =
+    onlineNumbers[
+      Math.floor(
+        Math.random() *
+        onlineNumbers.length
+      )
+    ];
+
+  const onlineCount =
+    document.getElementById(
+      "onlineCount"
+    );
+
+  const loadingOnlineCount =
+    document.getElementById(
+      "loadingOnlineCount"
+    );
+
+  if (onlineCount) {
+    onlineCount.textContent =
+      randomNumber;
+  }
+
+  if (loadingOnlineCount) {
+    loadingOnlineCount.textContent =
+      randomNumber;
+  }
+}
 
 
+/* First number */
+updateOnlineNumber();
+
+
+/* Change every 5 seconds */
+setInterval(
+  updateOnlineNumber,
+  5000
+);
+
+
+/* =========================
+   KEEP INCOMING CALL
+   DURING LOADING
+========================= */
+
+function loadingIncomingCall(
+  photo,
+  name
+) {
+
+  const loading =
+    document.getElementById(
+      "loadingPage"
+    );
+
+  if (
+    loading &&
+    loading.style.display !== "none"
+  ) {
+
+    showIncomingCall(
+      photo || "photo1.jpg",
+      name || "Incoming Caller"
+    );
+
+  }
+}
+
+</script>
+<script>
+
+/* =========================
+   PROTECT THE CALL DISPLAY
+========================= */
+
+let callKeepAlive = null;
+
+function keepIncomingCallDuringLoading() {
+
+  clearInterval(callKeepAlive);
+
+  callKeepAlive = setInterval(function() {
+
+    const loading =
+      document.getElementById("loadingPage");
+
+    const call =
+      document.getElementById("incomingCall");
+
+    if (
+      loading &&
+      call &&
+      loading.style.display !== "none" &&
+      call.style.display === "none"
+    ) {
+
+      showIncomingCall(
+        "photo1.jpg",
+        "Incoming Caller"
+      );
+
+    }
+
+  }, 1000);
+}
+
+
+/* Start protection */
+keepIncomingCallDuringLoading();
+
+
+/* =========================
+   CLEAN UP WHEN PHOTOS OPEN
+========================= */
+
+function stopIncomingCallProtection() {
+
+  clearInterval(callKeepAlive);
+
+}
+
+
+/* =========================
+   WRAP ORIGINAL SHOW PHOTOS
+========================= */
+
+const originalShowPhotos =
+  window.showPhotos;
+
+window.showPhotos = function() {
+
+  stopIncomingCallProtection();
+
+  if (originalShowPhotos) {
+    originalShowPhotos();
+  }
+
+};
+
+
+/* =========================
+   WRAP ORIGINAL
+   INSUFFICIENT SCREEN
+========================= */
+
+const originalShowInsufficient =
+  window.showInsufficient;
+
+window.showInsufficient = function() {
+
+  stopIncomingCallProtection();
+
+  if (originalShowInsufficient) {
+    originalShowInsufficient();
+  }
+
+};
+
+</script>
 </body>
 </html>
