@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Live Referral</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -17,339 +23,541 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100%;
-  font-family: Arial, sans-serif;
   background: #000;
   color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 button {
   font-family: inherit;
 }
 
+
 /* =========================
-   SAMPLE VIDEO
+   SAMPLE PAGE
 ========================= */
 
 #samplePage {
+
   width: 100%;
   min-height: 100vh;
+
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
+
   padding: 15px;
+
   background: #000;
 }
 
 #sampleVideo {
+
   width: 100%;
   max-width: 520px;
+
   max-height: 80vh;
+
   border-radius: 14px;
+
   background: #000;
+
   object-fit: contain;
 }
 
 .sample-title {
+
   margin-top: 12px;
+
   font-size: 18px;
+
   font-weight: 700;
 }
 
+
 /* =========================
-   LOADING
+   LOADING PAGE
 ========================= */
 
 #loadingPage {
+
   display: none;
+
+  width: 100%;
   min-height: 100vh;
+
   align-items: center;
   justify-content: center;
+
   flex-direction: column;
+
   text-align: center;
+
   padding: 20px;
+
+  background: #000;
 }
 
 .loader {
+
   width: 48px;
   height: 48px;
+
   border-radius: 50%;
+
   border: 4px solid #444;
+
   border-top-color: #fff;
+
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
+
   to {
     transform: rotate(360deg);
   }
+
 }
 
 .loading-text {
+
   margin-top: 15px;
+
   font-size: 16px;
 }
+
 
 /* =========================
    ONLINE STATUS
 ========================= */
 
 .online-status {
+
   font-size: 15px;
+
   font-weight: 700;
 }
 
 .live-dot {
+
   display: inline-block;
+
   width: 9px;
   height: 9px;
+
   margin-right: 5px;
+
   border-radius: 50%;
+
   background: #20c55a;
+
   animation: liveBlink 1s infinite;
 }
 
 @keyframes liveBlink {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
 
   50% {
     opacity: .25;
   }
+
 }
+
 
 /* =========================
    INSUFFICIENT MINUTES
 ========================= */
 
 #insufficientPage {
+
   display: none;
+
   min-height: 100vh;
+
   align-items: center;
   justify-content: center;
+
   padding: 20px;
+
   text-align: center;
+
+  background: #000;
 }
 
 .insufficient-box {
+
   width: 100%;
+
   max-width: 400px;
+
   padding: 25px;
+
   border-radius: 16px;
+
   background: #1d1d1d;
 }
 
 .insufficient-box h2 {
+
   margin-top: 0;
+
 }
 
 .insufficient-box button {
+
   border: 0;
+
   padding: 12px 28px;
+
   border-radius: 8px;
+
   background: #fff;
+
   color: #111;
+
   font-weight: 700;
+
   cursor: pointer;
 }
 
+
 /* =========================
-   PHOTOS
+   PHOTOS PAGE
 ========================= */
 
 #photosPage {
+
   display: none;
+
   min-height: 100vh;
+
   padding: 15px;
+
   background: #111;
 }
 
 .top-bar {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   margin-bottom: 15px;
 }
 
 .photo-grid {
+
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
   gap: 12px;
 }
 
 .photo-card {
+
   position: relative;
+
   overflow: hidden;
+
   border-radius: 14px;
+
   background: #222;
+
   cursor: pointer;
 }
 
 .photo-card img {
+
   display: block;
+
   width: 100%;
+
   height: 230px;
+
   object-fit: cover;
 }
 
 .live-badge {
+
   position: absolute;
+
   top: 9px;
   left: 9px;
+
   padding: 5px 9px;
+
   border-radius: 7px;
+
   background: #e53935;
+
   color: #fff;
+
   font-size: 11px;
+
   font-weight: 800;
 }
 
 .photo-name {
+
   padding: 9px;
+
   font-size: 14px;
+
   font-weight: 700;
 }
+
 
 /* =========================
    INCOMING VIDEO CALL
 ========================= */
 
 .incoming-call {
+
   position: fixed;
+
   inset: 0;
+
   z-index: 99999;
+
   display: none;
+
   align-items: center;
+
   justify-content: center;
+
   flex-direction: column;
+
   overflow: hidden;
+
   background: #111;
 }
 
 .incoming-call-bg {
+
   position: absolute;
+
   inset: -25px;
+
   background-position: center;
+
   background-size: cover;
-  filter: blur(20px) brightness(.32);
+
+  filter:
+    blur(20px)
+    brightness(.32);
+
   transform: scale(1.12);
 }
 
 .caller-box {
+
   position: relative;
+
   z-index: 2;
+
   width: 100%;
+
   text-align: center;
 }
 
 .caller-photo-wrap {
+
   position: relative;
+
   width: 155px;
   height: 155px;
-  margin: 0 auto 28px;
+
+  margin:
+    0 auto 28px;
 }
 
 .caller-photo {
+
   width: 155px;
   height: 155px;
+
   object-fit: cover;
+
   border: 4px solid #fff;
+
   border-radius: 50%;
-  animation: callerZoom 3s ease-in-out infinite;
+
+  animation:
+    callerZoom 3s ease-in-out infinite;
 }
 
 .call-ring {
+
   position: absolute;
+
   inset: -15px;
-  border: 2px solid rgba(255,255,255,.7);
+
+  border:
+    2px solid
+    rgba(255,255,255,.7);
+
   border-radius: 50%;
-  animation: ringPulse 2s infinite;
+
+  animation:
+    ringPulse 2s infinite;
 }
 
 .call-ring:nth-child(2) {
+
   inset: -30px;
+
   animation-delay: .5s;
 }
 
 @keyframes ringPulse {
+
   0% {
+
     opacity: .8;
+
     transform: scale(.8);
+
   }
 
   100% {
+
     opacity: 0;
+
     transform: scale(1.18);
+
   }
+
 }
 
 @keyframes callerZoom {
-  0%, 100% {
+
+  0%,
+  100% {
+
     transform: scale(1);
+
   }
 
   50% {
+
     transform: scale(1.06);
+
   }
+
 }
 
 .caller-name {
+
   font-size: 27px;
+
   font-weight: 700;
 }
 
 .call-title {
+
   margin-top: 8px;
+
   font-size: 14px;
+
   letter-spacing: 1.5px;
+
   font-weight: 700;
 }
 
 .call-ringing {
+
   margin-top: 8px;
+
   font-size: 14px;
+
   opacity: .8;
 }
 
 .call-buttons {
+
   position: relative;
+
   z-index: 3;
+
   display: flex;
+
   gap: 55px;
+
   margin-top: 55px;
 }
 
 .call-btn {
+
   width: 66px;
   height: 66px;
+
   border: 0;
+
   border-radius: 50%;
+
   color: #fff;
+
   font-size: 26px;
+
   cursor: pointer;
 }
 
 .decline-btn {
+
   background: #e53935;
 }
 
 .answer-btn {
+
   background: #20c55a;
 }
 
+
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 480px) {
+
   .photo-card img {
+
     height: 200px;
+
   }
 
   .caller-photo-wrap,
   .caller-photo {
+
     width: 140px;
     height: 140px;
+
   }
+
+  .call-buttons {
+
+    gap: 45px;
+
+  }
+
 }
+
 </style>
+
 </head>
 <body>
 
@@ -392,9 +600,15 @@ button {
   </div>
 
   <p class="online-status">
+
     <span class="live-dot"></span>
-    <span id="loadingOnlineCount">19</span>
+
+    <span id="loadingOnlineCount">
+      19
+    </span>
+
     online
+
   </p>
 
 </section>
@@ -430,7 +644,7 @@ button {
 
 
 <!-- =========================
-     PHOTOS PAGE
+     LIVE PHOTOS
 ========================= -->
 
 <section id="photosPage">
@@ -468,6 +682,7 @@ button {
   id="incomingCall"
   class="incoming-call">
 
+
   <div
     id="callerBg"
     class="incoming-call-bg">
@@ -476,11 +691,13 @@ button {
 
   <div class="caller-box">
 
+
     <div class="caller-photo-wrap">
 
       <div class="call-ring"></div>
 
       <div class="call-ring"></div>
+
 
       <img
         id="callerPhoto"
@@ -518,6 +735,7 @@ button {
 
   <div class="call-buttons">
 
+
     <button
       id="rejectCall"
       class="call-btn decline-btn"
@@ -539,6 +757,7 @@ button {
 
     </button>
 
+
   </div>
 
 </div>
@@ -548,10 +767,10 @@ button {
    SETTINGS
 ========================= */
 
-const SAMPLE_DURATION = 20000;
 const INSUFFICIENT_DURATION = 2000;
 
-const FLOW_KEY = "myReferralFlowStarted";
+const FLOW_KEY =
+  "myReferralFlowStarted";
 
 const MAX_PHOTOS = 24;
 
@@ -610,6 +829,7 @@ const rejectCall =
 ========================= */
 
 const photoNames = [
+
   "Cute",
   "Becky",
   "Dorry",
@@ -634,27 +854,32 @@ const photoNames = [
   "Cindy",
   "Fiona",
   "Fellow"
+
 ];
 
 
 /* =========================
-   HELPER
+   HIDE ALL PAGES
 ========================= */
 
 function hideAllPages() {
 
-  samplePage.style.display = "none";
+  samplePage.style.display =
+    "none";
 
-  loadingPage.style.display = "none";
+  loadingPage.style.display =
+    "none";
 
-  insufficientPage.style.display = "none";
+  insufficientPage.style.display =
+    "none";
 
-  photosPage.style.display = "none";
+  photosPage.style.display =
+    "none";
 }
 
 
 /* =========================
-   INCOMING CALL
+   SHOW INCOMING CALL
 ========================= */
 
 function showIncomingCall(
@@ -667,20 +892,27 @@ function showIncomingCall(
   callerBg.style.backgroundImage =
     `url("${photo}")`;
 
-  callerName.textContent = name;
+  callerName.textContent =
+    name;
 
-  incomingCall.style.display = "flex";
-}
-
-
-function hideIncomingCall() {
-
-  incomingCall.style.display = "none";
+  incomingCall.style.display =
+    "flex";
 }
 
 
 /* =========================
-   LOADING
+   HIDE INCOMING CALL
+========================= */
+
+function hideIncomingCall() {
+
+  incomingCall.style.display =
+    "none";
+}
+
+
+/* =========================
+   SHOW LOADING
 ========================= */
 
 function showLoading(
@@ -690,9 +922,13 @@ function showLoading(
 
   hideAllPages();
 
-  loadingPage.style.display = "flex";
+  loadingPage.style.display =
+    "flex";
 
-  showIncomingCall(photo, name);
+  showIncomingCall(
+    photo,
+    name
+  );
 }
 
 
@@ -706,12 +942,13 @@ function showInsufficient() {
 
   hideAllPages();
 
-  insufficientPage.style.display = "flex";
+  insufficientPage.style.display =
+    "flex";
 }
 
 
 /* =========================
-   SHOW PHOTOS
+   SHOW LIVE PHOTOS
 ========================= */
 
 function showPhotos() {
@@ -720,14 +957,15 @@ function showPhotos() {
 
   hideAllPages();
 
-  photosPage.style.display = "block";
+  photosPage.style.display =
+    "block";
 
   loadPhotos();
 }
 
 
 /* =========================
-   LOAD 24 PHOTOS
+   LOAD PHOTOS
 ========================= */
 
 function loadPhotos() {
@@ -758,7 +996,9 @@ function loadPhotos() {
         src="photo${i}.jpg"
         alt="${name}"
         loading="lazy"
-        onerror="this.style.display='none'"
+        onerror="
+          this.style.display='none'
+        "
       >
 
       <div class="live-badge">
@@ -784,12 +1024,14 @@ function loadPhotos() {
 
 
     photoGrid.appendChild(card);
+
   }
+
 }
 
 
 /* =========================
-   ANSWER BUTTON
+   ANSWER CALL
 ========================= */
 
 answerCall.addEventListener(
@@ -803,7 +1045,7 @@ answerCall.addEventListener(
 
 
 /* =========================
-   DECLINE BUTTON
+   DECLINE CALL
 ========================= */
 
 rejectCall.addEventListener(
@@ -832,32 +1074,29 @@ continuePayment.addEventListener(
 
 
 /* =========================
-   START MAIN FLOW
+   MAIN FLOW
 ========================= */
 
 function startMainFlow() {
 
-  /*
-   New visitor:
-   show sample video first.
-  */
+  /* FIRST VISIT */
 
   if (
-    !localStorage.getItem(FLOW_KEY)
+    !localStorage.getItem(
+      FLOW_KEY
+    )
   ) {
 
     hideAllPages();
 
-    samplePage.style.display = "flex";
+    samplePage.style.display =
+      "flex";
 
     return;
   }
 
 
-  /*
-   Returning visitor:
-   skip sample.
-  */
+  /* RETURNING VISITOR */
 
   showLoading(
     "photo1.jpg",
@@ -870,15 +1109,25 @@ function startMainFlow() {
 
       showInsufficient();
 
+
+      setTimeout(
+        function() {
+
+          showPhotos();
+
+        },
+        INSUFFICIENT_DURATION
+      );
+
     },
-    INSUFFICIENT_DURATION
+    2000
   );
 
 }
 
 
 /* =========================
-   SAMPLE VIDEO FINISHED
+   SAMPLE FINISHED
 ========================= */
 
 sampleVideo.addEventListener(
@@ -902,8 +1151,18 @@ sampleVideo.addEventListener(
 
         showInsufficient();
 
+
+        setTimeout(
+          function() {
+
+            showPhotos();
+
+          },
+          INSUFFICIENT_DURATION
+        );
+
       },
-      INSUFFICIENT_DURATION
+      2000
     );
 
   }
@@ -925,13 +1184,14 @@ startMainFlow();
 
 const onlineNumbers = [
   15,
-  20,
-  19,
   17,
-  21,
   18,
+  19,
+  20,
+  21,
   22
 ];
+
 
 function updateOnlineNumber() {
 
@@ -943,33 +1203,44 @@ function updateOnlineNumber() {
       )
     ];
 
+
   const onlineCount =
     document.getElementById(
       "onlineCount"
     );
+
 
   const loadingOnlineCount =
     document.getElementById(
       "loadingOnlineCount"
     );
 
+
   if (onlineCount) {
+
     onlineCount.textContent =
       randomNumber;
+
   }
 
+
   if (loadingOnlineCount) {
+
     loadingOnlineCount.textContent =
       randomNumber;
+
   }
+
 }
 
 
-/* First number */
+/* Initial number */
+
 updateOnlineNumber();
 
 
 /* Change every 5 seconds */
+
 setInterval(
   updateOnlineNumber,
   5000
@@ -977,122 +1248,149 @@ setInterval(
 
 
 /* =========================
-   KEEP INCOMING CALL
+   KEEP CALL AVAILABLE
    DURING LOADING
 ========================= */
 
-function loadingIncomingCall(
-  photo,
-  name
-) {
+function keepIncomingCallDuringLoading() {
 
-  const loading =
-    document.getElementById(
-      "loadingPage"
-    );
+  setInterval(
+    function() {
 
-  if (
-    loading &&
-    loading.style.display !== "none"
-  ) {
+      const loading =
+        document.getElementById(
+          "loadingPage"
+        );
 
-    showIncomingCall(
-      photo || "photo1.jpg",
-      name || "Incoming Caller"
-    );
 
-  }
+      const call =
+        document.getElementById(
+          "incomingCall"
+        );
+
+
+      if (
+        loading &&
+        call &&
+        loading.style.display !== "none" &&
+        call.style.display === "none"
+      ) {
+
+        showIncomingCall(
+          "photo1.jpg",
+          "Incoming Caller"
+        );
+
+      }
+
+    },
+    1000
+  );
+
 }
+
+
+/* Start loading-call protection */
+
+keepIncomingCallDuringLoading();
 
 </script>
 <script>
 
 /* =========================
-   PROTECT THE CALL DISPLAY
+   MAKE PHOTO CLICKS WORK
 ========================= */
 
-let callKeepAlive = null;
+function setupPhotoClicks() {
 
-function keepIncomingCallDuringLoading() {
+  const cards =
+    document.querySelectorAll(
+      ".photo-card"
+    );
 
-  clearInterval(callKeepAlive);
+  cards.forEach(function(card) {
 
-  callKeepAlive = setInterval(function() {
+    card.onclick = function() {
 
-    const loading =
-      document.getElementById("loadingPage");
+      window.location.href =
+        "payment.html";
 
-    const call =
-      document.getElementById("incomingCall");
+    };
+
+  });
+
+}
+
+
+/* =========================
+   REFRESH PHOTO CLICKS
+========================= */
+
+const originalLoadPhotos =
+  window.loadPhotos;
+
+window.loadPhotos = function() {
+
+  if (originalLoadPhotos) {
+
+    originalLoadPhotos();
+
+  }
+
+  setupPhotoClicks();
+
+};
+
+
+/* =========================
+   REFERRAL CODE
+========================= */
+
+const referralParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const referralCode =
+  referralParams.get("ref");
+
+
+if (referralCode) {
+
+  localStorage.setItem(
+    "referralCode",
+    referralCode
+  );
+
+}
+
+
+/* =========================
+   PREVENT EMPTY PHOTO PAGE
+========================= */
+
+setTimeout(
+  function() {
+
+    const grid =
+      document.getElementById(
+        "photoGrid"
+      );
 
     if (
-      loading &&
-      call &&
-      loading.style.display !== "none" &&
-      call.style.display === "none"
+      photosPage.style.display !==
+      "none" &&
+      grid &&
+      grid.children.length === 0
     ) {
 
-      showIncomingCall(
-        "photo1.jpg",
-        "Incoming Caller"
-      );
+      loadPhotos();
 
     }
 
-  }, 1000);
-}
-
-
-/* Start protection */
-keepIncomingCallDuringLoading();
-
-
-/* =========================
-   CLEAN UP WHEN PHOTOS OPEN
-========================= */
-
-function stopIncomingCallProtection() {
-
-  clearInterval(callKeepAlive);
-
-}
-
-
-/* =========================
-   WRAP ORIGINAL SHOW PHOTOS
-========================= */
-
-const originalShowPhotos =
-  window.showPhotos;
-
-window.showPhotos = function() {
-
-  stopIncomingCallProtection();
-
-  if (originalShowPhotos) {
-    originalShowPhotos();
-  }
-
-};
-
-
-/* =========================
-   WRAP ORIGINAL
-   INSUFFICIENT SCREEN
-========================= */
-
-const originalShowInsufficient =
-  window.showInsufficient;
-
-window.showInsufficient = function() {
-
-  stopIncomingCallProtection();
-
-  if (originalShowInsufficient) {
-    originalShowInsufficient();
-  }
-
-};
+  },
+  500
+);
 
 </script>
 </body>
