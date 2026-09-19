@@ -35,22 +35,16 @@ button {
 }
 
 
-/* =========================
-   SAMPLE PAGE
-========================= */
+/* SAMPLE */
 
 #samplePage {
   width: 100%;
   min-height: 100vh;
-
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   padding: 15px;
-
   background: #000;
 }
 
@@ -58,62 +52,45 @@ button {
   width: 100%;
   max-width: 520px;
   max-height: 80vh;
-
   border-radius: 14px;
-
   background: #000;
-
   object-fit: contain;
 }
 
 .sample-title {
   margin-top: 12px;
-
   font-size: 18px;
   font-weight: 700;
 }
 
 
-/* =========================
-   LOADING
-========================= */
+/* LOADING */
 
 #loadingPage {
   display: none;
-
   width: 100%;
   min-height: 100vh;
-
   align-items: center;
   justify-content: center;
-
   flex-direction: column;
-
   text-align: center;
-
   padding: 20px;
-
   background: #000;
 }
 
 .loader {
   width: 48px;
   height: 48px;
-
   border-radius: 50%;
-
   border: 4px solid #444;
   border-top-color: #fff;
-
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-
   to {
     transform: rotate(360deg);
   }
-
 }
 
 .loading-text {
@@ -122,9 +99,7 @@ button {
 }
 
 
-/* =========================
-   ONLINE STATUS
-========================= */
+/* ONLINE */
 
 .online-status {
   font-size: 15px;
@@ -133,23 +108,17 @@ button {
 
 .live-dot {
   display: inline-block;
-
   width: 9px;
   height: 9px;
-
   margin-right: 5px;
-
   border-radius: 50%;
-
   background: #20c55a;
-
   animation: liveBlink 1s infinite;
 }
 
 @keyframes liveBlink {
 
-  0%,
-  100% {
+  0%, 100% {
     opacity: 1;
   }
 
@@ -160,34 +129,24 @@ button {
 }
 
 
-/* =========================
-   INSUFFICIENT MINUTES
-========================= */
+/* INSUFFICIENT */
 
 #insufficientPage {
   display: none;
-
   width: 100%;
   min-height: 100vh;
-
   align-items: center;
   justify-content: center;
-
   padding: 20px;
-
   text-align: center;
-
   background: #000;
 }
 
 .insufficient-box {
   width: 100%;
   max-width: 400px;
-
   padding: 25px;
-
   border-radius: 16px;
-
   background: #1d1d1d;
 }
 
@@ -197,144 +156,98 @@ button {
 
 .insufficient-box button {
   border: 0;
-
   padding: 12px 28px;
-
   border-radius: 8px;
-
   background: #fff;
   color: #111;
-
   font-weight: 700;
-
   cursor: pointer;
 }
 
 
-/* =========================
-   LIVE PHOTOS
-========================= */
+/* LIVE PHOTOS */
 
 #photosPage {
   display: none;
-
   min-height: 100vh;
-
   padding: 15px;
-
   background: #111;
 }
 
 .top-bar {
   display: flex;
-
   align-items: center;
   justify-content: space-between;
-
   margin-bottom: 15px;
 }
 
 .photo-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
 .photo-card {
   position: relative;
-
   overflow: hidden;
-
   border-radius: 14px;
-
   background: #222;
-
   cursor: pointer;
 }
 
 .photo-card img {
   display: block;
-
   width: 100%;
   height: 230px;
-
   object-fit: cover;
 }
 
 .live-badge {
   position: absolute;
-
   top: 9px;
   left: 9px;
-
   padding: 5px 9px;
-
   border-radius: 7px;
-
   background: #e53935;
-
   color: #fff;
-
   font-size: 11px;
   font-weight: 800;
 }
 
 .photo-name {
   padding: 9px;
-
   font-size: 14px;
   font-weight: 700;
 }
 
 
-/* =========================
-   INCOMING VIDEO CALL
-========================= */
+/* INCOMING CALL */
 
 .incoming-call {
   position: fixed;
-
   inset: 0;
-
   z-index: 99999;
-
   display: none;
-
   align-items: center;
   justify-content: center;
-
   flex-direction: column;
-
   overflow: hidden;
-
   background: #050505;
 }
 
 .incoming-call-bg {
   position: absolute;
-
   inset: -35px;
-
   background-position: center;
   background-size: cover;
-
-  filter:
-    blur(25px)
-    brightness(.25);
-
+  filter: blur(25px) brightness(.25);
   transform: scale(1.15);
 }
 
 .incoming-call::after {
   content: "";
-
   position: absolute;
-
   inset: 0;
-
   background:
     linear-gradient(
       to bottom,
@@ -346,60 +259,41 @@ button {
 
 .caller-box {
   position: relative;
-
   z-index: 2;
-
   width: 100%;
-
   text-align: center;
-
   padding-top: 5vh;
 }
 
 .caller-photo-wrap {
   position: relative;
-
   width: 165px;
   height: 165px;
-
   margin: 0 auto 30px;
 }
 
 .caller-photo {
   width: 165px;
   height: 165px;
-
   object-fit: cover;
-
   border: 3px solid rgba(255,255,255,.95);
-
   border-radius: 50%;
-
   box-shadow:
     0 0 35px rgba(255,255,255,.18);
-
   animation:
     callerZoom 3s ease-in-out infinite;
 }
 
 .call-ring {
   position: absolute;
-
   inset: -14px;
-
-  border:
-    2px solid
-    rgba(255,255,255,.65);
-
+  border: 2px solid rgba(255,255,255,.65);
   border-radius: 50%;
-
-  animation:
-    ringPulse 2s infinite;
+  animation: ringPulse 2s infinite;
 }
 
 .call-ring:nth-child(2) {
   inset: -30px;
-
   animation-delay: .55s;
 }
 
@@ -419,8 +313,7 @@ button {
 
 @keyframes callerZoom {
 
-  0%,
-  100% {
+  0%, 100% {
     transform: scale(1);
   }
 
@@ -432,85 +325,58 @@ button {
 
 .caller-name {
   font-size: 29px;
-
   font-weight: 700;
-
   text-shadow:
     0 2px 10px rgba(0,0,0,.6);
 }
 
 .call-title {
   margin-top: 9px;
-
   font-size: 13px;
-
   letter-spacing: 1.8px;
-
   font-weight: 700;
-
   opacity: .9;
 }
 
 .call-ringing {
   margin-top: 9px;
-
   font-size: 14px;
-
   opacity: .8;
 }
 
 
-/* =========================
-   CALL BUTTONS
-========================= */
+/* CALL BUTTONS */
 
 .call-buttons {
   position: absolute;
-
   z-index: 3;
-
   bottom: 9vh;
-
   left: 0;
   right: 0;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 70px;
 }
 
 .call-action {
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   gap: 9px;
 }
 
 .call-btn {
   width: 68px;
   height: 68px;
-
   border: 0;
-
   border-radius: 50%;
-
   color: #fff;
-
   font-size: 27px;
-
   cursor: pointer;
-
   box-shadow:
     0 8px 25px rgba(0,0,0,.35);
-
-  transition:
-    transform .15s ease;
+  transition: transform .15s ease;
 }
 
 .call-btn:active {
@@ -527,16 +393,12 @@ button {
 
 .call-label {
   font-size: 12px;
-
   font-weight: 600;
-
   opacity: .9;
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media (max-width: 480px) {
 
@@ -565,10 +427,6 @@ button {
 </head>
 <body>
 
-<!-- =========================
-     SAMPLE VIDEO
-========================= -->
-
 <section id="samplePage">
 
   <video
@@ -590,10 +448,6 @@ button {
 
 </section>
 
-
-<!-- =========================
-     LOADING PAGE
-========================= -->
 
 <section id="loadingPage">
 
@@ -617,10 +471,6 @@ button {
 
 </section>
 
-
-<!-- =========================
-     INSUFFICIENT MINUTES
-========================= -->
 
 <section id="insufficientPage">
 
@@ -646,10 +496,6 @@ button {
 
 </section>
 
-
-<!-- =========================
-     LIVE PHOTOS
-========================= -->
 
 <section id="photosPage">
 
@@ -678,14 +524,9 @@ button {
 </section>
 
 
-<!-- =========================
-     INCOMING VIDEO CALL
-========================= -->
-
 <div
   id="incomingCall"
   class="incoming-call">
-
 
   <div
     id="callerBg"
@@ -695,13 +536,11 @@ button {
 
   <div class="caller-box">
 
-
     <div class="caller-photo-wrap">
 
       <div class="call-ring"></div>
 
       <div class="call-ring"></div>
-
 
       <img
         id="callerPhoto"
@@ -722,16 +561,12 @@ button {
 
 
     <div class="call-title">
-
       INCOMING VIDEO CALL
-
     </div>
 
 
     <div class="call-ringing">
-
       Ringing...
-
     </div>
 
   </div>
@@ -739,16 +574,12 @@ button {
 
   <div class="call-buttons">
 
-
-    <!-- DECLINE -->
-
     <div class="call-action">
 
       <button
         id="rejectCall"
         class="call-btn decline-btn"
-        type="button"
-        aria-label="Decline">
+        type="button">
 
         ☎
 
@@ -761,15 +592,12 @@ button {
     </div>
 
 
-    <!-- ANSWER -->
-
     <div class="call-action">
 
       <button
         id="answerCall"
         class="call-btn answer-btn"
-        type="button"
-        aria-label="Answer">
+        type="button">
 
         ☎
 
@@ -781,15 +609,10 @@ button {
 
     </div>
 
-
   </div>
 
 </div>
 <script>
-
-/* =========================
-   SETTINGS
-========================= */
 
 const FLOW_KEY =
   "myReferralFlowStarted";
@@ -797,10 +620,6 @@ const FLOW_KEY =
 const INSUFFICIENT_DURATION =
   2000;
 
-
-/* =========================
-   PAGE ELEMENTS
-========================= */
 
 const samplePage =
   document.getElementById("samplePage");
@@ -824,10 +643,6 @@ const continuePayment =
   document.getElementById("continuePayment");
 
 
-/* =========================
-   CALL ELEMENTS
-========================= */
-
 const incomingCall =
   document.getElementById("incomingCall");
 
@@ -847,26 +662,14 @@ const rejectCall =
   document.getElementById("rejectCall");
 
 
-/* =========================
-   GITHUB SETTINGS
-========================= */
-
 const GITHUB_API =
   "https://api.github.com/repos/agnesweb2026/My-referral-website/contents/";
 
-
-/* =========================
-   PHOTO DATA
-========================= */
 
 let availablePhotos = [];
 
 let lastCallerPhoto = "";
 
-
-/* =========================
-   NAMES
-========================= */
 
 const photoNames = [
   "Cute",
@@ -896,35 +699,22 @@ const photoNames = [
 ];
 
 
-/* =========================
-   HIDE ALL PAGES
-========================= */
-
 function hideAllPages() {
 
-  samplePage.style.display =
-    "none";
+  samplePage.style.display = "none";
 
-  loadingPage.style.display =
-    "none";
+  loadingPage.style.display = "none";
 
-  insufficientPage.style.display =
-    "none";
+  insufficientPage.style.display = "none";
 
-  photosPage.style.display =
-    "none";
+  photosPage.style.display = "none";
+
 }
 
 
-/* =========================
-   SHUFFLE
-========================= */
-
 function shuffleArray(array) {
 
-  const result =
-    [...array];
-
+  const result = [...array];
 
   for (
     let i = result.length - 1;
@@ -937,26 +727,20 @@ function shuffleArray(array) {
         Math.random() * (i + 1)
       );
 
-
     [
       result[i],
       result[j]
-    ] =
-    [
+    ] = [
       result[j],
       result[i]
     ];
 
   }
 
-
   return result;
+
 }
 
-
-/* =========================
-   GET RANDOM PHOTO
-========================= */
 
 function getRandomPhoto() {
 
@@ -972,9 +756,6 @@ function getRandomPhoto() {
   let candidates =
     availablePhotos;
 
-
-  /* Try not to use the same
-     photo twice in a row */
 
   if (
     availablePhotos.length > 1 &&
@@ -994,7 +775,7 @@ function getRandomPhoto() {
   }
 
 
-  const randomIndex =
+  const index =
     Math.floor(
       Math.random() *
       candidates.length
@@ -1002,7 +783,7 @@ function getRandomPhoto() {
 
 
   const selected =
-    candidates[randomIndex];
+    candidates[index];
 
 
   lastCallerPhoto =
@@ -1010,12 +791,9 @@ function getRandomPhoto() {
 
 
   return selected;
+
 }
 
-
-/* =========================
-   SHOW INCOMING CALL
-========================= */
 
 function showIncomingCall() {
 
@@ -1024,60 +802,45 @@ function showIncomingCall() {
 
 
   if (!caller) {
-
     return;
-
   }
 
 
   callerPhoto.src =
     caller.url;
 
-
   callerBg.style.backgroundImage =
     `url("${caller.url}")`;
-
 
   callerName.textContent =
     caller.name;
 
-
   incomingCall.style.display =
     "flex";
+
 }
 
-
-/* =========================
-   HIDE CALL
-========================= */
 
 function hideIncomingCall() {
 
   incomingCall.style.display =
     "none";
+
 }
 
-
-/* =========================
-   LOAD PHOTOS FROM GITHUB
-========================= */
 
 async function getGitHubPhotos() {
 
   try {
 
     const response =
-      await fetch(
-        GITHUB_API
-      );
+      await fetch(GITHUB_API);
 
 
     if (!response.ok) {
-
       throw new Error(
         "GitHub request failed"
       );
-
     }
 
 
@@ -1118,21 +881,16 @@ async function getGitHubPhotos() {
       );
 
 
-    /* Randomize immediately */
-
     availablePhotos =
       shuffleArray(
         availablePhotos
       );
 
 
-    loadPhotos();
-
-
   } catch (error) {
 
     console.error(
-      "Could not load GitHub photos:",
+      "Could not load photos:",
       error
     );
 
@@ -1141,14 +899,9 @@ async function getGitHubPhotos() {
 }
 
 
-/* =========================
-   LOAD LIVE PHOTOS
-========================= */
-
 function loadPhotos() {
 
-  photoGrid.innerHTML =
-    "";
+  photoGrid.innerHTML = "";
 
 
   const shuffled =
@@ -1161,9 +914,7 @@ function loadPhotos() {
     function(photo) {
 
       const card =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
 
 
       card.className =
@@ -1200,19 +951,13 @@ function loadPhotos() {
       );
 
 
-      photoGrid.appendChild(
-        card
-      );
+      photoGrid.appendChild(card);
 
     }
   );
 
 }
 
-
-/* =========================
-   SHOW PHOTOS
-========================= */
 
 function showPhotos() {
 
@@ -1224,17 +969,10 @@ function showPhotos() {
     "block";
 
 
-  /* Shuffle again every
-     time Live Photos opens */
-
   loadPhotos();
 
 }
 
-
-/* =========================
-   SHOW LOADING
-========================= */
 
 function showLoading() {
 
@@ -1243,18 +981,10 @@ function showLoading() {
   loadingPage.style.display =
     "flex";
 
-
-  /* Every new loading gets
-     a new incoming caller */
-
   showIncomingCall();
 
 }
 
-
-/* =========================
-   SHOW INSUFFICIENT
-========================= */
 
 function showInsufficient() {
 
@@ -1266,31 +996,47 @@ function showInsufficient() {
     "flex";
 
 }
-
-
-/* =========================
-   ANSWER CALL
+      /* =========================
+   ANSWER
 ========================= */
 
 answerCall.addEventListener(
   "click",
   function() {
 
-    /* Answer means:
-       Insufficient Minutes first */
-
     hideIncomingCall();
 
-    showInsufficient();
+
+    /* Loading for 2 seconds */
+
+    hideAllPages();
+
+    loadingPage.style.display =
+      "flex";
 
 
     setTimeout(
       function() {
 
-        showPhotos();
+        /* Insufficient after
+           the 2-second loading */
+
+        showInsufficient();
+
+
+        /* Then Live Photos */
+
+        setTimeout(
+          function() {
+
+            showPhotos();
+
+          },
+          INSUFFICIENT_DURATION
+        );
 
       },
-      INSUFFICIENT_DURATION
+      2000
     );
 
   }
@@ -1298,17 +1044,17 @@ answerCall.addEventListener(
 
 
 /* =========================
-   DECLINE CALL
+   DECLINE
 ========================= */
 
 rejectCall.addEventListener(
   "click",
   function() {
 
+    hideIncomingCall();
+
     /* Decline skips
        Insufficient Minutes */
-
-    hideIncomingCall();
 
     showPhotos();
 
@@ -1317,7 +1063,7 @@ rejectCall.addEventListener(
 
 
 /* =========================
-   CONTINUE BUTTON
+   CONTINUE
 ========================= */
 
 continuePayment.addEventListener(
@@ -1332,12 +1078,32 @@ continuePayment.addEventListener(
 
 
 /* =========================
-   START FLOW
+   SAMPLE FINISHED
+========================= */
+
+sampleVideo.addEventListener(
+  "ended",
+  function() {
+
+    localStorage.setItem(
+      FLOW_KEY,
+      "true"
+    );
+
+
+    showLoading();
+
+  }
+);
+
+
+/* =========================
+   MAIN FLOW
 ========================= */
 
 function startMainFlow() {
 
-  /* First visit */
+  /* First visitor */
 
   if (
     !localStorage.getItem(
@@ -1363,27 +1129,7 @@ function startMainFlow() {
 
 
 /* =========================
-   SAMPLE FINISHED
-========================= */
-
-sampleVideo.addEventListener(
-  "ended",
-  function() {
-
-    localStorage.setItem(
-      FLOW_KEY,
-      "true"
-    );
-
-
-    showLoading();
-
-  }
-);
-
-
-/* =========================
-   LOAD PHOTOS FIRST
+   START AFTER PHOTOS LOAD
 ========================= */
 
 getGitHubPhotos()
@@ -1394,7 +1140,6 @@ getGitHubPhotos()
 
     }
   );
-
 
 </script>
 <script>
@@ -1455,12 +1200,8 @@ function updateOnlineNumber() {
 }
 
 
-/* First number */
-
 updateOnlineNumber();
 
-
-/* Change every 5 seconds */
 
 setInterval(
   updateOnlineNumber,
@@ -1469,7 +1210,7 @@ setInterval(
 
 
 /* =========================
-   REFERRAL CODE
+   REFERRAL
 ========================= */
 
 const referralParams =
@@ -1491,49 +1232,10 @@ if (referralCode) {
 
 }
 
-    </script>
-    <script>
 
 /* =========================
-   RE-SHUFFLE LIVE PHOTOS
-========================= */
-
-function refreshLivePhotos() {
-
-  if (
-    photosPage.style.display === "block"
-  ) {
-
-    loadPhotos();
-
-  }
-
-}
-
-
-/* =========================
-   NEW INCOMING CALL
-========================= */
-
-function startNewIncomingCall() {
-
-  hideIncomingCall();
-
-  setTimeout(
-    function() {
-
-      showIncomingCall();
-
-    },
-    200
-  );
-
-}
-
-
-/* =========================
-   REFRESH WHEN PAGE
-   BECOMES ACTIVE AGAIN
+   RESHUFFLE WHEN
+   PHOTOS BECOME ACTIVE
 ========================= */
 
 document.addEventListener(
@@ -1545,17 +1247,13 @@ document.addEventListener(
       photosPage.style.display === "block"
     ) {
 
-      refreshLivePhotos();
+      loadPhotos();
 
     }
 
   }
 );
 
-
-/* =========================
-   REFRESH ON WINDOW FOCUS
-========================= */
 
 window.addEventListener(
   "focus",
@@ -1565,41 +1263,12 @@ window.addEventListener(
       photosPage.style.display === "block"
     ) {
 
-      refreshLivePhotos();
+      loadPhotos();
 
     }
 
   }
 );
 
-
-/* =========================
-   REFERRAL PARAMETER
-========================= */
-
-const currentURL =
-  new URL(
-    window.location.href
-  );
-
-
-const currentReferral =
-  currentURL.searchParams.get(
-    "ref"
-  );
-
-
-if (currentReferral) {
-
-  localStorage.setItem(
-    "referralCode",
-    currentReferral
-  );
-
-}
-
-    </script>
-    </script>
-
-</body>
+</script></body>
 </html>
