@@ -204,7 +204,7 @@ body{
 
 
 /* =========================
-   BUSY
+   ROOM CLOSED
 ========================= */
 
 .busy-label{
@@ -350,9 +350,7 @@ body{
   background:#19d45b;
   box-shadow:0 0 20px rgba(0,255,100,.5);
 }
-
-
-/* =========================
+  /* =========================
    FIRST LIVE VIDEO
 ========================= */
 
@@ -573,6 +571,7 @@ body{
   </div>
 
 </div>
+
 <script>
 
 const GITHUB_OWNER =
@@ -605,8 +604,12 @@ const INSUFFICIENT_DURATION =
   2000;
 
 
+/*
+  ROOM CLOSED selection changes
+  every 5 minutes.
+*/
 const BUSY_CHANGE_DURATION =
-  5000;
+  300000;
 
 
 const BUSY_MESSAGE_DURATION =
@@ -694,20 +697,7 @@ let photosTimer = null;
 let photosSoundTimer = null;
 
 let busyTimer = null;
-
-
-/*
-  RED LIVE + VIDEO + SOUND
-  appears only once on this phone/browser.
-
-  localStorage means:
-  - reload does not reset it
-  - closing browser does not reset it
-  - reopening does not reset it
-*/
-
-
-let firstLiveCallAvailable =
+  let firstLiveCallAvailable =
   localStorage.getItem(
     "redLiveShown"
   ) !== "true";
@@ -793,7 +783,9 @@ function shuffleArray(array){
   return copy;
 
 }
-  async function loadPhotos(){
+
+
+async function loadPhotos(){
 
   try{
 
@@ -903,7 +895,8 @@ function shuffleArray(array){
 
 
 /*
-  Create a new random BUSY selection.
+  Select exactly 5 random rooms
+  to be ROOM CLOSED.
 */
 function createBusyIndexes(
   total
@@ -923,9 +916,7 @@ function createBusyIndexes(
   const busyCount =
     Math.min(
       total,
-      Math.floor(
-        Math.random() * 3
-      ) + 2
+      5
     );
 
 
@@ -1032,7 +1023,7 @@ function renderPhotos(){
           isBusy
           ? `
             <div class="busy-label">
-              BUSY
+              ROOM CLOSED
             </div>
           `
           : ""
@@ -1054,7 +1045,7 @@ function renderPhotos(){
 
 
             nameElement.textContent =
-              "BUSY";
+              "ROOM CLOSED";
 
 
             setTimeout(
@@ -1089,8 +1080,9 @@ function renderPhotos(){
 
 
   /*
-    Every 5 seconds the BUSY
-    photos are randomly changed.
+    Every 5 minutes the 5
+    ROOM CLOSED selections
+    are randomly changed.
   */
 
   busyTimer =
@@ -1110,157 +1102,17 @@ function renderPhotos(){
       BUSY_CHANGE_DURATION
     );
 
-  }
-  function chooseCaller(){
+          }
+  function updateOnlineNumber(){
 
-  if(!photos.length){
+  const number =
+    Math.floor(
+      Math.random() * 6
+    ) + 18;
 
-    return null;
 
-  }
-
-
-  let available =
-    photos;
-
-
-  if(currentCaller){
-
-    available =
-      photos.filter(
-        photo => {
-
-          return (
-            photo.url !==
-            currentCaller.url
-          );
-
-        }
-      );
-
-  }
-
-
-  if(!available.length){
-
-    available =
-      photos;
-
-  }
-
-
-  const caller =
-    available[
-      Math.floor(
-        Math.random() *
-        available.length
-      )
-    ];
-
-
-  currentCaller =
-    caller;
-
-
-  return caller;
-
-}
-
-
-function startCallVibration(){
-
-  if(
-    "vibrate" in navigator
-  ){
-
-    navigator.vibrate([
-      500,
-      300,
-      500,
-      300
-    ]);
-
-  }
-
-}
-
-
-function stopCallVibration(){
-
-  if(
-    "vibrate" in navigator
-  ){
-
-    navigator.vibrate(0);
-
-  }
-
-}
-
-
-function showIncomingCall(){
-
-  clearTimeout(
-    photosTimer
-  );
-
-
-  clearTimeout(
-    photosSoundTimer
-  );
-
-
-  clearTimeout(
-    busyTimer
-  );
-
-
-  stopCallVibration();
-
-
-  if(!photos.length){
-
-    setTimeout(
-      showIncomingCall,
-      1000
-    );
-
-    return;
-
-  }
-
-
-  const caller =
-    chooseCaller();
-
-
-  if(!caller){
-
-    return;
-
-  }
-
-
-  callerPhoto.src =
-    caller.url;
-
-
-  callerName.textContent =
-    caller.name;
-
-
-  callBackground.style.backgroundImage =
-    `url("${caller.url}")`;
-
-
-  hideAllPages();
-
-
-  incomingCall.style.display =
-    "flex";
-
-
-  startCallVibration();
+  onlineNumber.textContent =
+    number + " online";
 
 }
 
@@ -1271,24 +1123,16 @@ function showLivePhotos(){
     photosTimer
   );
 
-
   clearTimeout(
     photosSoundTimer
   );
-
 
   clearTimeout(
     busyTimer
   );
 
 
-  stopCallVibration();
-
-
   hideAllPages();
-
-
-  renderPhotos();
 
 
   photosPage.style.display =
@@ -1298,147 +1142,116 @@ function showLivePhotos(){
   updateOnlineNumber();
 
 
-  playPhotosBackgroundSound();
+  /*
+    Create the 24 rooms and
+    randomly close exactly 5.
+  */
+  renderPhotos();
 
 
   /*
-    Next call after 20 seconds.
+    Update online number
+    regularly.
   */
+  updateOnlineNumber();
 
+
+  /*
+    After the live-photo period,
+    show the incoming call.
+  */
   photosTimer =
     setTimeout(
       () => {
 
-        showIncomingCall();
+        if(
+          photosPage.style.display !==
+          "none"
+        ){
+
+          showIncomingCall();
+
+        }
 
       },
       PHOTOS_DURATION
     );
 
 }
-  function playPhotosBackgroundSound(){
-
-  liveSoundVideo.pause();
 
 
-  liveSoundVideo.currentTime =
-    0;
+function showIncomingCall(){
 
-
-  liveSoundVideo.muted =
-    false;
-
-
-  liveSoundVideo.volume =
-    1;
-
-
-  liveSoundScreen.style.display =
-    "none";
-
-
-  liveSoundVideo.play().catch(
-    error => {
-
-      console.log(
-        "Background sound blocked:",
-        error
-      );
-
-    }
+  clearTimeout(
+    photosTimer
   );
 
+  clearTimeout(
+    photosSoundTimer
+  );
 
-  photosSoundTimer =
-    setTimeout(
-      () => {
+  clearTimeout(
+    busyTimer
+  );
 
-        liveSoundVideo.pause();
-
-
-        liveSoundVideo.currentTime =
-          0;
-
-
-        liveSoundVideo.muted =
-          true;
-
-      },
-      PHOTOS_SOUND_DURATION
-    );
-
-}
-
-
-async function playFirstLiveCall(){
 
   hideAllPages();
 
 
-  liveSoundScreen.style.display =
-    "flex";
+  if(
+    photos.length === 0
+  ){
 
-
-  try{
-
-    liveSoundVideo.pause();
-
-
-    liveSoundVideo.currentTime =
-      0;
-
-
-    liveSoundVideo.muted =
-      false;
-
-
-    liveSoundVideo.volume =
-      1;
-
-
-    await liveSoundVideo.play();
-
-
-  }catch(error){
-
-    console.log(
-      "LIVE sound blocked:",
-      error
-    );
+    return;
 
   }
 
 
-  await new Promise(
-    resolve => {
-
-      setTimeout(
-        resolve,
-        FIRST_LIVE_DURATION
-      );
-
-    }
-  );
+  const callerIndex =
+    Math.floor(
+      Math.random() *
+      photos.length
+    );
 
 
-  liveSoundVideo.pause();
+  currentCaller =
+    photos[
+      callerIndex
+    ];
 
 
-  liveSoundVideo.currentTime =
-    0;
+  callerPhoto.src =
+    currentCaller.url;
 
 
-  liveSoundVideo.muted =
-    true;
+  callerName.textContent =
+    currentCaller.name;
 
 
-  liveSoundScreen.style.display =
-    "none";
+  callBackground.style.backgroundImage =
+    `url("${currentCaller.url}")`;
+
+
+  incomingCall.style.display =
+    "flex";
 
 }
 
 
-function showInsufficientMinutes(){
+function showInsufficient(){
+
+  clearTimeout(
+    photosTimer
+  );
+
+  clearTimeout(
+    photosSoundTimer
+  );
+
+  clearTimeout(
+    busyTimer
+  );
+
 
   hideAllPages();
 
@@ -1459,57 +1272,81 @@ function showInsufficientMinutes(){
 }
 
 
-answerButton.addEventListener(
-  "click",
-  async () => {
+function showLiveSound(){
 
-    stopCallVibration();
+  clearTimeout(
+    photosTimer
+  );
 
+  clearTimeout(
+    photosSoundTimer
+  );
 
-    /*
-      The special RED LIVE call
-      can happen only once.
-    */
-
-    if(
-      firstLiveCallAvailable
-    ){
-
-      firstLiveCallAvailable =
-        false;
+  clearTimeout(
+    busyTimer
+  );
 
 
-      localStorage.setItem(
-        "redLiveShown",
-        "true"
-      );
+  hideAllPages();
 
 
-      await playFirstLiveCall();
+  liveSoundScreen.style.display =
+    "flex";
 
 
-      showInsufficientMinutes();
+  try{
 
+    liveSoundVideo.currentTime =
+      0;
 
-      return;
+    liveSoundVideo.play();
 
-    }
+  }catch(error){
 
-
-    /*
-      All later calls skip
-      RED LIVE + sound.
-    */
-
-    showInsufficientMinutes();
+    console.log(
+      "Video play error:",
+      error
+    );
 
   }
-);
-  declineButton.addEventListener(
+
+
+  photosSoundTimer =
+    setTimeout(
+      () => {
+
+        showInsufficient();
+
+      },
+      PHOTOS_SOUND_DURATION
+    );
+
+}
+
+
+answerButton.addEventListener(
   "click",
   () => {
 
-    stopCallVibration();
+    /*
+      Answering the incoming call
+      opens the live sound/video screen.
+    */
+
+    showLiveSound();
+
+  }
+);
+
+
+declineButton.addEventListener(
+  "click",
+  () => {
+
+    /*
+      Declining the call returns
+      to the live rooms.
+    */
 
     showLivePhotos();
 
@@ -1517,54 +1354,64 @@ answerButton.addEventListener(
 );
 
 
-function updateOnlineNumber(){
+liveSoundVideo.addEventListener(
+  "ended",
+  () => {
 
-  const numbers = [
-    15,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22
-  ];
+    showInsufficient();
 
+  }
+);
+  async function startWebsite(){
 
-  const number =
-    numbers[
-      Math.floor(
-        Math.random() *
-        numbers.length
-      )
-    ];
+  hideAllPages();
 
 
-  onlineNumber.textContent =
-    number +
-    " online";
-
-}
-
-
-async function startWebsite(){
-
+  /*
+    Load the images from GitHub
+    before showing the rooms.
+  */
   await loadPhotos();
 
-  showIncomingCall();
+
+  /*
+    Show the live rooms first.
+    Exactly 5 rooms will be randomly
+    marked ROOM CLOSED.
+  */
+  showLivePhotos();
 
 }
 
 
-startWebsite();
-
-
+/*
+  Keep the online number changing
+  while the visitor remains on the site.
+*/
 setInterval(
-  updateOnlineNumber,
+  () => {
+
+    if(
+      photosPage.style.display !==
+      "none"
+    ){
+
+      updateOnlineNumber();
+
+    }
+
+  },
   5000
 );
 
 
+/*
+  Start the website.
+*/
+startWebsite();
+
 </script>
 
 </body>
+
 </html>
