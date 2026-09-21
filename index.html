@@ -34,7 +34,7 @@ body{
 
 
 /* =========================
-   LIVE PHOTOS PAGE
+   LIVE PHOTOS
 ========================= */
 
 #photosPage{
@@ -204,7 +204,31 @@ body{
 
 
 /* =========================
-   INCOMING VIDEO CALL
+   BUSY
+========================= */
+
+.busy-label{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  z-index:10;
+
+  background:rgba(0,0,0,.88);
+  color:#fff;
+
+  padding:10px 18px;
+  border-radius:8px;
+
+  font-size:18px;
+  font-weight:bold;
+
+  box-shadow:0 0 15px rgba(255,255,255,.25);
+}
+
+
+/* =========================
+   INCOMING CALL
 ========================= */
 
 #incomingCall{
@@ -390,7 +414,7 @@ body{
 
 
 /* =========================
-   INSUFFICIENT MINUTES
+   INSUFFICIENT
 ========================= */
 
 #insufficientPage{
@@ -428,7 +452,6 @@ body{
   color:#ccc;
 }
 
-
 </style>
 
 </head>
@@ -444,8 +467,13 @@ body{
     </div>
 
     <div class="online-box">
+
       <span class="live-dot"></span>
-      <span id="onlineNumber">20 online</span>
+
+      <span id="onlineNumber">
+        20 online
+      </span>
+
     </div>
 
   </div>
@@ -546,57 +574,114 @@ body{
 </div>
 <script>
 
-const GITHUB_OWNER = "agnesweb2026";
-const GITHUB_REPO = "My-referral-website";
-const GITHUB_BRANCH = "main";
+const GITHUB_OWNER =
+  "agnesweb2026";
 
-const FIRST_LIVE_DURATION = 7000;
+const GITHUB_REPO =
+  "My-referral-website";
 
-const INSUFFICIENT_DURATION = 2000;
+const GITHUB_BRANCH =
+  "main";
 
-const PHOTOS_DURATION = 20000;
 
-const PHOTOS_SOUND_DURATION = 5000;
+const FIRST_LIVE_DURATION =
+  7000;
+
+
+/*
+  Next incoming call after
+  20 seconds of Live Photos.
+*/
+const PHOTOS_DURATION =
+  20000;
+
+
+const PHOTOS_SOUND_DURATION =
+  5000;
+
+
+const INSUFFICIENT_DURATION =
+  2000;
+
+
+const BUSY_CHANGE_DURATION =
+  5000;
+
+
+const BUSY_MESSAGE_DURATION =
+  3000;
 
 
 const photosPage =
-  document.getElementById("photosPage");
+  document.getElementById(
+    "photosPage"
+  );
+
 
 const photosGrid =
-  document.getElementById("photosGrid");
+  document.getElementById(
+    "photosGrid"
+  );
+
 
 const incomingCall =
-  document.getElementById("incomingCall");
+  document.getElementById(
+    "incomingCall"
+  );
+
 
 const callBackground =
-  document.getElementById("callBackground");
+  document.getElementById(
+    "callBackground"
+  );
+
 
 const callerPhoto =
-  document.getElementById("callerPhoto");
+  document.getElementById(
+    "callerPhoto"
+  );
+
 
 const callerName =
-  document.getElementById("callerName");
+  document.getElementById(
+    "callerName"
+  );
 
 
 const answerButton =
-  document.getElementById("answerButton");
+  document.getElementById(
+    "answerButton"
+  );
+
 
 const declineButton =
-  document.getElementById("declineButton");
+  document.getElementById(
+    "declineButton"
+  );
 
 
 const liveSoundScreen =
-  document.getElementById("liveSoundScreen");
+  document.getElementById(
+    "liveSoundScreen"
+  );
+
 
 const liveSoundVideo =
-  document.getElementById("liveSoundVideo");
+  document.getElementById(
+    "liveSoundVideo"
+  );
 
 
 const insufficientPage =
-  document.getElementById("insufficientPage");
+  document.getElementById(
+    "insufficientPage"
+  );
+
 
 const onlineNumber =
-  document.getElementById("onlineNumber");
+  document.getElementById(
+    "onlineNumber"
+  );
 
 
 let photos = [];
@@ -607,16 +692,24 @@ let photosTimer = null;
 
 let photosSoundTimer = null;
 
+let busyTimer = null;
+
 
 /*
-  Red LIVE + sound appears only once
-  per browser session.
+  RED LIVE + VIDEO + SOUND
+  appears only once on this phone/browser.
 
-  Reloading the page will NOT reset it.
+  localStorage means:
+  - reload does not reset it
+  - closing browser does not reset it
+  - reopening does not reset it
 */
-  let firstLiveCallAvailable =
-  localStorage.getItem("redLiveShown")
-  !== "true";
+
+
+let firstLiveCallAvailable =
+  localStorage.getItem(
+    "redLiveShown"
+  ) !== "true";
 
 
 const photoNames = [
@@ -651,20 +744,26 @@ const photoNames = [
 
 function hideAllPages(){
 
-  photosPage.style.display = "none";
+  photosPage.style.display =
+    "none";
 
-  incomingCall.style.display = "none";
+  incomingCall.style.display =
+    "none";
 
-  liveSoundScreen.style.display = "none";
+  liveSoundScreen.style.display =
+    "none";
 
-  insufficientPage.style.display = "none";
+  insufficientPage.style.display =
+    "none";
 
 }
 
 
 function shuffleArray(array){
 
-  const copy = [...array];
+  const copy =
+    [...array];
+
 
   for(
     let i = copy.length - 1;
@@ -677,10 +776,18 @@ function shuffleArray(array){
         Math.random() * (i + 1)
       );
 
-    [copy[i],copy[j]] =
-      [copy[j],copy[i]];
+
+    [
+      copy[i],
+      copy[j]
+    ] =
+    [
+      copy[j],
+      copy[i]
+    ];
 
   }
+
 
   return copy;
 
@@ -691,13 +798,17 @@ function shuffleArray(array){
 
     const treeUrl =
       "https://api.github.com/repos/" +
-      GITHUB_OWNER + "/" +
-      GITHUB_REPO + "/git/trees/" +
+      GITHUB_OWNER +
+      "/" +
+      GITHUB_REPO +
+      "/git/trees/" +
       GITHUB_BRANCH +
       "?recursive=1";
 
+
     const response =
       await fetch(treeUrl);
+
 
     if(!response.ok){
 
@@ -707,51 +818,73 @@ function shuffleArray(array){
 
     }
 
+
     const data =
       await response.json();
 
-    const imageFiles =
-      (data.tree || []).filter(file => {
 
-        if(file.type !== "blob"){
+    const imageFiles =
+      (data.tree || [])
+      .filter(file => {
+
+        if(
+          file.type !== "blob"
+        ){
+
           return false;
+
         }
+
 
         const name =
           file.path.toLowerCase();
 
+
         return (
+
           name.endsWith(".jpg") ||
+
           name.endsWith(".jpeg") ||
+
           name.endsWith(".png") ||
+
           name.endsWith(".webp")
+
         );
 
       });
 
 
     photos =
-      imageFiles.map((file,index) => ({
+      imageFiles.map(
+        (file,index) => ({
 
-        url:
-          "https://raw.githubusercontent.com/" +
-          GITHUB_OWNER + "/" +
-          GITHUB_REPO + "/" +
-          GITHUB_BRANCH + "/" +
-          file.path,
+          url:
+            "https://raw.githubusercontent.com/" +
+            GITHUB_OWNER +
+            "/" +
+            GITHUB_REPO +
+            "/" +
+            GITHUB_BRANCH +
+            "/" +
+            file.path,
 
-        name:
-          photoNames[
-            index % photoNames.length
-          ]
 
-      }));
+          name:
+            photoNames[
+              index %
+              photoNames.length
+            ]
+
+        })
+      );
 
 
     console.log(
       "Photos loaded:",
       photos.length
     );
+
 
   }catch(error){
 
@@ -760,6 +893,7 @@ function shuffleArray(array){
       error
     );
 
+
     photos = [];
 
   }
@@ -767,124 +901,249 @@ function shuffleArray(array){
 }
 
 
-function renderPhotos(){
+/*
+  Create a new random BUSY selection.
+*/
+function createBusyIndexes(
+  total
+){
 
-  photosGrid.innerHTML = "";
-
-  const shuffled =
-    shuffleArray(photos);
-
-
-  shuffled.forEach(photo => {
-
-    const card =
-      document.createElement("div");
-
-    card.className =
-      "photo-card";
+  const busyIndexes =
+    new Set();
 
 
-    card.innerHTML = `
+  if(total <= 0){
 
-      <img
-        src="${photo.url}"
-        alt="${photo.name}"
-        loading="lazy"
-      >
+    return busyIndexes;
 
-      <div class="photo-dark"></div>
-
-      <div class="photo-live">
-
-        <span
-          class="photo-green-dot">
-        </span>
-
-        <span
-          class="photo-green-dot">
-        </span>
-
-        <span
-          class="photo-green-dot">
-        </span>
-
-        LIVE
-
-      </div>
-
-      <div class="photo-video">
-        ▷
-      </div>
-
-      <div class="photo-name">
-        ${photo.name}
-      </div>
-
-    `;
+  }
 
 
-    card.addEventListener(
-      "click",
-      () => {
-
-        window.location.href =
-          "payment.html";
-
-      }
+  const busyCount =
+    Math.min(
+      total,
+      Math.floor(
+        Math.random() * 3
+      ) + 2
     );
 
 
-    photosGrid.appendChild(card);
+  while(
+    busyIndexes.size <
+    busyCount
+  ){
 
-  });
+    busyIndexes.add(
+
+      Math.floor(
+        Math.random() * total
+      )
+
+    );
+
+  }
+
+
+  return busyIndexes;
 
 }
 
 
-function updateOnlineNumber(){
+function renderPhotos(){
 
-  const numbers = [
-    15,17,18,19,20,21,22
-  ];
+  clearTimeout(
+    busyTimer
+  );
 
-  const number =
-    numbers[
-      Math.floor(
-        Math.random() *
-        numbers.length
-      )
-    ];
 
-  onlineNumber.textContent =
-    number + " online";
+  photosGrid.innerHTML =
+    "";
 
-  }
+
+  const shuffled =
+    shuffleArray(
+      photos
+    );
+
+
+  const busyIndexes =
+    createBusyIndexes(
+      shuffled.length
+    );
+
+
+  shuffled.forEach(
+    (photo,index) => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "photo-card";
+
+
+      const isBusy =
+        busyIndexes.has(
+          index
+        );
+
+
+      card.innerHTML = `
+
+        <img
+          src="${photo.url}"
+          alt="${photo.name}"
+          loading="lazy"
+        >
+
+        <div class="photo-dark"></div>
+
+        <div class="photo-live">
+
+          <span
+            class="photo-green-dot">
+          </span>
+
+          <span
+            class="photo-green-dot">
+          </span>
+
+          <span
+            class="photo-green-dot">
+          </span>
+
+          LIVE
+
+        </div>
+
+        <div class="photo-video">
+          ▷
+        </div>
+
+        <div class="photo-name">
+          ${photo.name}
+        </div>
+
+        ${
+          isBusy
+          ? `
+            <div class="busy-label">
+              BUSY
+            </div>
+          `
+          : ""
+        }
+
+      `;
+
+
+      card.addEventListener(
+        "click",
+        () => {
+
+          if(isBusy){
+
+            const nameElement =
+              card.querySelector(
+                ".photo-name"
+              );
+
+
+            nameElement.textContent =
+              "BUSY";
+
+
+            setTimeout(
+              () => {
+
+                nameElement.textContent =
+                  photo.name;
+
+              },
+              BUSY_MESSAGE_DURATION
+            );
+
+
+            return;
+
+          }
+
+
+          window.location.href =
+            "payment.html";
+
+        }
+      );
+
+
+      photosGrid.appendChild(
+        card
+      );
+
+    }
+  );
+
+
+  /*
+    Every 5 seconds the BUSY
+    photos are randomly changed.
+  */
+
+  busyTimer =
+    setTimeout(
+      () => {
+
+        if(
+          photosPage.style.display !==
+          "none"
+        ){
+
+          renderPhotos();
+
+        }
+
+      },
+      BUSY_CHANGE_DURATION
+    );
+
+    }
   function chooseCaller(){
 
   if(!photos.length){
+
     return null;
+
   }
 
 
-  let available = photos;
+  let available =
+    photos;
 
 
   if(currentCaller){
 
     available =
-      photos.filter(photo => {
+      photos.filter(
+        photo => {
 
-        return photo.url !==
-          currentCaller.url;
+          return (
+            photo.url !==
+            currentCaller.url
+          );
 
-      });
+        }
+      );
 
   }
 
 
   if(!available.length){
 
-    available = photos;
+    available =
+      photos;
 
   }
 
@@ -898,7 +1157,9 @@ function updateOnlineNumber(){
     ];
 
 
-  currentCaller = caller;
+  currentCaller =
+    caller;
+
 
   return caller;
 
@@ -907,7 +1168,9 @@ function updateOnlineNumber(){
 
 function startCallVibration(){
 
-  if("vibrate" in navigator){
+  if(
+    "vibrate" in navigator
+  ){
 
     navigator.vibrate([
       500,
@@ -923,7 +1186,9 @@ function startCallVibration(){
 
 function stopCallVibration(){
 
-  if("vibrate" in navigator){
+  if(
+    "vibrate" in navigator
+  ){
 
     navigator.vibrate(0);
 
@@ -938,9 +1203,16 @@ function showIncomingCall(){
     photosTimer
   );
 
+
   clearTimeout(
     photosSoundTimer
   );
+
+
+  clearTimeout(
+    busyTimer
+  );
+
 
   stopCallVibration();
 
@@ -962,7 +1234,9 @@ function showIncomingCall(){
 
 
   if(!caller){
+
     return;
+
   }
 
 
@@ -996,9 +1270,16 @@ function showLivePhotos(){
     photosTimer
   );
 
+
   clearTimeout(
     photosSoundTimer
   );
+
+
+  clearTimeout(
+    busyTimer
+  );
+
 
   stopCallVibration();
 
@@ -1019,6 +1300,10 @@ function showLivePhotos(){
   playPhotosBackgroundSound();
 
 
+  /*
+    Next call after 20 seconds.
+  */
+
   photosTimer =
     setTimeout(
       () => {
@@ -1029,16 +1314,23 @@ function showLivePhotos(){
       PHOTOS_DURATION
     );
 
-    }
+  }
   function playPhotosBackgroundSound(){
 
   liveSoundVideo.pause();
 
-  liveSoundVideo.currentTime = 0;
 
-  liveSoundVideo.muted = false;
+  liveSoundVideo.currentTime =
+    0;
 
-  liveSoundVideo.volume = 1;
+
+  liveSoundVideo.muted =
+    false;
+
+
+  liveSoundVideo.volume =
+    1;
+
 
   liveSoundScreen.style.display =
     "none";
@@ -1062,9 +1354,13 @@ function showLivePhotos(){
 
         liveSoundVideo.pause();
 
-        liveSoundVideo.currentTime = 0;
 
-        liveSoundVideo.muted = true;
+        liveSoundVideo.currentTime =
+          0;
+
+
+        liveSoundVideo.muted =
+          true;
 
       },
       PHOTOS_SOUND_DURATION
@@ -1086,14 +1382,21 @@ async function playFirstLiveCall(){
 
     liveSoundVideo.pause();
 
-    liveSoundVideo.currentTime = 0;
 
-    liveSoundVideo.muted = false;
+    liveSoundVideo.currentTime =
+      0;
 
-    liveSoundVideo.volume = 1;
+
+    liveSoundVideo.muted =
+      false;
+
+
+    liveSoundVideo.volume =
+      1;
 
 
     await liveSoundVideo.play();
+
 
   }catch(error){
 
@@ -1119,9 +1422,13 @@ async function playFirstLiveCall(){
 
   liveSoundVideo.pause();
 
-  liveSoundVideo.currentTime = 0;
 
-  liveSoundVideo.muted = true;
+  liveSoundVideo.currentTime =
+    0;
+
+
+  liveSoundVideo.muted =
+    true;
 
 
   liveSoundScreen.style.display =
@@ -1158,17 +1465,23 @@ answerButton.addEventListener(
     stopCallVibration();
 
 
-    if(firstLiveCallAvailable){
+    /*
+      The special RED LIVE call
+      can happen only once.
+    */
+
+    if(
+      firstLiveCallAvailable
+    ){
 
       firstLiveCallAvailable =
         false;
 
 
       localStorage.setItem(
-  "redLiveShown",
-  "true"
-);
-      
+        "redLiveShown",
+        "true"
+      );
 
 
       await playFirstLiveCall();
@@ -1182,10 +1495,16 @@ answerButton.addEventListener(
     }
 
 
+    /*
+      All later calls skip
+      RED LIVE + sound.
+    */
+
     showInsufficientMinutes();
 
   }
-);declineButton.addEventListener(
+);
+  declineButton.addEventListener(
   "click",
   () => {
 
@@ -1195,6 +1514,35 @@ answerButton.addEventListener(
 
   }
 );
+
+
+function updateOnlineNumber(){
+
+  const numbers = [
+    15,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
+  ];
+
+
+  const number =
+    numbers[
+      Math.floor(
+        Math.random() *
+        numbers.length
+      )
+    ];
+
+
+  onlineNumber.textContent =
+    number +
+    " online";
+
+}
 
 
 async function startWebsite(){
