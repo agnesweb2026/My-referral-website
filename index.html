@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>My Referral Website</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -28,6 +30,10 @@ html,body{
   background:#000;
 }
 
+/* =========================
+   SAMPLE VIDEO
+========================= */
+
 #samplePage{
   display:flex;
   align-items:center;
@@ -40,21 +46,31 @@ html,body{
   object-fit:cover;
 }
 
+
+/* =========================
+   LOADING
+========================= */
+
 #loadingPage{
   align-items:center;
   justify-content:center;
   flex-direction:column;
   background:#000;
-  z-index:20;
 }
 
 .loader{
   width:48px;
   height:48px;
-  border:4px solid rgba(255,255,255,.2);
+  border:4px solid #333;
   border-top:4px solid #fff;
   border-radius:50%;
   animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
 }
 
 .loading-text{
@@ -63,39 +79,41 @@ html,body{
   font-weight:bold;
 }
 
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
 
-/* INSUFFICIENT */
+/* =========================
+   INSUFFICIENT MINUTES
+========================= */
+
 #insufficientPage{
   align-items:center;
   justify-content:center;
-  flex-direction:column;
   text-align:center;
 }
 
 .insufficient-box{
   width:90%;
   max-width:380px;
-  padding:28px 20px;
+  padding:30px;
   border-radius:18px;
   background:#111;
   border:1px solid #333;
 }
 
 .insufficient-title{
-  font-size:24px;
+  font-size:25px;
   font-weight:bold;
-  margin-bottom:12px;
 }
 
 .insufficient-text{
-  color:#bbb;
-  font-size:15px;
+  margin-top:10px;
+  color:#aaa;
 }
 
-/* PHOTOS */
+
+/* =========================
+   LIVE PHOTOS
+========================= */
+
 #photosPage{
   overflow-y:auto;
   overflow-x:hidden;
@@ -111,7 +129,7 @@ html,body{
   align-items:center;
   justify-content:space-between;
   padding:0 15px;
-  background:rgba(0,0,0,.94);
+  background:rgba(0,0,0,.95);
   border-bottom:1px solid #222;
 }
 
@@ -131,15 +149,20 @@ html,body{
 .live-dot{
   width:8px;
   height:8px;
-  background:#22c55e;
+  background:#20c55a;
   border-radius:50%;
-  box-shadow:0 0 8px #22c55e;
+  box-shadow:0 0 8px #20c55a;
   animation:blink 1.2s infinite;
 }
 
 @keyframes blink{
-  0%,100%{opacity:1}
-  50%{opacity:.35}
+  0%,100%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:.35;
+  }
 }
 
 .photos-grid{
@@ -169,12 +192,12 @@ html,body{
   position:absolute;
   top:9px;
   left:9px;
-  background:#e60000;
+  background:#e00000;
   color:#fff;
-  font-size:11px;
-  font-weight:bold;
   padding:5px 8px;
   border-radius:5px;
+  font-size:11px;
+  font-weight:bold;
   z-index:3;
 }
 
@@ -184,22 +207,11 @@ html,body{
   right:10px;
   width:10px;
   height:10px;
-  border-radius:50%;
   background:#20c55a;
-  box-shadow:0 0 9px #20c55a;
-  animation:photoDotBlink 1.2s infinite;
+  border-radius:50%;
+  box-shadow:0 0 8px #20c55a;
+  animation:blink 1.2s infinite;
   z-index:3;
-}
-
-@keyframes photoDotBlink{
-  0%,100%{
-    opacity:1;
-    transform:scale(1);
-  }
-  50%{
-    opacity:.4;
-    transform:scale(.8);
-  }
 }
 
 .photo-video-icon{
@@ -208,12 +220,11 @@ html,body{
   bottom:42px;
   width:34px;
   height:28px;
-  border-radius:7px;
   background:rgba(0,0,0,.7);
+  border-radius:7px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:15px;
   z-index:3;
 }
 
@@ -223,49 +234,96 @@ html,body{
   right:0;
   bottom:0;
   padding:20px 10px 10px;
-  background:linear-gradient(transparent,rgba(0,0,0,.9));
+  background:linear-gradient(
+    transparent,
+    rgba(0,0,0,.9)
+  );
   font-size:15px;
   font-weight:bold;
   z-index:2;
 }
 
-/* BLACK 2 SECOND LIVE SOUND SCREEN */
+
+/* =========================
+   ANSWER VIDEO
+========================= */
+
 #liveSoundScreen{
   position:fixed;
   inset:0;
   z-index:100000;
   display:none;
   background:#000;
-  align-items:flex-start;
+  align-items:center;
   justify-content:center;
+  overflow:hidden;
+}
+
+#liveSoundVideo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+
+  /* VIDEO VISIBLE BUT NOT CLEAR */
+
+  filter:
+    blur(10px)
+    brightness(.45);
+
+  transform:scale(1.08);
+
+  background:#000;
 }
 
 .live-top{
-  margin-top:18px;
+  position:absolute;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:5;
+
   background:#e00000;
+
   padding:7px 12px;
+
   border-radius:6px;
+
   font-size:13px;
   font-weight:bold;
-  display:flex;
-  align-items:center;
-  gap:7px;
 }
 
 .live-red-dot{
+  display:inline-block;
+
   width:9px;
   height:9px;
+
   background:#fff;
+
   border-radius:50%;
+
+  margin-right:6px;
+
   animation:redBlink .8s infinite;
 }
 
 @keyframes redBlink{
-  0%,100%{opacity:1}
-  50%{opacity:.3}
+
+  0%,100%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:.3;
+  }
+
 }
 
-/* INCOMING CALL */
+
+/* =========================
+   INCOMING CALL
+========================= */
+
 #incomingCall{
   z-index:90000;
   align-items:center;
@@ -276,47 +334,66 @@ html,body{
 .incoming-background{
   position:absolute;
   inset:0;
+
   background-size:cover;
   background-position:center;
-  filter:blur(18px) brightness(.35);
+
+  filter:
+    blur(18px)
+    brightness(.35);
+
   transform:scale(1.1);
 }
 
 .incoming-content{
   position:relative;
   z-index:2;
+
   width:100%;
   height:100%;
+
   display:flex;
   flex-direction:column;
+
   align-items:center;
   justify-content:center;
+
   text-align:center;
 }
 
 .incoming-label{
   font-size:15px;
   font-weight:bold;
+
   letter-spacing:1px;
+
   margin-bottom:20px;
 }
 
 .caller-photo-wrap{
   position:relative;
+
   width:190px;
   height:190px;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   margin-bottom:20px;
 }
 
 .call-ring{
   position:absolute;
+
   width:190px;
   height:190px;
-  border:2px solid rgba(255,255,255,.55);
+
+  border:2px solid
+    rgba(255,255,255,.55);
+
   border-radius:50%;
+
   animation:ring 1.6s infinite;
 }
 
@@ -325,58 +402,83 @@ html,body{
 }
 
 @keyframes ring{
+
   0%{
     transform:scale(.9);
     opacity:.9;
   }
+
   100%{
     transform:scale(1.35);
     opacity:0;
   }
+
 }
 
 .caller-photo{
   width:150px;
   height:150px;
+
   border-radius:50%;
+
   object-fit:cover;
+
   border:4px solid #fff;
+
   position:relative;
   z-index:2;
-  animation:callerZoom 2s infinite alternate;
+
+  animation:callerZoom 2s
+    infinite alternate;
 }
 
 @keyframes callerZoom{
-  from{transform:scale(1)}
-  to{transform:scale(1.04)}
+
+  from{
+    transform:scale(1);
+  }
+
+  to{
+    transform:scale(1.04);
+  }
+
 }
 
 .caller-name{
   font-size:27px;
   font-weight:bold;
+
   margin-bottom:8px;
 }
 
 .ringing{
   font-size:15px;
   color:#ddd;
+
   margin-bottom:35px;
 }
 
 .call-buttons{
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   gap:60px;
 }
 
 .call-button{
   width:72px;
   height:72px;
+
   border-radius:50%;
+
   border:0;
+
   color:#fff;
+
   font-size:29px;
+
   cursor:pointer;
 }
 
@@ -388,8 +490,13 @@ html,body{
   background:#16a34a;
 }
 
-/* MOBILE */
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:500px){
+
   .photo-card{
     height:235px;
   }
@@ -416,35 +523,60 @@ html,body{
   .call-buttons{
     gap:50px;
   }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- SAMPLE VIDEO -->
+
+<!-- =========================
+     SAMPLE VIDEO
+========================= -->
+
 <section id="samplePage" class="page">
+
   <video
     id="sampleVideo"
     autoplay
     muted
     playsinline
     preload="auto">
-    <source src="preview_20_seconds.mp4" type="video/mp4">
+
+    <source
+      src="preview_20_seconds.mp4"
+      type="video/mp4">
+
   </video>
+
 </section>
 
 
-<!-- LOADING -->
+<!-- =========================
+     LOADING
+========================= -->
+
 <section id="loadingPage" class="page">
+
   <div class="loader"></div>
-  <div class="loading-text">Connecting...</div>
+
+  <div class="loading-text">
+    Connecting...
+  </div>
+
 </section>
 
 
-<!-- INSUFFICIENT -->
+<!-- =========================
+     INSUFFICIENT
+========================= -->
+
 <section id="insufficientPage" class="page">
+
   <div class="insufficient-box">
+
     <div class="insufficient-title">
       Insufficient Minutes
     </div>
@@ -452,29 +584,50 @@ html,body{
     <div class="insufficient-text">
       You do not have enough minutes to continue this video call.
     </div>
+
   </div>
+
 </section>
 
 
-<!-- LIVE PHOTOS -->
+<!-- =========================
+     LIVE PHOTOS
+========================= -->
+
 <section id="photosPage" class="page">
 
   <div class="photos-header">
-    <div class="logo">LIVE</div>
+
+    <div class="logo">
+      LIVE
+    </div>
 
     <div class="online-status">
+
       <span class="live-dot"></span>
-      <span id="onlineCount">19</span>
+
+      <span id="onlineCount">
+        19
+      </span>
+
       online
+
     </div>
+
   </div>
 
-  <div id="photosGrid" class="photos-grid"></div>
+  <div
+    id="photosGrid"
+    class="photos-grid">
+  </div>
 
 </section>
 
 
-<!-- INCOMING CALL -->
+<!-- =========================
+     INCOMING CALL
+========================= -->
+
 <section id="incomingCall" class="page">
 
   <div
@@ -491,6 +644,7 @@ html,body{
     <div class="caller-photo-wrap">
 
       <div class="call-ring"></div>
+
       <div class="call-ring"></div>
 
       <img
@@ -498,6 +652,7 @@ html,body{
         class="caller-photo"
         src=""
         alt="">
+
     </div>
 
     <div
@@ -527,15 +682,33 @@ html,body{
     </div>
 
   </div>
+
 </section>
 
 
-<!-- 2 SECOND BLACK LIVE SOUND -->
+<!-- =========================
+     5 SECOND VIDEO
+========================= -->
+
 <div id="liveSoundScreen">
 
+  <video
+    id="liveSoundVideo"
+    playsinline
+    preload="auto">
+
+    <source
+      src="preview_20_seconds.mp4"
+      type="video/mp4">
+
+  </video>
+
   <div class="live-top">
+
     <span class="live-red-dot"></span>
+
     LIVE
+
   </div>
 
 </div>
@@ -547,19 +720,26 @@ html,body{
    SETTINGS
 ========================= */
 
-const GITHUB_OWNER = "agnesweb2026";
-const GITHUB_REPO = "My-referral-website";
-const GITHUB_BRANCH = "main";
+const GITHUB_OWNER =
+  "agnesweb2026";
 
-const PAYMENT_PAGE_URL = "payment.html";
+const GITHUB_REPO =
+  "My-referral-website";
 
-const SAMPLE_VIDEO = "preview_20_seconds.mp4";
+const GITHUB_BRANCH =
+  "main";
 
-const INSUFFICIENT_DURATION = 2000;
-const LIVE_SOUND_DURATION = 2000;
+const PAYMENT_PAGE_URL =
+  "payment.html";
 
-const FLOW_STARTED_KEY = "myReferralFlowStarted";
-const SOUND_PLAYED_KEY = "incomingSoundPlayed";
+const FLOW_STARTED_KEY =
+  "myReferralFlowStarted";
+
+const INSUFFICIENT_DURATION =
+  2000;
+
+const LIVE_SOUND_DURATION =
+  5000;
 
 
 /* =========================
@@ -567,46 +747,79 @@ const SOUND_PLAYED_KEY = "incomingSoundPlayed";
 ========================= */
 
 const samplePage =
-  document.getElementById("samplePage");
+  document.getElementById(
+    "samplePage"
+  );
 
 const sampleVideo =
-  document.getElementById("sampleVideo");
+  document.getElementById(
+    "sampleVideo"
+  );
 
 const loadingPage =
-  document.getElementById("loadingPage");
+  document.getElementById(
+    "loadingPage"
+  );
 
 const insufficientPage =
-  document.getElementById("insufficientPage");
+  document.getElementById(
+    "insufficientPage"
+  );
 
 const photosPage =
-  document.getElementById("photosPage");
+  document.getElementById(
+    "photosPage"
+  );
 
 const incomingCall =
-  document.getElementById("incomingCall");
+  document.getElementById(
+    "incomingCall"
+  );
 
 const liveSoundScreen =
-  document.getElementById("liveSoundScreen");
+  document.getElementById(
+    "liveSoundScreen"
+  );
+
+const liveSoundVideo =
+  document.getElementById(
+    "liveSoundVideo"
+  );
 
 const incomingBackground =
-  document.getElementById("incomingBackground");
+  document.getElementById(
+    "incomingBackground"
+  );
 
 const callerPhoto =
-  document.getElementById("callerPhoto");
+  document.getElementById(
+    "callerPhoto"
+  );
 
 const callerName =
-  document.getElementById("callerName");
+  document.getElementById(
+    "callerName"
+  );
 
 const answerButton =
-  document.getElementById("answerButton");
+  document.getElementById(
+    "answerButton"
+  );
 
 const declineButton =
-  document.getElementById("declineButton");
+  document.getElementById(
+    "declineButton"
+  );
 
 const photosGrid =
-  document.getElementById("photosGrid");
+  document.getElementById(
+    "photosGrid"
+  );
 
 const onlineCount =
-  document.getElementById("onlineCount");
+  document.getElementById(
+    "onlineCount"
+  );
 
 
 /* =========================
@@ -614,6 +827,7 @@ const onlineCount =
 ========================= */
 
 const photoNames = [
+
   "Cute",
   "Becky",
   "Dorry",
@@ -638,67 +852,145 @@ const photoNames = [
   "Milly",
   "Susan",
   "Fellow"
+
 ];
 
 
-/* =========================
-   STATE
-========================= */
-
 let photos = [];
+
 let usedCallerPhotos = [];
-let currentCaller = null;
 
 
 /* =========================
-   HIDE EVERYTHING
+   HIDE PAGES
 ========================= */
 
 function hideAllPages(){
 
-  samplePage.style.display = "none";
-  loadingPage.style.display = "none";
-  insufficientPage.style.display = "none";
-  photosPage.style.display = "none";
-  incomingCall.style.display = "none";
+  samplePage.style.display =
+    "none";
+
+  loadingPage.style.display =
+    "none";
+
+  insufficientPage.style.display =
+    "none";
+
+  photosPage.style.display =
+    "none";
+
+  incomingCall.style.display =
+    "none";
 
 }
 
 
 /* =========================
-   LOADING
+   LOAD GITHUB PHOTOS
 ========================= */
 
-function showLoading(){
+async function loadPhotos(){
 
-  hideAllPages();
+  try{
 
-  loadingPage.style.display = "flex";
+    const url =
+      `https://api.github.com/repos/` +
+      `${GITHUB_OWNER}/` +
+      `${GITHUB_REPO}/contents/` +
+      `?ref=${GITHUB_BRANCH}`;
+
+    const response =
+      await fetch(url);
+
+    if(!response.ok){
+
+      throw new Error(
+        "GitHub request failed"
+      );
+
+    }
+
+    const files =
+      await response.json();
+
+    const imageFiles =
+      files.filter(file => {
+
+        if(
+          file.type !== "file"
+        ){
+          return false;
+        }
+
+        const name =
+          file.name.toLowerCase();
+
+        return (
+
+          name.endsWith(".jpg") ||
+
+          name.endsWith(".jpeg") ||
+
+          name.endsWith(".png") ||
+
+          name.endsWith(".webp")
+
+        );
+
+      });
+
+
+    photos =
+      imageFiles.map(
+        (file,index) => {
+
+          return {
+
+            url:
+              file.download_url,
+
+            name:
+              photoNames[
+                index %
+                photoNames.length
+              ]
+
+          };
+
+        }
+      );
+
+
+    renderPhotos();
+
+
+  }catch(error){
+
+    console.log(
+      "Photo loading error:",
+      error
+    );
+
+  }
 
 }
 
 
 /* =========================
-   INSUFFICIENT
+   SHUFFLE
 ========================= */
 
-function showInsufficientThenPhotos(){
+function shufflePhotos(){
 
-  hideAllPages();
-
-  insufficientPage.style.display = "flex";
-
-  setTimeout(() => {
-
-    showLivePhotos();
-
-  }, INSUFFICIENT_DURATION);
+  photos.sort(
+    () => Math.random() - 0.5
+  );
 
 }
 
 
 /* =========================
-   LIVE PHOTOS
+   SHOW PHOTOS
 ========================= */
 
 function showLivePhotos(){
@@ -709,18 +1001,8 @@ function showLivePhotos(){
 
   renderPhotos();
 
-  photosPage.style.display = "block";
-
-}
-
-
-/* =========================
-   SHUFFLE PHOTOS
-========================= */
-
-function shufflePhotos(){
-
-  photos = photos.sort(() => Math.random() - 0.5);
+  photosPage.style.display =
+    "block";
 
 }
 
@@ -733,12 +1015,16 @@ function renderPhotos(){
 
   photosGrid.innerHTML = "";
 
-  photos.forEach((photo) => {
+  photos.forEach(photo => {
 
     const card =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    card.className = "photo-card";
+    card.className =
+      "photo-card";
+
 
     card.innerHTML = `
 
@@ -751,7 +1037,8 @@ function renderPhotos(){
         LIVE
       </div>
 
-      <div class="photo-live-dot"></div>
+      <div class="photo-live-dot">
+      </div>
 
       <div class="photo-video-icon">
         ▶
@@ -763,16 +1050,23 @@ function renderPhotos(){
 
     `;
 
-    /* EVERY PHOTO GOES TO PAYMENT */
 
-    card.addEventListener("click", () => {
+    /* PHOTO → PAYMENT */
 
-      window.location.href =
-        PAYMENT_PAGE_URL;
+    card.addEventListener(
+      "click",
+      () => {
 
-    });
+        window.location.href =
+          PAYMENT_PAGE_URL;
 
-    photosGrid.appendChild(card);
+      }
+    );
+
+
+    photosGrid.appendChild(
+      card
+    );
 
   });
 
@@ -780,126 +1074,73 @@ function renderPhotos(){
 
 
 /* =========================
-   GET GITHUB PHOTOS
-========================= */
-
-async function loadPhotos(){
-
-  try{
-
-    const apiUrl =
-      `https://api.github.com/repos/` +
-      `${GITHUB_OWNER}/${GITHUB_REPO}/contents/` +
-      `?ref=${GITHUB_BRANCH}`;
-
-    const response =
-      await fetch(apiUrl);
-
-    if(!response.ok){
-      throw new Error("GitHub request failed");
-    }
-
-    const files =
-      await response.json();
-
-    const imageFiles =
-      files.filter(file => {
-
-        if(file.type !== "file"){
-          return false;
-        }
-
-        const name =
-          file.name.toLowerCase();
-
-        return (
-          name.endsWith(".jpg") ||
-          name.endsWith(".jpeg") ||
-          name.endsWith(".png") ||
-          name.endsWith(".webp")
-        );
-
-      });
-
-    photos =
-      imageFiles.map((file,index) => {
-
-        return {
-          url:file.download_url,
-          name:photoNames[
-            index % photoNames.length
-          ]
-        };
-
-      });
-
-    shufflePhotos();
-    renderPhotos();
-
-  }catch(error){
-
-    console.error(
-      "Could not load photos:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================
-   RANDOM CALLER
+   CHOOSE RANDOM CALLER
 ========================= */
 
 function chooseCaller(){
 
   if(photos.length === 0){
+
     return null;
+
   }
 
-  /* RESET WHEN ALL PHOTOS HAVE BEEN USED */
 
   if(
-    usedCallerPhotos.length >= photos.length
+    usedCallerPhotos.length >=
+    photos.length
   ){
 
     usedCallerPhotos = [];
 
   }
 
+
   let available =
     photos.filter(
       photo =>
-        !usedCallerPhotos.includes(photo.url)
+        !usedCallerPhotos
+          .includes(photo.url)
     );
 
-  if(available.length === 0){
+
+  if(
+    available.length === 0
+  ){
+
     available = photos;
+
   }
 
-  const selected =
+
+  const caller =
     available[
       Math.floor(
-        Math.random() * available.length
+        Math.random() *
+        available.length
       )
     ];
 
-  usedCallerPhotos.push(selected.url);
 
-  return selected;
+  usedCallerPhotos.push(
+    caller.url
+  );
+
+
+  return caller;
 
 }
 
 
 /* =========================
-   SHOW INCOMING CALL
+   INCOMING CALL
 ========================= */
 
 function showIncomingCall(){
 
   const caller =
     chooseCaller();
+
 
   if(!caller){
 
@@ -909,18 +1150,22 @@ function showIncomingCall(){
 
   }
 
-  currentCaller = caller;
 
   callerPhoto.src =
     caller.url;
 
-  incomingBackground.style.backgroundImage =
-    `url("${caller.url}")`;
+
+  incomingBackground.style
+    .backgroundImage =
+      `url("${caller.url}")`;
+
 
   callerName.textContent =
     caller.name;
 
+
   hideAllPages();
+
 
   incomingCall.style.display =
     "flex";
@@ -929,61 +1174,65 @@ function showIncomingCall(){
 
 
 /* =========================
-   BLACK LIVE SOUND SCREEN
+   ANSWER VIDEO
 ========================= */
 
 async function playLiveSound(){
 
   hideAllPages();
 
+
   liveSoundScreen.style.display =
     "flex";
 
-  /*
-    Reuse the SAME sample video.
-    The screen stays black, so only
-    its sound is heard.
-  */
 
   try{
 
-    sampleVideo.pause();
+    liveSoundVideo.pause();
 
-    sampleVideo.currentTime = 0;
+    liveSoundVideo.currentTime =
+      0;
 
-    sampleVideo.muted = false;
+    liveSoundVideo.muted =
+      false;
 
-    sampleVideo.volume = 1;
+    liveSoundVideo.volume =
+      1;
 
-    const playPromise =
-      sampleVideo.play();
 
-    if(playPromise){
-      await playPromise;
-    }
+    await liveSoundVideo.play();
+
 
   }catch(error){
 
     console.log(
-      "Audio autoplay was blocked:",
+      "Video sound blocked:",
       error
     );
 
   }
 
+
   await new Promise(
-    resolve =>
+    resolve => {
+
       setTimeout(
         resolve,
         LIVE_SOUND_DURATION
-      )
+      );
+
+    }
   );
 
-  sampleVideo.pause();
 
-  sampleVideo.muted = true;
+  liveSoundVideo.pause();
 
-  sampleVideo.currentTime = 0;
+  liveSoundVideo.currentTime =
+    0;
+
+  liveSoundVideo.muted =
+    true;
+
 
   liveSoundScreen.style.display =
     "none";
@@ -992,60 +1241,43 @@ async function playLiveSound(){
 
 
 /* =========================
-   ANSWER
+   ANSWER BUTTON
 ========================= */
 
 answerButton.addEventListener(
   "click",
   async () => {
 
-    /*
-      SOUND ONLY ONCE PER NEW VISIT/SESSION
-    */
+    await playLiveSound();
 
-    const soundAlreadyPlayed =
-      sessionStorage.getItem(
-        SOUND_PLAYED_KEY
-      );
 
-    if(!soundAlreadyPlayed){
+    hideAllPages();
 
-      sessionStorage.setItem(
-        SOUND_PLAYED_KEY,
-        "true"
-      );
 
-      await playLiveSound();
+    insufficientPage.style.display =
+      "flex";
 
-    }else{
 
-      hideAllPages();
+    setTimeout(
+      () => {
 
-    }
+        showLivePhotos();
 
-    /*
-      AFTER ANSWER:
-      INSUFFICIENT -> LIVE PHOTOS
-    */
-
-    showInsufficientThenPhotos();
+      },
+      INSUFFICIENT_DURATION
+    );
 
   }
 );
 
 
 /* =========================
-   DECLINE
+   DECLINE BUTTON
 ========================= */
 
 declineButton.addEventListener(
   "click",
   () => {
-
-    /*
-      Declining skips insufficient
-      and opens live photos.
-    */
 
     showLivePhotos();
 
@@ -1061,80 +1293,16 @@ sampleVideo.addEventListener(
   "ended",
   () => {
 
-    /*
-      Remember that this visitor
-      already watched the sample.
-    */
-
     localStorage.setItem(
       FLOW_STARTED_KEY,
       "true"
     );
 
-    /*
-      Sample is finished.
-      Show the incoming call.
-    */
 
     showIncomingCall();
 
   }
 );
-
-
-/* =========================
-   START FLOW
-========================= */
-
-function startMainFlow(){
-
-  const flowStarted =
-    localStorage.getItem(
-      FLOW_STARTED_KEY
-    );
-
-  if(!flowStarted){
-
-    /*
-      NEW VISITOR:
-      SAMPLE FIRST
-    */
-
-    hideAllPages();
-
-    samplePage.style.display =
-      "flex";
-
-    sampleVideo.muted = true;
-
-    const playPromise =
-      sampleVideo.play();
-
-    if(playPromise){
-
-      playPromise.catch(
-        error => {
-          console.log(
-            "Sample autoplay blocked:",
-            error
-          );
-        }
-      );
-
-    }
-
-  }else{
-
-    /*
-      RETURNING VISITOR:
-      DIRECTLY TO INCOMING CALL
-    */
-
-    showIncomingCall();
-
-  }
-
-}
 
 
 /* =========================
@@ -1144,6 +1312,7 @@ function startMainFlow(){
 function updateOnlineNumber(){
 
   const numbers = [
+
     15,
     17,
     18,
@@ -1151,7 +1320,9 @@ function updateOnlineNumber(){
     20,
     21,
     22
+
   ];
+
 
   const number =
     numbers[
@@ -1161,28 +1332,72 @@ function updateOnlineNumber(){
       )
     ];
 
+
   onlineCount.textContent =
     number;
 
 }
+
+
+updateOnlineNumber();
+
 
 setInterval(
   updateOnlineNumber,
   5000
 );
 
-updateOnlineNumber();
-
 
 /* =========================
-   START
+   START WEBSITE
 ========================= */
 
 loadPhotos();
 
-startMainFlow();
+
+const flowStarted =
+  localStorage.getItem(
+    FLOW_STARTED_KEY
+  );
+
+
+if(!flowStarted){
+
+  hideAllPages();
+
+
+  samplePage.style.display =
+    "flex";
+
+
+  sampleVideo.muted =
+    true;
+
+
+  sampleVideo.play().catch(
+    error => {
+
+      console.log(
+        "Sample autoplay blocked:",
+        error
+      );
+
+    }
+  );
+
+
+}else{
+
+  /*
+    RETURNING VISITOR
+    GO DIRECTLY TO CALL
+  */
+
+  showIncomingCall();
+
+}
 
 </script>
 
 </body>
-  </html>
+      </html>
