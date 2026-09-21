@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0,user-scalable=no">
 
 <title>My Referral Website</title>
 
@@ -16,159 +18,94 @@
 
 html,body{
   width:100%;
-  height:100%;
+  min-height:100%;
   background:#000;
   color:#fff;
-  font-family:Arial,sans-serif;
-  overflow:hidden;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
 }
+
+/* =========================
+   GENERAL
+========================= */
 
 .page{
-  position:fixed;
-  inset:0;
   display:none;
-  background:#000;
-}
-
-
-/* SAMPLE */
-
-#samplePage{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-#sampleVideo{
+  min-height:100vh;
   width:100%;
-  height:100%;
-  object-fit:cover;
 }
 
-
-/* LOADING */
-
-#loadingPage{
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-}
-
-.loader{
-  width:48px;
-  height:48px;
-  border:4px solid #333;
-  border-top:4px solid #fff;
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-.loading-text{
-  margin-top:18px;
-  font-size:20px;
-  font-weight:bold;
-}
-
-
-/* INSUFFICIENT */
-
-#insufficientPage{
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-
-.insufficient-box{
-  width:90%;
-  max-width:380px;
-  padding:30px;
-  border-radius:18px;
-  background:#111;
-  border:1px solid #333;
-}
-
-.insufficient-title{
-  font-size:25px;
-  font-weight:bold;
-}
-
-.insufficient-text{
-  margin-top:10px;
-  color:#aaa;
-}
-
-
-/* PHOTOS */
+/* =========================
+   LIVE PHOTOS PAGE
+========================= */
 
 #photosPage{
-  overflow-y:auto;
-  overflow-x:hidden;
-  padding-bottom:30px;
+  background:#000;
+  padding-bottom:20px;
 }
 
-.photos-header{
+.topbar{
   position:sticky;
   top:0;
   z-index:50;
-  height:58px;
+
+  height:52px;
+  width:100%;
+
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:0 15px;
-  background:rgba(0,0,0,.95);
-  border-bottom:1px solid #222;
-}
+  justify-content:center;
 
-.logo{
-  font-size:20px;
+  background:#080808;
+  border-bottom:1px solid #222;
+
+  font-size:15px;
   font-weight:bold;
 }
 
-.online-status{
+.live-title{
   display:flex;
   align-items:center;
-  gap:6px;
-  font-size:13px;
-  color:#ddd;
+  gap:7px;
 }
 
-.live-dot{
+.live-badge{
+  background:#e00000;
+  color:#fff;
+  padding:5px 8px;
+  border-radius:5px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.online-dot{
   width:8px;
   height:8px;
-  background:#20c55a;
   border-radius:50%;
-  box-shadow:0 0 8px #20c55a;
-  animation:blink 1.2s infinite;
-}
-
-@keyframes blink{
-  0%,100%{
-    opacity:1;
-  }
-
-  50%{
-    opacity:.35;
-  }
+  background:#00e676;
+  display:inline-block;
+  box-shadow:0 0 8px #00e676;
 }
 
 .photos-grid{
+  width:100%;
+  padding:10px;
+
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-  padding:8px;
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap:10px;
 }
 
 .photo-card{
   position:relative;
-  height:245px;
+  width:100%;
+  aspect-ratio:0.78;
+
   overflow:hidden;
   border-radius:10px;
+
   background:#111;
   cursor:pointer;
 }
@@ -180,78 +117,299 @@ html,body{
   display:block;
 }
 
-.live-badge{
+.photo-dark{
   position:absolute;
-  top:9px;
-  left:9px;
+  inset:0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.05),
+      rgba(0,0,0,.10),
+      rgba(0,0,0,.75)
+    );
+}
+
+.photo-live{
+  position:absolute;
+  top:8px;
+  left:8px;
+
+  display:flex;
+  align-items:center;
+  gap:5px;
+
   background:#e00000;
-  color:#fff;
-  padding:5px 8px;
+  padding:5px 7px;
   border-radius:5px;
-  font-size:11px;
+
+  font-size:10px;
   font-weight:bold;
-  z-index:3;
 }
 
 .photo-live-dot{
-  position:absolute;
-  top:11px;
-  right:10px;
-  width:10px;
-  height:10px;
-  background:#20c55a;
+  width:6px;
+  height:6px;
   border-radius:50%;
-  box-shadow:0 0 8px #20c55a;
-  animation:blink 1.2s infinite;
-  z-index:3;
+  background:#fff;
 }
 
-.photo-video-icon{
+.photo-video{
   position:absolute;
-  right:9px;
-  bottom:42px;
-  width:34px;
-  height:28px;
-  background:rgba(0,0,0,.7);
-  border-radius:7px;
+  top:8px;
+  right:8px;
+
+  width:25px;
+  height:25px;
+
+  border-radius:50%;
+  background:rgba(0,0,0,.55);
+
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:3;
+
+  font-size:12px;
 }
 
 .photo-name{
   position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  padding:20px 10px 10px;
-  background:linear-gradient(
-    transparent,
-    rgba(0,0,0,.9)
-  );
-  font-size:15px;
+  left:10px;
+  bottom:9px;
+
+  font-size:14px;
   font-weight:bold;
-  z-index:2;
+
+  text-shadow:0 2px 5px #000;
 }
 
+/* =========================
+   INCOMING CALL
+========================= */
 
-/* ANSWER VIDEO */
+#incomingCall{
+  position:fixed;
+  inset:0;
+
+  z-index:100000;
+
+  display:none;
+  align-items:center;
+  justify-content:center;
+
+  overflow:hidden;
+
+  background:#050505;
+}
+
+.call-background{
+  position:absolute;
+  inset:-20px;
+
+  background-size:cover;
+  background-position:center;
+
+  filter:
+    blur(14px)
+    brightness(.30);
+
+  transform:scale(1.08);
+}
+
+.call-overlay{
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0,0,0,.05),
+      rgba(0,0,0,.65)
+    );
+}
+
+.call-content{
+  position:relative;
+  z-index:5;
+
+  width:100%;
+  max-width:430px;
+
+  min-height:100vh;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  padding:25px;
+}
+
+.incoming-label{
+  font-size:14px;
+  letter-spacing:1px;
+  margin-bottom:24px;
+
+  color:#eee;
+}
+
+.caller-ring{
+  position:relative;
+
+  width:180px;
+  height:180px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin-bottom:25px;
+}
+
+.caller-ring::before,
+.caller-ring::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  border-radius:50%;
+
+  border:2px solid rgba(255,255,255,.35);
+
+  animation:ringPulse 2s infinite;
+}
+
+.caller-ring::after{
+  animation-delay:1s;
+}
+
+@keyframes ringPulse{
+
+  0%{
+    transform:scale(.90);
+    opacity:.8;
+  }
+
+  100%{
+    transform:scale(1.35);
+    opacity:0;
+  }
+}
+
+.caller-photo{
+  position:relative;
+  z-index:3;
+
+  width:145px;
+  height:145px;
+
+  border-radius:50%;
+
+  object-fit:cover;
+
+  border:4px solid #fff;
+
+  box-shadow:
+    0 0 30px rgba(255,255,255,.25);
+
+  animation:callerZoom 3s ease-in-out infinite;
+}
+
+@keyframes callerZoom{
+
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.05);
+  }
+}
+
+.caller-name{
+  font-size:27px;
+  font-weight:bold;
+
+  margin-bottom:8px;
+
+  text-align:center;
+}
+
+.ringing{
+  font-size:14px;
+  color:#bbb;
+
+  margin-bottom:50px;
+}
+
+.call-buttons{
+  width:100%;
+
+  display:flex;
+  align-items:center;
+  justify-content:
+    space-around;
+}
+
+.call-button{
+  border:0;
+
+  width:75px;
+  height:75px;
+
+  border-radius:50%;
+
+  color:#fff;
+
+  font-size:28px;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 8px 25px rgba(0,0,0,.35);
+}
+
+.decline{
+  background:#e00000;
+}
+
+.answer{
+  background:#00a83b;
+}
+
+.button-label{
+  margin-top:9px;
+  text-align:center;
+
+  font-size:12px;
+  color:#ddd;
+}
+
+/* =========================
+   LIVE ANSWER VIDEO
+========================= */
 
 #liveSoundScreen{
   position:fixed;
   inset:0;
-  z-index:100000;
+
+  z-index:110000;
+
   display:none;
+
   background:#000;
+
   align-items:center;
   justify-content:center;
+
   overflow:hidden;
 }
 
 #liveSoundVideo{
   width:100%;
   height:100%;
+
   object-fit:cover;
 
   filter:
@@ -265,13 +423,22 @@ html,body{
 
 .live-top{
   position:absolute;
+
   top:18px;
   left:50%;
+
   transform:translateX(-50%);
-  z-index:5;
+
+  z-index:10;
+
+  display:flex;
+  align-items:center;
+  gap:6px;
 
   background:#e00000;
+
   padding:7px 12px;
+
   border-radius:6px;
 
   font-size:13px;
@@ -279,214 +446,119 @@ html,body{
 }
 
 .live-red-dot{
-  display:inline-block;
-  width:9px;
-  height:9px;
-  background:#fff;
+  width:7px;
+  height:7px;
+
   border-radius:50%;
-  margin-right:6px;
-  animation:redBlink .8s infinite;
+
+  background:#fff;
+
+  animation:blink 1s infinite;
 }
 
-@keyframes redBlink{
+@keyframes blink{
+
   0%,100%{
     opacity:1;
   }
 
   50%{
-    opacity:.3;
+    opacity:.25;
   }
 }
 
+/* =========================
+   INSUFFICIENT MINUTES
+========================= */
 
-/* INCOMING CALL */
-
-#incomingCall{
-  z-index:90000;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.incoming-background{
-  position:absolute;
+#insufficientPage{
+  position:fixed;
   inset:0;
 
-  background-size:cover;
-  background-position:center;
+  z-index:90000;
 
-  filter:
-    blur(18px)
-    brightness(.35);
-
-  transform:scale(1.1);
-}
-
-.incoming-content{
-  position:relative;
-  z-index:2;
-
-  width:100%;
-  height:100%;
-
-  display:flex;
-  flex-direction:column;
+  display:none;
 
   align-items:center;
   justify-content:center;
+
+  background:#000;
+
+  padding:20px;
+}
+
+.insufficient-box{
+  width:100%;
+  max-width:360px;
+
+  background:#111;
+
+  border:1px solid #2b2b2b;
+
+  border-radius:16px;
+
+  padding:28px 20px;
 
   text-align:center;
+
+  box-shadow:
+    0 15px 50px rgba(0,0,0,.6);
 }
 
-.incoming-label{
-  font-size:15px;
-  font-weight:bold;
-  letter-spacing:1px;
-  margin-bottom:20px;
-}
+.insufficient-icon{
+  width:65px;
+  height:65px;
 
-.caller-photo-wrap{
-  position:relative;
+  margin:0 auto 18px;
 
-  width:190px;
-  height:190px;
+  border-radius:50%;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
-  margin-bottom:20px;
+  background:#e00000;
+
+  font-size:30px;
 }
 
-.call-ring{
-  position:absolute;
-
-  width:190px;
-  height:190px;
-
-  border:2px solid rgba(255,255,255,.55);
-
-  border-radius:50%;
-
-  animation:ring 1.6s infinite;
-}
-
-.call-ring:nth-child(2){
-  animation-delay:.5s;
-}
-
-@keyframes ring{
-
-  0%{
-    transform:scale(.9);
-    opacity:.9;
-  }
-
-  100%{
-    transform:scale(1.35);
-    opacity:0;
-  }
-
-}
-
-.caller-photo{
-  width:150px;
-  height:150px;
-
-  border-radius:50%;
-
-  object-fit:cover;
-
-  border:4px solid #fff;
-
-  position:relative;
-  z-index:2;
-
-  animation:callerZoom 2s infinite alternate;
-}
-
-@keyframes callerZoom{
-
-  from{
-    transform:scale(1);
-  }
-
-  to{
-    transform:scale(1.04);
-  }
-
-}
-
-.caller-name{
-  font-size:27px;
+.insufficient-title{
+  font-size:24px;
   font-weight:bold;
-  margin-bottom:8px;
+
+  margin-bottom:10px;
 }
 
-.ringing{
-  font-size:15px;
-  color:#ddd;
-  margin-bottom:35px;
+.insufficient-text{
+  color:#aaa;
+  font-size:14px;
+  line-height:1.5;
 }
 
-.call-buttons{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:60px;
-}
+/* =========================
+   MOBILE
+========================= */
 
-.call-button{
-  width:72px;
-  height:72px;
+@media(max-width:360px){
 
-  border-radius:50%;
-  border:0;
-
-  color:#fff;
-  font-size:29px;
-
-  cursor:pointer;
-}
-
-.decline{
-  background:#e11d48;
-}
-
-.answer{
-  background:#16a34a;
-}
-
-
-@media(max-width:500px){
-
-  .photo-card{
-    height:235px;
-  }
-
-  .caller-photo-wrap{
-    width:175px;
-    height:175px;
-  }
-
-  .call-ring{
-    width:175px;
-    height:175px;
+  .caller-ring{
+    width:155px;
+    height:155px;
   }
 
   .caller-photo{
-    width:138px;
-    height:138px;
+    width:125px;
+    height:125px;
   }
 
   .caller-name{
     font-size:24px;
   }
 
-  .call-buttons{
-    gap:50px;
+  .call-button{
+    width:68px;
+    height:68px;
   }
-
 }
 
 </style>
@@ -495,164 +567,158 @@ html,body{
 <body>
 
 
-<!-- SAMPLE VIDEO -->
+<!-- ==================================================
+     LIVE PHOTOS
+================================================== -->
 
-<section id="samplePage" class="page">
+<div id="photosPage" class="page">
 
-  <video
-    id="sampleVideo"
-    autoplay
-    muted
-    playsinline
-    preload="auto">
+  <div class="topbar">
 
-    <source
-      src="preview_20_seconds.mp4"
-      type="video/mp4">
+    <div class="live-title">
 
-  </video>
+      <span class="live-badge">
+        LIVE
+      </span>
 
-</section>
+      <span class="online-dot"></span>
 
+      <span id="onlineNumber">
+        19 online
+      </span>
 
-<!-- LOADING -->
+    </div>
 
-<section id="loadingPage" class="page">
-
-  <div class="loader"></div>
-
-  <div class="loading-text">
-    Connecting...
   </div>
 
-</section>
+
+  <div id="photosGrid"
+       class="photos-grid">
+  </div>
+
+</div>
 
 
-<!-- INSUFFICIENT -->
+<!-- ==================================================
+     INSUFFICIENT MINUTES
+================================================== -->
 
-<section id="insufficientPage" class="page">
+<div id="insufficientPage">
 
   <div class="insufficient-box">
+
+    <div class="insufficient-icon">
+      ⏱
+    </div>
 
     <div class="insufficient-title">
       Insufficient Minutes
     </div>
 
     <div class="insufficient-text">
-      You do not have enough minutes to continue this video call.
+      You don't have enough minutes to continue this video call.
     </div>
 
   </div>
 
-</section>
+</div>
 
 
-<!-- LIVE PHOTOS -->
+<!-- ==================================================
+     INCOMING VIDEO CALL
+================================================== -->
 
-<section id="photosPage" class="page">
+<div id="incomingCall">
 
-  <div class="photos-header">
-
-    <div class="logo">
-      LIVE
-    </div>
-
-    <div class="online-status">
-
-      <span class="live-dot"></span>
-
-      <span id="onlineCount">
-        19
-      </span>
-
-      online
-
-    </div>
-
+  <div id="callBackground"
+       class="call-background">
   </div>
 
-  <div
-    id="photosGrid"
-    class="photos-grid">
-  </div>
-
-</section>
+  <div class="call-overlay"></div>
 
 
-<!-- INCOMING CALL -->
-
-<section id="incomingCall" class="page">
-
-  <div
-    id="incomingBackground"
-    class="incoming-background">
-  </div>
-
-  <div class="incoming-content">
+  <div class="call-content">
 
     <div class="incoming-label">
       INCOMING VIDEO CALL
     </div>
 
-    <div class="caller-photo-wrap">
 
-      <div class="call-ring"></div>
+    <div class="caller-ring">
 
-      <div class="call-ring"></div>
-
-      <img
-        id="callerPhoto"
-        class="caller-photo"
-        src=""
-        alt="">
+      <img id="callerPhoto"
+           class="caller-photo"
+           src=""
+           alt="Caller">
 
     </div>
 
-    <div
-      id="callerName"
-      class="caller-name">
-      Cute
+
+    <div id="callerName"
+         class="caller-name">
+      Incoming Call
     </div>
+
 
     <div class="ringing">
       Ringing...
     </div>
 
+
     <div class="call-buttons">
 
-      <button
-        id="declineButton"
-        class="call-button decline">
-        ✕
-      </button>
 
-      <button
-        id="answerButton"
-        class="call-button answer">
-        ✓
-      </button>
+      <div>
+
+        <button id="declineButton"
+                class="call-button decline">
+          ☎
+        </button>
+
+        <div class="button-label">
+          Decline
+        </div>
+
+      </div>
+
+
+      <div>
+
+        <button id="answerButton"
+                class="call-button answer">
+          ☎
+        </button>
+
+        <div class="button-label">
+          Answer
+        </div>
+
+      </div>
+
 
     </div>
 
   </div>
 
-</section>
+</div>
 
 
-<!-- ANSWER VIDEO -->
+<!-- ==================================================
+     ANSWERED LIVE VIDEO
+================================================== -->
 
 <div id="liveSoundScreen">
 
-  <video
-    id="liveSoundVideo"
-    playsinline
-    preload="auto">
+  <video id="liveSoundVideo"
+         playsinline
+         preload="auto">
 
     <source
       src="preview_20_seconds.mp4"
       type="video/mp4">
 
   </video>
+
 
   <div class="live-top">
 
@@ -667,7 +733,9 @@ html,body{
 
 <script>
 
-/* SETTINGS */
+/* ==================================================
+   SETTINGS
+================================================== */
 
 const GITHUB_OWNER =
   "agnesweb2026";
@@ -678,47 +746,34 @@ const GITHUB_REPO =
 const GITHUB_BRANCH =
   "main";
 
-const PAYMENT_PAGE_URL =
-  "payment.html";
 
-const FLOW_STARTED_KEY =
-  "myReferralFlowStarted";
+/* Timing */
+
+const LIVE_SOUND_DURATION =
+  7000;
 
 const INSUFFICIENT_DURATION =
   2000;
 
-const LIVE_SOUND_DURATION =
+const PHOTOS_DURATION =
   5000;
 
 
-/* ELEMENTS */
-
-const samplePage =
-  document.getElementById("samplePage");
-
-const sampleVideo =
-  document.getElementById("sampleVideo");
-
-const loadingPage =
-  document.getElementById("loadingPage");
-
-const insufficientPage =
-  document.getElementById("insufficientPage");
+/* ==================================================
+   ELEMENTS
+================================================== */
 
 const photosPage =
   document.getElementById("photosPage");
 
+const photosGrid =
+  document.getElementById("photosGrid");
+
 const incomingCall =
   document.getElementById("incomingCall");
 
-const liveSoundScreen =
-  document.getElementById("liveSoundScreen");
-
-const liveSoundVideo =
-  document.getElementById("liveSoundVideo");
-
-const incomingBackground =
-  document.getElementById("incomingBackground");
+const callBackground =
+  document.getElementById("callBackground");
 
 const callerPhoto =
   document.getElementById("callerPhoto");
@@ -732,14 +787,33 @@ const answerButton =
 const declineButton =
   document.getElementById("declineButton");
 
-const photosGrid =
-  document.getElementById("photosGrid");
+const liveSoundScreen =
+  document.getElementById("liveSoundScreen");
 
-const onlineCount =
-  document.getElementById("onlineCount");
+const liveSoundVideo =
+  document.getElementById("liveSoundVideo");
+
+const insufficientPage =
+  document.getElementById("insufficientPage");
+
+const onlineNumber =
+  document.getElementById("onlineNumber");
 
 
-/* PHOTO NAMES */
+/* ==================================================
+   DATA
+================================================== */
+
+let photos = [];
+
+let currentCaller = null;
+
+let incomingTimer = null;
+
+let photosTimer = null;
+
+
+/* Names */
 
 const photoNames = [
 
@@ -747,157 +821,62 @@ const photoNames = [
   "Becky",
   "Dorry",
   "Jenny",
-  "Mercy",
-  "Brenda",
-  "Sharon",
-  "Diana",
-  "Lucy",
-  "Ann",
-  "Carol",
-  "Faith",
-  "Lydia",
-  "Nancy",
-  "Esther",
-  "Joy",
-  "Rose",
+  "Ashley",
   "Mary",
   "Cindy",
+  "Mercy",
+  "Linda",
+  "Sharon",
+  "Brenda",
+  "Diana",
+  "Faith",
+  "Joy",
+  "Lucy",
+  "Angela",
   "Betty",
-  "Vicky",
-  "Milly",
-  "Susan",
+  "Nancy",
+  "Winnie",
+  "Ann",
+  "Carol",
+  "Irene",
+  "Rose",
   "Fellow"
 
 ];
 
 
-let photos = [];
-
-let usedCallerPhotos = [];
-
-
-/* HIDE ALL */
+/* ==================================================
+   HIDE ALL PAGES
+================================================== */
 
 function hideAllPages(){
 
-  samplePage.style.display = "none";
+  photosPage.style.display =
+    "none";
 
-  loadingPage.style.display = "none";
+  incomingCall.style.display =
+    "none";
 
-  insufficientPage.style.display = "none";
+  liveSoundScreen.style.display =
+    "none";
 
-  photosPage.style.display = "none";
-
-  incomingCall.style.display = "none";
-
-}
-
-
-/* LOAD ALL REPOSITORY IMAGES */
-
-async function loadPhotos(){
-
-  try{
-
-    const treeUrl =
-      `https://api.github.com/repos/` +
-      `${GITHUB_OWNER}/` +
-      `${GITHUB_REPO}/git/trees/` +
-      `${GITHUB_BRANCH}?recursive=1`;
-
-    const response =
-      await fetch(treeUrl);
-
-    if(!response.ok){
-
-      throw new Error(
-        "Could not access GitHub repository"
-      );
-
-    }
-
-    const data =
-      await response.json();
-
-    const imageFiles =
-      (data.tree || []).filter(file => {
-
-        if(file.type !== "blob"){
-          return false;
-        }
-
-        const name =
-          file.path.toLowerCase();
-
-        return (
-
-          name.endsWith(".jpg") ||
-
-          name.endsWith(".jpeg") ||
-
-          name.endsWith(".png") ||
-
-          name.endsWith(".webp")
-
-        );
-
-      });
-
-
-    photos =
-      imageFiles.map(
-        (file,index) => {
-
-          return {
-
-            url:
-              `https://raw.githubusercontent.com/` +
-              `${GITHUB_OWNER}/` +
-              `${GITHUB_REPO}/` +
-              `${GITHUB_BRANCH}/` +
-              `${file.path}`,
-
-            name:
-              photoNames[
-                index %
-                photoNames.length
-              ]
-
-          };
-
-        }
-      );
-
-
-    shufflePhotos();
-
-    renderPhotos();
-
-
-    console.log(
-      "Photos loaded:",
-      photos.length
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Photo loading error:",
-      error
-    );
-
-  }
+  insufficientPage.style.display =
+    "none";
 
 }
 
 
-/* SHUFFLE */
+/* ==================================================
+   SHUFFLE
+================================================== */
 
-function shufflePhotos(){
+function shuffleArray(array){
+
+  const copy =
+    [...array];
 
   for(
-    let i = photos.length - 1;
+    let i = copy.length - 1;
     i > 0;
     i--
   ){
@@ -908,143 +887,281 @@ function shufflePhotos(){
       );
 
     [
-      photos[i],
-      photos[j]
+      copy[i],
+      copy[j]
     ] =
     [
-      photos[j],
-      photos[i]
+      copy[j],
+      copy[i]
     ];
+
+  }
+
+  return copy;
+
+}
+
+
+/* ==================================================
+   LOAD GITHUB PHOTOS
+================================================== */
+
+async function loadPhotos(){
+
+  try{
+
+    const treeUrl =
+      "https://api.github.com/repos/" +
+      GITHUB_OWNER +
+      "/" +
+      GITHUB_REPO +
+      "/git/trees/" +
+      GITHUB_BRANCH +
+      "?recursive=1";
+
+
+    const response =
+      await fetch(treeUrl);
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "GitHub request failed"
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    const imageFiles =
+      (data.tree || []).filter(
+        file => {
+
+          if(
+            file.type !== "blob"
+          ){
+
+            return false;
+
+          }
+
+
+          const name =
+            file.path.toLowerCase();
+
+
+          return(
+
+            name.endsWith(".jpg") ||
+
+            name.endsWith(".jpeg") ||
+
+            name.endsWith(".png") ||
+
+            name.endsWith(".webp")
+
+          );
+
+        }
+      );
+
+
+    photos =
+      imageFiles.map(
+        (file,index) => ({
+
+          url:
+            "https://raw.githubusercontent.com/" +
+            GITHUB_OWNER +
+            "/" +
+            GITHUB_REPO +
+            "/" +
+            GITHUB_BRANCH +
+            "/" +
+            file.path,
+
+          name:
+            photoNames[
+              index %
+              photoNames.length
+            ]
+
+        })
+      );
+
+
+    console.log(
+      "Photos loaded:",
+      photos.length
+    );
+
+
+  }catch(error){
+
+    console.log(
+      "Photo loading error:",
+      error
+    );
+
+    photos = [];
 
   }
 
 }
 
 
-/* SHOW PHOTOS */
-
-function showLivePhotos(){
-
-  hideAllPages();
-
-  shufflePhotos();
-
-  renderPhotos();
-
-  photosPage.style.display =
-    "block";
-
-}
-
-
-/* RENDER PHOTOS */
+/* ==================================================
+   RENDER PHOTOS
+================================================== */
 
 function renderPhotos(){
 
   photosGrid.innerHTML = "";
 
-  if(photos.length === 0){
 
-    photosGrid.innerHTML = `
-      <div style="
-        grid-column:1/-1;
-        text-align:center;
-        padding:50px 20px;
-        color:#aaa;
-      ">
-        Loading live photos...
-      </div>
-    `;
-
-    return;
-
-  }
+  const shuffled =
+    shuffleArray(photos);
 
 
-  photos.forEach(photo => {
+  shuffled.forEach(
+    (photo,index) => {
 
-    const card =
-      document.createElement("div");
-
-    card.className =
-      "photo-card";
+      const card =
+        document.createElement("div");
 
 
-    card.innerHTML = `
-
-      <img
-        src="${photo.url}"
-        alt="${photo.name}"
-        loading="lazy">
-
-      <div class="live-badge">
-        LIVE
-      </div>
-
-      <div class="photo-live-dot">
-      </div>
-
-      <div class="photo-video-icon">
-        ▶
-      </div>
-
-      <div class="photo-name">
-        ${photo.name}
-      </div>
-
-    `;
+      card.className =
+        "photo-card";
 
 
-    card.addEventListener(
-      "click",
-      () => {
+      card.innerHTML = `
 
-        window.location.href =
-          PAYMENT_PAGE_URL;
+        <img
+          src="${photo.url}"
+          alt="${photo.name}"
+          loading="lazy"
+        >
 
-      }
-    );
+        <div class="photo-dark"></div>
+
+        <div class="photo-live">
+
+          <span class="photo-live-dot"></span>
+
+          LIVE
+
+        </div>
+
+        <div class="photo-video">
+          ▷
+        </div>
+
+        <div class="photo-name">
+          ${photo.name}
+        </div>
+
+      `;
 
 
-    photosGrid.appendChild(card);
+      /* ANY PHOTO TAP */
 
-  });
+      card.addEventListener(
+        "click",
+        function(){
+
+          window.location.href =
+            "payment.html";
+
+        }
+      );
+
+
+      photosGrid.appendChild(
+        card
+      );
+
+    }
+  );
 
 }
 
 
-/* RANDOM CALLER */
+/* ==================================================
+   UPDATE ONLINE NUMBER
+================================================== */
+
+function updateOnlineNumber(){
+
+  const numbers =
+    [
+      15,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ];
+
+
+  const number =
+    numbers[
+      Math.floor(
+        Math.random() *
+        numbers.length
+      )
+    ];
+
+
+  onlineNumber.textContent =
+    number + " online";
+
+}
+
+
+/* ==================================================
+   CHOOSE RANDOM CALLER
+================================================== */
 
 function chooseCaller(){
 
-  if(photos.length === 0){
+  if(
+    !photos.length
+  ){
 
     return null;
 
   }
 
 
+  let available =
+    photos;
+
+
   if(
-    usedCallerPhotos.length >=
-    photos.length
+    currentCaller
   ){
 
-    usedCallerPhotos = [];
+    available =
+      photos.filter(
+        photo =>
+          photo.url !==
+          currentCaller.url
+      );
 
   }
 
 
-  let available =
-    photos.filter(
-      photo =>
-        !usedCallerPhotos
-          .includes(photo.url)
-    );
+  if(
+    !available.length
+  ){
 
-
-  if(available.length === 0){
-
-    available = photos;
+    available =
+      photos;
 
   }
 
@@ -1058,9 +1175,8 @@ function chooseCaller(){
     ];
 
 
-  usedCallerPhotos.push(
-    caller.url
-  );
+  currentCaller =
+    caller;
 
 
   return caller;
@@ -1068,17 +1184,44 @@ function chooseCaller(){
 }
 
 
-/* SHOW INCOMING CALL */
+/* ==================================================
+   SHOW INCOMING CALL
+================================================== */
 
 function showIncomingCall(){
+
+  clearTimeout(
+    incomingTimer
+  );
+
+  clearTimeout(
+    photosTimer
+  );
+
+
+  if(
+    !photos.length
+  ){
+
+    console.log(
+      "No photos available yet."
+    );
+
+    setTimeout(
+      showIncomingCall,
+      1000
+    );
+
+    return;
+
+  }
+
 
   const caller =
     chooseCaller();
 
 
   if(!caller){
-
-    showLivePhotos();
 
     return;
 
@@ -1089,13 +1232,12 @@ function showIncomingCall(){
     caller.url;
 
 
-  incomingBackground.style
-    .backgroundImage =
-      `url("${caller.url}")`;
-
-
   callerName.textContent =
     caller.name;
+
+
+  callBackground.style.backgroundImage =
+    `url("${caller.url}")`;
 
 
   hideAllPages();
@@ -1107,11 +1249,61 @@ function showIncomingCall(){
 }
 
 
-/* ANSWER VIDEO + SOUND FOR 5 SECONDS */
+/* ==================================================
+   SHOW LIVE PHOTOS
+================================================== */
+
+function showLivePhotos(){
+
+  clearTimeout(
+    incomingTimer
+  );
+
+  clearTimeout(
+    photosTimer
+  );
+
+
+  hideAllPages();
+
+
+  renderPhotos();
+
+
+  photosPage.style.display =
+    "block";
+
+
+  updateOnlineNumber();
+
+
+  /*
+     Wait 5 seconds,
+     then show another
+     incoming video call.
+  */
+
+  photosTimer =
+    setTimeout(
+      function(){
+
+        showIncomingCall();
+
+      },
+      PHOTOS_DURATION
+    );
+
+}
+
+
+/* ==================================================
+   PLAY ANSWER VIDEO
+================================================== */
 
 async function playLiveSound(){
 
   hideAllPages();
+
 
   liveSoundScreen.style.display =
     "flex";
@@ -1149,7 +1341,7 @@ async function playLiveSound(){
 
       setTimeout(
         resolve,
-        const LIVE_SOUND_DURATION = 5000;
+        LIVE_SOUND_DURATION
       );
 
     }
@@ -1171,14 +1363,27 @@ async function playLiveSound(){
 }
 
 
-/* ANSWER */
+/* ==================================================
+   ANSWER BUTTON
+================================================== */
 
 answerButton.addEventListener(
   "click",
-  async () => {
+  async function(){
+
+    /*
+       Answer starts directly
+       from the user's tap,
+       which gives the browser
+       permission to play sound.
+    */
 
     await playLiveSound();
 
+
+    /*
+       Show insufficient minutes.
+    */
 
     hideAllPages();
 
@@ -1187,8 +1392,13 @@ answerButton.addEventListener(
       "flex";
 
 
+    /*
+       After 2 seconds,
+       return to Live Photos.
+    */
+
     setTimeout(
-      () => {
+      function(){
 
         showLivePhotos();
 
@@ -1200,11 +1410,19 @@ answerButton.addEventListener(
 );
 
 
-/* DECLINE */
+/* ==================================================
+   DECLINE BUTTON
+================================================== */
 
 declineButton.addEventListener(
   "click",
-  () => {
+  function(){
+
+    /*
+       Decline skips the video
+       and goes straight to
+       Live Photos.
+    */
 
     showLivePhotos();
 
@@ -1212,109 +1430,47 @@ declineButton.addEventListener(
 );
 
 
-/* SAMPLE FINISHED */
+/* ==================================================
+   START WEBSITE
+================================================== */
 
-sampleVideo.addEventListener(
-  "ended",
-  () => {
+async function startWebsite(){
 
-    localStorage.setItem(
-      FLOW_STARTED_KEY,
-      "true"
-    );
+  /*
+     Load the actual GitHub
+     photos first.
+  */
 
-
-    showIncomingCall();
-
-  }
-);
+  await loadPhotos();
 
 
-/* ONLINE NUMBER */
+  /*
+     Start with incoming call
+     immediately on first visit.
+  */
 
-function updateOnlineNumber(){
-
-  const numbers = [
-    15,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22
-  ];
-
-
-  onlineCount.textContent =
-    numbers[
-      Math.floor(
-        Math.random() *
-        numbers.length
-      )
-    ];
+  showIncomingCall();
 
 }
 
 
-updateOnlineNumber();
+/* ==================================================
+   START
+================================================== */
 
+startWebsite();
+
+
+/* ==================================================
+   KEEP ONLINE NUMBER DYNAMIC
+================================================== */
 
 setInterval(
   updateOnlineNumber,
   5000
 );
 
-
-/* START WEBSITE ONLY AFTER PHOTOS LOAD */
-
-async function startWebsite(){
-
-  await loadPhotos();
-
-
-  const flowStarted =
-    localStorage.getItem(
-      FLOW_STARTED_KEY
-    );
-
-
-  if(!flowStarted){
-
-    hideAllPages();
-
-
-    samplePage.style.display =
-      "flex";
-
-
-    sampleVideo.muted =
-      true;
-
-
-    sampleVideo.play().catch(
-      error => {
-
-        console.log(
-          "Sample autoplay blocked:",
-          error
-        );
-
-      }
-    );
-
-
-  }else{
-
-    showIncomingCall();
-
-  }
-
-}
-
-
-startWebsite();
-
 </script>
 
 </body>
-  </html>
+</html>
