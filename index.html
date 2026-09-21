@@ -614,9 +614,8 @@ let photosSoundTimer = null;
 
   Reloading the page will NOT reset it.
 */
-
-let firstLiveCallAvailable =
-  sessionStorage.getItem("redLiveShown")
+  let firstLiveCallAvailable =
+  localStorage.getItem("redLiveShown")
   !== "true";
 
 
