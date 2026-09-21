@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>My Referral Website</title>
 
 <style>
-
 *{
   box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 html,body{
-  margin:0;
-  padding:0;
   width:100%;
   min-height:100%;
   background:#000;
@@ -25,52 +25,35 @@ body{
   overflow-x:hidden;
 }
 
-/* WELCOME */
+/* =========================
+   WELCOME
+========================= */
 
 #welcomeScreen{
   position:fixed;
   inset:0;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
 }
 
-.welcome-content{
-  text-align:center;
-}
-
-.welcome-title{
-  font-size:28px;
-  font-weight:bold;
+#welcomeScreen h1{
+  font-size:42px;
+  letter-spacing:3px;
   margin-bottom:15px;
 }
 
-.welcome-loading{
-  font-size:15px;
+#welcomeScreen p{
+  font-size:18px;
   color:#aaa;
 }
 
-.welcome-loading span{
-  animation:loadingDots 1.4s infinite;
-}
-
-.welcome-loading span:nth-child(2){
-  animation-delay:.2s;
-}
-
-.welcome-loading span:nth-child(3){
-  animation-delay:.4s;
-}
-
-@keyframes loadingDots{
-  0%,20%{opacity:0;}
-  50%,100%{opacity:1;}
-}
-
-
-/* LIVE PEOPLE */
+/* =========================
+   LIVE PHOTOS
+========================= */
 
 #photosPage{
   display:none;
@@ -79,47 +62,48 @@ body{
   background:#000;
 }
 
-.photos-top{
-  position:sticky;
-  top:0;
-  z-index:20;
+.topBar{
   width:100%;
-  height:50px;
+  height:55px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 14px;
-  background:#111;
+  padding:0 15px;
+  background:#080808;
   border-bottom:1px solid #222;
 }
 
-.photos-title{
-  font-size:16px;
+.onlineText{
+  font-size:14px;
+  color:#ddd;
+}
+
+.onlineNumber{
+  color:#00ff66;
   font-weight:bold;
 }
 
-.online-box{
-  font-size:13px;
-  color:#fff;
+.liveTitle{
+  font-size:17px;
+  font-weight:bold;
 }
 
-.live-dot{
+.liveDot{
   display:inline-block;
   width:8px;
   height:8px;
-  margin-right:5px;
-  border-radius:50%;
   background:#00ff66;
-  box-shadow:0 0 8px #00ff66;
-  animation:onlineBlink 1s infinite;
+  border-radius:50%;
+  margin-right:5px;
+  animation:blinkDot 1s infinite;
 }
 
-@keyframes onlineBlink{
+@keyframes blinkDot{
   0%,100%{opacity:1;}
   50%{opacity:.25;}
 }
 
-#photosGrid{
+.photoGrid{
   width:100%;
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -127,496 +111,516 @@ body{
   padding:3px;
 }
 
-.photo-card{
+.photoCard{
   position:relative;
   width:100%;
-  aspect-ratio:.72;
-  overflow:hidden;
+  aspect-ratio:1/1;
   background:#111;
+  overflow:hidden;
   cursor:pointer;
 }
 
-.photo-card img{
+.photoCard img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
 }
 
-.photo-dark{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.22);
+.photoCard:active{
+  transform:scale(.98);
 }
 
-.photo-live{
+.liveBadge{
   position:absolute;
   top:8px;
   left:8px;
-  display:flex;
-  align-items:center;
-  gap:4px;
-  background:rgba(0,0,0,.65);
-  padding:5px 7px;
-  border-radius:6px;
-  font-size:10px;
+  background:#f00;
+  color:#fff;
+  padding:4px 8px;
+  border-radius:4px;
+  font-size:11px;
   font-weight:bold;
-  z-index:5;
+  z-index:3;
 }
 
-.photo-green-dot{
+.onlineLiveDot{
+  display:inline-block;
   width:6px;
   height:6px;
-  border-radius:50%;
   background:#00ff66;
-  box-shadow:0 0 6px #00ff66;
-  animation:greenBlink 1.2s infinite;
+  border-radius:50%;
+  margin-right:3px;
 }
 
-.photo-green-dot:nth-child(2){
-  animation-delay:.2s;
+.photoInfo{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:25px 8px 8px;
+  background:linear-gradient(transparent,rgba(0,0,0,.85));
 }
 
-.photo-green-dot:nth-child(3){
-  animation-delay:.4s;
+.photoName{
+  font-size:14px;
+  font-weight:bold;
 }
 
-@keyframes greenBlink{
-  0%,100%{opacity:1;}
-  50%{opacity:.35;}
+.photoMeta{
+  font-size:11px;
+  color:#ccc;
+  margin-top:3px;
 }
+
+.playIcon{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:rgba(0,0,0,.55);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:19px;
+  z-index:2;
+}
+  /* =========================
+   OFFLINE ROOMS
+========================= */
 
 .photo-offline{
   position:absolute;
   top:8px;
   left:8px;
-  display:flex;
-  align-items:center;
-  gap:5px;
-  background:rgba(0,0,0,.72);
-  padding:5px 7px;
-  border-radius:6px;
-  font-size:10px;
+  background:#333;
+  color:#ddd;
+  padding:4px 8px;
+  border-radius:4px;
+  font-size:11px;
   font-weight:bold;
-  z-index:5;
+  z-index:3;
 }
 
 .photo-red-dot{
+  display:inline-block;
   width:6px;
   height:6px;
+  background:#f00;
   border-radius:50%;
-  background:#ff3333;
-  box-shadow:0 0 6px #ff3333;
+  margin-right:3px;
 }
 
-.photo-video{
+.closedOverlay{
   position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:rgba(0,0,0,.65);
+  inset:0;
+  background:rgba(0,0,0,.58);
   display:flex;
-  align-items:center;
   justify-content:center;
-  font-size:24px;
-  z-index:5;
+  align-items:center;
+  z-index:4;
 }
 
-.photo-name{
-  position:absolute;
-  bottom:30px;
-  left:8px;
-  z-index:5;
+.closedText{
+  background:rgba(0,0,0,.8);
+  padding:10px 15px;
+  border-radius:5px;
+  color:#fff;
   font-size:13px;
   font-weight:bold;
-  text-shadow:0 2px 5px #000;
 }
 
-.photo-meta{
-  position:absolute;
-  bottom:8px;
-  left:8px;
-  z-index:5;
-  font-size:11px;
-  color:rgba(255,255,255,.82);
-  text-shadow:0 2px 5px #000;
-}
-
-.busy-label{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  z-index:10;
-  background:rgba(0,0,0,.88);
-  color:#fff;
-  padding:10px 18px;
-  border-radius:8px;
-  font-size:18px;
-  font-weight:bold;
-  box-shadow:0 0 15px rgba(255,255,255,.25);
-}
-  /* INCOMING CALL */
+/* =========================
+   INCOMING CALL
+========================= */
 
 #incomingCall{
   display:none;
   position:fixed;
   inset:0;
-  z-index:100;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  overflow:hidden;
-  background:#000;
-}
-
-#callBackground{
-  position:absolute;
-  inset:-20px;
-  background-position:center;
-  background-size:cover;
-  filter:blur(25px);
-  transform:scale(1.1);
-  opacity:.55;
-}
-
-.call-overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.45);
-}
-
-.call-content{
-  position:relative;
-  z-index:5;
-  width:100%;
-  height:100%;
-  display:flex;
+  background:#050505;
+  z-index:8000;
   flex-direction:column;
   align-items:center;
   justify-content:center;
 }
 
-.incoming-title{
-  font-size:17px;
+.incomingLabel{
+  position:absolute;
+  top:35px;
+  font-size:20px;
   font-weight:bold;
-  margin-bottom:25px;
+  letter-spacing:1px;
 }
 
-.caller-photo{
-  width:150px;
-  height:150px;
+.callerPhoto{
+  width:180px;
+  height:180px;
   border-radius:50%;
   object-fit:cover;
-  border:3px solid #fff;
-  box-shadow:0 0 25px rgba(255,255,255,.3);
+  border:3px solid #f00;
 }
 
-.caller-name{
-  margin-top:16px;
-  font-size:24px;
+.callerName{
+  margin-top:15px;
+  font-size:22px;
   font-weight:bold;
 }
 
-.ringing-text{
-  margin-top:8px;
-  font-size:14px;
-  opacity:.8;
-  animation:ringText 1s infinite;
-}
-
-@keyframes ringText{
-  0%,100%{opacity:.35;}
-  50%{opacity:1;}
-}
-
-.call-buttons{
+.callButtons{
   position:absolute;
-  bottom:55px;
+  bottom:45px;
   width:100%;
   display:flex;
   justify-content:center;
-  gap:55px;
+  gap:45px;
 }
 
-.call-button{
-  width:70px;
-  height:70px;
-  border:none;
+.callButton{
+  width:65px;
+  height:65px;
   border-radius:50%;
+  border:none;
   color:#fff;
-  font-size:30px;
+  font-size:28px;
   cursor:pointer;
 }
 
-.decline-button{
-  background:#f22;
-  box-shadow:0 0 20px rgba(255,0,0,.5);
+.answerButton{
+  background:#00b83d;
 }
 
-.answer-button{
-  background:#19d45b;
-  box-shadow:0 0 20px rgba(0,255,100,.5);
+.declineButton{
+  background:#e00000;
 }
 
+/* =========================
+   RED LIVE VIDEO
+========================= */
 
-/* RED LIVE VIDEO */
-
-#liveSoundScreen{
+#liveSoundPage{
   display:none;
   position:fixed;
   inset:0;
-  z-index:200;
   background:#000;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
+  z-index:8500;
 }
 
 #liveSoundVideo{
   width:100%;
   height:100%;
   object-fit:cover;
-  filter:blur(3px) brightness(.65);
+  display:block;
 }
 
-.live-top{
+.redLiveTop{
   position:absolute;
-  top:18px;
-  left:18px;
-  z-index:5;
-  background:red;
-  padding:7px 11px;
-  border-radius:5px;
-  font-size:12px;
+  top:15px;
+  left:15px;
+  z-index:10;
+  background:#f00000;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:4px;
+  font-size:13px;
   font-weight:bold;
-  animation:liveBlink 1s infinite;
 }
 
-.live-red-dot{
+.redLiveDot{
   display:inline-block;
   width:7px;
   height:7px;
-  margin-right:5px;
   border-radius:50%;
-  background:#fff;
+  background:#00ff66;
+  margin-right:4px;
+  animation:blinkDot 1s infinite;
 }
 
-@keyframes liveBlink{
-  0%,100%{opacity:1;}
-  50%{opacity:.55;}
+/* =========================
+   SECOND CALL BLACK SCREEN
+========================= */
+
+#blackLivePage{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:8500;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
 }
 
+.blackLiveBadge{
+  position:absolute;
+  top:15px;
+  left:15px;
+  background:#f00000;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:4px;
+  font-size:13px;
+  font-weight:bold;
+}
 
-/* INSUFFICIENT */
+.blackLoading{
+  font-size:20px;
+  color:#fff;
+  margin-top:10px;
+}
+
+.loadingDots{
+  margin-top:10px;
+  font-size:14px;
+  color:#999;
+}
+
+/* =========================
+   INSUFFICIENT
+========================= */
 
 #insufficientPage{
   display:none;
   position:fixed;
   inset:0;
-  z-index:150;
   background:#000;
+  z-index:8700;
   align-items:center;
   justify-content:center;
+  flex-direction:column;
   text-align:center;
   padding:20px;
 }
 
-.insufficient-box{
+.insufficientBox{
   width:90%;
-  max-width:350px;
-  padding:25px 20px;
+  max-width:360px;
   border:1px solid #333;
-  border-radius:12px;
   background:#111;
+  padding:30px 20px;
+  border-radius:8px;
 }
 
-.insufficient-title{
-  font-size:22px;
-  font-weight:bold;
+.insufficientBox h2{
+  color:#ff3030;
+  font-size:24px;
   margin-bottom:12px;
 }
 
-.insufficient-text{
-  font-size:14px;
-  color:#ccc;
+.insufficientBox p{
+  color:#bbb;
+  font-size:15px;
+  line-height:1.5;
 }
-
 </style>
 </head>
 
 <body>
+  <!-- =========================
+     WELCOME
+========================= -->
 
 <div id="welcomeScreen">
-
-  <div class="welcome-content">
-
-    <div class="welcome-title">
-      WELCOME
-    </div>
-
-    <div class="welcome-loading">
-      Loading<span>.</span><span>.</span><span>.</span>
-    </div>
-
-  </div>
-
+  <h1>WELCOME</h1>
+  <p>Loading...</p>
 </div>
+
+<!-- =========================
+     LIVE PHOTOS
+========================= -->
 
 <div id="photosPage">
 
-  <div class="photos-top">
+  <div class="topBar">
 
-    <div class="photos-title">
-      LIVE PEOPLE
+    <div class="onlineText">
+      <span class="onlineNumber" id="onlineNumber">21</span>
+      online
     </div>
 
-    <div class="online-box">
+    <div class="liveTitle">
+      <span class="liveDot"></span>
+      LIVE
+    </div>
 
-      <span class="live-dot"></span>
-
-      <span id="onlineNumber">
-        20 online
-      </span>
-
+    <div style="font-size:12px;color:#999;">
+      Rooms
     </div>
 
   </div>
 
-  <div id="photosGrid"></div>
+  <div id="photoGrid" class="photoGrid"></div>
 
 </div>
+
+<!-- =========================
+     INCOMING CALL
+========================= -->
+
 <div id="incomingCall">
 
-  <div id="callBackground"></div>
+  <div class="incomingLabel">
+    INCOMING VIDEO CALL
+  </div>
 
-  <div class="call-overlay"></div>
+  <img
+    id="callerPhoto"
+    class="callerPhoto"
+    src=""
+    alt="Caller"
+  >
 
-  <div class="call-content">
+  <div id="callerName" class="callerName">
+    Incoming Call
+  </div>
 
-    <div class="incoming-title">
-      INCOMING VIDEO CALL
-    </div>
+  <div class="callButtons">
 
-    <img
-      id="callerPhoto"
-      class="caller-photo"
-      src=""
-      alt="Caller"
+    <button
+      id="declineButton"
+      class="callButton declineButton"
+      type="button"
     >
+      ✕
+    </button>
 
-    <div
-      id="callerName"
-      class="caller-name">
-    </div>
-
-    <div class="ringing-text">
-      Ringing...
-    </div>
-
-    <div class="call-buttons">
-
-      <button
-        id="declineButton"
-        class="call-button decline-button">
-        ✕
-      </button>
-
-      <button
-        id="answerButton"
-        class="call-button answer-button">
-        ✓
-      </button>
-
-    </div>
+    <button
+      id="answerButton"
+      class="callButton answerButton"
+      type="button"
+    >
+      ✓
+    </button>
 
   </div>
 
 </div>
 
+<!-- =========================
+     FIRST RED LIVE VIDEO
+========================= -->
 
-<div id="insufficientPage">
+<div id="liveSoundPage">
 
-  <div class="insufficient-box">
-
-    <div class="insufficient-title">
-      Insufficient Minutes
-    </div>
-
-    <div class="insufficient-text">
-      You don't have enough minutes
-      to continue this video call.
-    </div>
-
+  <div class="redLiveTop">
+    <span class="redLiveDot"></span>
+    LIVE
   </div>
-
-</div>
-
-
-<div id="liveSoundScreen">
 
   <video
     id="liveSoundVideo"
     playsinline
-    preload="auto">
-
+    preload="auto"
+  >
     <source
       src="preview_20_seconds.mp4"
-      type="video/mp4">
-
+      type="video/mp4"
+    >
   </video>
 
-  <div class="live-top">
+</div>
 
-    <span class="live-red-dot"></span>
+<!-- =========================
+     SECOND CALL BLACK SCREEN
+========================= -->
 
+<div id="blackLivePage">
+
+  <div class="blackLiveBadge">
+    <span class="redLiveDot"></span>
     LIVE
+  </div>
+
+  <div class="blackLoading">
+    Loading...
+  </div>
+
+  <div class="loadingDots">
+    Please wait
+  </div>
+
+</div>
+
+<!-- =========================
+     INSUFFICIENT MINUTES
+========================= -->
+
+<div id="insufficientPage">
+
+  <div class="insufficientBox">
+
+    <h2>Insufficient Minutes</h2>
+
+    <p>
+      You don't have enough minutes to continue this video call.
+    </p>
 
   </div>
 
 </div>
 
+<!-- =========================
+     AUDIO SOURCE
+========================= -->
+
+<audio
+  id="backgroundSound"
+  preload="auto"
+  playsinline
+>
+  <source
+    src="preview_20_seconds.mp4"
+    type="video/mp4"
+  >
+</audio>
 
 <script>
+  /* =========================
+   SETTINGS
+========================= */
 
-const GITHUB_OWNER =
-  "agnesweb2026";
+const GITHUB_OWNER = "agnesweb2026";
+const GITHUB_REPO = "My-referral-website";
+const GITHUB_BRANCH = "main";
 
-const GITHUB_REPO =
-  "My-referral-website";
+const PHOTOS_DURATION = 20000;
+const BACKGROUND_SOUND_DURATION = 5000;
+const INSUFFICIENT_DURATION = 2000;
+const BUSY_CHANGE_DURATION = 300000;
+const SECOND_CALL_SOUND_DURATION = 5000;
 
-const GITHUB_BRANCH =
-  "main";
-
-
-const PHOTOS_DURATION =
-  20000;
-
-const PHOTOS_SOUND_DURATION =
-  5000;
-
-const INSUFFICIENT_DURATION =
-  2000;
-
+/* =========================
+   VISIT STATE
+========================= */
 
 /*
-  5 minutes = 300000 ms
+  IMPORTANT:
+
+  This variable resets when the website
+  is opened/reloaded.
+
+  Therefore the red LIVE video can only
+  appear ONCE during one visit.
 */
-const BUSY_CHANGE_DURATION =
-  300000;
 
-const BUSY_MESSAGE_DURATION =
-  3000;
+let redLiveShownThisVisit = false;
 
+let photosTimer = null;
+let backgroundSoundTimer = null;
+let busyTimer = null;
+let blackLiveTimer = null;
 
-/*
-  24 names
-*/
-const photoNames = [
+let photos = [];
+let busyIndexes = [];
 
+/* =========================
+   24 NAMES
+========================= */
+
+const names = [
   "Cute",
   "Becky",
   "Dorry",
@@ -641,274 +645,129 @@ const photoNames = [
   "Irene",
   "Rose",
   "Fellow"
-
 ];
 
+/* =========================
+   24 AGES
+========================= */
 
-/*
-  24 ages
-*/
-const photoAges = [
-
-  19,
-  23,
-  25,
-  18,
-  24,
-  24,
-  26,
-  30,
-  27,
-  23,
-  29,
-  33,
-  25,
-  25,
-  31,
-  25,
-  23,
-  19,
-  22,
-  24,
-  23,
-  27,
-  28,
-  21
-
+const ages = [
+  19,23,25,18,24,24,
+  26,30,27,23,29,33,
+  25,25,31,25,23,19,
+  22,24,23,27,28,21
 ];
 
+/* =========================
+   24 COUNTRIES
+========================= */
 
-/*
-  24 countries
-  5 Kenya
-  4 Tanzania
-  4 Nigeria
-  5 Congo
-  2 Canada
-  2 South Africa
-  2 USA
-*/
-const photoCountries = [
+const countries = [
+  {country:"Kenya",flag:"🇰🇪"},
+  {country:"Kenya",flag:"🇰🇪"},
+  {country:"Kenya",flag:"🇰🇪"},
+  {country:"Kenya",flag:"🇰🇪"},
+  {country:"Kenya",flag:"🇰🇪"},
 
-  {
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
+  {country:"Tanzania",flag:"🇹🇿"},
+  {country:"Tanzania",flag:"🇹🇿"},
+  {country:"Tanzania",flag:"🇹🇿"},
+  {country:"Tanzania",flag:"🇹🇿"},
 
-  {
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
+  {country:"Nigeria",flag:"🇳🇬"},
+  {country:"Nigeria",flag:"🇳🇬"},
+  {country:"Nigeria",flag:"🇳🇬"},
+  {country:"Nigeria",flag:"🇳🇬"},
 
-  {
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
+  {country:"Congo",flag:"🇨🇩"},
+  {country:"Congo",flag:"🇨🇩"},
+  {country:"Congo",flag:"🇨🇩"},
+  {country:"Congo",flag:"🇨🇩"},
+  {country:"Congo",flag:"🇨🇩"},
 
-  {
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
+  {country:"Canada",flag:"🇨🇦"},
+  {country:"Canada",flag:"🇨🇦"},
 
-  {
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
+  {country:"South Africa",flag:"🇿🇦"},
+  {country:"South Africa",flag:"🇿🇦"},
 
-  {
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
-
-  {
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
-
-  {
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
-
-  {
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
-
-  {
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-
-  {
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-
-  {
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-
-  {
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-
-  {
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-
-  {
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-
-  {
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-
-  {
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-
-  {
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-
-  {
-    country:"Canada",
-    flag:"🇨🇦"
-  },
-
-  {
-    country:"Canada",
-    flag:"🇨🇦"
-  },
-
-  {
-    country:"South Africa",
-    flag:"🇿🇦"
-  },
-
-  {
-    country:"South Africa",
-    flag:"🇿🇦"
-  },
-
-  {
-    country:"USA",
-    flag:"🇺🇸"
-  },
-
-  {
-    country:"USA",
-    flag:"🇺🇸"
-  }
-
+  {country:"USA",flag:"🇺🇸"},
+  {country:"USA",flag:"🇺🇸"}
 ];
-  const photosPage =
-  document.getElementById(
-    "photosPage"
-  );
-
-const photosGrid =
-  document.getElementById(
-    "photosGrid"
-  );
-
-const incomingCall =
-  document.getElementById(
-    "incomingCall"
-  );
-
-const callBackground =
-  document.getElementById(
-    "callBackground"
-  );
-
-const callerPhoto =
-  document.getElementById(
-    "callerPhoto"
-  );
-
-const callerName =
-  document.getElementById(
-    "callerName"
-  );
-
-const answerButton =
-  document.getElementById(
-    "answerButton"
-  );
-
-const declineButton =
-  document.getElementById(
-    "declineButton"
-  );
-
-const liveSoundScreen =
-  document.getElementById(
-    "liveSoundScreen"
-  );
-
-const liveSoundVideo =
-  document.getElementById(
-    "liveSoundVideo"
-  );
-
-const insufficientPage =
-  document.getElementById(
-    "insufficientPage"
-  );
-
-const onlineNumber =
-  document.getElementById(
-    "onlineNumber"
-  );
+  /* =========================
+   DOM
+========================= */
 
 const welcomeScreen =
-  document.getElementById(
-    "welcomeScreen"
-  );
+  document.getElementById("welcomeScreen");
+
+const photosPage =
+  document.getElementById("photosPage");
+
+const photoGrid =
+  document.getElementById("photoGrid");
+
+const incomingCall =
+  document.getElementById("incomingCall");
+
+const callerPhoto =
+  document.getElementById("callerPhoto");
+
+const callerName =
+  document.getElementById("callerName");
+
+const answerButton =
+  document.getElementById("answerButton");
+
+const declineButton =
+  document.getElementById("declineButton");
+
+const liveSoundPage =
+  document.getElementById("liveSoundPage");
+
+const liveSoundVideo =
+  document.getElementById("liveSoundVideo");
+
+const blackLivePage =
+  document.getElementById("blackLivePage");
+
+const insufficientPage =
+  document.getElementById("insufficientPage");
+
+const backgroundSound =
+  document.getElementById("backgroundSound");
+
+const onlineNumber =
+  document.getElementById("onlineNumber");
 
 
-let photos = [];
-
-let currentCaller = null;
-
-let photosTimer = null;
-
-let photosSoundTimer = null;
-
-let busyTimer = null;
-
+/* =========================
+   HIDE ALL PAGES
+========================= */
 
 function hideAllPages(){
 
-  photosPage.style.display =
-    "none";
+  welcomeScreen.style.display = "none";
 
-  incomingCall.style.display =
-    "none";
+  photosPage.style.display = "none";
 
-  liveSoundScreen.style.display =
-    "none";
+  incomingCall.style.display = "none";
 
-  insufficientPage.style.display =
-    "none";
+  liveSoundPage.style.display = "none";
 
+  blackLivePage.style.display = "none";
+
+  insufficientPage.style.display = "none";
 }
 
 
+/* =========================
+   SHUFFLE
+========================= */
+
 function shuffleArray(array){
 
-  const copy =
-    [...array];
+  const copy = [...array];
 
   for(
     let i = copy.length - 1;
@@ -917,323 +776,272 @@ function shuffleArray(array){
   ){
 
     const j =
-      Math.floor(
-        Math.random() * (i + 1)
-      );
+      Math.floor(Math.random() * (i + 1));
 
     [
       copy[i],
       copy[j]
-    ] =
-    [
+    ] = [
       copy[j],
       copy[i]
     ];
-
   }
 
   return copy;
-
 }
 
+
+/* =========================
+   GITHUB PHOTOS
+========================= */
 
 async function loadPhotos(){
 
   try{
 
-    const treeUrl =
-      "https://api.github.com/repos/" +
-      GITHUB_OWNER +
-      "/" +
-      GITHUB_REPO +
-      "/git/trees/" +
-      GITHUB_BRANCH +
-      "?recursive=1";
+    const apiUrl =
+      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/trees/${GITHUB_BRANCH}?recursive=1`;
 
     const response =
-      await fetch(treeUrl);
+      await fetch(apiUrl);
 
     if(!response.ok){
-
-      throw new Error(
-        "GitHub request failed"
-      );
-
+      throw new Error("GitHub request failed");
     }
 
     const data =
       await response.json();
 
     const imageFiles =
-      (data.tree || [])
-      .filter(file => {
+      data.tree
+        .filter(item => {
 
-        if(
-          file.type !== "blob"
-        ){
+          if(item.type !== "blob"){
+            return false;
+          }
 
-          return false;
+          const lower =
+            item.path.toLowerCase();
 
-        }
+          return (
+            lower.endsWith(".jpg") ||
+            lower.endsWith(".jpeg") ||
+            lower.endsWith(".png") ||
+            lower.endsWith(".webp")
+          );
+        })
+        .slice(0,24);
 
-        const name =
-          file.path.toLowerCase();
+    photos =
+      imageFiles.map((item,index) => {
 
-        return (
+        return {
+          src:
+            `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${item.path}`,
 
-          name.endsWith(".jpg") ||
-          name.endsWith(".jpeg") ||
-          name.endsWith(".png") ||
-          name.endsWith(".webp")
+          name:
+            names[index] || `User ${index + 1}`,
 
-        );
+          age:
+            ages[index] || 25,
+
+          country:
+            countries[index] ||
+            {
+              country:"Kenya",
+              flag:"🇰🇪"
+            }
+        };
 
       });
 
-
-    photos =
-      imageFiles
-      .slice(0,24)
-      .map(
-        (file,index) => ({
-
-          url:
-            "https://raw.githubusercontent.com/" +
-            GITHUB_OWNER +
-            "/" +
-            GITHUB_REPO +
-            "/" +
-            GITHUB_BRANCH +
-            "/" +
-            file.path,
-
-          name:
-            photoNames[index],
-
-          age:
-            photoAges[index],
-
-          country:
-            photoCountries[index].country,
-
-          flag:
-            photoCountries[index].flag
-
-        })
-      );
-
-
-    console.log(
-      "Photos loaded:",
-      photos.length
-    );
-
-
   }catch(error){
 
-    console.log(
+    console.error(
       "Photo loading error:",
       error
     );
 
-    photos = [];
-
   }
+                 }
+  /* =========================
+   CREATE 5 OFFLINE ROOMS
+========================= */
 
+function createBusyIndexes(){
+
+  busyIndexes = [];
+
+  while(busyIndexes.length < 5){
+
+    const randomIndex =
+      Math.floor(
+        Math.random() * photos.length
+      );
+
+    if(
+      !busyIndexes.includes(randomIndex)
+    ){
+
+      busyIndexes.push(randomIndex);
+
+    }
+  }
 }
 
 
-function createBusyIndexes(total){
+/* =========================
+   RENDER PHOTOS
+========================= */
 
-  const busyIndexes =
-    new Set();
+function renderPhotos(){
 
-  if(total <= 0){
+  clearTimeout(busyTimer);
 
-    return busyIndexes;
-
+  if(!photos.length){
+    return;
   }
 
-  const busyCount =
-    Math.min(
-      total,
-      5
-    );
+  photoGrid.innerHTML = "";
 
-  while(
-    busyIndexes.size <
-    busyCount
-  ){
+  const shuffledPhotos =
+    shuffleArray(photos);
 
-    busyIndexes.add(
+  createBusyIndexes();
 
-      Math.floor(
-        Math.random() * total
-      )
+  shuffledPhotos.forEach((person,index) => {
 
-    );
+    const card =
+      document.createElement("div");
 
-  }
+    card.className = "photoCard";
 
-  return busyIndexes;
+    const isBusy =
+      busyIndexes.includes(index);
 
-  }
-  function renderPhotos(){
+    const image =
+      document.createElement("img");
 
-  clearTimeout(
-    busyTimer
-  );
+    image.src = person.src;
 
-  photosGrid.innerHTML =
-    "";
+    image.alt = person.name;
 
-  const shuffled =
-    shuffleArray(
-      photos
-    );
+    image.loading = "lazy";
 
-  const busyIndexes =
-    createBusyIndexes(
-      shuffled.length
-    );
+    card.appendChild(image);
 
 
-  shuffled.forEach(
-    (photo,index) => {
+    const playIcon =
+      document.createElement("div");
 
-      const card =
-        document.createElement(
-          "div"
-        );
+    playIcon.className = "playIcon";
 
-      card.className =
-        "photo-card";
+    playIcon.innerHTML = "▶";
+
+    card.appendChild(playIcon);
 
 
-      const isBusy =
-        busyIndexes.has(
-          index
-        );
+    if(isBusy){
+
+      const offline =
+        document.createElement("div");
+
+      offline.className =
+        "photo-offline";
+
+      offline.innerHTML =
+        '<span class="photo-red-dot"></span>OFFLINE';
+
+      card.appendChild(offline);
 
 
-      card.innerHTML = `
+      const closedOverlay =
+        document.createElement("div");
 
-        <img
-          src="${photo.url}"
-          alt="${photo.name}"
-          loading="lazy"
-        >
+      closedOverlay.className =
+        "closedOverlay";
 
-        <div class="photo-dark"></div>
+      closedOverlay.innerHTML =
+        '<div class="closedText">ROOM CLOSED</div>';
 
-        ${
-          isBusy
-
-          ?
-
-          `
-            <div class="photo-offline">
-
-              <span
-                class="photo-red-dot">
-              </span>
-
-              OFFLINE
-
-            </div>
-          `
-
-          :
-
-          `
-            <div class="photo-live">
-
-              <span
-                class="photo-green-dot">
-              </span>
-
-              <span
-                class="photo-green-dot">
-              </span>
-
-              <span
-                class="photo-green-dot">
-              </span>
-
-              LIVE
-
-            </div>
-          `
-
-        }
+      card.appendChild(closedOverlay);
 
 
-        <div class="photo-video">
-          ▷
+      const info =
+        document.createElement("div");
+
+      info.className = "photoInfo";
+
+      info.innerHTML = `
+        <div class="photoName">
+          ${person.name}
         </div>
 
-
-        <div class="photo-name">
-          ${photo.name}
+        <div class="photoMeta">
+          ${person.country.flag} ${person.age} yrs
         </div>
-
-
-        <div class="photo-meta">
-          ${photo.flag} ${photo.age} yrs
-        </div>
-
-
-        ${
-          isBusy
-
-          ?
-
-          `
-            <div class="busy-label">
-              ROOM CLOSED
-            </div>
-          `
-
-          :
-
-          ""
-
-        }
-
       `;
 
+      card.appendChild(info);
+
+
+      /*
+        OFFLINE ROOM:
+        Do NOT open payment.
+      */
 
       card.addEventListener(
         "click",
-        () => {
+        function(){
 
-          if(isBusy){
+          closedOverlay.querySelector(
+            ".closedText"
+          ).textContent =
+            "ROOM CLOSED";
 
-            const nameElement =
-              card.querySelector(
-                ".photo-name"
-              );
+        }
+      );
+
+    }else{
+
+      const liveBadge =
+        document.createElement("div");
+
+      liveBadge.className =
+        "liveBadge";
+
+      liveBadge.innerHTML =
+        '<span class="onlineLiveDot"></span>LIVE';
+
+      card.appendChild(liveBadge);
 
 
-            nameElement.textContent =
-              "ROOM CLOSED";
+      const info =
+        document.createElement("div");
+
+      info.className = "photoInfo";
+
+      info.innerHTML = `
+        <div class="photoName">
+          ${person.name}
+        </div>
+
+        <div class="photoMeta">
+          ${person.country.flag} ${person.age} yrs
+        </div>
+      `;
+
+      card.appendChild(info);
 
 
-            setTimeout(
-              () => {
+      /*
+        ANY TAP ON LIVE ROOM:
+        GO TO PAYMENT PAGE.
+      */
 
-                nameElement.textContent =
-                  photo.name;
-
-              },
-              BUSY_MESSAGE_DURATION
-            );
-
-
-            return;
-
-          }
-
+      card.addEventListener(
+        "click",
+        function(){
 
           window.location.href =
             "payment.html";
@@ -1241,78 +1049,171 @@ function createBusyIndexes(total){
         }
       );
 
-
-      photosGrid.appendChild(
-        card
-      );
-
     }
-  );
+
+    photoGrid.appendChild(card);
+
+  });
 
 
   /*
-    New random 5 rooms after
-    every 5 minutes.
+    Exactly 5 rooms change every 5 minutes.
   */
 
   busyTimer =
-    setTimeout(
-      () => {
+    setTimeout(() => {
 
-        if(
-          photosPage.style.display !==
-          "none"
-        ){
+      if(
+        photosPage.style.display !== "none"
+      ){
 
-          renderPhotos();
+        renderPhotos();
 
-        }
+      }
 
-      },
-      BUSY_CHANGE_DURATION
-    );
-
+    }, BUSY_CHANGE_DURATION);
 }
 
+
+/* =========================
+   ONLINE NUMBER
+========================= */
 
 function updateOnlineNumber(){
 
   const number =
     Math.floor(
-      Math.random() * 6
-    ) + 18;
-
+      Math.random() * 5
+    ) + 19;
 
   onlineNumber.textContent =
-    number + " online";
+    number;
+}
+  /* =========================
+   PLAY 5 SECOND BACKGROUND
+   SOUND ON LIVE PHOTOS
+========================= */
 
-          }
-  function showLivePhotos(){
-
-  clearTimeout(
-    photosTimer
-  );
-
-  clearTimeout(
-    photosSoundTimer
-  );
+function playLivePhotosSound(){
 
   clearTimeout(
-    busyTimer
+    backgroundSoundTimer
   );
 
+  try{
+
+    backgroundSound.pause();
+
+    backgroundSound.currentTime = 0;
+
+    backgroundSound.volume = 0.45;
+
+    const promise =
+      backgroundSound.play();
+
+    if(promise){
+
+      promise.catch(() => {
+
+        /*
+          Chrome may block sound until
+          the visitor interacts with the page.
+          The interaction listener below
+          will try again.
+        */
+
+      });
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "Background sound:",
+      error
+    );
+
+  }
+
+
+  backgroundSoundTimer =
+    setTimeout(() => {
+
+      backgroundSound.pause();
+
+      backgroundSound.currentTime = 0;
+
+    }, BACKGROUND_SOUND_DURATION);
+}
+
+
+/* =========================
+   ENABLE SOUND AFTER
+   FIRST USER INTERACTION
+========================= */
+
+function enableSound(){
+
+  try{
+
+    if(
+      photosPage.style.display !== "none"
+    ){
+
+      playLivePhotosSound();
+
+    }
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+document.addEventListener(
+  "click",
+  enableSound,
+  {once:false}
+);
+
+document.addEventListener(
+  "touchstart",
+  enableSound,
+  {once:false}
+);
+
+
+/* =========================
+   SHOW LIVE PHOTOS
+========================= */
+
+function showLivePhotos(){
+
+  clearTimeout(photosTimer);
+
+  clearTimeout(backgroundSoundTimer);
+
+  clearTimeout(busyTimer);
+
+  clearTimeout(blackLiveTimer);
 
   hideAllPages();
 
-
-  photosPage.style.display =
-    "block";
-
+  photosPage.style.display = "block";
 
   updateOnlineNumber();
 
-
   renderPhotos();
+
+  /*
+    Every time Live Photos appears,
+    background sound plays for 5 seconds.
+  */
+
+  playLivePhotosSound();
 
 
   /*
@@ -1320,239 +1221,166 @@ function updateOnlineNumber(){
   */
 
   photosTimer =
-    setTimeout(
-      () => {
+    setTimeout(() => {
 
-        if(
-          photosPage.style.display !==
-          "none"
-        ){
+      if(
+        photosPage.style.display !== "none"
+      ){
 
-          showIncomingCall();
+        showIncomingCall();
 
-        }
+      }
 
-      },
-      PHOTOS_DURATION
-    );
+    }, PHOTOS_DURATION);
 
 }
 
 
+/* =========================
+   SHOW INCOMING CALL
+========================= */
+
 function showIncomingCall(){
 
-  clearTimeout(
-    photosTimer
-  );
+  clearTimeout(photosTimer);
 
-  clearTimeout(
-    photosSoundTimer
-  );
+  clearTimeout(backgroundSoundTimer);
 
-  clearTimeout(
-    busyTimer
-  );
-
+  clearTimeout(busyTimer);
 
   hideAllPages();
 
+  incomingCall.style.display =
+    "flex";
 
-  if(
-    photos.length === 0
-  ){
+
+  if(!photos.length){
+
+    callerPhoto.style.display =
+      "none";
+
+    callerName.textContent =
+      "Incoming Video Call";
 
     return;
 
   }
 
 
-  const callerIndex =
-    Math.floor(
-      Math.random() *
-      photos.length
-    );
-
-
-  currentCaller =
+  const randomCaller =
     photos[
-      callerIndex
+      Math.floor(
+        Math.random() * photos.length
+      )
     ];
 
 
-  callerPhoto.src =
-    currentCaller.url;
+  callerPhoto.style.display =
+    "block";
 
+  callerPhoto.src =
+    randomCaller.src;
 
   callerName.textContent =
-    currentCaller.name;
-
-
-  callBackground.style.backgroundImage =
-    `url("${currentCaller.url}")`;
-
-
-  incomingCall.style.display =
-    "flex";
+    randomCaller.name;
 
 }
-
-
-function showInsufficient(){
-
-  clearTimeout(
-    photosTimer
-  );
-
-  clearTimeout(
-    photosSoundTimer
-  );
-
-  clearTimeout(
-    busyTimer
-  );
-
-
-  hideAllPages();
-
-
-  insufficientPage.style.display =
-    "flex";
-
-
-  setTimeout(
-    () => {
-
-      showLivePhotos();
-
-    },
-    INSUFFICIENT_DURATION
-  );
-
-}
-
+  /* =========================
+   FIRST RED LIVE VIDEO
+========================= */
 
 function showLiveSound(){
 
-  clearTimeout(
-    photosTimer
-  );
+  clearTimeout(photosTimer);
 
-  clearTimeout(
-    photosSoundTimer
-  );
+  clearTimeout(backgroundSoundTimer);
 
-  clearTimeout(
-    busyTimer
-  );
+  clearTimeout(busyTimer);
 
+  clearTimeout(blackLiveTimer);
 
   hideAllPages();
 
+  liveSoundPage.style.display =
+    "block";
 
-  liveSoundScreen.style.display =
-    "flex";
+
+  /*
+    Stop background sound so we don't
+    hear two copies at once.
+  */
+
+  backgroundSound.pause();
+
+  backgroundSound.currentTime = 0;
 
 
-  try{
+  liveSoundVideo.currentTime = 0;
 
-    liveSoundVideo.currentTime =
-      0;
+  liveSoundVideo.muted = false;
 
+  liveSoundVideo.volume = 1;
+
+
+  /*
+    Play red LIVE video with sound.
+  */
+
+  const playPromise =
     liveSoundVideo.play();
 
-  }catch(error){
+  if(playPromise){
 
-    console.log(
-      "Video play error:",
-      error
-    );
+    playPromise.catch(() => {
+
+      /*
+        If Chrome blocks autoplay,
+        the video can still start after
+        the user's answer tap.
+      */
+
+    });
 
   }
 
 
-  photosSoundTimer =
-    setTimeout(
-      () => {
-
-        showInsufficient();
-
-      },
-      PHOTOS_SOUND_DURATION
-    );
-
-}
-
-
-function startWebsite(){
-
-  hideAllPages();
-
-
   /*
-    Welcome screen first.
+    Maximum red LIVE video time.
+    It will continue until the video
+    ends, but we also prevent it from
+    getting stuck forever.
   */
 
-  welcomeScreen.style.display =
-    "flex";
-
-
-  /*
-    Load photos while Welcome
-    screen is visible.
-  */
-
-  loadPhotos()
-    .then(
-      () => {
-
-        setTimeout(
-          () => {
-
-            welcomeScreen.style.display =
-              "none";
-
-            showLivePhotos();
-
-          },
-          3000
-        );
-
-      }
-    );
-
-}
-  /*
-  FIRST ANSWERED CALL
-
-  The red LIVE video plays only
-  when redLiveShown is not yet true.
-*/
-
-answerButton.addEventListener(
-  "click",
-  () => {
+  setTimeout(() => {
 
     if(
-      localStorage.getItem(
-        "redLiveShown"
-      ) !== "true"
+      liveSoundPage.style.display !==
+      "none"
     ){
 
-      localStorage.setItem(
-        "redLiveShown",
-        "true"
-      );
+      liveSoundVideo.pause();
+
+      showInsufficient();
+
+    }
+
+  }, 20000);
+
+}
 
 
-      showLiveSound();
+/* =========================
+   RED LIVE VIDEO ENDED
+========================= */
 
+liveSoundVideo.addEventListener(
+  "ended",
+  function(){
 
-    }else{
-
-      /*
-        Later calls skip the
-        red LIVE video.
-      */
+    if(
+      liveSoundPage.style.display !==
+      "none"
+    ){
 
       showInsufficient();
 
@@ -1562,9 +1390,163 @@ answerButton.addEventListener(
 );
 
 
+/* =========================
+   SECOND CALL BLACK SCREEN
+========================= */
+
+function showBlackLive(){
+
+  clearTimeout(photosTimer);
+
+  clearTimeout(backgroundSoundTimer);
+
+  clearTimeout(busyTimer);
+
+  clearTimeout(blackLiveTimer);
+
+  hideAllPages();
+
+  blackLivePage.style.display =
+    "flex";
+
+
+  /*
+    Same sound as red LIVE,
+    but NO video is displayed.
+  */
+
+  backgroundSound.pause();
+
+  backgroundSound.currentTime = 0;
+
+  backgroundSound.volume = 1;
+
+
+  const playPromise =
+    backgroundSound.play();
+
+  if(playPromise){
+
+    playPromise.catch(() => {
+
+      /*
+        Browser autoplay restriction.
+        The user has already tapped Answer,
+        so normally playback should be allowed.
+      */
+
+    });
+
+  }
+
+
+  /*
+    Sound + black LIVE screen:
+    exactly 5 seconds.
+  */
+
+  blackLiveTimer =
+    setTimeout(() => {
+
+      backgroundSound.pause();
+
+      backgroundSound.currentTime = 0;
+
+      showInsufficient();
+
+    }, SECOND_CALL_SOUND_DURATION);
+
+}
+
+
+/* =========================
+   INSUFFICIENT MINUTES
+========================= */
+
+function showInsufficient(){
+
+  clearTimeout(photosTimer);
+
+  clearTimeout(backgroundSoundTimer);
+
+  clearTimeout(busyTimer);
+
+  clearTimeout(blackLiveTimer);
+
+  hideAllPages();
+
+  insufficientPage.style.display =
+    "flex";
+
+
+  setTimeout(() => {
+
+    showLivePhotos();
+
+  }, INSUFFICIENT_DURATION);
+
+}
+  
+  /* =========================
+   ANSWER BUTTON
+========================= */
+
+answerButton.addEventListener(
+  "click",
+  function(){
+
+    /*
+      FIRST ANSWERED CALL:
+      Red LIVE video.
+
+      AFTER THAT:
+      Black screen + LIVE + sound.
+    */
+
+    if(!redLiveShownThisVisit){
+
+      /*
+        Mark it immediately.
+
+        This means even if the video
+        has a loading problem, another
+        incoming call during this visit
+        will NOT show the red video again.
+      */
+
+      redLiveShownThisVisit = true;
+
+      showLiveSound();
+
+    }else{
+
+      /*
+        Second and later answered calls:
+        black screen + red LIVE + sound.
+      */
+
+      showBlackLive();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   DECLINE BUTTON
+========================= */
+
 declineButton.addEventListener(
   "click",
-  () => {
+  function(){
+
+    /*
+      Declining does NOT use the
+      red LIVE video.
+
+      Return directly to Live Photos.
+    */
 
     showLivePhotos();
 
@@ -1572,45 +1554,71 @@ declineButton.addEventListener(
 );
 
 
-/*
-  If the video ends before
-  the timer, continue.
-*/
+/* =========================
+   START WEBSITE
+========================= */
 
-liveSoundVideo.addEventListener(
-  "ended",
-  () => {
+function startWebsite(){
 
-    showInsufficient();
+  hideAllPages();
+
+  welcomeScreen.style.display =
+    "flex";
+
+
+  const startedAt =
+    Date.now();
+
+
+  /*
+    Load photos while the Welcome
+    screen is already counting.
+  */
+
+  loadPhotos().finally(() => {
+
+    const elapsed =
+      Date.now() - startedAt;
+
+    const remaining =
+      Math.max(
+        0,
+        3000 - elapsed
+      );
+
+
+    setTimeout(() => {
+
+      welcomeScreen.style.display =
+        "none";
+
+      showLivePhotos();
+
+    }, remaining);
+
+  });
+
+}
+
+
+/* =========================
+   ONLINE NUMBER UPDATE
+========================= */
+
+setInterval(() => {
+
+  if(
+    photosPage.style.display !== "none"
+  ){
+
+    updateOnlineNumber();
 
   }
-);
 
-
-/*
-  Keep online number changing.
-*/
-
-setInterval(
-  () => {
-
-    if(
-      photosPage.style.display !==
-      "none"
-    ){
-
-      updateOnlineNumber();
-
-    }
-
-  },
-  5000
-);
-
-
-/*
-  Start everything.
-*/
+}, 10000);
+  /* =========================
+   START
+========================= */
 
 startWebsite();
 
@@ -1618,3 +1626,5 @@ startWebsite();
 
 </body>
 </html>
+  
+  
