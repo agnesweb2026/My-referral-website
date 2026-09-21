@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Referral Website</title>
 
 <style>
@@ -17,8 +11,7 @@
   box-sizing:border-box;
 }
 
-html,
-body{
+html,body{
   margin:0;
   padding:0;
   width:100%;
@@ -32,10 +25,52 @@ body{
   overflow-x:hidden;
 }
 
+/* WELCOME */
 
-/* =========================
-   LIVE PHOTOS
-========================= */
+#welcomeScreen{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#000;
+}
+
+.welcome-content{
+  text-align:center;
+}
+
+.welcome-title{
+  font-size:28px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+.welcome-loading{
+  font-size:15px;
+  color:#aaa;
+}
+
+.welcome-loading span{
+  animation:loadingDots 1.4s infinite;
+}
+
+.welcome-loading span:nth-child(2){
+  animation-delay:.2s;
+}
+
+.welcome-loading span:nth-child(3){
+  animation-delay:.4s;
+}
+
+@keyframes loadingDots{
+  0%,20%{opacity:0;}
+  50%,100%{opacity:1;}
+}
+
+
+/* LIVE PEOPLE */
 
 #photosPage{
   display:none;
@@ -80,17 +115,9 @@ body{
 }
 
 @keyframes onlineBlink{
-
-  0%,100%{
-    opacity:1;
-  }
-
-  50%{
-    opacity:.25;
-  }
-
+  0%,100%{opacity:1;}
+  50%{opacity:.25;}
 }
-
 
 #photosGrid{
   width:100%;
@@ -100,16 +127,14 @@ body{
   padding:3px;
 }
 
-
 .photo-card{
   position:relative;
   width:100%;
-  aspect-ratio:0.72;
+  aspect-ratio:.72;
   overflow:hidden;
   background:#111;
   cursor:pointer;
 }
-
 
 .photo-card img{
   width:100%;
@@ -118,13 +143,11 @@ body{
   display:block;
 }
 
-
 .photo-dark{
   position:absolute;
   inset:0;
   background:rgba(0,0,0,.22);
 }
-
 
 .photo-live{
   position:absolute;
@@ -141,7 +164,6 @@ body{
   z-index:5;
 }
 
-
 .photo-green-dot{
   width:6px;
   height:6px;
@@ -151,29 +173,41 @@ body{
   animation:greenBlink 1.2s infinite;
 }
 
-
 .photo-green-dot:nth-child(2){
   animation-delay:.2s;
 }
-
 
 .photo-green-dot:nth-child(3){
   animation-delay:.4s;
 }
 
-
 @keyframes greenBlink{
-
-  0%,100%{
-    opacity:1;
-  }
-
-  50%{
-    opacity:.35;
-  }
-
+  0%,100%{opacity:1;}
+  50%{opacity:.35;}
 }
 
+.photo-offline{
+  position:absolute;
+  top:8px;
+  left:8px;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  background:rgba(0,0,0,.72);
+  padding:5px 7px;
+  border-radius:6px;
+  font-size:10px;
+  font-weight:bold;
+  z-index:5;
+}
+
+.photo-red-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#ff3333;
+  box-shadow:0 0 6px #ff3333;
+}
 
 .photo-video{
   position:absolute;
@@ -191,10 +225,9 @@ body{
   z-index:5;
 }
 
-
 .photo-name{
   position:absolute;
-  bottom:8px;
+  bottom:30px;
   left:8px;
   z-index:5;
   font-size:13px;
@@ -202,10 +235,15 @@ body{
   text-shadow:0 2px 5px #000;
 }
 
-
-/* =========================
-   BUSY
-========================= */
+.photo-meta{
+  position:absolute;
+  bottom:8px;
+  left:8px;
+  z-index:5;
+  font-size:11px;
+  color:rgba(255,255,255,.82);
+  text-shadow:0 2px 5px #000;
+}
 
 .busy-label{
   position:absolute;
@@ -213,23 +251,15 @@ body{
   left:50%;
   transform:translate(-50%,-50%);
   z-index:10;
-
   background:rgba(0,0,0,.88);
   color:#fff;
-
   padding:10px 18px;
   border-radius:8px;
-
   font-size:18px;
   font-weight:bold;
-
   box-shadow:0 0 15px rgba(255,255,255,.25);
 }
-
-
-/* =========================
-   INCOMING CALL
-========================= */
+  /* INCOMING CALL */
 
 #incomingCall{
   display:none;
@@ -243,7 +273,6 @@ body{
   background:#000;
 }
 
-
 #callBackground{
   position:absolute;
   inset:-20px;
@@ -254,13 +283,11 @@ body{
   opacity:.55;
 }
 
-
 .call-overlay{
   position:absolute;
   inset:0;
   background:rgba(0,0,0,.45);
 }
-
 
 .call-content{
   position:relative;
@@ -273,13 +300,11 @@ body{
   justify-content:center;
 }
 
-
 .incoming-title{
   font-size:17px;
   font-weight:bold;
   margin-bottom:25px;
 }
-
 
 .caller-photo{
   width:150px;
@@ -290,13 +315,11 @@ body{
   box-shadow:0 0 25px rgba(255,255,255,.3);
 }
 
-
 .caller-name{
   margin-top:16px;
   font-size:24px;
   font-weight:bold;
 }
-
 
 .ringing-text{
   margin-top:8px;
@@ -305,19 +328,10 @@ body{
   animation:ringText 1s infinite;
 }
 
-
 @keyframes ringText{
-
-  0%,100%{
-    opacity:.35;
-  }
-
-  50%{
-    opacity:1;
-  }
-
+  0%,100%{opacity:.35;}
+  50%{opacity:1;}
 }
-
 
 .call-buttons{
   position:absolute;
@@ -327,7 +341,6 @@ body{
   justify-content:center;
   gap:55px;
 }
-
 
 .call-button{
   width:70px;
@@ -339,12 +352,10 @@ body{
   cursor:pointer;
 }
 
-
 .decline-button{
   background:#f22;
   box-shadow:0 0 20px rgba(255,0,0,.5);
 }
-
 
 .answer-button{
   background:#19d45b;
@@ -352,9 +363,7 @@ body{
 }
 
 
-/* =========================
-   FIRST LIVE VIDEO
-========================= */
+/* RED LIVE VIDEO */
 
 #liveSoundScreen{
   display:none;
@@ -367,14 +376,12 @@ body{
   overflow:hidden;
 }
 
-
 #liveSoundVideo{
   width:100%;
   height:100%;
   object-fit:cover;
   filter:blur(3px) brightness(.65);
 }
-
 
 .live-top{
   position:absolute;
@@ -389,7 +396,6 @@ body{
   animation:liveBlink 1s infinite;
 }
 
-
 .live-red-dot{
   display:inline-block;
   width:7px;
@@ -399,23 +405,13 @@ body{
   background:#fff;
 }
 
-
 @keyframes liveBlink{
-
-  0%,100%{
-    opacity:1;
-  }
-
-  50%{
-    opacity:.55;
-  }
-
+  0%,100%{opacity:1;}
+  50%{opacity:.55;}
 }
 
 
-/* =========================
-   INSUFFICIENT
-========================= */
+/* INSUFFICIENT */
 
 #insufficientPage{
   display:none;
@@ -429,7 +425,6 @@ body{
   padding:20px;
 }
 
-
 .insufficient-box{
   width:90%;
   max-width:350px;
@@ -439,13 +434,11 @@ body{
   background:#111;
 }
 
-
 .insufficient-title{
   font-size:22px;
   font-weight:bold;
   margin-bottom:12px;
 }
-
 
 .insufficient-text{
   font-size:14px;
@@ -453,19 +446,32 @@ body{
 }
 
 </style>
-
 </head>
 
 <body>
+
+<div id="welcomeScreen">
+
+  <div class="welcome-content">
+
+    <div class="welcome-title">
+      WELCOME
+    </div>
+
+    <div class="welcome-loading">
+      Loading<span>.</span><span>.</span><span>.</span>
+    </div>
+
+  </div>
+
+</div>
 
 <div id="photosPage">
 
   <div class="photos-top">
 
     <div class="photos-title">
-      DISCOVER 
-      LIVE 
-    PEOPLE 
+      LIVE PEOPLE
     </div>
 
     <div class="online-box">
@@ -483,8 +489,6 @@ body{
   <div id="photosGrid"></div>
 
 </div>
-
-
 <div id="incomingCall">
 
   <div id="callBackground"></div>
@@ -574,6 +578,8 @@ body{
   </div>
 
 </div>
+
+
 <script>
 
 const GITHUB_OWNER =
@@ -586,134 +592,29 @@ const GITHUB_BRANCH =
   "main";
 
 
-const FIRST_LIVE_DURATION =
-  7000;
-
-
-/*
-  Next incoming call after
-  20 seconds of Live Photos.
-*/
 const PHOTOS_DURATION =
   20000;
 
-
 const PHOTOS_SOUND_DURATION =
   5000;
-
 
 const INSUFFICIENT_DURATION =
   2000;
 
 
+/*
+  5 minutes = 300000 ms
+*/
 const BUSY_CHANGE_DURATION =
-  70000;
-
+  300000;
 
 const BUSY_MESSAGE_DURATION =
-  50000;
-
-
-const photosPage =
-  document.getElementById(
-    "photosPage"
-  );
-
-
-const photosGrid =
-  document.getElementById(
-    "photosGrid"
-  );
-
-
-const incomingCall =
-  document.getElementById(
-    "incomingCall"
-  );
-
-
-const callBackground =
-  document.getElementById(
-    "callBackground"
-  );
-
-
-const callerPhoto =
-  document.getElementById(
-    "callerPhoto"
-  );
-
-
-const callerName =
-  document.getElementById(
-    "callerName"
-  );
-
-
-const answerButton =
-  document.getElementById(
-    "answerButton"
-  );
-
-
-const declineButton =
-  document.getElementById(
-    "declineButton"
-  );
-
-
-const liveSoundScreen =
-  document.getElementById(
-    "liveSoundScreen"
-  );
-
-
-const liveSoundVideo =
-  document.getElementById(
-    "liveSoundVideo"
-  );
-
-
-const insufficientPage =
-  document.getElementById(
-    "insufficientPage"
-  );
-
-
-const onlineNumber =
-  document.getElementById(
-    "onlineNumber"
-  );
-
-
-let photos = [];
-
-let currentCaller = null;
-
-let photosTimer = null;
-
-let photosSoundTimer = null;
-
-let busyTimer = null;
+  3000;
 
 
 /*
-  RED LIVE + VIDEO + SOUND
-  appears only once on this phone/browser.
-
-  localStorage means:
-  - reload does not reset it
-  - closing browser does not reset it
-  - reopening does not reset it
+  24 names
 */
-
-
-let firstLiveCallAvailable =
-  localStorage.getItem(
-    "redLiveShown"
-  ) !== "true";
-
-
 const photoNames = [
 
   "Cute",
@@ -744,6 +645,249 @@ const photoNames = [
 ];
 
 
+/*
+  24 ages
+*/
+const photoAges = [
+
+  19,
+  23,
+  25,
+  18,
+  24,
+  24,
+  26,
+  30,
+  27,
+  23,
+  29,
+  33,
+  25,
+  25,
+  31,
+  25,
+  23,
+  19,
+  22,
+  24,
+  23,
+  27,
+  28,
+  21
+
+];
+
+
+/*
+  24 countries
+  5 Kenya
+  4 Tanzania
+  4 Nigeria
+  5 Congo
+  2 Canada
+  2 South Africa
+  2 USA
+*/
+const photoCountries = [
+
+  {
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
+
+  {
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
+
+  {
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
+
+  {
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
+
+  {
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
+
+  {
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+  {
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+  {
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+  {
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+  {
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    country:"Canada",
+    flag:"🇨🇦"
+  },
+
+  {
+    country:"Canada",
+    flag:"🇨🇦"
+  },
+
+  {
+    country:"South Africa",
+    flag:"🇿🇦"
+  },
+
+  {
+    country:"South Africa",
+    flag:"🇿🇦"
+  },
+
+  {
+    country:"USA",
+    flag:"🇺🇸"
+  },
+
+  {
+    country:"USA",
+    flag:"🇺🇸"
+  }
+
+];
+  const photosPage =
+  document.getElementById(
+    "photosPage"
+  );
+
+const photosGrid =
+  document.getElementById(
+    "photosGrid"
+  );
+
+const incomingCall =
+  document.getElementById(
+    "incomingCall"
+  );
+
+const callBackground =
+  document.getElementById(
+    "callBackground"
+  );
+
+const callerPhoto =
+  document.getElementById(
+    "callerPhoto"
+  );
+
+const callerName =
+  document.getElementById(
+    "callerName"
+  );
+
+const answerButton =
+  document.getElementById(
+    "answerButton"
+  );
+
+const declineButton =
+  document.getElementById(
+    "declineButton"
+  );
+
+const liveSoundScreen =
+  document.getElementById(
+    "liveSoundScreen"
+  );
+
+const liveSoundVideo =
+  document.getElementById(
+    "liveSoundVideo"
+  );
+
+const insufficientPage =
+  document.getElementById(
+    "insufficientPage"
+  );
+
+const onlineNumber =
+  document.getElementById(
+    "onlineNumber"
+  );
+
+const welcomeScreen =
+  document.getElementById(
+    "welcomeScreen"
+  );
+
+
+let photos = [];
+
+let currentCaller = null;
+
+let photosTimer = null;
+
+let photosSoundTimer = null;
+
+let busyTimer = null;
+
+
 function hideAllPages(){
 
   photosPage.style.display =
@@ -766,7 +910,6 @@ function shuffleArray(array){
   const copy =
     [...array];
 
-
   for(
     let i = copy.length - 1;
     i > 0;
@@ -777,7 +920,6 @@ function shuffleArray(array){
       Math.floor(
         Math.random() * (i + 1)
       );
-
 
     [
       copy[i],
@@ -790,11 +932,12 @@ function shuffleArray(array){
 
   }
 
-
   return copy;
 
 }
-  async function loadPhotos(){
+
+
+async function loadPhotos(){
 
   try{
 
@@ -807,10 +950,8 @@ function shuffleArray(array){
       GITHUB_BRANCH +
       "?recursive=1";
 
-
     const response =
       await fetch(treeUrl);
-
 
     if(!response.ok){
 
@@ -820,10 +961,8 @@ function shuffleArray(array){
 
     }
 
-
     const data =
       await response.json();
-
 
     const imageFiles =
       (data.tree || [])
@@ -837,19 +976,14 @@ function shuffleArray(array){
 
         }
 
-
         const name =
           file.path.toLowerCase();
-
 
         return (
 
           name.endsWith(".jpg") ||
-
           name.endsWith(".jpeg") ||
-
           name.endsWith(".png") ||
-
           name.endsWith(".webp")
 
         );
@@ -858,7 +992,9 @@ function shuffleArray(array){
 
 
     photos =
-      imageFiles.map(
+      imageFiles
+      .slice(0,24)
+      .map(
         (file,index) => ({
 
           url:
@@ -871,12 +1007,17 @@ function shuffleArray(array){
             "/" +
             file.path,
 
-
           name:
-            photoNames[
-              index %
-              photoNames.length
-            ]
+            photoNames[index],
+
+          age:
+            photoAges[index],
+
+          country:
+            photoCountries[index].country,
+
+          flag:
+            photoCountries[index].flag
 
         })
       );
@@ -895,7 +1036,6 @@ function shuffleArray(array){
       error
     );
 
-
     photos = [];
 
   }
@@ -903,16 +1043,10 @@ function shuffleArray(array){
 }
 
 
-/*
-  Create a new random BUSY selection.
-*/
-function createBusyIndexes(
-  total
-){
+function createBusyIndexes(total){
 
   const busyIndexes =
     new Set();
-
 
   if(total <= 0){
 
@@ -920,15 +1054,11 @@ function createBusyIndexes(
 
   }
 
-
   const busyCount =
     Math.min(
       total,
-      Math.floor(
-        Math.random() * 3
-      ) + 2
+      5
     );
-
 
   while(
     busyIndexes.size <
@@ -945,28 +1075,22 @@ function createBusyIndexes(
 
   }
 
-
   return busyIndexes;
 
-}
-
-
-function renderPhotos(){
+  }
+  function renderPhotos(){
 
   clearTimeout(
     busyTimer
   );
 
-
   photosGrid.innerHTML =
     "";
-
 
   const shuffled =
     shuffleArray(
       photos
     );
-
 
   const busyIndexes =
     createBusyIndexes(
@@ -981,7 +1105,6 @@ function renderPhotos(){
         document.createElement(
           "div"
         );
-
 
       card.className =
         "photo-card";
@@ -1003,40 +1126,78 @@ function renderPhotos(){
 
         <div class="photo-dark"></div>
 
-        <div class="photo-live">
+        ${
+          isBusy
 
-          <span
-            class="photo-green-dot">
-          </span>
+          ?
 
-          <span
-            class="photo-green-dot">
-          </span>
+          `
+            <div class="photo-offline">
 
-          <span
-            class="photo-green-dot">
-          </span>
+              <span
+                class="photo-red-dot">
+              </span>
 
-          LIVE
+              OFFLINE
 
-        </div>
+            </div>
+          `
+
+          :
+
+          `
+            <div class="photo-live">
+
+              <span
+                class="photo-green-dot">
+              </span>
+
+              <span
+                class="photo-green-dot">
+              </span>
+
+              <span
+                class="photo-green-dot">
+              </span>
+
+              LIVE
+
+            </div>
+          `
+
+        }
+
 
         <div class="photo-video">
           ▷
         </div>
 
+
         <div class="photo-name">
           ${photo.name}
         </div>
 
+
+        <div class="photo-meta">
+          ${photo.flag} ${photo.age} yrs
+        </div>
+
+
         ${
           isBusy
-          ? `
+
+          ?
+
+          `
             <div class="busy-label">
-              offline now
+              ROOM CLOSED
             </div>
           `
-          : ""
+
+          :
+
+          ""
+
         }
 
       `;
@@ -1055,7 +1216,7 @@ function renderPhotos(){
 
 
             nameElement.textContent =
-              "BUSY";
+              "ROOM CLOSED";
 
 
             setTimeout(
@@ -1090,8 +1251,8 @@ function renderPhotos(){
 
 
   /*
-    Every 5 seconds the BUSY
-    photos are randomly changed.
+    New random 5 rooms after
+    every 5 minutes.
   */
 
   busyTimer =
@@ -1111,90 +1272,69 @@ function renderPhotos(){
       BUSY_CHANGE_DURATION
     );
 
+}
+
+
+function updateOnlineNumber(){
+
+  const number =
+    Math.floor(
+      Math.random() * 6
+    ) + 18;
+
+
+  onlineNumber.textContent =
+    number + " online";
+
           }
-  function chooseCaller(){
+  function showLivePhotos(){
 
-  if(!photos.length){
+  clearTimeout(
+    photosTimer
+  );
 
-    return null;
+  clearTimeout(
+    photosSoundTimer
+  );
 
-  }
+  clearTimeout(
+    busyTimer
+  );
 
 
-  let available =
-    photos;
+  hideAllPages();
 
 
-  if(currentCaller){
+  photosPage.style.display =
+    "block";
 
-    available =
-      photos.filter(
-        photo => {
 
-          return (
-            photo.url !==
-            currentCaller.url
-          );
+  updateOnlineNumber();
+
+
+  renderPhotos();
+
+
+  /*
+    Incoming call after 20 seconds.
+  */
+
+  photosTimer =
+    setTimeout(
+      () => {
+
+        if(
+          photosPage.style.display !==
+          "none"
+        ){
+
+          showIncomingCall();
 
         }
-      );
 
-  }
-
-
-  if(!available.length){
-
-    available =
-      photos;
-
-  }
-
-
-  const caller =
-    available[
-      Math.floor(
-        Math.random() *
-        available.length
-      )
-    ];
-
-
-  currentCaller =
-    caller;
-
-
-  return caller;
-
-}
-
-
-function startCallVibration(){
-
-  if(
-    "vibrate" in navigator
-  ){
-
-    navigator.vibrate([
-      500,
-      300,
-      500,
-      300
-    ]);
-
-  }
-
-}
-
-
-function stopCallVibration(){
-
-  if(
-    "vibrate" in navigator
-  ){
-
-    navigator.vibrate(0);
-
-  }
+      },
+      PHOTOS_DURATION
+    );
 
 }
 
@@ -1205,241 +1345,72 @@ function showIncomingCall(){
     photosTimer
   );
 
-
   clearTimeout(
     photosSoundTimer
   );
-
 
   clearTimeout(
     busyTimer
   );
 
 
-  stopCallVibration();
+  hideAllPages();
 
 
-  if(!photos.length){
+  if(
+    photos.length === 0
+  ){
 
-    setTimeout(
-      showIncomingCall,
-      1000
+    return;
+
+  }
+
+
+  const callerIndex =
+    Math.floor(
+      Math.random() *
+      photos.length
     );
 
-    return;
 
-  }
-
-
-  const caller =
-    chooseCaller();
-
-
-  if(!caller){
-
-    return;
-
-  }
+  currentCaller =
+    photos[
+      callerIndex
+    ];
 
 
   callerPhoto.src =
-    caller.url;
+    currentCaller.url;
 
 
   callerName.textContent =
-    caller.name;
+    currentCaller.name;
 
 
   callBackground.style.backgroundImage =
-    `url("${caller.url}")`;
-
-
-  hideAllPages();
+    `url("${currentCaller.url}")`;
 
 
   incomingCall.style.display =
     "flex";
 
-
-  startCallVibration();
-
 }
 
 
-function showLivePhotos(){
+function showInsufficient(){
 
   clearTimeout(
     photosTimer
   );
 
-
   clearTimeout(
     photosSoundTimer
   );
-
 
   clearTimeout(
     busyTimer
   );
 
-
-  stopCallVibration();
-
-
-  hideAllPages();
-
-
-  renderPhotos();
-
-
-  photosPage.style.display =
-    "block";
-
-
-  updateOnlineNumber();
-
-
-  playPhotosBackgroundSound();
-
-
-  /*
-    Next call after 20 seconds.
-  */
-
-  photosTimer =
-    setTimeout(
-      () => {
-
-        showIncomingCall();
-
-      },
-      PHOTOS_DURATION
-    );
-
-    }
-  function playPhotosBackgroundSound(){
-
-  liveSoundVideo.pause();
-
-
-  liveSoundVideo.currentTime =
-    0;
-
-
-  liveSoundVideo.muted =
-    false;
-
-
-  liveSoundVideo.volume =
-    1;
-
-
-  liveSoundScreen.style.display =
-    "none";
-
-
-  liveSoundVideo.play().catch(
-    error => {
-
-      console.log(
-        "Background sound blocked:",
-        error
-      );
-
-    }
-  );
-
-
-  photosSoundTimer =
-    setTimeout(
-      () => {
-
-        liveSoundVideo.pause();
-
-
-        liveSoundVideo.currentTime =
-          0;
-
-
-        liveSoundVideo.muted =
-          true;
-
-      },
-      PHOTOS_SOUND_DURATION
-    );
-
-}
-
-
-async function playFirstLiveCall(){
-
-  hideAllPages();
-
-
-  liveSoundScreen.style.display =
-    "flex";
-
-
-  try{
-
-    liveSoundVideo.pause();
-
-
-    liveSoundVideo.currentTime =
-      0;
-
-
-    liveSoundVideo.muted =
-      false;
-
-
-    liveSoundVideo.volume =
-      1;
-
-
-    await liveSoundVideo.play();
-
-
-  }catch(error){
-
-    console.log(
-      "LIVE sound blocked:",
-      error
-    );
-
-  }
-
-
-  await new Promise(
-    resolve => {
-
-      setTimeout(
-        resolve,
-        FIRST_LIVE_DURATION
-      );
-
-    }
-  );
-
-
-  liveSoundVideo.pause();
-
-
-  liveSoundVideo.currentTime =
-    0;
-
-
-  liveSoundVideo.muted =
-    true;
-
-
-  liveSoundScreen.style.display =
-    "none";
-
-}
-
-
-function showInsufficientMinutes(){
 
   hideAllPages();
 
@@ -1460,25 +1431,112 @@ function showInsufficientMinutes(){
 }
 
 
+function showLiveSound(){
+
+  clearTimeout(
+    photosTimer
+  );
+
+  clearTimeout(
+    photosSoundTimer
+  );
+
+  clearTimeout(
+    busyTimer
+  );
+
+
+  hideAllPages();
+
+
+  liveSoundScreen.style.display =
+    "flex";
+
+
+  try{
+
+    liveSoundVideo.currentTime =
+      0;
+
+    liveSoundVideo.play();
+
+  }catch(error){
+
+    console.log(
+      "Video play error:",
+      error
+    );
+
+  }
+
+
+  photosSoundTimer =
+    setTimeout(
+      () => {
+
+        showInsufficient();
+
+      },
+      PHOTOS_SOUND_DURATION
+    );
+
+}
+
+
+function startWebsite(){
+
+  hideAllPages();
+
+
+  /*
+    Welcome screen first.
+  */
+
+  welcomeScreen.style.display =
+    "flex";
+
+
+  /*
+    Load photos while Welcome
+    screen is visible.
+  */
+
+  loadPhotos()
+    .then(
+      () => {
+
+        setTimeout(
+          () => {
+
+            welcomeScreen.style.display =
+              "none";
+
+            showLivePhotos();
+
+          },
+          3000
+        );
+
+      }
+    );
+
+}
+  /*
+  FIRST ANSWERED CALL
+
+  The red LIVE video plays only
+  when redLiveShown is not yet true.
+*/
+
 answerButton.addEventListener(
   "click",
-  async () => {
-
-    stopCallVibration();
-
-
-    /*
-      The special RED LIVE call
-      can happen only once.
-    */
+  () => {
 
     if(
-      firstLiveCallAvailable
+      localStorage.getItem(
+        "redLiveShown"
+      ) !== "true"
     ){
-
-      firstLiveCallAvailable =
-        false;
-
 
       localStorage.setItem(
         "redLiveShown",
@@ -1486,31 +1544,27 @@ answerButton.addEventListener(
       );
 
 
-      await playFirstLiveCall();
+      showLiveSound();
 
 
-      showInsufficientMinutes();
+    }else{
 
+      /*
+        Later calls skip the
+        red LIVE video.
+      */
 
-      return;
+      showInsufficient();
 
     }
 
-
-    /*
-      All later calls skip
-      RED LIVE + sound.
-    */
-
-    showInsufficientMinutes();
-
   }
 );
-  declineButton.addEventListener(
+
+
+declineButton.addEventListener(
   "click",
   () => {
-
-    stopCallVibration();
 
     showLivePhotos();
 
@@ -1518,52 +1572,47 @@ answerButton.addEventListener(
 );
 
 
-function updateOnlineNumber(){
+/*
+  If the video ends before
+  the timer, continue.
+*/
 
-  const numbers = [
-    15,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22
-  ];
+liveSoundVideo.addEventListener(
+  "ended",
+  () => {
 
+    showInsufficient();
 
-  const number =
-    numbers[
-      Math.floor(
-        Math.random() *
-        numbers.length
-      )
-    ];
+  }
+);
 
 
-  onlineNumber.textContent =
-    number +
-    " online";
-
-}
-
-
-async function startWebsite(){
-
-  await loadPhotos();
-
-  showIncomingCall();
-
-}
-
-
-startWebsite();
-
+/*
+  Keep online number changing.
+*/
 
 setInterval(
-  updateOnlineNumber,
+  () => {
+
+    if(
+      photosPage.style.display !==
+      "none"
+    ){
+
+      updateOnlineNumber();
+
+    }
+
+  },
   5000
 );
 
+
+/*
+  Start everything.
+*/
+
+startWebsite();
 
 </script>
 
