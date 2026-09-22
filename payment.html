@@ -6,6 +6,7 @@
 
   <title>Choose Access</title>
 
+  <!-- IntaSend Checkout -->
   <script src="https://unpkg.com/intasend-checkout-sdk"></script>
 
   <style>
@@ -42,7 +43,10 @@
       margin-bottom: 20px;
     }
 
-    /* PACKAGE GRID */
+    /* =========================
+       PACKAGE GRID
+    ========================= */
+
     .package-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -52,7 +56,7 @@
     .package {
       position: relative;
       width: 100%;
-      min-height: 185px;
+      min-height: 235px;
       padding: 0;
       overflow: hidden;
       border: 2px solid #292943;
@@ -72,6 +76,8 @@
       box-shadow: 0 0 0 2px rgba(24,119,242,0.25);
     }
 
+    /* HOT BADGE */
+
     .hot {
       position: absolute;
       top: 8px;
@@ -84,6 +90,8 @@
       font-weight: bold;
       z-index: 2;
     }
+
+    /* CAMERA */
 
     .camera-circle {
       width: 55px;
@@ -98,6 +106,8 @@
       font-size: 26px;
     }
 
+    /* MINUTES */
+
     .minutes {
       display: block;
       min-height: 42px;
@@ -106,19 +116,35 @@
       font-weight: bold;
     }
 
+    /* PRICE AREA */
+
     .price {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 12px 3px;
+
+      padding: 8px 3px;
+
       background: #ff9f1c;
       color: #111;
-      font-size: 17px;
+
+      font-size: 14px;
       font-weight: bold;
+
+      line-height: 1.45;
     }
 
-    /* PAYMENT AREA */
+    .price div {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    /* =========================
+       PAYMENT AREA
+    ========================= */
+
     .payment-section {
       display: none;
       margin-top: 22px;
@@ -150,7 +176,14 @@
       cursor: pointer;
     }
 
-    /* MESSAGE BOX */
+    .pay:hover {
+      background: #0d65d9;
+    }
+
+    /* =========================
+       MESSAGE BOX
+    ========================= */
+
     .message-area {
       display: none;
       margin-top: 12px;
@@ -204,7 +237,10 @@
       font-weight: bold;
     }
 
-    /* NO PAYMENT */
+    /* =========================
+       PAYMENT STATUS
+    ========================= */
+
     .payment-status {
       display: none;
       margin-top: 12px;
@@ -224,7 +260,10 @@
       font-weight: normal;
     }
 
-    /* SMALL PHONES */
+    /* =========================
+       SMALL PHONES
+    ========================= */
+
     @media (max-width: 350px) {
 
       .package-grid {
@@ -232,7 +271,7 @@
       }
 
       .package {
-        min-height: 170px;
+        min-height: 225px;
       }
 
       .minutes {
@@ -240,7 +279,7 @@
       }
 
       .price {
-        font-size: 15px;
+        font-size: 12px;
       }
 
       .paste-text {
@@ -248,8 +287,10 @@
         font-size: 12px;
       }
     }
+
   </style>
 </head>
+
 
 <body>
 
@@ -261,80 +302,183 @@
     Choose a plan that works for you
   </div>
 
+
+  <!-- =========================
+       PACKAGES
+  ========================= -->
+
   <div class="package-grid">
 
-    <button class="package" data-amount="80" data-minutes="10">
 
-      <span class="hot">🔥 HOT</span>
+    <!-- 30 MINUTES -->
 
-      <div class="camera-circle">📹</div>
+    <button
+      class="package"
+      data-amount="81"
+      data-minutes="30">
+
+      <span class="hot">
+        🔥 HOT
+      </span>
+
+      <div class="camera-circle">
+        📹
+      </div>
 
       <span class="minutes">
         30 Mins
       </span>
 
       <div class="price">
-        KSh 81
+
+        <div>
+          KSh 81
+        </div>
+
+        <div>
+          $0.62
+        </div>
+
+        <div>
+          €0.57
+        </div>
+
       </div>
 
     </button>
 
 
-    <button class="package" data-amount="135" data-minutes="25">
+    <!-- 55 MINUTES -->
 
-      <div class="camera-circle">📹</div>
+    <button
+      class="package"
+      data-amount="138"
+      data-minutes="55">
+
+      <div class="camera-circle">
+        📹
+      </div>
 
       <span class="minutes">
         55 Mins
       </span>
 
       <div class="price">
-        KSh 138
+
+        <div>
+          KSh 138
+        </div>
+
+        <div>
+          $1.06
+        </div>
+
+        <div>
+          €0.97
+        </div>
+
       </div>
 
     </button>
 
 
-    <button class="package" data-amount="200" data-minutes="40">
+    <!-- 73 MINUTES -->
 
-      <div class="camera-circle">📹</div>
+    <button
+      class="package"
+      data-amount="207"
+      data-minutes="73">
+
+      <div class="camera-circle">
+        📹
+      </div>
 
       <span class="minutes">
         73 Mins
       </span>
 
       <div class="price">
-        KSh 207
+
+        <div>
+          KSh 207
+        </div>
+
+        <div>
+          $1.59
+        </div>
+
+        <div>
+          €1.45
+        </div>
+
       </div>
 
     </button>
 
 
-    <button class="package" data-amount="250" data-minutes="55">
+    <!-- 95 MINUTES -->
 
-      <div class="camera-circle">📹</div>
+    <button
+      class="package"
+      data-amount="253"
+      data-minutes="95">
+
+      <div class="camera-circle">
+        📹
+      </div>
 
       <span class="minutes">
         95 Mins
       </span>
 
       <div class="price">
-        KSh 253
+
+        <div>
+          KSh 253
+        </div>
+
+        <div>
+          $1.94
+        </div>
+
+        <div>
+          €1.77
+        </div>
+
       </div>
 
     </button>
 
 
-    <button class="package" data-amount="300" data-minutes="65">
+    <!-- 105 MINUTES -->
 
-      <div class="camera-circle">📹</div>
+    <button
+      class="package"
+      data-amount="299"
+      data-minutes="105">
+
+      <div class="camera-circle">
+        📹
+      </div>
 
       <span class="minutes">
         105 Mins
       </span>
 
       <div class="price">
-        KSh 299
+
+        <div>
+          KSh 299
+        </div>
+
+        <div>
+          $2.29
+        </div>
+
+        <div>
+          €2.09
+        </div>
+
       </div>
 
     </button>
@@ -342,18 +486,37 @@
   </div>
 
 
-  <!-- PAYMENT SECTION -->
+  <!-- =========================
+       PAYMENT SECTION
+  ========================= -->
 
-  <div class="payment-section" id="paymentSection">
+  <div
+    class="payment-section"
+    id="paymentSection">
+
+
+    <!-- MPESA NUMBER -->
 
     <div class="till">
-      send money:0795939598
+
+      send money:
+      <strong>0795939598</strong>
+
     </div>
 
-    <div class="selected-info" id="selectedInfo">
+
+    <!-- SELECTED PACKAGE -->
+
+    <div
+      class="selected-info"
+      id="selectedInfo">
+
       No package selected
+
     </div>
 
+
+    <!-- PAYMENT BUTTON -->
 
     <button
       type="button"
@@ -367,9 +530,13 @@
     </button>
 
 
-    <!-- MESSAGE BOX -->
+    <!-- =========================
+         MESSAGE BOX
+    ========================= -->
 
-    <div class="message-area" id="messageArea">
+    <div
+      class="message-area"
+      id="messageArea">
 
       <div class="message-row">
 
@@ -380,28 +547,45 @@
           placeholder="Paste M-PESA message here..."
           autocomplete="off">
 
+
         <div class="paste-text">
-          Paste mpesa<br>
+
+          Paste mpesa
+          <br>
+
           message &amp; continue
+
         </div>
 
       </div>
 
-      <div class="message-error" id="messageError">
+
+      <div
+        class="message-error"
+        id="messageError">
+
         ❌ Message not accepted.
+
       </div>
 
     </div>
 
 
-    <!-- NO PAYMENT MESSAGE -->
+    <!-- =========================
+         PAYMENT STATUS
+    ========================= -->
 
-    <div class="payment-status" id="paymentStatus">
+    <div
+      class="payment-status"
+      id="paymentStatus">
 
       ❌ No payment is done
 
       <small>
-        Please complete the M-PESA payment to continue.
+
+        Please complete the M-PESA payment
+        to continue.
+
       </small>
 
     </div>
@@ -411,9 +595,15 @@
 </div>
 
 
+
 <script>
 
-const packages = document.querySelectorAll(".package");
+/* =========================
+   ELEMENTS
+========================= */
+
+const packages =
+  document.querySelectorAll(".package");
 
 const paymentSection =
   document.getElementById("paymentSection");
@@ -436,84 +626,138 @@ const messageError =
 const paymentStatus =
   document.getElementById("paymentStatus");
 
+
+/* =========================
+   VARIABLES
+========================= */
+
 let selectedAmount = null;
+
 let selectedMinutes = null;
 
 
-/* SELECT PACKAGE */
+/* =========================
+   SELECT PACKAGE
+========================= */
 
 packages.forEach(function(button) {
 
-  button.addEventListener("click", function() {
-
-    packages.forEach(function(item) {
-      item.classList.remove("selected");
-    });
-
-    this.classList.add("selected");
-
-    selectedAmount =
-      this.dataset.amount;
-
-    selectedMinutes =
-      this.dataset.minutes;
+  button.addEventListener(
+    "click",
+    function() {
 
 
-    selectedInfo.textContent =
-      "Selected: KSh " +
-      selectedAmount +
-      " for " +
-      selectedMinutes +
-      " minutes";
+      /* Remove previous selection */
+
+      packages.forEach(function(item) {
+
+        item.classList.remove(
+          "selected"
+        );
+
+      });
 
 
-    payButton.dataset.amount =
-      selectedAmount;
+      /* Select current package */
 
-    payButton.dataset.currency =
-      "KES";
-
-    payButton.dataset.method =
-      "M-PESA";
+      this.classList.add(
+        "selected"
+      );
 
 
-    payButton.dataset.api_ref =
-      "access-" +
-      selectedMinutes +
-      "min-" +
-      Date.now();
+      /* Get package data */
+
+      selectedAmount =
+        this.dataset.amount;
+
+      selectedMinutes =
+        this.dataset.minutes;
 
 
-    paymentSection.style.display =
-      "block";
+      /* Display selection */
+
+      selectedInfo.textContent =
+        "Selected: KSh " +
+        selectedAmount +
+        " for " +
+        selectedMinutes +
+        " minutes";
 
 
-    messageArea.style.display =
-      "none";
+      /* Set IntaSend amount */
 
-    paymentStatus.style.display =
-      "none";
+      payButton.dataset.amount =
+        selectedAmount;
 
 
-    messageInput.value = "";
+      payButton.dataset.currency =
+        "KES";
 
-    messageInput.classList.remove(
-      "rejected"
-    );
 
-    messageError.style.display =
-      "none";
+      payButton.dataset.method =
+        "M-PESA";
 
-  });
+
+      /* Unique reference */
+
+      payButton.dataset.api_ref =
+        "access-" +
+        selectedMinutes +
+        "min-" +
+        Date.now();
+
+
+      /* Show payment */
+
+      paymentSection.style.display =
+        "block";
+
+
+      /* Reset payment messages */
+
+      messageArea.style.display =
+        "none";
+
+      paymentStatus.style.display =
+        "none";
+
+
+      messageInput.value =
+        "";
+
+      messageInput.classList.remove(
+        "rejected"
+      );
+
+      messageError.style.display =
+        "none";
+
+    }
+
+  );
 
 });
 
 
-/* PAY WITH M-PESA */
+/* =========================
+   PAY WITH MPESA
+========================= */
 
 payButton.addEventListener(
   "click",
   function() {
+
+
+    if (!selectedAmount) {
+
+      alert(
+        "Please select a package first."
+      );
+
+      return;
+
+    }
+
 
     paymentStatus.style.display =
       "block";
@@ -525,13 +769,18 @@ payButton.addEventListener(
 );
 
 
-/* REJECT ANY TYPED / PASTED MESSAGE */
+/* =========================
+   REJECT TYPED MESSAGE
+========================= */
 
 messageInput.addEventListener(
   "input",
   function() {
 
-    if (this.value.trim().length > 0) {
+
+    if (
+      this.value.trim().length > 0
+    ) {
 
       this.classList.add(
         "rejected"
@@ -540,7 +789,9 @@ messageInput.addEventListener(
       messageError.style.display =
         "block";
 
-    } else {
+    }
+
+    else {
 
       this.classList.remove(
         "rejected"
@@ -555,80 +806,115 @@ messageInput.addEventListener(
 );
 
 
-/* INTASEND */
+/* =========================
+   INTASEND
+========================= */
 
-new window.IntaSend({
+const intasend =
+  new window.IntaSend({
 
-  publicAPIKey:
-    "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
+    publicAPIKey:
+      "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
 
-  live: true
+    live: true
 
-})
+  });
 
 
-/* PAYMENT SUCCESS */
+/* =========================
+   PAYMENT SUCCESS
+========================= */
 
-.on(
+intasend.on(
   "COMPLETE",
   function(results) {
+
 
     console.log(
       "Payment successful:",
       results
     );
 
+
     paymentStatus.style.display =
       "none";
+
 
     alert(
       "Payment successful!"
     );
 
+
     window.location.href =
       "index.html";
 
   }
-)
+);
 
 
-/* PAYMENT FAILED */
+/* =========================
+   PAYMENT FAILED
+========================= */
 
-.on(
+intasend.on(
   "FAILED",
   function(results) {
+
 
     console.log(
       "Payment failed:",
       results
     );
 
+
     paymentStatus.style.display =
       "block";
 
+
     paymentStatus.innerHTML =
+
       "❌ No payment is done" +
+
       "<small>" +
-      "Payment was not completed. Please try again." +
+
+      "Payment was not completed. " +
+      "Please try again." +
+
       "</small>";
 
   }
-)
+);
 
 
-/* PAYMENT IN PROGRESS */
+/* =========================
+   PAYMENT IN PROGRESS
+========================= */
 
-.on(
+intasend.on(
   "IN-PROGRESS",
   function(results) {
+
 
     console.log(
       "Payment in progress:",
       results
     );
 
+
     paymentStatus.style.display =
       "block";
+
+
+    paymentStatus.innerHTML =
+
+      "⏳ Payment in progress..." +
+
+      "<small>" +
+
+      "Please complete the payment " +
+      "on your phone." +
+
+      "</small>";
 
   }
 );
