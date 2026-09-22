@@ -6,9 +6,7 @@
 <title>My Referral Website</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 html,body{
   margin:0;
@@ -20,9 +18,7 @@ html,body{
   font-family:Arial,sans-serif;
 }
 
-body{
-  overflow-x:hidden;
-}
+body{overflow-x:hidden}
 
 .page{
   display:none;
@@ -31,7 +27,6 @@ body{
   background:#000;
 }
 
-/* WELCOME */
 #welcomeScreen{
   min-height:100vh;
   display:flex;
@@ -53,7 +48,6 @@ body{
   color:#aaa;
 }
 
-/* PHOTOS */
 #photosPage{
   padding:12px;
   background:#000;
@@ -177,7 +171,6 @@ body{
   color:#ddd;
 }
 
-/* CENTER PLAY ICON */
 .videoPlayIcon{
   position:absolute;
   top:50%;
@@ -264,16 +257,14 @@ body{
          font-size:23px;
          font-weight:bold;
          margin-top:15px;
-       ">
-  </div>
+       "></div>
 
   <div id="callerDetails"
        style="
          color:#aaa;
          font-size:14px;
          margin-top:5px;
-       ">
-  </div>
+       "></div>
 
   <div style="
     display:flex;
@@ -289,9 +280,7 @@ body{
       background:#e00000;
       color:#fff;
       font-size:27px;
-    ">
-      ✕
-    </button>
+    ">✕</button>
 
     <button id="answerBtn" style="
       width:65px;
@@ -301,9 +290,7 @@ body{
       background:#12c95a;
       color:#fff;
       font-size:27px;
-    ">
-      ✓
-    </button>
+    ">✓</button>
 
   </div>
 </div>
@@ -317,7 +304,7 @@ body{
   justify-content:center;
 ">
 
-  <div class="redLiveTop" style="
+  <div style="
     position:absolute;
     top:15px;
     left:15px;
@@ -329,7 +316,7 @@ body{
     font-weight:bold;
     z-index:20;
   ">
-    <span class="redLiveDot" style="
+    <span style="
       display:inline-block;
       width:8px;
       height:8px;
@@ -352,7 +339,6 @@ body{
          ">
     <source src="preview_20_seconds.mp4" type="video/mp4">
   </video>
-
 </div>
 
 
@@ -388,13 +374,9 @@ body{
     LIVE
   </div>
 
-  <div style="
-    font-size:18px;
-    color:#aaa;
-  ">
+  <div style="font-size:18px;color:#aaa;">
     Loading...
   </div>
-
 </div>
 
 
@@ -416,13 +398,10 @@ body{
     Insufficient Minutes
   </div>
 
-  <div style="
-    color:#aaa;
-    font-size:14px;
-  ">
+  <div style="color:#aaa;font-size:14px;">
     You don't have enough minutes for this call.
   </div>
-
+  
 </div>
 
 
@@ -463,57 +442,15 @@ let soundTimer = null;
 let liveVideoSafetyTimer = null;
 
 const names = [
-  "Cute",
-  "Becky",
-  "Dorry",
-  "Jenny",
-  "Ashley",
-  "Mary",
-  "Cindy",
-  "Mercy",
-  "Linda",
-  "Sharon",
-  "Brenda",
-  "Diana",
-  "Faith",
-  "Joy",
-  "Lucy",
-  "Angela",
-  "Betty",
-  "Nancy",
-  "Winnie",
-  "Ann",
-  "Carol",
-  "Irene",
-  "Rose",
-  "Fellow"
+  "Cute","Becky","Dorry","Jenny","Ashley","Mary",
+  "Cindy","Mercy","Linda","Sharon","Brenda","Diana",
+  "Faith","Joy","Lucy","Angela","Betty","Nancy",
+  "Winnie","Ann","Carol","Irene","Rose","Fellow"
 ];
 
 const ages = [
-  19,
-  23,
-  25,
-  18,
-  24,
-  24,
-  26,
-  30,
-  27,
-  23,
-  29,
-  33,
-  25,
-  25,
-  31,
-  25,
-  23,
-  19,
-  22,
-  24,
-  23,
-  27,
-  28,
-  21
+  19,23,25,18,24,24,26,30,27,23,29,33,
+  25,25,31,25,23,19,22,24,23,27,28,21
 ];
 
 const countries = [
@@ -624,8 +561,8 @@ function stopLiveVideo(){
 function shuffleArray(array){
   const arr = [...array];
 
-  for(let i = arr.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
     [arr[i],arr[j]] = [arr[j],arr[i]];
   }
 
@@ -633,23 +570,17 @@ function shuffleArray(array){
 }
 
 function getRandomBusyIndexes(){
-  const result = [];
   const available = [];
 
   for(let i=0;i<MAX_PHOTOS;i++){
     available.push(i);
   }
 
-  const shuffled = shuffleArray(available);
-
-  for(let i=0;i<5;i++){
-    result.push(shuffled[i]);
-  }
-
-  return result;
+  return shuffleArray(available).slice(0,5);
 }
 
 async function getGitHubContents(path=""){
+
   const url =
     `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`;
 
@@ -667,11 +598,16 @@ function isImageFile(name){
 }
 
 async function collectImages(path="",result=[]){
-  const items = await getGitHubContents(path);
+
+  const items =
+    await getGitHubContents(path);
 
   for(const item of items){
 
-    if(item.type === "file" && isImageFile(item.name)){
+    if(
+      item.type === "file" &&
+      isImageFile(item.name)
+    ){
       result.push(item.path);
     }
 
@@ -696,30 +632,34 @@ async function loadPhotos(){
   let imagePaths = [];
 
   try{
-    imagePaths = await collectImages("",[]);
+    imagePaths =
+      await collectImages("",[]);
   }catch(error){
     console.error(error);
     return;
   }
 
-  imagePaths = imagePaths.slice(0,MAX_PHOTOS);
+  imagePaths =
+    imagePaths.slice(0,MAX_PHOTOS);
 
-  photosData = imagePaths.map((path,index)=>({
-    path,
-    url:getFileUrl(path),
-    name:names[index] || `User ${index+1}`,
-    age:ages[index] || 25,
-    country:countries[index] || {
-      name:"Kenya",
-      flag:"🇰🇪"
-    }
-  }));
+  photosData =
+    imagePaths.map((path,index)=>({
+      path:path,
+      url:getFileUrl(path),
+      name:names[index] || `User ${index+1}`,
+      age:ages[index] || 25,
+      country:countries[index] || {
+        name:"Kenya",
+        flag:"🇰🇪"
+      }
+    }));
   }
   function renderPhotos(){
 
   photoGrid.innerHTML = "";
 
   if(!photosData.length){
+
     photoGrid.innerHTML = `
       <div style="
         grid-column:1/-1;
@@ -730,93 +670,131 @@ async function loadPhotos(){
         Loading photos...
       </div>
     `;
+
     return;
   }
 
-  const displayPhotos = shuffleArray(photosData);
-  const busyIndexes = getRandomBusyIndexes();
+  const displayPhotos =
+    shuffleArray(photosData);
 
-  displayPhotos.forEach((photo,displayIndex)=>{
+  const busyIndexes =
+    getRandomBusyIndexes();
 
-    const card = document.createElement("div");
-    card.className = "photoCard";
+  displayPhotos.forEach(
+    (photo,displayIndex)=>{
 
-    const img = document.createElement("img");
-    img.src = photo.url;
-    img.alt = photo.name;
-    img.loading = "lazy";
+      const card =
+        document.createElement("div");
 
-    card.appendChild(img);
+      card.className = "photoCard";
 
-    const isBusy =
-      busyIndexes.includes(displayIndex);
+      const img =
+        document.createElement("img");
 
-    const status = document.createElement("div");
-    status.className = "statusBadge";
+      img.src = photo.url;
+      img.alt = photo.name;
+      img.loading = "lazy";
 
-    if(isBusy){
+      card.appendChild(img);
 
-      status.classList.add("offlineBadge");
-      status.textContent = "OFFLINE";
+      const isBusy =
+        busyIndexes.includes(displayIndex);
 
-      const closed = document.createElement("div");
-      closed.className = "roomClosed";
-      closed.textContent = "ROOM CLOSED";
+      const status =
+        document.createElement("div");
 
-      card.appendChild(closed);
+      status.className =
+        "statusBadge";
 
-    }else{
+      if(isBusy){
 
-      status.classList.add("liveBadge");
+        status.classList.add(
+          "offlineBadge"
+        );
 
-      const dot = document.createElement("span");
-      dot.className = "liveDot";
+        status.textContent =
+          "OFFLINE";
 
-      status.appendChild(dot);
-      status.appendChild(
-        document.createTextNode("LIVE")
-      );
+        const closed =
+          document.createElement("div");
 
-      card.addEventListener("click",()=>{
-        window.location.href = PAYMENT_PAGE_URL;
-      });
+        closed.className =
+          "roomClosed";
+
+        closed.textContent =
+          "ROOM CLOSED";
+
+        card.appendChild(closed);
+
+      }else{
+
+        status.classList.add(
+          "liveBadge"
+        );
+
+        const dot =
+          document.createElement("span");
+
+        dot.className =
+          "liveDot";
+
+        status.appendChild(dot);
+
+        status.appendChild(
+          document.createTextNode("LIVE")
+        );
+
+        card.addEventListener(
+          "click",
+          ()=>{
+            window.location.href =
+              PAYMENT_PAGE_URL;
+          }
+        );
+      }
+
+      card.appendChild(status);
+
+      const videoIcon =
+        document.createElement("div");
+
+      videoIcon.className =
+        "videoPlayIcon";
+
+      videoIcon.innerHTML =
+        "▶";
+
+      card.appendChild(videoIcon);
+
+      const info =
+        document.createElement("div");
+
+      info.className =
+        "photoInfo";
+
+      info.innerHTML = `
+        <div class="photoName">
+          ${photo.name}
+        </div>
+
+        <div class="photoAge">
+          ${photo.country.flag} ${photo.age} yrs
+        </div>
+      `;
+
+      card.appendChild(info);
+
+      photoGrid.appendChild(card);
     }
-
-    card.appendChild(status);
-
-    const videoIcon =
-      document.createElement("div");
-
-    videoIcon.className = "videoPlayIcon";
-    videoIcon.innerHTML = "▶";
-
-    card.appendChild(videoIcon);
-
-    const info =
-      document.createElement("div");
-
-    info.className = "photoInfo";
-
-    info.innerHTML = `
-      <div class="photoName">
-        ${photo.name}
-      </div>
-
-      <div class="photoAge">
-        ${photo.country.flag} ${photo.age} yrs
-      </div>
-    `;
-
-    card.appendChild(info);
-
-    photoGrid.appendChild(card);
-  });
+  );
 }
 
 function updateOnlineNumber(){
 
   const number =
-    document.getElementById("onlineNumber");
+    document.getElementById(
+      "onlineNumber"
+    );
 
   if(number){
     number.textContent =
@@ -826,24 +804,30 @@ function updateOnlineNumber(){
 
 function startBusyRoomRotation(){
 
-  clearInterval(busyRotationTimer);
+  clearInterval(
+    busyRotationTimer
+  );
 
   busyRotationTimer =
-    setInterval(()=>{
-      if(
-        photosPage.style.display !== "none"
-      ){
-        renderPhotos();
-      }
-    },BUSY_CHANGE_DURATION);
+    setInterval(
+      ()=>{
+        if(
+          photosPage.style.display !==
+          "none"
+        ){
+          renderPhotos();
+        }
+      },
+      BUSY_CHANGE_DURATION
+    );
 }
-
 
 function playLivePhotosSound(){
 
   stopBackgroundSound();
 
   try{
+
     backgroundSound.currentTime = 0;
     backgroundSound.volume = 0.45;
 
@@ -857,24 +841,30 @@ function playLivePhotosSound(){
     clearTimeout(soundTimer);
 
     soundTimer =
-      setTimeout(()=>{
-        stopBackgroundSound();
-      },BACKGROUND_SOUND_DURATION);
+      setTimeout(
+        ()=>{
+          stopBackgroundSound();
+        },
+        BACKGROUND_SOUND_DURATION
+      );
 
   }catch(e){}
 }
 
-
 function scheduleIncomingCall(){
 
-  clearTimeout(incomingTimer);
+  clearTimeout(
+    incomingTimer
+  );
 
   incomingTimer =
-    setTimeout(()=>{
-      showIncomingCall();
-    },PHOTOS_DURATION);
+    setTimeout(
+      ()=>{
+        showIncomingCall();
+      },
+      PHOTOS_DURATION
+    );
 }
-
 
 function showLivePhotos(){
 
@@ -885,7 +875,8 @@ function showLivePhotos(){
 
   hideAllPages();
 
-  photosPage.style.display = "block";
+  photosPage.style.display =
+    "block";
 
   renderPhotos();
 
@@ -896,7 +887,7 @@ function showLivePhotos(){
   startBusyRoomRotation();
 
   scheduleIncomingCall();
-  }
+     }
   function showIncomingCall(){
 
   clearAllTimers();
@@ -906,14 +897,17 @@ function showLivePhotos(){
 
   hideAllPages();
 
-  incomingCall.style.display = "flex";
+  incomingCall.style.display =
+    "flex";
 
   if(!photosData.length){
     return;
   }
 
   const randomIndex =
-    Math.floor(Math.random()*photosData.length);
+    Math.floor(
+      Math.random()*photosData.length
+    );
 
   currentCaller =
     photosData[randomIndex];
@@ -928,7 +922,6 @@ function showLivePhotos(){
     `${currentCaller.country.flag} ${currentCaller.age} yrs`;
 }
 
-
 function showLiveSound(){
 
   clearAllTimers();
@@ -937,9 +930,11 @@ function showLiveSound(){
 
   hideAllPages();
 
-  liveSoundPage.style.display = "flex";
+  liveSoundPage.style.display =
+    "flex";
 
   try{
+
     liveSoundVideo.currentTime = 0;
     liveSoundVideo.volume = 1;
 
@@ -953,18 +948,24 @@ function showLiveSound(){
     }
 
   }catch(e){
+
     showInsufficient(false);
+
     return;
   }
 
-  clearTimeout(liveVideoSafetyTimer);
+  clearTimeout(
+    liveVideoSafetyTimer
+  );
 
   liveVideoSafetyTimer =
-    setTimeout(()=>{
-      showInsufficient(false);
-    },20000);
+    setTimeout(
+      ()=>{
+        showInsufficient(false);
+      },
+      20000
+    );
 }
-
 
 function showBlackLive(){
 
@@ -975,9 +976,11 @@ function showBlackLive(){
 
   hideAllPages();
 
-  blackLivePage.style.display = "flex";
+  blackLivePage.style.display =
+    "flex";
 
   try{
+
     backgroundSound.currentTime = 0;
     backgroundSound.volume = 1;
 
@@ -993,14 +996,24 @@ function showBlackLive(){
   clearTimeout(soundTimer);
 
   soundTimer =
-    setTimeout(()=>{
-      stopBackgroundSound();
-      showInsufficient(true);
-    },SECOND_CALL_SOUND_DURATION);
+    setTimeout(
+      ()=>{
+        stopBackgroundSound();
+
+        /*
+         * SECOND CALL:
+         * Go back to Live Photos,
+         * NOT to payment.
+         */
+        showInsufficient(false);
+      },
+      SECOND_CALL_SOUND_DURATION
+    );
 }
 
-
-function showInsufficient(openPayment=false){
+function showInsufficient(
+  openPayment=false
+){
 
   clearAllTimers();
 
@@ -1009,36 +1022,34 @@ function showInsufficient(openPayment=false){
 
   hideAllPages();
 
-  insufficientPage.style.display = "flex";
+  insufficientPage.style.display =
+    "flex";
 
   insufficientTimer =
-    setTimeout(()=>{
+    setTimeout(
+      ()=>{
 
-      if(openPayment){
+        if(openPayment){
 
-        /*
-         * This tells index.html:
-         * when the user comes back from payment,
-         * return directly to Live Photos.
-         */
-        sessionStorage.setItem(
-          "returnToLivePhotos",
-          "yes"
-        );
+          sessionStorage.setItem(
+            "returnToLivePhotos",
+            "yes"
+          );
 
-        window.location.replace(
-          PAYMENT_PAGE_URL
-        );
+          window.location.replace(
+            PAYMENT_PAGE_URL
+          );
 
-      }else{
+        }else{
 
-        showLivePhotos();
+          showLivePhotos();
 
-      }
+        }
 
-    },INSUFFICIENT_DURATION);
+      },
+      INSUFFICIENT_DURATION
+    );
 }
-
 
 function answerIncomingCall(){
 
@@ -1046,6 +1057,9 @@ function answerIncomingCall(){
 
   if(!redLiveShownThisVisit){
 
+    /*
+     * FIRST CALL
+     */
     redLiveShownThisVisit = true;
 
     localStorage.setItem(
@@ -1057,11 +1071,13 @@ function answerIncomingCall(){
 
   }else{
 
+    /*
+     * SECOND CALL
+     */
     showBlackLive();
 
   }
 }
-
 
 function declineIncomingCall(){
 
@@ -1073,7 +1089,6 @@ function declineIncomingCall(){
   showLivePhotos();
 }
 
-
 answerBtn.addEventListener(
   "click",
   answerIncomingCall
@@ -1084,11 +1099,6 @@ declineBtn.addEventListener(
   declineIncomingCall
 );
 
-
-/*
- * Handles the payment return when index.html
- * is restored from browser Back / bfcache.
- */
 function checkPaymentReturn(){
 
   const returning =
@@ -1107,20 +1117,23 @@ function checkPaymentReturn(){
         RED_LIVE_KEY
       ) === "yes";
 
-    setTimeout(()=>{
-      showLivePhotos();
-    },100);
+    setTimeout(
+      ()=>{
+        showLivePhotos();
+      },
+      100
+    );
 
     return true;
   }
 
   return false;
-      }
+    }
   async function startWebsite(){
 
   /*
-   * If the user is coming back from payment,
-   * don't show Welcome or another incoming call.
+   * Returning from payment:
+   * go directly to Live Photos.
    */
   if(checkPaymentReturn()){
 
@@ -1131,48 +1144,43 @@ function checkPaymentReturn(){
 
   hideAllPages();
 
-  welcomeScreen.style.display = "flex";
+  welcomeScreen.style.display =
+    "flex";
 
-  const startTime = Date.now();
+  const photosPromise =
+    loadPhotos();
 
-  /*
-   * Load the photos while Welcome is showing.
-   */
-  const photosPromise = loadPhotos();
-
-  /*
-   * Welcome stays for at least 3 seconds.
-   */
   await Promise.all([
     photosPromise,
-    new Promise(resolve =>
-      setTimeout(resolve,3000)
+
+    new Promise(
+      resolve =>
+        setTimeout(
+          resolve,
+          3000
+        )
     )
   ]);
 
-  welcomeScreen.style.display = "none";
+  welcomeScreen.style.display =
+    "none";
 
   /*
-   * FIRST INCOMING CALL APPEARS IMMEDIATELY
-   * after Welcome.
+   * FIRST incoming call appears
+   * immediately after Welcome.
    */
   showIncomingCall();
 
   websiteStarted = true;
 }
 
+setInterval(
+  ()=>{
+    updateOnlineNumber();
+  },
+  10000
+);
 
-/*
- * Keep the online number moving.
- */
-setInterval(()=>{
-  updateOnlineNumber();
-},10000);
-
-
-/*
- * Prepare video.
- */
 function prepareVideo(){
 
   try{
@@ -1180,10 +1188,6 @@ function prepareVideo(){
   }catch(e){}
 }
 
-
-/*
- * Prepare background audio.
- */
 function prepareAudio(){
 
   try{
@@ -1191,52 +1195,46 @@ function prepareAudio(){
   }catch(e){}
 }
 
-
 /*
- * Important:
- * When payment page is opened and the user presses
- * phone/browser Back, index.html can be restored
- * from browser cache instead of reloading.
- *
- * pageshow catches that situation.
+ * Handles Back from payment when
+ * index.html is restored from browser cache.
  */
-window.addEventListener("pageshow",()=>{
+window.addEventListener(
+  "pageshow",
+  ()=>{
 
-  stopBackgroundSound();
-  stopLiveVideo();
+    stopBackgroundSound();
+    stopLiveVideo();
 
-  /*
-   * Don't interfere with the first page load.
-   */
-  if(!websiteStarted){
-    return;
+    if(!websiteStarted){
+      return;
+    }
+
+    if(
+      sessionStorage.getItem(
+        "returnToLivePhotos"
+      ) === "yes"
+    ){
+
+      sessionStorage.removeItem(
+        "returnToLivePhotos"
+      );
+
+      redLiveShownThisVisit =
+        localStorage.getItem(
+          RED_LIVE_KEY
+        ) === "yes";
+
+      setTimeout(
+        ()=>{
+          showLivePhotos();
+        },
+        50
+      );
+    }
   }
+);
 
-  if(
-    sessionStorage.getItem(
-      "returnToLivePhotos"
-    ) === "yes"
-  ){
-
-    sessionStorage.removeItem(
-      "returnToLivePhotos"
-    );
-
-    redLiveShownThisVisit =
-      localStorage.getItem(
-        RED_LIVE_KEY
-      ) === "yes";
-
-    setTimeout(()=>{
-      showLivePhotos();
-    },50);
-  }
-});
-
-
-/*
- * Pause sound when the user leaves the page.
- */
 document.addEventListener(
   "visibilitychange",
   ()=>{
@@ -1248,7 +1246,8 @@ document.addEventListener(
     }else{
 
       if(
-        photosPage.style.display !== "none"
+        photosPage.style.display !==
+        "none"
       ){
         playLivePhotosSound();
       }
@@ -1256,10 +1255,6 @@ document.addEventListener(
   }
 );
 
-
-/*
- * Reload / page restoration safety.
- */
 window.addEventListener(
   "beforeunload",
   ()=>{
@@ -1267,7 +1262,6 @@ window.addEventListener(
     stopLiveVideo();
   }
 );
-
 
 window.addEventListener(
   "load",
