@@ -6,13 +6,11 @@
 <title>My Referral Website</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box}
 
 html,body{
+  margin:0;
+  padding:0;
   width:100%;
   min-height:100%;
   background:#000;
@@ -20,266 +18,193 @@ html,body{
   font-family:Arial,sans-serif;
 }
 
-body{
-  overflow-x:hidden;
-}
+body{overflow-x:hidden}
 
 .page{
   display:none;
   width:100%;
   min-height:100vh;
   background:#000;
+}
+
+#welcomeScreen{
+  min-height:100vh;
+  display:flex;
   align-items:center;
   justify-content:center;
   flex-direction:column;
-}
-
-/* WELCOME */
-#welcomeScreen{
-  display:flex;
   text-align:center;
+  background:#000;
 }
 
-#welcomeScreen h1{
-  font-size:30px;
-  margin-bottom:15px;
+.welcomeTitle{
+  font-size:32px;
+  font-weight:bold;
+  margin-bottom:20px;
 }
 
-#welcomeScreen p{
+.loadingText{
   font-size:18px;
+  color:#aaa;
 }
 
-/* PHOTOS */
 #photosPage{
-  display:none;
-  align-items:stretch;
-  justify-content:flex-start;
-  padding:10px;
+  padding:12px;
+  background:#000;
+}
+
+.topBar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px 4px 14px;
+}
+
+.onlineText{
+  font-size:14px;
+  color:#ddd;
+}
+
+.onlineDot{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#20e070;
+  margin-right:5px;
+  animation:blinkGreen 1s infinite;
+}
+
+@keyframes blinkGreen{
+  0%,100%{opacity:1}
+  50%{opacity:.25}
+}
+
+.liveTitle{
+  font-size:20px;
+  font-weight:bold;
 }
 
 .photoGrid{
-  width:100%;
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
 
 .photoCard{
   position:relative;
   overflow:hidden;
+  border-radius:10px;
   background:#111;
-  border-radius:6px;
+  min-height:240px;
   cursor:pointer;
 }
 
 .photoCard img{
   width:100%;
-  height:180px;
+  height:240px;
   object-fit:cover;
   display:block;
 }
 
-.photoCard.offline{
-  cursor:default;
-}
-
-.photoStatus{
+.statusBadge{
   position:absolute;
-  top:6px;
-  left:6px;
-  padding:4px 7px;
-  border-radius:4px;
+  top:8px;
+  left:8px;
+  padding:4px 8px;
+  border-radius:5px;
   font-size:11px;
   font-weight:bold;
-  z-index:3;
-}
-
-.liveStatus{
-  background:#e00000;
-  color:#fff;
-}
-
-.offlineStatus{
-  background:#555;
-  color:#fff;
-}
-
-.closedOverlay{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.58);
-  color:#fff;
-  font-size:17px;
-  font-weight:bold;
-  z-index:2;
-}
-
-.videoPlayIcon{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  background:rgba(220,0,0,.9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-  color:#fff;
-  z-index:4;
-  pointer-events:none;
-  animation:pulsePlay 1.2s infinite;
-}
-
-@keyframes pulsePlay{
-  0%,100%{
-    transform:translate(-50%,-50%) scale(1);
-  }
-  50%{
-    transform:translate(-50%,-50%) scale(1.12);
-  }
-}
-
-.photoInfo{
-  padding:6px 4px 8px;
-  text-align:center;
-  background:#080808;
-}
-
-.photoName{
-  font-size:14px;
-  font-weight:bold;
-}
-
-.photoMeta{
-  margin-top:3px;
-  font-size:11px;
-  color:#bbb;
-}
-  /* INCOMING CALL */
-#incomingCall{
-  background:#050505;
-  text-align:center;
-}
-
-#incomingCall img{
-  width:150px;
-  height:150px;
-  object-fit:cover;
-  border-radius:50%;
-  margin-bottom:15px;
-  border:3px solid #e00000;
-}
-
-#incomingCall h2{
-  font-size:24px;
-  margin-bottom:8px;
-}
-
-#incomingCall p{
-  color:#bbb;
-  margin-bottom:25px;
-}
-
-.callButtons{
-  display:flex;
-  gap:25px;
-}
-
-.callButton{
-  width:65px;
-  height:65px;
-  border-radius:50%;
-  border:none;
-  color:#fff;
-  font-size:27px;
-  cursor:pointer;
-}
-
-.declineButton{
-  background:#e00000;
-}
-
-.answerButton{
-  background:#00a83b;
-}
-
-/* BLACK LIVE */
-#blackLivePage{
-  background:#000;
-  text-align:center;
+  z-index:10;
 }
 
 .liveBadge{
   background:#e00000;
   color:#fff;
-  padding:8px 18px;
-  border-radius:6px;
-  font-size:22px;
-  font-weight:bold;
-  animation:livePulse 1s infinite;
 }
 
-@keyframes livePulse{
-  0%,100%{opacity:1;}
-  50%{opacity:.55;}
-}
-
-.liveLoading{
-  margin-top:20px;
-  font-size:18px;
-}
-
-/* RED LIVE VIDEO */
-#liveSoundPage{
-  background:#000;
-  position:relative;
-}
-
-#liveSoundVideo{
-  width:100%;
-  height:100vh;
-  object-fit:cover;
-  background:#000;
-}
-
-.redLiveBadge{
-  position:absolute;
-  top:18px;
-  left:18px;
-  z-index:10;
-  background:#e00000;
+.offlineBadge{
+  background:#555;
   color:#fff;
-  padding:8px 15px;
-  border-radius:5px;
-  font-weight:bold;
+}
+
+.liveDot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#25e66d;
+  margin-right:4px;
+  animation:blinkGreen 1s infinite;
+}
+
+.roomClosed{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.62);
   font-size:18px;
+  font-weight:bold;
+  z-index:7;
 }
 
-/* NO ANSWER */
-#noAnswerPage{
-  background:#e00000;
-  text-align:center;
+.photoInfo{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:25px 10px 9px;
+  background:linear-gradient(transparent,rgba(0,0,0,.9));
+  z-index:9;
 }
 
-#noAnswerPage h1{
-  font-size:32px;
+.photoName{
+  font-size:16px;
   font-weight:bold;
 }
 
-/* INSUFFICIENT */
-#insufficientPage{
-  background:#000;
-  text-align:center;
+.photoAge{
+  margin-top:3px;
+  font-size:12px;
+  color:#ddd;
 }
 
-#insufficientPage h1{
-  font-size:28px;
+.videoPlayIcon{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:rgba(0,0,0,.58);
+  border:1px solid rgba(255,255,255,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:22px;
+  line-height:1;
+  z-index:8;
+  pointer-events:none;
+  animation:videoPulse 1.5s infinite;
+}
+
+@keyframes videoPulse{
+  0%{
+    transform:translate(-50%,-50%) scale(1);
+    opacity:1;
+  }
+  50%{
+    transform:translate(-50%,-50%) scale(1.12);
+    opacity:.72;
+  }
+  100%{
+    transform:translate(-50%,-50%) scale(1);
+    opacity:1;
+  }
 }
 </style>
 </head>
@@ -287,114 +212,217 @@ body{
 <body>
 
 <div id="welcomeScreen" class="page">
-  <h1>WELCOME</h1>
-  <p>Loading...</p>
+  <div class="welcomeTitle">WELCOME</div>
+  <div class="loadingText">Loading...</div>
 </div>
 
 <div id="photosPage" class="page">
+  <div class="topBar">
+    <div class="onlineText">
+      <span class="onlineDot"></span>
+      <span id="onlineNumber">21</span> online
+    </div>
+
+    <div class="liveTitle">LIVE</div>
+  </div>
+
   <div id="photoGrid" class="photoGrid"></div>
 </div>
+<div id="incomingCall" class="page" style="
+  background:#000;
+  min-height:100vh;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  padding:20px;
+">
 
-<div id="incomingCall" class="page">
-  <img id="callerPhoto" src="" alt="Caller">
+  <div style="font-size:15px;color:#aaa;margin-bottom:12px;">
+    INCOMING VIDEO CALL
+  </div>
 
-  <h2 id="callerName">
-    Incoming Video Call
-  </h2>
+  <img id="callerImage"
+       src=""
+       style="
+         width:180px;
+         height:180px;
+         object-fit:cover;
+         border-radius:50%;
+         border:3px solid #e00000;
+       ">
 
-  <p id="callerDetails"></p>
+  <div id="callerName"
+       style="
+         font-size:23px;
+         font-weight:bold;
+         margin-top:15px;
+       "></div>
 
-  <div class="callButtons">
-    <button
-      id="declineButton"
-      class="callButton declineButton">
-      ✕
-    </button>
+  <div id="callerDetails"
+       style="
+         color:#aaa;
+         font-size:14px;
+         margin-top:5px;
+       "></div>
 
-    <button
-      id="answerButton"
-      class="callButton answerButton">
-      ✓
-    </button>
+  <div style="
+    display:flex;
+    gap:35px;
+    margin-top:35px;
+  ">
+
+    <button id="declineBtn" style="
+      width:65px;
+      height:65px;
+      border-radius:50%;
+      border:0;
+      background:#e00000;
+      color:#fff;
+      font-size:27px;
+    ">✕</button>
+
+    <button id="answerBtn" style="
+      width:65px;
+      height:65px;
+      border-radius:50%;
+      border:0;
+      background:#12c95a;
+      color:#fff;
+      font-size:27px;
+    ">✓</button>
+
   </div>
 </div>
 
-<div id="liveSoundPage" class="page">
 
-  <div class="redLiveBadge">
-    🔴 LIVE
+<div id="liveSoundPage" class="page" style="
+  position:relative;
+  background:#000;
+  min-height:100vh;
+  align-items:center;
+  justify-content:center;
+">
+
+  <div style="
+    position:absolute;
+    top:15px;
+    left:15px;
+    background:#e00000;
+    color:#fff;
+    padding:7px 11px;
+    border-radius:5px;
+    font-size:13px;
+    font-weight:bold;
+    z-index:20;
+  ">
+    <span style="
+      display:inline-block;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#20e070;
+      margin-right:5px;
+      animation:blinkGreen 1s infinite;
+    "></span>
+    LIVE
   </div>
 
-  <video
-    id="liveSoundVideo"
-    playsinline
-    preload="auto">
-
-    <source
-      src="preview_20_seconds.mp4"
-      type="video/mp4">
-
+  <video id="liveSoundVideo"
+         playsinline
+         preload="auto"
+         style="
+           width:100%;
+           max-height:100vh;
+           object-fit:contain;
+           background:#000;
+         ">
+    <source src="preview_20_seconds.mp4" type="video/mp4">
   </video>
-
 </div>
 
-<div id="blackLivePage" class="page">
 
-  <div class="liveBadge">
-    🔴 LIVE
+<div id="blackLivePage" class="page" style="
+  position:relative;
+  min-height:100vh;
+  background:#000;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+">
+
+  <div style="
+    position:absolute;
+    top:15px;
+    left:15px;
+    background:#e00000;
+    color:#fff;
+    padding:7px 11px;
+    border-radius:5px;
+    font-size:13px;
+    font-weight:bold;
+  ">
+    <span style="
+      display:inline-block;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#20e070;
+      margin-right:5px;
+      animation:blinkGreen 1s infinite;
+    "></span>
+    LIVE
   </div>
 
-  <div class="liveLoading">
+  <div style="font-size:18px;color:#aaa;">
     Loading...
   </div>
-
 </div>
 
-<div id="noAnswerPage" class="page">
-  <h1>NO ANSWER</h1>
+
+<div id="insufficientPage" class="page" style="
+  min-height:100vh;
+  background:#000;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  padding:25px;
+">
+
+  <div style="
+    font-size:23px;
+    font-weight:bold;
+    margin-bottom:12px;
+  ">
+    Insufficient Minutes
+  </div>
+
+  <div style="color:#aaa;font-size:14px;">
+    You don't have enough minutes for this call.
+  </div>
 </div>
 
-<div id="insufficientPage" class="page">
-  <h1>INSUFFICIENT MINUTES</h1>
-</div>
 
-<audio
-  id="backgroundSound"
-  preload="auto">
-
-  <source
-    src="preview_20_seconds.mp4"
-    type="video/mp4">
-
+<audio id="backgroundSound" preload="auto" playsinline>
+  <source src="preview_20_seconds.mp4" type="video/mp4">
 </audio>
+
 <script>
-const GITHUB_OWNER = "agnesweb2026";
+  const GITHUB_OWNER = "agnesweb2026";
 const GITHUB_REPO = "My-referral-website";
 const GITHUB_BRANCH = "main";
 
 const MAX_PHOTOS = 24;
 
-/* FIRST CALL */
-const FIRST_WELCOME_DURATION = 3000;
-
-/* NEXT CALL RINGS AFTER 7 SECONDS */
-const PHOTOS_DURATION = 7000;
-
-/* BACKGROUND SOUND */
+const PHOTOS_DURATION = 20000;
 const BACKGROUND_SOUND_DURATION = 5000;
-
-/* OFFLINE ROOMS CHANGE EVERY 5 MINUTES */
+const INSUFFICIENT_DURATION = 2000;
 const BUSY_CHANGE_DURATION = 300000;
-
-/* SECOND BLACK LIVE SOUND */
 const SECOND_CALL_SOUND_DURATION = 5000;
-
-/* NO ANSWER SCREEN */
-const NO_ANSWER_DURATION = 3000;
 
 const PAYMENT_PAGE_URL = "payment.html";
 
-/* RED LIVE VIDEO IS SHOWN ONLY ONCE */
 const RED_LIVE_KEY = "redLiveVideoSeen";
 
 let redLiveShownThisVisit =
@@ -407,10 +435,55 @@ let currentCaller = null;
 
 let photoTimer = null;
 let incomingTimer = null;
+let insufficientTimer = null;
 let busyRotationTimer = null;
 let soundTimer = null;
 let liveVideoSafetyTimer = null;
-let noAnswerTimer = null;
+
+const names = [
+  "Cute","Becky","Dorry","Jenny","Ashley","Mary",
+  "Cindy","Mercy","Linda","Sharon","Brenda","Diana",
+  "Faith","Joy","Lucy","Angela","Betty","Nancy",
+  "Winnie","Ann","Carol","Irene","Rose","Fellow"
+];
+
+const ages = [
+  19,23,25,18,24,24,26,30,27,23,29,33,
+  25,25,31,25,23,19,22,24,23,27,28,21
+];
+
+const countries = [
+  {name:"Kenya",flag:"🇰🇪"},
+  {name:"Kenya",flag:"🇰🇪"},
+  {name:"Kenya",flag:"🇰🇪"},
+  {name:"Kenya",flag:"🇰🇪"},
+  {name:"Kenya",flag:"🇰🇪"},
+
+  {name:"Tanzania",flag:"🇹🇿"},
+  {name:"Tanzania",flag:"🇹🇿"},
+  {name:"Tanzania",flag:"🇹🇿"},
+  {name:"Tanzania",flag:"🇹🇿"},
+
+  {name:"Nigeria",flag:"🇳🇬"},
+  {name:"Nigeria",flag:"🇳🇬"},
+  {name:"Nigeria",flag:"🇳🇬"},
+  {name:"Nigeria",flag:"🇳🇬"},
+
+  {name:"Congo",flag:"🇨🇩"},
+  {name:"Congo",flag:"🇨🇩"},
+  {name:"Congo",flag:"🇨🇩"},
+  {name:"Congo",flag:"🇨🇩"},
+  {name:"Congo",flag:"🇨🇩"},
+
+  {name:"Canada",flag:"🇨🇦"},
+  {name:"Canada",flag:"🇨🇦"},
+
+  {name:"South Africa",flag:"🇿🇦"},
+  {name:"South Africa",flag:"🇿🇦"},
+
+  {name:"USA",flag:"🇺🇸"},
+  {name:"USA",flag:"🇺🇸"}
+];
 
 const welcomeScreen =
   document.getElementById("welcomeScreen");
@@ -418,14 +491,29 @@ const welcomeScreen =
 const photosPage =
   document.getElementById("photosPage");
 
-const photoGrid =
-  document.getElementById("photoGrid");
-
 const incomingCall =
   document.getElementById("incomingCall");
 
-const callerPhoto =
-  document.getElementById("callerPhoto");
+const liveSoundPage =
+  document.getElementById("liveSoundPage");
+
+const blackLivePage =
+  document.getElementById("blackLivePage");
+
+const insufficientPage =
+  document.getElementById("insufficientPage");
+
+const photoGrid =
+  document.getElementById("photoGrid");
+
+const backgroundSound =
+  document.getElementById("backgroundSound");
+
+const liveSoundVideo =
+  document.getElementById("liveSoundVideo");
+
+const callerImage =
+  document.getElementById("callerImage");
 
 const callerName =
   document.getElementById("callerName");
@@ -433,97 +521,26 @@ const callerName =
 const callerDetails =
   document.getElementById("callerDetails");
 
-const answerButton =
-  document.getElementById("answerButton");
+const answerBtn =
+  document.getElementById("answerBtn");
 
-const declineButton =
-  document.getElementById("declineButton");
-
-const liveSoundPage =
-  document.getElementById("liveSoundPage");
-
-const liveSoundVideo =
-  document.getElementById("liveSoundVideo");
-
-const blackLivePage =
-  document.getElementById("blackLivePage");
-
-const noAnswerPage =
-  document.getElementById("noAnswerPage");
-
-const insufficientPage =
-  document.getElementById("insufficientPage");
-
-const backgroundSound =
-  document.getElementById("backgroundSound");
-  const names = [
-  "Cute",
-  "Becky",
-  "Dorry",
-  "Jenny",
-  "Ashley",
-  "Mary",
-  "Cindy",
-  "Mercy",
-  "Linda",
-  "Sharon",
-  "Brenda",
-  "Diana",
-  "Faith",
-  "Joy",
-  "Lucy",
-  "Angela",
-  "Betty",
-  "Nancy",
-  "Winnie",
-  "Ann",
-  "Carol",
-  "Irene",
-  "Rose",
-  "Fellow"
-];
-
-const ages = [
-  19,23,25,18,24,24,
-  26,30,27,23,29,33,
-  25,25,31,25,23,19,
-  22,24,23,27,28,21
-];
-
-const countries = [
-  "🇰🇪","🇰🇪","🇰🇪","🇰🇪","🇰🇪",
-  "🇹🇿","🇹🇿","🇹🇿","🇹🇿",
-  "🇳🇬","🇳🇬","🇳🇬","🇳🇬",
-  "🇨🇩","🇨🇩","🇨🇩","🇨🇩","🇨🇩",
-  "🇨🇦","🇨🇦",
-  "🇿🇦","🇿🇦",
-  "🇺🇸","🇺🇸"
-];
-
-function hideAllPages(){
+const declineBtn =
+  document.getElementById("declineBtn");
+  function hideAllPages(){
   welcomeScreen.style.display = "none";
   photosPage.style.display = "none";
   incomingCall.style.display = "none";
   liveSoundPage.style.display = "none";
   blackLivePage.style.display = "none";
-  noAnswerPage.style.display = "none";
   insufficientPage.style.display = "none";
 }
 
 function clearAllTimers(){
   clearTimeout(photoTimer);
   clearTimeout(incomingTimer);
-  clearTimeout(busyRotationTimer);
+  clearTimeout(insufficientTimer);
   clearTimeout(soundTimer);
   clearTimeout(liveVideoSafetyTimer);
-  clearTimeout(noAnswerTimer);
-
-  photoTimer = null;
-  incomingTimer = null;
-  busyRotationTimer = null;
-  soundTimer = null;
-  liveVideoSafetyTimer = null;
-  noAnswerTimer = null;
 }
 
 function stopBackgroundSound(){
@@ -543,55 +560,58 @@ function stopLiveVideo(){
 function shuffleArray(array){
   const arr = [...array];
 
-  for(let i = arr.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
     [arr[i],arr[j]] = [arr[j],arr[i]];
   }
 
   return arr;
 }
 
-function getRandomBusyIndexes(total,count){
-  const indexes = [];
+function getRandomBusyIndexes(){
+  const available = [];
 
-  while(indexes.length < count){
-    const index =
-      Math.floor(Math.random() * total);
-
-    if(!indexes.includes(index)){
-      indexes.push(index);
-    }
+  for(let i=0;i<MAX_PHOTOS;i++){
+    available.push(i);
   }
 
-  return indexes;
+  return shuffleArray(available).slice(0,5);
 }
-  async function getGitHubContents(path = ""){
+
+async function getGitHubContents(path=""){
+
   const url =
     `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`;
 
   const response = await fetch(url);
 
   if(!response.ok){
-    throw new Error("GitHub files could not be loaded");
+    throw new Error("GitHub request failed");
   }
 
   return await response.json();
 }
 
-async function collectImages(path = "", result = []){
-  const items = await getGitHubContents(path);
+function isImageFile(name){
+  return /\.(jpg|jpeg|png|webp|gif)$/i.test(name);
+}
+
+async function collectImages(path="",result=[]){
+
+  const items =
+    await getGitHubContents(path);
 
   for(const item of items){
 
-    if(item.type === "dir"){
-      await collectImages(item.path,result);
-    }
-
-    else if(
+    if(
       item.type === "file" &&
       isImageFile(item.name)
     ){
       result.push(item.path);
+    }
+
+    if(item.type === "dir"){
+      await collectImages(item.path,result);
     }
 
     if(result.length >= MAX_PHOTOS){
@@ -606,183 +626,196 @@ function getFileUrl(path){
   return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
 }
 
-function isImageFile(name){
-  return /\.(jpg|jpeg|png|webp|gif)$/i.test(name);
-}
-
 async function loadPhotos(){
 
+  let imagePaths = [];
+
   try{
-
-    let imagePaths = [];
-
     imagePaths =
       await collectImages("",[]);
-
-    imagePaths =
-      imagePaths.slice(0,MAX_PHOTOS);
-
-    photosData = imagePaths.map(
-      (path,index) => ({
-        image:getFileUrl(path),
-        name:names[index],
-        age:ages[index],
-        country:countries[index]
-      })
-    );
-
   }catch(error){
-
     console.error(error);
-
-    photosData = [];
-
-  }
-}
-
-function getRandomCaller(){
-
-  if(!photosData.length){
-    return {
-      image:"",
-      name:"Incoming Call",
-      age:"",
-      country:""
-    };
+    return;
   }
 
-  const index =
-    Math.floor(Math.random() * photosData.length);
+  imagePaths =
+    imagePaths.slice(0,MAX_PHOTOS);
 
-  return photosData[index];
-}
-
-function getBusyIndexes(){
-  return getRandomBusyIndexes(
-    photosData.length,
-    Math.min(5,photosData.length)
-  );
+  photosData =
+    imagePaths.map((path,index)=>({
+      path:path,
+      url:getFileUrl(path),
+      name:names[index] || `User ${index+1}`,
+      age:ages[index] || 25,
+      country:countries[index] || {
+        name:"Kenya",
+        flag:"🇰🇪"
       }
+    }));
+    }
   function renderPhotos(){
 
   photoGrid.innerHTML = "";
 
-  const displayData =
+  if(!photosData.length){
+
+    photoGrid.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:40px;
+        color:#aaa;
+      ">
+        Loading photos...
+      </div>
+    `;
+
+    return;
+  }
+
+  const displayPhotos =
     shuffleArray(photosData);
 
   const busyIndexes =
-    getBusyIndexes();
+    getRandomBusyIndexes();
 
-  displayData.forEach((person,index)=>{
+  displayPhotos.forEach(
+    (photo,displayIndex)=>{
 
-    const card =
-      document.createElement("div");
-
-    card.className = "photoCard";
-
-    const isOffline =
-      busyIndexes.includes(index);
-
-    if(isOffline){
-      card.classList.add("offline");
-    }
-
-    const status =
-      document.createElement("div");
-
-    status.className =
-      "photoStatus " +
-      (isOffline
-        ? "offlineStatus"
-        : "liveStatus");
-
-    status.textContent =
-      isOffline ? "OFFLINE" : "LIVE";
-
-    card.appendChild(status);
-
-    const image =
-      document.createElement("img");
-
-    image.src = person.image;
-    image.alt = person.name;
-
-    card.appendChild(image);
-
-    const play =
-      document.createElement("div");
-
-    play.className = "videoPlayIcon";
-    play.textContent = "▶";
-
-    card.appendChild(play);
-
-    if(isOffline){
-
-      const closed =
+      const card =
         document.createElement("div");
 
-      closed.className =
-        "closedOverlay";
+      card.className = "photoCard";
 
-      closed.textContent =
-        "ROOM CLOSED";
+      const img =
+        document.createElement("img");
 
-      card.appendChild(closed);
+      img.src = photo.url;
+      img.alt = photo.name;
+      img.loading = "lazy";
 
-    }else{
+      card.appendChild(img);
 
-      card.addEventListener(
-        "click",
-        ()=>{
-          window.location.href =
-            PAYMENT_PAGE_URL;
-        }
-      );
+      const isBusy =
+        busyIndexes.includes(displayIndex);
+
+      const status =
+        document.createElement("div");
+
+      status.className =
+        "statusBadge";
+
+      if(isBusy){
+
+        status.classList.add(
+          "offlineBadge"
+        );
+
+        status.textContent =
+          "OFFLINE";
+
+        const closed =
+          document.createElement("div");
+
+        closed.className =
+          "roomClosed";
+
+        closed.textContent =
+          "ROOM CLOSED";
+
+        card.appendChild(closed);
+
+      }else{
+
+        status.classList.add(
+          "liveBadge"
+        );
+
+        const dot =
+          document.createElement("span");
+
+        dot.className =
+          "liveDot";
+
+        status.appendChild(dot);
+
+        status.appendChild(
+          document.createTextNode("LIVE")
+        );
+
+        card.addEventListener(
+          "click",
+          ()=>{
+            window.location.href =
+              PAYMENT_PAGE_URL;
+          }
+        );
+      }
+
+      card.appendChild(status);
+
+      const videoIcon =
+        document.createElement("div");
+
+      videoIcon.className =
+        "videoPlayIcon";
+
+      videoIcon.innerHTML =
+        "▶";
+
+      card.appendChild(videoIcon);
+
+      const info =
+        document.createElement("div");
+
+      info.className =
+        "photoInfo";
+
+      info.innerHTML = `
+        <div class="photoName">
+          ${photo.name}
+        </div>
+
+        <div class="photoAge">
+          ${photo.country.flag} ${photo.age} yrs
+        </div>
+      `;
+
+      card.appendChild(info);
+
+      photoGrid.appendChild(card);
     }
+  );
+}
 
-    const info =
-      document.createElement("div");
+function updateOnlineNumber(){
 
-    info.className = "photoInfo";
+  const number =
+    document.getElementById(
+      "onlineNumber"
+    );
 
-    const name =
-      document.createElement("div");
-
-    name.className = "photoName";
-    name.textContent = person.name;
-
-    const meta =
-      document.createElement("div");
-
-    meta.className = "photoMeta";
-    meta.textContent =
-      `${person.country} ${person.age} yrs`;
-
-    info.appendChild(name);
-    info.appendChild(meta);
-
-    card.appendChild(info);
-
-    photoGrid.appendChild(card);
-  });
+  if(number){
+    number.textContent =
+      Math.floor(18 + Math.random()*8);
+  }
 }
 
 function startBusyRoomRotation(){
 
-  clearTimeout(busyRotationTimer);
+  clearInterval(
+    busyRotationTimer
+  );
 
   busyRotationTimer =
-    setTimeout(
+    setInterval(
       ()=>{
         if(
-          photosPage.style.display !== "none"
+          photosPage.style.display !==
+          "none"
         ){
           renderPhotos();
         }
-
-        startBusyRoomRotation();
-
       },
       BUSY_CHANGE_DURATION
     );
@@ -815,10 +848,13 @@ function playLivePhotosSound(){
       );
 
   }catch(e){}
-      }
-  function scheduleIncomingCall(){
+}
 
-  clearTimeout(incomingTimer);
+function scheduleIncomingCall(){
+
+  clearTimeout(
+    incomingTimer
+  );
 
   incomingTimer =
     setTimeout(
@@ -838,56 +874,51 @@ function showLivePhotos(){
 
   hideAllPages();
 
-  photosPage.style.display = "flex";
+  photosPage.style.display =
+    "block";
 
   renderPhotos();
+
+  updateOnlineNumber();
 
   playLivePhotosSound();
 
   startBusyRoomRotation();
 
-  /*
-    Every time Live Photos appears,
-    the next incoming call rings after 7 seconds.
-  */
   scheduleIncomingCall();
-}
-
-function showIncomingCall(){
+  }
+  function showIncomingCall(){
 
   clearAllTimers();
 
-  stopLiveVideo();
   stopBackgroundSound();
+  stopLiveVideo();
 
   hideAllPages();
 
-  currentCaller =
-    getRandomCaller();
+  incomingCall.style.display =
+    "flex";
 
-  callerPhoto.src =
-    currentCaller.image;
+  if(!photosData.length){
+    return;
+  }
+
+  const randomIndex =
+    Math.floor(
+      Math.random()*photosData.length
+    );
+
+  currentCaller =
+    photosData[randomIndex];
+
+  callerImage.src =
+    currentCaller.url;
 
   callerName.textContent =
     currentCaller.name;
 
   callerDetails.textContent =
-    `${currentCaller.country} ${currentCaller.age} yrs`;
-
-  incomingCall.style.display =
-    "flex";
-
-  /*
-    If nobody answers within 7 seconds,
-    show NO ANSWER.
-  */
-  incomingTimer =
-    setTimeout(
-      ()=>{
-        showNoAnswer();
-      },
-      PHOTOS_DURATION
-    );
+    `${currentCaller.country.flag} ${currentCaller.age} yrs`;
 }
 
 function showLiveSound(){
@@ -904,7 +935,6 @@ function showLiveSound(){
   try{
 
     liveSoundVideo.currentTime = 0;
-    liveSoundVideo.muted = false;
     liveSoundVideo.volume = 1;
 
     const playPromise =
@@ -912,32 +942,27 @@ function showLiveSound(){
 
     if(playPromise){
       playPromise.catch(()=>{
-        liveSoundVideo.muted = true;
-        liveSoundVideo.play().catch(()=>{});
+        showInsufficient(false);
       });
     }
 
-  }catch(e){}
+  }catch(e){
 
-  /*
-    When the first red LIVE video ends,
-    go directly to Live Photos.
-  */
-  liveSoundVideo.onended =
-    ()=>{
-      showLivePhotos();
-    };
+    showInsufficient(false);
 
-  /*
-    Safety fallback in case the video
-    does not send the ended event.
-  */
+    return;
+  }
+
+  clearTimeout(
+    liveVideoSafetyTimer
+  );
+
   liveVideoSafetyTimer =
     setTimeout(
       ()=>{
-        showLivePhotos();
+        showInsufficient(false);
       },
-      22000
+      20000
     );
 }
 
@@ -965,39 +990,29 @@ function showBlackLive(){
       playPromise.catch(()=>{});
     }
 
-    soundTimer =
-      setTimeout(
-        ()=>{
-          stopBackgroundSound();
-        },
-        SECOND_CALL_SOUND_DURATION
-      );
-
   }catch(e){}
-}
 
-function showNoAnswer(){
+  clearTimeout(soundTimer);
 
-  clearAllTimers();
-
-  stopLiveVideo();
-  stopBackgroundSound();
-
-  hideAllPages();
-
-  noAnswerPage.style.display =
-    "flex";
-
-  noAnswerTimer =
+  soundTimer =
     setTimeout(
       ()=>{
-        showLivePhotos();
+        stopBackgroundSound();
+
+        /*
+         * SECOND CALL:
+         * Go back to Live Photos,
+         * NOT to payment.
+         */
+        showInsufficient(false);
       },
-      NO_ANSWER_DURATION
+      SECOND_CALL_SOUND_DURATION
     );
 }
 
-function showInsufficient(){
+function showInsufficient(
+  openPayment=false
+){
 
   clearAllTimers();
 
@@ -1008,17 +1023,42 @@ function showInsufficient(){
 
   insufficientPage.style.display =
     "flex";
+
+  insufficientTimer =
+    setTimeout(
+      ()=>{
+
+        if(openPayment){
+
+          sessionStorage.setItem(
+            "returnToLivePhotos",
+            "yes"
+          );
+
+          window.location.replace(
+            PAYMENT_PAGE_URL
+          );
+
+        }else{
+
+          showLivePhotos();
+
+        }
+
+      },
+      INSUFFICIENT_DURATION
+    );
 }
-  function answerIncomingCall(){
+
+function answerIncomingCall(){
 
   clearAllTimers();
 
-  /*
-    FIRST CALL:
-    Answer -> red LIVE video.
-  */
   if(!redLiveShownThisVisit){
 
+    /*
+     * FIRST CALL
+     */
     redLiveShownThisVisit = true;
 
     localStorage.setItem(
@@ -1031,11 +1071,10 @@ function showInsufficient(){
   }else{
 
     /*
-      NEXT CALL:
-      Answer -> black LIVE screen
-      with sound.
-    */
+     * SECOND CALL
+     */
     showBlackLive();
+
   }
 }
 
@@ -1043,69 +1082,132 @@ function declineIncomingCall(){
 
   clearAllTimers();
 
-  /*
-    If the first call is declined,
-    simply return to Live Photos.
-  */
-  if(!redLiveShownThisVisit){
+  stopLiveVideo();
+  stopBackgroundSound();
 
-    showLivePhotos();
-
-  }else{
-
-    /*
-      If the next call is declined,
-      show NO ANSWER for 3 seconds.
-    */
-    showNoAnswer();
-  }
+  showLivePhotos();
 }
 
-answerButton.addEventListener(
+answerBtn.addEventListener(
   "click",
   answerIncomingCall
 );
 
-declineButton.addEventListener(
+declineBtn.addEventListener(
   "click",
   declineIncomingCall
 );
 
-/*
-  When payment.html opens, remember that
-  returning should go directly to Live Photos.
-*/
-function markPaymentReturn(){
+function checkPaymentReturn(){
+
+  const returning =
+    sessionStorage.getItem(
+      "returnToLivePhotos"
+    );
+
+  if(returning === "yes"){
+
+    sessionStorage.removeItem(
+      "returnToLivePhotos"
+    );
+
+    redLiveShownThisVisit =
+      localStorage.getItem(
+        RED_LIVE_KEY
+      ) === "yes";
+
+    setTimeout(
+      ()=>{
+        showLivePhotos();
+      },
+      100
+    );
+
+    return true;
+  }
+
+  return false;
+  }
+  async function startWebsite(){
+
+  /*
+   * Returning from payment:
+   * go directly to Live Photos.
+   */
+  if(checkPaymentReturn()){
+
+    websiteStarted = true;
+
+    return;
+  }
+
+  hideAllPages();
+
+  welcomeScreen.style.display =
+    "flex";
+
+  const photosPromise =
+    loadPhotos();
+
+  await Promise.all([
+    photosPromise,
+
+    new Promise(
+      resolve =>
+        setTimeout(
+          resolve,
+          3000
+        )
+    )
+  ]);
+
+  welcomeScreen.style.display =
+    "none";
+
+  /*
+   * FIRST incoming call appears
+   * immediately after Welcome.
+   */
+  showIncomingCall();
+
+  websiteStarted = true;
+}
+
+setInterval(
+  ()=>{
+    updateOnlineNumber();
+  },
+  10000
+);
+
+function prepareVideo(){
 
   try{
-    sessionStorage.setItem(
-      "returnToLivePhotos",
-      "yes"
-    );
+    liveSoundVideo.load();
   }catch(e){}
 }
 
-document.addEventListener(
-  "click",
-  (event)=>{
-    const card =
-      event.target.closest(".photoCard");
-
-    if(
-      card &&
-      !card.classList.contains("offline")
-    ){
-      markPaymentReturn();
-    }
-  }
-);
-
-/*
-  Return from payment page.
-*/
-function checkPaymentReturn(){
+function prepareAudio(){
 
   try{
+    backgroundSound.load();
+  }catch(e){}
+}
+
+/*
+ * Handles Back from payment when
+ * index.html is restored from browser cache.
+ */
+window.addEventListener(
+  "pageshow",
+  ()=>{
+
+    stopBackgroundSound();
+    stopLiveVideo();
+
+    if(!websiteStarted){
+      return;
+    }
 
     if(
       sessionStorage.getItem(
@@ -1122,96 +1224,51 @@ function checkPaymentReturn(){
           RED_LIVE_KEY
         ) === "yes";
 
-      websiteStarted = true;
-
       setTimeout(
         ()=>{
           showLivePhotos();
         },
         50
       );
-
-      return true;
     }
-
-  }catch(e){}
-
-  return false;
-}
-
-/*
-  Handles browser/phone Back and bfcache.
-*/
-window.addEventListener(
-  "pageshow",
-  ()=>{
-    if(!websiteStarted){
-      return;
-    }
-
-    try{
-
-      if(
-        sessionStorage.getItem(
-          "returnToLivePhotos"
-        ) === "yes"
-      ){
-
-        sessionStorage.removeItem(
-          "returnToLivePhotos"
-        );
-
-        redLiveShownThisVisit =
-          localStorage.getItem(
-            RED_LIVE_KEY
-          ) === "yes";
-
-        setTimeout(
-          ()=>{
-            showLivePhotos();
-          },
-          50
-        );
-      }
-
-    }catch(e){}
   }
 );
 
-async function startWebsite(){
+document.addEventListener(
+  "visibilitychange",
+  ()=>{
 
-  /*
-    If returning from payment,
-    skip Welcome.
-  */
-  if(checkPaymentReturn()){
-    return;
+    if(document.hidden){
+
+      stopBackgroundSound();
+
+    }else{
+
+      if(
+        photosPage.style.display !==
+        "none"
+      ){
+        playLivePhotosSound();
+      }
+    }
   }
+);
 
-  websiteStarted = true;
-
-  hideAllPages();
-
-  welcomeScreen.style.display =
-    "flex";
-
-  await loadPhotos();
-
-  setTimeout(
-    ()=>{
-      /*
-        After Welcome, FIRST incoming call
-        appears immediately.
-      */
-      showIncomingCall();
-    },
-    FIRST_WELCOME_DURATION
-  );
-}
+window.addEventListener(
+  "beforeunload",
+  ()=>{
+    stopBackgroundSound();
+    stopLiveVideo();
+  }
+);
 
 window.addEventListener(
   "load",
   ()=>{
+
+    prepareVideo();
+    prepareAudio();
+
     startWebsite();
   }
 );
