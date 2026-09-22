@@ -7,6 +7,7 @@
 <title>My Referral Website</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -23,19 +24,13 @@ body{
   overflow-x:hidden;
 }
 
-/* =========================
-   COMMON
-========================= */
-
 .page{
   width:100%;
   min-height:100vh;
   background:#000;
 }
 
-/* =========================
-   WELCOME
-========================= */
+/* WELCOME */
 
 #welcomeScreen{
   min-height:100vh;
@@ -64,9 +59,7 @@ body{
   color:#aaa;
 }
 
-/* =========================
-   PHOTOS PAGE
-========================= */
+/* PHOTOS */
 
 #photosPage{
   display:none;
@@ -81,7 +74,7 @@ body{
   z-index:20;
   width:100%;
   background:#000;
-  padding:12px 12px 10px;
+  padding:12px;
   border-bottom:1px solid #222;
 }
 
@@ -112,10 +105,6 @@ body{
   box-shadow:0 0 8px rgba(24,227,111,.8);
 }
 
-/* =========================
-   PHOTO GRID
-========================= */
-
 .photosGrid{
   width:100%;
   display:grid;
@@ -127,7 +116,7 @@ body{
 .photoCard{
   position:relative;
   width:100%;
-  aspect-ratio:0.78;
+  aspect-ratio:.78;
   overflow:hidden;
   background:#111;
   border-radius:5px;
@@ -143,18 +132,19 @@ body{
   display:block;
 }
 
-/* =========================
-   CENTER VIDEO PLAY SIGN
-========================= */
+/* CENTER VIDEO ICON */
 
 .videoPlayIcon{
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
+
   width:46px;
   height:46px;
+
   border-radius:50%;
+
   background:rgba(0,0,0,.58);
   border:1px solid rgba(255,255,255,.35);
 
@@ -173,6 +163,7 @@ body{
 }
 
 @keyframes videoPulse{
+
   0%{
     transform:translate(-50%,-50%) scale(1);
   }
@@ -184,11 +175,10 @@ body{
   100%{
     transform:translate(-50%,-50%) scale(1);
   }
+
 }
 
-/* =========================
-   LIVE LABEL
-========================= */
+/* LIVE */
 
 .liveLabel{
   position:absolute;
@@ -208,7 +198,6 @@ body{
 
   font-size:10px;
   font-weight:700;
-  letter-spacing:.3px;
 }
 
 .liveSmallDot{
@@ -216,10 +205,12 @@ body{
   height:6px;
   border-radius:50%;
   background:#fff;
+
   animation:liveBlink 1s infinite;
 }
 
 @keyframes liveBlink{
+
   0%,100%{
     opacity:1;
   }
@@ -227,11 +218,10 @@ body{
   50%{
     opacity:.25;
   }
+
 }
 
-/* =========================
-   OFFLINE
-========================= */
+/* OFFLINE */
 
 .offlineLabel{
   position:absolute;
@@ -267,9 +257,7 @@ body{
   text-align:center;
 }
 
-/* =========================
-   PHOTO INFO
-========================= */
+/* PHOTO INFO */
 
 .photoInfo{
   position:absolute;
@@ -300,9 +288,7 @@ body{
   color:#ddd;
 }
 
-/* =========================
-   INCOMING CALL
-========================= */
+/* INCOMING CALL */
 
 #incomingCall{
   display:none;
@@ -325,15 +311,17 @@ body{
   font-size:20px;
   font-weight:700;
   margin-bottom:22px;
-  color:#fff;
 }
 
 .callerPhoto{
   width:150px;
   height:150px;
+
   border-radius:50%;
   object-fit:cover;
+
   border:3px solid #222;
+
   margin-bottom:15px;
 }
 
@@ -358,10 +346,13 @@ body{
 .callButton{
   width:70px;
   height:70px;
+
   border-radius:50%;
   border:none;
+
   color:#fff;
   font-size:26px;
+
   cursor:pointer;
 }
 
@@ -373,15 +364,15 @@ body{
   background:#16c964;
 }
 
-/* =========================
-   RED LIVE VIDEO
-========================= */
+/* RED LIVE VIDEO */
 
 #liveSoundPage{
   display:none;
   position:relative;
+
   width:100%;
   min-height:100vh;
+
   background:#000;
 }
 
@@ -400,6 +391,7 @@ body{
   position:absolute;
   top:15px;
   left:15px;
+
   z-index:30;
 
   display:flex;
@@ -407,9 +399,11 @@ body{
   gap:6px;
 
   padding:6px 9px;
+
   border-radius:4px;
 
   background:#e00000;
+
   color:#fff;
 
   font-size:12px;
@@ -419,20 +413,22 @@ body{
 .redLiveDot{
   width:7px;
   height:7px;
+
   border-radius:50%;
+
   background:#fff;
+
   animation:liveBlink 1s infinite;
 }
 
-/* =========================
-   BLACK SECOND CALL PAGE
-========================= */
+/* BLACK SECOND CALL */
 
 #blackLivePage{
   display:none;
   position:relative;
 
   min-height:100vh;
+
   background:#000;
 
   align-items:center;
@@ -451,7 +447,9 @@ body{
   gap:6px;
 
   padding:6px 9px;
+
   background:#e00000;
+
   border-radius:4px;
 
   font-size:12px;
@@ -461,8 +459,11 @@ body{
 .blackLiveDot{
   width:7px;
   height:7px;
+
   border-radius:50%;
+
   background:#fff;
+
   animation:liveBlink 1s infinite;
 }
 
@@ -477,19 +478,20 @@ body{
   color:#777;
 }
 
-/* =========================
-   INSUFFICIENT PAGE
-========================= */
+/* INSUFFICIENT */
 
 #insufficientPage{
   display:none;
+
   min-height:100vh;
+
   background:#000;
 
   align-items:center;
   justify-content:center;
 
   text-align:center;
+
   padding:25px;
 }
 
@@ -510,10 +512,6 @@ body{
   line-height:1.5;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-
 @media(max-width:700px){
 
   .photosGrid{
@@ -526,9 +524,6 @@ body{
     font-size:20px;
   }
 
-  .photosTitle{
-    font-size:18px;
-  }
 }
 
 @media(min-width:701px){
@@ -536,15 +531,13 @@ body{
   .photosGrid{
     grid-template-columns:repeat(4,1fr);
   }
+
 }
+
 </style>
 </head>
 
 <body>
-
-<!-- =========================
-     WELCOME
-========================= -->
 
 <div id="welcomeScreen" class="page">
 
@@ -558,10 +551,6 @@ body{
 
 </div>
 
-
-<!-- =========================
-     LIVE PHOTOS
-========================= -->
 
 <div id="photosPage" class="page">
 
@@ -587,7 +576,6 @@ body{
 
   </div>
 
-
   <div
     id="photosGrid"
     class="photosGrid">
@@ -596,13 +584,7 @@ body{
 </div>
 
 
-<!-- =========================
-     INCOMING CALL
-========================= -->
-
-<div
-  id="incomingCall"
-  class="page">
+<div id="incomingCall" class="page">
 
   <div class="incomingBox">
 
@@ -651,13 +633,7 @@ body{
 </div>
 
 
-<!-- =========================
-     RED LIVE VIDEO
-========================= -->
-
-<div
-  id="liveSoundPage"
-  class="page">
+<div id="liveSoundPage" class="page">
 
   <div class="redLiveTop">
 
@@ -681,13 +657,7 @@ body{
 </div>
 
 
-<!-- =========================
-     SECOND CALL BLACK SCREEN
-========================= -->
-
-<div
-  id="blackLivePage"
-  class="page">
+<div id="blackLivePage" class="page">
 
   <div class="blackLiveTop">
 
@@ -712,13 +682,7 @@ body{
 </div>
 
 
-<!-- =========================
-     INSUFFICIENT MINUTES
-========================= -->
-
-<div
-  id="insufficientPage"
-  class="page">
+<div id="insufficientPage" class="page">
 
   <div class="insufficientBox">
 
@@ -735,10 +699,6 @@ body{
 </div>
 
 
-<!-- =========================
-     BACKGROUND SOUND
-========================= -->
-
 <audio
   id="backgroundSound"
   preload="auto"
@@ -748,8 +708,8 @@ body{
     src="preview_20_seconds.mp4"
     type="video/mp4">
 
-  </audio>
-  <script>
+</audio>
+<script>
 
 const GITHUB_OWNER = "agnesweb2026";
 const GITHUB_REPO = "My-referral-website";
@@ -766,9 +726,20 @@ const SECOND_CALL_SOUND_DURATION = 5000;
 const PAYMENT_PAGE_URL = "payment.html";
 
 
-/* =========================
-   PAGE ELEMENTS
-========================= */
+/*
+ * IMPORTANT:
+ * This value is stored in localStorage.
+ *
+ * Once the first red LIVE video has been
+ * shown, reloading/reopening the website
+ * will NOT show it again in this browser.
+ */
+
+const RED_LIVE_KEY = "redLiveVideoSeen";
+
+let redLiveShownThisVisit =
+  localStorage.getItem(RED_LIVE_KEY) === "yes";
+
 
 const welcomeScreen =
   document.getElementById("welcomeScreen");
@@ -816,12 +787,6 @@ const onlineNumber =
   document.getElementById("onlineNumber");
 
 
-/* =========================
-   FLOW STATE
-========================= */
-
-let redLiveShownThisVisit = false;
-
 let photosTimer = null;
 let backgroundSoundTimer = null;
 let busyTimer = null;
@@ -831,11 +796,8 @@ let photos = [];
 let busyIndexes = [];
 
 
-/* =========================
-   NAMES
-========================= */
-
 const names = [
+
   "Cute",
   "Becky",
   "Dorry",
@@ -860,14 +822,12 @@ const names = [
   "Irene",
   "Rose",
   "Fellow"
+
 ];
 
 
-/* =========================
-   AGES
-========================= */
-
 const ages = [
+
   19,
   23,
   25,
@@ -892,122 +852,45 @@ const ages = [
   27,
   28,
   21
+
 ];
 
-
-/* =========================
-   COUNTRIES
-========================= */
 
 const countries = [
-  {
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
-  {
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
-  {
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
-  {
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
-  {
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
 
-  {
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
-  {
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
-  {
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
-  {
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
+  {country:"Kenya",flag:"🇰🇪"},
+  {country:"Kenya",flag:"🇰🇪"},
+  {country:"Kenya",flag:"🇰🇪"},
+  {country:"Kenya",flag:"🇰🇪"},
+  {country:"Kenya",flag:"🇰🇪"},
 
-  {
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-  {
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-  {
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-  {
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
+  {country:"Tanzania",flag:"🇹🇿"},
+  {country:"Tanzania",flag:"🇹🇿"},
+  {country:"Tanzania",flag:"🇹🇿"},
+  {country:"Tanzania",flag:"🇹🇿"},
 
-  {
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-  {
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-  {
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-  {
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-  {
-    country:"Congo",
-    flag:"🇨🇩"
-  },
+  {country:"Nigeria",flag:"🇳🇬"},
+  {country:"Nigeria",flag:"🇳🇬"},
+  {country:"Nigeria",flag:"🇳🇬"},
+  {country:"Nigeria",flag:"🇳🇬"},
 
-  {
-    country:"Canada",
-    flag:"🇨🇦"
-  },
-  {
-    country:"Canada",
-    flag:"🇨🇦"
-  },
+  {country:"Congo",flag:"🇨🇩"},
+  {country:"Congo",flag:"🇨🇩"},
+  {country:"Congo",flag:"🇨🇩"},
+  {country:"Congo",flag:"🇨🇩"},
+  {country:"Congo",flag:"🇨🇩"},
 
-  {
-    country:"South Africa",
-    flag:"🇿🇦"
-  },
-  {
-    country:"South Africa",
-    flag:"🇿🇦"
-  },
+  {country:"Canada",flag:"🇨🇦"},
+  {country:"Canada",flag:"🇨🇦"},
 
-  {
-    country:"USA",
-    flag:"🇺🇸"
-  },
-  {
-    country:"USA",
-    flag:"🇺🇸"
-  }
+  {country:"South Africa",flag:"🇿🇦"},
+  {country:"South Africa",flag:"🇿🇦"},
+
+  {country:"USA",flag:"🇺🇸"},
+  {country:"USA",flag:"🇺🇸"}
+
 ];
-    /* =========================
-   PAGE CONTROL
-========================= */
-
-function hideAllPages(){
+  function hideAllPages(){
 
   welcomeScreen.style.display = "none";
   photosPage.style.display = "none";
@@ -1018,10 +901,6 @@ function hideAllPages(){
 
 }
 
-
-/* =========================
-   CLEAR TIMERS
-========================= */
 
 function clearAllTimers(){
 
@@ -1048,50 +927,39 @@ function clearAllTimers(){
 }
 
 
-/* =========================
-   STOP BACKGROUND SOUND
-========================= */
-
 function stopBackgroundSound(){
 
-  if(!backgroundSound){
-    return;
-  }
-
   try{
+
     backgroundSound.pause();
     backgroundSound.currentTime = 0;
+
   }catch(e){}
 
   if(backgroundSoundTimer){
-    clearTimeout(backgroundSoundTimer);
+
+    clearTimeout(
+      backgroundSoundTimer
+    );
+
     backgroundSoundTimer = null;
+
   }
 
 }
 
 
-/* =========================
-   STOP LIVE VIDEO
-========================= */
-
 function stopLiveVideo(){
 
-  if(!liveSoundVideo){
-    return;
-  }
-
   try{
+
     liveSoundVideo.pause();
     liveSoundVideo.currentTime = 0;
+
   }catch(e){}
 
 }
 
-
-/* =========================
-   SHUFFLE
-========================= */
 
 function shuffleArray(array){
 
@@ -1104,20 +972,25 @@ function shuffleArray(array){
   ){
 
     const j =
-      Math.floor(Math.random() * (i + 1));
+      Math.floor(
+        Math.random() * (i + 1)
+      );
 
-    [copy[i],copy[j]] =
-      [copy[j],copy[i]];
+    [
+      copy[i],
+      copy[j]
+    ] =
+    [
+      copy[j],
+      copy[i]
+    ];
 
   }
 
   return copy;
+
 }
 
-
-/* =========================
-   EXACTLY 5 OFFLINE
-========================= */
 
 function getRandomBusyIndexes(){
 
@@ -1127,39 +1000,37 @@ function getRandomBusyIndexes(){
       (_,i)=>i
     );
 
-  return shuffleArray(indexes).slice(0,5);
+  return shuffleArray(indexes)
+    .slice(0,5);
 
 }
 
 
-/* =========================
-   GITHUB CONTENTS
-========================= */
-
-async function getGitHubContents(path = ""){
+async function getGitHubContents(
+  path = ""
+){
 
   const url =
     `https://api.github.com/repos/` +
-    `${GITHUB_OWNER}/${GITHUB_REPO}/contents/` +
+    `${GITHUB_OWNER}/` +
+    `${GITHUB_REPO}/contents/` +
     `${path}?ref=${GITHUB_BRANCH}`;
 
   const response =
     await fetch(url);
 
   if(!response.ok){
+
     throw new Error(
       "GitHub request failed"
     );
+
   }
 
   return await response.json();
 
 }
 
-
-/* =========================
-   COLLECT IMAGES
-========================= */
 
 async function collectImages(
   path = "",
@@ -1186,9 +1057,13 @@ async function collectImages(
       ){
 
         result.push({
+
           name:item.name,
+
           path:item.path,
+
           url:getFileUrl(item.path)
+
         });
 
       }
@@ -1209,10 +1084,6 @@ async function collectImages(
 }
 
 
-/* =========================
-   FILE URL
-========================= */
-
 function getFileUrl(path){
 
   return (
@@ -1226,21 +1097,13 @@ function getFileUrl(path){
 }
 
 
-/* =========================
-   IMAGE FILE CHECK
-========================= */
-
 function isImageFile(name){
 
   return /\.(jpg|jpeg|png|gif|webp)$/i
     .test(name);
 
-    }
-    /* =========================
-   LOAD PHOTOS
-========================= */
-
-async function loadPhotos(){
+  }
+  async function loadPhotos(){
 
   const images =
     await collectImages();
@@ -1249,45 +1112,45 @@ async function loadPhotos(){
     shuffleArray(images)
       .slice(0,MAX_PHOTOS);
 
-  photos =
-    selected.map((photo,index)=>{
 
-      const country =
-        countries[index] || {
-          country:"Kenya",
-          flag:"🇰🇪"
+  photos =
+    selected.map(
+      (photo,index)=>{
+
+        const country =
+          countries[index] || {
+            country:"Kenya",
+            flag:"🇰🇪"
+          };
+
+
+        return {
+
+          url:photo.url,
+
+          name:
+            names[index] ||
+            `User ${index + 1}`,
+
+          age:
+            ages[index] ||
+            25,
+
+          country:
+            country.country,
+
+          flag:
+            country.flag,
+
+          originalIndex:index
+
         };
 
-      return {
-
-        url:photo.url,
-
-        name:
-          names[index] ||
-          `User ${index + 1}`,
-
-        age:
-          ages[index] ||
-          25,
-
-        country:
-          country.country,
-
-        flag:
-          country.flag,
-
-        originalIndex:index
-
-      };
-
-    });
+      }
+    );
 
 }
 
-
-/* =========================
-   RENDER PHOTOS
-========================= */
 
 function renderPhotos(){
 
@@ -1302,7 +1165,7 @@ function renderPhotos(){
 
 
   displayPhotos.forEach(
-    (photo,displayIndex)=>{
+    (photo)=>{
 
       const card =
         document.createElement("div");
@@ -1327,9 +1190,9 @@ function renderPhotos(){
       card.appendChild(img);
 
 
-      /* =====================
-         CENTER VIDEO SIGN
-      ===================== */
+      /*
+       * CENTER PLAY BUTTON
+       */
 
       const videoIcon =
         document.createElement("div");
@@ -1340,12 +1203,10 @@ function renderPhotos(){
       videoIcon.innerHTML =
         "▶";
 
-      card.appendChild(videoIcon);
+      card.appendChild(
+        videoIcon
+      );
 
-
-      /* =====================
-         OFFLINE / LIVE
-      ===================== */
 
       const isBusy =
         busyIndexes.includes(
@@ -1399,8 +1260,6 @@ function renderPhotos(){
         );
 
 
-        /* LIVE ROOM ONLY */
-
         card.addEventListener(
           "click",
           ()=>{
@@ -1413,10 +1272,6 @@ function renderPhotos(){
 
       }
 
-
-      /* =====================
-         NAME + COUNTRY + AGE
-      ===================== */
 
       const info =
         document.createElement("div");
@@ -1468,10 +1323,6 @@ function renderPhotos(){
 }
 
 
-/* =========================
-   ONLINE NUMBER
-========================= */
-
 function updateOnlineNumber(){
 
   if(!onlineNumber){
@@ -1479,7 +1330,8 @@ function updateOnlineNumber(){
   }
 
   const number =
-    21 + Math.floor(
+    21 +
+    Math.floor(
       Math.random() * 6
     );
 
@@ -1489,15 +1341,16 @@ function updateOnlineNumber(){
 }
 
 
-/* =========================
-   OFFLINE ROOM ROTATION
-========================= */
-
 function startBusyRoomRotation(){
 
   if(busyTimer){
-    clearInterval(busyTimer);
+
+    clearInterval(
+      busyTimer
+    );
+
   }
+
 
   busyTimer =
     setInterval(
@@ -1516,24 +1369,17 @@ function startBusyRoomRotation(){
       BUSY_CHANGE_DURATION
     );
 
-        }
-    /* =========================
-   LIVE PHOTOS SOUND
-========================= */
-
-function playLivePhotosSound(){
+  }
+  function playLivePhotosSound(){
 
   stopBackgroundSound();
 
-  if(!backgroundSound){
-    return;
-  }
 
   try{
 
     backgroundSound.currentTime = 0;
 
-    backgroundSound.volume = 0.45;
+    backgroundSound.volume = .45;
 
     const playPromise =
       backgroundSound.play();
@@ -1558,8 +1404,10 @@ function playLivePhotosSound(){
       ()=>{
 
         try{
+
           backgroundSound.pause();
           backgroundSound.currentTime = 0;
+
         }catch(e){}
 
       },
@@ -1569,15 +1417,21 @@ function playLivePhotosSound(){
 }
 
 
-/* =========================
-   INCOMING CALL TIMER
-========================= */
+/*
+ * After Live Photos have been shown
+ * for 20 seconds, show another call.
+ */
 
 function scheduleIncomingCall(){
 
   if(photosTimer){
-    clearTimeout(photosTimer);
+
+    clearTimeout(
+      photosTimer
+    );
+
   }
+
 
   photosTimer =
     setTimeout(
@@ -1592,9 +1446,9 @@ function scheduleIncomingCall(){
 }
 
 
-/* =========================
-   SHOW LIVE PHOTOS
-========================= */
+/*
+ * LIVE PHOTOS
+ */
 
 function showLivePhotos(){
 
@@ -1617,14 +1471,19 @@ function showLivePhotos(){
 
   startBusyRoomRotation();
 
+  /*
+   * Subsequent calls happen after
+   * 20 seconds in Live Photos.
+   */
+
   scheduleIncomingCall();
 
 }
 
 
-/* =========================
-   INCOMING CALL
-========================= */
+/*
+ * INCOMING CALL
+ */
 
 function showIncomingCall(){
 
@@ -1640,14 +1499,17 @@ function showIncomingCall(){
 
 
   if(photos.length === 0){
+
     return;
+
   }
 
 
   const caller =
     photos[
       Math.floor(
-        Math.random() * photos.length
+        Math.random() *
+        photos.length
       )
     ];
 
@@ -1664,9 +1526,9 @@ function showIncomingCall(){
 }
 
 
-/* =========================
-   FIRST RED LIVE VIDEO
-========================= */
+/*
+ * FIRST RED LIVE VIDEO
+ */
 
 function showLiveSound(){
 
@@ -1706,8 +1568,6 @@ function showLiveSound(){
   }catch(e){}
 
 
-  /* Safety timeout */
-
   photosTimer =
     setTimeout(
       ()=>{
@@ -1721,9 +1581,9 @@ function showLiveSound(){
 }
 
 
-/* =========================
-   RED VIDEO ENDED
-========================= */
+/*
+ * If video reaches the end
+ */
 
 liveSoundVideo.addEventListener(
   "ended",
@@ -1733,9 +1593,9 @@ liveSoundVideo.addEventListener(
 
   }
 );
-    /* =========================
-   SECOND CALL BLACK SCREEN
-========================= */
+  /*
+ * SECOND CALL BLACK SCREEN
+ */
 
 function showBlackLive(){
 
@@ -1749,8 +1609,6 @@ function showBlackLive(){
   blackLivePage.style.display =
     "flex";
 
-
-  /* Use same video file for sound */
 
   try{
 
@@ -1791,9 +1649,9 @@ function showBlackLive(){
 }
 
 
-/* =========================
-   INSUFFICIENT
-========================= */
+/*
+ * INSUFFICIENT MINUTES
+ */
 
 function showInsufficient(
   openPayment = false
@@ -1817,11 +1675,7 @@ function showInsufficient(
         if(openPayment){
 
           /*
-           * IMPORTANT:
-           * Save return state first.
-           * replace() prevents the
-           * insufficient page from
-           * remaining in history.
+           * Save the return state.
            */
 
           sessionStorage.setItem(
@@ -1829,6 +1683,13 @@ function showInsufficient(
             "yes"
           );
 
+
+          /*
+           * IMPORTANT:
+           * replace() removes the
+           * insufficient page from
+           * browser history.
+           */
 
           window.location.replace(
             PAYMENT_PAGE_URL
@@ -1848,9 +1709,9 @@ function showInsufficient(
 }
 
 
-/* =========================
-   ANSWER CALL
-========================= */
+/*
+ * ANSWER INCOMING CALL
+ */
 
 function answerIncomingCall(){
 
@@ -1858,9 +1719,10 @@ function answerIncomingCall(){
 
   stopBackgroundSound();
 
+
   /*
-   * First answered call:
-   * show red LIVE video once.
+   * RED LIVE VIDEO HAS NEVER
+   * BEEN SHOWN IN THIS BROWSER.
    */
 
   if(!redLiveShownThisVisit){
@@ -1868,13 +1730,26 @@ function answerIncomingCall(){
     redLiveShownThisVisit =
       true;
 
+
+    /*
+     * PERMANENTLY REMEMBER IT
+     * FOR THIS BROWSER.
+     */
+
+    localStorage.setItem(
+      RED_LIVE_KEY,
+      "yes"
+    );
+
+
     showLiveSound();
+
 
   }else{
 
     /*
-     * Second and later calls:
-     * black LIVE page
+     * Every later call goes
+     * to the black LIVE screen.
      */
 
     showBlackLive();
@@ -1884,9 +1759,9 @@ function answerIncomingCall(){
 }
 
 
-/* =========================
-   DECLINE CALL
-========================= */
+/*
+ * DECLINE CALL
+ */
 
 function declineIncomingCall(){
 
@@ -1895,9 +1770,9 @@ function declineIncomingCall(){
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
+/*
+ * BUTTONS
+ */
 
 answerButton.addEventListener(
   "click",
@@ -1910,43 +1785,9 @@ declineButton.addEventListener(
 );
 
 
-/* =========================
-   TOUCH / CLICK
-   FOR SOUND
-========================= */
-
-document.addEventListener(
-  "click",
-  ()=>{
-
-    /*
-     * If Live Photos are visible,
-     * retry the 5-second sound.
-     */
-
-    if(
-      photosPage.style.display !==
-      "none"
-    ){
-
-      if(
-        backgroundSound.paused
-      ){
-
-        playLivePhotosSound();
-
-      }
-
-    }
-
-  },
-  {passive:true}
-);
-
-
-/* =========================
-   PAYMENT RETURN
-========================= */
+/*
+ * PAYMENT RETURN
+ */
 
 function checkPaymentReturn(){
 
@@ -1964,12 +1805,15 @@ function checkPaymentReturn(){
 
 
     /*
-     * Red LIVE has already
-     * been used during this visit.
+     * Do NOT reset the red video.
+     * localStorage already remembers
+     * whether it has been shown.
      */
 
     redLiveShownThisVisit =
-      true;
+      localStorage.getItem(
+        RED_LIVE_KEY
+      ) === "yes";
 
 
     setTimeout(
@@ -1992,9 +1836,9 @@ function checkPaymentReturn(){
 }
 
 
-/* =========================
-   START WEBSITE
-========================= */
+/*
+ * START WEBSITE
+ */
 
 function startWebsite(){
 
@@ -2006,7 +1850,7 @@ function startWebsite(){
 
   /*
    * If returning from payment,
-   * skip WELCOME.
+   * go directly to Live Photos.
    */
 
   if(checkPaymentReturn()){
@@ -2048,7 +1892,13 @@ function startWebsite(){
             welcomeScreen.style.display =
               "none";
 
-            showLivePhotos();
+
+            /*
+             * FIRST CALL IS NOW
+             * IMMEDIATELY AFTER WELCOME.
+             */
+
+            showIncomingCall();
 
           },
           remaining
@@ -2057,10 +1907,10 @@ function startWebsite(){
       }
     );
 
-}
-    /* =========================
-   PERIODIC ONLINE UPDATE
-========================= */
+  }
+  /*
+ * ONLINE NUMBER UPDATE
+ */
 
 setInterval(
   ()=>{
@@ -2079,9 +1929,9 @@ setInterval(
 );
 
 
-/* =========================
-   PREPARE VIDEO
-========================= */
+/*
+ * PREPARE VIDEO
+ */
 
 function prepareVideo(){
 
@@ -2097,9 +1947,9 @@ function prepareVideo(){
 }
 
 
-/* =========================
-   PREPARE AUDIO
-========================= */
+/*
+ * PREPARE AUDIO
+ */
 
 function prepareAudio(){
 
@@ -2115,9 +1965,9 @@ function prepareAudio(){
 }
 
 
-/* =========================
-   PAGE VISIBILITY
-========================= */
+/*
+ * PAGE VISIBILITY
+ */
 
 document.addEventListener(
   "visibilitychange",
@@ -2144,19 +1994,16 @@ document.addEventListener(
 );
 
 
-/* =========================
-   BROWSER BACK / PAGESHOW
-========================= */
+/*
+ * BROWSER PAGESHOW
+ *
+ * This does NOT reset the red
+ * video state.
+ */
 
 window.addEventListener(
   "pageshow",
   ()=>{
-    
-    /*
-     * Do not restart WELCOME here.
-     * startWebsite() handles the
-     * payment return state.
-     */
 
     stopBackgroundSound();
     stopLiveVideo();
@@ -2165,9 +2012,9 @@ window.addEventListener(
 );
 
 
-/* =========================
-   START
-========================= */
+/*
+ * START WEBSITE
+ */
 
 window.addEventListener(
   "load",
