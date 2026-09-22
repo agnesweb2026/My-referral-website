@@ -63,7 +63,9 @@
 
     body::before {
       content: "";
+
       position: fixed;
+
       width: 300px;
       height: 300px;
 
@@ -79,18 +81,22 @@
         );
 
       border-radius: 50%;
+
       filter: blur(5px);
+
       opacity: .75;
 
       transform: rotate(-25deg);
 
       pointer-events: none;
+
       z-index: -2;
     }
 
 
     body::after {
       content: "";
+
       position: fixed;
 
       width: 280px;
@@ -110,11 +116,13 @@
       border-radius: 50%;
 
       filter: blur(8px);
+
       opacity: .6;
 
       transform: rotate(25deg);
 
       pointer-events: none;
+
       z-index: -2;
     }
 
@@ -123,7 +131,9 @@
 
     .card {
       width: 100%;
+
       max-width: 760px;
+
       margin: auto;
 
       padding: 25px 12px 40px;
@@ -149,6 +159,7 @@
         rgba(20, 50, 150, .08);
 
       position: relative;
+
       overflow: hidden;
     }
 
@@ -157,6 +168,7 @@
 
     .card::before {
       content: "";
+
       position: absolute;
 
       width: 240px;
@@ -181,6 +193,7 @@
 
     .card::after {
       content: "";
+
       position: absolute;
 
       width: 260px;
@@ -212,6 +225,7 @@
       margin: 0 auto 12px;
 
       display: flex;
+
       align-items: center;
       justify-content: center;
 
@@ -239,6 +253,7 @@
       font-size: 34px;
 
       position: relative;
+
       z-index: 2;
     }
 
@@ -247,6 +262,7 @@
       margin: 0;
 
       font-size: 40px;
+
       font-weight: 900;
 
       background:
@@ -258,15 +274,18 @@
         );
 
       -webkit-background-clip: text;
+
       -webkit-text-fill-color: transparent;
 
       position: relative;
+
       z-index: 2;
     }
 
 
     .subtitle {
       margin-top: 10px;
+
       margin-bottom: 18px;
 
       color: #b9c8ee;
@@ -274,12 +293,14 @@
       font-size: 17px;
 
       position: relative;
+
       z-index: 2;
     }
 
 
     .header-line {
       width: 235px;
+
       height: 4px;
 
       margin: 0 auto 30px;
@@ -300,6 +321,7 @@
         rgba(0,220,255,.7);
 
       position: relative;
+
       z-index: 2;
     }
 
@@ -315,9 +337,11 @@
       gap: 15px;
 
       max-width: 650px;
+
       margin: auto;
 
       position: relative;
+
       z-index: 2;
     }
 
@@ -328,6 +352,7 @@
       position: relative;
 
       width: 100%;
+
       min-height: 330px;
 
       border-radius: 25px;
@@ -437,7 +462,7 @@
     }
 
 
-    /* DIFFERENT PACKAGE GLOWS */
+    /* PACKAGE GLOWS */
 
     .package:nth-child(1) {
       border-color:
@@ -489,6 +514,16 @@
     }
 
 
+    .package:nth-child(6) {
+      border-color:
+        rgba(255,55,110,.85);
+
+      box-shadow:
+        0 0 22px
+        rgba(255,40,110,.25);
+    }
+
+
     /* HOT BADGE */
 
     .hot {
@@ -514,6 +549,7 @@
       color: white;
 
       font-size: 12px;
+
       font-weight: 900;
 
       white-space: nowrap;
@@ -541,6 +577,7 @@
       height: 68px;
 
       display: flex;
+
       align-items: center;
       justify-content: center;
 
@@ -562,347 +599,7 @@
         #08bfff,
 
         inset 0 0 18px
-        rgba(100,50,255,.65);
-
-      font-size: 30px;
-
-      z-index: 5;
-    }
-
-
-    .minutes {
-      position: absolute;
-
-      top: 145px;
-      left: 0;
-      right: 0;
-
-      font-size: 23px;
-      font-weight: 900;
-
-      text-shadow:
-        0 2px 8px black;
-
-      z-index: 5;
-    }
-
-
-    /* PRICE BOX */
-
-    .price {
-      position: absolute;
-
-      left: 7%;
-      right: 7%;
-      bottom: 18px;
-
-      padding: 12px 8px;
-
-      border-radius: 16px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ff62ad,
-          #ff1fc4
-        );
-
-      color: white;
-
-      box-shadow:
-        0 0 20px
-        rgba(255,35,180,.35);
-
-      font-weight: 900;
-
-      z-index: 5;
-    }
-
-
-    .package:nth-child(2) .price {
-      background:
-        linear-gradient(
-          135deg,
-          #18d8ff,
-          #2450ff
-        );
-    }
-
-
-    .package:nth-child(3) .price {
-      background:
-        linear-gradient(
-          135deg,
-          #27ffd0,
-          #00bfae
-        );
-
-      color: #061c20;
-    }
-
-
-    .package:nth-child(4) .price {
-      background:
-        linear-gradient(
-          135deg,
-          #ffd21c,
-          #ff9500
-        );
-
-      color: #111;
-    }
-
-
-    .package:nth-child(5) .price {
-      background:
-        linear-gradient(
-          135deg,
-          #ff55df,
-          #702cff
-        );
-    }
-
-
-    .price-row {
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      gap: 7px;
-
-      margin: 4px 0;
-
-      font-size: 15px;
-    }
-
-
-    .currency-icon {
-      width: 27px;
-      height: 27px;
-
-      display: inline-flex;
-
-      align-items: center;
-      justify-content: center;
-
-      border-radius: 50%;
-
-      font-size: 10px;
-      font-weight: 900;
-
-      color: white;
-
-      box-shadow:
-        0 2px 5px
-        rgba(0,0,0,.3);
-    }
-
-
-    .kes {
-      background: #08a85c;
-    }
-
-
-    .usd {
-      background: #1677ed;
-    }
-
-
-    .eur {
-      background: #6a24d9;
-    }
-
-
-    /* FEATURES */
-
-    .features {
-      display: flex;
-
-      justify-content: center;
-
-      gap: 22px;
-
-      margin-top: 30px;
-
-      color: #c2cdf5;
-
-      font-size: 13px;
-      font-weight: bold;
-
-      flex-wrap: wrap;
-
-      position: relative;
-      z-index: 2;
-    }
-
-
-    .feature {
-      display: flex;
-
-      align-items: center;
-
-      gap: 6px;
-    }
-
-
-    .feature-icon {
-      font-size: 20px;
-    }
-
-
-    /* MOBILE */
-
-    @media (max-width: 600px) {
-
-      body {
-        padding:
-          10px 4px 55px;
-      }
-
-
-      .card {
-        padding:
-          20px 5px 30px;
-
-        border-radius: 24px;
-      }
-
-
-      h1 {
-        font-size: 34px;
-      }
-
-
-      .subtitle {
-        font-size: 15px;
-      }
-
-
-      .header-line {
-        width: 200px;
-        margin-bottom: 22px;
-      }
-
-
-      .package-grid {
-        grid-template-columns:
-          repeat(2, 1fr);
-
-        gap: 9px;
-      }
-
-
-      .package {
-        min-height: 300px;
-        border-radius: 20px;
-      }
-
-
-      .camera-circle {
-        width: 56px;
-        height: 56px;
-
-        top: 59px;
-
-        font-size: 23px;
-      }
-
-
-      .minutes {
-        top: 125px;
-        font-size: 17px;
-      }
-
-
-      .price {
-        left: 5%;
-        right: 5%;
-        bottom: 14px;
-
-        padding:
-          9px 3px 10px;
-      }
-
-
-      .price-row {
-        font-size: 10px;
-        gap: 3px;
-      }
-
-
-      .currency-icon {
-        width: 20px;
-        height: 20px;
-        font-size: 7px;
-      }
-
-
-      .hot {
-        top: 13px;
-
-        padding:
-          5px 9px;
-
-        font-size: 9px;
-      }
-
-
-      .features {
-        gap: 9px;
-        font-size: 10px;
-      }
-
-    }
-
-
-    @media (max-width: 360px) {
-
-      .package {
-        min-height: 285px;
-      }
-
-
-      .minutes {
-        font-size: 15px;
-      }
-
-
-      .price-row {
-        font-size: 9px;
-      }
-
-
-      .currency-icon {
-        width: 18px;
-        height: 18px;
-        font-size: 6px;
-      }
-
-    }
-
-  </style>
-
-</head>
-
-<body>
-
-  <div class="card">
-
-    <div class="header-icon">
-      🎥
-    </div>
-
-    <h1>
-      Buy Minutes
-    </h1>
-
-    <div class="subtitle">
-      Choose a plan that works for you
-    </div>
-
-    <div class="header-line"></div>
-        <div class="package-grid">
+          <div class="package-grid">
 
       <!-- 30 MINUTES -->
 
@@ -926,23 +623,17 @@
         <div class="price">
 
           <div class="price-row">
-            <span class="currency-icon kes">
-              KSh
-            </span>
+            <span class="currency-icon kes">KSh</span>
             KSh 81
           </div>
 
           <div class="price-row">
-            <span class="currency-icon usd">
-              $
-            </span>
+            <span class="currency-icon usd">$</span>
             $0.62
           </div>
 
           <div class="price-row">
-            <span class="currency-icon eur">
-              €
-            </span>
+            <span class="currency-icon eur">€</span>
             €0.57
           </div>
 
@@ -969,23 +660,17 @@
         <div class="price">
 
           <div class="price-row">
-            <span class="currency-icon kes">
-              KSh
-            </span>
+            <span class="currency-icon kes">KSh</span>
             KSh 138
           </div>
 
           <div class="price-row">
-            <span class="currency-icon usd">
-              $
-            </span>
+            <span class="currency-icon usd">$</span>
             $1.06
           </div>
 
           <div class="price-row">
-            <span class="currency-icon eur">
-              €
-            </span>
+            <span class="currency-icon eur">€</span>
             €0.97
           </div>
 
@@ -1012,23 +697,17 @@
         <div class="price">
 
           <div class="price-row">
-            <span class="currency-icon kes">
-              KSh
-            </span>
+            <span class="currency-icon kes">KSh</span>
             KSh 207
           </div>
 
           <div class="price-row">
-            <span class="currency-icon usd">
-              $
-            </span>
+            <span class="currency-icon usd">$</span>
             $1.59
           </div>
 
           <div class="price-row">
-            <span class="currency-icon eur">
-              €
-            </span>
+            <span class="currency-icon eur">€</span>
             €1.45
           </div>
 
@@ -1055,23 +734,17 @@
         <div class="price">
 
           <div class="price-row">
-            <span class="currency-icon kes">
-              KSh
-            </span>
+            <span class="currency-icon kes">KSh</span>
             KSh 253
           </div>
 
           <div class="price-row">
-            <span class="currency-icon usd">
-              $
-            </span>
+            <span class="currency-icon usd">$</span>
             $1.94
           </div>
 
           <div class="price-row">
-            <span class="currency-icon eur">
-              €
-            </span>
+            <span class="currency-icon eur">€</span>
             €1.77
           </div>
 
@@ -1102,24 +775,59 @@
         <div class="price">
 
           <div class="price-row">
-            <span class="currency-icon kes">
-              KSh
-            </span>
+            <span class="currency-icon kes">KSh</span>
             KSh 299
           </div>
 
           <div class="price-row">
-            <span class="currency-icon usd">
-              $
-            </span>
+            <span class="currency-icon usd">$</span>
             $2.29
           </div>
 
           <div class="price-row">
-            <span class="currency-icon eur">
-              €
-            </span>
+            <span class="currency-icon eur">€</span>
             €2.09
+          </div>
+
+        </div>
+
+      </button>
+
+
+      <!-- 166 MINUTES — FINAL PACKAGE 🔥 -->
+
+      <button
+        class="package"
+        data-amount="393"
+        data-minutes="166">
+
+        <span class="hot">
+          🔥 HOT
+        </span>
+
+        <div class="camera-circle">
+          🎥
+        </div>
+
+        <span class="minutes">
+          166 Mins
+        </span>
+
+        <div class="price">
+
+          <div class="price-row">
+            <span class="currency-icon kes">KSh</span>
+            KSh 393
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon usd">$</span>
+            $3.02
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon eur">€</span>
+            €2.75
           </div>
 
         </div>
@@ -1134,28 +842,22 @@
     <div class="features">
 
       <div class="feature">
-        <span class="feature-icon">
-          🛡️
-        </span>
+        <span class="feature-icon">🛡️</span>
         Secure Payments
       </div>
 
       <div class="feature">
-        <span class="feature-icon">
-          ⚡
-        </span>
+        <span class="feature-icon">⚡</span>
         Instant Access
       </div>
 
       <div class="feature">
-        <span class="feature-icon">
-          🔒
-        </span>
+        <span class="feature-icon">🔒</span>
         Privacy
       </div>
 
-            </div>
-                <!-- PAYMENT SECTION -->
+    </div>
+         <!-- PAYMENT SECTION -->
 
     <div
       class="payment-section"
@@ -1226,8 +928,6 @@
         </div>
 
 
-        <!-- LOADING / INCORRECT MESSAGE -->
-
         <div
           class="message-error"
           id="messageError">
@@ -1251,8 +951,7 @@
     </div>
 
   </div>
-    <script>
-
+     <script>
 
     /* =========================
        GET ELEMENTS
@@ -1261,48 +960,40 @@
     const packages =
       document.querySelectorAll(".package");
 
-
     const paymentSection =
       document.getElementById(
         "paymentSection"
       );
-
 
     const selectedInfo =
       document.getElementById(
         "selectedInfo"
       );
 
-
     const payButton =
       document.getElementById(
         "payButton"
       );
-
 
     const messageArea =
       document.getElementById(
         "messageArea"
       );
 
-
     const messageInput =
       document.getElementById(
         "messageInput"
       );
-
 
     const messageError =
       document.getElementById(
         "messageError"
       );
 
-
     const paymentStatus =
       document.getElementById(
         "paymentStatus"
       );
-
 
     let selectedAmount = null;
 
@@ -1322,7 +1013,6 @@
           "click",
           function() {
 
-
             packages.forEach(
               function(item) {
 
@@ -1341,7 +1031,6 @@
 
             selectedAmount =
               this.dataset.amount;
-
 
             selectedMinutes =
               this.dataset.minutes;
@@ -1374,10 +1063,8 @@
             paymentSection.style.display =
               "block";
 
-
             messageArea.style.display =
               "none";
-
 
             paymentStatus.style.display =
               "none";
@@ -1388,7 +1075,6 @@
             messageInput.classList.remove(
               "rejected"
             );
-
 
             messageError.style.display =
               "none";
@@ -1412,11 +1098,8 @@
               function() {
 
                 paymentSection.scrollIntoView({
-
                   behavior: "smooth",
-
                   block: "center"
-
                 });
 
               },
@@ -1431,7 +1114,7 @@
 
 
     /* =========================
-       COPY TILL NUMBER
+       COPY TILL
     ========================= */
 
     function copyTillNumber() {
@@ -1455,7 +1138,6 @@
               document.querySelector(
                 ".copy-till"
               );
-
 
             button.textContent =
               "✓ COPIED";
@@ -1510,10 +1192,8 @@
         paymentStatus.style.display =
           "none";
 
-
         messageArea.style.display =
           "block";
-
 
         messageInput.focus();
 
@@ -1550,15 +1230,12 @@
           messageError.style.display =
             "none";
 
-
           messageError.textContent =
             "";
-
 
           this.classList.remove(
             "rejected"
           );
-
 
           return;
 
@@ -1573,10 +1250,8 @@
         messageError.style.display =
           "block";
 
-
         messageError.style.color =
           "white";
-
 
         messageError.textContent =
           "Loading...";
@@ -1598,19 +1273,15 @@
               messageError.style.display =
                 "block";
 
-
               messageError.style.color =
                 "#ff4747";
-
 
               messageError.textContent =
                 "Incorrect message";
 
-
               messageInput.classList.add(
                 "rejected"
               );
-
 
               messageTimer = null;
 
@@ -1737,4 +1408,4 @@
 
 </body>
 
-  </html>
+</html> 
