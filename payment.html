@@ -43,8 +43,6 @@
     }
 
 
-    /* MAIN CARD */
-
     .card {
       width: 100%;
       max-width: 760px;
@@ -65,8 +63,6 @@
       overflow: hidden;
     }
 
-
-    /* HEADER */
 
     .header-icon {
       width: 65px;
@@ -149,10 +145,6 @@
     }
 
 
-    /* =========================
-       PACKAGE GRID - TWO COLUMNS
-    ========================= */
-
     .package-grid {
 
       display: grid;
@@ -167,10 +159,6 @@
       margin: auto;
     }
 
-
-    /* =========================
-       TRIANGLE PACKAGE
-    ========================= */
 
     .package {
 
@@ -290,8 +278,6 @@
     }
 
 
-    /* DIFFERENT CARD GLOW */
-
     .package:nth-child(1) {
       filter:
         drop-shadow(
@@ -332,10 +318,6 @@
     }
 
 
-    /* =========================
-       HOT BADGE
-    ========================= */
-
     .hot {
 
       position: absolute;
@@ -374,8 +356,6 @@
         rgba(255, 0, 100, 0.8);
     }
 
-
-    /* CAMERA */
 
     .camera-circle {
 
@@ -418,8 +398,6 @@
     }
 
 
-    /* MINUTES */
-
     .minutes {
 
       position: absolute;
@@ -438,8 +416,6 @@
         0 2px 8px black;
     }
 
-
-    /* PRICE */
 
     .price {
 
@@ -523,8 +499,6 @@
     }
 
 
-    /* PRICE ROW */
-
     .price-row {
 
       display: flex;
@@ -582,8 +556,6 @@
     }
 
 
-    /* FEATURES */
-
     .features {
 
       display: flex;
@@ -618,8 +590,6 @@
       font-size: 21px;
     }
 
-
-    /* PAYMENT SECTION */
 
     .payment-section {
 
@@ -656,6 +626,41 @@
       font-size: 17px;
 
       font-weight: bold;
+    }
+
+
+    /* COPY TILL BUTTON */
+
+    .copy-till {
+
+      margin-left: 8px;
+
+      padding: 7px 10px;
+
+      border: 0;
+
+      border-radius: 8px;
+
+      background: #168cff;
+
+      color: white;
+
+      font-size: 12px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 0 10px
+        rgba(22,140,255,.5);
+    }
+
+
+    .copy-till:active {
+
+      transform:
+        scale(.95);
     }
 
 
@@ -706,8 +711,6 @@
       transform: translateY(-2px);
     }
 
-
-    /* MESSAGE AREA */
 
     .message-area {
 
@@ -804,8 +807,6 @@
     }
 
 
-    /* PAYMENT STATUS */
-
     .payment-status {
 
       display: none;
@@ -837,10 +838,6 @@
       font-weight: normal;
     }
 
-
-    /* =========================
-       MOBILE
-    ========================= */
 
     @media (max-width: 600px) {
 
@@ -1014,8 +1011,6 @@
   <div class="card">
 
 
-    <!-- HEADER -->
-
     <div class="header-icon">
       🎥
     </div>
@@ -1034,12 +1029,8 @@
     <div class="header-line"></div>
 
 
-    <!-- PACKAGE GRID -->
-
     <div class="package-grid">
 
-
-      <!-- 30 MINUTES -->
 
       <button
         class="package"
@@ -1050,16 +1041,13 @@
           🔥 HOT
         </span>
 
-
         <div class="camera-circle">
           🎥
         </div>
 
-
         <span class="minutes">
           30 Mins
         </span>
-
 
         <div class="price">
 
@@ -1070,14 +1058,12 @@
             KSh 81
           </div>
 
-
           <div class="price-row">
             <span class="currency-icon usd">
               $
             </span>
             $0.62
           </div>
-
 
           <div class="price-row">
             <span class="currency-icon eur">
@@ -1091,8 +1077,6 @@
       </button>
 
 
-      <!-- 55 MINUTES -->
-
       <button
         class="package"
         data-amount="138"
@@ -1102,11 +1086,9 @@
           🎥
         </div>
 
-
         <span class="minutes">
           55 Mins
         </span>
-
 
         <div class="price">
 
@@ -1117,14 +1099,12 @@
             KSh 138
           </div>
 
-
           <div class="price-row">
             <span class="currency-icon usd">
               $
             </span>
             $1.06
           </div>
-
 
           <div class="price-row">
             <span class="currency-icon eur">
@@ -1138,8 +1118,6 @@
       </button>
 
 
-      <!-- 73 MINUTES -->
-
       <button
         class="package"
         data-amount="207"
@@ -1149,11 +1127,9 @@
           🎥
         </div>
 
-
         <span class="minutes">
           73 Mins
         </span>
-
 
         <div class="price">
 
@@ -1164,14 +1140,12 @@
             KSh 207
           </div>
 
-
           <div class="price-row">
             <span class="currency-icon usd">
               $
             </span>
             $1.59
           </div>
-
 
           <div class="price-row">
             <span class="currency-icon eur">
@@ -1185,8 +1159,6 @@
       </button>
 
 
-      <!-- 95 MINUTES -->
-
       <button
         class="package"
         data-amount="253"
@@ -1196,11 +1168,9 @@
           🎥
         </div>
 
-
         <span class="minutes">
           95 Mins
         </span>
-
 
         <div class="price">
 
@@ -1211,14 +1181,12 @@
             KSh 253
           </div>
 
-
           <div class="price-row">
             <span class="currency-icon usd">
               $
             </span>
             $1.94
           </div>
-
 
           <div class="price-row">
             <span class="currency-icon eur">
@@ -1232,8 +1200,6 @@
       </button>
 
 
-      <!-- 105 MINUTES - HOT -->
-
       <button
         class="package"
         data-amount="299"
@@ -1243,16 +1209,13 @@
           🔥 HOT
         </span>
 
-
         <div class="camera-circle">
           🎥
         </div>
 
-
         <span class="minutes">
           105 Mins
         </span>
-
 
         <div class="price">
 
@@ -1263,14 +1226,12 @@
             KSh 299
           </div>
 
-
           <div class="price-row">
             <span class="currency-icon usd">
               $
             </span>
             $2.29
           </div>
-
 
           <div class="price-row">
             <span class="currency-icon eur">
@@ -1287,8 +1248,6 @@
     </div>
 
 
-    <!-- FEATURES -->
-
     <div class="features">
 
       <div class="feature">
@@ -1298,14 +1257,12 @@
         Secure Payments
       </div>
 
-
       <div class="feature">
         <span class="feature-icon">
           ⚡
         </span>
         Instant Access
       </div>
-
 
       <div class="feature">
         <span class="feature-icon">
@@ -1317,15 +1274,30 @@
     </div>
 
 
-    <!-- PAYMENT SECTION STARTS IN PART 2 -->
+    <!-- PAYMENT SECTION CONTINUES IN 2/3 -->
+        <!-- PAYMENT SECTION -->
 
     <div
       class="payment-section"
       id="paymentSection">
 
       <div class="till">
+
         Send money:
-        <strong>0783783687</strong>
+
+        <strong id="tillNumber">
+          0783783687
+        </strong>
+
+        <button
+          type="button"
+          class="copy-till"
+          onclick="copyTillNumber()">
+
+          📋 COPY
+
+        </button>
+
       </div>
 
 
@@ -1363,11 +1335,12 @@
             placeholder="Paste M-PESA message here..."
             autocomplete="off">
 
-
           <div class="paste-text">
+
             Paste M-PESA
             <br>
             message &amp; continue
+
           </div>
 
         </div>
@@ -1391,7 +1364,9 @@
         ❌ No payment is done
 
         <small>
+
           Please complete the M-PESA payment to continue.
+
         </small>
 
       </div>
@@ -1400,326 +1375,426 @@
 
 
   </div>
+
+
   <script>
 
-  /* =========================
-     GET ELEMENTS
-  ========================= */
 
-  const packages =
-    document.querySelectorAll(".package");
+    /* =========================
+       GET ELEMENTS
+    ========================= */
 
-  const paymentSection =
-    document.getElementById("paymentSection");
-
-  const selectedInfo =
-    document.getElementById("selectedInfo");
-
-  const payButton =
-    document.getElementById("payButton");
-
-  const messageArea =
-    document.getElementById("messageArea");
-
-  const messageInput =
-    document.getElementById("messageInput");
-
-  const messageError =
-    document.getElementById("messageError");
-
-  const paymentStatus =
-    document.getElementById("paymentStatus");
+    const packages =
+      document.querySelectorAll(".package");
 
 
-  let selectedAmount = null;
-  let selectedMinutes = null;
+    const paymentSection =
+      document.getElementById(
+        "paymentSection"
+      );
 
 
-  /* =========================
-     SELECT PACKAGE
-  ========================= */
+    const selectedInfo =
+      document.getElementById(
+        "selectedInfo"
+      );
 
-  packages.forEach(function(button) {
 
-    button.addEventListener(
+    const payButton =
+      document.getElementById(
+        "payButton"
+      );
+
+
+    const messageArea =
+      document.getElementById(
+        "messageArea"
+      );
+
+
+    const messageInput =
+      document.getElementById(
+        "messageInput"
+      );
+
+
+    const messageError =
+      document.getElementById(
+        "messageError"
+      );
+
+
+    const paymentStatus =
+      document.getElementById(
+        "paymentStatus"
+      );
+
+
+    let selectedAmount = null;
+
+    let selectedMinutes = null;
+
+
+    /* =========================
+       SELECT PACKAGE
+    ========================= */
+
+    packages.forEach(
+      function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+
+            /* Remove old selection */
+
+            packages.forEach(
+              function(item) {
+
+                item.classList.remove(
+                  "selected"
+                );
+
+              }
+            );
+
+
+            /* Select this package */
+
+            this.classList.add(
+              "selected"
+            );
+
+
+            /* Get package information */
+
+            selectedAmount =
+              this.dataset.amount;
+
+
+            selectedMinutes =
+              this.dataset.minutes;
+
+
+            /* Display selection */
+
+            selectedInfo.textContent =
+              "Selected: KSh " +
+              selectedAmount +
+              " for " +
+              selectedMinutes +
+              " minutes";
+
+
+            /* Configure payment button */
+
+            payButton.dataset.amount =
+              selectedAmount;
+
+
+            payButton.dataset.currency =
+              "KES";
+
+
+            payButton.dataset.method =
+              "M-PESA";
+
+
+            payButton.dataset.api_ref =
+              "access-" +
+              selectedMinutes +
+              "min-" +
+              Date.now();
+
+
+            /* Show payment section */
+
+            paymentSection.style.display =
+              "block";
+
+
+            messageArea.style.display =
+              "none";
+
+
+            paymentStatus.style.display =
+              "none";
+
+
+            /* Clear old message */
+
+            messageInput.value = "";
+
+
+            messageInput.classList.remove(
+              "rejected"
+            );
+
+
+            messageError.style.display =
+              "none";
+
+
+            /* Scroll to payment */
+
+            setTimeout(
+              function() {
+
+                paymentSection.scrollIntoView({
+
+                  behavior: "smooth",
+
+                  block: "center"
+
+                });
+
+              },
+              100
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =========================
+       COPY TILL NUMBER
+    ========================= */
+
+    function copyTillNumber() {
+
+      const till =
+        document
+          .getElementById(
+            "tillNumber"
+          )
+          .textContent
+          .trim();
+
+
+      navigator.clipboard
+        .writeText(till)
+
+        .then(
+          function() {
+
+            const button =
+              document.querySelector(
+                ".copy-till"
+              );
+
+
+            button.textContent =
+              "✓ COPIED";
+
+
+            setTimeout(
+              function() {
+
+                button.textContent =
+                  "📋 COPY";
+
+              },
+              2000
+            );
+
+          }
+        )
+
+        .catch(
+          function() {
+
+            alert(
+              "Please copy the Till number manually: " +
+              till
+            );
+
+          }
+        );
+
+    }
+
+
+    /* =========================
+       PAY BUTTON
+    ========================= */
+
+    payButton.addEventListener(
       "click",
       function() {
 
-        /* Remove old selection */
+        if (!selectedAmount) {
 
-        packages.forEach(function(item) {
-
-          item.classList.remove(
-            "selected"
+          alert(
+            "Please select a package first."
           );
 
-        });
+          return;
+
+        }
 
 
-        /* Select this package */
-
-        this.classList.add(
-          "selected"
-        );
-
-
-        /* Get package information */
-
-        selectedAmount =
-          this.dataset.amount;
-
-        selectedMinutes =
-          this.dataset.minutes;
-
-
-        /* Display selection */
-
-        selectedInfo.textContent =
-          "Selected: KSh " +
-          selectedAmount +
-          " for " +
-          selectedMinutes +
-          " minutes";
-
-
-        /* Configure payment button */
-
-        payButton.dataset.amount =
-          selectedAmount;
-
-        payButton.dataset.currency =
-          "KES";
-
-        payButton.dataset.method =
-          "M-PESA";
-
-
-        payButton.dataset.api_ref =
-          "access-" +
-          selectedMinutes +
-          "min-" +
-          Date.now();
-
-
-        /* Show payment section */
-
-        paymentSection.style.display =
+        paymentStatus.style.display =
           "block";
 
 
         messageArea.style.display =
-          "none";
+          "block";
+
+      }
+    );
+
+
+    /* =========================
+       M-PESA MESSAGE INPUT
+    ========================= */
+
+    messageInput.addEventListener(
+      "input",
+      function() {
+
+        if (
+          this.value.trim().length > 0
+        ) {
+
+          this.classList.add(
+            "rejected"
+          );
+
+
+          messageError.style.display =
+            "block";
+
+        } else {
+
+          this.classList.remove(
+            "rejected"
+          );
+
+
+          messageError.style.display =
+            "none";
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       INTASEND
+    ========================= */
+
+    const intasend =
+      new window.IntaSend({
+
+        publicAPIKey:
+          "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
+
+        live: true
+
+      });
+
+
+    /* =========================
+       PAYMENT SUCCESS
+    ========================= */
+
+    intasend.on(
+      "COMPLETE",
+      function(results) {
+
+        console.log(
+          "Payment successful:",
+          results
+        );
+
 
         paymentStatus.style.display =
           "none";
 
 
-        /* Clear old message */
-
-        messageInput.value = "";
-
-        messageInput.classList.remove(
-          "rejected"
+        alert(
+          "Payment successful!"
         );
 
-        messageError.style.display =
-          "none";
 
-
-        /* Scroll to payment */
-
-        setTimeout(function() {
-
-          paymentSection.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-
-        }, 100);
+        window.location.href =
+          "index.html";
 
       }
     );
 
-  });
 
+    /* =========================
+       PAYMENT FAILED
+    ========================= */
 
-  /* =========================
-     PAY BUTTON
-  ========================= */
+    intasend.on(
+      "FAILED",
+      function(results) {
 
-  payButton.addEventListener(
-    "click",
-    function() {
-
-      if (!selectedAmount) {
-
-        alert(
-          "Please select a package first."
+        console.log(
+          "Payment failed:",
+          results
         );
 
-        return;
 
-      }
-
-
-      paymentStatus.style.display =
-        "block";
-
-
-      messageArea.style.display =
-        "block";
-
-    }
-  );
-
-
-  /* =========================
-     M-PESA MESSAGE INPUT
-  ========================= */
-
-  messageInput.addEventListener(
-    "input",
-    function() {
-
-      if (
-        this.value.trim().length > 0
-      ) {
-
-        this.classList.add(
-          "rejected"
-        );
-
-        messageError.style.display =
+        paymentStatus.style.display =
           "block";
 
-      } else {
 
-        this.classList.remove(
-          "rejected"
-        );
+        paymentStatus.innerHTML =
+          "❌ No payment is done" +
 
-        messageError.style.display =
-          "none";
+          "<small>" +
+
+          "Payment was not completed. " +
+
+          "Please try again." +
+
+          "</small>";
 
       }
-
-    }
-  );
+    );
 
 
-  /* =========================
-     INTASEND
-  ========================= */
+    /* =========================
+       PAYMENT IN PROGRESS
+    ========================= */
 
-  const intasend =
-    new window.IntaSend({
+    intasend.on(
+      "IN-PROGRESS",
+      function(results) {
 
-      publicAPIKey:
-        "ISPubKey_live_7b5c9f64-df56-449c-880b-dc2d83876cae",
-
-      live: true
-
-    });
-
-
-  /* =========================
-     PAYMENT SUCCESS
-  ========================= */
-
-  intasend.on(
-    "COMPLETE",
-    function(results) {
-
-      console.log(
-        "Payment successful:",
-        results
-      );
+        console.log(
+          "Payment in progress:",
+          results
+        );
 
 
-      paymentStatus.style.display =
-        "none";
+        paymentStatus.style.display =
+          "block";
 
 
-      alert(
-        "Payment successful!"
-      );
+        paymentStatus.innerHTML =
+          "⏳ Payment in progress..." +
 
+          "<small>" +
 
-      /* Go back to your main page */
+          "Please complete the payment " +
 
-      window.location.href =
-        "index.html";
+          "on your phone." +
 
-    }
-  );
+          "</small>";
 
+      }
+    );
 
-  /* =========================
-     PAYMENT FAILED
-  ========================= */
-
-  intasend.on(
-    "FAILED",
-    function(results) {
-
-      console.log(
-        "Payment failed:",
-        results
-      );
-
-
-      paymentStatus.style.display =
-        "block";
-
-
-      paymentStatus.innerHTML =
-        "❌ No payment is done" +
-
-        "<small>" +
-
-        "Payment was not completed. " +
-
-        "Please try again." +
-
-        "</small>";
-
-    }
-  );
-
-
-  /* =========================
-     PAYMENT IN PROGRESS
-  ========================= */
-
-  intasend.on(
-    "IN-PROGRESS",
-    function(results) {
-
-      console.log(
-        "Payment in progress:",
-        results
-      );
-
-
-      paymentStatus.style.display =
-        "block";
-
-
-      paymentStatus.innerHTML =
-        "⏳ Payment in progress..." +
-
-        "<small>" +
-
-        "Please complete the payment " +
-
-        "on your phone." +
-
-        "</small>";
-
-    }
-  );
-
-</script>
+  </script>
 
 
 </body>
