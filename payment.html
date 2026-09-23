@@ -137,7 +137,8 @@ cursor:pointer
 
 .pay-btn:disabled{
 background:#333;
-color:#777
+color:#777;
+cursor:not-allowed
 }
 
 .status{
@@ -303,10 +304,11 @@ Select a package to continue.
 <p>
 1. Select your package.<br>
 2. Tap PAY WITH M-PESA.<br>
-3. Your recipient number will be copied.<br>
-4. Open M-PESA Send Money.<br>
-5. Paste the recipient number and enter the amount.<br>
-6. Confirm and enter your M-PESA PIN.
+3. Your recipient number will be copied automatically.<br>
+4. My OneApp will open.<br>
+5. Open M-PESA → Send Money.<br>
+6. Paste the copied number and enter the amount.<br>
+7. Confirm and enter your M-PESA PIN.
 </p>
 
 </div>
@@ -323,7 +325,7 @@ let selectedAmount = null;
 
 /* SELECT PACKAGE */
 
-function selectPackage(element,minutes,amount){
+function selectPackage(element, minutes, amount){
 
 document.querySelectorAll(".package").forEach(function(pkg){
 pkg.classList.remove("selected");
@@ -383,6 +385,46 @@ alert("Number: " + RECIPIENT);
 }
 
 
+/* OPEN MY ONEAPP */
+
+function openMyOneApp(){
+
+/*
+Android package for My OneApp
+*/
+
+const packageName =
+"com.safaricom.mpesa.lifestyle";
+
+
+/*
+Try Android package launch.
+
+This does NOT use the Play Store URL.
+*/
+
+const intentUrl =
+"intent:#Intent;" +
+"action=android.intent.action.MAIN;" +
+"category=android.intent.category.LAUNCHER;" +
+"package=" +
+packageName +
+";end";
+
+
+try{
+
+window.location.href = intentUrl;
+
+}catch(error){
+
+showFallback();
+
+}
+
+}
+
+
 /* PAYMENT BUTTON */
 
 function payWithMpesa(){
@@ -395,24 +437,37 @@ return;
 
 }
 
+const status =
+document.getElementById("status");
 
-/* Copy recipient */
+
+/*
+Copy recipient number first.
+*/
 
 if(navigator.clipboard){
 
 navigator.clipboard.writeText(RECIPIENT)
-.catch(function(){});
-
-}
-
-
-const status =
-document.getElementById("status");
+.then(function(){
 
 status.className = "status success";
 
 status.innerHTML =
-"Opening M-PESA...<br>" +
+"Number copied successfully.<br><br>" +
+"Opening My OneApp...<br>" +
+"Amount: <strong>" +
+selectedAmount +
+" KSh</strong>";
+
+openMyOneApp();
+
+})
+.catch(function(){
+
+status.className = "status";
+
+status.innerHTML =
+"Opening My OneApp...<br><br>" +
 "Recipient: <strong>" +
 RECIPIENT +
 "</strong><br>" +
@@ -420,43 +475,38 @@ RECIPIENT +
 selectedAmount +
 " KSh</strong>";
 
+openMyOneApp();
 
-/*
-Try opening My OneApp.
-Official Android package shown
-for My OneApp:
-com.safaricom.mpesa.lifestyle
-*/
+});
 
-const intent =
-"intent://#Intent;" +
-"action=android.intent.action.MAIN;" +
-"category=android.intent.category.LAUNCHER;" +
-"package=com.safaricom.mpesa.lifestyle;" +
-"end";
+}else{
 
+status.className = "status";
 
-try{
+status.innerHTML =
+"Opening My OneApp...<br><br>" +
+"Recipient: <strong>" +
+RECIPIENT +
+"</strong><br>" +
+"Amount: <strong>" +
+selectedAmount +
+" KSh</strong>";
 
-window.location.href = intent;
-
-}catch(error){
-
-showFallback();
+openMyOneApp();
 
 }
 
 
 /*
-If Chrome blocks the intent,
-show manual payment instructions.
+If Android/Chrome does not open the app,
+show instructions after a short delay.
 */
 
 setTimeout(function(){
 
 showFallback();
 
-},2500);
+},3000);
 
 }
 
@@ -471,7 +521,7 @@ document.getElementById("status");
 status.className = "status";
 
 status.innerHTML =
-"<strong>Recipient copied.</strong><br><br>" +
+"<strong>Recipient number copied.</strong><br><br>" +
 
 "Send <strong>" +
 selectedAmount +
@@ -481,8 +531,12 @@ selectedAmount +
 RECIPIENT +
 "</strong><br><br>" +
 
-"Open My OneApp → M-PESA → Send Money " +
-"and paste the number.";
+"Open My OneApp → M-PESA → Send Money.<br>" +
+
+"Paste the copied number and enter " +
+"<strong>" +
+selectedAmount +
+" KSh</strong>.";
 
 }
 
