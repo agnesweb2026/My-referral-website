@@ -7,151 +7,210 @@
 <title>M-PESA Payment</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+    box-sizing: border-box;
 }
 
-body{
-  min-height:100vh;
-  background:#050505;
-  color:white;
-  font-family:Arial,sans-serif;
-  padding:20px 12px;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #050505;
+    color: white;
+    min-height: 100vh;
 }
 
-.container{
-  width:100%;
-  max-width:480px;
-  margin:auto;
+.container {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
 }
 
-h1{
-  text-align:center;
-  color:#00ff88;
-  font-size:28px;
-  margin-bottom:8px;
+.header {
+    text-align: center;
+    margin-bottom: 25px;
 }
 
-.subtitle{
-  text-align:center;
-  color:#aaa;
-  margin-bottom:20px;
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #00ff88;
 }
 
-.card{
-  background:#101010;
-  border:1px solid #252525;
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:15px;
+.header p {
+    margin-top: 8px;
+    color: #aaa;
+    font-size: 14px;
 }
 
-.label{
-  display:block;
-  color:#bbb;
-  font-size:14px;
-  margin-bottom:8px;
+/* Recipient */
+.recipient-box {
+    background: #111;
+    border: 1px solid #00ff88;
+    border-radius: 15px;
+    padding: 18px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-input{
-  width:100%;
-  padding:15px;
-  border-radius:10px;
-  border:1px solid #333;
-  background:#181818;
-  color:white;
-  font-size:16px;
-  outline:none;
+.recipient-title {
+    font-size: 13px;
+    color: #aaa;
+    margin-bottom: 8px;
 }
 
-input:focus{
-  border-color:#00ff88;
+.recipient-number {
+    font-size: 25px;
+    font-weight: bold;
+    color: #00ff88;
+    letter-spacing: 1px;
 }
 
-.packages{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+/* Packages */
+.packages {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
 
-.package{
-  background:#171717;
-  border:1px solid #333;
-  border-radius:14px;
-  padding:15px;
-  cursor:pointer;
+.package {
+    background: #101010;
+    border: 1px solid #333;
+    border-radius: 15px;
+    padding: 18px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.package.selected{
-  border:2px solid #00ff88;
-  background:#10251b;
+.package:hover {
+    border-color: #00ff88;
 }
 
-.minutes{
-  font-size:18px;
-  font-weight:bold;
+.package.selected {
+    border: 2px solid #00ff88;
+    box-shadow: 0 0 15px rgba(0,255,136,0.25);
 }
 
-.price{
-  color:#00ff88;
-  font-size:20px;
-  font-weight:bold;
-  margin-top:7px;
+.package .minutes {
+    font-size: 21px;
+    font-weight: bold;
+    color: white;
 }
 
-.hot{
-  color:#ff4444;
-  font-size:12px;
-  margin-top:5px;
+.package .price {
+    margin-top: 8px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #00ff88;
 }
 
-button{
-  width:100%;
-  border:none;
-  border-radius:12px;
-  padding:17px;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
-  background:#00d875;
-  color:#000;
+.package .currency {
+    font-size: 13px;
+    color: #aaa;
 }
 
-button:disabled{
-  opacity:.45;
-  cursor:not-allowed;
+.hot {
+    color: #ff3030;
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 5px;
 }
 
-.status{
-  display:none;
-  margin-top:15px;
-  padding:15px;
-  border-radius:12px;
-  background:#171717;
-  border:1px solid #333;
-  line-height:1.5;
+/* Payment area */
+.payment-area {
+    margin-top: 25px;
+    background: #101010;
+    border-radius: 18px;
+    padding: 20px;
+    border: 1px solid #252525;
 }
 
-.status.show{
-  display:block;
+.selected-info {
+    text-align: center;
+    margin-bottom: 18px;
+    color: #bbb;
 }
 
-.info{
-  color:#00ff88;
+.selected-info strong {
+    color: #00ff88;
 }
 
-.warning{
-  color:#ffd000;
+/* Pay button */
+.pay-btn {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    padding: 17px;
+    background: #00c853;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(0,200,83,0.25);
 }
 
-.small{
-  color:#888;
-  text-align:center;
-  font-size:12px;
-  line-height:1.5;
-  margin-top:15px;
+.pay-btn:active {
+    transform: scale(0.98);
+}
+
+.pay-btn:disabled {
+    background: #333;
+    color: #777;
+    box-shadow: none;
+}
+
+/* Status */
+.status {
+    margin-top: 18px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #080808;
+    border: 1px solid #222;
+    text-align: center;
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.status.success {
+    border-color: #00ff88;
+    color: #00ff88;
+}
+
+.status.error {
+    border-color: #ff3030;
+    color: #ff6060;
+}
+
+/* Instructions */
+.instructions {
+    margin-top: 20px;
+    padding: 16px;
+    background: #0d0d0d;
+    border-radius: 14px;
+    border: 1px solid #222;
+}
+
+.instructions h3 {
+    margin-top: 0;
+    color: #00ff88;
+    font-size: 16px;
+}
+
+.instructions p {
+    color: #aaa;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* Small screens */
+@media (max-width: 380px) {
+    .packages {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 </head>
@@ -160,357 +219,230 @@ button:disabled{
 
 <div class="container">
 
-  <h1>M-PESA PAYMENT</h1>
+    <div class="header">
+        <h1>M-PESA PAYMENT</h1>
+        <p>Select your preferred minutes package</p>
+    </div>
 
-  <div class="subtitle">
-    Send Money
-  </div>
+    <!-- Recipient -->
+    <div class="recipient-box">
 
-
-  <!-- PHONE NUMBER -->
-
-  <div class="card">
-
-    <label class="label">
-      M-PESA phone number
-    </label>
-
-    <input
-      id="phone"
-      type="tel"
-      inputmode="numeric"
-      maxlength="12"
-      placeholder="0712345678"
-    >
-
-  </div>
-
-
-  <!-- PACKAGES -->
-
-  <div class="card">
-
-    <label class="label">
-      Choose package
-    </label>
-
-    <div class="packages">
-
-      <div
-        class="package"
-        data-minutes="30"
-        data-price="81"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          30 Mins
+        <div class="recipient-title">
+            SEND MONEY TO
         </div>
 
-        <div class="price">
-          KSh 81
+        <div class="recipient-number">
+            0704676086
         </div>
-      </div>
-
-
-      <div
-        class="package"
-        data-minutes="55"
-        data-price="138"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          55 Mins
-        </div>
-
-        <div class="price">
-          KSh 138
-        </div>
-      </div>
-
-
-      <div
-        class="package"
-        data-minutes="73"
-        data-price="207"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          73 Mins
-        </div>
-
-        <div class="price">
-          KSh 207
-        </div>
-      </div>
-
-
-      <div
-        class="package"
-        data-minutes="95"
-        data-price="253"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          95 Mins
-        </div>
-
-        <div class="price">
-          KSh 253
-        </div>
-      </div>
-
-
-      <div
-        class="package"
-        data-minutes="105"
-        data-price="299"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          105 Mins
-        </div>
-
-        <div class="price">
-          KSh 299
-        </div>
-      </div>
-
-
-      <div
-        class="package"
-        data-minutes="166"
-        data-price="393"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          166 Mins
-        </div>
-
-        <div class="price">
-          KSh 393
-        </div>
-
-        <div class="hot">
-          🔥 HOT
-        </div>
-      </div>
 
     </div>
 
-  </div>
+
+    <!-- Packages -->
+    <div class="packages">
+
+        <div class="package" onclick="selectPackage(this, 30, 81)">
+            <div class="minutes">30 Mins</div>
+            <div class="price">81 <span class="currency">KSh</span></div>
+        </div>
+
+        <div class="package" onclick="selectPackage(this, 55, 138)">
+            <div class="minutes">55 Mins</div>
+            <div class="price">138 <span class="currency">KSh</span></div>
+        </div>
+
+        <div class="package" onclick="selectPackage(this, 73, 207)">
+            <div class="minutes">73 Mins</div>
+            <div class="price">207 <span class="currency">KSh</span></div>
+        </div>
+
+        <div class="package" onclick="selectPackage(this, 95, 253)">
+            <div class="minutes">95 Mins</div>
+            <div class="price">253 <span class="currency">KSh</span></div>
+        </div>
+
+        <div class="package" onclick="selectPackage(this, 105, 299)">
+            <div class="minutes">105 Mins</div>
+            <div class="price">299 <span class="currency">KSh</span></div>
+        </div>
+
+        <div class="package" onclick="selectPackage(this, 166, 393)">
+            <div class="minutes">166 Mins</div>
+            <div class="price">393 <span class="currency">KSh</span></div>
+            <div class="hot">🔥 HOT</div>
+        </div>
+
+    </div>
 
 
-  <!-- PAYMENT -->
+    <!-- Payment -->
+    <div class="payment-area">
 
-  <div class="card">
+        <div class="selected-info">
+            Selected:
+            <strong id="selectedPackage">
+                No package selected
+            </strong>
+        </div>
 
-    <button
-      id="payButton"
-      onclick="testMpesa()"
-      disabled
-    >
-      PAY WITH M-PESA
-    </button>
+        <button
+            id="payButton"
+            class="pay-btn"
+            onclick="testMpesa()"
+            disabled
+        >
+            PAY WITH M-PESA
+        </button>
+
+        <div id="status" class="status">
+            Select a package to continue.
+        </div>
+
+    </div>
 
 
-    <div
-      id="status"
-      class="status"
-    ></div>
+    <!-- Instructions -->
+    <div class="instructions">
 
-  </div>
+        <h3>How to pay</h3>
 
+        <p>
+            1. Select your minutes package.<br>
+            2. Tap PAY WITH M-PESA.<br>
+            3. If your M-PESA app opens, check the recipient number.<br>
+            4. Enter the selected amount.<br>
+            5. Confirm the transaction and enter your M-PESA PIN.
+        </p>
 
-  <div class="small">
-    This is an Android USSD test.
-    The website does not request or handle your M-PESA PIN.
-  </div>
+    </div>
 
 </div>
 
 
 <script>
 
-let selectedPackage = null;
+/* =========================
+   PAYMENT INFORMATION
+========================= */
+
+const RECIPIENT = "0704676086";
+
+let selectedMinutes = null;
+let selectedAmount = null;
 
 
-/* ============================
+/* =========================
    SELECT PACKAGE
-============================ */
+========================= */
 
-function selectPackage(element){
+function selectPackage(element, minutes, amount) {
 
-  document
-    .querySelectorAll(".package")
-    .forEach(function(item){
-
-      item.classList.remove("selected");
-
+    // Remove previous selection
+    document.querySelectorAll(".package").forEach(function(pkg) {
+        pkg.classList.remove("selected");
     });
 
+    // Select current package
+    element.classList.add("selected");
 
-  element.classList.add("selected");
+    selectedMinutes = minutes;
+    selectedAmount = amount;
 
+    // Update selected text
+    document.getElementById("selectedPackage").innerHTML =
+        minutes + " Mins — " + amount + " KSh";
 
-  selectedPackage = {
+    // Enable payment button
+    document.getElementById("payButton").disabled = false;
 
-    minutes:
-      Number(element.dataset.minutes),
+    // Update status
+    const status = document.getElementById("status");
 
-    price:
-      Number(element.dataset.price)
+    status.className = "status";
 
-  };
-
-
-  checkReady();
-
+    status.innerHTML =
+        "Ready to pay <strong>" +
+        amount +
+        " KSh</strong> to " +
+        RECIPIENT +
+        ".";
 }
 
 
-/* ============================
-   CHECK INPUT
-============================ */
+/* =========================
+   M-PESA TEST LAUNCHER
+========================= */
 
-document
-  .getElementById("phone")
-  .addEventListener(
-    "input",
-    checkReady
-  );
+function testMpesa() {
 
+    if (!selectedAmount) {
 
-function checkReady(){
+        alert("Please select a package first.");
 
-  const phone =
-    document
-      .getElementById("phone")
-      .value
-      .trim();
+        return;
+    }
 
 
-  document
-    .getElementById("payButton")
-    .disabled =
-      !selectedPackage ||
-      phone.length < 10;
+    const status = document.getElementById("status");
 
-}
+    status.className = "status";
 
-
-/* ============================
-   TEST M-PESA
-============================ */
-
-function testMpesa(){
-
-  if(!selectedPackage){
-
-    showStatus(
-      "Please select a package.",
-      "warning"
-    );
-
-    return;
-
-  }
+    status.innerHTML =
+        "Opening M-PESA...<br>" +
+        "Selected amount: <strong>" +
+        selectedAmount +
+        " KSh</strong><br>" +
+        "Recipient: <strong>" +
+        RECIPIENT +
+        "</strong>";
 
 
-  const phone =
-    document
-      .getElementById("phone")
-      .value
-      .trim();
+    /*
+       EXPERIMENTAL M-PESA DEEP LINK
+
+       This attempts to open the M-PESA Android
+       application and pass the recipient number.
+
+       It is NOT an officially documented Safaricom
+       public deep-link, so behaviour depends on the
+       M-PESA Android app/device.
+    */
+
+    const mpesaIntent =
+        "intent://send?phone=" +
+        encodeURIComponent(RECIPIENT) +
+        "#Intent;" +
+        "scheme=mpesa;" +
+        "package=com.safaricom.mpesa;" +
+        "action=android.intent.action.VIEW;" +
+        "end";
 
 
-  if(phone.length < 10){
-
-    showStatus(
-      "Please enter your M-PESA phone number.",
-      "warning"
-    );
-
-    return;
-
-  }
+    // Try opening M-PESA
+    window.location.href = mpesaIntent;
 
 
-  showStatus(
+    /*
+       Fallback after a short delay.
 
-    `
-    <div class="info">
-      Opening M-PESA USSD...
-    </div>
+       If the M-PESA app does not open, show
+       the normal Send Money instructions.
+    */
 
-    <br>
+    setTimeout(function() {
 
-    Selected amount:
-    <strong>
-      KSh ${selectedPackage.price}
-    </strong>
+        status.className = "status";
 
-    <br><br>
+        status.innerHTML =
+            "If M-PESA did not open automatically:<br><br>" +
+            "Send <strong>" +
+            selectedAmount +
+            " KSh</strong> to:<br>" +
+            "<strong>" +
+            RECIPIENT +
+            "</strong>";
 
-    After M-PESA opens, select
-    <strong>Send Money</strong>.
-    `,
-
-    "info"
-
-  );
-
-
-  /*
-    ANDROID INTENT TEST
-
-    This asks Android to open
-    the telephone/USSD handler
-    with *334#
-  */
-
-  const ussd =
-    "*334#";
-
-
-  const intentUrl =
-    "intent://" +
-    encodeURIComponent(ussd) +
-    "#Intent;" +
-    "scheme=tel;" +
-    "action=android.intent.action.CALL;" +
-    "end";
-
-
-  setTimeout(function(){
-
-    window.location.href =
-      intentUrl;
-
-  },500);
-
-}
-
-
-/* ============================
-   STATUS
-============================ */
-
-function showStatus(
-  message,
-  type
-){
-
-  const status =
-    document.getElementById("status");
-
-
-  status.className =
-    "status show " + type;
-
-
-  status.innerHTML =
-    message;
-
+    }, 2500);
 }
 
 </script>
