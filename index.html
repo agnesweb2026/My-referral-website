@@ -6,7 +6,6 @@
 <title>My Referral Website</title>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
@@ -32,7 +31,6 @@ body{
   background:#000;
 }
 
-
 /* WELCOME */
 
 #welcomeScreen{
@@ -55,7 +53,6 @@ body{
   font-size:18px;
   color:#aaa;
 }
-
 
 /* LIVE PHOTOS */
 
@@ -185,9 +182,6 @@ body{
   color:#ddd;
 }
 
-
-/* VIDEO PLAY */
-
 .videoPlayIcon{
   position:absolute;
   top:50%;
@@ -213,18 +207,15 @@ body{
     transform:translate(-50%,-50%) scale(1);
     opacity:1;
   }
-
   50%{
     transform:translate(-50%,-50%) scale(1.12);
     opacity:.72;
   }
-
   100%{
     transform:translate(-50%,-50%) scale(1);
     opacity:1;
   }
 }
-
 
 /* INCOMING CALL */
 
@@ -276,7 +267,6 @@ body{
   font-size:23px;
   margin-right:5px;
 }
-
 
 /* SWIPE */
 
@@ -393,7 +383,6 @@ body{
   font-size:11px;
 }
 
-
 /* LIVE VIDEO */
 
 #liveSoundPage{
@@ -438,7 +427,6 @@ body{
   background:#000;
 }
 
-
 /* BLACK LIVE */
 
 #blackLivePage{
@@ -455,7 +443,6 @@ body{
   color:#aaa;
   font-size:18px;
 }
-
 
 /* INSUFFICIENT */
 
@@ -481,22 +468,6 @@ body{
   color:#aaa;
   font-size:14px;
 }
-
-
-/* HIDDEN RECORDED SOUND PLAYER */
-
-#backgroundSound{
-  position:fixed;
-  width:1px;
-  height:1px;
-  left:-10px;
-  top:-10px;
-  opacity:.01;
-  pointer-events:none;
-}
-
-
-/* SMALL PHONES */
 
 @media(max-width:360px){
 
@@ -533,14 +504,11 @@ body{
   .swipe-label{
     font-size:14px;
   }
-
 }
-
 </style>
 </head>
 
 <body>
-
 
 <!-- WELCOME -->
 
@@ -564,15 +532,9 @@ body{
   <div class="topBar">
 
     <div class="onlineText">
-
       <span class="onlineDot"></span>
-
-      <span id="onlineNumber">
-        21
-      </span>
-
+      <span id="onlineNumber">21</span>
       online
-
     </div>
 
     <div class="liveTitle">
@@ -581,10 +543,7 @@ body{
 
   </div>
 
-  <div
-    id="photoGrid"
-    class="photoGrid">
-  </div>
+  <div id="photoGrid" class="photoGrid"></div>
 
 </div>
 
@@ -617,11 +576,7 @@ body{
 
     </div>
 
-
     <div class="swipe-area">
-
-
-      <!-- DECLINE -->
 
       <div
         id="declineSwipe"
@@ -641,9 +596,6 @@ body{
 
       </div>
 
-
-      <!-- ANSWER -->
-
       <div
         id="answerSwipe"
         class="swipe-bar answer-swipe">
@@ -662,7 +614,6 @@ body{
 
       </div>
 
-
       <div class="swipe-hint">
         Swipe the control to respond
       </div>
@@ -674,16 +625,13 @@ body{
 </div>
 
 
-<!-- FIRST RED LIVE VIDEO -->
+<!-- RED LIVE -->
 
-<div
-  id="liveSoundPage"
-  class="page">
+<div id="liveSoundPage" class="page">
 
   <div class="liveBadgeTop">
 
     <span class="greenLiveDot"></span>
-
     LIVE
 
   </div>
@@ -702,22 +650,19 @@ body{
 </div>
 
 
-<!-- SECOND BLACK LIVE -->
+<!-- BLACK LIVE -->
 
-<div
-  id="blackLivePage"
-  class="page">
+<div id="blackLivePage" class="page">
 
   <div class="liveBadgeTop">
 
     <span class="greenLiveDot"></span>
-
     LIVE
 
   </div>
 
   <div class="blackLiveText">
-    Loading...
+    LIVE
   </div>
 
 </div>
@@ -725,9 +670,7 @@ body{
 
 <!-- INSUFFICIENT -->
 
-<div
-  id="insufficientPage"
-  class="page">
+<div id="insufficientPage" class="page">
 
   <div class="insufficientTitle">
     Insufficient Minutes
@@ -741,16 +684,19 @@ body{
 </div>
 
 
-<!-- RANDOM RECORDED SOUND PLAYER -->
+<!-- AUDIO PLAYER -->
 
-<video
+<audio
   id="backgroundSound"
-  playsinline
   preload="auto">
-</video>
-
+</audio>
 
 <script>
+  <script>
+
+/* =========================
+   CONFIGURATION
+========================= */
 
 const GITHUB_OWNER =
   "agnesweb2026";
@@ -770,27 +716,17 @@ const PHOTOS_DURATION =
 const INSUFFICIENT_DURATION =
   2000;
 
-const BUSY_CHANGE_DURATION =
-  300000;
-
+/*
+  Black LIVE sound duration.
+  EXACTLY 5 seconds.
+*/
 const SECOND_CALL_SOUND_DURATION =
   5000;
 
-const PAYMENT_PAGE_URL =
-  "payment.html";
 
-const RED_LIVE_KEY =
-  "redLiveVideoSeen";
-
-
-/*
-================================================
-RECORDED SOUNDS
-================================================
-These are your 4 uploaded recordings.
-One is selected randomly on every Black Live.
-================================================
-*/
+/* =========================
+   UPLOADED RECORDINGS
+========================= */
 
 const recordedSounds = [
 
@@ -803,6 +739,25 @@ const recordedSounds = [
   "Screen_Recording_20260923_113509.mp4"
 
 ];
+
+
+/*
+  Remember previous recording
+  so the same one is not selected
+  twice in a row.
+*/
+let lastSoundIndex = -1;
+
+
+/* =========================
+   OTHER SETTINGS
+========================= */
+
+const PAYMENT_PAGE_URL =
+  "payment.html";
+
+const RED_LIVE_KEY =
+  "redLiveVideoSeen";
 
 
 let redLiveShownThisVisit =
@@ -820,6 +775,10 @@ let photosData =
 let currentCaller =
   null;
 
+
+/* =========================
+   TIMERS
+========================= */
 
 let photoTimer =
   null;
@@ -839,11 +798,10 @@ let soundTimer =
 let liveVideoSafetyTimer =
   null;
 
-let lastSoundIndex =
-  -1;
 
-
-/* NAMES */
+/* =========================
+   NAMES
+========================= */
 
 const names = [
 
@@ -875,7 +833,9 @@ const names = [
 ];
 
 
-/* AGES */
+/* =========================
+   AGES
+========================= */
 
 const ages = [
 
@@ -887,7 +847,9 @@ const ages = [
 ];
 
 
-/* COUNTRIES */
+/* =========================
+   COUNTRIES
+========================= */
 
 const countries = [
 
@@ -925,7 +887,9 @@ const countries = [
 ];
 
 
-/* ELEMENTS */
+/* =========================
+   ELEMENTS
+========================= */
 
 const welcomeScreen =
   document.getElementById(
@@ -993,6 +957,10 @@ const declineSwipe =
   );
 
 
+/* =========================
+   HIDE ALL PAGES
+========================= */
+
 function hideAllPages(){
 
   welcomeScreen.style.display =
@@ -1016,6 +984,10 @@ function hideAllPages(){
 }
 
 
+/* =========================
+   CLEAR TIMERS
+========================= */
+
 function clearAllTimers(){
 
   clearTimeout(photoTimer);
@@ -1028,20 +1000,12 @@ function clearAllTimers(){
 
   clearTimeout(liveVideoSafetyTimer);
 
-  if(
-    busyRotationTimer
-  ){
-
-    clearInterval(
-      busyRotationTimer
-    );
-
-  }
-
 }
 
 
-/* STOP RECORDED SOUND */
+/* =========================
+   STOP RECORDING SOUND
+========================= */
 
 function stopBackgroundSound(){
 
@@ -1052,18 +1016,21 @@ function stopBackgroundSound(){
     backgroundSound.currentTime =
       0;
 
-    backgroundSound.removeAttribute(
-      "src"
+  }catch(error){
+
+    console.log(
+      "Audio stop error:",
+      error
     );
 
-    backgroundSound.load();
-
-  }catch(e){}
+  }
 
 }
 
 
-/* STOP RED VIDEO */
+/* =========================
+   STOP RED LIVE VIDEO
+========================= */
 
 function stopLiveVideo(){
 
@@ -1074,12 +1041,21 @@ function stopLiveVideo(){
     liveSoundVideo.currentTime =
       0;
 
-  }catch(e){}
+  }catch(error){
+
+    console.log(
+      "Video stop error:",
+      error
+    );
+
+  }
 
 }
 
 
-/* SHUFFLE */
+/* =========================
+   SHUFFLE
+========================= */
 
 function shuffleArray(array){
 
@@ -1087,14 +1063,14 @@ function shuffleArray(array){
     [...array];
 
   for(
-    let i=arr.length-1;
-    i>0;
+    let i = arr.length - 1;
+    i > 0;
     i--
   ){
 
     const j =
       Math.floor(
-        Math.random()*(i+1)
+        Math.random() * (i + 1)
       );
 
     [
@@ -1113,19 +1089,24 @@ function shuffleArray(array){
 }
 
 
-/* GITHUB */
+/* =========================
+   GITHUB CONTENTS
+========================= */
 
 async function getGitHubContents(
-  path=""
+  path = ""
 ){
 
   const url =
     `https://api.github.com/repos/` +
-    `${GITHUB_OWNER}/${GITHUB_REPO}` +
-    `/contents/${path}?ref=${GITHUB_BRANCH}`;
+    `${GITHUB_OWNER}/` +
+    `${GITHUB_REPO}/` +
+    `contents/${path}?ref=${GITHUB_BRANCH}`;
+
 
   const response =
     await fetch(url);
+
 
   if(!response.ok){
 
@@ -1135,10 +1116,15 @@ async function getGitHubContents(
 
   }
 
+
   return await response.json();
 
 }
 
+
+/* =========================
+   IMAGE CHECK
+========================= */
 
 function isImageFile(name){
 
@@ -1148,15 +1134,20 @@ function isImageFile(name){
 }
 
 
+/* =========================
+   COLLECT IMAGES
+========================= */
+
 async function collectImages(
-  path="",
-  result=[]
+  path = "",
+  result = []
 ){
 
   const items =
     await getGitHubContents(
       path
     );
+
 
   for(
     const item of items
@@ -1173,7 +1164,10 @@ async function collectImages(
 
     }
 
-    if(item.type === "dir"){
+
+    if(
+      item.type === "dir"
+    ){
 
       await collectImages(
         item.path,
@@ -1181,6 +1175,7 @@ async function collectImages(
       );
 
     }
+
 
     if(
       result.length >=
@@ -1193,10 +1188,15 @@ async function collectImages(
 
   }
 
+
   return result;
 
 }
 
+
+/* =========================
+   FILE URL
+========================= */
 
 function getFileUrl(path){
 
@@ -1211,11 +1211,14 @@ function getFileUrl(path){
 }
 
 
-/* LOAD PHOTOS */
+/* =========================
+   LOAD PHOTOS
+========================= */
 
 async function loadPhotos(){
 
   let imagePaths = [];
+
 
   try{
 
@@ -1227,17 +1230,22 @@ async function loadPhotos(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Photo loading error:",
+      error
+    );
 
     return;
 
   }
+
 
   imagePaths =
     imagePaths.slice(
       0,
       MAX_PHOTOS
     );
+
 
   photosData =
     imagePaths.map(
@@ -1250,7 +1258,7 @@ async function loadPhotos(){
 
         name:
           names[index] ||
-          `User ${index+1}`,
+          `User ${index + 1}`,
 
         age:
           ages[index] ||
@@ -1269,21 +1277,25 @@ async function loadPhotos(){
 }
 
 
-/* BUSY */
+/* =========================
+   BUSY USERS
+========================= */
 
 function getRandomBusyIndexes(){
 
   const indexes = [];
 
+
   for(
-    let i=0;
-    i<MAX_PHOTOS;
+    let i = 0;
+    i < MAX_PHOTOS;
     i++
   ){
 
     indexes.push(i);
 
   }
+
 
   return shuffleArray(
     indexes
@@ -1292,11 +1304,14 @@ function getRandomBusyIndexes(){
 }
 
 
-/* RENDER PHOTOS */
+/* =========================
+   RENDER PHOTOS
+========================= */
 
 function renderPhotos(){
 
   photoGrid.innerHTML = "";
+
 
   if(!photosData.length){
 
@@ -1320,6 +1335,7 @@ function renderPhotos(){
     shuffleArray(
       photosData
     );
+
 
   const busyIndexes =
     getRandomBusyIndexes();
@@ -1351,9 +1367,7 @@ function renderPhotos(){
       img.loading =
         "lazy";
 
-      card.appendChild(
-        img
-      );
+      card.appendChild(img);
 
 
       const isBusy =
@@ -1383,8 +1397,8 @@ function renderPhotos(){
 
         const closed =
           document.createElement(
-          "div"
-        );
+            "div"
+          );
 
         closed.className =
           "roomClosed";
@@ -1395,7 +1409,6 @@ function renderPhotos(){
         card.appendChild(
           closed
         );
-
 
       }else{
 
@@ -1416,6 +1429,7 @@ function renderPhotos(){
         status.appendChild(
           dot
         );
+
 
         status.appendChild(
           document.createTextNode(
@@ -1485,6 +1499,7 @@ function renderPhotos(){
         info
       );
 
+
       photoGrid.appendChild(
         card
       );
@@ -1495,7 +1510,828 @@ function renderPhotos(){
 }
 
 
-/* ONLINE NUMBER */
+/* =========================
+   ONLINE NUMBER
+========================= */
+
+function updateOnlineNumber(){
+
+  const number =
+    document.getElementById(
+      "onlineNumber"
+    );
+
+
+  if(number){
+
+    number.textContent =
+      Math
+    <script>
+
+/* =========================
+   SETTINGS
+========================= */
+
+const GITHUB_OWNER =
+  "agnesweb2026";
+
+const GITHUB_REPO =
+  "My-referral-website";
+
+const GITHUB_BRANCH =
+  "main";
+
+const MAX_PHOTOS =
+  24;
+
+const PHOTOS_DURATION =
+  20000;
+
+const INSUFFICIENT_DURATION =
+  2000;
+
+const BUSY_CHANGE_DURATION =
+  300000;
+
+/*
+  BLACK LIVE SOUND TIME
+  = 5 seconds
+*/
+const SECOND_CALL_SOUND_DURATION =
+  5000;
+
+
+/* =========================
+   RANDOM RECORDINGS
+========================= */
+
+const recordedSounds = [
+
+  "Screen_Recording_20260923_113344.mp4",
+
+  "Screen_Recording_20260923_113631.mp4",
+
+  "Screen_Recording_20260923_113713.mp4",
+
+  "Screen_Recording_20260923_113509.mp4"
+
+];
+
+
+/*
+  Remember last sound so the
+  same sound is not selected
+  twice consecutively.
+*/
+
+let lastSoundIndex = -1;
+
+
+/* =========================
+   OTHER SETTINGS
+========================= */
+
+const PAYMENT_PAGE_URL =
+  "payment.html";
+
+const RED_LIVE_KEY =
+  "redLiveVideoSeen";
+
+
+let redLiveShownThisVisit =
+  localStorage.getItem(
+    RED_LIVE_KEY
+  ) === "yes";
+
+
+let websiteStarted =
+  false;
+
+let photosData =
+  [];
+
+let currentCaller =
+  null;
+
+
+let photoTimer =
+  null;
+
+let incomingTimer =
+  null;
+
+let insufficientTimer =
+  null;
+
+let busyRotationTimer =
+  null;
+
+let soundTimer =
+  null;
+
+let liveVideoSafetyTimer =
+  null;
+
+
+/* =========================
+   NAMES
+========================= */
+
+const names = [
+
+  "Cute",
+  "Becky",
+  "Dorry",
+  "Jenny",
+  "Ashley",
+  "Mary",
+  "Cindy",
+  "Mercy",
+  "Linda",
+  "Sharon",
+  "Brenda",
+  "Diana",
+  "Faith",
+  "Joy",
+  "Lucy",
+  "Angela",
+  "Betty",
+  "Nancy",
+  "Winnie",
+  "Ann",
+  "Carol",
+  "Irene",
+  "Rose",
+  "Fellow"
+
+];
+
+
+/* =========================
+   AGES
+========================= */
+
+const ages = [
+
+  19,23,25,18,24,24,
+  26,30,27,23,29,33,
+  25,25,31,25,23,19,
+  22,24,23,27,28,21
+
+];
+
+
+/* =========================
+   COUNTRIES
+========================= */
+
+const countries = [
+
+  {name:"Kenya",flag:"🇰🇪"},
+  {name:"Kenya",flag:"🇰🇪"},
+  {name:"Kenya",flag:"🇰🇪"},
+  {name:"Kenya",flag:"🇰🇪"},
+  {name:"Kenya",flag:"🇰🇪"},
+
+  {name:"Tanzania",flag:"🇹🇿"},
+  {name:"Tanzania",flag:"🇹🇿"},
+  {name:"Tanzania",flag:"🇹🇿"},
+  {name:"Tanzania",flag:"🇹🇿"},
+
+  {name:"Nigeria",flag:"🇳🇬"},
+  {name:"Nigeria",flag:"🇳🇬"},
+  {name:"Nigeria",flag:"🇳🇬"},
+  {name:"Nigeria",flag:"🇳🇬"},
+
+  {name:"Congo",flag:"🇨🇩"},
+  {name:"Congo",flag:"🇨🇩"},
+  {name:"Congo",flag:"🇨🇩"},
+  {name:"Congo",flag:"🇨🇩"},
+  {name:"Congo",flag:"🇨🇩"},
+
+  {name:"Canada",flag:"🇨🇦"},
+  {name:"Canada",flag:"🇨🇦"},
+
+  {name:"South Africa",flag:"🇿🇦"},
+  {name:"South Africa",flag:"🇿🇦"},
+
+  {name:"USA",flag:"🇺🇸"},
+  {name:"USA",flag:"🇺🇸"}
+
+];
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const welcomeScreen =
+  document.getElementById(
+    "welcomeScreen"
+  );
+
+const photosPage =
+  document.getElementById(
+    "photosPage"
+  );
+
+const incomingCall =
+  document.getElementById(
+    "incomingCall"
+  );
+
+const liveSoundPage =
+  document.getElementById(
+    "liveSoundPage"
+  );
+
+const blackLivePage =
+  document.getElementById(
+    "blackLivePage"
+  );
+
+const insufficientPage =
+  document.getElementById(
+    "insufficientPage"
+  );
+
+const photoGrid =
+  document.getElementById(
+    "photoGrid"
+  );
+
+const backgroundSound =
+  document.getElementById(
+    "backgroundSound"
+  );
+
+const liveSoundVideo =
+  document.getElementById(
+    "liveSoundVideo"
+  );
+
+const callerImage =
+  document.getElementById(
+    "callerImage"
+  );
+
+const callerName =
+  document.getElementById(
+    "callerName"
+  );
+
+const answerSwipe =
+  document.getElementById(
+    "answerSwipe"
+  );
+
+const declineSwipe =
+  document.getElementById(
+    "declineSwipe"
+  );
+
+
+/* =========================
+   HIDE ALL
+========================= */
+
+function hideAllPages(){
+
+  welcomeScreen.style.display =
+    "none";
+
+  photosPage.style.display =
+    "none";
+
+  incomingCall.style.display =
+    "none";
+
+  liveSoundPage.style.display =
+    "none";
+
+  blackLivePage.style.display =
+    "none";
+
+  insufficientPage.style.display =
+    "none";
+
+}
+
+
+/* =========================
+   CLEAR TIMERS
+========================= */
+
+function clearAllTimers(){
+
+  clearTimeout(photoTimer);
+
+  clearTimeout(incomingTimer);
+
+  clearTimeout(insufficientTimer);
+
+  clearTimeout(soundTimer);
+
+  clearTimeout(liveVideoSafetyTimer);
+
+}
+
+
+/* =========================
+   STOP SOUND
+========================= */
+
+function stopBackgroundSound(){
+
+  try{
+
+    backgroundSound.pause();
+
+    backgroundSound.currentTime = 0;
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+/* =========================
+   STOP VIDEO
+========================= */
+
+function stopLiveVideo(){
+
+  try{
+
+    liveSoundVideo.pause();
+
+    liveSoundVideo.currentTime = 0;
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+/* =========================
+   SHUFFLE
+========================= */
+
+function shuffleArray(array){
+
+  const arr =
+    [...array];
+
+  for(
+    let i = arr.length - 1;
+    i > 0;
+    i--
+  ){
+
+    const j =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+
+    [
+      arr[i],
+      arr[j]
+    ] =
+    [
+      arr[j],
+      arr[i]
+    ];
+
+  }
+
+  return arr;
+
+}
+
+
+/* =========================
+   GITHUB
+========================= */
+
+async function getGitHubContents(
+  path=""
+){
+
+  const url =
+    `https://api.github.com/repos/` +
+    `${GITHUB_OWNER}/${GITHUB_REPO}` +
+    `/contents/${path}?ref=${GITHUB_BRANCH}`;
+
+  const response =
+    await fetch(url);
+
+  if(!response.ok){
+
+    throw new Error(
+      "GitHub request failed"
+    );
+
+  }
+
+  return await response.json();
+
+}
+
+
+/* =========================
+   IMAGE CHECK
+========================= */
+
+function isImageFile(name){
+
+  return /\.(jpg|jpeg|png|webp|gif)$/i
+    .test(name);
+
+}
+
+
+/* =========================
+   COLLECT IMAGES
+========================= */
+
+async function collectImages(
+  path="",
+  result=[]
+){
+
+  const items =
+    await getGitHubContents(
+      path
+    );
+
+  for(
+    const item of items
+  ){
+
+    if(
+      item.type === "file" &&
+      isImageFile(item.name)
+    ){
+
+      result.push(
+        item.path
+      );
+
+    }
+
+    if(item.type === "dir"){
+
+      await collectImages(
+        item.path,
+        result
+      );
+
+    }
+
+    if(
+      result.length >=
+      MAX_PHOTOS
+    ){
+
+      break;
+
+    }
+
+  }
+
+  return result;
+
+}
+
+
+/* =========================
+   FILE URL
+========================= */
+
+function getFileUrl(path){
+
+  return (
+    "https://raw.githubusercontent.com/" +
+    GITHUB_OWNER + "/" +
+    GITHUB_REPO + "/" +
+    GITHUB_BRANCH + "/" +
+    path
+  );
+
+}
+
+
+/* =========================
+   LOAD PHOTOS
+========================= */
+
+async function loadPhotos(){
+
+  let imagePaths = [];
+
+  try{
+
+    imagePaths =
+      await collectImages(
+        "",
+        []
+      );
+
+  }catch(error){
+
+    console.error(
+      "Photo loading error:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  imagePaths =
+    imagePaths.slice(
+      0,
+      MAX_PHOTOS
+    );
+
+
+  photosData =
+    imagePaths.map(
+      function(path,index){
+
+        return {
+
+          path:path,
+
+          url:
+            getFileUrl(path),
+
+          name:
+            names[index] ||
+            `User ${index+1}`,
+
+          age:
+            ages[index] ||
+            25,
+
+          country:
+            countries[index] ||
+            {
+              name:"Kenya",
+              flag:"🇰🇪"
+            }
+
+        };
+
+      }
+    );
+
+}
+
+
+/* =========================
+   BUSY INDEXES
+========================= */
+
+function getRandomBusyIndexes(){
+
+  const indexes = [];
+
+  for(
+    let i=0;
+    i<MAX_PHOTOS;
+    i++
+  ){
+
+    indexes.push(i);
+
+  }
+
+  return shuffleArray(
+    indexes
+  ).slice(0,5);
+
+}
+
+
+/* =========================
+   RENDER PHOTOS
+========================= */
+
+function renderPhotos(){
+
+  photoGrid.innerHTML = "";
+
+  if(!photosData.length){
+
+    photoGrid.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:40px;
+        color:#aaa;
+      ">
+        Loading photos...
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const displayPhotos =
+    shuffleArray(
+      photosData
+    );
+
+
+  const busyIndexes =
+    getRandomBusyIndexes();
+
+
+  displayPhotos.forEach(
+    function(photo,index){
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "photoCard";
+
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+      img.src =
+        photo.url;
+
+      img.alt =
+        photo.name;
+
+      img.loading =
+        "lazy";
+
+      card.appendChild(
+        img
+      );
+
+
+      const isBusy =
+        busyIndexes.includes(
+          index
+        );
+
+
+      const status =
+        document.createElement(
+          "div"
+        );
+
+      status.className =
+        "statusBadge";
+
+
+      if(isBusy){
+
+        status.classList.add(
+          "offlineBadge"
+        );
+
+        status.textContent =
+          "OFFLINE";
+
+
+        const closed =
+          document.createElement(
+            "div"
+          );
+
+        closed.className =
+          "roomClosed";
+
+        closed.textContent =
+          "ROOM CLOSED";
+
+        card.appendChild(
+          closed
+        );
+
+
+      }else{
+
+        status.classList.add(
+          "liveBadge"
+        );
+
+
+        const dot =
+          document.createElement(
+            "span"
+          );
+
+        dot.className =
+          "liveDot";
+
+
+        status.appendChild(
+          dot
+        );
+
+
+        status.appendChild(
+          document.createTextNode(
+            "LIVE"
+          )
+        );
+
+
+        card.addEventListener(
+          "click",
+          function(){
+
+            window.location.href =
+              PAYMENT_PAGE_URL;
+
+          }
+        );
+
+      }
+
+
+      card.appendChild(
+        status
+      );
+
+
+      const icon =
+        document.createElement(
+          "div"
+        );
+
+      icon.className =
+        "videoPlayIcon";
+
+      icon.textContent =
+        "▶";
+
+      card.appendChild(
+        icon
+      );
+
+
+      const info =
+        document.createElement(
+          "div"
+        );
+
+      info.className =
+        "photoInfo";
+
+
+      info.innerHTML = `
+
+        <div class="photoName">
+          ${photo.name}
+        </div>
+
+        <div class="photoAge">
+          ${photo.country.flag}
+          ${photo.age} yrs
+        </div>
+
+      `;
+
+
+      card.appendChild(
+        info
+      );
+
+
+      photoGrid.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   ONLINE NUMBER
+========================= */
 
 function updateOnlineNumber(){
 
@@ -1509,7 +2345,7 @@ function updateOnlineNumber(){
     number.textContent =
       Math.floor(
         18 +
-        Math.random()*8
+        Math.random() * 8
       );
 
   }
@@ -1517,7 +2353,9 @@ function updateOnlineNumber(){
 }
 
 
-/* LIVE PHOTOS */
+/* =========================
+   LIVE PHOTOS
+========================= */
 
 function showLivePhotos(){
 
@@ -1535,6 +2373,11 @@ function showLivePhotos(){
   renderPhotos();
 
   updateOnlineNumber();
+
+
+  clearInterval(
+    busyRotationTimer
+  );
 
 
   busyRotationTimer =
@@ -1559,7 +2402,18 @@ function showLivePhotos(){
     setTimeout(
       function(){
 
-  <!-- INCOMING CALL -->
+        showIncomingCall();
+
+      },
+      PHOTOS_DURATION
+    );
+
+}
+
+
+/* =========================
+   INCOMING CALL
+========================= */
 
 function showIncomingCall(){
 
@@ -1582,7 +2436,7 @@ function showIncomingCall(){
   }
 
 
-  let randomIndex =
+  const randomIndex =
     Math.floor(
       Math.random() *
       photosData.length
@@ -1600,9 +2454,90 @@ function showIncomingCall(){
     currentCaller.name;
 
 }
+    /* =========================
+   RANDOM SOUND SELECTOR
+========================= */
+
+function playRandomRecordedSound(){
+
+  if(!recordedSounds.length){
+    return;
+  }
+
+  let randomIndex;
+
+  do{
+
+    randomIndex =
+      Math.floor(
+        Math.random() *
+        recordedSounds.length
+      );
+
+  }while(
+    recordedSounds.length > 1 &&
+    randomIndex === lastSoundIndex
+  );
 
 
-/* FIRST RED LIVE */
+  lastSoundIndex =
+    randomIndex;
+
+
+  const selectedSound =
+    recordedSounds[randomIndex];
+
+
+  /*
+    Files are in the ROOT
+    ya GitHub repository.
+  */
+
+  const soundURL =
+    "https://raw.githubusercontent.com/" +
+    GITHUB_OWNER + "/" +
+    GITHUB_REPO + "/" +
+    GITHUB_BRANCH + "/" +
+    encodeURIComponent(selectedSound);
+
+
+  stopBackgroundSound();
+
+
+  backgroundSound.src =
+    soundURL;
+
+  backgroundSound.load();
+
+  backgroundSound.volume =
+    1;
+
+
+  const playPromise =
+    backgroundSound.play();
+
+
+  if(playPromise){
+
+    playPromise.catch(
+      function(error){
+
+        console.log(
+          "Sound could not play:",
+          error
+        );
+
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================
+   RED LIVE
+========================= */
 
 function showLiveSound(){
 
@@ -1611,6 +2546,7 @@ function showLiveSound(){
   stopBackgroundSound();
 
   hideAllPages();
+
 
   liveSoundPage.style.display =
     "flex";
@@ -1635,7 +2571,7 @@ function showLiveSound(){
         function(error){
 
           console.log(
-            "Red Live video error:",
+            "Video autoplay blocked:",
             error
           );
 
@@ -1644,106 +2580,40 @@ function showLiveSound(){
 
     }
 
-
-    /*
-      Keep the first LIVE
-      video running for 20 seconds.
-    */
-
-    liveVideoSafetyTimer =
-      setTimeout(
-        function(){
-
-          stopLiveVideo();
-
-          showInsufficient();
-
-        },
-        20000
-      );
-
-
   }catch(error){
 
     console.log(
-      "Red Live error:",
+      "Video error:",
       error
     );
-
-
-    liveVideoSafetyTimer =
-      setTimeout(
-        function(){
-
-          showInsufficient();
-
-        },
-        20000
-      );
-
-  }
-
-}
-
-
-/* GET RANDOM RECORDED SOUND */
-
-function getRandomSound(){
-
-  if(
-    recordedSounds.length === 0
-  ){
-
-    return null;
 
   }
 
 
   /*
-    Avoid immediately playing
-    exactly the same recording
-    twice in a row when possible.
+    Safety:
+    after 20 seconds return
+    to the normal flow.
   */
 
-  let randomIndex;
+  liveVideoSafetyTimer =
+    setTimeout(
+      function(){
 
+        stopLiveVideo();
 
-  if(
-    recordedSounds.length === 1
-  ){
+        showInsufficient();
 
-    randomIndex = 0;
-
-  }else{
-
-    do{
-
-      randomIndex =
-        Math.floor(
-          Math.random() *
-          recordedSounds.length
-        );
-
-    }while(
-      randomIndex ===
-      lastSoundIndex
+      },
+      20000
     );
-
-  }
-
-
-  lastSoundIndex =
-    randomIndex;
-
-
-  return recordedSounds[
-    randomIndex
-  ];
 
 }
 
 
-/* BLACK LIVE */
+/* =========================
+   BLACK LIVE
+========================= */
 
 function showBlackLive(){
 
@@ -1755,157 +2625,42 @@ function showBlackLive(){
 
   hideAllPages();
 
+
   blackLivePage.style.display =
     "flex";
 
 
   /*
-    SELECT ONE OF THE
-    FOUR UPLOADED RECORDINGS
-    RANDOMLY
+    IMPORTANT:
+    Every answer chooses a
+    different random recording.
   */
 
-  const randomSound =
-    getRandomSound();
-
-
-  if(!randomSound){
-
-    console.log(
-      "No recorded sound found."
-    );
-
-
-    soundTimer =
-      setTimeout(
-        function(){
-
-          showInsufficient();
-
-        },
-        5000
-      );
-
-    return;
-
-  }
+  playRandomRecordedSound();
 
 
   /*
-    BUILD THE GITHUB URL
+    Sound plays for ONLY 5 seconds.
   */
 
-  const soundURL =
-    getFileUrl(
-      randomSound
+  soundTimer =
+    setTimeout(
+      function(){
+
+        stopBackgroundSound();
+
+        showInsufficient();
+
+      },
+      SECOND_CALL_SOUND_DURATION
     );
-
-
-  console.log(
-    "Playing random recording:",
-    randomSound
-  );
-
-
-  try{
-
-    /*
-      Load the selected recording.
-    */
-
-    backgroundSound.pause();
-
-    backgroundSound.removeAttribute(
-      "src"
-    );
-
-    backgroundSound.load();
-
-
-    backgroundSound.src =
-      soundURL;
-
-
-    backgroundSound.load();
-
-
-    /*
-      Start from beginning.
-    */
-
-    backgroundSound.currentTime =
-      0;
-
-    backgroundSound.volume =
-      1;
-
-
-    /*
-      PLAY SOUND
-    */
-
-    const playPromise =
-      backgroundSound.play();
-
-
-    if(playPromise){
-
-      playPromise.catch(
-        function(error){
-
-          console.log(
-            "Recorded sound could not play:",
-            error
-          );
-
-        }
-      );
-
-    }
-
-
-    /*
-      STOP AFTER EXACTLY
-      5 SECONDS
-    */
-
-    soundTimer =
-      setTimeout(
-        function(){
-
-          stopBackgroundSound();
-
-          showInsufficient();
-
-        },
-        SECOND_CALL_SOUND_DURATION
-      );
-
-
-  }catch(error){
-
-    console.log(
-      "Black Live sound error:",
-      error
-    );
-
-
-    soundTimer =
-      setTimeout(
-        function(){
-
-          showInsufficient();
-
-        },
-        SECOND_CALL_SOUND_DURATION
-      );
-
-  }
 
 }
 
 
-/* INSUFFICIENT */
+/* =========================
+   INSUFFICIENT
+========================= */
 
 function showInsufficient(){
 
@@ -1916,6 +2671,7 @@ function showInsufficient(){
   stopBackgroundSound();
 
   hideAllPages();
+
 
   insufficientPage.style.display =
     "flex";
@@ -1934,12 +2690,22 @@ function showInsufficient(){
 }
 
 
-/* ANSWER */
+/* =========================
+   ANSWER CALL
+========================= */
 
 function answerIncomingCall(){
 
   clearAllTimers();
 
+
+  /*
+    First answered call:
+    RED LIVE video.
+
+    Following calls:
+    BLACK LIVE + random sound.
+  */
 
   if(
     !redLiveShownThisVisit
@@ -1948,26 +2714,16 @@ function answerIncomingCall(){
     redLiveShownThisVisit =
       true;
 
+
     localStorage.setItem(
       RED_LIVE_KEY,
       "yes"
     );
 
 
-    /*
-      FIRST ANSWER:
-      RED LIVE VIDEO
-    */
-
     showLiveSound();
 
   }else{
-
-    /*
-      NEXT ANSWERS:
-      BLACK LIVE +
-      RANDOM RECORDING
-    */
 
     showBlackLive();
 
@@ -1976,7 +2732,9 @@ function answerIncomingCall(){
 }
 
 
-/* DECLINE */
+/* =========================
+   DECLINE CALL
+========================= */
 
 function declineIncomingCall(){
 
@@ -1991,7 +2749,9 @@ function declineIncomingCall(){
 }
 
 
-/* REAL SWIPE */
+/* =========================
+   SWIPE
+========================= */
 
 function enableSwipe(
   element,
@@ -2000,7 +2760,6 @@ function enableSwipe(
 ){
 
   let startX = 0;
-
   let startY = 0;
 
 
@@ -2056,7 +2815,7 @@ function enableSwipe(
 
 
       /*
-        Ignore vertical swipes.
+        Ignore vertical movement.
       */
 
       if(
@@ -2082,10 +2841,6 @@ function enableSwipe(
       }
 
 
-      /*
-        LEFT = DECLINE
-      */
-
       if(
         direction === "left" &&
         dx < 0
@@ -2095,10 +2850,6 @@ function enableSwipe(
 
       }
 
-
-      /*
-        RIGHT = ANSWER
-      */
 
       if(
         direction === "right" &&
@@ -2116,7 +2867,9 @@ function enableSwipe(
 }
 
 
-/* DECLINE SWIPE */
+/* =========================
+   DECLINE SWIPE
+========================= */
 
 enableSwipe(
   declineSwipe,
@@ -2129,7 +2882,9 @@ enableSwipe(
 );
 
 
-/* ANSWER SWIPE */
+/* =========================
+   ANSWER SWIPE
+========================= */
 
 enableSwipe(
   answerSwipe,
@@ -2142,7 +2897,9 @@ enableSwipe(
 );
 
 
-/* RETURN FROM PAYMENT */
+/* =========================
+   PAYMENT RETURN
+========================= */
 
 function checkPaymentReturn(){
 
@@ -2181,9 +2938,16 @@ function checkPaymentReturn(){
 }
 
 
-/* START WEBSITE */
+/* =========================
+   START WEBSITE
+========================= */
 
 async function startWebsite(){
+
+  /*
+    If returning from payment,
+    skip welcome screen.
+  */
 
   if(
     checkPaymentReturn()
@@ -2197,11 +2961,20 @@ async function startWebsite(){
   }
 
 
+  /*
+    SHOW WELCOME
+  */
+
   hideAllPages();
 
   welcomeScreen.style.display =
     "flex";
 
+
+  /*
+    Load photos while the
+    welcome screen is showing.
+  */
 
   await Promise.all([
 
@@ -2221,15 +2994,15 @@ async function startWebsite(){
   ]);
 
 
-  welcomeScreen.style.display =
-    "none";
-
-
   /*
-    FIRST INCOMING CALL
+    HIDE WELCOME
+    SHOW FIRST CALL
   */
 
+  hideAllPages();
+
   showIncomingCall();
+
 
   websiteStarted =
     true;
@@ -2237,7 +3010,9 @@ async function startWebsite(){
 }
 
 
-/* ONLINE NUMBER */
+/* =========================
+   ONLINE NUMBER UPDATE
+========================= */
 
 setInterval(
   function(){
@@ -2249,7 +3024,9 @@ setInterval(
 );
 
 
-/* PREPARE RED LIVE VIDEO */
+/* =========================
+   PREPARE VIDEO
+========================= */
 
 function prepareVideo(){
 
@@ -2257,25 +3034,40 @@ function prepareVideo(){
 
     liveSoundVideo.load();
 
-  }catch(e){}
+  }catch(error){
+
+    console.log(error);
+
+  }
 
 }
 
 
-/* PREPARE RECORDED SOUND PLAYER */
+/* =========================
+   PREPARE AUDIO
+========================= */
 
 function prepareAudio(){
 
   try{
 
+    backgroundSound.preload =
+      "auto";
+
     backgroundSound.load();
 
-  }catch(e){}
+  }catch(error){
+
+    console.log(error);
+
+  }
 
 }
 
 
-/* PAGE SHOW */
+/* =========================
+   PAGE SHOW
+========================= */
 
 window.addEventListener(
   "pageshow",
@@ -2319,7 +3111,9 @@ window.addEventListener(
 );
 
 
-/* VISIBILITY */
+/* =========================
+   VISIBILITY
+========================= */
 
 document.addEventListener(
   "visibilitychange",
@@ -2331,15 +3125,15 @@ document.addEventListener(
 
       stopBackgroundSound();
 
-      stopLiveVideo();
-
     }
 
   }
 );
 
 
-/* CLOSE */
+/* =========================
+   CLOSE PAGE
+========================= */
 
 window.addEventListener(
   "beforeunload",
@@ -2353,7 +3147,9 @@ window.addEventListener(
 );
 
 
-/* START */
+/* =========================
+   START
+========================= */
 
 window.addEventListener(
   "load",
