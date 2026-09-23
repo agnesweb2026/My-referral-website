@@ -1,3 +1,13 @@
 {
-  "type": "module"
+  "name": "mpesa-minutes-app",
+  "version": "1.0.0",
+  "description": "M-PESA package verification and timed minutes",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "express": "^4.21.2"
+  }
 }
