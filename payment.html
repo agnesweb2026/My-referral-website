@@ -1,19 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1.0"
->
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>M-PESA Payment</title>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
@@ -21,9 +13,9 @@
 body{
   margin:0;
   padding:0;
-  font-family:Arial,sans-serif;
   background:#050505;
   color:#fff;
+  font-family:Arial,sans-serif;
   min-height:100vh;
 }
 
@@ -34,9 +26,6 @@ body{
   padding:20px;
 }
 
-
-/* HEADER */
-
 .header{
   text-align:center;
   margin-bottom:25px;
@@ -44,8 +33,8 @@ body{
 
 .header h1{
   margin:0;
-  font-size:28px;
   color:#00ff88;
+  font-size:28px;
 }
 
 .header p{
@@ -53,43 +42,36 @@ body{
   font-size:14px;
 }
 
-
-/* RECIPIENT */
-
 .recipient-box{
   background:#111;
   border:1px solid #00ff88;
-  border-radius:15px;
-  padding:18px;
-  margin-bottom:20px;
+  border-radius:16px;
+  padding:20px;
   text-align:center;
+  margin-bottom:20px;
 }
 
 .recipient-title{
-  font-size:13px;
   color:#aaa;
+  font-size:13px;
   margin-bottom:8px;
 }
 
 .recipient-number{
-  font-size:25px;
-  font-weight:bold;
   color:#00ff88;
+  font-size:27px;
+  font-weight:bold;
 }
 
 .copy-btn{
-  margin-top:10px;
-  padding:10px 16px;
+  margin-top:12px;
+  padding:10px 18px;
   border:1px solid #00ff88;
   border-radius:10px;
   background:transparent;
   color:#00ff88;
   font-weight:bold;
-  cursor:pointer;
 }
-
-
-/* PACKAGES */
 
 .packages{
   display:grid;
@@ -104,7 +86,6 @@ body{
   padding:18px 10px;
   text-align:center;
   cursor:pointer;
-  transition:.2s;
 }
 
 .package:active{
@@ -113,7 +94,7 @@ body{
 
 .package.selected{
   border:2px solid #00ff88;
-  box-shadow:0 0 15px rgba(0,255,136,.25);
+  box-shadow:0 0 18px rgba(0,255,136,.25);
 }
 
 .minutes{
@@ -123,14 +104,14 @@ body{
 
 .price{
   margin-top:8px;
+  color:#00ff88;
   font-size:22px;
   font-weight:bold;
-  color:#00ff88;
 }
 
 .currency{
-  font-size:13px;
   color:#aaa;
+  font-size:13px;
 }
 
 .hot{
@@ -140,21 +121,18 @@ body{
   margin-top:5px;
 }
 
-
-/* PAYMENT */
-
 .payment-area{
   margin-top:25px;
-  background:#101010;
-  border-radius:18px;
   padding:20px;
+  background:#101010;
   border:1px solid #252525;
+  border-radius:18px;
 }
 
 .selected-info{
   text-align:center;
+  color:#aaa;
   margin-bottom:18px;
-  color:#bbb;
 }
 
 .selected-info strong{
@@ -173,18 +151,23 @@ body{
   cursor:pointer;
 }
 
-.pay-btn:active{
-  transform:scale(.98);
-}
-
 .pay-btn:disabled{
   background:#333;
   color:#777;
-  cursor:not-allowed;
 }
 
-
-/* STATUS */
+.open-btn{
+  width:100%;
+  margin-top:12px;
+  padding:16px;
+  border:0;
+  border-radius:14px;
+  background:#087f45;
+  color:#fff;
+  font-size:17px;
+  font-weight:bold;
+  display:none;
+}
 
 .status{
   margin-top:18px;
@@ -203,15 +186,12 @@ body{
   color:#00ff88;
 }
 
-
-/* INSTRUCTIONS */
-
 .instructions{
   margin-top:20px;
-  padding:16px;
+  padding:17px;
   background:#0d0d0d;
-  border-radius:14px;
   border:1px solid #222;
+  border-radius:14px;
 }
 
 .instructions h3{
@@ -222,11 +202,8 @@ body{
 .instructions p{
   color:#aaa;
   font-size:13px;
-  line-height:1.6;
+  line-height:1.7;
 }
-
-
-/* SMALL PHONES */
 
 @media(max-width:380px){
 
@@ -235,296 +212,238 @@ body{
   }
 
 }
-
 </style>
-
 </head>
 
 <body>
 
-
 <div class="container">
 
+  <div class="header">
 
-<!-- HEADER -->
+    <h1>M-PESA PAYMENT</h1>
 
-<div class="header">
-
-  <h1>
-    M-PESA PAYMENT
-  </h1>
-
-  <p>
-    Select your preferred minutes package
-  </p>
-
-</div>
-
-
-<!-- RECIPIENT -->
-
-<div class="recipient-box">
-
-  <div class="recipient-title">
-    SEND MONEY TO
-  </div>
-
-  <div
-    id="recipientDisplay"
-    class="recipient-number"
-  >
-    0783783687
-  </div>
-
-  <button
-    class="copy-btn"
-    onclick="copyNumber()"
-  >
-    COPY NUMBER
-  </button>
-
-</div>
-
-
-<!-- PACKAGES -->
-
-<div class="packages">
-
-
-  <div
-    class="package"
-    onclick="selectPackage(this,30,81)"
-  >
-
-    <div class="minutes">
-      30 Mins
-    </div>
-
-    <div class="price">
-      81
-      <span class="currency">
-        KSh
-      </span>
-    </div>
+    <p>
+      Select your preferred minutes package
+    </p>
 
   </div>
 
 
-  <div
-    class="package"
-    onclick="selectPackage(this,55,138)"
-  >
+  <!-- RECIPIENT -->
 
-    <div class="minutes">
-      55 Mins
+  <div class="recipient-box">
+
+    <div class="recipient-title">
+      SEND MONEY TO
     </div>
 
-    <div class="price">
-      138
-      <span class="currency">
-        KSh
-      </span>
+    <div class="recipient-number">
+      0783783687
     </div>
+
+    <button
+      class="copy-btn"
+      onclick="copyNumber()"
+    >
+      COPY NUMBER
+    </button>
 
   </div>
 
 
-  <div
-    class="package"
-    onclick="selectPackage(this,73,207)"
-  >
+  <!-- PACKAGES -->
 
-    <div class="minutes">
-      73 Mins
+  <div class="packages">
+
+    <div
+      class="package"
+      onclick="selectPackage(this,30,81)"
+    >
+      <div class="minutes">
+        30 Mins
+      </div>
+
+      <div class="price">
+        81
+        <span class="currency">KSh</span>
+      </div>
     </div>
 
-    <div class="price">
-      207
-      <span class="currency">
-        KSh
-      </span>
+
+    <div
+      class="package"
+      onclick="selectPackage(this,55,138)"
+    >
+      <div class="minutes">
+        55 Mins
+      </div>
+
+      <div class="price">
+        138
+        <span class="currency">KSh</span>
+      </div>
     </div>
 
-  </div>
 
+    <div
+      class="package"
+      onclick="selectPackage(this,73,207)"
+    >
+      <div class="minutes">
+        73 Mins
+      </div>
 
-  <div
-    class="package"
-    onclick="selectPackage(this,95,253)"
-  >
-
-    <div class="minutes">
-      95 Mins
+      <div class="price">
+        207
+        <span class="currency">KSh</span>
+      </div>
     </div>
 
-    <div class="price">
-      253
-      <span class="currency">
-        KSh
-      </span>
+
+    <div
+      class="package"
+      onclick="selectPackage(this,95,253)"
+    >
+      <div class="minutes">
+        95 Mins
+      </div>
+
+      <div class="price">
+        253
+        <span class="currency">KSh</span>
+      </div>
     </div>
 
-  </div>
 
+    <div
+      class="package"
+      onclick="selectPackage(this,105,299)"
+    >
+      <div class="minutes">
+        105 Mins
+      </div>
 
-  <div
-    class="package"
-    onclick="selectPackage(this,105,299)"
-  >
-
-    <div class="minutes">
-      105 Mins
+      <div class="price">
+        299
+        <span class="currency">KSh</span>
+      </div>
     </div>
 
-    <div class="price">
-      299
-      <span class="currency">
-        KSh
-      </span>
+
+    <div
+      class="package"
+      onclick="selectPackage(this,166,393)"
+    >
+      <div class="minutes">
+        166 Mins
+      </div>
+
+      <div class="price">
+        393
+        <span class="currency">KSh</span>
+      </div>
+
+      <div class="hot">
+        🔥 HOT
+      </div>
     </div>
 
   </div>
 
 
-  <div
-    class="package"
-    onclick="selectPackage(this,166,393)"
-  >
+  <!-- PAYMENT -->
 
-    <div class="minutes">
-      166 Mins
+  <div class="payment-area">
+
+    <div class="selected-info">
+
+      Selected:
+
+      <strong id="selectedPackage">
+        No package selected
+      </strong>
+
     </div>
 
-    <div class="price">
-      393
-      <span class="currency">
-        KSh
-      </span>
-    </div>
 
-    <div class="hot">
-      🔥 HOT
+    <button
+      id="payButton"
+      class="pay-btn"
+      onclick="payWithMpesa()"
+      disabled
+    >
+      PAY WITH M-PESA
+    </button>
+
+
+    <button
+      id="openButton"
+      class="open-btn"
+      onclick="openMpesaInstructions()"
+    >
+      📱 OPEN M-PESA
+    </button>
+
+
+    <div
+      id="status"
+      class="status"
+    >
+      Select a package to continue.
     </div>
 
   </div>
 
 
-</div>
+  <!-- INSTRUCTIONS -->
 
+  <div class="instructions">
 
-<!-- PAYMENT AREA -->
+    <h3>
+      How to pay
+    </h3>
 
-<div class="payment-area">
+    <p>
 
-  <div class="selected-info">
+      1. Select your package.<br>
 
-    Selected:
+      2. Tap PAY WITH M-PESA.<br>
 
-    <strong id="selectedPackage">
-      No package selected
-    </strong>
+      3. The recipient number will be copied.<br>
+
+      4. Open your green M-PESA app.<br>
+
+      5. Select <b>Send Money</b>.<br>
+
+      6. Paste the copied number.<br>
+
+      7. Enter the selected amount.<br>
+
+      8. Confirm the transaction with your M-PESA PIN.
+
+    </p>
 
   </div>
-
-
-  <button
-    id="payButton"
-    class="pay-btn"
-    onclick="payWithMpesa()"
-    disabled
-  >
-    PAY WITH M-PESA
-  </button>
-
-
-  <div
-    id="status"
-    class="status"
-  >
-    Select a package to continue.
-  </div>
-
-</div>
-
-
-<!-- INSTRUCTIONS -->
-
-<div class="instructions">
-
-  <h3>
-    How to pay
-  </h3>
-
-  <p>
-
-    1. Select your package.<br>
-
-    2. Tap PAY WITH M-PESA.<br>
-
-    3. The number
-    <strong>0783783687</strong>
-    will be copied.<br>
-
-    4. My OneApp will be opened if Android
-    allows the app launch.<br>
-
-    5. Choose Send Money.<br>
-
-    6. Paste the copied number.<br>
-
-    7. Enter the selected amount.<br>
-
-    8. Confirm your payment in M-PESA.
-
-  </p>
-
-</div>
-
 
 </div>
 
 
 <script>
 
+/* =========================
+   SETTINGS
+========================= */
 
-/*
-========================================
-RECIPIENT
-========================================
-*/
+const RECIPIENT = "0783783687";
 
-const RECIPIENT =
-  "0783783687";
-
-
-/*
-========================================
-ANDROID APP
-========================================
-*/
-
-const MPESA_PACKAGE =
-  "com.safaricom.mpesa.lifestyle";
+let selectedMinutes = null;
+let selectedAmount = null;
 
 
-/*
-========================================
-SELECTED PACKAGE
-========================================
-*/
-
-let selectedMinutes =
-  null;
-
-let selectedAmount =
-  null;
-
-
-/*
-========================================
-SELECT PACKAGE
-========================================
-*/
+/* =========================
+   SELECT PACKAGE
+========================= */
 
 function selectPackage(
   element,
@@ -534,15 +453,13 @@ function selectPackage(
 
   document
     .querySelectorAll(".package")
-    .forEach(
-      function(pkg){
+    .forEach(function(pkg){
 
-        pkg.classList.remove(
-          "selected"
-        );
+      pkg.classList.remove(
+        "selected"
+      );
 
-      }
-    );
+    });
 
 
   element.classList.add(
@@ -568,21 +485,24 @@ function selectPackage(
 
   document.getElementById(
     "payButton"
-  ).disabled =
-    false;
+  ).disabled = false;
 
 
-  const status =
-    document.getElementById(
-      "status"
-    );
+  document.getElementById(
+    "openButton"
+  ).style.display =
+    "none";
 
 
-  status.className =
+  document.getElementById(
+    "status"
+  ).className =
     "status";
 
 
-  status.innerHTML =
+  document.getElementById(
+    "status"
+  ).innerHTML =
     "Ready to pay <strong>" +
     amount +
     " KSh</strong> to " +
@@ -592,19 +512,11 @@ function selectPackage(
 }
 
 
-/*
-========================================
-COPY NUMBER
-========================================
-*/
+/* =========================
+   COPY NUMBER
+========================= */
 
 async function copyNumber(){
-
-  const status =
-    document.getElementById(
-      "status"
-    );
-
 
   try{
 
@@ -612,32 +524,21 @@ async function copyNumber(){
       RECIPIENT
     );
 
-
-    status.className =
-      "status success";
-
-
-    status.innerHTML =
-      "Recipient number copied:<br>" +
-      "<strong>" +
-      RECIPIENT +
-      "</strong>";
-
-
   }catch(error){
 
     fallbackCopy();
 
   }
 
+
+  showCopiedMessage();
+
 }
 
 
-/*
-========================================
-FALLBACK COPY
-========================================
-*/
+/* =========================
+   FALLBACK COPY
+========================= */
 
 function fallbackCopy(){
 
@@ -646,10 +547,8 @@ function fallbackCopy(){
       "input"
     );
 
-
   input.value =
     RECIPIENT;
-
 
   input.style.position =
     "fixed";
@@ -657,16 +556,13 @@ function fallbackCopy(){
   input.style.opacity =
     "0";
 
-
   document.body.appendChild(
     input
   );
 
-
   input.focus();
 
   input.select();
-
 
   try{
 
@@ -674,23 +570,28 @@ function fallbackCopy(){
       "copy"
     );
 
-  }catch(e){}
-
+  }catch(error){}
 
   document.body.removeChild(
     input
   );
 
+}
+
+
+/* =========================
+   COPIED MESSAGE
+========================= */
+
+function showCopiedMessage(){
 
   const status =
     document.getElementById(
       "status"
     );
 
-
   status.className =
     "status success";
-
 
   status.innerHTML =
     "Recipient number copied:<br>" +
@@ -701,50 +602,9 @@ function fallbackCopy(){
 }
 
 
-/*
-========================================
-OPEN MY ONEAPP
-========================================
-
-IMPORTANT:
-
-This uses the installed Android
-application package.
-
-It does NOT contain a Play Store URL.
-*/
-
-function openMyOneApp(){
-
-  const intentUrl =
-    "intent:#Intent;" +
-    "action=android.intent.action.MAIN;" +
-    "category=android.intent.category.LAUNCHER;" +
-    "package=" +
-    MPESA_PACKAGE +
-    ";" +
-    "end";
-
-
-  try{
-
-    window.location.href =
-      intentUrl;
-
-  }catch(error){
-
-    showFallback();
-
-  }
-
-}
-
-
-/*
-========================================
-PAY BUTTON
-========================================
-*/
+/* =========================
+   PAY
+========================= */
 
 async function payWithMpesa(){
 
@@ -759,14 +619,8 @@ async function payWithMpesa(){
   }
 
 
-  const status =
-    document.getElementById(
-      "status"
-    );
-
-
   /*
-    Copy number first.
+   COPY RECIPIENT
   */
 
   try{
@@ -794,17 +648,70 @@ async function payWithMpesa(){
 
 
   /*
-    Show payment information.
+   SHOW PAYMENT DETAILS
   */
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
 
   status.className =
     "status success";
 
 
   status.innerHTML =
+
     "Number copied successfully.<br><br>" +
 
-    "Opening M-PESA...<br><br>" +
+    "Send <strong>" +
+    selectedAmount +
+    " KSh</strong> to:<br>" +
+
+    "<strong>" +
+    RECIPIENT +
+    "</strong><br><br>" +
+
+    "Open the green M-PESA app and choose " +
+    "<strong>Send Money</strong>.";
+
+
+  /*
+   SHOW OPEN BUTTON
+  */
+
+  document.getElementById(
+    "openButton"
+  ).style.display =
+    "block";
+
+}
+
+
+/* =========================
+   OPEN INSTRUCTIONS
+========================= */
+
+function openMpesaInstructions(){
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+
+  status.className =
+    "status success";
+
+
+  status.innerHTML =
+
+    "Your number is already copied.<br><br>" +
+
+    "Open the green M-PESA app.<br>" +
+
+    "Choose <strong>Send Money</strong>.<br><br>" +
 
     "Recipient:<br>" +
 
@@ -818,96 +725,9 @@ async function payWithMpesa(){
     selectedAmount +
     " KSh</strong>";
 
-
-  /*
-    Open app directly.
-  */
-
-  openMyOneApp();
-
-
-  /*
-    Do NOT redirect to Play Store.
-    If the app does not open,
-    show manual instructions.
-  */
-
-  setTimeout(
-    function(){
-
-      showFallback();
-
-    },
-    4000
-  );
-
 }
-
-
-/*
-========================================
-FALLBACK
-========================================
-*/
-
-function showFallback(){
-
-  const status =
-    document.getElementById(
-      "status"
-    );
-
-
-  status.className =
-    "status";
-
-
-  status.innerHTML =
-
-    "<strong>Open M-PESA manually</strong>" +
-
-    "<br><br>" +
-
-    "Recipient:<br>" +
-
-    "<strong>" +
-    RECIPIENT +
-    "</strong>" +
-
-    "<br><br>" +
-
-    "Amount:<br>" +
-
-    "<strong>" +
-    selectedAmount +
-    " KSh</strong>" +
-
-    "<br><br>" +
-
-    "The number has been copied. " +
-
-    "Open My OneApp → M-PESA → Send Money " +
-
-    "and paste the number.";
-
-}
-
-
-/*
-========================================
-DISPLAY RECIPIENT
-========================================
-*/
-
-document.getElementById(
-  "recipientDisplay"
-).textContent =
-  RECIPIENT;
-
 
 </script>
 
-
 </body>
-
 </html>
