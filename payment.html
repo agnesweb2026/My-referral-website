@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -17,8 +18,7 @@
   box-sizing:border-box;
 }
 
-html,
-body{
+html,body{
   margin:0;
   padding:0;
   min-height:100%;
@@ -32,8 +32,6 @@ body{
   overflow-x:hidden;
   position:relative;
 }
-
-/* NEON BACKGROUND */
 
 body::before{
   content:"";
@@ -63,16 +61,12 @@ body::after{
   z-index:-2;
 }
 
-/* CONTAINER */
-
 .container{
   width:100%;
   max-width:520px;
   margin:auto;
   padding:20px 14px 40px;
 }
-
-/* HEADER */
 
 .header{
   text-align:center;
@@ -83,7 +77,6 @@ body::after{
   margin:0;
   font-size:28px;
   color:#fff;
-
   text-shadow:
     0 0 8px #00c8ff,
     0 0 20px #006eff;
@@ -95,129 +88,73 @@ body::after{
   font-size:14px;
 }
 
-/* PAYMENT CARD */
-
 .payment-card{
   position:relative;
-
-  background:
-    rgba(8,12,40,.90);
-
-  border:
-    1px solid
-    rgba(0,195,255,.45);
-
+  background:rgba(8,12,40,.90);
+  border:1px solid rgba(0,195,255,.45);
   border-radius:22px;
-
   padding:18px;
-
   box-shadow:
     0 0 20px rgba(0,150,255,.18),
     inset 0 0 25px rgba(0,100,255,.05);
 }
 
-/* SEND MONEY NUMBER */
-
 .till{
   margin:0 0 20px;
-
   padding:13px;
-
   border-radius:13px;
-
-  background:
-    rgba(0,0,0,.35);
-
-  border:
-    1px solid
-    rgba(255,255,255,.12);
-
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.12);
   text-align:center;
-
   font-size:14px;
 }
 
 .till strong{
   display:inline-block;
-
   color:#00e5ff;
-
   font-size:17px;
-
   margin-left:5px;
 }
 
 .copy-till{
   margin-left:8px;
-
   padding:7px 10px;
-
   border:0;
-
   border-radius:8px;
-
   background:#168cff;
-
   color:white;
-
   font-size:12px;
-
   font-weight:bold;
-
   cursor:pointer;
-
-  box-shadow:
-    0 0 10px
-    rgba(22,140,255,.5);
+  box-shadow:0 0 10px rgba(22,140,255,.5);
 }
 
 .copy-till:active{
   transform:scale(.95);
 }
 
-/* PACKAGE GRID */
-
 .packages{
   display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
+  grid-template-columns:1fr 1fr;
   gap:12px;
 }
 
-/* PACKAGE */
-
 .package{
   position:relative;
-
   min-height:190px;
-
-  border:
-    1px solid
-    rgba(0,208,255,.35);
-
+  border:1px solid rgba(0,208,255,.35);
   border-radius:18px;
-
   background:
     linear-gradient(
       145deg,
       rgba(15,27,83,.96),
       rgba(5,7,28,.96)
     );
-
   color:white;
-
   padding:14px 8px;
-
   cursor:pointer;
-
   overflow:hidden;
-
-  box-shadow:
-    0 0 12px
-    rgba(0,180,255,.08);
-
+  box-shadow:0 0 12px rgba(0,180,255,.08);
   transition:.2s;
 }
 
@@ -226,131 +163,78 @@ body::after{
 }
 
 .package.selected{
-  border:
-    2px solid
-    #00e5ff;
-
+  border:2px solid #00e5ff;
   box-shadow:
     0 0 12px #00bfff,
-    0 0 30px
-    rgba(0,180,255,.35);
+    0 0 30px rgba(0,180,255,.35);
 }
-
-/* HOT */
 
 .hot{
   position:absolute;
-
   top:8px;
   right:8px;
-
   background:#ff1744;
-
   color:white;
-
   font-size:10px;
-
   font-weight:bold;
-
   padding:5px 7px;
-
   border-radius:8px;
-
-  box-shadow:
-    0 0 12px
-    rgba(255,23,68,.7);
+  box-shadow:0 0 12px rgba(255,23,68,.7);
 }
-
-/* CAMERA */
 
 .camera-circle{
   width:62px;
   height:62px;
-
-  margin:
-    12px auto 10px;
-
+  margin:12px auto 10px;
   display:flex;
-
   align-items:center;
   justify-content:center;
-
   border-radius:50%;
-
   background:
     radial-gradient(
       circle,
       #263db0,
       #080c35
     );
-
-  border:
-    2px solid
-    #12c7ff;
-
+  border:2px solid #12c7ff;
   box-shadow:
     0 0 15px #08bfff,
-    inset 0 0 18px
-    rgba(0,200,255,.3);
-
+    inset 0 0 18px rgba(0,200,255,.3);
   font-size:27px;
 }
 
-/* MINUTES */
-
 .minutes{
   display:block;
-
   font-size:17px;
-
   font-weight:bold;
-
   color:#fff;
-
   margin-bottom:9px;
-
   text-align:center;
 }
 
-/* PRICE */
-
 .price{
   display:flex;
-
   flex-direction:column;
-
   gap:4px;
-
   align-items:center;
-
   font-size:13px;
-
   color:#dce8ff;
 }
 
 .price-row{
   display:flex;
-
   align-items:center;
-
   gap:5px;
 }
-
-/* CURRENCY */
 
 .currency-icon{
   width:21px;
   height:21px;
-
   border-radius:50%;
-
   display:inline-flex;
-
   align-items:center;
   justify-content:center;
-
   font-size:9px;
-
   font-weight:bold;
 }
 
@@ -366,90 +250,52 @@ body::after{
   background:#ff9d21;
 }
 
-/* SELECTED PACKAGE */
-
 .selected-info{
   display:none;
-
   margin-top:18px;
-
   padding:13px;
-
   border-radius:12px;
-
   text-align:center;
-
-  background:
-    rgba(0,229,255,.08);
-
-  border:
-    1px solid
-    rgba(0,229,255,.25);
-
+  background:rgba(0,229,255,.08);
+  border:1px solid rgba(0,229,255,.25);
   color:#dffaff;
-
   font-size:14px;
 }
-  /* PAY BUTTON */
 
 .pay{
   display:block;
-
   width:100%;
-
   margin-top:15px;
-
   padding:15px;
-
   border:0;
-
   border-radius:13px;
-
   background:
     linear-gradient(
       90deg,
       #00b7ff,
       #176cff
     );
-
   color:white;
-
   font-size:16px;
-
   font-weight:bold;
-
   cursor:pointer;
-
   box-shadow:
-    0 0 15px
-    rgba(0,174,255,.45);
+    0 0 15px rgba(0,174,255,.45);
 }
 
 .pay:active{
   transform:scale(.98);
 }
 
-/* STATUS */
-
 .payment-status{
   display:none;
-
   margin-top:15px;
-
   padding:12px;
-
   border-radius:12px;
-
   text-align:center;
-
   font-size:14px;
-
-  background:
-    rgba(0,0,0,.3);
-
-  border:
-    1px solid
-    rgba(255,255,255,.1);
+  background:rgba(0,0,0,.3);
+  border:1px solid rgba(255,255,255,.1);
 }
 
 .status-info{
@@ -460,32 +306,17 @@ body::after{
   color:#ff4747;
 }
 
-/* INSTRUCTIONS */
-
 .instructions{
   margin-top:15px;
-
   padding:12px;
-
   border-radius:12px;
-
-  background:
-    rgba(0,0,0,.25);
-
-  border:
-    1px solid
-    rgba(255,255,255,.08);
-
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.08);
   color:#9da9c9;
-
   font-size:12px;
-
   line-height:1.5;
-
   text-align:center;
 }
-
-/* MOBILE */
 
 @media(max-width:360px){
 
@@ -507,15 +338,16 @@ body::after{
 
 }
 
-/* END CSS */
-
 </style>
 
 </head>
 
+
 <body>
 
+
 <div class="container">
+
 
   <div class="header">
 
@@ -529,7 +361,9 @@ body::after{
 
   </div>
 
+
   <div class="payment-card">
+
 
     <div class="till">
 
@@ -542,382 +376,378 @@ body::after{
       <button
         type="button"
         class="copy-till"
-        id="copyTillButton">
-
+        id="copyTillButton"
+      >
         📋 COPY
+      </button>
+
+    </div>
+
+
+    <div class="packages">
+
+
+      <!-- 30 -->
+
+      <button
+        type="button"
+        class="package"
+        data-amount="81"
+        data-minutes="30"
+      >
+
+        <div class="camera-circle">
+          🎥
+        </div>
+
+        <span class="minutes">
+          30 Mins
+        </span>
+
+        <div class="price">
+
+          <div class="price-row">
+            <span class="currency-icon kes">
+              KSh
+            </span>
+            KSh 81
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon usd">
+              $
+            </span>
+            $0.62
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon eur">
+              €
+            </span>
+            €0.57
+          </div>
+
+        </div>
+
+      </button>
+
+
+      <!-- 55 -->
+
+      <button
+        type="button"
+        class="package"
+        data-amount="138"
+        data-minutes="55"
+      >
+
+        <div class="camera-circle">
+          🎥
+        </div>
+
+        <span class="minutes">
+          55 Mins
+        </span>
+
+        <div class="price">
+
+          <div class="price-row">
+            <span class="currency-icon kes">
+              KSh
+            </span>
+            KSh 138
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon usd">
+              $
+            </span>
+            $1.06
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon eur">
+              €
+            </span>
+            €0.97
+          </div>
+
+        </div>
+
+      </button>
+
+
+      <!-- 73 -->
+
+      <button
+        type="button"
+        class="package"
+        data-amount="207"
+        data-minutes="73"
+      >
+
+        <div class="camera-circle">
+          🎥
+        </div>
+
+        <span class="minutes">
+          73 Mins
+        </span>
+
+        <div class="price">
+
+          <div class="price-row">
+            <span class="currency-icon kes">
+              KSh
+            </span>
+            KSh 207
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon usd">
+              $
+            </span>
+            $1.59
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon eur">
+              €
+            </span>
+            €1.45
+          </div>
+
+        </div>
+
+      </button>
+
+
+      <!-- 95 -->
+
+      <button
+        type="button"
+        class="package"
+        data-amount="253"
+        data-minutes="95"
+      >
+
+        <div class="camera-circle">
+          🎥
+        </div>
+
+        <span class="minutes">
+          95 Mins
+        </span>
+
+        <div class="price">
+
+          <div class="price-row">
+            <span class="currency-icon kes">
+              KSh
+            </span>
+            KSh 253
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon usd">
+              $
+            </span>
+            $1.95
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon eur">
+              €
+            </span>
+            €1.77
+          </div>
+
+        </div>
+
+      </button>
+
+
+      <!-- 105 -->
+
+      <button
+        type="button"
+        class="package"
+        data-amount="299"
+        data-minutes="105"
+      >
+
+        <div class="camera-circle">
+          🎥
+        </div>
+
+        <span class="minutes">
+          105 Mins
+        </span>
+
+        <div class="price">
+
+          <div class="price-row">
+            <span class="currency-icon kes">
+              KSh
+            </span>
+            KSh 299
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon usd">
+              $
+            </span>
+            $2.30
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon eur">
+              €
+            </span>
+            €2.09
+          </div>
+
+        </div>
+
+      </button>
+
+
+      <!-- 166 -->
+
+      <button
+        type="button"
+        class="package"
+        data-amount="393"
+        data-minutes="166"
+      >
+
+        <span class="hot">
+          🔥 HOT
+        </span>
+
+        <div class="camera-circle">
+          🎥
+        </div>
+
+        <span class="minutes">
+          166 Mins
+        </span>
+
+        <div class="price">
+
+          <div class="price-row">
+            <span class="currency-icon kes">
+              KSh
+            </span>
+            KSh 393
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon usd">
+              $
+            </span>
+            $3.02
+          </div>
+
+          <div class="price-row">
+            <span class="currency-icon eur">
+              €
+            </span>
+            €2.75
+          </div>
+
+        </div>
 
       </button>
 
     </div>
-    <div class="packages">
-
-  <!-- 30 MINUTES -->
-
-  <button
-    type="button"
-    class="package"
-    data-amount="81"
-    data-minutes="30">
-
-    <div class="camera-circle">
-      🎥
-    </div>
-
-    <span class="minutes">
-      30 Mins
-    </span>
-
-    <div class="price">
-
-      <div class="price-row">
-        <span class="currency-icon kes">
-          KSh
-        </span>
-
-        KSh 81
-      </div>
-
-      <div class="price-row">
-        <span class="currency-icon usd">
-          $
-        </span>
-
-        $0.62
-      </div>
-
-      <div class="price-row">
-        <span class="currency-icon eur">
-          €
-        </span>
-
-        €0.57
-      </div>
-
-    </div>
-
-  </button>
 
 
-  <!-- 55 MINUTES -->
+    <div
+      class="selected-info"
+      id="selectedInfo"
+    ></div>
 
-  <button
-    type="button"
-    class="package"
-    data-amount="138"
-    data-minutes="55">
 
-    <div class="camera-circle">
-      🎥
-    </div>
+    <button
+      type="button"
+      class="pay"
+      id="payButton"
+    >
+      💚 PAY WITH M-PESA
+    </button>
 
-    <span class="minutes">
-      55 Mins
-    </span>
 
-    <div class="price">
+    <div
+      class="payment-status"
+      id="paymentStatus"
+    ></div>
 
-      <div class="price-row">
-        <span class="currency-icon kes">
-          KSh
-        </span>
 
-        KSh 138
-      </div>
+    <div class="instructions">
 
-      <div class="price-row">
-        <span class="currency-icon usd">
-          $
-        </span>
+      Tap
+      <strong>PAY WITH M-PESA</strong>
+      to open the M-PESA Send Money route.
 
-        $1.06
-      </div>
+      <br><br>
 
-      <div class="price-row">
-        <span class="currency-icon eur">
-          €
-        </span>
+      Recipient:
 
-        €0.97
-      </div>
+      <strong>
+        0783783687
+      </strong>
+
+      <br><br>
+
+      The amount selected above is shown for your
+      reference. Confirm the amount inside M-PESA
+      before entering your PIN.
 
     </div>
-
-  </button>
-
-
-  <!-- 73 MINUTES -->
-
-  <button
-    type="button"
-    class="package"
-    data-amount="207"
-    data-minutes="73">
-
-    <div class="camera-circle">
-      🎥
-    </div>
-
-    <span class="minutes">
-      73 Mins
-    </span>
-
-    <div class="price">
-
-      <div class="price-row">
-        <span class="currency-icon kes">
-          KSh
-        </span>
-
-        KSh 207
-      </div>
-
-      <div class="price-row">
-        <span class="currency-icon usd">
-          $
-        </span>
-
-        $1.59
-      </div>
-
-      <div class="price-row">
-        <span class="currency-icon eur">
-          €
-        </span>
-
-        €1.45
-      </div>
-
-    </div>
-
-  </button>
-
-
-  <!-- 95 MINUTES -->
-
-  <button
-    type="button"
-    class="package"
-    data-amount="253"
-    data-minutes="95">
-
-    <div class="camera-circle">
-      🎥
-    </div>
-
-    <span class="minutes">
-      95 Mins
-    </span>
-
-    <div class="price">
-
-      <div class="price-row">
-        <span class="currency-icon kes">
-          KSh
-        </span>
-
-        KSh 253
-      </div>
-
-      <div class="price-row">
-        <span class="currency-icon usd">
-          $
-        </span>
-
-        $1.95
-      </div>
-
-      <div class="price-row">
-        <span class="currency-icon eur">
-          €
-        </span>
-
-        €1.77
-      </div>
-
-    </div>
-
-  </button>
-
-
-  <!-- 105 MINUTES -->
-
-  <button
-    type="button"
-    class="package"
-    data-amount="299"
-    data-minutes="105">
-
-    <div class="camera-circle">
-      🎥
-    </div>
-
-    <span class="minutes">
-      105 Mins
-    </span>
-
-    <div class="price">
-
-      <div class="price-row">
-        <span class="currency-icon kes">
-          KSh
-        </span>
-
-        KSh 299
-      </div>
-
-      <div class="price-row">
-        <span class="currency-icon usd">
-          $
-        </span>
-
-        $2.30
-      </div>
-
-      <div class="price-row">
-        <span class="currency-icon eur">
-          €
-        </span>
-
-        €2.09
-      </div>
-
-    </div>
-
-  </button>
-
-
-  <!-- 166 MINUTES — FINAL HOT PACKAGE -->
-
-  <button
-    type="button"
-    class="package"
-    data-amount="393"
-    data-minutes="166">
-
-    <span class="hot">
-      🔥 HOT
-    </span>
-
-    <div class="camera-circle">
-      🎥
-    </div>
-
-    <span class="minutes">
-      166 Mins
-    </span>
-
-    <div class="price">
-
-      <div class="price-row">
-        <span class="currency-icon kes">
-          KSh
-        </span>
-
-        KSh 393
-      </div>
-
-      <div class="price-row">
-        <span class="currency-icon usd">
-          $
-        </span>
-
-        $3.02
-      </div>
-
-      <div class="price-row">
-        <span class="currency-icon eur">
-          €
-        </span>
-
-        €2.75
-      </div>
-
-    </div>
-
-  </button>
-
-</div>
-
-
-<div
-  class="selected-info"
-  id="selectedInfo">
-</div>
-<button
-  type="button"
-  class="pay"
-  id="payButton">
-
-  💚 PAY WITH M-PESA
-
-</button>
-
-
-<div
-  class="payment-status"
-  id="paymentStatus">
-</div>
-
-
-<div class="instructions">
-
-  Tap
-  <strong>PAY WITH M-PESA</strong>
-  to open the M-PESA
-  Send Money service.
-
-  <br><br>
-
-  Recipient:
-
-  <strong>
-    0783783687
-  </strong>
-
-  <br>
-
-  Enter the amount yourself
-  and complete the payment
-  using your M-PESA PIN.
-
-</div>
 
 
   </div>
+
 
 </div>
 
 
 <script>
-  let selectedPackage = null;
 
 
-/* ELEMENTS */
+let selectedPackage = null;
+
 
 const packages =
   document.querySelectorAll(
     ".package"
   );
 
+
 const selectedInfo =
   document.getElementById(
     "selectedInfo"
   );
+
 
 const payButton =
   document.getElementById(
     "payButton"
   );
 
+
 const paymentStatus =
   document.getElementById(
     "paymentStatus"
   );
 
+
 const copyTillButton =
   document.getElementById(
     "copyTillButton"
   );
+
 
 const tillNumber =
   document.getElementById(
@@ -973,9 +803,6 @@ packages.forEach(
 
         paymentStatus.style.display =
           "none";
-
-        paymentStatus.textContent =
-          "";
 
       }
     );
@@ -1072,57 +899,28 @@ payButton.addEventListener(
 
 
     paymentStatus.textContent =
-      "Opening M-PESA...";
+      "Opening M-PESA Send Money...";
 
 
     /*
-      TEST M-PESA USSD ROUTE
+      DEEPER USSD TEST
 
-      This asks Android to open
-      the phone dialer/USSD handler
-      with the M-PESA Send Money
-      shortcut.
+      *334#      = M-PESA main menu
+      *334*1#    = first menu option
 
-      No payment is automatically
-      confirmed by this website.
+      This does NOT enter an M-PESA PIN.
     */
-
-    const ussd =
-      "*334#";
-
-
-    const encoded =
-      encodeURIComponent(
-        ussd
-      );
-
 
     window.location.href =
-      "tel:" + encoded;
-
-
-    /*
-      Fallback message after
-      a short delay.
-    */
-
-    setTimeout(
-      function(){
-
-        paymentStatus.className =
-          "payment-status status-info";
-
-        paymentStatus.textContent =
-          "If M-PESA did not open, dial *334# and choose Send Money.";
-
-      },
-      2500
-    );
+      "tel:*334*1%23";
 
   }
 );
 
+
 </script>
 
+
 </body>
-</html>
+
+  </html>
