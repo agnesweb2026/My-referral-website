@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>M-PESA PAYMENT</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #050505;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ff66;
+      margin-bottom: 25px;
+    }
+
+    .recipient {
+      background: #111;
+      border: 1px solid #00ff66;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .number {
+      font-size: 22px;
+      font-weight: bold;
+      color: #00ff66;
+      margin: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .copy {
+      background: #00ff66;
+      color: #000;
+    }
+
+    .packages {
+      display: grid;
+      gap: 12px;
+    }
+
+    .package {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 15px;
+      cursor: pointer;
+    }
+
+    .package.selected {
+      border: 2px solid #00ff66;
+      background: #102015;
+    }
+
+    .package strong {
+      display: block;
+      font-size: 19px;
+    }
+
+    .price {
+      color: #00ff66;
+      font-size: 18px;
+      margin-top: 5px;
+    }
+
+    .pay {
+      width: 100%;
+      margin-top: 20px;
+      background: #00ff66;
+      color: #000;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      background: #111;
+      color: white;
+      resize: vertical;
+    }
+
+    .verify {
+      width: 100%;
+      margin-top: 10px;
+      background: #00ff66;
+      color: #000;
+    }
+
+    .status {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #111;
+      text-align: center;
+    }
+
+    .timer {
+      font-size: 40px;
+      font-weight: bold;
+      color: #00ff66;
+      text-align: center;
+      margin: 25px 0;
+    }
+
+    .error {
+      color: #ff4444;
+    }
+
+    .success {
+      color: #00ff66;
+    }
+
+    #paymentArea {
+      display: none;
+    }
+
+    #activeArea {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>M-PESA PAYMENT</h1>
+
+  <div class="recipient">
+    <div>Send payment to:</div>
+
+    <div class="number" id="recipient">
+      0783783687
+    </div>
+
+    <button class="copy" onclick="copyNumber()">
+      COPY NUMBER
+    </button>
+  </div>
+
+  <div class="packages">
+
+    <div class="package" data-minutes="30" data-price="81">
+      <strong>30 Minutes</strong>
+      <div class="price">KSh 81</div>
+    </div>
+
+    <div class="package" data-minutes="55" data-price="138">
+      <strong>55 Minutes</strong>
+      <div class="price">KSh 138</div>
+    </div>
+
+    <div class="package" data-minutes="73" data-price="207">
+      <strong>73 Minutes</strong>
+      <div class="price">KSh 207</div>
+    </div>
+
+    <div class="package" data-minutes="95" data-price="253">
+      <strong>95 Minutes</strong>
+      <div class="price">KSh 253</div>
+    </div>
+
+    <div class="package" data-minutes="105" data-price="299">
+      <strong>105 Minutes</strong>
+      <div class="price">KSh 299</div>
+    </div>
+
+    <div class="package" data-minutes="166" data-price="393">
+      <strong>166 Minutes</strong>
+      <div class="price">KSh 393</div>
+    </div>
+
+  </div>
+
+  <button class="pay" onclick="showPayment()">
+    I HAVE PAID
+  </button>
+
+
+  <div id="paymentArea">
+
+    <textarea
+      id="sms"
+      placeholder="Paste the complete M-PESA confirmation SMS here..."
+    ></textarea>
+
+    <button class="verify" onclick="verifyPayment()">
+      VERIFY PAYMENT
+    </button>
+
+    <div id="status" class="status"></div>
+
+  </div>
+
+
+  <div id="activeArea">
+
+    <h2 style="text-align:center">
+      MINUTES ACTIVE
+    </h2>
+
+    <div id="timer" class="timer">
+      00:00
+    </div>
+
+    <div class="status success">
+      Your purchased minutes are active.
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+let selectedMinutes = null;
+let countdown = null;
+
+
+document.querySelectorAll(".package")
+.forEach(pkg => {
+
+  pkg.addEventListener("click", () => {
+
+    document
+      .querySelectorAll(".package")
+      .forEach(p => p.classList.remove("selected"));
+
+    pkg.classList.add("selected");
+
+    selectedMinutes =
+      Number(pkg.dataset.minutes);
+
+  });
+
+});
+
+
+function copyNumber() {
+
+  navigator.clipboard.writeText("0783783687");
+
+  alert("Number copied.");
+}
+
+
+function showPayment() {
+
+  if (!selectedMinutes) {
+
+    alert("Please select a package first.");
+
+    return;
+  }
+
+  document.getElementById(
+    "paymentArea"
+  ).style.display = "block";
+
+}
+
+
+async function verifyPayment() {
+
+  const sms =
+    document.getElementById("sms").value.trim();
+
+  const status =
+    document.getElementById("status");
+
+  if (!sms) {
+
+    status.innerHTML =
+      '<span class="error">Paste the M-PESA SMS first.</span>';
+
+    return;
+  }
+
+
+  status.innerHTML =
+    "Checking payment...";
+
+
+  try {
+
+    const response =
+      await fetch("/api/verify", {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          sms,
+          minutes: selectedMinutes
+        })
+
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      status.innerHTML =
+        `<span class="error">${result.message}</span>`;
+
+      return;
+    }
+
+
+    // Save only the expiry information.
+    localStorage.setItem(
+      "minutesExpiry",
+      String(result.expiresAt)
+    );
+
+
+    localStorage.setItem(
+      "transactionCode",
+      result.transactionCode
+    );
+
+
+    startTimer(result.expiresAt);
+
+
+  } catch (error) {
+
+    status.innerHTML =
+      '<span class="error">Could not contact server.</span>';
+
+  }
+
+}
+
+
+function startTimer(expiresAt) {
+
+  document.getElementById(
+    "paymentArea"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "activeArea"
+  ).style.display = "block";
+
+
+  clearInterval(countdown);
+
+
+  function update() {
+
+    const remaining =
+      Math.max(0, expiresAt - Date.now());
+
+
+    if (remaining <= 0) {
+
+      clearInterval(countdown);
+
+      expireMinutes();
+
+      return;
+    }
+
+
+    const totalSeconds =
+      Math.floor(remaining / 1000);
+
+    const minutes =
+      Math.floor(totalSeconds / 60);
+
+    const seconds =
+      totalSeconds % 60;
+
+
+    document.getElementById(
+      "timer"
+    ).textContent =
+      `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+  }
+
+
+  update();
+
+  countdown =
+    setInterval(update, 1000);
+}
+
+
+function expireMinutes() {
+
+  localStorage.removeItem(
+    "minutesExpiry"
+  );
+
+  localStorage.removeItem(
+    "transactionCode"
+  );
+
+
+  document.getElementById(
+    "activeArea"
+  ).innerHTML = `
+
+    <h2 style="text-align:center">
+      MINUTES EXPIRED
+    </h2>
+
+    <div class="status error">
+      Your minutes have ended.
+      <br><br>
+      Please make a new payment to continue.
+    </div>
+
+    <button
+      class="pay"
+      onclick="location.reload()"
+    >
+      PAY AGAIN
+    </button>
+
+  `;
+
+}
+
+
+// Restore timer after page refresh.
+window.addEventListener("load", () => {
+
+  const expiry =
+    Number(
+      localStorage.getItem("minutesExpiry")
+    );
+
+  if (expiry && expiry > Date.now()) {
+
+    startTimer(expiry);
+
+  } else {
+
+    localStorage.removeItem(
+      "minutesExpiry"
+    );
+
+    localStorage.removeItem(
+      "transactionCode"
+    );
+
+  }
+
+});
+
+</script>
+
+</body>
+  </html>
