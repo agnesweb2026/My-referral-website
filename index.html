@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>My Referral Website</title>
 
 <style>
@@ -92,13 +87,8 @@ body{
 }
 
 @keyframes blinkGreen{
-  0%,100%{
-    opacity:1
-  }
-
-  50%{
-    opacity:.25
-  }
+  0%,100%{opacity:1}
+  50%{opacity:.25}
 }
 
 .liveTitle{
@@ -219,7 +209,6 @@ body{
 }
 
 @keyframes videoPulse{
-
   0%{
     transform:translate(-50%,-50%) scale(1);
     opacity:1;
@@ -234,7 +223,6 @@ body{
     transform:translate(-50%,-50%) scale(1);
     opacity:1;
   }
-
 }
 
 
@@ -495,6 +483,19 @@ body{
 }
 
 
+/* HIDDEN RECORDED SOUND PLAYER */
+
+#backgroundSound{
+  position:fixed;
+  width:1px;
+  height:1px;
+  left:-10px;
+  top:-10px;
+  opacity:.01;
+  pointer-events:none;
+}
+
+
 /* SMALL PHONES */
 
 @media(max-width:360px){
@@ -536,7 +537,6 @@ body{
 }
 
 </style>
-
 </head>
 
 <body>
@@ -581,8 +581,9 @@ body{
 
   </div>
 
-  <div id="photoGrid"
-       class="photoGrid">
+  <div
+    id="photoGrid"
+    class="photoGrid">
   </div>
 
 </div>
@@ -619,6 +620,9 @@ body{
 
     <div class="swipe-area">
 
+
+      <!-- DECLINE -->
+
       <div
         id="declineSwipe"
         class="swipe-bar decline-swipe">
@@ -638,6 +642,8 @@ body{
       </div>
 
 
+      <!-- ANSWER -->
+
       <div
         id="answerSwipe"
         class="swipe-bar answer-swipe">
@@ -656,6 +662,7 @@ body{
 
       </div>
 
+
       <div class="swipe-hint">
         Swipe the control to respond
       </div>
@@ -667,10 +674,11 @@ body{
 </div>
 
 
-<!-- FIRST LIVE VIDEO -->
+<!-- FIRST RED LIVE VIDEO -->
 
-<div id="liveSoundPage"
-     class="page">
+<div
+  id="liveSoundPage"
+  class="page">
 
   <div class="liveBadgeTop">
 
@@ -696,8 +704,9 @@ body{
 
 <!-- SECOND BLACK LIVE -->
 
-<div id="blackLivePage"
-     class="page">
+<div
+  id="blackLivePage"
+  class="page">
 
   <div class="liveBadgeTop">
 
@@ -716,8 +725,9 @@ body{
 
 <!-- INSUFFICIENT -->
 
-<div id="insufficientPage"
-     class="page">
+<div
+  id="insufficientPage"
+  class="page">
 
   <div class="insufficientTitle">
     Insufficient Minutes
@@ -731,13 +741,13 @@ body{
 </div>
 
 
-<!-- RANDOM AUDIO -->
+<!-- RANDOM RECORDED SOUND PLAYER -->
 
-<audio
+<video
   id="backgroundSound"
-  preload="auto"
-  playsinline>
-</audio>
+  playsinline
+  preload="auto">
+</video>
 
 
 <script>
@@ -754,24 +764,8 @@ const GITHUB_BRANCH =
 const MAX_PHOTOS =
   24;
 
-
-/*
-  FIRST RED LIVE VIDEO
-  20 seconds
-*/
-
 const PHOTOS_DURATION =
   20000;
-
-
-/*
-  BLACK LIVE SOUND
-  EXACTLY 5 SECONDS
-*/
-
-const SECOND_CALL_SOUND_DURATION =
-  5000;
-
 
 const INSUFFICIENT_DURATION =
   2000;
@@ -779,12 +773,36 @@ const INSUFFICIENT_DURATION =
 const BUSY_CHANGE_DURATION =
   300000;
 
+const SECOND_CALL_SOUND_DURATION =
+  5000;
+
 const PAYMENT_PAGE_URL =
   "payment.html";
 
-
 const RED_LIVE_KEY =
   "redLiveVideoSeen";
+
+
+/*
+================================================
+RECORDED SOUNDS
+================================================
+These are your 4 uploaded recordings.
+One is selected randomly on every Black Live.
+================================================
+*/
+
+const recordedSounds = [
+
+  "Screen_Recording_20260923_113344.mp4",
+
+  "Screen_Recording_20260923_113631.mp4",
+
+  "Screen_Recording_20260923_113713.mp4",
+
+  "Screen_Recording_20260923_113509.mp4"
+
+];
 
 
 let redLiveShownThisVisit =
@@ -821,14 +839,8 @@ let soundTimer =
 let liveVideoSafetyTimer =
   null;
 
-
-/*
-  RANDOM AUDIO FILES
-*/
-
-let audioFiles = [];
-
-let currentAudio = null;
+let lastSoundIndex =
+  -1;
 
 
 /* NAMES */
@@ -979,7 +991,9 @@ const declineSwipe =
   document.getElementById(
     "declineSwipe"
   );
- function hideAllPages(){
+
+
+function hideAllPages(){
 
   welcomeScreen.style.display =
     "none";
@@ -1014,8 +1028,20 @@ function clearAllTimers(){
 
   clearTimeout(liveVideoSafetyTimer);
 
+  if(
+    busyRotationTimer
+  ){
+
+    clearInterval(
+      busyRotationTimer
+    );
+
+  }
+
 }
 
+
+/* STOP RECORDED SOUND */
 
 function stopBackgroundSound(){
 
@@ -1023,12 +1049,21 @@ function stopBackgroundSound(){
 
     backgroundSound.pause();
 
-    backgroundSound.currentTime = 0;
+    backgroundSound.currentTime =
+      0;
+
+    backgroundSound.removeAttribute(
+      "src"
+    );
+
+    backgroundSound.load();
 
   }catch(e){}
 
 }
 
+
+/* STOP RED VIDEO */
 
 function stopLiveVideo(){
 
@@ -1036,7 +1071,8 @@ function stopLiveVideo(){
 
     liveSoundVideo.pause();
 
-    liveSoundVideo.currentTime = 0;
+    liveSoundVideo.currentTime =
+      0;
 
   }catch(e){}
 
@@ -1051,14 +1087,14 @@ function shuffleArray(array){
     [...array];
 
   for(
-    let i = arr.length - 1;
-    i > 0;
+    let i=arr.length-1;
+    i>0;
     i--
   ){
 
     const j =
       Math.floor(
-        Math.random() * (i + 1)
+        Math.random()*(i+1)
       );
 
     [
@@ -1080,7 +1116,7 @@ function shuffleArray(array){
 /* GITHUB */
 
 async function getGitHubContents(
-  path = ""
+  path=""
 ){
 
   const url =
@@ -1112,28 +1148,15 @@ function isImageFile(name){
 }
 
 
-/*
-  AUDIO FILE TYPES
-*/
-
-function isAudioFile(name){
-
-  return /\.(mp3|wav|m4a|ogg|aac|mp4)$/i
-    .test(name);
-
-}
-
-
 async function collectImages(
-  path = "",
-  result = []
+  path="",
+  result=[]
 ){
 
   const items =
     await getGitHubContents(
       path
     );
-
 
   for(
     const item of items
@@ -1150,7 +1173,6 @@ async function collectImages(
 
     }
 
-
     if(item.type === "dir"){
 
       await collectImages(
@@ -1159,7 +1181,6 @@ async function collectImages(
       );
 
     }
-
 
     if(
       result.length >=
@@ -1171,55 +1192,6 @@ async function collectImages(
     }
 
   }
-
-
-  return result;
-
-}
-
-
-/*
-  COLLECT ALL SOUNDS
-*/
-
-async function collectAudioFiles(
-  path = "",
-  result = []
-){
-
-  const items =
-    await getGitHubContents(
-      path
-    );
-
-
-  for(
-    const item of items
-  ){
-
-    if(
-      item.type === "file" &&
-      isAudioFile(item.name)
-    ){
-
-      result.push(
-        item.path
-      );
-
-    }
-
-
-    if(item.type === "dir"){
-
-      await collectAudioFiles(
-        item.path,
-        result
-      );
-
-    }
-
-  }
-
 
   return result;
 
@@ -1239,14 +1211,11 @@ function getFileUrl(path){
 }
 
 
-/*
-  LOAD PHOTOS
-*/
+/* LOAD PHOTOS */
 
 async function loadPhotos(){
 
   let imagePaths = [];
-
 
   try{
 
@@ -1258,22 +1227,17 @@ async function loadPhotos(){
 
   }catch(error){
 
-    console.error(
-      "Photo loading error:",
-      error
-    );
+    console.error(error);
 
     return;
 
   }
-
 
   imagePaths =
     imagePaths.slice(
       0,
       MAX_PHOTOS
     );
-
 
   photosData =
     imagePaths.map(
@@ -1305,172 +1269,21 @@ async function loadPhotos(){
 }
 
 
-/*
-  LOAD AUDIO
-*/
-
-async function loadAudioFiles(){
-
-  try{
-
-    audioFiles =
-      await collectAudioFiles(
-        "",
-        []
-      );
-
-
-    console.log(
-      "Audio files found:",
-      audioFiles
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Audio loading error:",
-      error
-    );
-
-  }
-
-}
-
-
-/*
-  RANDOM SOUND
-*/
-
-async function playRandomSound(){
-
-  try{
-
-    /*
-      If sounds have not loaded yet,
-      load them now.
-    */
-
-    if(!audioFiles.length){
-
-      await loadAudioFiles();
-
-    }
-
-
-    if(!audioFiles.length){
-
-      console.log(
-        "NO AUDIO FILES FOUND"
-      );
-
-      return;
-
-    }
-
-
-    /*
-      RANDOM SOUND
-    */
-
-    const randomIndex =
-      Math.floor(
-        Math.random() *
-        audioFiles.length
-      );
-
-
-    const selectedAudio =
-      audioFiles[randomIndex];
-
-
-    console.log(
-      "Playing random sound:",
-      selectedAudio
-    );
-
-
-    /*
-      Stop old sound
-    */
-
-    backgroundSound.pause();
-
-    backgroundSound.currentTime =
-      0;
-
-
-    /*
-      Set new random sound
-    */
-
-    backgroundSound.src =
-      getFileUrl(
-        selectedAudio
-      );
-
-
-    backgroundSound.load();
-
-
-    backgroundSound.volume =
-      1;
-
-
-    /*
-      PLAY
-    */
-
-    const playPromise =
-      backgroundSound.play();
-
-
-    if(playPromise){
-
-      playPromise.catch(
-        function(error){
-
-          console.log(
-            "Audio play blocked:",
-            error
-          );
-
-        }
-      );
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Random sound error:",
-      error
-    );
-
-  }
-
-}
-
-
-/*
-  RANDOM BUSY
-*/
+/* BUSY */
 
 function getRandomBusyIndexes(){
 
   const indexes = [];
 
-
   for(
-    let i = 0;
-    i < MAX_PHOTOS;
+    let i=0;
+    i<MAX_PHOTOS;
     i++
   ){
 
     indexes.push(i);
 
   }
-
 
   return shuffleArray(
     indexes
@@ -1479,14 +1292,11 @@ function getRandomBusyIndexes(){
 }
 
 
-/*
-  RENDER PHOTOS
-*/
+/* RENDER PHOTOS */
 
 function renderPhotos(){
 
   photoGrid.innerHTML = "";
-
 
   if(!photosData.length){
 
@@ -1511,7 +1321,6 @@ function renderPhotos(){
       photosData
     );
 
-
   const busyIndexes =
     getRandomBusyIndexes();
 
@@ -1524,7 +1333,6 @@ function renderPhotos(){
           "div"
         );
 
-
       card.className =
         "photoCard";
 
@@ -1534,7 +1342,6 @@ function renderPhotos(){
           "img"
         );
 
-
       img.src =
         photo.url;
 
@@ -1543,7 +1350,6 @@ function renderPhotos(){
 
       img.loading =
         "lazy";
-
 
       card.appendChild(
         img
@@ -1561,7 +1367,6 @@ function renderPhotos(){
           "div"
         );
 
-
       status.className =
         "statusBadge";
 
@@ -1578,17 +1383,14 @@ function renderPhotos(){
 
         const closed =
           document.createElement(
-            "div"
-          );
-
+          "div"
+        );
 
         closed.className =
           "roomClosed";
 
-
         closed.textContent =
           "ROOM CLOSED";
-
 
         card.appendChild(
           closed
@@ -1607,7 +1409,6 @@ function renderPhotos(){
             "span"
           );
 
-
         dot.className =
           "liveDot";
 
@@ -1615,7 +1416,6 @@ function renderPhotos(){
         status.appendChild(
           dot
         );
-
 
         status.appendChild(
           document.createTextNode(
@@ -1647,14 +1447,11 @@ function renderPhotos(){
           "div"
         );
 
-
       icon.className =
         "videoPlayIcon";
 
-
       icon.textContent =
         "▶";
-
 
       card.appendChild(
         icon
@@ -1665,7 +1462,6 @@ function renderPhotos(){
         document.createElement(
           "div"
         );
-
 
       info.className =
         "photoInfo";
@@ -1689,7 +1485,6 @@ function renderPhotos(){
         info
       );
 
-
       photoGrid.appendChild(
         card
       );
@@ -1709,13 +1504,12 @@ function updateOnlineNumber(){
       "onlineNumber"
     );
 
-
   if(number){
 
     number.textContent =
       Math.floor(
         18 +
-        Math.random() * 8
+        Math.random()*8
       );
 
   }
@@ -1735,19 +1529,12 @@ function showLivePhotos(){
 
   hideAllPages();
 
-
   photosPage.style.display =
     "block";
-
 
   renderPhotos();
 
   updateOnlineNumber();
-
-
-  clearInterval(
-    busyRotationTimer
-  );
 
 
   busyRotationTimer =
@@ -1772,16 +1559,7 @@ function showLivePhotos(){
     setTimeout(
       function(){
 
-        showIncomingCall();
-
-      },
-      PHOTOS_DURATION
-    );
-
-}
-
-
-/* INCOMING CALL */
+  <!-- INCOMING CALL -->
 
 function showIncomingCall(){
 
@@ -1792,7 +1570,6 @@ function showIncomingCall(){
   stopLiveVideo();
 
   hideAllPages();
-
 
   incomingCall.style.display =
     "block";
@@ -1805,7 +1582,7 @@ function showIncomingCall(){
   }
 
 
-  const randomIndex =
+  let randomIndex =
     Math.floor(
       Math.random() *
       photosData.length
@@ -1819,12 +1596,13 @@ function showIncomingCall(){
   callerImage.src =
     currentCaller.url;
 
-
   callerName.textContent =
     currentCaller.name;
 
- }
- /* FIRST RED LIVE */
+}
+
+
+/* FIRST RED LIVE */
 
 function showLiveSound(){
 
@@ -1833,7 +1611,6 @@ function showLiveSound(){
   stopBackgroundSound();
 
   hideAllPages();
-
 
   liveSoundPage.style.display =
     "flex";
@@ -1858,7 +1635,7 @@ function showLiveSound(){
         function(error){
 
           console.log(
-            "Video play error:",
+            "Red Live video error:",
             error
           );
 
@@ -1867,87 +1644,263 @@ function showLiveSound(){
 
     }
 
-  }catch(e){}
+
+    /*
+      Keep the first LIVE
+      video running for 20 seconds.
+    */
+
+    liveVideoSafetyTimer =
+      setTimeout(
+        function(){
+
+          stopLiveVideo();
+
+          showInsufficient();
+
+        },
+        20000
+      );
 
 
-  /*
-    Safety:
-    after 20 seconds go to
-    Black Live
-  */
+  }catch(error){
 
-  liveVideoSafetyTimer =
-    setTimeout(
-      function(){
-
-        showBlackLive();
-
-      },
-      20000
+    console.log(
+      "Red Live error:",
+      error
     );
+
+
+    liveVideoSafetyTimer =
+      setTimeout(
+        function(){
+
+          showInsufficient();
+
+        },
+        20000
+      );
+
+  }
 
 }
 
 
-/*
-  SECOND BLACK LIVE
-  RANDOM SOUND
-  EXACTLY 5 SECONDS
-*/
+/* GET RANDOM RECORDED SOUND */
+
+function getRandomSound(){
+
+  if(
+    recordedSounds.length === 0
+  ){
+
+    return null;
+
+  }
+
+
+  /*
+    Avoid immediately playing
+    exactly the same recording
+    twice in a row when possible.
+  */
+
+  let randomIndex;
+
+
+  if(
+    recordedSounds.length === 1
+  ){
+
+    randomIndex = 0;
+
+  }else{
+
+    do{
+
+      randomIndex =
+        Math.floor(
+          Math.random() *
+          recordedSounds.length
+        );
+
+    }while(
+      randomIndex ===
+      lastSoundIndex
+    );
+
+  }
+
+
+  lastSoundIndex =
+    randomIndex;
+
+
+  return recordedSounds[
+    randomIndex
+  ];
+
+}
+
+
+/* BLACK LIVE */
 
 function showBlackLive(){
 
   clearAllTimers();
 
-
-  /*
-    Stop red live video
-  */
-
   stopLiveVideo();
-
-
-  /*
-    Stop previous audio
-  */
 
   stopBackgroundSound();
 
-
-  /*
-    Show black live immediately
-  */
-
   hideAllPages();
-
 
   blackLivePage.style.display =
     "flex";
 
 
   /*
-    Choose and play
-    RANDOM uploaded sound
+    SELECT ONE OF THE
+    FOUR UPLOADED RECORDINGS
+    RANDOMLY
   */
 
-  playRandomSound();
+  const randomSound =
+    getRandomSound();
+
+
+  if(!randomSound){
+
+    console.log(
+      "No recorded sound found."
+    );
+
+
+    soundTimer =
+      setTimeout(
+        function(){
+
+          showInsufficient();
+
+        },
+        5000
+      );
+
+    return;
+
+  }
 
 
   /*
-    ONLY 5 SECONDS
+    BUILD THE GITHUB URL
   */
 
-  soundTimer =
-    setTimeout(
-      function(){
-
-        stopBackgroundSound();
-
-        showInsufficient();
-
-      },
-      SECOND_CALL_SOUND_DURATION
+  const soundURL =
+    getFileUrl(
+      randomSound
     );
+
+
+  console.log(
+    "Playing random recording:",
+    randomSound
+  );
+
+
+  try{
+
+    /*
+      Load the selected recording.
+    */
+
+    backgroundSound.pause();
+
+    backgroundSound.removeAttribute(
+      "src"
+    );
+
+    backgroundSound.load();
+
+
+    backgroundSound.src =
+      soundURL;
+
+
+    backgroundSound.load();
+
+
+    /*
+      Start from beginning.
+    */
+
+    backgroundSound.currentTime =
+      0;
+
+    backgroundSound.volume =
+      1;
+
+
+    /*
+      PLAY SOUND
+    */
+
+    const playPromise =
+      backgroundSound.play();
+
+
+    if(playPromise){
+
+      playPromise.catch(
+        function(error){
+
+          console.log(
+            "Recorded sound could not play:",
+            error
+          );
+
+        }
+      );
+
+    }
+
+
+    /*
+      STOP AFTER EXACTLY
+      5 SECONDS
+    */
+
+    soundTimer =
+      setTimeout(
+        function(){
+
+          stopBackgroundSound();
+
+          showInsufficient();
+
+        },
+        SECOND_CALL_SOUND_DURATION
+      );
+
+
+  }catch(error){
+
+    console.log(
+      "Black Live sound error:",
+      error
+    );
+
+
+    soundTimer =
+      setTimeout(
+        function(){
+
+          showInsufficient();
+
+        },
+        SECOND_CALL_SOUND_DURATION
+      );
+
+  }
 
 }
 
@@ -1963,7 +1916,6 @@ function showInsufficient(){
   stopBackgroundSound();
 
   hideAllPages();
-
 
   insufficientPage.style.display =
     "flex";
@@ -1996,7 +1948,6 @@ function answerIncomingCall(){
     redLiveShownThisVisit =
       true;
 
-
     localStorage.setItem(
       RED_LIVE_KEY,
       "yes"
@@ -2004,18 +1955,18 @@ function answerIncomingCall(){
 
 
     /*
-      FIRST ANSWER
+      FIRST ANSWER:
       RED LIVE VIDEO
     */
 
     showLiveSound();
 
-
   }else{
 
     /*
-      NEXT ANSWERS
-      BLACK LIVE + RANDOM SOUND
+      NEXT ANSWERS:
+      BLACK LIVE +
+      RANDOM RECORDING
     */
 
     showBlackLive();
@@ -2069,7 +2020,6 @@ function enableSwipe(
       startX =
         e.touches[0].clientX;
 
-
       startY =
         e.touches[0].clientY;
 
@@ -2094,7 +2044,6 @@ function enableSwipe(
       const endX =
         e.changedTouches[0].clientX;
 
-
       const endY =
         e.changedTouches[0].clientY;
 
@@ -2102,13 +2051,12 @@ function enableSwipe(
       const dx =
         endX - startX;
 
-
       const dy =
         endY - startY;
 
 
       /*
-        Ignore vertical swipe
+        Ignore vertical swipes.
       */
 
       if(
@@ -2122,7 +2070,7 @@ function enableSwipe(
 
 
       /*
-        Minimum distance
+        Minimum swipe distance.
       */
 
       if(
@@ -2134,6 +2082,10 @@ function enableSwipe(
       }
 
 
+      /*
+        LEFT = DECLINE
+      */
+
       if(
         direction === "left" &&
         dx < 0
@@ -2143,6 +2095,10 @@ function enableSwipe(
 
       }
 
+
+      /*
+        RIGHT = ANSWER
+      */
 
       if(
         direction === "right" &&
@@ -2160,10 +2116,7 @@ function enableSwipe(
 }
 
 
-/*
-  DECLINE
-  RIGHT → LEFT
-*/
+/* DECLINE SWIPE */
 
 enableSwipe(
   declineSwipe,
@@ -2176,10 +2129,7 @@ enableSwipe(
 );
 
 
-/*
-  ANSWER
-  LEFT → RIGHT
-*/
+/* ANSWER SWIPE */
 
 enableSwipe(
   answerSwipe,
@@ -2249,20 +2199,13 @@ async function startWebsite(){
 
   hideAllPages();
 
-
   welcomeScreen.style.display =
     "flex";
 
 
-  /*
-    Load photos AND sounds
-  */
-
   await Promise.all([
 
     loadPhotos(),
-
-    loadAudioFiles(),
 
     new Promise(
       function(resolve){
@@ -2288,7 +2231,6 @@ async function startWebsite(){
 
   showIncomingCall();
 
-
   websiteStarted =
     true;
 
@@ -2307,7 +2249,7 @@ setInterval(
 );
 
 
-/* PREPARE VIDEO */
+/* PREPARE RED LIVE VIDEO */
 
 function prepareVideo(){
 
@@ -2320,7 +2262,7 @@ function prepareVideo(){
 }
 
 
-/* PREPARE AUDIO */
+/* PREPARE RECORDED SOUND PLAYER */
 
 function prepareAudio(){
 
@@ -2389,6 +2331,8 @@ document.addEventListener(
 
       stopBackgroundSound();
 
+      stopLiveVideo();
+
     }
 
   }
@@ -2407,29 +2351,17 @@ window.addEventListener(
 
   }
 );
- /* START */
+
+
+/* START */
 
 window.addEventListener(
   "load",
   function(){
 
-    /*
-      Prepare video
-    */
-
     prepareVideo();
 
-
-    /*
-      Prepare audio
-    */
-
     prepareAudio();
-
-
-    /*
-      Start website
-    */
 
     startWebsite();
 
@@ -2439,5 +2371,4 @@ window.addEventListener(
 </script>
 
 </body>
-
 </html>
