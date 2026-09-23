@@ -1,519 +1,900 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1.0"
+>
+
 <title>My Referral Website</title>
 
+
 <style>
+
 *{
   box-sizing:border-box;
 }
 
+
 html,body{
+
   margin:0;
   padding:0;
+
   width:100%;
   min-height:100%;
+
   background:#000;
   color:#fff;
+
   font-family:Arial,sans-serif;
+
 }
+
 
 body{
   overflow-x:hidden;
 }
 
+
 .page{
+
   display:none;
+
   width:100%;
   min-height:100vh;
+
   background:#000;
+
 }
+
 
 /* WELCOME */
 
 #welcomeScreen{
+
   min-height:100vh;
+
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   flex-direction:column;
+
   text-align:center;
+
   background:#000;
+
 }
+
 
 .welcomeTitle{
+
   font-size:32px;
+
   font-weight:bold;
+
   margin-bottom:20px;
+
 }
 
+
 .loadingText{
+
   font-size:18px;
+
   color:#aaa;
+
 }
+
 
 /* LIVE PHOTOS */
 
 #photosPage{
+
   padding:12px;
+
   background:#000;
+
 }
+
 
 .topBar{
+
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
+
   padding:8px 4px 14px;
+
 }
+
 
 .onlineText{
+
   font-size:14px;
+
   color:#ddd;
+
 }
+
 
 .onlineDot{
+
   display:inline-block;
+
   width:8px;
   height:8px;
+
   border-radius:50%;
+
   background:#20e070;
+
   margin-right:5px;
+
   animation:blinkGreen 1s infinite;
+
 }
+
 
 @keyframes blinkGreen{
-  0%,100%{opacity:1}
-  50%{opacity:.25}
+
+  0%,100%{
+    opacity:1
+  }
+
+  50%{
+    opacity:.25
+  }
+
 }
+
 
 .liveTitle{
+
   font-size:20px;
+
   font-weight:bold;
+
 }
+
 
 .photoGrid{
+
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:8px;
+
 }
+
 
 .photoCard{
+
   position:relative;
+
   overflow:hidden;
+
   border-radius:10px;
+
   background:#111;
+
   min-height:240px;
+
   cursor:pointer;
+
 }
+
 
 .photoCard img{
+
   width:100%;
+
   height:180px;
+
   object-fit:cover;
+
   display:block;
+
 }
+
 
 .statusBadge{
+
   position:absolute;
+
   top:8px;
   left:8px;
+
   padding:4px 8px;
+
   border-radius:5px;
+
   font-size:11px;
+
   font-weight:bold;
+
   z-index:10;
+
 }
+
 
 .liveBadge{
+
   background:#e00000;
+
   color:#fff;
+
 }
+
 
 .offlineBadge{
+
   background:#555;
+
   color:#fff;
+
 }
+
 
 .liveDot{
+
   display:inline-block;
+
   width:7px;
   height:7px;
+
   border-radius:50%;
+
   background:#25e66d;
+
   margin-right:4px;
+
   animation:blinkGreen 1s infinite;
+
 }
+
 
 .roomClosed{
+
   position:absolute;
+
   inset:0;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   background:rgba(0,0,0,.62);
+
   font-size:18px;
+
   font-weight:bold;
+
   z-index:7;
+
 }
 
+
 .photoInfo{
+
   position:absolute;
+
   left:0;
   right:0;
   bottom:0;
+
   padding:25px 10px 9px;
-  background:linear-gradient(
-    transparent,
-    rgba(0,0,0,.9)
-  );
+
+  background:
+    linear-gradient(
+      transparent,
+      rgba(0,0,0,.9)
+    );
+
   z-index:9;
+
 }
+
 
 .photoName{
+
   font-size:16px;
+
   font-weight:bold;
+
 }
+
 
 .photoAge{
+
   margin-top:3px;
+
   font-size:12px;
+
   color:#ddd;
-}
-  .videoPlayIcon{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:rgba(0,0,0,.58);
-  border:1px solid rgba(255,255,255,.35);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  font-size:22px;
-  z-index:8;
-  pointer-events:none;
-  animation:videoPulse 1.5s infinite;
+
 }
 
-@keyframes videoPulse{
-  0%{
-    transform:translate(-50%,-50%) scale(1);
-    opacity:1;
-  }
-  50%{
-    transform:translate(-50%,-50%) scale(1.12);
-    opacity:.72;
-  }
-  100%{
-    transform:translate(-50%,-50%) scale(1);
-    opacity:1;
-  }
+
+/* VIDEO PLAY ICON */
+
+.videoPlayIcon{
+
+  position:absolute;
+
+  top:50%;
+  left:50%;
+
+  transform:
+    translate(-50%,-50%);
+
+  width:46px;
+  height:46px;
+
+  border-radius:50%;
+
+  background:
+    rgba(0,0,0,.58);
+
+  border:
+    1px solid
+    rgba(255,255,255,.35);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  color:#fff;
+
+  font-size:22px;
+
+  z-index:8;
+
+  pointer-events:none;
+
+  animation:
+    videoPulse 1.5s infinite;
+
 }
+
+
+@keyframes videoPulse{
+
+  0%{
+
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+
+    opacity:1;
+
+  }
+
+  50%{
+
+    transform:
+      translate(-50%,-50%)
+      scale(1.12);
+
+    opacity:.72;
+
+  }
+
+  100%{
+
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+
+    opacity:1;
+
+  }
+
+}
+
 
 /* INCOMING CALL */
 
 .incoming-screen{
+
   width:100%;
+
   min-height:100vh;
+
   display:flex;
+
   align-items:center;
+
   justify-content:flex-start;
+
   flex-direction:column;
+
   text-align:center;
-  padding:55px 18px 25px;
+
+  padding:
+    55px 18px 25px;
 
   background:
+
     radial-gradient(
       circle at 50% 25%,
       rgba(55,65,125,.4),
       transparent 45%
     ),
+
     #050608;
 
   overflow:hidden;
+
 }
+
 
 .incoming-photo{
+
   width:165px;
   height:165px;
+
   object-fit:cover;
+
   border-radius:50%;
-  border:2px solid rgba(255,255,255,.7);
+
+  border:
+    2px solid
+    rgba(255,255,255,.7);
 
   box-shadow:
-    0 0 18px rgba(80,130,255,.5);
+    0 0 18px
+    rgba(80,130,255,.5);
+
 }
+
 
 .incoming-name{
+
   margin-top:18px;
+
   font-size:27px;
+
   font-weight:bold;
+
 }
+
 
 .incoming-text{
+
   margin-top:7px;
+
   color:#b8bfd0;
+
   font-size:16px;
+
 }
 
+
 .incoming-camera{
+
   font-size:23px;
+
   margin-right:5px;
+
 }
+
 
 /* SWIPE CONTROLS */
 
 .swipe-area{
+
   width:100%;
+
   max-width:380px;
+
   margin-top:auto;
+
   padding-bottom:20px;
 
   display:flex;
+
   flex-direction:column;
+
   gap:14px;
+
 }
 
+
 .swipe-bar{
+
   height:68px;
+
   width:100%;
+
   border-radius:36px;
+
   position:relative;
 
   display:flex;
+
   align-items:center;
 
   overflow:hidden;
+
   user-select:none;
+
   touch-action:pan-y;
+
 }
 
+
 .decline-swipe{
+
   background:
+
     linear-gradient(
       90deg,
       rgba(180,0,0,.3),
       rgba(30,30,35,.8)
     );
 
-  border:1px solid rgba(255,50,50,.35);
+  border:
+    1px solid
+    rgba(255,50,50,.35);
+
 }
 
+
 .answer-swipe{
+
   background:
+
     linear-gradient(
       90deg,
       rgba(30,30,35,.8),
       rgba(0,150,70,.3)
     );
 
-  border:1px solid rgba(0,255,100,.35);
+  border:
+    1px solid
+    rgba(0,255,100,.35);
+
 }
 
+
 .swipe-icon{
+
   position:absolute;
+
   width:56px;
   height:56px;
+
   top:5px;
 
   border-radius:50%;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
 
   color:#fff;
+
   font-size:24px;
+
   font-weight:bold;
 
   z-index:3;
 
   box-shadow:
-    0 0 15px rgba(0,0,0,.5);
+    0 0 15px
+    rgba(0,0,0,.5);
+
 }
+
 
 .decline-swipe .swipe-icon{
+
   left:5px;
+
   background:#f02030;
+
 }
+
 
 .answer-swipe .swipe-icon{
+
   right:5px;
+
   background:#12d65b;
+
 }
+
 
 .swipe-label{
+
   position:absolute;
+
   width:100%;
+
   text-align:center;
+
   font-size:16px;
+
   font-weight:bold;
+
   color:#d9deea;
+
   pointer-events:none;
+
 }
+
 
 .swipe-arrows{
+
   position:absolute;
+
   font-size:23px;
+
   font-weight:bold;
+
   opacity:.85;
+
   pointer-events:none;
+
 }
+
 
 .decline-swipe .swipe-arrows{
+
   left:82px;
+
   color:#ff3948;
+
 }
+
 
 .answer-swipe .swipe-arrows{
+
   right:82px;
+
   color:#22df72;
+
 }
+
 
 .swipe-hint{
+
   margin-top:2px;
+
   color:#777f91;
+
   font-size:11px;
+
 }
-  /* LIVE VIDEO */
+
+
+/* LIVE VIDEO */
 
 #liveSoundPage{
+
   position:relative;
+
   background:#000;
+
   min-height:100vh;
+
   align-items:center;
+
   justify-content:center;
+
 }
 
+
 .liveBadgeTop{
+
   position:absolute;
+
   top:15px;
   left:15px;
 
   background:#e00000;
+
   color:#fff;
 
   padding:7px 11px;
+
   border-radius:5px;
 
   font-size:13px;
+
   font-weight:bold;
 
   z-index:20;
+
 }
+
 
 .greenLiveDot{
+
   display:inline-block;
+
   width:8px;
   height:8px;
+
   border-radius:50%;
+
   background:#20e070;
+
   margin-right:5px;
+
   animation:blinkGreen 1s infinite;
+
 }
 
+
 #liveSoundVideo{
+
   width:100%;
+
   max-height:100vh;
+
   object-fit:contain;
+
   background:#000;
+
 }
+
 
 /* BLACK LIVE */
 
 #blackLivePage{
+
   position:relative;
+
   min-height:100vh;
+
   background:#000;
 
   align-items:center;
+
   justify-content:center;
+
   flex-direction:column;
+
 }
 
+
 .blackLiveText{
+
   color:#aaa;
+
   font-size:18px;
+
 }
+
 
 /* INSUFFICIENT */
 
 #insufficientPage{
+
   min-height:100vh;
+
   background:#000;
 
   align-items:center;
+
   justify-content:center;
+
   flex-direction:column;
 
   text-align:center;
+
   padding:25px;
+
 }
+
 
 .insufficientTitle{
+
   font-size:23px;
+
   font-weight:bold;
+
   margin-bottom:12px;
+
 }
 
+
 .insufficientText{
+
   color:#aaa;
+
   font-size:14px;
+
 }
+
 
 /* SMALL PHONES */
 
 @media(max-width:360px){
 
   .photoGrid{
+
     gap:6px;
+
   }
 
   .photoCard{
+
     min-height:210px;
+
   }
 
   .photoCard img{
+
     height:155px;
+
   }
 
   .incoming-photo{
+
     width:145px;
     height:145px;
+
   }
 
   .incoming-name{
+
     font-size:24px;
+
   }
 
   .swipe-bar{
+
     height:62px;
+
   }
 
   .swipe-icon{
+
     width:50px;
     height:50px;
+
   }
 
   .swipe-label{
+
     font-size:14px;
+
   }
+
 }
 
 </style>
+
 </head>
 
 <body>
 
+
 <!-- WELCOME -->
 
-<div id="welcomeScreen" class="page">
+<div
+  id="welcomeScreen"
+  class="page"
+>
 
   <div class="welcomeTitle">
     WELCOME
@@ -528,7 +909,10 @@ body{
 
 <!-- LIVE PHOTOS -->
 
-<div id="photosPage" class="page">
+<div
+  id="photosPage"
+  class="page"
+>
 
   <div class="topBar">
 
@@ -550,14 +934,22 @@ body{
 
   </div>
 
-  <div id="photoGrid"
-       class="photoGrid">
+
+  <div
+    id="photoGrid"
+    class="photoGrid"
+  >
   </div>
 
 </div>
+
+
 <!-- INCOMING CALL -->
 
-<div id="incomingCall" class="page">
+<div
+  id="incomingCall"
+  class="page"
+>
 
   <div class="incoming-screen">
 
@@ -568,10 +960,13 @@ body{
       alt="Caller"
     >
 
+
     <div
       id="callerName"
-      class="incoming-name">
+      class="incoming-name"
+    >
     </div>
+
 
     <div class="incoming-text">
 
@@ -586,11 +981,12 @@ body{
 
     <div class="swipe-area">
 
-      <!-- RIGHT TO LEFT = DECLINE -->
+      <!-- DECLINE -->
 
       <div
         id="declineSwipe"
-        class="swipe-bar decline-swipe">
+        class="swipe-bar decline-swipe"
+      >
 
         <div class="swipe-icon">
           ☎
@@ -607,11 +1003,12 @@ body{
       </div>
 
 
-      <!-- LEFT TO RIGHT = ANSWER -->
+      <!-- ANSWER -->
 
       <div
         id="answerSwipe"
-        class="swipe-bar answer-swipe">
+        class="swipe-bar answer-swipe"
+      >
 
         <div class="swipe-label">
           Swipe right to answer
@@ -627,6 +1024,7 @@ body{
 
       </div>
 
+
       <div class="swipe-hint">
         Swipe the control to respond
       </div>
@@ -640,8 +1038,10 @@ body{
 
 <!-- FIRST LIVE VIDEO -->
 
-<div id="liveSoundPage"
-     class="page">
+<div
+  id="liveSoundPage"
+  class="page"
+>
 
   <div class="liveBadgeTop">
 
@@ -651,14 +1051,17 @@ body{
 
   </div>
 
+
   <video
     id="liveSoundVideo"
     playsinline
-    preload="auto">
+    preload="auto"
+  >
 
     <source
       src="preview_20_seconds.mp4"
-      type="video/mp4">
+      type="video/mp4"
+    >
 
   </video>
 
@@ -667,8 +1070,10 @@ body{
 
 <!-- SECOND LIVE -->
 
-<div id="blackLivePage"
-     class="page">
+<div
+  id="blackLivePage"
+  class="page"
+>
 
   <div class="liveBadgeTop">
 
@@ -677,6 +1082,7 @@ body{
     LIVE
 
   </div>
+
 
   <div class="blackLiveText">
     Loading...
@@ -687,12 +1093,15 @@ body{
 
 <!-- INSUFFICIENT -->
 
-<div id="insufficientPage"
-     class="page">
+<div
+  id="insufficientPage"
+  class="page"
+>
 
   <div class="insufficientTitle">
     Insufficient Minutes
   </div>
+
 
   <div class="insufficientText">
     You don't have enough minutes
@@ -702,46 +1111,71 @@ body{
 </div>
 
 
+<!-- EXISTING AUDIO -->
+
 <audio
   id="backgroundSound"
-  preload="auto">
+  preload="auto"
+>
 
   <source
     src="preview_20_seconds.mp4"
-    type="audio/mp4">
+    type="audio/mp4"
+  >
 
 </audio>
+
+
 <script>
+
+
+/* GITHUB */
 
 const GITHUB_OWNER =
   "agnesweb2026";
 
+
 const GITHUB_REPO =
   "My-referral-website";
+
 
 const GITHUB_BRANCH =
   "main";
 
+
 const MAX_PHOTOS =
   24;
+
+
+/* TIMING */
 
 const PHOTOS_DURATION =
   20000;
 
-const BACKGROUND_SOUND_DURATION =
+
+const CALL_SOUND_DURATION =
   5000;
+
 
 const INSUFFICIENT_DURATION =
   2000;
 
+
 const BUSY_CHANGE_DURATION =
   300000;
+
 
 const SECOND_CALL_SOUND_DURATION =
   5000;
 
+
+/* PAYMENT */
+
 const PAYMENT_PAGE_URL =
   "payment.html";
+
+
+/* RED LIVE STORAGE */
 
 const RED_LIVE_KEY =
   "redLiveVideoSeen";
@@ -753,11 +1187,15 @@ let redLiveShownThisVisit =
   ) === "yes";
 
 
+/* STATE */
+
 let websiteStarted =
   false;
 
+
 let photosData =
   [];
+
 
 let currentCaller =
   null;
@@ -766,17 +1204,22 @@ let currentCaller =
 let photoTimer =
   null;
 
+
 let incomingTimer =
   null;
+
 
 let insufficientTimer =
   null;
 
+
 let busyRotationTimer =
   null;
 
+
 let soundTimer =
   null;
+
 
 let liveVideoSafetyTimer =
   null;
@@ -871,66 +1314,80 @@ const welcomeScreen =
     "welcomeScreen"
   );
 
+
 const photosPage =
   document.getElementById(
     "photosPage"
   );
+
 
 const incomingCall =
   document.getElementById(
     "incomingCall"
   );
 
+
 const liveSoundPage =
   document.getElementById(
     "liveSoundPage"
   );
+
 
 const blackLivePage =
   document.getElementById(
     "blackLivePage"
   );
 
+
 const insufficientPage =
   document.getElementById(
     "insufficientPage"
   );
+
 
 const photoGrid =
   document.getElementById(
     "photoGrid"
   );
 
+
 const backgroundSound =
   document.getElementById(
     "backgroundSound"
   );
+
 
 const liveSoundVideo =
   document.getElementById(
     "liveSoundVideo"
   );
 
+
 const callerImage =
   document.getElementById(
     "callerImage"
   );
+
 
 const callerName =
   document.getElementById(
     "callerName"
   );
 
+
 const answerSwipe =
   document.getElementById(
     "answerSwipe"
   );
 
+
 const declineSwipe =
   document.getElementById(
     "declineSwipe"
   );
-  function hideAllPages(){
+
+
+function hideAllPages(){
 
   welcomeScreen.style.display =
     "none";
@@ -956,9 +1413,13 @@ const declineSwipe =
 function clearAllTimers(){
 
   clearTimeout(photoTimer);
+
   clearTimeout(incomingTimer);
+
   clearTimeout(insufficientTimer);
+
   clearTimeout(soundTimer);
+
   clearTimeout(liveVideoSafetyTimer);
 
 }
@@ -969,7 +1430,9 @@ function stopBackgroundSound(){
   try{
 
     backgroundSound.pause();
-    backgroundSound.currentTime = 0;
+
+    backgroundSound.currentTime =
+      0;
 
   }catch(e){}
 
@@ -981,7 +1444,9 @@ function stopLiveVideo(){
   try{
 
     liveSoundVideo.pause();
-    liveSoundVideo.currentTime = 0;
+
+    liveSoundVideo.currentTime =
+      0;
 
   }catch(e){}
 
@@ -995,6 +1460,7 @@ function shuffleArray(array){
   const arr =
     [...array];
 
+
   for(
     let i=arr.length-1;
     i>0;
@@ -1003,8 +1469,10 @@ function shuffleArray(array){
 
     const j =
       Math.floor(
-        Math.random()*(i+1)
+        Math.random() *
+        (i+1)
       );
+
 
     [
       arr[i],
@@ -1017,7 +1485,9 @@ function shuffleArray(array){
 
   }
 
+
   return arr;
+
 }
 
 
@@ -1032,8 +1502,10 @@ async function getGitHubContents(
     `${GITHUB_OWNER}/${GITHUB_REPO}` +
     `/contents/${path}?ref=${GITHUB_BRANCH}`;
 
+
   const response =
     await fetch(url);
+
 
   if(!response.ok){
 
@@ -1043,7 +1515,9 @@ async function getGitHubContents(
 
   }
 
+
   return await response.json();
+
 }
 
 
@@ -1065,6 +1539,7 @@ async function collectImages(
       path
     );
 
+
   for(
     const item of items
   ){
@@ -1080,6 +1555,7 @@ async function collectImages(
 
     }
 
+
     if(item.type === "dir"){
 
       await collectImages(
@@ -1088,6 +1564,7 @@ async function collectImages(
       );
 
     }
+
 
     if(
       result.length >=
@@ -1100,7 +1577,9 @@ async function collectImages(
 
   }
 
+
   return result;
+
 }
 
 
@@ -1123,6 +1602,7 @@ async function loadPhotos(){
 
   let imagePaths = [];
 
+
   try{
 
     imagePaths =
@@ -1134,15 +1614,18 @@ async function loadPhotos(){
   }catch(error){
 
     console.error(error);
+
     return;
 
   }
+
 
   imagePaths =
     imagePaths.slice(
       0,
       MAX_PHOTOS
     );
+
 
   photosData =
     imagePaths.map(
@@ -1171,7 +1654,7 @@ async function loadPhotos(){
       })
     );
 
-  }
+}
   function getRandomBusyIndexes(){
 
   const indexes = [];
@@ -1189,6 +1672,7 @@ async function loadPhotos(){
   return shuffleArray(
     indexes
   ).slice(0,5);
+
 }
 
 
@@ -1210,6 +1694,7 @@ function renderPhotos(){
     `;
 
     return;
+
   }
 
 
@@ -1217,6 +1702,7 @@ function renderPhotos(){
     shuffleArray(
       photosData
     );
+
 
   const busyIndexes =
     getRandomBusyIndexes();
@@ -1247,6 +1733,7 @@ function renderPhotos(){
 
       img.loading =
         "lazy";
+
 
       card.appendChild(img);
 
@@ -1287,6 +1774,7 @@ function renderPhotos(){
         closed.textContent =
           "ROOM CLOSED";
 
+
         card.appendChild(
           closed
         );
@@ -1311,6 +1799,7 @@ function renderPhotos(){
         status.appendChild(
           dot
         );
+
 
         status.appendChild(
           document.createTextNode(
@@ -1348,6 +1837,7 @@ function renderPhotos(){
       icon.textContent =
         "▶";
 
+
       card.appendChild(
         icon
       );
@@ -1380,6 +1870,7 @@ function renderPhotos(){
         info
       );
 
+
       photoGrid.appendChild(
         card
       );
@@ -1399,6 +1890,7 @@ function updateOnlineNumber(){
       "onlineNumber"
     );
 
+
   if(number){
 
     number.textContent =
@@ -1409,10 +1901,8 @@ function updateOnlineNumber(){
 
   }
 
-}
-
-
-/* LIVE PHOTOS */
+          }
+  /* LIVE PHOTOS */
 
 function showLivePhotos(){
 
@@ -1424,16 +1914,20 @@ function showLivePhotos(){
 
   hideAllPages();
 
+
   photosPage.style.display =
     "block";
+
 
   renderPhotos();
 
   updateOnlineNumber();
 
+
   clearInterval(
     busyRotationTimer
   );
+
 
   busyRotationTimer =
     setInterval(
@@ -1463,8 +1957,10 @@ function showLivePhotos(){
       PHOTOS_DURATION
     );
 
-  }
-  /* INCOMING CALL */
+}
+
+
+/* INCOMING CALL */
 
 function showIncomingCall(){
 
@@ -1475,6 +1971,7 @@ function showIncomingCall(){
   stopLiveVideo();
 
   hideAllPages();
+
 
   incomingCall.style.display =
     "block";
@@ -1501,13 +1998,47 @@ function showIncomingCall(){
   callerImage.src =
     currentCaller.url;
 
+
   callerName.textContent =
     currentCaller.name;
 
 }
 
 
-/* FIRST LIVE */
+/*
+  RANDOM START POSITION
+
+  We use the SAME
+  preview_20_seconds.mp4.
+
+  Only the starting point
+  changes on every Answer.
+*/
+
+function getRandomVideoStart(
+  mediaElement
+){
+
+  const duration =
+    mediaElement.duration || 20;
+
+
+  const playSeconds =
+    CALL_SOUND_DURATION / 1000;
+
+
+  const maxStart =
+    Math.max(
+      0,
+      duration - playSeconds
+    );
+
+
+  return Math.random() *
+    maxStart;
+
+}
+  /* FIRST LIVE */
 
 function showLiveSound(){
 
@@ -1517,50 +2048,74 @@ function showLiveSound(){
 
   hideAllPages();
 
+
   liveSoundPage.style.display =
     "flex";
 
 
   try{
 
+    /*
+      SAME VIDEO + SAME SOUND
+
+      Random starting position
+      every time the call is answered.
+    */
+
+    const randomStart =
+      getRandomVideoStart(
+        liveSoundVideo
+      );
+
+
     liveSoundVideo.currentTime =
-      0;
+      randomStart;
+
 
     liveSoundVideo.volume =
       1;
 
+
     const playPromise =
       liveSoundVideo.play();
+
 
     if(playPromise){
 
       playPromise.catch(
-        function(){
+        function(error){
 
-          showInsufficient();
+          console.log(
+            "Video play error:",
+            error
+          );
 
         }
       );
 
     }
 
+
   }catch(e){
 
-    showInsufficient();
-
-    return;
+    console.log(
+      "Live video error:",
+      e
+    );
 
   }
 
 
-  liveVideoSafetyTimer =
+  soundTimer =
     setTimeout(
       function(){
 
-        showInsufficient();
+        stopLiveVideo();
+
+        showBlackLive();
 
       },
-      7000
+      CALL_SOUND_DURATION
     );
 
 }
@@ -1578,30 +2133,61 @@ function showBlackLive(){
 
   hideAllPages();
 
+
   blackLivePage.style.display =
     "flex";
 
 
   try{
 
+    /*
+      SAME preview_20_seconds.mp4
+      audio.
+
+      Random position every call.
+    */
+
+    const randomStart =
+      getRandomVideoStart(
+        backgroundSound
+      );
+
+
     backgroundSound.currentTime =
-      0;
+      randomStart;
+
 
     backgroundSound.volume =
       1;
 
+
     const p =
       backgroundSound.play();
+
 
     if(p){
 
       p.catch(
-        function(){}
+        function(error){
+
+          console.log(
+            "Audio play error:",
+            error
+          );
+
+        }
       );
 
     }
 
-  }catch(e){}
+  }catch(e){
+
+    console.log(
+      "Background sound error:",
+      e
+    );
+
+  }
 
 
   soundTimer =
@@ -1613,13 +2199,11 @@ function showBlackLive(){
         showInsufficient();
 
       },
-      SECOND_CALL_SOUND_DURATION
+      CALL_SOUND_DURATION
     );
 
 }
-
-
-/* INSUFFICIENT */
+  /* INSUFFICIENT */
 
 function showInsufficient(){
 
@@ -1630,6 +2214,7 @@ function showInsufficient(){
   stopBackgroundSound();
 
   hideAllPages();
+
 
   insufficientPage.style.display =
     "flex";
@@ -1662,12 +2247,15 @@ function answerIncomingCall(){
     redLiveShownThisVisit =
       true;
 
+
     localStorage.setItem(
       RED_LIVE_KEY,
       "yes"
     );
 
+
     showLiveSound();
+
 
   }else{
 
@@ -1702,6 +2290,7 @@ function enableSwipe(
 ){
 
   let startX = 0;
+
   let startY = 0;
 
 
@@ -1717,8 +2306,10 @@ function enableSwipe(
 
       }
 
+
       startX =
         e.touches[0].clientX;
+
 
       startY =
         e.touches[0].clientY;
@@ -1740,8 +2331,10 @@ function enableSwipe(
 
       }
 
+
       const endX =
         e.changedTouches[0].clientX;
+
 
       const endY =
         e.changedTouches[0].clientY;
@@ -1749,6 +2342,7 @@ function enableSwipe(
 
       const dx =
         endX - startX;
+
 
       const dy =
         endY - startY;
@@ -1801,9 +2395,7 @@ function enableSwipe(
   );
 
 }
-
-
-/* DECLINE:
+  /* DECLINE:
    RIGHT → LEFT */
 
 enableSwipe(
@@ -1829,7 +2421,9 @@ enableSwipe(
 
   }
 );
-  /* RETURN FROM PAYMENT */
+
+
+/* RETURN FROM PAYMENT */
 
 function checkPaymentReturn(){
 
@@ -1886,6 +2480,7 @@ async function startWebsite(){
 
   hideAllPages();
 
+
   welcomeScreen.style.display =
     "flex";
 
@@ -1916,13 +2511,12 @@ async function startWebsite(){
 
   showIncomingCall();
 
+
   websiteStarted =
     true;
 
 }
-
-
-/* ONLINE NUMBER */
+  /* ONLINE NUMBER */
 
 setInterval(
   function(){
@@ -2016,6 +2610,8 @@ document.addEventListener(
 
       stopBackgroundSound();
 
+      stopLiveVideo();
+
     }
 
   }
@@ -2034,9 +2630,7 @@ window.addEventListener(
 
   }
 );
-
-
-/* START */
+  /* START */
 
 window.addEventListener(
   "load",
@@ -2054,4 +2648,5 @@ window.addEventListener(
 </script>
 
 </body>
+
 </html>
