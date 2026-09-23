@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payment</title>
 
-<script src="https://unpkg.com/intasend-checkout-sdk"></script>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>M-PESA Payment</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
   margin:0;
   padding:0;
   min-height:100%;
@@ -28,6 +34,7 @@ body{
 }
 
 /* NEON BACKGROUND */
+
 body::before{
   content:"";
   position:fixed;
@@ -56,6 +63,8 @@ body::after{
   z-index:-2;
 }
 
+/* CONTAINER */
+
 .container{
   width:100%;
   max-width:520px;
@@ -64,6 +73,7 @@ body::after{
 }
 
 /* HEADER */
+
 .header{
   text-align:center;
   margin-bottom:20px;
@@ -73,6 +83,7 @@ body::after{
   margin:0;
   font-size:28px;
   color:#fff;
+
   text-shadow:
     0 0 8px #00c8ff,
     0 0 20px #006eff;
@@ -85,45 +96,79 @@ body::after{
 }
 
 /* PAYMENT CARD */
+
 .payment-card{
   position:relative;
-  background:rgba(8,12,40,.88);
-  border:1px solid rgba(0,195,255,.45);
+
+  background:
+    rgba(8,12,40,.90);
+
+  border:
+    1px solid
+    rgba(0,195,255,.45);
+
   border-radius:22px;
+
   padding:18px;
+
   box-shadow:
     0 0 20px rgba(0,150,255,.18),
     inset 0 0 25px rgba(0,100,255,.05);
 }
 
-/* TILL */
+/* SEND MONEY NUMBER */
+
 .till{
   margin:0 0 20px;
+
   padding:13px;
+
   border-radius:13px;
-  background:rgba(0,0,0,.35);
-  border:1px solid rgba(255,255,255,.12);
+
+  background:
+    rgba(0,0,0,.35);
+
+  border:
+    1px solid
+    rgba(255,255,255,.12);
+
   text-align:center;
+
   font-size:14px;
 }
 
 .till strong{
+  display:inline-block;
+
   color:#00e5ff;
+
   font-size:17px;
+
   margin-left:5px;
 }
 
 .copy-till{
   margin-left:8px;
+
   padding:7px 10px;
+
   border:0;
+
   border-radius:8px;
+
   background:#168cff;
+
   color:white;
+
   font-size:12px;
+
   font-weight:bold;
+
   cursor:pointer;
-  box-shadow:0 0 10px rgba(22,140,255,.5);
+
+  box-shadow:
+    0 0 10px
+    rgba(22,140,255,.5);
 }
 
 .copy-till:active{
@@ -131,29 +176,48 @@ body::after{
 }
 
 /* PACKAGE GRID */
+
 .packages{
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
   gap:12px;
 }
 
+/* PACKAGE */
+
 .package{
   position:relative;
+
   min-height:190px;
-  border:1px solid rgba(0,208,255,.35);
+
+  border:
+    1px solid
+    rgba(0,208,255,.35);
+
   border-radius:18px;
+
   background:
     linear-gradient(
       145deg,
       rgba(15,27,83,.96),
       rgba(5,7,28,.96)
     );
+
   color:white;
+
   padding:14px 8px;
+
   cursor:pointer;
+
   overflow:hidden;
+
   box-shadow:
-    0 0 12px rgba(0,180,255,.08);
+    0 0 12px
+    rgba(0,180,255,.08);
+
   transition:.2s;
 }
 
@@ -162,77 +226,131 @@ body::after{
 }
 
 .package.selected{
-  border:2px solid #00e5ff;
+  border:
+    2px solid
+    #00e5ff;
+
   box-shadow:
     0 0 12px #00bfff,
-    0 0 30px rgba(0,180,255,.35);
+    0 0 30px
+    rgba(0,180,255,.35);
 }
+
+/* HOT */
 
 .hot{
   position:absolute;
+
   top:8px;
   right:8px;
+
   background:#ff1744;
+
   color:white;
+
   font-size:10px;
+
   font-weight:bold;
+
   padding:5px 7px;
+
   border-radius:8px;
-  box-shadow:0 0 12px rgba(255,23,68,.7);
+
+  box-shadow:
+    0 0 12px
+    rgba(255,23,68,.7);
 }
+
+/* CAMERA */
 
 .camera-circle{
   width:62px;
   height:62px;
-  margin:12px auto 10px;
+
+  margin:
+    12px auto 10px;
+
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   border-radius:50%;
+
   background:
     radial-gradient(
       circle,
       #263db0,
       #080c35
     );
-  border:2px solid #12c7ff;
+
+  border:
+    2px solid
+    #12c7ff;
+
   box-shadow:
     0 0 15px #08bfff,
-    inset 0 0 18px rgba(0,200,255,.3);
+    inset 0 0 18px
+    rgba(0,200,255,.3);
+
   font-size:27px;
 }
 
+/* MINUTES */
+
 .minutes{
   display:block;
+
   font-size:17px;
+
   font-weight:bold;
+
   color:#fff;
+
   margin-bottom:9px;
+
+  text-align:center;
 }
+
+/* PRICE */
 
 .price{
   display:flex;
+
   flex-direction:column;
+
   gap:4px;
+
   align-items:center;
+
   font-size:13px;
+
   color:#dce8ff;
 }
 
 .price-row{
   display:flex;
+
   align-items:center;
+
   gap:5px;
 }
+
+/* CURRENCY */
 
 .currency-icon{
   width:21px;
   height:21px;
+
   border-radius:50%;
+
   display:inline-flex;
+
   align-items:center;
   justify-content:center;
+
   font-size:9px;
+
   font-weight:bold;
 }
 
@@ -247,95 +365,130 @@ body::after{
 .currency-icon.eur{
   background:#ff9d21;
 }
-  /* PAYMENT CONTROLS */
+
+/* SELECTED PACKAGE */
+
 .selected-info{
   display:none;
+
   margin-top:18px;
+
   padding:13px;
+
   border-radius:12px;
+
   text-align:center;
-  background:rgba(0,229,255,.08);
-  border:1px solid rgba(0,229,255,.25);
+
+  background:
+    rgba(0,229,255,.08);
+
+  border:
+    1px solid
+    rgba(0,229,255,.25);
+
   color:#dffaff;
+
   font-size:14px;
 }
+  /* PAY BUTTON */
 
 .pay{
   display:block;
+
   width:100%;
+
   margin-top:15px;
+
   padding:15px;
+
   border:0;
+
   border-radius:13px;
+
   background:
     linear-gradient(
       90deg,
       #00b7ff,
       #176cff
     );
+
   color:white;
+
   font-size:16px;
+
   font-weight:bold;
+
   cursor:pointer;
+
   box-shadow:
-    0 0 15px rgba(0,174,255,.45);
+    0 0 15px
+    rgba(0,174,255,.45);
 }
 
 .pay:active{
   transform:scale(.98);
 }
 
-/* MESSAGE AREA */
-.message-area{
-  display:none;
-  margin-top:15px;
-}
-
-.message-title{
-  margin-bottom:8px;
-  font-size:13px;
-  color:#b9c7e8;
-}
-
-.message-input{
-  width:100%;
-  min-height:100px;
-  resize:none;
-  border-radius:12px;
-  border:1px solid rgba(0,200,255,.35);
-  outline:none;
-  background:#05081e;
-  color:white;
-  padding:13px;
-  font-size:14px;
-}
-
-.message-input:focus{
-  border-color:#00d9ff;
-  box-shadow:0 0 12px rgba(0,200,255,.2);
-}
-
-.message-input.rejected{
-  border-color:#ff3030;
-}
-
-.message-error{
-  display:none;
-  margin-top:8px;
-  font-size:13px;
-  text-align:center;
-}
+/* STATUS */
 
 .payment-status{
   display:none;
+
   margin-top:15px;
+
+  padding:12px;
+
+  border-radius:12px;
+
   text-align:center;
-  color:white;
+
   font-size:14px;
+
+  background:
+    rgba(0,0,0,.3);
+
+  border:
+    1px solid
+    rgba(255,255,255,.1);
 }
 
-/* RESPONSIVE */
+.status-info{
+  color:#00d9ff;
+}
+
+.status-error{
+  color:#ff4747;
+}
+
+/* INSTRUCTIONS */
+
+.instructions{
+  margin-top:15px;
+
+  padding:12px;
+
+  border-radius:12px;
+
+  background:
+    rgba(0,0,0,.25);
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  color:#9da9c9;
+
+  font-size:12px;
+
+  line-height:1.5;
+
+  text-align:center;
+}
+
+/* MOBILE */
+
 @media(max-width:360px){
+
   .packages{
     gap:8px;
   }
@@ -347,8 +500,17 @@ body::after{
   .minutes{
     font-size:15px;
   }
+
+  .header h1{
+    font-size:24px;
+  }
+
 }
+
+/* END CSS */
+
 </style>
+
 </head>
 
 <body>
@@ -356,358 +518,536 @@ body::after{
 <div class="container">
 
   <div class="header">
-    <h1>💳 PAYMENT</h1>
-    <p>Select your preferred minutes package</p>
+
+    <h1>
+      💳 PAYMENT
+    </h1>
+
+    <p>
+      Select your preferred minutes package
+    </p>
+
   </div>
 
   <div class="payment-card">
 
     <div class="till">
+
       Send money:
-      <strong id="tillNumber">0783783687</strong>
+
+      <strong id="tillNumber">
+        0783783687
+      </strong>
 
       <button
         type="button"
         class="copy-till"
-        onclick="copyTillNumber()">
-        📋 COPY
-      </button>
-    </div>
+        id="copyTillButton">
 
+        📋 COPY
+
+      </button>
+
+    </div>
     <div class="packages">
 
-      <button
-        class="package"
-        data-amount="81"
-        data-minutes="30">
+  <!-- 30 MINUTES -->
 
-        <div class="camera-circle">🎥</div>
+  <button
+    type="button"
+    class="package"
+    data-amount="81"
+    data-minutes="30">
 
-        <span class="minutes">30 Mins</span>
-
-        <div class="price">
-          <div class="price-row">
-            <span class="currency-icon kes">KSh</span>
-            KSh 81
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon usd">$</span>
-            $0.62
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon eur">€</span>
-            €0.57
-          </div>
-        </div>
-      </button>
-
-
-      <button
-        class="package"
-        data-amount="138"
-        data-minutes="55">
-
-        <div class="camera-circle">🎥</div>
-
-        <span class="minutes">55 Mins</span>
-
-        <div class="price">
-          <div class="price-row">
-            <span class="currency-icon kes">KSh</span>
-            KSh 138
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon usd">$</span>
-            $1.06
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon eur">€</span>
-            €0.97
-          </div>
-        </div>
-      </button>
-
-
-      <button
-        class="package"
-        data-amount="207"
-        data-minutes="73">
-
-        <div class="camera-circle">🎥</div>
-
-        <span class="minutes">73 Mins</span>
-
-        <div class="price">
-          <div class="price-row">
-            <span class="currency-icon kes">KSh</span>
-            KSh 207
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon usd">$</span>
-            $1.59
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon eur">€</span>
-            €1.45
-          </div>
-        </div>
-      </button>
-
-
-      <button
-        class="package"
-        data-amount="253"
-        data-minutes="95">
-
-        <div class="camera-circle">🎥</div>
-
-        <span class="minutes">95 Mins</span>
-
-        <div class="price">
-          <div class="price-row">
-            <span class="currency-icon kes">KSh</span>
-            KSh 253
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon usd">$</span>
-            $1.95
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon eur">€</span>
-            €1.77
-          </div>
-        </div>
-      </button>
-
-
-      <button
-        class="package"
-        data-amount="299"
-        data-minutes="105">
-
-        <div class="camera-circle">🎥</div>
-
-        <span class="minutes">105 Mins</span>
-
-        <div class="price">
-          <div class="price-row">
-            <span class="currency-icon kes">KSh</span>
-            KSh 299
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon usd">$</span>
-            $2.30
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon eur">€</span>
-            €2.09
-          </div>
-        </div>
-      </button>
-
-
-      <!-- FINAL PACKAGE -->
-      <button
-        class="package"
-        data-amount="393"
-        data-minutes="166">
-
-        <span class="hot">🔥 HOT</span>
-
-        <div class="camera-circle">🎥</div>
-
-        <span class="minutes">166 Mins</span>
-
-        <div class="price">
-          <div class="price-row">
-            <span class="currency-icon kes">KSh</span>
-            KSh 393
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon usd">$</span>
-            $3.02
-          </div>
-
-          <div class="price-row">
-            <span class="currency-icon eur">€</span>
-            €2.75
-          </div>
-        </div>
-      </button>
-
-    </div>
-        <div
-      class="selected-info"
-      id="selectedInfo">
+    <div class="camera-circle">
+      🎥
     </div>
 
-    <button
-      class="pay"
-      id="payButton">
-      💚 PAY WITH M-PESA
-    </button>
+    <span class="minutes">
+      30 Mins
+    </span>
 
-    <div
-      class="message-area"
-      id="messageArea">
+    <div class="price">
 
-      <div class="message-title">
-        Paste your M-PESA message below:
+      <div class="price-row">
+        <span class="currency-icon kes">
+          KSh
+        </span>
+
+        KSh 81
       </div>
 
-      <textarea
-        class="message-input"
-        id="messageInput"
-        placeholder="paste mpesa message & continue">
-      </textarea>
+      <div class="price-row">
+        <span class="currency-icon usd">
+          $
+        </span>
 
-      <div
-        class="message-error"
-        id="messageError">
+        $0.62
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon eur">
+          €
+        </span>
+
+        €0.57
       </div>
 
     </div>
 
-    <div
-      class="payment-status"
-      id="paymentStatus">
-      No payment is done
+  </button>
+
+
+  <!-- 55 MINUTES -->
+
+  <button
+    type="button"
+    class="package"
+    data-amount="138"
+    data-minutes="55">
+
+    <div class="camera-circle">
+      🎥
     </div>
 
-  </div>
+    <span class="minutes">
+      55 Mins
+    </span>
+
+    <div class="price">
+
+      <div class="price-row">
+        <span class="currency-icon kes">
+          KSh
+        </span>
+
+        KSh 138
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon usd">
+          $
+        </span>
+
+        $1.06
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon eur">
+          €
+        </span>
+
+        €0.97
+      </div>
+
+    </div>
+
+  </button>
+
+
+  <!-- 73 MINUTES -->
+
+  <button
+    type="button"
+    class="package"
+    data-amount="207"
+    data-minutes="73">
+
+    <div class="camera-circle">
+      🎥
+    </div>
+
+    <span class="minutes">
+      73 Mins
+    </span>
+
+    <div class="price">
+
+      <div class="price-row">
+        <span class="currency-icon kes">
+          KSh
+        </span>
+
+        KSh 207
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon usd">
+          $
+        </span>
+
+        $1.59
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon eur">
+          €
+        </span>
+
+        €1.45
+      </div>
+
+    </div>
+
+  </button>
+
+
+  <!-- 95 MINUTES -->
+
+  <button
+    type="button"
+    class="package"
+    data-amount="253"
+    data-minutes="95">
+
+    <div class="camera-circle">
+      🎥
+    </div>
+
+    <span class="minutes">
+      95 Mins
+    </span>
+
+    <div class="price">
+
+      <div class="price-row">
+        <span class="currency-icon kes">
+          KSh
+        </span>
+
+        KSh 253
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon usd">
+          $
+        </span>
+
+        $1.95
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon eur">
+          €
+        </span>
+
+        €1.77
+      </div>
+
+    </div>
+
+  </button>
+
+
+  <!-- 105 MINUTES -->
+
+  <button
+    type="button"
+    class="package"
+    data-amount="299"
+    data-minutes="105">
+
+    <div class="camera-circle">
+      🎥
+    </div>
+
+    <span class="minutes">
+      105 Mins
+    </span>
+
+    <div class="price">
+
+      <div class="price-row">
+        <span class="currency-icon kes">
+          KSh
+        </span>
+
+        KSh 299
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon usd">
+          $
+        </span>
+
+        $2.30
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon eur">
+          €
+        </span>
+
+        €2.09
+      </div>
+
+    </div>
+
+  </button>
+
+
+  <!-- 166 MINUTES — FINAL HOT PACKAGE -->
+
+  <button
+    type="button"
+    class="package"
+    data-amount="393"
+    data-minutes="166">
+
+    <span class="hot">
+      🔥 HOT
+    </span>
+
+    <div class="camera-circle">
+      🎥
+    </div>
+
+    <span class="minutes">
+      166 Mins
+    </span>
+
+    <div class="price">
+
+      <div class="price-row">
+        <span class="currency-icon kes">
+          KSh
+        </span>
+
+        KSh 393
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon usd">
+          $
+        </span>
+
+        $3.02
+      </div>
+
+      <div class="price-row">
+        <span class="currency-icon eur">
+          €
+        </span>
+
+        €2.75
+      </div>
+
+    </div>
+
+  </button>
+
 </div>
 
+
+<div
+  class="selected-info"
+  id="selectedInfo">
+</div>
+<button
+  type="button"
+  class="pay"
+  id="payButton">
+
+  💚 PAY WITH M-PESA
+
+</button>
+
+
+<div
+  class="payment-status"
+  id="paymentStatus">
+</div>
+
+
+<div class="instructions">
+
+  Tap
+  <strong>PAY WITH M-PESA</strong>
+  to open the M-PESA
+  Send Money service.
+
+  <br><br>
+
+  Recipient:
+
+  <strong>
+    0783783687
+  </strong>
+
+  <br>
+
+  Enter the amount yourself
+  and complete the payment
+  using your M-PESA PIN.
+
+</div>
+
+
+  </div>
+
+</div>
+
+
 <script>
-
-let selectedPackage = null;
-let messageTimer = null;
+  let selectedPackage = null;
 
 
-/* COPY TILL */
-function copyTillNumber(){
+/* ELEMENTS */
 
-  const till =
-    document
-      .getElementById("tillNumber")
-      .textContent
-      .trim();
+const packages =
+  document.querySelectorAll(
+    ".package"
+  );
 
-  navigator.clipboard
-    .writeText(till)
+const selectedInfo =
+  document.getElementById(
+    "selectedInfo"
+  );
 
-    .then(function(){
+const payButton =
+  document.getElementById(
+    "payButton"
+  );
 
-      const button =
-        document.querySelector(".copy-till");
+const paymentStatus =
+  document.getElementById(
+    "paymentStatus"
+  );
 
-      button.textContent = "✓ COPIED";
+const copyTillButton =
+  document.getElementById(
+    "copyTillButton"
+  );
 
-      setTimeout(function(){
-
-        button.textContent = "📋 COPY";
-
-      },2000);
-
-    })
-
-    .catch(function(){
-
-      alert(
-        "Please copy the Till number manually: " +
-        till
-      );
-
-    });
-}
+const tillNumber =
+  document.getElementById(
+    "tillNumber"
+  );
 
 
 /* PACKAGE SELECTION */
-const packages =
-  document.querySelectorAll(".package");
 
-const selectedInfo =
-  document.getElementById("selectedInfo");
+packages.forEach(
+  function(packageButton){
 
-const payButton =
-  document.getElementById("payButton");
+    packageButton.addEventListener(
+      "click",
+      function(){
 
-const messageArea =
-  document.getElementById("messageArea");
+        packages.forEach(
+          function(item){
 
-const messageInput =
-  document.getElementById("messageInput");
+            item.classList.remove(
+              "selected"
+            );
 
-const messageError =
-  document.getElementById("messageError");
-
-const paymentStatus =
-  document.getElementById("paymentStatus");
+          }
+        );
 
 
-packages.forEach(function(packageButton){
+        this.classList.add(
+          "selected"
+        );
 
-  packageButton.addEventListener(
-    "click",
-    function(){
 
-      packages.forEach(function(item){
-        item.classList.remove("selected");
-      });
+        selectedPackage = {
 
-      this.classList.add("selected");
+          amount:
+            this.dataset.amount,
 
-      selectedPackage = {
-        amount:this.dataset.amount,
-        minutes:this.dataset.minutes
-      };
+          minutes:
+            this.dataset.minutes
 
-      selectedInfo.style.display = "block";
+        };
 
-      selectedInfo.textContent =
-        selectedPackage.minutes +
-        " Minutes — KSh " +
-        selectedPackage.amount;
 
-      messageArea.style.display = "none";
+        selectedInfo.style.display =
+          "block";
 
-      paymentStatus.style.display = "none";
 
-      messageInput.value = "";
+        selectedInfo.textContent =
+          selectedPackage.minutes +
+          " Minutes — KSh " +
+          selectedPackage.amount;
 
-      messageError.style.display = "none";
 
-      messageError.textContent = "";
+        paymentStatus.style.display =
+          "none";
 
-      messageInput.classList.remove(
-        "rejected"
-      );
-
-      if(messageTimer){
-
-        clearTimeout(messageTimer);
-
-        messageTimer = null;
+        paymentStatus.textContent =
+          "";
 
       }
+    );
+
+  }
+);
+
+
+/* COPY NUMBER */
+
+copyTillButton.addEventListener(
+  "click",
+  function(){
+
+    const number =
+      tillNumber.textContent.trim();
+
+
+    if(
+      navigator.clipboard &&
+      navigator.clipboard.writeText
+    ){
+
+      navigator.clipboard
+        .writeText(number)
+
+        .then(
+          function(){
+
+            copyTillButton.textContent =
+              "✓ COPIED";
+
+
+            setTimeout(
+              function(){
+
+                copyTillButton.textContent =
+                  "📋 COPY";
+
+              },
+              2000
+            );
+
+          }
+        )
+
+        .catch(
+          function(){
+
+            alert(
+              "M-PESA number: " +
+              number
+            );
+
+          }
+        );
+
+    }else{
+
+      alert(
+        "M-PESA number: " +
+        number
+      );
 
     }
-  );
 
-});
+  }
+);
 
 
-/* PAY BUTTON */
+/* PAY WITH M-PESA */
+
 payButton.addEventListener(
   "click",
   function(){
@@ -719,164 +1059,68 @@ payButton.addEventListener(
       );
 
       return;
-    }
 
-    messageArea.style.display = "block";
-
-    paymentStatus.style.display = "none";
-
-    messageInput.focus();
-
-  }
-);
-
-
-/* M-PESA MESSAGE */
-messageInput.addEventListener(
-  "input",
-  function(){
-
-    const message =
-      this.value.trim();
-
-    if(!message){
-
-      if(messageTimer){
-
-        clearTimeout(messageTimer);
-
-        messageTimer = null;
-
-      }
-
-      messageError.style.display = "none";
-
-      messageError.textContent = "";
-
-      this.classList.remove(
-        "rejected"
-      );
-
-      return;
     }
 
 
-    this.classList.remove(
-      "rejected"
-    );
-
-    messageError.style.display =
+    paymentStatus.style.display =
       "block";
 
-    messageError.style.color =
-      "white";
 
-    messageError.textContent =
-      "Loading...";
+    paymentStatus.className =
+      "payment-status status-info";
 
 
-    if(messageTimer){
-
-      clearTimeout(messageTimer);
-
-    }
+    paymentStatus.textContent =
+      "Opening M-PESA...";
 
 
-    messageTimer =
-      setTimeout(function(){
+    /*
+      TEST M-PESA USSD ROUTE
 
-        messageError.style.display =
-          "block";
+      This asks Android to open
+      the phone dialer/USSD handler
+      with the M-PESA Send Money
+      shortcut.
 
-        messageError.style.color =
-          "#ff4747";
+      No payment is automatically
+      confirmed by this website.
+    */
 
-        messageError.textContent =
-          "Incorrect message";
+    const ussd =
+      "*334*1*1#";
 
-        messageInput.classList.add(
-          "rejected"
-        );
 
-        messageTimer = null;
+    const encoded =
+      encodeURIComponent(
+        ussd
+      );
 
-      },10000);
+
+    window.location.href =
+      "tel:" + encoded;
+
+
+    /*
+      Fallback message after
+      a short delay.
+    */
+
+    setTimeout(
+      function(){
+
+        paymentStatus.className =
+          "payment-status status-info";
+
+        paymentStatus.textContent =
+          "If M-PESA did not open, dial *334# and choose Send Money.";
+
+      },
+      2500
+    );
 
   }
 );
-
-  </script>
-  <script>
-
-/*
-  INTASEND
-  Keep this section if your
-  existing IntaSend setup is
-  configured.
-*/
-
-try{
-
-  if(
-    typeof window.IntaSend !==
-    "undefined"
-  ){
-
-    const intasend =
-      new window.IntaSend({
-        publicAPIKey:
-          "",
-        live:false
-      });
-
-    intasend.on(
-      "COMPLETE",
-      function(response){
-
-        paymentStatus.style.display =
-          "block";
-
-        paymentStatus.textContent =
-          "Payment received";
-
-      }
-    );
-
-    intasend.on(
-      "FAILED",
-      function(response){
-
-        paymentStatus.style.display =
-          "block";
-
-        paymentStatus.textContent =
-          "No payment is done";
-
-      }
-    );
-
-    intasend.on(
-      "IN-PROGRESS",
-      function(response){
-
-        paymentStatus.style.display =
-          "block";
-
-        paymentStatus.textContent =
-          "Payment in progress";
-
-      }
-    );
-
-  }
-
-}catch(error){
-
-  console.log(
-    "IntaSend not configured."
-  );
-
-}
 
 </script>
 
