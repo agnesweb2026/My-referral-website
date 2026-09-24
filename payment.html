@@ -7,239 +7,234 @@
 <title>M-PESA Payment</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-    }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
-    body {
-        background: #07110c;
-        color: white;
-        min-height: 100vh;
-        padding: 20px 14px;
-    }
+body {
+    background: #07110c;
+    color: white;
+    min-height: 100vh;
+    padding: 20px 14px;
+}
 
-    .container {
-        max-width: 500px;
-        margin: auto;
-    }
+.container {
+    max-width: 500px;
+    margin: auto;
+}
 
-    .top-title {
-        text-align: center;
-        margin-bottom: 18px;
-    }
+.top-title {
+    text-align: center;
+    margin-bottom: 18px;
+}
 
-    .top-title h1 {
-        color: #20d66b;
-        font-size: 27px;
-        margin-bottom: 7px;
-    }
+.top-title h1 {
+    color: #20d66b;
+    font-size: 27px;
+    margin-bottom: 7px;
+}
 
-    .top-title p {
-        color: #a9b5ae;
-        font-size: 14px;
-    }
+.top-title p {
+    color: #a9b5ae;
+    font-size: 14px;
+}
 
-    .payment-box {
-        background: #0d1812;
-        border: 1px solid #1b3b29;
-        border-radius: 18px;
-        padding: 20px;
-        box-shadow: 0 0 20px rgba(0, 255, 100, 0.08);
-    }
+.payment-box {
+    background: #0d1812;
+    border: 1px solid #1b3b29;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 255, 100, 0.08);
+}
 
-    .section-title {
-        color: #20d66b;
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 12px;
-    }
+.section-title {
+    color: #20d66b;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
 
-    .packages {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 11px;
-        margin-bottom: 22px;
-    }
+.packages {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 11px;
+    margin-bottom: 22px;
+}
 
-    .package {
-        position: relative;
-        background: #111f17;
-        border: 1px solid #294535;
-        border-radius: 13px;
-        padding: 15px 10px;
-        text-align: center;
-        cursor: pointer;
-        transition: 0.2s;
-    }
+.package {
+    position: relative;
+    background: #111f17;
+    border: 1px solid #294535;
+    border-radius: 13px;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
-    .package:hover {
-        border-color: #20d66b;
-    }
+.package:hover {
+    border-color: #20d66b;
+}
 
-    .package.selected {
-        border: 2px solid #20d66b;
-        background: #102a1a;
-        box-shadow: 0 0 12px rgba(32, 214, 107, 0.18);
-    }
+.package.selected {
+    border: 2px solid #20d66b;
+    background: #102a1a;
+    box-shadow: 0 0 12px rgba(32, 214, 107, 0.18);
+}
 
-    .package .minutes {
-        color: white;
-        font-size: 18px;
-        font-weight: bold;
-    }
+.minutes {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
 
-    .package .price {
-        color: #20d66b;
-        font-size: 16px;
-        font-weight: bold;
-        margin-top: 6px;
-    }
+.price {
+    color: #20d66b;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 6px;
+}
 
-    .hot {
-        position: absolute;
-        top: -8px;
-        right: -5px;
-        background: #ff3030;
-        color: white;
-        font-size: 10px;
-        font-weight: bold;
-        padding: 4px 7px;
-        border-radius: 8px;
-    }
+.hot {
+    position: absolute;
+    top: -8px;
+    right: -5px;
+    background: #ff3030;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 4px 7px;
+    border-radius: 8px;
+}
 
-    .selected-info {
-        background: #08150d;
-        border: 1px solid #1b3b29;
-        border-radius: 12px;
-        padding: 14px;
-        margin-bottom: 17px;
-    }
+.selected-info {
+    background: #08150d;
+    border: 1px solid #1b3b29;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 17px;
+}
 
-    .selected-info p {
-        font-size: 14px;
-        color: #aebbb3;
-        margin-bottom: 5px;
-    }
+.selected-info p {
+    font-size: 14px;
+    color: #aebbb3;
+    margin-bottom: 5px;
+}
 
-    .selected-info strong {
-        color: white;
-        font-size: 17px;
-    }
+.selected-info strong {
+    color: white;
+    font-size: 17px;
+}
 
-    .recipient-title {
-        color: #20d66b;
-        font-size: 15px;
-        font-weight: bold;
-        margin-bottom: 7px;
-    }
+.recipient-title {
+    color: #20d66b;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
 
-    .number-box {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 17px;
-    }
+.number-box {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 17px;
+}
 
-    .number-input {
-        flex: 1;
-        background: #08150d;
-        border: 1px solid #294535;
-        color: white;
-        border-radius: 10px;
-        padding: 13px;
-        font-size: 16px;
-        outline: none;
-    }
+.number-input {
+    flex: 1;
+    background: #08150d;
+    border: 1px solid #294535;
+    color: white;
+    border-radius: 10px;
+    padding: 13px;
+    font-size: 16px;
+    outline: none;
+}
 
-    .copy-btn {
-        border: none;
-        background: #173522;
-        color: #20d66b;
-        border-radius: 10px;
-        padding: 0 15px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+.copy-btn {
+    border: none;
+    background: #173522;
+    color: #20d66b;
+    border-radius: 10px;
+    padding: 0 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    .copy-btn:active {
-        transform: scale(0.97);
-    }
+.pay-btn {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    background: #20d66b;
+    color: #031008;
+    padding: 16px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    .pay-btn {
-        width: 100%;
-        border: none;
-        border-radius: 12px;
-        background: #20d66b;
-        color: #031008;
-        padding: 16px;
-        font-size: 17px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.2s;
-    }
+.pay-btn:disabled {
+    background: #31503d;
+    color: #789182;
+    cursor: not-allowed;
+}
 
-    .pay-btn:disabled {
-        background: #31503d;
-        color: #789182;
-        cursor: not-allowed;
-    }
+.pay-btn:not(:disabled):active {
+    transform: scale(0.98);
+}
 
-    .pay-btn:not(:disabled):active {
-        transform: scale(0.98);
-    }
+.status {
+    display: none;
+    margin-top: 15px;
+    padding: 13px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+}
 
-    .status {
-        display: none;
-        margin-top: 15px;
-        padding: 13px;
-        border-radius: 10px;
-        text-align: center;
-        font-size: 14px;
-        line-height: 1.6;
-    }
+.status.success {
+    display: block;
+    background: #0d2818;
+    border: 1px solid #1d713b;
+    color: #8ff2b4;
+}
 
-    .status.success {
-        display: block;
-        background: #0d2818;
-        border: 1px solid #1d713b;
-        color: #8ff2b4;
-    }
+.status.error {
+    display: block;
+    background: #2a1010;
+    border: 1px solid #7b2525;
+    color: #ff9a9a;
+}
 
-    .status.error {
-        display: block;
-        background: #2a1010;
-        border: 1px solid #7b2525;
-        color: #ff9a9a;
-    }
+.instructions {
+    margin-top: 20px;
+    background: #0a140e;
+    border: 1px solid #193524;
+    border-radius: 13px;
+    padding: 15px;
+}
 
-    .instructions {
-        margin-top: 20px;
-        background: #0a140e;
-        border: 1px solid #193524;
-        border-radius: 13px;
-        padding: 15px;
-    }
+.instructions h3 {
+    color: #20d66b;
+    font-size: 15px;
+    margin-bottom: 9px;
+}
 
-    .instructions h3 {
-        color: #20d66b;
-        font-size: 15px;
-        margin-bottom: 9px;
-    }
+.instructions p {
+    color: #aab6af;
+    font-size: 13px;
+    line-height: 1.7;
+}
 
-    .instructions p {
-        color: #aab6af;
-        font-size: 13px;
-        line-height: 1.7;
-    }
-
-    .footer {
-        text-align: center;
-        color: #627168;
-        font-size: 11px;
-        margin-top: 20px;
-    }
+.footer {
+    text-align: center;
+    color: #627168;
+    font-size: 11px;
+    margin-top: 20px;
+}
 </style>
 </head>
 
@@ -260,32 +255,38 @@
 
         <div class="packages">
 
-            <div class="package" onclick="selectPackage(this, 30, 81)">
+            <div class="package"
+                 onclick="selectPackage(this, 30, 81)">
                 <div class="minutes">30 Mins</div>
                 <div class="price">81 KSh</div>
             </div>
 
-            <div class="package" onclick="selectPackage(this, 55, 138)">
+            <div class="package"
+                 onclick="selectPackage(this, 55, 138)">
                 <div class="minutes">55 Mins</div>
                 <div class="price">138 KSh</div>
             </div>
 
-            <div class="package" onclick="selectPackage(this, 73, 207)">
+            <div class="package"
+                 onclick="selectPackage(this, 73, 207)">
                 <div class="minutes">73 Mins</div>
                 <div class="price">207 KSh</div>
             </div>
 
-            <div class="package" onclick="selectPackage(this, 95, 253)">
+            <div class="package"
+                 onclick="selectPackage(this, 95, 253)">
                 <div class="minutes">95 Mins</div>
                 <div class="price">253 KSh</div>
             </div>
 
-            <div class="package" onclick="selectPackage(this, 105, 299)">
+            <div class="package"
+                 onclick="selectPackage(this, 105, 299)">
                 <div class="minutes">105 Mins</div>
                 <div class="price">299 KSh</div>
             </div>
 
-            <div class="package" onclick="selectPackage(this, 166, 393)">
+            <div class="package"
+                 onclick="selectPackage(this, 166, 393)">
                 <span class="hot">HOT</span>
                 <div class="minutes">166 Mins</div>
                 <div class="price">393 KSh</div>
@@ -293,17 +294,30 @@
 
         </div>
 
-        <div class="selected-info">
-            <p>Selected package</p>
-            <strong id="selectedPackage">No package selected</strong>
 
-            <p style="margin-top:10px;">Amount</p>
-            <strong id="selectedAmount">0 KSh</strong>
+        <div class="selected-info">
+
+            <p>Selected package</p>
+
+            <strong id="selectedPackage">
+                No package selected
+            </strong>
+
+            <p style="margin-top:10px;">
+                Amount
+            </p>
+
+            <strong id="selectedAmount">
+                0 KSh
+            </strong>
+
         </div>
+
 
         <div class="recipient-title">
-            Pay with M-PESA
+            M-PESA Number
         </div>
+
 
         <div class="number-box">
 
@@ -315,38 +329,50 @@
                 readonly
             >
 
-            <button class="copy-btn" onclick="copyNumber()">
+            <button
+                class="copy-btn"
+                onclick="copyNumber()">
                 COPY
             </button>
 
         </div>
 
+
         <button
             id="payButton"
             class="pay-btn"
             disabled
-            onclick="payWithMpesa()"
-        >
+            onclick="payWithMpesa()">
+
             PAY WITH M-PESA
+
         </button>
+
 
         <div id="status" class="status"></div>
 
+
         <div class="instructions">
+
             <h3>Payment Instructions</h3>
 
             <p>
-                1. Select the minutes package you want.
+                1. Select your package.
                 <br>
                 2. Tap <b>PAY WITH M-PESA</b>.
                 <br>
-                3. My OneApp will be opened if Android allows the direct app launch.
+                3. My OneApp will be opened.
                 <br>
-                4. Complete the payment using your M-PESA PIN.
+                4. The website sends the selected number
+                and amount to the Android intent.
+                <br>
+                5. Enter your M-PESA PIN manually.
             </p>
+
         </div>
 
     </div>
+
 
     <div class="footer">
         M-PESA payment
@@ -357,208 +383,294 @@
 
 <script>
 
-    /* ================================
-       PAYMENT SETTINGS
-    ================================= */
+/* =========================================
+   M-PESA SETTINGS
+========================================= */
 
-    const RECIPIENT = "0783783687";
+const RECIPIENT = "0783783687";
 
-    let selectedMinutes = 0;
-    let selectedAmount = 0;
-
-
-    /* ================================
-       SELECT PACKAGE
-    ================================= */
-
-    function selectPackage(element, minutes, amount) {
-
-        const packages = document.querySelectorAll(".package");
-
-        packages.forEach(function(item) {
-            item.classList.remove("selected");
-        });
-
-        element.classList.add("selected");
-
-        selectedMinutes = minutes;
-        selectedAmount = amount;
-
-        document.getElementById("selectedPackage").textContent =
-            minutes + " Minutes";
-
-        document.getElementById("selectedAmount").textContent =
-            amount + " KSh";
-
-        document.getElementById("payButton").disabled = false;
-
-        document.getElementById("status").style.display = "none";
-    }
+let selectedMinutes = 0;
+let selectedAmount = 0;
 
 
-    /* ================================
-       COPY RECIPIENT NUMBER
-    ================================= */
+/* =========================================
+   SELECT PACKAGE
+========================================= */
 
-    function copyNumber() {
+function selectPackage(element, minutes, amount) {
 
-        const number = RECIPIENT;
+    const packages =
+        document.querySelectorAll(".package");
 
-        if (navigator.clipboard) {
+    packages.forEach(function(item) {
 
-            navigator.clipboard.writeText(number)
-                .then(function() {
+        item.classList.remove("selected");
 
-                    showStatus(
-                        "success",
-                        "Recipient number copied:<br><strong>" +
-                        number +
-                        "</strong>"
-                    );
-
-                })
-                .catch(function() {
-
-                    fallbackCopy(number);
-
-                });
-
-        } else {
-
-            fallbackCopy(number);
-
-        }
-    }
+    });
 
 
-    function fallbackCopy(text) {
+    element.classList.add("selected");
 
-        const input = document.createElement("textarea");
 
-        input.value = text;
+    selectedMinutes = minutes;
 
-        document.body.appendChild(input);
+    selectedAmount = amount;
 
-        input.select();
 
-        try {
-            document.execCommand("copy");
+    document.getElementById(
+        "selectedPackage"
+    ).textContent =
+        minutes + " Minutes";
+
+
+    document.getElementById(
+        "selectedAmount"
+    ).textContent =
+        amount + " KSh";
+
+
+    document.getElementById(
+        "payButton"
+    ).disabled = false;
+
+
+    document.getElementById(
+        "status"
+    ).style.display = "none";
+}
+
+
+/* =========================================
+   COPY NUMBER
+========================================= */
+
+function copyNumber() {
+
+    const number = RECIPIENT;
+
+
+    if (navigator.clipboard) {
+
+        navigator.clipboard.writeText(number)
+        .then(function() {
 
             showStatus(
                 "success",
-                "Recipient number copied:<br><strong>" +
-                text +
+                "Number copied:<br><strong>" +
+                number +
                 "</strong>"
             );
 
-        } catch (error) {
+        })
+        .catch(function() {
 
-            showStatus(
-                "error",
-                "Please copy the number manually:<br><strong>" +
-                text +
-                "</strong>"
-            );
-        }
+            fallbackCopy(number);
 
-        document.body.removeChild(input);
+        });
+
+    } else {
+
+        fallbackCopy(number);
+
     }
+}
 
 
-    /* ================================
-       OPEN MY ONEAPP
-    ================================= */
+/* =========================================
+   FALLBACK COPY
+========================================= */
 
-    function openMyOneApp() {
+function fallbackCopy(text) {
 
-        /*
-         * My OneApp Android package
-         */
-        const intent =
-            "intent://#Intent;" +
-            "package=com.safaricom.mpesa.lifestyle;" +
-            "action=android.intent.action.MAIN;" +
-            "category=android.intent.category.LAUNCHER;" +
-            "end";
+    const textarea =
+        document.createElement("textarea");
 
-        /*
-         * Launch directly from the button tap.
-         * No setTimeout and no mpesa://sendmoney.
-         */
-        window.location.href = intent;
-    }
+    textarea.value = text;
+
+    textarea.style.position = "fixed";
+
+    textarea.style.left = "-9999px";
+
+    document.body.appendChild(textarea);
+
+    textarea.focus();
+
+    textarea.select();
 
 
-    /* ================================
-       PAY WITH M-PESA
-    ================================= */
+    try {
 
-    function payWithMpesa() {
+        document.execCommand("copy");
 
-        if (!selectedAmount) {
-
-            showStatus(
-                "error",
-                "Please select a package first."
-            );
-
-            return;
-        }
-
-
-        /*
-         * Copy recipient number so it is ready
-         * if it needs to be pasted inside OneApp.
-         */
-        if (navigator.clipboard) {
-
-            navigator.clipboard
-                .writeText(RECIPIENT)
-                .catch(function() {});
-
-        }
-
-
-        /*
-         * Show the selected payment details.
-         */
         showStatus(
             "success",
-            "Opening M-PESA...<br><br>" +
-
-            "Recipient: <strong>" +
-            RECIPIENT +
-            "</strong><br>" +
-
-            "Amount: <strong>" +
-            selectedAmount +
-            " KSh</strong>"
+            "Number copied:<br><strong>" +
+            text +
+            "</strong>"
         );
 
+    } catch (error) {
 
-        /*
-         * IMPORTANT:
-         * Launch OneApp directly from the user's
-         * button click.
-         */
-        openMyOneApp();
+        showStatus(
+            "error",
+            "Copy failed. Number:<br><strong>" +
+            text +
+            "</strong>"
+        );
+
     }
 
 
-    /* ================================
-       STATUS MESSAGE
-    ================================= */
+    document.body.removeChild(textarea);
+}
 
-    function showStatus(type, message) {
 
-        const status = document.getElementById("status");
+/* =========================================
+   OPEN MY ONEAPP + SEND NUMBER/AMOUNT
+========================================= */
 
-        status.className = "status " + type;
+function openMyOneAppWithPayment() {
 
-        status.innerHTML = message;
+    const phone =
+        encodeURIComponent(RECIPIENT);
 
-        status.style.display = "block";
+    const amount =
+        encodeURIComponent(selectedAmount);
+
+
+    /*
+     * Android Intent
+     *
+     * My OneApp package:
+     * com.safaricom.mpesa.lifestyle
+     *
+     * The phone and amount are passed
+     * as Intent extras.
+     */
+
+    const intent =
+        "intent://sendmoney" +
+
+        "?phone=" +
+        phone +
+
+        "&amount=" +
+        amount +
+
+        "#Intent;" +
+
+        "scheme=mpesa;" +
+
+        "package=com.safaricom.mpesa.lifestyle;" +
+
+        "action=android.intent.action.VIEW;" +
+
+        "category=android.intent.category.BROWSABLE;" +
+
+        "S.phone=" +
+        phone +
+        ";" +
+
+        "S.recipient=" +
+        phone +
+        ";" +
+
+        "S.amount=" +
+        amount +
+        ";" +
+
+        "end";
+
+
+    /*
+     * Launch immediately from
+     * the user's button tap.
+     */
+
+    window.location.href = intent;
+}
+
+
+/* =========================================
+   PAY BUTTON
+========================================= */
+
+function payWithMpesa() {
+
+    if (!selectedAmount) {
+
+        showStatus(
+            "error",
+            "Please select a package first."
+        );
+
+        return;
     }
+
+
+    /*
+     * Copy recipient number automatically.
+     * This gives you a backup if OneApp
+     * does not accept the intent extra.
+     */
+
+    if (navigator.clipboard) {
+
+        navigator.clipboard
+            .writeText(RECIPIENT)
+            .catch(function() {});
+
+    }
+
+
+    /*
+     * Show selected details.
+     */
+
+    showStatus(
+        "success",
+
+        "Opening M-PESA...<br><br>" +
+
+        "Recipient: <strong>" +
+        RECIPIENT +
+        "</strong><br>" +
+
+        "Amount: <strong>" +
+        selectedAmount +
+        " KSh</strong>"
+    );
+
+
+    /*
+     * Open My OneApp.
+     */
+
+    openMyOneAppWithPayment();
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+function showStatus(type, message) {
+
+    const status =
+        document.getElementById("status");
+
+
+    status.className =
+        "status " + type;
+
+
+    status.innerHTML =
+        message;
+
+
+    status.style.display =
+        "block";
+}
 
 </script>
 
