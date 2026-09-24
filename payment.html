@@ -47,7 +47,7 @@ body {
     border: 1px solid #1b3b29;
     border-radius: 18px;
     padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 255, 100, 0.08);
+    box-shadow: 0 0 20px rgba(0,255,100,0.08);
 }
 
 .section-title {
@@ -72,17 +72,12 @@ body {
     padding: 15px 10px;
     text-align: center;
     cursor: pointer;
-    transition: 0.2s;
-}
-
-.package:hover {
-    border-color: #20d66b;
 }
 
 .package.selected {
     border: 2px solid #20d66b;
     background: #102a1a;
-    box-shadow: 0 0 12px rgba(32, 214, 107, 0.18);
+    box-shadow: 0 0 12px rgba(32,214,107,0.18);
 }
 
 .minutes {
@@ -179,10 +174,6 @@ body {
     background: #31503d;
     color: #789182;
     cursor: not-allowed;
-}
-
-.pay-btn:not(:disabled):active {
-    transform: scale(0.98);
 }
 
 .status {
@@ -294,7 +285,6 @@ body {
 
         </div>
 
-
         <div class="selected-info">
 
             <p>Selected package</p>
@@ -313,11 +303,9 @@ body {
 
         </div>
 
-
         <div class="recipient-title">
             M-PESA Number
         </div>
-
 
         <div class="number-box">
 
@@ -337,7 +325,6 @@ body {
 
         </div>
 
-
         <button
             id="payButton"
             class="pay-btn"
@@ -348,9 +335,7 @@ body {
 
         </button>
 
-
         <div id="status" class="status"></div>
-
 
         <div class="instructions">
 
@@ -363,16 +348,12 @@ body {
                 <br>
                 3. My OneApp will be opened.
                 <br>
-                4. The website sends the selected number
-                and amount to the Android intent.
-                <br>
-                5. Enter your M-PESA PIN manually.
+                4. Complete the payment manually in M-PESA.
             </p>
 
         </div>
 
     </div>
-
 
     <div class="footer">
         M-PESA payment
@@ -383,71 +364,42 @@ body {
 
 <script>
 
-/* =========================================
-   M-PESA SETTINGS
-========================================= */
-
 const RECIPIENT = "0783783687";
 
 let selectedMinutes = 0;
 let selectedAmount = 0;
 
 
-/* =========================================
-   SELECT PACKAGE
-========================================= */
+/* SELECT PACKAGE */
 
 function selectPackage(element, minutes, amount) {
 
-    const packages =
-        document.querySelectorAll(".package");
-
-    packages.forEach(function(item) {
-
+    document.querySelectorAll(".package").forEach(function(item) {
         item.classList.remove("selected");
-
     });
-
 
     element.classList.add("selected");
 
-
     selectedMinutes = minutes;
-
     selectedAmount = amount;
 
-
-    document.getElementById(
-        "selectedPackage"
-    ).textContent =
+    document.getElementById("selectedPackage").textContent =
         minutes + " Minutes";
 
-
-    document.getElementById(
-        "selectedAmount"
-    ).textContent =
+    document.getElementById("selectedAmount").textContent =
         amount + " KSh";
 
+    document.getElementById("payButton").disabled = false;
 
-    document.getElementById(
-        "payButton"
-    ).disabled = false;
-
-
-    document.getElementById(
-        "status"
-    ).style.display = "none";
+    document.getElementById("status").style.display = "none";
 }
 
 
-/* =========================================
-   COPY NUMBER
-========================================= */
+/* COPY NUMBER */
 
 function copyNumber() {
 
     const number = RECIPIENT;
-
 
     if (navigator.clipboard) {
 
@@ -476,9 +428,7 @@ function copyNumber() {
 }
 
 
-/* =========================================
-   FALLBACK COPY
-========================================= */
+/* FALLBACK COPY */
 
 function fallbackCopy(text) {
 
@@ -488,15 +438,12 @@ function fallbackCopy(text) {
     textarea.value = text;
 
     textarea.style.position = "fixed";
-
     textarea.style.left = "-9999px";
 
     document.body.appendChild(textarea);
 
     textarea.focus();
-
     textarea.select();
-
 
     try {
 
@@ -513,87 +460,35 @@ function fallbackCopy(text) {
 
         showStatus(
             "error",
-            "Copy failed. Number:<br><strong>" +
+            "Copy failed.<br><strong>" +
             text +
             "</strong>"
         );
 
     }
 
-
     document.body.removeChild(textarea);
 }
 
 
 /* =========================================
-   OPEN MY ONEAPP + SEND NUMBER/AMOUNT
+   OPEN MY ONEAPP ONLY
 ========================================= */
 
-function openMyOneAppWithPayment() {
-
-    const phone =
-        encodeURIComponent(RECIPIENT);
-
-    const amount =
-        encodeURIComponent(selectedAmount);
-
-
-    /*
-     * Android Intent
-     *
-     * My OneApp package:
-     * com.safaricom.mpesa.lifestyle
-     *
-     * The phone and amount are passed
-     * as Intent extras.
-     */
+function openMyOneApp() {
 
     const intent =
-        "intent://sendmoney" +
-
-        "?phone=" +
-        phone +
-
-        "&amount=" +
-        amount +
-
-        "#Intent;" +
-
-        "scheme=mpesa;" +
-
+        "intent://#Intent;" +
         "package=com.safaricom.mpesa.lifestyle;" +
-
-        "action=android.intent.action.VIEW;" +
-
-        "category=android.intent.category.BROWSABLE;" +
-
-        "S.phone=" +
-        phone +
-        ";" +
-
-        "S.recipient=" +
-        phone +
-        ";" +
-
-        "S.amount=" +
-        amount +
-        ";" +
-
+        "action=android.intent.action.MAIN;" +
+        "category=android.intent.category.LAUNCHER;" +
         "end";
 
-
-    /*
-     * Launch immediately from
-     * the user's button tap.
-     */
-
-    window.location.href = intent;
+    window.location.assign(intent);
 }
 
 
-/* =========================================
-   PAY BUTTON
-========================================= */
+/* PAY BUTTON */
 
 function payWithMpesa() {
 
@@ -607,66 +502,34 @@ function payWithMpesa() {
         return;
     }
 
-
-    /*
-     * Copy recipient number automatically.
-     * This gives you a backup if OneApp
-     * does not accept the intent extra.
-     */
-
-    if (navigator.clipboard) {
-
-        navigator.clipboard
-            .writeText(RECIPIENT)
-            .catch(function() {});
-
-    }
-
-
-    /*
-     * Show selected details.
-     */
-
     showStatus(
         "success",
-
-        "Opening M-PESA...<br><br>" +
-
-        "Recipient: <strong>" +
-        RECIPIENT +
-        "</strong><br>" +
-
-        "Amount: <strong>" +
-        selectedAmount +
-        " KSh</strong>"
+        "Opening M-PESA..."
     );
 
-
     /*
-     * Open My OneApp.
+     * Direct launch.
+     * No Play Store URL.
+     * No mpesa://sendmoney.
+     * No setTimeout.
      */
 
-    openMyOneAppWithPayment();
+    openMyOneApp();
 }
 
 
-/* =========================================
-   STATUS
-========================================= */
+/* STATUS */
 
 function showStatus(type, message) {
 
     const status =
         document.getElementById("status");
 
-
     status.className =
         "status " + type;
 
-
     status.innerHTML =
         message;
-
 
     status.style.display =
         "block";
@@ -675,4 +538,4 @@ function showStatus(type, message) {
 </script>
 
 </body>
-   </html>
+</html>
