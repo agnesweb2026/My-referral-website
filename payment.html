@@ -6,210 +6,198 @@
 <title>M-PESA Payment</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
-  margin:0;
-  padding:0;
-  background:#050505;
-  color:#fff;
-  font-family:Arial,sans-serif;
-  min-height:100vh;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+background:#050505;
+color:#fff;
+min-height:100vh
 }
 
 .container{
-  width:100%;
-  max-width:500px;
-  margin:auto;
-  padding:20px;
+width:100%;
+max-width:500px;
+margin:auto;
+padding:20px
 }
 
 .header{
-  text-align:center;
-  margin-bottom:25px;
+text-align:center;
+margin-bottom:25px
 }
 
 .header h1{
-  margin:0;
-  color:#00ff88;
-  font-size:28px;
+margin:0;
+font-size:28px;
+color:#00ff88
 }
 
 .header p{
-  color:#aaa;
-  font-size:14px;
+color:#aaa;
+font-size:14px
 }
 
 .recipient-box{
-  background:#111;
-  border:1px solid #00ff88;
-  border-radius:16px;
-  padding:20px;
-  text-align:center;
-  margin-bottom:20px;
+background:#111;
+border:1px solid #00ff88;
+border-radius:15px;
+padding:18px;
+margin-bottom:20px;
+text-align:center
 }
 
 .recipient-title{
-  color:#aaa;
-  font-size:13px;
-  margin-bottom:8px;
+font-size:13px;
+color:#aaa;
+margin-bottom:8px
 }
 
 .recipient-number{
-  color:#00ff88;
-  font-size:27px;
-  font-weight:bold;
-}
-
-.copy-btn{
-  margin-top:12px;
-  padding:10px 18px;
-  border:1px solid #00ff88;
-  border-radius:10px;
-  background:transparent;
-  color:#00ff88;
-  font-weight:bold;
+font-size:25px;
+font-weight:bold;
+color:#00ff88
 }
 
 .packages{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
 }
 
 .package{
-  background:#101010;
-  border:1px solid #333;
-  border-radius:15px;
-  padding:18px 10px;
-  text-align:center;
-  cursor:pointer;
+background:#101010;
+border:1px solid #333;
+border-radius:15px;
+padding:18px 10px;
+text-align:center;
+cursor:pointer;
+transition:.2s
 }
 
 .package:active{
-  transform:scale(.97);
+transform:scale(.97)
 }
 
 .package.selected{
-  border:2px solid #00ff88;
-  box-shadow:0 0 18px rgba(0,255,136,.25);
+border:2px solid #00ff88;
+box-shadow:0 0 15px rgba(0,255,136,.25)
 }
 
 .minutes{
-  font-size:21px;
-  font-weight:bold;
+font-size:21px;
+font-weight:bold
 }
 
 .price{
-  margin-top:8px;
-  color:#00ff88;
-  font-size:22px;
-  font-weight:bold;
+margin-top:8px;
+font-size:22px;
+font-weight:bold;
+color:#00ff88
 }
 
 .currency{
-  color:#aaa;
-  font-size:13px;
+font-size:13px;
+color:#aaa
 }
 
 .hot{
-  color:#ff3030;
-  font-size:11px;
-  font-weight:bold;
-  margin-top:5px;
+color:#ff3030;
+font-size:11px;
+font-weight:bold;
+margin-top:5px
 }
 
 .payment-area{
-  margin-top:25px;
-  padding:20px;
-  background:#101010;
-  border:1px solid #252525;
-  border-radius:18px;
+margin-top:25px;
+background:#101010;
+border-radius:18px;
+padding:20px;
+border:1px solid #252525
 }
 
 .selected-info{
-  text-align:center;
-  color:#aaa;
-  margin-bottom:18px;
+text-align:center;
+margin-bottom:18px;
+color:#bbb
 }
 
 .selected-info strong{
-  color:#00ff88;
+color:#00ff88
 }
 
 .pay-btn{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:17px;
-  background:#00c853;
-  color:white;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
+width:100%;
+border:0;
+border-radius:14px;
+padding:17px;
+background:#00c853;
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer
 }
 
 .pay-btn:disabled{
-  background:#333;
-  color:#777;
-}
-
-.open-btn{
-  width:100%;
-  margin-top:12px;
-  padding:16px;
-  border:0;
-  border-radius:14px;
-  background:#087f45;
-  color:#fff;
-  font-size:17px;
-  font-weight:bold;
-  display:none;
+background:#333;
+color:#777;
+cursor:not-allowed
 }
 
 .status{
-  margin-top:18px;
-  padding:15px;
-  border-radius:12px;
-  background:#080808;
-  border:1px solid #222;
-  text-align:center;
-  color:#aaa;
-  font-size:14px;
-  line-height:1.6;
+margin-top:18px;
+padding:15px;
+border-radius:12px;
+background:#080808;
+border:1px solid #222;
+text-align:center;
+color:#aaa;
+font-size:14px;
+line-height:1.6
 }
 
 .status.success{
-  border-color:#00ff88;
-  color:#00ff88;
+border-color:#00ff88;
+color:#00ff88
 }
 
 .instructions{
-  margin-top:20px;
-  padding:17px;
-  background:#0d0d0d;
-  border:1px solid #222;
-  border-radius:14px;
+margin-top:20px;
+padding:16px;
+background:#0d0d0d;
+border-radius:14px;
+border:1px solid #222
 }
 
 .instructions h3{
-  margin-top:0;
-  color:#00ff88;
+margin-top:0;
+color:#00ff88
 }
 
 .instructions p{
-  color:#aaa;
-  font-size:13px;
-  line-height:1.7;
+color:#aaa;
+font-size:13px;
+line-height:1.6
+}
+
+.copy-btn{
+margin-top:10px;
+padding:10px 16px;
+border:1px solid #00ff88;
+border-radius:10px;
+background:transparent;
+color:#00ff88;
+font-weight:bold;
+cursor:pointer
 }
 
 @media(max-width:380px){
 
-  .packages{
-    grid-template-columns:1fr;
-  }
+.packages{
+grid-template-columns:1fr
+}
 
 }
 </style>
@@ -219,212 +207,156 @@ body{
 
 <div class="container">
 
-  <div class="header">
-
-    <h1>M-PESA PAYMENT</h1>
-
-    <p>
-      Select your preferred minutes package
-    </p>
-
-  </div>
+<div class="header">
+<h1>M-PESA PAYMENT</h1>
+<p>Select your preferred minutes package</p>
+</div>
 
 
-  <!-- RECIPIENT -->
+<!-- RECIPIENT -->
 
-  <div class="recipient-box">
+<div class="recipient-box">
 
-    <div class="recipient-title">
-      SEND MONEY TO
-    </div>
+<div class="recipient-title">
+SEND MONEY TO
+</div>
 
-    <div class="recipient-number">
-      0783783687
-    </div>
+<div class="recipient-number">
+0783783687
+</div>
 
-    <button
-      class="copy-btn"
-      onclick="copyNumber()"
-    >
-      COPY NUMBER
-    </button>
+<button class="copy-btn" onclick="copyNumber()">
+COPY NUMBER
+</button>
 
-  </div>
+</div>
 
 
-  <!-- PACKAGES -->
+<!-- PACKAGES -->
 
-  <div class="packages">
+<div class="packages">
 
-    <div
-      class="package"
-      onclick="selectPackage(this,30,81)"
-    >
-      <div class="minutes">
-        30 Mins
-      </div>
-
-      <div class="price">
-        81
-        <span class="currency">KSh</span>
-      </div>
-    </div>
+<div class="package"
+onclick="selectPackage(this,30,81)">
+<div class="minutes">30 Mins</div>
+<div class="price">
+81 <span class="currency">KSh</span>
+</div>
+</div>
 
 
-    <div
-      class="package"
-      onclick="selectPackage(this,55,138)"
-    >
-      <div class="minutes">
-        55 Mins
-      </div>
-
-      <div class="price">
-        138
-        <span class="currency">KSh</span>
-      </div>
-    </div>
+<div class="package"
+onclick="selectPackage(this,55,138)">
+<div class="minutes">55 Mins</div>
+<div class="price">
+138 <span class="currency">KSh</span>
+</div>
+</div>
 
 
-    <div
-      class="package"
-      onclick="selectPackage(this,73,207)"
-    >
-      <div class="minutes">
-        73 Mins
-      </div>
-
-      <div class="price">
-        207
-        <span class="currency">KSh</span>
-      </div>
-    </div>
+<div class="package"
+onclick="selectPackage(this,73,207)">
+<div class="minutes">73 Mins</div>
+<div class="price">
+207 <span class="currency">KSh</span>
+</div>
+</div>
 
 
-    <div
-      class="package"
-      onclick="selectPackage(this,95,253)"
-    >
-      <div class="minutes">
-        95 Mins
-      </div>
-
-      <div class="price">
-        253
-        <span class="currency">KSh</span>
-      </div>
-    </div>
+<div class="package"
+onclick="selectPackage(this,95,253)">
+<div class="minutes">95 Mins</div>
+<div class="price">
+253 <span class="currency">KSh</span>
+</div>
+</div>
 
 
-    <div
-      class="package"
-      onclick="selectPackage(this,105,299)"
-    >
-      <div class="minutes">
-        105 Mins
-      </div>
-
-      <div class="price">
-        299
-        <span class="currency">KSh</span>
-      </div>
-    </div>
+<div class="package"
+onclick="selectPackage(this,105,299)">
+<div class="minutes">105 Mins</div>
+<div class="price">
+299 <span class="currency">KSh</span>
+</div>
+</div>
 
 
-    <div
-      class="package"
-      onclick="selectPackage(this,166,393)"
-    >
-      <div class="minutes">
-        166 Mins
-      </div>
+<div class="package"
+onclick="selectPackage(this,166,393)">
+<div class="minutes">166 Mins</div>
+<div class="price">
+393 <span class="currency">KSh</span>
+</div>
 
-      <div class="price">
-        393
-        <span class="currency">KSh</span>
-      </div>
+<div class="hot">
+🔥 HOT
+</div>
 
-      <div class="hot">
-        🔥 HOT
-      </div>
-    </div>
+</div>
 
-  </div>
+</div>
 
 
-  <!-- PAYMENT -->
+<!-- PAYMENT -->
 
-  <div class="payment-area">
+<div class="payment-area">
 
-    <div class="selected-info">
+<div class="selected-info">
 
-      Selected:
+Selected:
 
-      <strong id="selectedPackage">
-        No package selected
-      </strong>
+<strong id="selectedPackage">
+No package selected
+</strong>
 
-    </div>
-
-
-    <button
-      id="payButton"
-      class="pay-btn"
-      onclick="payWithMpesa()"
-      disabled
-    >
-      PAY WITH M-PESA
-    </button>
+</div>
 
 
-    <button
-      id="openButton"
-      class="open-btn"
-      onclick="openMpesaInstructions()"
-    >
-      📱 OPEN M-PESA
-    </button>
+<button
+id="payButton"
+class="pay-btn"
+onclick="payWithMpesa()"
+disabled>
+
+PAY WITH M-PESA
+
+</button>
 
 
-    <div
-      id="status"
-      class="status"
-    >
-      Select a package to continue.
-    </div>
+<div id="status" class="status">
 
-  </div>
+Select a package to continue.
+
+</div>
+
+</div>
 
 
-  <!-- INSTRUCTIONS -->
+<!-- INSTRUCTIONS -->
 
-  <div class="instructions">
+<div class="instructions">
 
-    <h3>
-      How to pay
-    </h3>
+<h3>How to pay</h3>
 
-    <p>
+<p>
 
-      1. Select your package.<br>
+1. Select your package.<br>
 
-      2. Tap PAY WITH M-PESA.<br>
+2. Tap PAY WITH M-PESA.<br>
 
-      3. The recipient number will be copied.<br>
+3. The recipient number is copied automatically.<br>
 
-      4. Open your green M-PESA app.<br>
+4. My OneApp will be opened.<br>
 
-      5. Select <b>Send Money</b>.<br>
+5. Go to M-PESA → Send Money.<br>
 
-      6. Paste the copied number.<br>
+6. The code will attempt to pass the recipient and amount to the app.<br>
 
-      7. Enter the selected amount.<br>
+7. Confirm the payment and enter your M-PESA PIN manually.
 
-      8. Confirm the transaction with your M-PESA PIN.
+</p>
 
-    </p>
-
-  </div>
+</div>
 
 </div>
 
@@ -445,69 +377,44 @@ let selectedAmount = null;
    SELECT PACKAGE
 ========================= */
 
-function selectPackage(
-  element,
-  minutes,
-  amount
-){
+function selectPackage(element, minutes, amount){
 
-  document
-    .querySelectorAll(".package")
-    .forEach(function(pkg){
+document.querySelectorAll(".package").forEach(function(pkg){
 
-      pkg.classList.remove(
-        "selected"
-      );
+pkg.classList.remove("selected");
 
-    });
+});
 
 
-  element.classList.add(
-    "selected"
-  );
+element.classList.add("selected");
 
 
-  selectedMinutes =
-    minutes;
+selectedMinutes = minutes;
 
-  selectedAmount =
-    amount;
+selectedAmount = amount;
 
 
-  document.getElementById(
-    "selectedPackage"
-  ).innerHTML =
-    minutes +
-    " Mins — " +
-    amount +
-    " KSh";
+document.getElementById("selectedPackage").innerHTML =
+
+minutes +
+" Mins — " +
+amount +
+" KSh";
 
 
-  document.getElementById(
-    "payButton"
-  ).disabled = false;
+document.getElementById("payButton").disabled = false;
 
 
-  document.getElementById(
-    "openButton"
-  ).style.display =
-    "none";
+document.getElementById("status").className = "status";
 
 
-  document.getElementById(
-    "status"
-  ).className =
-    "status";
+document.getElementById("status").innerHTML =
 
-
-  document.getElementById(
-    "status"
-  ).innerHTML =
-    "Ready to pay <strong>" +
-    amount +
-    " KSh</strong> to " +
-    RECIPIENT +
-    ".";
+"Ready to pay <strong>" +
+amount +
+" KSh</strong> to " +
+RECIPIENT +
+".";
 
 }
 
@@ -516,22 +423,38 @@ function selectPackage(
    COPY NUMBER
 ========================= */
 
-async function copyNumber(){
+function copyNumber(){
 
-  try{
+if(navigator.clipboard){
 
-    await navigator.clipboard.writeText(
-      RECIPIENT
-    );
+navigator.clipboard.writeText(RECIPIENT)
 
-  }catch(error){
+.then(function(){
 
-    fallbackCopy();
+document.getElementById("status").className =
+"status success";
 
-  }
+document.getElementById("status").innerHTML =
 
+"Recipient number copied:<br>" +
 
-  showCopiedMessage();
+"<strong>" +
+RECIPIENT +
+"</strong>";
+
+})
+
+.catch(function(){
+
+fallbackCopy();
+
+});
+
+}else{
+
+fallbackCopy();
+
+}
 
 }
 
@@ -542,188 +465,212 @@ async function copyNumber(){
 
 function fallbackCopy(){
 
-  const input =
-    document.createElement(
-      "input"
-    );
+const input = document.createElement("input");
 
-  input.value =
-    RECIPIENT;
+input.value = RECIPIENT;
 
-  input.style.position =
-    "fixed";
+document.body.appendChild(input);
 
-  input.style.opacity =
-    "0";
+input.select();
 
-  document.body.appendChild(
-    input
-  );
+document.execCommand("copy");
 
-  input.focus();
+document.body.removeChild(input);
 
-  input.select();
+document.getElementById("status").className =
+"status success";
 
-  try{
+document.getElementById("status").innerHTML =
 
-    document.execCommand(
-      "copy"
-    );
+"Recipient number copied:<br>" +
 
-  }catch(error){}
-
-  document.body.removeChild(
-    input
-  );
+"<strong>" +
+RECIPIENT +
+"</strong>";
 
 }
 
 
 /* =========================
-   COPIED MESSAGE
+   OPEN ONEAPP
 ========================= */
 
-function showCopiedMessage(){
+function openMyOneApp(){
 
-  const status =
-    document.getElementById(
-      "status"
-    );
+if(!selectedAmount){
 
-  status.className =
-    "status success";
+return;
 
-  status.innerHTML =
-    "Recipient number copied:<br>" +
-    "<strong>" +
-    RECIPIENT +
-    "</strong>";
+}
+
+
+/*
+Convert values for URL
+*/
+
+const phone =
+encodeURIComponent(RECIPIENT);
+
+const amount =
+encodeURIComponent(selectedAmount);
+
+
+/*
+First deep-link attempt.
+
+The recipient and amount are included
+as URI parameters.
+*/
+
+const mpesaLink =
+
+"mpesa://sendmoney" +
+
+"?phone=" +
+phone +
+
+"&amount=" +
+amount;
+
+
+/*
+Try the M-PESA URI.
+*/
+
+window.location.href = mpesaLink;
+
+
+/*
+Second Android intent attempt.
+*/
+
+setTimeout(function(){
+
+const intent =
+
+"intent://sendmoney" +
+
+"?phone=" +
+phone +
+
+"&amount=" +
+amount +
+
+"#Intent;" +
+
+"scheme=mpesa;" +
+
+"package=com.safaricom.mpesa.lifestyle;" +
+
+"action=android.intent.action.VIEW;" +
+
+"category=android.intent.category.BROWSABLE;" +
+
+"end";
+
+
+window.location.href = intent;
+
+},700);
 
 }
 
 
 /* =========================
-   PAY
+   PAY BUTTON
 ========================= */
 
-async function payWithMpesa(){
+function payWithMpesa(){
 
-  if(!selectedAmount){
+if(!selectedAmount){
 
-    alert(
-      "Please select a package first."
-    );
+alert("Please select a package first.");
 
-    return;
-
-  }
-
-
-  /*
-   COPY RECIPIENT
-  */
-
-  try{
-
-    if(
-      navigator.clipboard &&
-      window.isSecureContext
-    ){
-
-      await navigator.clipboard.writeText(
-        RECIPIENT
-      );
-
-    }else{
-
-      fallbackCopy();
-
-    }
-
-  }catch(error){
-
-    fallbackCopy();
-
-  }
-
-
-  /*
-   SHOW PAYMENT DETAILS
-  */
-
-  const status =
-    document.getElementById(
-      "status"
-    );
-
-
-  status.className =
-    "status success";
-
-
-  status.innerHTML =
-
-    "Number copied successfully.<br><br>" +
-
-    "Send <strong>" +
-    selectedAmount +
-    " KSh</strong> to:<br>" +
-
-    "<strong>" +
-    RECIPIENT +
-    "</strong><br><br>" +
-
-    "Open the green M-PESA app and choose " +
-    "<strong>Send Money</strong>.";
-
-
-  /*
-   SHOW OPEN BUTTON
-  */
-
-  document.getElementById(
-    "openButton"
-  ).style.display =
-    "block";
+return;
 
 }
 
 
-/* =========================
-   OPEN INSTRUCTIONS
-========================= */
-
-function openMpesaInstructions(){
-
-  const status =
-    document.getElementById(
-      "status"
-    );
+const status =
+document.getElementById("status");
 
 
-  status.className =
-    "status success";
+/*
+Copy recipient first.
+*/
+
+if(navigator.clipboard){
+
+navigator.clipboard.writeText(RECIPIENT)
+
+.catch(function(){});
+
+}
 
 
-  status.innerHTML =
+/*
+Show status.
+*/
 
-    "Your number is already copied.<br><br>" +
+status.className =
+"status success";
 
-    "Open the green M-PESA app.<br>" +
 
-    "Choose <strong>Send Money</strong>.<br><br>" +
+status.innerHTML =
 
-    "Recipient:<br>" +
+"Opening M-PESA...<br><br>" +
 
-    "<strong>" +
-    RECIPIENT +
-    "</strong><br><br>" +
+"Recipient: <strong>" +
 
-    "Amount:<br>" +
+RECIPIENT +
 
-    "<strong>" +
-    selectedAmount +
-    " KSh</strong>";
+"</strong><br>" +
+
+"Amount: <strong>" +
+
+selectedAmount +
+
+" KSh</strong>";
+
+
+/*
+Open OneApp.
+*/
+
+openMyOneApp();
+
+
+/*
+Fallback message after 5 seconds.
+*/
+
+setTimeout(function(){
+
+status.className = "status";
+
+status.innerHTML =
+
+"<strong>Payment details copied.</strong><br><br>" +
+
+"Recipient:<br>" +
+
+"<strong>" +
+
+RECIPIENT +
+
+"</strong><br><br>" +
+
+"Amount:<br>" +
+
+"<strong>" +
+
+selectedAmount +
+
+" KSh</strong><br><br>" +
+
+"Open M-PESA → Send Money.";
+
+},5000);
 
 }
 
