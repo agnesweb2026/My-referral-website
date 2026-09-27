@@ -25,6 +25,8 @@ body {
   padding: 18px;
 }
 
+/* HEADER */
+
 .header {
   text-align: center;
   padding: 15px 0 20px;
@@ -61,8 +63,8 @@ body {
   transition: .2s;
 }
 
-.package:hover {
-  border-color: #32cd32;
+.package:active {
+  transform: scale(.97);
 }
 
 .package.selected {
@@ -71,12 +73,12 @@ body {
   transform: scale(1.02);
 }
 
-.package .minutes {
+.minutes {
   font-size: 21px;
   font-weight: bold;
 }
 
-.package .price {
+.price {
   margin-top: 8px;
   font-size: 18px;
   color: #32cd32;
@@ -154,6 +156,30 @@ body {
   transform: scale(.98);
 }
 
+/* STATUS */
+
+.status {
+  display: none;
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  background: #171717;
+}
+
+.status-title {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.status-text {
+  margin-top: 6px;
+  color: #bbb;
+  font-size: 13px;
+}
+
+/* INSTRUCTIONS */
+
 .instructions {
   margin-top: 18px;
   background: #0d0d0d;
@@ -185,29 +211,7 @@ body {
   text-align: center;
 }
 
-/* STATUS */
-
-.status {
-  display: none;
-  margin-top: 16px;
-  padding: 14px;
-  border-radius: 10px;
-  text-align: center;
-  background: #171717;
-}
-
-.status-title {
-  font-weight: bold;
-  font-size: 17px;
-}
-
-.status-text {
-  margin-top: 6px;
-  color: #bbb;
-  font-size: 13px;
-}
-
-/* LIVE STREAM SCREEN */
+/* LIVE / LOADING SCREEN */
 
 .live-screen {
   position: fixed;
@@ -253,19 +257,7 @@ body {
   animation: blink .8s infinite;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes blink {
-  50% {
-    opacity: .2;
-  }
-}
-
-/* INSUFFICIENT SCREEN */
+/* NO PAYMENT / INSUFFICIENT SCREEN */
 
 .insufficient-screen {
   position: fixed;
@@ -297,7 +289,21 @@ body {
   font-size: 15px;
 }
 
-/* RESPONSIVE */
+/* ANIMATIONS */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: .2;
+  }
+}
+
+/* MOBILE */
 
 @media (max-width: 380px) {
   .packages {
@@ -315,6 +321,9 @@ body {
     <h1>M-PESA PAYMENT</h1>
     <p>Choose your minutes package</p>
   </div>
+
+
+  <!-- PACKAGES -->
 
   <div class="packages">
 
@@ -351,42 +360,74 @@ body {
 
   </div>
 
+
+  <!-- PAYMENT -->
+
   <div class="payment-box">
 
     <h2>Pay with M-PESA</h2>
 
     <div class="recipient">
+
       <div class="number" id="recipientNumber">
-        0704676086
+        0741101913
       </div>
 
       <button class="copy-btn" onclick="copyNumber()">
         COPY
       </button>
+
     </div>
+
 
     <button class="main-btn" onclick="payWithMpesa()">
       PAY WITH M-PESA
     </button>
 
+
     <div class="status" id="status">
+
       <div class="status-title" id="statusTitle"></div>
+
       <div class="status-text" id="statusText"></div>
+
     </div>
 
   </div>
+
+
+  <!-- INSTRUCTIONS -->
 
   <div class="instructions">
 
     <h3>How to pay and get access</h3>
 
     <ol>
-      <li>Select the minutes package you want.</li>
-      <li>Tap <b>PAY WITH M-PESA</b>.</li>
-      <li>Wait while the payment screen loads.</li>
-      <li>After the loading screen, the payment packages will appear again.</li>
-      <li>Use M-PESA to send the exact amount for your selected package.</li>
-      <li>After your payment is confirmed, access can be granted.</li>
+
+      <li>
+        Select the minutes package you want.
+      </li>
+
+      <li>
+        Tap <b>PAY WITH M-PESA</b>.
+      </li>
+
+      <li>
+        Wait while the payment screen loads.
+      </li>
+
+      <li>
+        After the loading screen, the payment packages will appear again.
+      </li>
+
+      <li>
+        Use M-PESA to send the exact amount for your selected package.
+      </li>
+
+      <li>
+        After your payment is confirmed, access can be granted.
+      </li>
+
     </ol>
 
     <div class="note">
@@ -400,7 +441,12 @@ body {
 
 <script>
 
-const RECIPIENT = "0704676086";
+/* M-PESA NUMBER */
+
+const RECIPIENT = "0741101913";
+
+
+/* SELECTED PACKAGE */
 
 let selectedMinutes = null;
 let selectedPrice = null;
@@ -410,7 +456,7 @@ let selectedPrice = null;
 
 function selectPackage(element, minutes, price) {
 
-  document.querySelectorAll(".package").forEach(pkg => {
+  document.querySelectorAll(".package").forEach(function(pkg) {
     pkg.classList.remove("selected");
   });
 
@@ -430,27 +476,38 @@ function selectPackage(element, minutes, price) {
 
 function copyNumber() {
 
-  navigator.clipboard.writeText(RECIPIENT)
-    .then(() => {
+  if (navigator.clipboard) {
 
-      showStatus(
-        "Copied",
-        "M-PESA number copied successfully."
-      );
+    navigator.clipboard.writeText(RECIPIENT)
+      .then(function() {
 
-    })
-    .catch(() => {
+        showStatus(
+          "Copied",
+          "M-PESA number copied successfully."
+        );
 
-      showStatus(
-        "M-PESA number",
-        RECIPIENT
-      );
+      })
+      .catch(function() {
 
-    });
+        showStatus(
+          "M-PESA number",
+          RECIPIENT
+        );
+
+      });
+
+  } else {
+
+    showStatus(
+      "M-PESA number",
+      RECIPIENT
+    );
+
+  }
 }
 
 
-/* STATUS */
+/* STATUS MESSAGE */
 
 function showStatus(title, text) {
 
@@ -458,15 +515,19 @@ function showStatus(title, text) {
   const statusTitle = document.getElementById("statusTitle");
   const statusText = document.getElementById("statusText");
 
-  if (!status) return;
+  if (!status) {
+    return;
+  }
 
   status.style.display = "block";
+
   statusTitle.textContent = title;
+
   statusText.textContent = text;
 }
 
 
-/* PAY BUTTON */
+/* PAY WITH M-PESA */
 
 function payWithMpesa() {
 
@@ -480,16 +541,23 @@ function payWithMpesa() {
     return;
   }
 
+
+  /*
+    STEP 1:
+    SHOW LIVE STREAM FOR 2 SECONDS
+  */
+
   showLiveStream();
 
 }
 
 
-/* LIVE STREAM FOR 2 SECONDS */
+/* LIVE STREAM */
 
 function showLiveStream() {
 
   document.body.innerHTML = `
+
     <div class="live-screen">
 
       <div class="live-title">
@@ -504,9 +572,17 @@ function showLiveStream() {
       </div>
 
     </div>
+
   `;
 
-  setTimeout(() => {
+
+  setTimeout(function() {
+
+    /*
+      STEP 2:
+      AFTER 2 SECONDS SHOW
+      INSUFFICIENT MINUTES
+    */
 
     showInsufficientMinutes();
 
@@ -515,11 +591,12 @@ function showLiveStream() {
 }
 
 
-/* INSUFFICIENT MINUTES FOR 2 SECONDS */
+/* INSUFFICIENT MINUTES */
 
 function showInsufficientMinutes() {
 
   document.body.innerHTML = `
+
     <div class="insufficient-screen">
 
       <div class="warning-icon">
@@ -535,9 +612,16 @@ function showInsufficientMinutes() {
       </p>
 
     </div>
+
   `;
 
-  setTimeout(() => {
+
+  setTimeout(function() {
+
+    /*
+      STEP 3:
+      RETURN TO PAYMENT PACKAGES
+    */
 
     showPaymentPackages();
 
@@ -555,8 +639,13 @@ function showPaymentPackages() {
     <div class="container">
 
       <div class="header">
+
         <h1>M-PESA PAYMENT</h1>
-        <p>Choose your minutes package</p>
+
+        <p>
+          Choose your minutes package
+        </p>
+
       </div>
 
 
@@ -564,47 +653,88 @@ function showPaymentPackages() {
 
         <div class="package ${selectedMinutes === 30 ? "selected" : ""}"
              onclick="selectPackage(this, 30, 81)">
-          <div class="minutes">30 Mins</div>
-          <div class="price">KSh 81</div>
+
+          <div class="minutes">
+            30 Mins
+          </div>
+
+          <div class="price">
+            KSh 81
+          </div>
+
         </div>
 
 
         <div class="package ${selectedMinutes === 55 ? "selected" : ""}"
              onclick="selectPackage(this, 55, 138)">
-          <div class="minutes">55 Mins</div>
-          <div class="price">KSh 138</div>
+
+          <div class="minutes">
+            55 Mins
+          </div>
+
+          <div class="price">
+            KSh 138
+          </div>
+
         </div>
 
 
         <div class="package ${selectedMinutes === 73 ? "selected" : ""}"
              onclick="selectPackage(this, 73, 207)">
-          <div class="minutes">73 Mins</div>
-          <div class="price">KSh 207</div>
+
+          <div class="minutes">
+            73 Mins
+          </div>
+
+          <div class="price">
+            KSh 207
+          </div>
+
         </div>
 
 
         <div class="package ${selectedMinutes === 95 ? "selected" : ""}"
              onclick="selectPackage(this, 95, 253)">
-          <div class="minutes">95 Mins</div>
-          <div class="price">KSh 253</div>
+
+          <div class="minutes">
+            95 Mins
+          </div>
+
+          <div class="price">
+            KSh 253
+          </div>
+
         </div>
 
 
         <div class="package ${selectedMinutes === 105 ? "selected" : ""}"
              onclick="selectPackage(this, 105, 299)">
-          <div class="minutes">105 Mins</div>
-          <div class="price">KSh 299</div>
+
+          <div class="minutes">
+            105 Mins
+          </div>
+
+          <div class="price">
+            KSh 299
+          </div>
+
         </div>
 
 
         <div class="package ${selectedMinutes === 166 ? "selected" : ""}"
              onclick="selectPackage(this, 166, 393)">
 
-          <span class="hot">HOT</span>
+          <span class="hot">
+            HOT
+          </span>
 
-          <div class="minutes">166 Mins</div>
+          <div class="minutes">
+            166 Mins
+          </div>
 
-          <div class="price">KSh 393</div>
+          <div class="price">
+            KSh 393
+          </div>
 
         </div>
 
@@ -613,7 +743,10 @@ function showPaymentPackages() {
 
       <div class="payment-box">
 
-        <h2>Pay with M-PESA</h2>
+        <h2>
+          Pay with M-PESA
+        </h2>
+
 
         <div class="recipient">
 
@@ -621,23 +754,33 @@ function showPaymentPackages() {
             ${RECIPIENT}
           </div>
 
-          <button class="copy-btn" onclick="copyNumber()">
+          <button class="copy-btn"
+                  onclick="copyNumber()">
+
             COPY
+
           </button>
 
         </div>
 
 
-        <button class="main-btn" onclick="startPaymentInstructions()">
+        <button class="main-btn"
+                onclick="startPaymentInstructions()">
+
           GET ACCESS
+
         </button>
 
 
         <div class="status" id="status">
 
-          <div class="status-title" id="statusTitle"></div>
+          <div class="status-title"
+               id="statusTitle">
+          </div>
 
-          <div class="status-text" id="statusText"></div>
+          <div class="status-text"
+               id="statusText">
+          </div>
 
         </div>
 
@@ -649,6 +792,7 @@ function showPaymentPackages() {
         <h3>
           Process to pay and get access
         </h3>
+
 
         <ol>
 
@@ -665,7 +809,8 @@ function showPaymentPackages() {
           </li>
 
           <li>
-            Send the exact amount to the displayed M-PESA number.
+            Send the exact amount to:
+            <b>${RECIPIENT}</b>
           </li>
 
           <li>
@@ -687,7 +832,7 @@ function showPaymentPackages() {
             ${selectedMinutes || "--"} minutes
           </b>
 
-          <br>
+          <br><br>
 
           Amount:
           <b>
@@ -699,12 +844,17 @@ function showPaymentPackages() {
       </div>
 
     </div>
+
   `;
 
 }
 
 
-/* GET ACCESS BUTTON */
+/*
+  GET ACCESS
+  ↓
+  LOADING FOR 2 SECONDS
+*/
 
 function startPaymentInstructions() {
 
@@ -712,30 +862,91 @@ function startPaymentInstructions() {
 
     showStatus(
       "Select a package first",
-      "Choose a minutes package before paying."
+      "Choose a minutes package before continuing."
     );
 
     return;
   }
 
-  showStatus(
-    "Ready for payment",
-    "Send KSh " + selectedPrice +
-    " for " + selectedMinutes + " minutes."
-  );
+
+  document.body.innerHTML = `
+
+    <div class="live-screen">
+
+      <div class="live-title">
+        <span class="live-dot"></span>
+        LOADING
+      </div>
+
+      <div class="loading-ring"></div>
+
+      <div class="loading-text">
+        Checking payment...
+      </div>
+
+    </div>
+
+  `;
+
+
+  setTimeout(function() {
+
+    /*
+      AFTER 2 SECONDS:
+      SHOW NO PAYMENT IS DONE
+    */
+
+    showNoPayment();
+
+  }, 2000);
 
 }
 
 
-/* SAFETY: PREVENT PAGE FROM SUBMITTING */
+/*
+  NO PAYMENT IS DONE
+  ↓
+  2 SECONDS
+  ↓
+  BACK TO PACKAGES
+*/
 
-window.addEventListener("load", function() {
+function showNoPayment() {
 
-  console.log("Payment page loaded.");
+  document.body.innerHTML = `
 
-});
+    <div class="insufficient-screen">
+
+      <div class="warning-icon">
+        ⚠️
+      </div>
+
+      <h1>
+        No payment is done
+      </h1>
+
+      <p>
+        No payment was detected.
+      </p>
+
+    </div>
+
+  `;
+
+
+  setTimeout(function() {
+
+    /*
+      RETURN TO PACKAGES
+    */
+
+    showPaymentPackages();
+
+  }, 2000);
+
+}
 
 </script>
 
 </body>
-</html>
+  </html>
