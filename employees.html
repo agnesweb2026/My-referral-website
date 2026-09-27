@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -15,7 +16,8 @@ content="width=device-width,initial-scale=1.0">
   box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
   margin:0;
   padding:0;
   width:100%;
@@ -94,6 +96,12 @@ button{
   border:1px solid #444;
 }
 
+.dashboardButton{
+  margin-top:8px;
+  background:#2563eb;
+  color:#fff;
+}
+
 button:active{
   transform:scale(.98);
 }
@@ -126,7 +134,9 @@ button:active{
 
 </head>
 
+
 <body>
+
 
 <h1>
   Employee Accounts
@@ -136,18 +146,15 @@ button:active{
   10 Employee Referral Links
 </div>
 
+
 <div id="employees"></div>
 
 
 <script>
 
+
 /*
   MAIN WEBSITE
-
-  All employees use the same
-  website.
-
-  Only the employee ID changes.
 */
 
 const WEBSITE_URL =
@@ -155,7 +162,15 @@ const WEBSITE_URL =
 
 
 /*
-  EMPLOYEE ACCOUNTS
+  DASHBOARD PAGE
+*/
+
+const DASHBOARD_PAGE =
+  "employee-dashboard.html";
+
+
+/*
+  EMPLOYEES
 */
 
 const employees = [
@@ -214,12 +229,10 @@ const employees = [
 
 
 /*
-  CREATE EMPLOYEE LINK
+  CREATE REFERRAL LINK
 */
 
-function makeEmployeeLink(
-  employeeId
-){
+function makeEmployeeLink(employeeId){
 
   return (
     WEBSITE_URL +
@@ -233,17 +246,30 @@ function makeEmployeeLink(
 
 
 /*
+  CREATE DASHBOARD LINK
+*/
+
+function makeDashboardLink(employeeId){
+
+  return (
+    DASHBOARD_PAGE +
+    "?employee=" +
+    encodeURIComponent(
+      employeeId
+    )
+  );
+
+}
+
+
+/*
   CREATE EMPLOYEE CARD
 */
 
-function createEmployeeCard(
-  employee
-){
+function createEmployeeCard(employee){
 
   const box =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
   box.className =
     "employee";
@@ -254,9 +280,7 @@ function createEmployeeCard(
   */
 
   const name =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
   name.className =
     "employeeName";
@@ -264,19 +288,15 @@ function createEmployeeCard(
   name.textContent =
     employee.name;
 
-  box.appendChild(
-    name
-  );
+  box.appendChild(name);
 
 
   /*
-    EMPLOYEE ID
+    ID
   */
 
   const id =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
   id.className =
     "employeeId";
@@ -284,9 +304,7 @@ function createEmployeeCard(
   id.textContent =
     employee.id;
 
-  box.appendChild(
-    id
-  );
+  box.appendChild(id);
 
 
   /*
@@ -300,9 +318,7 @@ function createEmployeeCard(
 
 
   const linkBox =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
   linkBox.className =
     "linkBox";
@@ -310,9 +326,7 @@ function createEmployeeCard(
   linkBox.textContent =
     link;
 
-  box.appendChild(
-    linkBox
-  );
+  box.appendChild(linkBox);
 
 
   /*
@@ -320,9 +334,7 @@ function createEmployeeCard(
   */
 
   const copyButton =
-    document.createElement(
-      "button"
-    );
+    document.createElement("button");
 
   copyButton.className =
     "copyButton";
@@ -331,14 +343,8 @@ function createEmployeeCard(
     "COPY LINK";
 
 
-  /*
-    STATUS
-  */
-
   const status =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
   status.className =
     "status";
@@ -349,9 +355,9 @@ function createEmployeeCard(
 
       try{
 
-        await navigator.clipboard.writeText(
-          link
-        );
+        await navigator.clipboard
+          .writeText(link);
+
 
         copyButton.textContent =
           "COPIED ✓";
@@ -392,13 +398,11 @@ function createEmployeeCard(
 
 
   /*
-    OPEN BUTTON
+    OPEN REFERRAL LINK
   */
 
   const openButton =
-    document.createElement(
-      "button"
-    );
+    document.createElement("button");
 
   openButton.className =
     "openButton";
@@ -421,6 +425,40 @@ function createEmployeeCard(
   );
 
 
+  /*
+    DASHBOARD BUTTON
+  */
+
+  const dashboardButton =
+    document.createElement("button");
+
+  dashboardButton.className =
+    "dashboardButton";
+
+  dashboardButton.textContent =
+    "OPEN DASHBOARD";
+
+
+  dashboardButton.onclick =
+    function(){
+
+      window.location.href =
+        makeDashboardLink(
+          employee.id
+        );
+
+    };
+
+
+  box.appendChild(
+    dashboardButton
+  );
+
+
+  /*
+    STATUS
+  */
+
   box.appendChild(
     status
   );
@@ -442,6 +480,7 @@ function loadEmployees(){
       "employees"
     );
 
+
   container.innerHTML =
     "";
 
@@ -453,6 +492,7 @@ function loadEmployees(){
         createEmployeeCard(
           employee
         );
+
 
       container.appendChild(
         card
@@ -470,7 +510,10 @@ function loadEmployees(){
 
 loadEmployees();
 
+
 </script>
 
+
 </body>
-  </html>
+
+</html>
