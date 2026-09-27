@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Employee Dashboard</title>
 
@@ -59,6 +63,7 @@ padding:9px 13px;
 border-radius:9px;
 font-size:12px;
 font-weight:bold;
+cursor:pointer;
 }
 
 /* EMPLOYEE CARD */
@@ -86,7 +91,7 @@ margin-top:7px;
 .employee-id{
 display:inline-block;
 margin-top:9px;
-padding:5px 9px;
+padding:6px 10px;
 border-radius:7px;
 background:#102615;
 color:#36df70;
@@ -186,6 +191,7 @@ height:100%;
 width:0%;
 background:#25d366;
 border-radius:20px;
+transition:width .5s ease;
 }
 
 /* PAYMENTS */
@@ -204,6 +210,7 @@ justify-content:space-between;
 align-items:center;
 padding:14px 0;
 border-bottom:1px solid #242424;
+gap:10px;
 }
 
 .payment-row:last-child{
@@ -298,6 +305,10 @@ color:#fff;
 border:1px solid #3a3a3a;
 }
 
+.action-button:active{
+transform:scale(.98);
+}
+
 /* INFO */
 
 .info{
@@ -321,6 +332,7 @@ align-items:center;
 justify-content:center;
 text-align:center;
 flex-direction:column;
+padding:20px;
 }
 
 .error h1{
@@ -355,14 +367,22 @@ font-size:19px;
 font-size:9px;
 }
 
+.payment-row{
+align-items:flex-start;
+}
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="container" id="dashboard">
+<div
+class="container"
+id="dashboard">
+
 
 <!-- HEADER -->
 
@@ -370,20 +390,28 @@ font-size:9px;
 
 <div class="header-left">
 
-<h1>Employee Dashboard</h1>
+<h1>
+Employee Dashboard
+</h1>
 
-<p>Your referral performance</p>
+<p>
+Your referral performance
+</p>
 
 </div>
 
-<button class="logout" onclick="logout()">
+<button
+class="logout"
+onclick="logout()">
+
 LOGOUT
+
 </button>
 
 </div>
 
 
-<!-- EMPLOYEE -->
+<!-- EMPLOYEE CARD -->
 
 <div class="employee-card">
 
@@ -391,12 +419,20 @@ LOGOUT
 EMPLOYEE ACCOUNT
 </div>
 
-<div class="employee-name" id="employeeName">
+<div
+class="employee-name"
+id="employeeName">
+
 Employee
+
 </div>
 
-<div class="employee-id" id="employeeId">
-EMP001
+<div
+class="employee-id"
+id="employeeId">
+
+REF-A7K2
+
 </div>
 
 </div>
@@ -410,8 +446,12 @@ EMP001
 TOTAL COMMISSION
 </div>
 
-<div class="earnings-amount" id="commissionAmount">
+<div
+class="earnings-amount"
+id="commissionAmount">
+
 KSh 0
+
 </div>
 
 <div class="rate">
@@ -421,18 +461,26 @@ KSh 0
 </div>
 
 
-<!-- STATS -->
+<!-- STATISTICS -->
 
 <div class="stats">
 
+
 <div class="stat">
 
-<div class="stat-number" id="customerCount">
+<div
+class="stat-number"
+id="customerCount">
+
 0
+
 </div>
 
 <div class="stat-label">
-CUSTOMERS<br>REFERRED
+
+CUSTOMERS<br>
+REFERRED
+
 </div>
 
 </div>
@@ -440,12 +488,19 @@ CUSTOMERS<br>REFERRED
 
 <div class="stat">
 
-<div class="stat-number" id="paymentCount">
+<div
+class="stat-number"
+id="paymentCount">
+
 0
+
 </div>
 
 <div class="stat-label">
-VERIFIED<br>PAYMENTS
+
+VERIFIED<br>
+PAYMENTS
+
 </div>
 
 </div>
@@ -453,15 +508,23 @@ VERIFIED<br>PAYMENTS
 
 <div class="stat">
 
-<div class="stat-number" id="totalSales">
+<div
+class="stat-number"
+id="totalSales">
+
 KSh 0
+
 </div>
 
 <div class="stat-label">
-TOTAL<br>SALES
+
+TOTAL<br>
+SALES
+
 </div>
 
 </div>
+
 
 </div>
 
@@ -498,7 +561,7 @@ id="progressFill">
 </div>
 
 
-<!-- PAYMENTS -->
+<!-- VERIFIED PAYMENTS -->
 
 <div class="payments">
 
@@ -509,15 +572,17 @@ Verified Payments
 <div id="paymentList">
 
 <div class="empty">
+
 No verified payments yet.
-</div>
 
 </div>
 
 </div>
 
+</div>
 
-<!-- REFERRAL -->
+
+<!-- REFERRAL LINK -->
 
 <div class="referral">
 
@@ -528,6 +593,7 @@ My Referral Link
 <div
 class="referral-link"
 id="referralLink">
+
 </div>
 
 <div class="button-row">
@@ -535,13 +601,18 @@ id="referralLink">
 <button
 class="action-button copy"
 onclick="copyReferralLink()">
+
 COPY LINK
+
 </button>
+
 
 <button
 class="action-button share"
 onclick="shareReferralLink()">
+
 SHARE LINK
+
 </button>
 
 </div>
@@ -549,7 +620,7 @@ SHARE LINK
 </div>
 
 
-<!-- INFO -->
+<!-- INFORMATION -->
 
 <div class="info">
 
@@ -564,28 +635,41 @@ payment system.
 
 <script>
 
+
 /*
 EMPLOYEE ACCOUNTS
+
+NEW REF CODES
 */
 
 const employees = {
 
-EMP001:"Employee 1",
-EMP002:"Employee 2",
-EMP003:"Employee 3",
-EMP004:"Employee 4",
-EMP005:"Employee 5",
-EMP006:"Employee 6",
-EMP007:"Employee 7",
-EMP008:"Employee 8",
-EMP009:"Employee 9",
-EMP010:"Employee 10"
+"REF-A7K2":"Employee 1",
+
+"REF-B4M8":"Employee 2",
+
+"REF-C9P3":"Employee 3",
+
+"REF-D2X6":"Employee 4",
+
+"REF-E5Q1":"Employee 5",
+
+"REF-F8L4":"Employee 6",
+
+"REF-G3N7":"Employee 7",
+
+"REF-H6R2":"Employee 8",
+
+"REF-J9T5":"Employee 9",
+
+"REF-K4W8":"Employee 10"
 
 };
 
 
 /*
-GET EMPLOYEE FROM URL
+GET EMPLOYEE CODE
+FROM URL
 */
 
 const params =
@@ -598,7 +682,7 @@ params.get("employee");
 
 
 /*
-CHECK EMPLOYEE
+CHECK EMPLOYEE CODE
 */
 
 if(
@@ -630,16 +714,18 @@ throw new Error(
 
 
 /*
-EMPLOYEE DETAILS
+EMPLOYEE NAME
 */
 
 const employeeName =
 employees[employeeId];
 
+
 document.getElementById(
 "employeeName"
 ).textContent =
 employeeName;
+
 
 document.getElementById(
 "employeeId"
@@ -648,7 +734,7 @@ employeeId;
 
 
 /*
-REFERRAL LINK
+CREATE REFERRAL LINK
 */
 
 const referralLink =
@@ -657,6 +743,7 @@ window.location.origin +
 encodeURIComponent(
 employeeId
 );
+
 
 document.getElementById(
 "referralLink"
@@ -668,16 +755,20 @@ referralLink;
 VERIFIED PAYMENTS
 
 IMPORTANT:
-Only put REAL payments here after
-your payment backend verifies them.
 
-Do NOT add simulated payments.
+This array must contain ONLY
+REAL payments verified by your
+payment system.
+
+The current website does not
+automatically create verified
+payments here.
 */
 
 const verifiedPayments = [
 
 /*
-Example format:
+Example structure:
 
 {
 id:"MP001",
@@ -686,6 +777,7 @@ amount:100,
 date:"28 Sep 2026"
 }
 
+Do not add simulated payments.
 */
 
 ];
@@ -697,18 +789,31 @@ CALCULATE DASHBOARD
 
 function calculateDashboard(){
 
+
 const paymentCount =
 verifiedPayments.length;
 
 
-const customerCount =
-new Set(
-verifiedPayments.map(
+const customerSet =
+new Set();
+
+
+verifiedPayments.forEach(
 function(payment){
-return payment.customerId;
+
+if(payment.customerId){
+
+customerSet.add(
+payment.customerId
+);
+
 }
-)
-).size;
+
+});
+
+
+const customerCount =
+customerSet.size;
 
 
 let totalSales = 0;
@@ -728,7 +833,7 @@ totalSales * 0.25;
 
 
 /*
-UPDATE STATS
+UPDATE PAYMENT COUNT
 */
 
 document.getElementById(
@@ -737,11 +842,19 @@ document.getElementById(
 paymentCount;
 
 
+/*
+UPDATE CUSTOMER COUNT
+*/
+
 document.getElementById(
 "customerCount"
 ).textContent =
 customerCount;
 
+
+/*
+UPDATE TOTAL SALES
+*/
 
 document.getElementById(
 "totalSales"
@@ -751,6 +864,10 @@ totalSales.toLocaleString(
 "en-KE"
 );
 
+
+/*
+UPDATE COMMISSION
+*/
 
 document.getElementById(
 "commissionAmount"
@@ -765,16 +882,19 @@ maximumFractionDigits:2
 
 
 /*
-PROGRESS
+MONTHLY PROGRESS
 */
 
 const monthlyGoal = 20;
 
+
 const percent =
 Math.min(
-(customerCount / monthlyGoal) * 100,
+(customerCount /
+monthlyGoal) * 100,
 100
 );
+
 
 document.getElementById(
 "progressText"
@@ -801,10 +921,11 @@ percent + "%";
 
 
 /*
-DISPLAY PAYMENTS
+DISPLAY VERIFIED PAYMENTS
 */
 
 function displayPayments(){
+
 
 const list =
 document.getElementById(
@@ -813,7 +934,7 @@ document.getElementById(
 
 
 if(
-!verifiedPayments.length
+verifiedPayments.length === 0
 ){
 
 list.innerHTML = `
@@ -837,18 +958,23 @@ list.innerHTML = "";
 verifiedPayments.forEach(
 function(payment){
 
+
 const row =
 document.createElement(
 "div"
 );
 
+
 row.className =
 "payment-row";
 
 
+const amount =
+Number(payment.amount) || 0;
+
+
 const commission =
-Number(payment.amount) *
-0.25;
+amount * 0.25;
 
 
 row.innerHTML = `
@@ -874,9 +1000,9 @@ ${payment.date}
 
 <div class="payment-amount">
 
-KSh ${Number(
-payment.amount
-).toLocaleString("en-KE")}
+KSh ${amount.toLocaleString(
+"en-KE"
+)}
 
 </div>
 
@@ -902,6 +1028,7 @@ maximumFractionDigits:2
 
 `;
 
+
 list.appendChild(row);
 
 });
@@ -915,13 +1042,16 @@ COPY REFERRAL LINK
 
 function copyReferralLink(){
 
+
 if(
 navigator.clipboard
 ){
 
-navigator.clipboard.writeText(
+navigator.clipboard
+.writeText(
 referralLink
-).then(
+)
+.then(
 function(){
 
 alert(
@@ -929,37 +1059,80 @@ alert(
 );
 
 }
+)
+.catch(
+function(){
+
+fallbackCopy();
+
+}
 );
 
 }else{
 
-const input =
+fallbackCopy();
+
+}
+
+}
+
+
+/*
+COPY FALLBACK
+*/
+
+function fallbackCopy(){
+
+
+const textarea =
 document.createElement(
 "textarea"
 );
 
-input.value =
+
+textarea.value =
 referralLink;
 
+
+textarea.style.position =
+"fixed";
+
+textarea.style.left =
+"-9999px";
+
+
 document.body.appendChild(
-input
+textarea
 );
 
-input.select();
+
+textarea.focus();
+
+textarea.select();
+
+
+try{
 
 document.execCommand(
 "copy"
-);
-
-document.body.removeChild(
-input
 );
 
 alert(
 "Referral link copied!"
 );
 
+}catch(error){
+
+alert(
+"Copy failed. Please copy the link manually."
+);
+
 }
+
+
+document.body.removeChild(
+textarea
+);
 
 }
 
@@ -970,6 +1143,7 @@ SHARE REFERRAL LINK
 
 function shareReferralLink(){
 
+
 if(
 navigator.share
 ){
@@ -977,15 +1151,20 @@ navigator.share
 navigator.share({
 
 title:
-"Referral Link",
+"My Referral Link",
 
 text:
-"Join using my referral link:",
+"Join using my referral link.",
 
 url:
 referralLink
 
-});
+})
+.catch(
+function(){
+
+}
+);
 
 }else{
 
@@ -1013,7 +1192,7 @@ window.location.href =
 
 
 /*
-START
+START DASHBOARD
 */
 
 calculateDashboard();
