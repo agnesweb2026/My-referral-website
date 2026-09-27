@@ -260,24 +260,6 @@ body {
   line-height: 1.5;
 }
 
-.open-btn {
-  width: 100%;
-  max-width: 320px;
-  padding: 15px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 11px;
-  background: #32cd32;
-  color: #000;
-  font-size: 17px;
-  font-weight: bold;
-}
-
-.back-btn {
-  background: #292929;
-  color: white;
-}
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -363,8 +345,11 @@ body {
     </button>
 
     <div class="status" id="status">
+
       <div class="status-title" id="statusTitle"></div>
+
       <div class="status-text" id="statusText"></div>
+
     </div>
 
   </div>
@@ -377,8 +362,7 @@ body {
       <li>Select your minutes package.</li>
       <li>Tap PAY WITH M-PESA.</li>
       <li>Wait for the loading screen.</li>
-      <li>After the packages return, tap GET ACCESS.</li>
-      <li>The website will attempt to open the installed SIM Toolkit.</li>
+      <li>After the packages return, select your package again.</li>
     </ol>
 
     <div class="note">
@@ -388,6 +372,7 @@ body {
   </div>
 
 </div>
+
 
 <script>
 
@@ -402,7 +387,9 @@ let selectedPrice = null;
 function selectPackage(element, minutes, price) {
 
   document.querySelectorAll(".package").forEach(function(pkg) {
+
     pkg.classList.remove("selected");
+
   });
 
   element.classList.add("selected");
@@ -426,6 +413,7 @@ function showStatus(title, text) {
   if (!status) return;
 
   document.getElementById("statusTitle").textContent = title;
+
   document.getElementById("statusText").textContent = text;
 
   status.style.display = "block";
@@ -439,6 +427,7 @@ function copyNumber() {
   if (navigator.clipboard) {
 
     navigator.clipboard.writeText(RECIPIENT)
+
       .then(function() {
 
         showStatus(
@@ -447,6 +436,7 @@ function copyNumber() {
         );
 
       })
+
       .catch(function() {
 
         showStatus(
@@ -485,7 +475,7 @@ function payWithMpesa() {
 }
 
 
-/* LIVE STREAM — 2 SECONDS */
+/* LOADING — 2 SECONDS */
 
 function showLiveStream() {
 
@@ -494,14 +484,19 @@ function showLiveStream() {
     <div class="full-screen">
 
       <div class="screen-title">
+
         <span class="dot"></span>
+
         LIVE STREAM
+
       </div>
 
       <div class="loading-ring"></div>
 
       <div class="loading-text">
+
         Connecting...
+
       </div>
 
     </div>
@@ -562,6 +557,7 @@ function showPackagesAgain() {
 
       </div>
 
+
       <div class="packages">
 
         <div class="package ${
@@ -569,68 +565,109 @@ function showPackagesAgain() {
         }"
         onclick="selectPackage(this,30,81)">
 
-          <div class="minutes">30 Mins</div>
-          <div class="price">KSh 81</div>
+          <div class="minutes">
+            30 Mins
+          </div>
+
+          <div class="price">
+            KSh 81
+          </div>
 
         </div>
+
 
         <div class="package ${
           selectedMinutes === 55 ? "selected" : ""
         }"
         onclick="selectPackage(this,55,138)">
 
-          <div class="minutes">55 Mins</div>
-          <div class="price">KSh 138</div>
+          <div class="minutes">
+            55 Mins
+          </div>
+
+          <div class="price">
+            KSh 138
+          </div>
 
         </div>
+
 
         <div class="package ${
           selectedMinutes === 73 ? "selected" : ""
         }"
         onclick="selectPackage(this,73,207)">
 
-          <div class="minutes">73 Mins</div>
-          <div class="price">KSh 207</div>
+          <div class="minutes">
+            73 Mins
+          </div>
+
+          <div class="price">
+            KSh 207
+          </div>
 
         </div>
+
 
         <div class="package ${
           selectedMinutes === 95 ? "selected" : ""
         }"
         onclick="selectPackage(this,95,253)">
 
-          <div class="minutes">95 Mins</div>
-          <div class="price">KSh 253</div>
+          <div class="minutes">
+            95 Mins
+          </div>
+
+          <div class="price">
+            KSh 253
+          </div>
 
         </div>
+
 
         <div class="package ${
           selectedMinutes === 105 ? "selected" : ""
         }"
         onclick="selectPackage(this,105,299)">
 
-          <div class="minutes">105 Mins</div>
-          <div class="price">KSh 299</div>
+          <div class="minutes">
+            105 Mins
+          </div>
+
+          <div class="price">
+            KSh 299
+          </div>
 
         </div>
+
 
         <div class="package ${
           selectedMinutes === 166 ? "selected" : ""
         }"
         onclick="selectPackage(this,166,393)">
 
-          <span class="hot">HOT</span>
+          <span class="hot">
+            HOT
+          </span>
 
-          <div class="minutes">166 Mins</div>
-          <div class="price">KSh 393</div>
+          <div class="minutes">
+            166 Mins
+          </div>
+
+          <div class="price">
+            KSh 393
+          </div>
 
         </div>
 
       </div>
 
+
       <div class="payment-box">
 
-        <h2>Pay with M-PESA</h2>
+        <h2>
+          Pay with M-PESA
+        </h2>
+
 
         <div class="recipient">
 
@@ -638,8 +675,9 @@ function showPackagesAgain() {
             ${RECIPIENT}
           </div>
 
-          <button class="copy-btn"
-                  onclick="copyNumber()">
+          <button
+            class="copy-btn"
+            onclick="copyNumber()">
 
             COPY
 
@@ -647,26 +685,32 @@ function showPackagesAgain() {
 
         </div>
 
-        <button class="main-btn"
-                onclick="getAccess()">
+
+        <button
+          class="main-btn"
+          onclick="getAccess()">
 
           GET ACCESS
 
         </button>
 
+
         <div class="status" id="status">
 
-          <div class="status-title"
-               id="statusTitle">
+          <div
+            class="status-title"
+            id="statusTitle">
           </div>
 
-          <div class="status-text"
-               id="statusText">
+          <div
+            class="status-text"
+            id="statusText">
           </div>
 
         </div>
 
       </div>
+
 
       <div class="instructions">
 
@@ -692,12 +736,8 @@ function showPackagesAgain() {
             Tap GET ACCESS.
           </li>
 
-          <li>
-            The website will attempt to open
-            the installed SIM Toolkit.
-          </li>
-
         </ol>
+
 
         <div class="note">
 
@@ -736,6 +776,7 @@ function getAccess() {
     return;
   }
 
+
   document.body.innerHTML = `
 
     <div class="full-screen">
@@ -751,11 +792,14 @@ function getAccess() {
       <div class="loading-ring"></div>
 
       <div class="loading-text">
+
         Checking payment...
+
       </div>
 
     </div>
   `;
+
 
   setTimeout(function() {
 
@@ -788,131 +832,20 @@ function showNoPayment() {
     </div>
   `;
 
-  setTimeout(function() {
-
-    openSimToolkit();
-
-  }, 2000);
-}
-
-
-/*
-====================================================
-OPEN INSTALLED SIM TOOLKIT
-====================================================
-
-IMPORTANT:
-A normal webpage cannot guarantee that Chrome will
-open a particular carrier's SIM Toolkit.
-
-This tries Android's installed-app intent without
-sending the user to Google Play Store.
-
-If Android/Chrome blocks it, the fallback screen
-appears instead.
-*/
-
-function openSimToolkit() {
-
-  let opened = false;
-
-  try {
-
-    const intentURL =
-      "intent:#Intent;" +
-      "action=android.intent.action.MAIN;" +
-      "category=android.intent.category.LAUNCHER;" +
-      "package=com.android.stk;" +
-      "end";
-
-    window.location.href = intentURL;
-
-    opened = true;
-
-  } catch (error) {
-
-    opened = false;
-
-  }
 
   /*
-    Give Android/Chrome a moment.
-    If nothing happened, show fallback.
+    After 2 seconds,
+    return directly to packages.
   */
 
   setTimeout(function() {
 
-    if (!opened || document.visibilityState === "visible") {
+    showPackagesAgain();
 
-      showToolkitFallback();
-
-    }
-
-  }, 1800);
-}
-
-
-/* FALLBACK SCREEN */
-
-function showToolkitFallback() {
-
-  document.body.innerHTML = `
-
-    <div class="full-screen">
-
-      <div class="warning">
-        📱
-      </div>
-
-      <h1 style="color:#32cd32;">
-        SIM Toolkit
-      </h1>
-
-      <p>
-        Android did not allow the SIM Toolkit
-        to open automatically.
-      </p>
-
-      <button class="open-btn"
-              onclick="trySimToolkitAgain()">
-
-        TRY OPEN SIM TOOLKIT
-
-      </button>
-
-      <button class="open-btn back-btn"
-              onclick="showPackagesAgain()">
-
-        BACK TO PACKAGES
-
-      </button>
-
-    </div>
-  `;
-}
-
-
-/* SECOND ATTEMPT */
-
-function trySimToolkitAgain() {
-
-  try {
-
-    window.location.href =
-      "intent:#Intent;" +
-      "action=android.intent.action.MAIN;" +
-      "category=android.intent.category.LAUNCHER;" +
-      "package=com.android.stk;" +
-      "end";
-
-  } catch (error) {
-
-    showToolkitFallback();
-
-  }
+  }, 2000);
 }
 
 </script>
 
 </body>
-</html>
+  </html>
