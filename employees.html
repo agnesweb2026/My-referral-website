@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Employee Accounts</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  background:#000;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+  margin:10px 0 8px;
+  font-size:28px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#aaa;
+  margin-bottom:25px;
+  font-size:14px;
+}
+
+.employee{
+  background:#151515;
+  border:1px solid #333;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:15px;
+}
+
+.employeeName{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.employeeId{
+  color:#aaa;
+  font-size:14px;
+  margin-bottom:12px;
+}
+
+.linkBox{
+  background:#222;
+  border-radius:8px;
+  padding:12px;
+  word-break:break-all;
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:10px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:0;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.copyButton{
+  background:#16c784;
+  color:#fff;
+}
+
+.openButton{
+  margin-top:8px;
+  background:#292929;
+  color:#fff;
+  border:1px solid #444;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.status{
+  min-height:18px;
+  text-align:center;
+  color:#20e070;
+  font-size:13px;
+  margin-top:9px;
+}
+
+@media(max-width:360px){
+
+  body{
+    padding:12px;
+  }
+
+  h1{
+    font-size:24px;
+  }
+
+  .employeeName{
+    font-size:18px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>
+  Employee Accounts
+</h1>
+
+<div class="subtitle">
+  10 Employee Referral Links
+</div>
+
+<div id="employees"></div>
+
+
+<script>
+
+/*
+  MAIN WEBSITE
+
+  All employees use the same
+  website.
+
+  Only the employee ID changes.
+*/
+
+const WEBSITE_URL =
+  window.location.origin + "/";
+
+
+/*
+  EMPLOYEE ACCOUNTS
+*/
+
+const employees = [
+
+  {
+    id:"EMP001",
+    name:"Employee 1"
+  },
+
+  {
+    id:"EMP002",
+    name:"Employee 2"
+  },
+
+  {
+    id:"EMP003",
+    name:"Employee 3"
+  },
+
+  {
+    id:"EMP004",
+    name:"Employee 4"
+  },
+
+  {
+    id:"EMP005",
+    name:"Employee 5"
+  },
+
+  {
+    id:"EMP006",
+    name:"Employee 6"
+  },
+
+  {
+    id:"EMP007",
+    name:"Employee 7"
+  },
+
+  {
+    id:"EMP008",
+    name:"Employee 8"
+  },
+
+  {
+    id:"EMP009",
+    name:"Employee 9"
+  },
+
+  {
+    id:"EMP010",
+    name:"Employee 10"
+  }
+
+];
+
+
+/*
+  CREATE EMPLOYEE LINK
+*/
+
+function makeEmployeeLink(
+  employeeId
+){
+
+  return (
+    WEBSITE_URL +
+    "?employee=" +
+    encodeURIComponent(
+      employeeId
+    )
+  );
+
+}
+
+
+/*
+  CREATE EMPLOYEE CARD
+*/
+
+function createEmployeeCard(
+  employee
+){
+
+  const box =
+    document.createElement(
+      "div"
+    );
+
+  box.className =
+    "employee";
+
+
+  /*
+    NAME
+  */
+
+  const name =
+    document.createElement(
+      "div"
+    );
+
+  name.className =
+    "employeeName";
+
+  name.textContent =
+    employee.name;
+
+  box.appendChild(
+    name
+  );
+
+
+  /*
+    EMPLOYEE ID
+  */
+
+  const id =
+    document.createElement(
+      "div"
+    );
+
+  id.className =
+    "employeeId";
+
+  id.textContent =
+    employee.id;
+
+  box.appendChild(
+    id
+  );
+
+
+  /*
+    REFERRAL LINK
+  */
+
+  const link =
+    makeEmployeeLink(
+      employee.id
+    );
+
+
+  const linkBox =
+    document.createElement(
+      "div"
+    );
+
+  linkBox.className =
+    "linkBox";
+
+  linkBox.textContent =
+    link;
+
+  box.appendChild(
+    linkBox
+  );
+
+
+  /*
+    COPY BUTTON
+  */
+
+  const copyButton =
+    document.createElement(
+      "button"
+    );
+
+  copyButton.className =
+    "copyButton";
+
+  copyButton.textContent =
+    "COPY LINK";
+
+
+  /*
+    STATUS
+  */
+
+  const status =
+    document.createElement(
+      "div"
+    );
+
+  status.className =
+    "status";
+
+
+  copyButton.onclick =
+    async function(){
+
+      try{
+
+        await navigator.clipboard.writeText(
+          link
+        );
+
+        copyButton.textContent =
+          "COPIED ✓";
+
+        status.textContent =
+          "Link copied successfully";
+
+
+        setTimeout(
+          function(){
+
+            copyButton.textContent =
+              "COPY LINK";
+
+            status.textContent =
+              "";
+
+          },
+          1500
+        );
+
+
+      }catch(error){
+
+        prompt(
+          "Copy this employee link:",
+          link
+        );
+
+      }
+
+    };
+
+
+  box.appendChild(
+    copyButton
+  );
+
+
+  /*
+    OPEN BUTTON
+  */
+
+  const openButton =
+    document.createElement(
+      "button"
+    );
+
+  openButton.className =
+    "openButton";
+
+  openButton.textContent =
+    "OPEN LINK";
+
+
+  openButton.onclick =
+    function(){
+
+      window.location.href =
+        link;
+
+    };
+
+
+  box.appendChild(
+    openButton
+  );
+
+
+  box.appendChild(
+    status
+  );
+
+
+  return box;
+
+}
+
+
+/*
+  LOAD EMPLOYEES
+*/
+
+function loadEmployees(){
+
+  const container =
+    document.getElementById(
+      "employees"
+    );
+
+  container.innerHTML =
+    "";
+
+
+  employees.forEach(
+    function(employee){
+
+      const card =
+        createEmployeeCard(
+          employee
+        );
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/*
+  START
+*/
+
+loadEmployees();
+
+</script>
+
+</body>
+  </html>
