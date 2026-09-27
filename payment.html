@@ -3,540 +3,394 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>M-PESA Payment</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  min-height:100vh;
-  background:#050507;
-  color:white;
-  font-family:Arial,Helvetica,sans-serif;
-  padding:20px 14px 40px;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #050505;
+  color: white;
+  min-height: 100vh;
 }
 
-.container{
-  width:100%;
-  max-width:520px;
-  margin:auto;
+.container {
+  width: 100%;
+  max-width: 520px;
+  margin: auto;
+  padding: 18px;
 }
 
-/* HEADER */
-.header{
-  text-align:center;
-  margin-bottom:22px;
+.header {
+  text-align: center;
+  padding: 15px 0 20px;
 }
 
-.header h1{
-  font-size:29px;
-  color:#00ff88;
-  text-shadow:0 0 15px rgba(0,255,136,.5);
+.header h1 {
+  margin: 0;
+  font-size: 27px;
+  color: #32cd32;
 }
 
-.header p{
-  margin-top:7px;
-  color:#999;
-  font-size:14px;
-}
-
-/* MAIN BOX */
-.payment-box{
-  background:#101014;
-  border:1px solid #25252f;
-  border-radius:20px;
-  padding:20px;
-  box-shadow:0 0 25px rgba(0,255,136,.07);
-}
-
-/* TITLES */
-.section-title{
-  font-size:18px;
-  font-weight:bold;
-  margin-bottom:14px;
+.header p {
+  margin: 8px 0 0;
+  color: #aaa;
+  font-size: 14px;
 }
 
 /* PACKAGES */
-.packages{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+
+.packages {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
-.package{
-  background:#18181f;
-  border:2px solid #292932;
-  border-radius:15px;
-  padding:17px 10px;
-  text-align:center;
-  cursor:pointer;
-  transition:.2s;
+.package {
+  position: relative;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 14px;
+  padding: 18px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: .2s;
 }
 
-.package:active{
-  transform:scale(.97);
+.package:hover {
+  border-color: #32cd32;
 }
 
-.package.selected{
-  border-color:#00ff88;
-  background:#102219;
-  box-shadow:
-    0 0 12px rgba(0,255,136,.18),
-    inset 0 0 10px rgba(0,255,136,.05);
+.package.selected {
+  border: 2px solid #32cd32;
+  background: #102010;
+  transform: scale(1.02);
 }
 
-.minutes{
-  font-size:18px;
-  font-weight:bold;
+.package .minutes {
+  font-size: 21px;
+  font-weight: bold;
 }
 
-.price{
-  margin-top:7px;
-  color:#00ff88;
-  font-size:18px;
-  font-weight:bold;
+.package .price {
+  margin-top: 8px;
+  font-size: 18px;
+  color: #32cd32;
+  font-weight: bold;
 }
 
-.hot{
-  margin-top:5px;
-  color:#ff4545;
-  font-size:12px;
-  font-weight:bold;
+.hot {
+  position: absolute;
+  top: -8px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 4px 7px;
+  border-radius: 10px;
 }
 
-/* RECIPIENT */
-.recipient{
-  margin-top:24px;
+/* PAYMENT BOX */
+
+.payment-box {
+  margin-top: 18px;
+  background: #101010;
+  border: 1px solid #292929;
+  border-radius: 15px;
+  padding: 18px;
 }
 
-.recipient-box{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:#18181f;
-  border:1px solid #34343e;
-  border-radius:12px;
-  padding:12px;
+.payment-box h2 {
+  margin: 0 0 15px;
+  font-size: 19px;
 }
 
-.recipient-number{
-  flex:1;
-  color:#00ff88;
-  font-size:19px;
-  font-weight:bold;
-  letter-spacing:1px;
+.recipient {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.copy-btn{
-  border:0;
-  border-radius:9px;
-  padding:10px 13px;
-  background:#00ff88;
-  color:#001c0e;
-  font-weight:bold;
-  cursor:pointer;
+.number {
+  flex: 1;
+  background: #050505;
+  border: 1px solid #333;
+  border-radius: 9px;
+  padding: 13px;
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
 }
 
-/* PAY BUTTON */
-.pay-btn{
-  width:100%;
-  margin-top:22px;
-  padding:17px;
-  border:0;
-  border-radius:14px;
-  background:linear-gradient(
-    135deg,
-    #00ff88,
-    #00c96b
-  );
-  color:#001c0e;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
-  box-shadow:0 0 20px rgba(0,255,136,.25);
+.copy-btn {
+  border: none;
+  background: #333;
+  color: white;
+  padding: 13px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.pay-btn:active{
-  transform:scale(.98);
+.main-btn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 15px;
+  border: none;
+  border-radius: 11px;
+  background: #32cd32;
+  color: #000;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.main-btn:active {
+  transform: scale(.98);
+}
+
+.instructions {
+  margin-top: 18px;
+  background: #0d0d0d;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #242424;
+}
+
+.instructions h3 {
+  margin-top: 0;
+  color: #32cd32;
+}
+
+.instructions ol {
+  padding-left: 22px;
+}
+
+.instructions li {
+  margin-bottom: 10px;
+  color: #ddd;
+  line-height: 1.4;
+}
+
+.note {
+  margin-top: 15px;
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
 }
 
 /* STATUS */
-.status{
-  display:none;
-  margin-top:17px;
-  background:#17171f;
-  border-radius:13px;
-  padding:15px;
-  line-height:1.5;
+
+.status {
+  display: none;
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  background: #171717;
 }
 
-.status.show{
-  display:block;
+.status-title {
+  font-weight: bold;
+  font-size: 17px;
 }
 
-.status-title{
-  color:#00ff88;
-  font-weight:bold;
-  margin-bottom:6px;
+.status-text {
+  margin-top: 6px;
+  color: #bbb;
+  font-size: 13px;
 }
 
-/* INSTRUCTIONS */
-.instructions{
-  margin-top:18px;
-  background:#0c1511;
-  border:1px solid #1d4935;
-  border-radius:14px;
-  padding:16px;
+/* LIVE STREAM SCREEN */
+
+.live-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
-.instructions h3{
-  color:#00ff88;
-  margin-bottom:10px;
+.live-title {
+  color: red;
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
 }
 
-.instructions ol{
-  padding-left:20px;
+.loading-ring {
+  width: 65px;
+  height: 65px;
+  border: 5px solid #222;
+  border-top: 5px solid red;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-.instructions li{
-  margin:8px 0;
-  color:#ddd;
-  line-height:1.4;
+.loading-text {
+  margin-top: 22px;
+  color: #aaa;
+  font-size: 15px;
 }
 
-/* NOTE */
-.note{
-  margin-top:15px;
-  color:#888;
-  font-size:13px;
-  line-height:1.5;
-  text-align:center;
+.live-dot {
+  width: 12px;
+  height: 12px;
+  background: red;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  animation: blink .8s infinite;
 }
 
-/* =========================
-   LIVE STREAM SCREEN
-========================= */
-
-.live-screen{
-  min-height:72vh;
-  width:100%;
-  background:#000;
-  border-radius:18px;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.live-title{
-  color:red;
-  font-size:31px;
-  font-weight:bold;
-
-  margin-bottom:28px;
-
-  text-shadow:
-    0 0 8px rgba(255,0,0,.8),
-    0 0 18px rgba(255,0,0,.45);
-
-  animation:liveBlink .7s infinite;
-}
-
-.loading-ring{
-  width:58px;
-  height:58px;
-
-  border-radius:50%;
-
-  border:5px solid #292929;
-  border-top:5px solid #00ff88;
-
-  animation:spin .75s linear infinite;
-}
-
-.loading-text{
-  margin-top:20px;
-  color:#aaa;
-  font-size:15px;
-}
-
-/* small LIVE dot */
-.live-dot{
-  position:absolute;
-  top:18px;
-  left:18px;
-
-  background:red;
-  color:white;
-
-  padding:6px 10px;
-  border-radius:7px;
-
-  font-size:12px;
-  font-weight:bold;
-
-  animation:liveBlink .7s infinite;
-}
-
-/* ANIMATIONS */
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-@keyframes liveBlink{
-  50%{
-    opacity:.35;
+@keyframes blink {
+  50% {
+    opacity: .2;
   }
 }
 
-/* MOBILE */
-@media(max-width:380px){
+/* INSUFFICIENT SCREEN */
 
-  .packages{
-    grid-template-columns:1fr;
+.insufficient-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 25px;
+  z-index: 9999;
+}
+
+.warning-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+.insufficient-screen h1 {
+  color: red;
+  font-size: 28px;
+  margin: 0;
+}
+
+.insufficient-screen p {
+  color: #aaa;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 380px) {
+  .packages {
+    grid-template-columns: 1fr;
   }
-
-  .header h1{
-    font-size:25px;
-  }
-
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="page">
+<div class="container" id="paymentPage">
 
-  <!-- PAYMENT HEADER -->
   <div class="header">
     <h1>M-PESA PAYMENT</h1>
     <p>Choose your minutes package</p>
   </div>
 
+  <div class="packages">
 
-  <!-- PAYMENT BOX -->
+    <div class="package" onclick="selectPackage(this, 30, 81)">
+      <div class="minutes">30 Mins</div>
+      <div class="price">KSh 81</div>
+    </div>
+
+    <div class="package" onclick="selectPackage(this, 55, 138)">
+      <div class="minutes">55 Mins</div>
+      <div class="price">KSh 138</div>
+    </div>
+
+    <div class="package" onclick="selectPackage(this, 73, 207)">
+      <div class="minutes">73 Mins</div>
+      <div class="price">KSh 207</div>
+    </div>
+
+    <div class="package" onclick="selectPackage(this, 95, 253)">
+      <div class="minutes">95 Mins</div>
+      <div class="price">KSh 253</div>
+    </div>
+
+    <div class="package" onclick="selectPackage(this, 105, 299)">
+      <div class="minutes">105 Mins</div>
+      <div class="price">KSh 299</div>
+    </div>
+
+    <div class="package" onclick="selectPackage(this, 166, 393)">
+      <span class="hot">HOT</span>
+      <div class="minutes">166 Mins</div>
+      <div class="price">KSh 393</div>
+    </div>
+
+  </div>
+
   <div class="payment-box">
 
-    <div class="section-title">
-      Select Package
-    </div>
+    <h2>Pay with M-PESA</h2>
 
-
-    <!-- PACKAGES -->
-    <div class="packages">
-
-      <div
-        class="package"
-        data-minutes="30"
-        data-price="81"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          30 Mins
-        </div>
-
-        <div class="price">
-          KSh 81
-        </div>
-      </div>
-
-
-      <div
-        class="package"
-        data-minutes="55"
-        data-price="138"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          55 Mins
-        </div>
-
-        <div class="price">
-          KSh 138
-        </div>
-      </div>
-
-
-      <div
-        class="package"
-        data-minutes="73"
-        data-price="207"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          73 Mins
-        </div>
-
-        <div class="price">
-          KSh 207
-        </div>
-      </div>
-
-
-      <div
-        class="package"
-        data-minutes="95"
-        data-price="253"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          95 Mins
-        </div>
-
-        <div class="price">
-          KSh 253
-        </div>
-      </div>
-
-
-      <div
-        class="package"
-        data-minutes="105"
-        data-price="299"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          105 Mins
-        </div>
-
-        <div class="price">
-          KSh 299
-        </div>
-      </div>
-
-
-      <div
-        class="package"
-        data-minutes="166"
-        data-price="393"
-        onclick="selectPackage(this)"
-      >
-        <div class="minutes">
-          166 Mins
-        </div>
-
-        <div class="price">
-          KSh 393
-        </div>
-
-        <div class="hot">
-          🔥 HOT
-        </div>
-      </div>
-
-    </div>
-
-
-    <!-- RECIPIENT -->
     <div class="recipient">
-
-      <div class="section-title">
-        Send Money To
+      <div class="number" id="recipientNumber">
+        0704676086
       </div>
 
-      <div class="recipient-box">
-
-        <div
-          class="recipient-number"
-          id="recipient"
-        >
-          0704676086
-        </div>
-
-        <button
-          class="copy-btn"
-          onclick="copyNumber()"
-        >
-          COPY
-        </button>
-
-      </div>
-
+      <button class="copy-btn" onclick="copyNumber()">
+        COPY
+      </button>
     </div>
 
-
-    <!-- PAY -->
-    <button
-      class="pay-btn"
-      onclick="payWithMpesa()"
-    >
+    <button class="main-btn" onclick="payWithMpesa()">
       PAY WITH M-PESA
     </button>
 
-
-    <!-- STATUS -->
-    <div
-      class="status"
-      id="status"
-    >
-
-      <div
-        class="status-title"
-        id="statusTitle"
-      >
-        Package selected
-      </div>
-
-      <div id="statusText"></div>
-
+    <div class="status" id="status">
+      <div class="status-title" id="statusTitle"></div>
+      <div class="status-text" id="statusText"></div>
     </div>
 
+  </div>
 
-    <!-- INSTRUCTIONS -->
-    <div class="instructions">
+  <div class="instructions">
 
-      <h3>
-        How to pay
-      </h3>
+    <h3>How to pay and get access</h3>
 
-      <ol>
-
-        <li>
-          Select your minutes package.
-        </li>
-
-        <li>
-          Tap <b>PAY WITH M-PESA</b>.
-        </li>
-
-        <li>
-          Open your M-PESA app and choose
-          <b>Send Money</b>.
-        </li>
-
-        <li>
-          Use the recipient number shown above.
-        </li>
-
-        <li>
-          Enter the amount for your package.
-        </li>
-
-        <li>
-          Confirm the details and enter your
-          M-PESA PIN.
-        </li>
-
-      </ol>
-
-    </div>
-
+    <ol>
+      <li>Select the minutes package you want.</li>
+      <li>Tap <b>PAY WITH M-PESA</b>.</li>
+      <li>Wait while the payment screen loads.</li>
+      <li>After the loading screen, the payment packages will appear again.</li>
+      <li>Use M-PESA to send the exact amount for your selected package.</li>
+      <li>After your payment is confirmed, access can be granted.</li>
+    </ol>
 
     <div class="note">
-      Never enter your M-PESA PIN on this website.
+      Make sure you send the exact amount for the package you selected.
     </div>
 
   </div>
@@ -546,204 +400,340 @@ body{
 
 <script>
 
-/* =========================
-   SETTINGS
-========================= */
-
 const RECIPIENT = "0704676086";
 
 let selectedMinutes = null;
 let selectedPrice = null;
 
 
-/* =========================
-   SELECT PACKAGE
-========================= */
+/* SELECT PACKAGE */
 
-function selectPackage(element){
+function selectPackage(element, minutes, price) {
 
-  document
-    .querySelectorAll(".package")
-    .forEach(function(pkg){
-
-      pkg.classList.remove("selected");
-
-    });
-
+  document.querySelectorAll(".package").forEach(pkg => {
+    pkg.classList.remove("selected");
+  });
 
   element.classList.add("selected");
 
-
-  selectedMinutes =
-    element.dataset.minutes;
-
-  selectedPrice =
-    element.dataset.price;
-
+  selectedMinutes = minutes;
+  selectedPrice = price;
 
   showStatus(
-    "Package selected ✓",
-    selectedMinutes +
-    " minutes — KSh " +
-    selectedPrice
+    "Package selected",
+    minutes + " minutes — KSh " + price
   );
 }
 
 
-/* =========================
-   COPY NUMBER
-========================= */
+/* COPY NUMBER */
 
-async function copyNumber(){
+function copyNumber() {
 
-  try{
+  navigator.clipboard.writeText(RECIPIENT)
+    .then(() => {
 
-    await navigator.clipboard
-      .writeText(RECIPIENT);
+      showStatus(
+        "Copied",
+        "M-PESA number copied successfully."
+      );
 
-    showStatus(
-      "Recipient copied ✓",
-      "The recipient number has been copied."
-    );
+    })
+    .catch(() => {
 
-  }catch(error){
+      showStatus(
+        "M-PESA number",
+        RECIPIENT
+      );
 
-    const input =
-      document.createElement("input");
-
-    input.value = RECIPIENT;
-
-    document.body.appendChild(input);
-
-    input.select();
-
-    document.execCommand("copy");
-
-    input.remove();
-
-
-    showStatus(
-      "Recipient copied ✓",
-      "The recipient number has been copied."
-    );
-
-  }
+    });
 }
 
 
-/* =========================
-   PAY BUTTON
-========================= */
+/* STATUS */
 
-function payWithMpesa(){
+function showStatus(title, text) {
 
-  /*
-    No M-PESA payment is processed here.
+  const status = document.getElementById("status");
+  const statusTitle = document.getElementById("statusTitle");
+  const statusText = document.getElementById("statusText");
 
-    The button only starts the visual
-    loading/live-stream sequence.
-  */
+  if (!status) return;
+
+  status.style.display = "block";
+  statusTitle.textContent = title;
+  statusText.textContent = text;
+}
 
 
-  /* Make sure a package was selected */
+/* PAY BUTTON */
 
-  if(!selectedPrice){
+function payWithMpesa() {
+
+  if (!selectedPrice) {
 
     showStatus(
       "Select a package first",
-      "Please choose a package before continuing."
+      "Please choose a minutes package before continuing."
     );
 
     return;
   }
 
+  showLiveStream();
 
-  /*
-    Replace the payment box with
-    LIVE STREAM loading screen.
-  */
+}
 
-  document.getElementById("page").innerHTML = `
 
+/* LIVE STREAM FOR 2 SECONDS */
+
+function showLiveStream() {
+
+  document.body.innerHTML = `
     <div class="live-screen">
 
-      <div class="live-dot">
-        LIVE
-      </div>
-
       <div class="live-title">
-        🔴 LIVE STREAM
+        <span class="live-dot"></span>
+        LIVE STREAM
       </div>
 
       <div class="loading-ring"></div>
 
       <div class="loading-text">
-        Loading live stream...
+        Connecting...
       </div>
 
     </div>
-
   `;
 
+  setTimeout(() => {
 
-  /*
-    Exactly 2 seconds later,
-    return to index.html.
-  */
+    showInsufficientMinutes();
 
-  setTimeout(function(){
-
-    window.location.href = "index.html";
-
-  },2000);
+  }, 2000);
 
 }
 
 
-/* =========================
-   STATUS MESSAGE
-========================= */
+/* INSUFFICIENT MINUTES FOR 2 SECONDS */
 
-function showStatus(title,text){
+function showInsufficientMinutes() {
 
-  const status =
-    document.getElementById("status");
+  document.body.innerHTML = `
+    <div class="insufficient-screen">
 
-  const titleBox =
-    document.getElementById("statusTitle");
+      <div class="warning-icon">
+        ⚠️
+      </div>
 
-  const textBox =
-    document.getElementById("statusText");
+      <h1>
+        Insufficient Minutes
+      </h1>
+
+      <p>
+        You need more minutes to continue.
+      </p>
+
+    </div>
+  `;
+
+  setTimeout(() => {
+
+    showPaymentPackages();
+
+  }, 2000);
+
+}
 
 
-  if(!status || !titleBox || !textBox){
+/* SHOW PAYMENT PACKAGES AGAIN */
+
+function showPaymentPackages() {
+
+  document.body.innerHTML = `
+
+    <div class="container">
+
+      <div class="header">
+        <h1>M-PESA PAYMENT</h1>
+        <p>Choose your minutes package</p>
+      </div>
+
+
+      <div class="packages">
+
+        <div class="package ${selectedMinutes === 30 ? "selected" : ""}"
+             onclick="selectPackage(this, 30, 81)">
+          <div class="minutes">30 Mins</div>
+          <div class="price">KSh 81</div>
+        </div>
+
+
+        <div class="package ${selectedMinutes === 55 ? "selected" : ""}"
+             onclick="selectPackage(this, 55, 138)">
+          <div class="minutes">55 Mins</div>
+          <div class="price">KSh 138</div>
+        </div>
+
+
+        <div class="package ${selectedMinutes === 73 ? "selected" : ""}"
+             onclick="selectPackage(this, 73, 207)">
+          <div class="minutes">73 Mins</div>
+          <div class="price">KSh 207</div>
+        </div>
+
+
+        <div class="package ${selectedMinutes === 95 ? "selected" : ""}"
+             onclick="selectPackage(this, 95, 253)">
+          <div class="minutes">95 Mins</div>
+          <div class="price">KSh 253</div>
+        </div>
+
+
+        <div class="package ${selectedMinutes === 105 ? "selected" : ""}"
+             onclick="selectPackage(this, 105, 299)">
+          <div class="minutes">105 Mins</div>
+          <div class="price">KSh 299</div>
+        </div>
+
+
+        <div class="package ${selectedMinutes === 166 ? "selected" : ""}"
+             onclick="selectPackage(this, 166, 393)">
+
+          <span class="hot">HOT</span>
+
+          <div class="minutes">166 Mins</div>
+
+          <div class="price">KSh 393</div>
+
+        </div>
+
+      </div>
+
+
+      <div class="payment-box">
+
+        <h2>Pay with M-PESA</h2>
+
+        <div class="recipient">
+
+          <div class="number">
+            ${RECIPIENT}
+          </div>
+
+          <button class="copy-btn" onclick="copyNumber()">
+            COPY
+          </button>
+
+        </div>
+
+
+        <button class="main-btn" onclick="startPaymentInstructions()">
+          GET ACCESS
+        </button>
+
+
+        <div class="status" id="status">
+
+          <div class="status-title" id="statusTitle"></div>
+
+          <div class="status-text" id="statusText"></div>
+
+        </div>
+
+      </div>
+
+
+      <div class="instructions">
+
+        <h3>
+          Process to pay and get access
+        </h3>
+
+        <ol>
+
+          <li>
+            Select your preferred minutes package.
+          </li>
+
+          <li>
+            Check the exact KSh amount displayed.
+          </li>
+
+          <li>
+            Open your M-PESA app or M-PESA menu.
+          </li>
+
+          <li>
+            Send the exact amount to the displayed M-PESA number.
+          </li>
+
+          <li>
+            Complete the payment using your M-PESA PIN.
+          </li>
+
+          <li>
+            After the payment is successfully confirmed,
+            access can be granted.
+          </li>
+
+        </ol>
+
+
+        <div class="note">
+
+          Selected package:
+          <b>
+            ${selectedMinutes || "--"} minutes
+          </b>
+
+          <br>
+
+          Amount:
+          <b>
+            KSh ${selectedPrice || "--"}
+          </b>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+}
+
+
+/* GET ACCESS BUTTON */
+
+function startPaymentInstructions() {
+
+  if (!selectedPrice) {
+
+    showStatus(
+      "Select a package first",
+      "Choose a minutes package before paying."
+    );
+
     return;
   }
 
+  showStatus(
+    "Ready for payment",
+    "Send KSh " + selectedPrice +
+    " for " + selectedMinutes + " minutes."
+  );
 
-  titleBox.innerHTML = title;
-
-  textBox.innerHTML = text;
-
-  status.classList.add("show");
 }
 
 
-/* =========================
-   DEFAULT PACKAGE
-========================= */
+/* SAFETY: PREVENT PAGE FROM SUBMITTING */
 
-window.addEventListener(
-  "load",
-  function(){
+window.addEventListener("load", function() {
 
-    /*
-      No package is automatically selected.
-      User chooses one before PAY.
-    */
+  console.log("Payment page loaded.");
 
-  }
-);
+});
 
 </script>
 
