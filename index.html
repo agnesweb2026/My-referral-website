@@ -404,9 +404,7 @@ body{
   color:#777f91;
   font-size:11px;
 }
-
-
-/* LIVE VIDEO */
+  /* LIVE VIDEO */
 
 #liveSoundPage{
   position:relative;
@@ -586,8 +584,6 @@ body{
   </div>
 
 </div>
-
-
 <!-- INCOMING CALL -->
 
 <div id="incomingCall" class="page">
@@ -754,24 +750,11 @@ const GITHUB_BRANCH =
 const MAX_PHOTOS =
   24;
 
-
-/*
-  FIRST RED LIVE VIDEO
-  20 seconds
-*/
-
 const PHOTOS_DURATION =
   20000;
 
-
-/*
-  BLACK LIVE SOUND
-  EXACTLY 5 SECONDS
-*/
-
 const SECOND_CALL_SOUND_DURATION =
   5000;
-
 
 const INSUFFICIENT_DURATION =
   2000;
@@ -781,6 +764,73 @@ const BUSY_CHANGE_DURATION =
 
 const PAYMENT_PAGE_URL =
   "payment.html";
+
+
+/*
+  EMPLOYEE REFERRAL TRACKING
+*/
+
+const referralParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+let referralEmployeeId =
+  referralParams.get("employee");
+
+
+if(
+  referralEmployeeId &&
+  /^[A-Za-z0-9_-]{1,50}$/.test(
+    referralEmployeeId
+  )
+){
+
+  localStorage.setItem(
+    "referralEmployeeId",
+    referralEmployeeId
+  );
+
+}else{
+
+  referralEmployeeId =
+    localStorage.getItem(
+      "referralEmployeeId"
+    );
+
+}
+
+
+/*
+  OPEN PAYMENT WITH EMPLOYEE ID
+*/
+
+function openPaymentPage(){
+
+  const employeeId =
+    referralEmployeeId ||
+    localStorage.getItem(
+      "referralEmployeeId"
+    );
+
+
+  if(employeeId){
+
+    window.location.href =
+      PAYMENT_PAGE_URL +
+      "?employee=" +
+      encodeURIComponent(
+        employeeId
+      );
+
+  }else{
+
+    window.location.href =
+      PAYMENT_PAGE_URL;
+
+  }
+
+}
 
 
 const RED_LIVE_KEY =
@@ -829,9 +879,7 @@ let liveVideoSafetyTimer =
 let audioFiles = [];
 
 let currentAudio = null;
-
-
-/* NAMES */
+  /* NAMES */
 
 const names = [
 
@@ -979,7 +1027,9 @@ const declineSwipe =
   document.getElementById(
     "declineSwipe"
   );
-  function hideAllPages(){
+
+
+function hideAllPages(){
 
   welcomeScreen.style.display =
     "none";
@@ -1041,9 +1091,7 @@ function stopLiveVideo(){
   }catch(e){}
 
 }
-
-
-/* SHUFFLE */
+  /* SHUFFLE */
 
 function shuffleArray(array){
 
@@ -1111,10 +1159,6 @@ function isImageFile(name){
 
 }
 
-
-/*
-  AUDIO FILE TYPES
-*/
 
 function isAudioFile(name){
 
@@ -1302,10 +1346,8 @@ async function loadPhotos(){
       })
     );
 
-}
-
-
-/*
+  }
+  /*
   LOAD AUDIO
 */
 
@@ -1346,11 +1388,6 @@ async function playRandomSound(){
 
   try{
 
-    /*
-      If sounds have not loaded yet,
-      load them now.
-    */
-
     if(!audioFiles.length){
 
       await loadAudioFiles();
@@ -1369,10 +1406,6 @@ async function playRandomSound(){
     }
 
 
-    /*
-      RANDOM SOUND
-    */
-
     const randomIndex =
       Math.floor(
         Math.random() *
@@ -1384,25 +1417,11 @@ async function playRandomSound(){
       audioFiles[randomIndex];
 
 
-    console.log(
-      "Playing random sound:",
-      selectedAudio
-    );
-
-
-    /*
-      Stop old sound
-    */
-
     backgroundSound.pause();
 
     backgroundSound.currentTime =
       0;
 
-
-    /*
-      Set new random sound
-    */
 
     backgroundSound.src =
       getFileUrl(
@@ -1412,14 +1431,9 @@ async function playRandomSound(){
 
     backgroundSound.load();
 
-
     backgroundSound.volume =
       1;
 
-
-    /*
-      PLAY
-    */
 
     const playPromise =
       backgroundSound.play();
@@ -1628,8 +1642,7 @@ function renderPhotos(){
           "click",
           function(){
 
-            window.location.href =
-              PAYMENT_PAGE_URL;
+            openPaymentPage();
 
           }
         );
@@ -1721,9 +1734,7 @@ function updateOnlineNumber(){
   }
 
 }
-
-
-/* LIVE PHOTOS */
+  /* LIVE PHOTOS */
 
 function showLivePhotos(){
 
@@ -1823,8 +1834,10 @@ function showIncomingCall(){
   callerName.textContent =
     currentCaller.name;
 
-  }
-  /* FIRST RED LIVE */
+}
+
+
+/* FIRST RED LIVE */
 
 function showLiveSound(){
 
@@ -1870,12 +1883,6 @@ function showLiveSound(){
   }catch(e){}
 
 
-  /*
-    Safety:
-    after 20 seconds go to
-    Black Live
-  */
-
   liveVideoSafetyTimer =
     setTimeout(
       function(){
@@ -1891,32 +1898,15 @@ function showLiveSound(){
 
 /*
   SECOND BLACK LIVE
-  RANDOM SOUND
-  EXACTLY 5 SECONDS
 */
 
 function showBlackLive(){
 
   clearAllTimers();
 
-
-  /*
-    Stop red live video
-  */
-
   stopLiveVideo();
 
-
-  /*
-    Stop previous audio
-  */
-
   stopBackgroundSound();
-
-
-  /*
-    Show black live immediately
-  */
 
   hideAllPages();
 
@@ -1925,17 +1915,8 @@ function showBlackLive(){
     "flex";
 
 
-  /*
-    Choose and play
-    RANDOM uploaded sound
-  */
-
   playRandomSound();
 
-
-  /*
-    ONLY 5 SECONDS
-  */
 
   soundTimer =
     setTimeout(
@@ -2003,20 +1984,10 @@ function answerIncomingCall(){
     );
 
 
-    /*
-      FIRST ANSWER
-      RED LIVE VIDEO
-    */
-
     showLiveSound();
 
 
   }else{
-
-    /*
-      NEXT ANSWERS
-      BLACK LIVE + RANDOM SOUND
-    */
 
     showBlackLive();
 
@@ -2038,9 +2009,7 @@ function declineIncomingCall(){
   showLivePhotos();
 
 }
-
-
-/* REAL SWIPE */
+  /* REAL SWIPE */
 
 function enableSwipe(
   element,
@@ -2069,7 +2038,6 @@ function enableSwipe(
       startX =
         e.touches[0].clientX;
 
-
       startY =
         e.touches[0].clientY;
 
@@ -2094,22 +2062,15 @@ function enableSwipe(
       const endX =
         e.changedTouches[0].clientX;
 
-
       const endY =
         e.changedTouches[0].clientY;
-
 
       const dx =
         endX - startX;
 
-
       const dy =
         endY - startY;
 
-
-      /*
-        Ignore vertical swipe
-      */
 
       if(
         Math.abs(dy) >
@@ -2120,10 +2081,6 @@ function enableSwipe(
 
       }
 
-
-      /*
-        Minimum distance
-      */
 
       if(
         Math.abs(dx) < 80
@@ -2162,7 +2119,6 @@ function enableSwipe(
 
 /*
   DECLINE
-  RIGHT → LEFT
 */
 
 enableSwipe(
@@ -2178,7 +2134,6 @@ enableSwipe(
 
 /*
   ANSWER
-  LEFT → RIGHT
 */
 
 enableSwipe(
@@ -2254,10 +2209,6 @@ async function startWebsite(){
     "flex";
 
 
-  /*
-    Load photos AND sounds
-  */
-
   await Promise.all([
 
     loadPhotos(),
@@ -2281,10 +2232,6 @@ async function startWebsite(){
   welcomeScreen.style.display =
     "none";
 
-
-  /*
-    FIRST INCOMING CALL
-  */
 
   showIncomingCall();
 
@@ -2407,29 +2354,17 @@ window.addEventListener(
 
   }
 );
-  /* START */
+
+
+/* START */
 
 window.addEventListener(
   "load",
   function(){
 
-    /*
-      Prepare video
-    */
-
     prepareVideo();
 
-
-    /*
-      Prepare audio
-    */
-
     prepareAudio();
-
-
-    /*
-      Start website
-    */
 
     startWebsite();
 
