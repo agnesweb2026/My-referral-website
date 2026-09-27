@@ -1,459 +1,563 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Employee Dashboard</title>
 
 <style>
 
 *{
-  box-sizing:border-box;
+box-sizing:border-box;
 }
 
-html,
-body{
-  margin:0;
-  padding:0;
-  min-height:100%;
-  background:#050505;
-  color:#fff;
-  font-family:Arial,sans-serif;
+html,body{
+margin:0;
+padding:0;
+min-height:100%;
+background:#070707;
+color:#fff;
+font-family:Arial,sans-serif;
 }
 
 body{
-  padding:16px;
+padding:14px;
 }
 
 .container{
-  width:100%;
-  max-width:520px;
-  margin:auto;
+width:100%;
+max-width:520px;
+margin:auto;
 }
-
 
 /* HEADER */
 
 .header{
-  text-align:center;
-  padding:18px 0 22px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:12px 2px 20px;
 }
 
-.header h1{
-  margin:0;
-  font-size:28px;
+.header-left h1{
+margin:0;
+font-size:25px;
 }
 
-.header p{
-  margin:8px 0 0;
-  color:#aaa;
-  font-size:14px;
+.header-left p{
+margin:5px 0 0;
+font-size:13px;
+color:#888;
 }
 
+.logout{
+border:1px solid #333;
+background:#151515;
+color:#fff;
+padding:9px 13px;
+border-radius:9px;
+font-size:12px;
+font-weight:bold;
+}
 
-/* EMPLOYEE */
+/* EMPLOYEE CARD */
 
-.employee-box{
-  background:#111;
-  border:1px solid #333;
-  border-radius:15px;
-  padding:18px;
-  margin-bottom:15px;
+.employee-card{
+background:linear-gradient(135deg,#171717,#0e0e0e);
+border:1px solid #292929;
+border-radius:18px;
+padding:20px;
+margin-bottom:14px;
 }
 
 .employee-label{
-  color:#999;
-  font-size:12px;
-  margin-bottom:6px;
+font-size:11px;
+color:#888;
+letter-spacing:1px;
 }
 
 .employee-name{
-  font-size:24px;
-  font-weight:bold;
+font-size:24px;
+font-weight:bold;
+margin-top:7px;
 }
 
 .employee-id{
-  margin-top:7px;
-  color:#32cd32;
-  font-size:15px;
-  font-weight:bold;
+display:inline-block;
+margin-top:9px;
+padding:5px 9px;
+border-radius:7px;
+background:#102615;
+color:#36df70;
+font-size:12px;
+font-weight:bold;
 }
 
+/* EARNINGS */
+
+.earnings{
+background:linear-gradient(135deg,#12351e,#0b1c11);
+border:1px solid #1d6b36;
+border-radius:18px;
+padding:22px;
+margin-bottom:14px;
+}
+
+.earnings-label{
+font-size:12px;
+color:#a9b5ad;
+}
+
+.earnings-amount{
+font-size:34px;
+font-weight:bold;
+margin-top:8px;
+}
+
+.rate{
+margin-top:8px;
+font-size:13px;
+color:#39df72;
+}
 
 /* STATS */
 
 .stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:9px;
+margin-bottom:14px;
 }
 
 .stat{
-  background:#111;
-  border:1px solid #292929;
-  border-radius:14px;
-  padding:18px 12px;
-  text-align:center;
+background:#121212;
+border:1px solid #292929;
+border-radius:14px;
+padding:15px 6px;
+text-align:center;
+}
+
+.stat-number{
+font-size:22px;
+font-weight:bold;
 }
 
 .stat-label{
-  color:#999;
-  font-size:12px;
-  margin-bottom:9px;
+font-size:10px;
+color:#888;
+margin-top:6px;
+line-height:1.3;
 }
 
-.stat-value{
-  font-size:23px;
-  font-weight:bold;
+/* PROGRESS */
+
+.progress-card{
+background:#121212;
+border:1px solid #292929;
+border-radius:16px;
+padding:18px;
+margin-bottom:14px;
 }
 
-
-/* COMMISSION */
-
-.commission{
-  margin-top:15px;
-  background:#102010;
-  border:1px solid #32cd32;
-  border-radius:15px;
-  padding:20px;
-  text-align:center;
+.section-title{
+font-size:17px;
+font-weight:bold;
+margin-bottom:15px;
 }
 
-.commission-title{
-  font-size:14px;
-  color:#aaa;
+.progress-top{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+color:#aaa;
+margin-bottom:8px;
 }
 
-.commission-rate{
-  margin-top:7px;
-  font-size:28px;
-  color:#32cd32;
-  font-weight:bold;
+.progress-bar{
+height:9px;
+background:#252525;
+border-radius:20px;
+overflow:hidden;
 }
 
-.commission-amount{
-  margin-top:8px;
-  font-size:25px;
-  font-weight:bold;
+.progress-fill{
+height:100%;
+width:0%;
+background:#25d366;
+border-radius:20px;
 }
-
 
 /* PAYMENTS */
 
 .payments{
-  margin-top:15px;
-  background:#111;
-  border:1px solid #292929;
-  border-radius:15px;
-  padding:18px;
-}
-
-.payments h2{
-  margin:0 0 15px;
-  font-size:19px;
+background:#121212;
+border:1px solid #292929;
+border-radius:16px;
+padding:18px;
+margin-bottom:14px;
 }
 
 .payment-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:13px 0;
-  border-bottom:1px solid #292929;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 0;
+border-bottom:1px solid #242424;
 }
 
 .payment-row:last-child{
-  border-bottom:none;
-}
-
-.payment-left{
-  display:flex;
-  flex-direction:column;
-  gap:4px;
+border-bottom:none;
 }
 
 .payment-id{
-  font-size:14px;
-  font-weight:bold;
+font-size:13px;
+font-weight:bold;
 }
 
 .payment-date{
-  color:#888;
-  font-size:11px;
-}
-
-.payment-right{
-  text-align:right;
+font-size:10px;
+color:#777;
+margin-top:4px;
 }
 
 .payment-amount{
-  font-weight:bold;
+font-size:14px;
+font-weight:bold;
+text-align:right;
 }
 
-.payment-status{
-  margin-top:4px;
-  color:#32cd32;
-  font-size:11px;
+.payment-commission{
+font-size:11px;
+color:#35dc6d;
+margin-top:4px;
+text-align:right;
 }
 
+.verified{
+display:inline-block;
+margin-top:5px;
+font-size:9px;
+color:#35dc6d;
+}
 
 /* EMPTY */
 
 .empty{
-  text-align:center;
-  padding:25px 10px;
-  color:#888;
-  font-size:14px;
+text-align:center;
+padding:25px 10px;
+color:#777;
+font-size:13px;
 }
-
 
 /* REFERRAL */
 
 .referral{
-  margin-top:15px;
-  background:#111;
-  border:1px solid #292929;
-  border-radius:15px;
-  padding:18px;
-}
-
-.referral h2{
-  margin:0 0 12px;
-  font-size:18px;
+background:#121212;
+border:1px solid #292929;
+border-radius:16px;
+padding:18px;
+margin-bottom:14px;
 }
 
 .referral-link{
-  background:#050505;
-  border:1px solid #333;
-  border-radius:9px;
-  padding:12px;
-  word-break:break-all;
-  font-size:12px;
-  color:#ccc;
+background:#080808;
+border:1px solid #333;
+border-radius:9px;
+padding:12px;
+font-size:11px;
+color:#bbb;
+word-break:break-all;
+line-height:1.5;
 }
 
-.copy-btn{
-  width:100%;
-  margin-top:10px;
-  padding:13px;
-  border:none;
-  border-radius:9px;
-  background:#32cd32;
-  color:#000;
-  font-weight:bold;
-  font-size:15px;
+.button-row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
+margin-top:10px;
 }
 
+.action-button{
+border:0;
+border-radius:9px;
+padding:13px 8px;
+font-size:13px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.copy{
+background:#25d366;
+color:#000;
+}
+
+.share{
+background:#252525;
+color:#fff;
+border:1px solid #3a3a3a;
+}
 
 /* INFO */
 
 .info{
-  margin-top:15px;
-  padding:15px;
-  background:#0d0d0d;
-  border:1px solid #222;
-  border-radius:12px;
-  color:#888;
-  font-size:12px;
-  line-height:1.5;
-  text-align:center;
+background:#0e0e0e;
+border:1px solid #222;
+border-radius:13px;
+padding:14px;
+text-align:center;
+font-size:11px;
+line-height:1.5;
+color:#777;
+margin-bottom:15px;
 }
-
 
 /* ERROR */
 
 .error{
-  min-height:80vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  text-align:center;
+min-height:90vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+flex-direction:column;
 }
 
 .error h1{
-  color:red;
+color:#ff4444;
 }
 
 .error p{
-  color:#aaa;
+color:#888;
 }
 
+/* MOBILE */
 
 @media(max-width:380px){
 
-  body{
-    padding:12px;
-  }
+body{
+padding:10px;
+}
 
-  .employee-name{
-    font-size:21px;
-  }
+.header-left h1{
+font-size:22px;
+}
 
-  .stat-value{
-    font-size:20px;
-  }
+.earnings-amount{
+font-size:29px;
+}
+
+.stat-number{
+font-size:19px;
+}
+
+.stat-label{
+font-size:9px;
+}
 
 }
 
 </style>
-
 </head>
-
 
 <body>
 
+<div class="container" id="dashboard">
 
-<div class="container"
-     id="dashboard">
+<!-- HEADER -->
 
-  <div class="header">
+<div class="header">
 
-    <h1>
-      Employee Dashboard
-    </h1>
+<div class="header-left">
 
-    <p>
-      Referral performance
-    </p>
+<h1>Employee Dashboard</h1>
 
-  </div>
+<p>Your referral performance</p>
 
+</div>
 
-  <!-- EMPLOYEE -->
+<button class="logout" onclick="logout()">
+LOGOUT
+</button>
 
-  <div class="employee-box">
-
-    <div class="employee-label">
-      EMPLOYEE
-    </div>
-
-    <div
-      class="employee-name"
-      id="employeeName">
-      Employee
-    </div>
-
-    <div
-      class="employee-id"
-      id="employeeId">
-      EMP001
-    </div>
-
-  </div>
+</div>
 
 
-  <!-- STATS -->
+<!-- EMPLOYEE -->
 
-  <div class="stats">
+<div class="employee-card">
 
-    <div class="stat">
+<div class="employee-label">
+EMPLOYEE ACCOUNT
+</div>
 
-      <div class="stat-label">
-        VERIFIED PAYMENTS
-      </div>
+<div class="employee-name" id="employeeName">
+Employee
+</div>
 
-      <div
-        class="stat-value"
-        id="paymentCount">
-        0
-      </div>
+<div class="employee-id" id="employeeId">
+EMP001
+</div>
 
-    </div>
-
-
-    <div class="stat">
-
-      <div class="stat-label">
-        REFERRED CUSTOMERS
-      </div>
-
-      <div
-        class="stat-value"
-        id="customerCount">
-        0
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 
-  <!-- COMMISSION -->
+<!-- EARNINGS -->
 
-  <div class="commission">
+<div class="earnings">
 
-    <div class="commission-title">
-      COMMISSION RATE
-    </div>
+<div class="earnings-label">
+TOTAL COMMISSION
+</div>
 
-    <div class="commission-rate">
-      25%
-    </div>
+<div class="earnings-amount" id="commissionAmount">
+KSh 0
+</div>
 
-    <div
-      class="commission-amount"
-      id="commissionAmount">
-      KSh 0
-    </div>
+<div class="rate">
+25% commission on verified payments
+</div>
 
-  </div>
+</div>
 
 
-  <!-- PAYMENTS -->
+<!-- STATS -->
 
-  <div class="payments">
+<div class="stats">
 
-    <h2>
-      Verified Payments
-    </h2>
+<div class="stat">
 
-    <div id="paymentList">
+<div class="stat-number" id="customerCount">
+0
+</div>
 
-      <div class="empty">
-        No verified payments yet.
-      </div>
+<div class="stat-label">
+CUSTOMERS<br>REFERRED
+</div>
 
-    </div>
-
-  </div>
+</div>
 
 
-  <!-- REFERRAL -->
+<div class="stat">
 
-  <div class="referral">
+<div class="stat-number" id="paymentCount">
+0
+</div>
 
-    <h2>
-      My Referral Link
-    </h2>
+<div class="stat-label">
+VERIFIED<br>PAYMENTS
+</div>
 
-    <div
-      class="referral-link"
-      id="referralLink">
-    </div>
-
-    <button
-      class="copy-btn"
-      onclick="copyReferralLink()">
-
-      COPY REFERRAL LINK
-
-    </button>
-
-  </div>
+</div>
 
 
-  <div class="info">
+<div class="stat">
 
-    Commission is calculated only from
-    payments that are verified by the
-    payment system.
+<div class="stat-number" id="totalSales">
+KSh 0
+</div>
 
-  </div>
+<div class="stat-label">
+TOTAL<br>SALES
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PROGRESS -->
+
+<div class="progress-card">
+
+<div class="section-title">
+Monthly Referrals
+</div>
+
+<div class="progress-top">
+
+<span id="progressText">
+0 / 20 customers
+</span>
+
+<span id="progressPercent">
+0%
+</span>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+class="progress-fill"
+id="progressFill">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PAYMENTS -->
+
+<div class="payments">
+
+<div class="section-title">
+Verified Payments
+</div>
+
+<div id="paymentList">
+
+<div class="empty">
+No verified payments yet.
+</div>
+
+</div>
+
+</div>
+
+
+<!-- REFERRAL -->
+
+<div class="referral">
+
+<div class="section-title">
+My Referral Link
+</div>
+
+<div
+class="referral-link"
+id="referralLink">
+</div>
+
+<div class="button-row">
+
+<button
+class="action-button copy"
+onclick="copyReferralLink()">
+COPY LINK
+</button>
+
+<button
+class="action-button share"
+onclick="shareReferralLink()">
+SHARE LINK
+</button>
+
+</div>
+
+</div>
+
+
+<!-- INFO -->
+
+<div class="info">
+
+Your commission is calculated only from
+payments that have been verified by the
+payment system.
+
+</div>
 
 </div>
 
@@ -461,361 +565,455 @@ body{
 <script>
 
 /*
-  ==========================================
-  EMPLOYEE DASHBOARD
-  ==========================================
-
-  Dashboard URL example:
-
-  employee-dashboard.html?employee=EMP001
-
-  Each employee gets their own employee ID.
-*/
-
-
-/*
-  EMPLOYEE LIST
+EMPLOYEE ACCOUNTS
 */
 
 const employees = {
 
-  EMP001:"Employee 1",
-
-  EMP002:"Employee 2",
-
-  EMP003:"Employee 3",
-
-  EMP004:"Employee 4",
-
-  EMP005:"Employee 5",
-
-  EMP006:"Employee 6",
-
-  EMP007:"Employee 7",
-
-  EMP008:"Employee 8",
-
-  EMP009:"Employee 9",
-
-  EMP010:"Employee 10"
+EMP001:"Employee 1",
+EMP002:"Employee 2",
+EMP003:"Employee 3",
+EMP004:"Employee 4",
+EMP005:"Employee 5",
+EMP006:"Employee 6",
+EMP007:"Employee 7",
+EMP008:"Employee 8",
+EMP009:"Employee 9",
+EMP010:"Employee 10"
 
 };
 
 
 /*
-  GET EMPLOYEE ID
+GET EMPLOYEE FROM URL
 */
 
 const params =
-  new URLSearchParams(
-    window.location.search
-  );
+new URLSearchParams(
+window.location.search
+);
 
-
-let employeeId =
-  params.get("employee");
+const employeeId =
+params.get("employee");
 
 
 /*
-  VALIDATE EMPLOYEE ID
+CHECK EMPLOYEE
 */
 
 if(
-  !employeeId ||
-  !employees[employeeId]
+!employeeId ||
+!employees[employeeId]
 ){
 
-  document.body.innerHTML = `
+document.body.innerHTML = `
 
-    <div class="error">
+<div class="error">
 
-      <h1>
-        Invalid Employee
-      </h1>
+<h1>
+Invalid Employee
+</h1>
 
-      <p>
-        This employee dashboard
-        does not exist.
-      </p>
+<p>
+This employee dashboard does not exist.
+</p>
 
-    </div>
+</div>
 
-  `;
+`;
 
-  throw new Error(
-    "Invalid employee ID"
-  );
+throw new Error(
+"Invalid employee ID"
+);
 
 }
 
 
 /*
-  EMPLOYEE NAME
+EMPLOYEE DETAILS
 */
 
 const employeeName =
-  employees[employeeId];
+employees[employeeId];
+
+document.getElementById(
+"employeeName"
+).textContent =
+employeeName;
+
+document.getElementById(
+"employeeId"
+).textContent =
+employeeId;
 
 
 /*
-  DISPLAY EMPLOYEE
-*/
-
-document.getElementById(
-  "employeeName"
-).textContent =
-  employeeName;
-
-
-document.getElementById(
-  "employeeId"
-).textContent =
-  employeeId;
-
-
-/*
-  REFERRAL LINK
+REFERRAL LINK
 */
 
 const referralLink =
-  window.location.origin +
-  "/?employee=" +
-  encodeURIComponent(
-    employeeId
-  );
-
+window.location.origin +
+"/?employee=" +
+encodeURIComponent(
+employeeId
+);
 
 document.getElementById(
-  "referralLink"
+"referralLink"
 ).textContent =
-  referralLink;
+referralLink;
 
 
 /*
-  ==========================================
-  VERIFIED PAYMENT DATA
-  ==========================================
+VERIFIED PAYMENTS
 
-  IMPORTANT:
+IMPORTANT:
+Only put REAL payments here after
+your payment backend verifies them.
 
-  This is intentionally empty.
-
-  Real payments must come from your
-  payment backend after verification.
-
-  Do NOT manually put customer payments
-  here and treat them as verified.
+Do NOT add simulated payments.
 */
 
+const verifiedPayments = [
 
-const verifiedPayments = [];
+/*
+Example format:
+
+{
+id:"MP001",
+customerId:"CUSTOMER001",
+amount:100,
+date:"28 Sep 2026"
+}
+
+*/
+
+];
 
 
 /*
-  CALCULATE STATISTICS
+CALCULATE DASHBOARD
 */
 
 function calculateDashboard(){
 
-  const paymentCount =
-    verifiedPayments.length;
+const paymentCount =
+verifiedPayments.length;
 
 
-  const customerCount =
-    new Set(
-      verifiedPayments.map(
-        function(payment){
-
-          return payment.customerId;
-
-        }
-      )
-    ).size;
+const customerCount =
+new Set(
+verifiedPayments.map(
+function(payment){
+return payment.customerId;
+}
+)
+).size;
 
 
-  let totalPayments = 0;
+let totalSales = 0;
 
 
-  verifiedPayments.forEach(
-    function(payment){
+verifiedPayments.forEach(
+function(payment){
 
-      totalPayments +=
-        Number(
-          payment.amount
-        ) || 0;
+totalSales +=
+Number(payment.amount) || 0;
 
-    }
-  );
+});
 
 
-  /*
-    25% employee commission
-  */
-
-  const commission =
-    totalPayments * 0.25;
+const commission =
+totalSales * 0.25;
 
 
-  document.getElementById(
-    "paymentCount"
-  ).textContent =
-    paymentCount;
+/*
+UPDATE STATS
+*/
+
+document.getElementById(
+"paymentCount"
+).textContent =
+paymentCount;
 
 
-  document.getElementById(
-    "customerCount"
-  ).textContent =
-    customerCount;
+document.getElementById(
+"customerCount"
+).textContent =
+customerCount;
 
 
-  document.getElementById(
-    "commissionAmount"
-  ).textContent =
-    "KSh " +
-    commission.toLocaleString(
-      "en-KE",
-      {
-        maximumFractionDigits:2
-      }
-    );
+document.getElementById(
+"totalSales"
+).textContent =
+"KSh " +
+totalSales.toLocaleString(
+"en-KE"
+);
+
+
+document.getElementById(
+"commissionAmount"
+).textContent =
+"KSh " +
+commission.toLocaleString(
+"en-KE",
+{
+maximumFractionDigits:2
+}
+);
+
+
+/*
+PROGRESS
+*/
+
+const monthlyGoal = 20;
+
+const percent =
+Math.min(
+(customerCount / monthlyGoal) * 100,
+100
+);
+
+document.getElementById(
+"progressText"
+).textContent =
+customerCount +
+" / " +
+monthlyGoal +
+" customers";
+
+
+document.getElementById(
+"progressPercent"
+).textContent =
+Math.round(percent) +
+"%";
+
+
+document.getElementById(
+"progressFill"
+).style.width =
+percent + "%";
 
 }
 
 
 /*
-  DISPLAY PAYMENTS
+DISPLAY PAYMENTS
 */
 
 function displayPayments(){
 
-  const list =
-    document.getElementById(
-      "paymentList"
-    );
+const list =
+document.getElementById(
+"paymentList"
+);
 
 
-  if(
-    !verifiedPayments.length
-  ){
+if(
+!verifiedPayments.length
+){
 
-    list.innerHTML = `
+list.innerHTML = `
 
-      <div class="empty">
+<div class="empty">
 
-        No verified payments yet.
+No verified payments yet.
 
-      </div>
+</div>
 
-    `;
+`;
 
-    return;
+return;
 
-  }
-
-
-  list.innerHTML = "";
+}
 
 
-  verifiedPayments.forEach(
-    function(payment){
-
-      const row =
-        document.createElement(
-          "div"
-        );
+list.innerHTML = "";
 
 
-      row.className =
-        "payment-row";
+verifiedPayments.forEach(
+function(payment){
+
+const row =
+document.createElement(
+"div"
+);
+
+row.className =
+"payment-row";
 
 
-      row.innerHTML = `
-
-        <div class="payment-left">
-
-          <div class="payment-id">
-            Payment ${payment.id}
-          </div>
-
-          <div class="payment-date">
-            ${payment.date}
-          </div>
-
-        </div>
+const commission =
+Number(payment.amount) *
+0.25;
 
 
-        <div class="payment-right">
+row.innerHTML = `
 
-          <div class="payment-amount">
-            KSh ${Number(payment.amount)
-              .toLocaleString("en-KE")}
-          </div>
+<div>
 
-          <div class="payment-status">
-            VERIFIED
-          </div>
+<div class="payment-id">
 
-        </div>
+Payment ${payment.id}
 
-      `;
+</div>
+
+<div class="payment-date">
+
+${payment.date}
+
+</div>
+
+</div>
 
 
-      list.appendChild(
-        row
-      );
+<div>
 
-    }
-  );
+<div class="payment-amount">
+
+KSh ${Number(
+payment.amount
+).toLocaleString("en-KE")}
+
+</div>
+
+<div class="payment-commission">
+
+Commission:
+KSh ${commission.toLocaleString(
+"en-KE",
+{
+maximumFractionDigits:2
+}
+)}
+
+</div>
+
+<div class="verified">
+
+✓ VERIFIED
+
+</div>
+
+</div>
+
+`;
+
+list.appendChild(row);
+
+});
 
 }
 
 
 /*
-  COPY REFERRAL LINK
+COPY REFERRAL LINK
 */
 
 function copyReferralLink(){
 
-  const link =
-    referralLink;
+if(
+navigator.clipboard
+){
 
+navigator.clipboard.writeText(
+referralLink
+).then(
+function(){
 
-  if(
-    navigator.clipboard
-  ){
+alert(
+"Referral link copied!"
+);
 
-    navigator.clipboard
-      .writeText(link)
+}
+);
 
-      .then(
-        function(){
+}else{
 
-          alert(
-            "Referral link copied!"
-          );
+const input =
+document.createElement(
+"textarea"
+);
 
-        }
-      )
+input.value =
+referralLink;
 
-      .catch(
-        function(){
+document.body.appendChild(
+input
+);
 
-          alert(link);
+input.select();
 
-        }
-      );
+document.execCommand(
+"copy"
+);
 
-  }else{
+document.body.removeChild(
+input
+);
 
-    alert(link);
+alert(
+"Referral link copied!"
+);
 
-  }
+}
 
 }
 
 
 /*
-  START
+SHARE REFERRAL LINK
+*/
+
+function shareReferralLink(){
+
+if(
+navigator.share
+){
+
+navigator.share({
+
+title:
+"Referral Link",
+
+text:
+"Join using my referral link:",
+
+url:
+referralLink
+
+});
+
+}else{
+
+copyReferralLink();
+
+}
+
+}
+
+
+/*
+LOGOUT
+*/
+
+function logout(){
+
+sessionStorage.removeItem(
+"loggedInEmployee"
+);
+
+window.location.href =
+"employee-login.html";
+
+}
+
+
+/*
+START
 */
 
 calculateDashboard();
@@ -824,7 +1022,5 @@ displayPayments();
 
 </script>
 
-
 </body>
-
-      </html>
+  </html>
