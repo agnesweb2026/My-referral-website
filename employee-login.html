@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -65,6 +66,11 @@ input{
   background:#080808;
   color:#fff;
   font-size:16px;
+  outline:none;
+}
+
+input:focus{
+  border-color:#16c784;
 }
 
 .login-button{
@@ -76,6 +82,11 @@ input{
   color:#fff;
   font-size:16px;
   font-weight:bold;
+  cursor:pointer;
+}
+
+.login-button:active{
+  transform:scale(.98);
 }
 
 .message{
@@ -91,6 +102,7 @@ input{
 
 <body>
 
+
 <div class="login-box">
 
 <h1>
@@ -104,7 +116,8 @@ Login to your employee account
 
 <form id="loginForm">
 
-<label>
+
+<label for="username">
 Username
 </label>
 
@@ -117,7 +130,7 @@ required
 >
 
 
-<label>
+<label for="password">
 Password
 </label>
 
@@ -138,6 +151,7 @@ LOGIN
 
 </button>
 
+
 </form>
 
 
@@ -146,134 +160,165 @@ id="message"
 class="message">
 </div>
 
+
 </div>
 
 
 <script>
 
 /*
-EMPLOYEE ACCOUNTS
-
-DEMO ONLY.
+  EMPLOYEE ACCOUNTS
 */
 
 const employees = {
 
-EMP001:{
-password:"EMP001123"
-},
+  Joshua1:{
+    employeeId:"EMP001",
+    password:"123456"
+  },
 
-EMP002:{
-password:"EMP002123"
-},
+  Joshua2:{
+    employeeId:"EMP002",
+    password:"123456"
+  },
 
-EMP003:{
-password:"EMP003123"
-},
+  Joshua3:{
+    employeeId:"EMP003",
+    password:"123456"
+  },
 
-EMP004:{
-password:"EMP004123"
-},
+  Joshua4:{
+    employeeId:"EMP004",
+    password:"123456"
+  },
 
-EMP005:{
-password:"EMP005123"
-},
+  Joshua5:{
+    employeeId:"EMP005",
+    password:"123456"
+  },
 
-EMP006:{
-password:"EMP006123"
-},
+  Joshua6:{
+    employeeId:"EMP006",
+    password:"123456"
+  },
 
-EMP007:{
-password:"EMP007123"
-},
+  Joshua7:{
+    employeeId:"EMP007",
+    password:"123456"
+  },
 
-EMP008:{
-password:"EMP008123"
-},
+  Joshua8:{
+    employeeId:"EMP008",
+    password:"123456"
+  },
 
-EMP009:{
-password:"EMP009123"
-},
+  Joshua9:{
+    employeeId:"EMP009",
+    password:"123456"
+  },
 
-EMP010:{
-password:"EMP010123"
-}
+  Joshua10:{
+    employeeId:"EMP010",
+    password:"123456"
+  }
 
 };
 
 
 document.getElementById(
-"loginForm"
+  "loginForm"
 ).addEventListener(
-"submit",
-function(event){
+  "submit",
+  function(event){
 
-event.preventDefault();
-
-
-const username =
-document.getElementById(
-"username"
-).value
-.trim()
-.toUpperCase();
+    event.preventDefault();
 
 
-const password =
-document.getElementById(
-"password"
-).value;
+    const username =
+      document.getElementById(
+        "username"
+      ).value.trim();
 
 
-const message =
-document.getElementById(
-"message"
+    const password =
+      document.getElementById(
+        "password"
+      ).value;
+
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+
+    /*
+      CHECK USERNAME
+    */
+
+    const employee =
+      employees[username];
+
+
+    if(
+      !employee ||
+      employee.password !== password
+    ){
+
+      message.textContent =
+        "Incorrect username or password.";
+
+      message.style.color =
+        "#ff4d4d";
+
+      return;
+
+    }
+
+
+    /*
+      LOGIN SUCCESS
+    */
+
+    message.textContent =
+      "Login successful...";
+
+    message.style.color =
+      "#16c784";
+
+
+    /*
+      SAVE EMPLOYEE
+    */
+
+    sessionStorage.setItem(
+      "loggedInEmployee",
+      employee.employeeId
+    );
+
+
+    /*
+      OPEN CORRECT DASHBOARD
+    */
+
+    setTimeout(
+      function(){
+
+        window.location.href =
+          "employee-dashboard.html?employee=" +
+          encodeURIComponent(
+            employee.employeeId
+          );
+
+      },
+      700
+    );
+
+  }
 );
-
-
-if(
-!employees[username] ||
-employees[username].password !== password
-){
-
-message.textContent =
-"Incorrect username or password.";
-
-message.style.color =
-"#ff4d4d";
-
-return;
-
-}
-
-
-message.textContent =
-"Login successful...";
-
-message.style.color =
-"#16c784";
-
-
-sessionStorage.setItem(
-"loggedInEmployee",
-username
-);
-
-
-setTimeout(
-function(){
-
-window.location.href =
-"employee-dashboard.html?employee=" +
-encodeURIComponent(username);
-
-},
-800
-);
-
-});
 
 </script>
 
 </body>
+
 </html>
