@@ -196,7 +196,7 @@ body {
   text-align: center;
 }
 
-/* LOADING SCREEN */
+/* FULL SCREEN */
 
 .full-screen {
   position: fixed;
@@ -378,7 +378,7 @@ body {
       <li>Tap PAY WITH M-PESA.</li>
       <li>Wait for the loading screen.</li>
       <li>After the packages return, tap GET ACCESS.</li>
-      <li>The website will attempt to open the SIM Toolkit already installed on the phone.</li>
+      <li>The website will attempt to open the installed SIM Toolkit.</li>
     </ol>
 
     <div class="note">
@@ -388,7 +388,6 @@ body {
   </div>
 
 </div>
-
 
 <script>
 
@@ -433,7 +432,7 @@ function showStatus(title, text) {
 }
 
 
-/* COPY */
+/* COPY NUMBER */
 
 function copyNumber() {
 
@@ -563,7 +562,6 @@ function showPackagesAgain() {
 
       </div>
 
-
       <div class="packages">
 
         <div class="package ${
@@ -576,7 +574,6 @@ function showPackagesAgain() {
 
         </div>
 
-
         <div class="package ${
           selectedMinutes === 55 ? "selected" : ""
         }"
@@ -586,7 +583,6 @@ function showPackagesAgain() {
           <div class="price">KSh 138</div>
 
         </div>
-
 
         <div class="package ${
           selectedMinutes === 73 ? "selected" : ""
@@ -598,7 +594,6 @@ function showPackagesAgain() {
 
         </div>
 
-
         <div class="package ${
           selectedMinutes === 95 ? "selected" : ""
         }"
@@ -609,7 +604,6 @@ function showPackagesAgain() {
 
         </div>
 
-
         <div class="package ${
           selectedMinutes === 105 ? "selected" : ""
         }"
@@ -619,7 +613,6 @@ function showPackagesAgain() {
           <div class="price">KSh 299</div>
 
         </div>
-
 
         <div class="package ${
           selectedMinutes === 166 ? "selected" : ""
@@ -634,7 +627,6 @@ function showPackagesAgain() {
         </div>
 
       </div>
-
 
       <div class="payment-box">
 
@@ -655,14 +647,12 @@ function showPackagesAgain() {
 
         </div>
 
-
         <button class="main-btn"
                 onclick="getAccess()">
 
           GET ACCESS
 
         </button>
-
 
         <div class="status" id="status">
 
@@ -677,7 +667,6 @@ function showPackagesAgain() {
         </div>
 
       </div>
-
 
       <div class="instructions">
 
@@ -709,7 +698,6 @@ function showPackagesAgain() {
           </li>
 
         </ol>
-
 
         <div class="note">
 
@@ -748,7 +736,6 @@ function getAccess() {
     return;
   }
 
-
   document.body.innerHTML = `
 
     <div class="full-screen">
@@ -769,7 +756,6 @@ function getAccess() {
 
     </div>
   `;
-
 
   setTimeout(function() {
 
@@ -802,7 +788,6 @@ function showNoPayment() {
     </div>
   `;
 
-
   setTimeout(function() {
 
     openSimToolkit();
@@ -812,49 +797,62 @@ function showNoPayment() {
 
 
 /*
-  ATTEMPT TO OPEN AN
-  ALREADY-INSTALLED SIM TOOLKIT
+====================================================
+OPEN INSTALLED SIM TOOLKIT
+====================================================
 
-  NO PLAY STORE URL IS USED.
+IMPORTANT:
+A normal webpage cannot guarantee that Chrome will
+open a particular carrier's SIM Toolkit.
+
+This tries Android's installed-app intent without
+sending the user to Google Play Store.
+
+If Android/Chrome blocks it, the fallback screen
+appears instead.
 */
 
 function openSimToolkit() {
 
-  /*
-    First attempt:
-    Android application intent.
-  */
+  let opened = false;
 
   try {
 
-    window.location.href =
-      "intent://#Intent;" +
+    const intentURL =
+      "intent:#Intent;" +
       "action=android.intent.action.MAIN;" +
       "category=android.intent.category.LAUNCHER;" +
       "package=com.android.stk;" +
       "end";
 
+    window.location.href = intentURL;
+
+    opened = true;
+
   } catch (error) {
 
-    showToolkitFallback();
+    opened = false;
 
   }
 
-
   /*
-    If Chrome blocks the intent,
-    show the manual button.
+    Give Android/Chrome a moment.
+    If nothing happened, show fallback.
   */
 
   setTimeout(function() {
 
-    showToolkitFallback();
+    if (!opened || document.visibilityState === "visible") {
 
-  }, 1500);
+      showToolkitFallback();
+
+    }
+
+  }, 1800);
 }
 
 
-/* FALLBACK */
+/* FALLBACK SCREEN */
 
 function showToolkitFallback() {
 
@@ -871,14 +869,14 @@ function showToolkitFallback() {
       </h1>
 
       <p>
-        Your browser did not allow the installed
-        SIM Toolkit to open automatically.
+        Android did not allow the SIM Toolkit
+        to open automatically.
       </p>
 
       <button class="open-btn"
               onclick="trySimToolkitAgain()">
 
-        OPEN SIM TOOLKIT
+        TRY OPEN SIM TOOLKIT
 
       </button>
 
@@ -898,16 +896,23 @@ function showToolkitFallback() {
 
 function trySimToolkitAgain() {
 
-  window.location.href =
-    "intent://#Intent;" +
-    "action=android.intent.action.MAIN;" +
-    "category=android.intent.category.LAUNCHER;" +
-    "package=com.android.stk;" +
-    "end";
+  try {
 
+    window.location.href =
+      "intent:#Intent;" +
+      "action=android.intent.action.MAIN;" +
+      "category=android.intent.category.LAUNCHER;" +
+      "package=com.android.stk;" +
+      "end";
+
+  } catch (error) {
+
+    showToolkitFallback();
+
+  }
 }
 
 </script>
 
 </body>
-  </html>
+</html>
