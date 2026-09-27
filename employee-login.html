@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Employee Login</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#000;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-box{
+  width:100%;
+  max-width:400px;
+  background:#151515;
+  border:1px solid #333;
+  border-radius:18px;
+  padding:25px 20px;
+}
+
+h1{
+  text-align:center;
+  margin:0 0 8px;
+  font-size:28px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#999;
+  margin-bottom:25px;
+  font-size:14px;
+}
+
+label{
+  display:block;
+  color:#bbb;
+  font-size:14px;
+  margin-bottom:7px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:17px;
+  border:1px solid #444;
+  border-radius:9px;
+  background:#080808;
+  color:#fff;
+  font-size:16px;
+}
+
+.login-button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:9px;
+  background:#16c784;
+  color:#fff;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.message{
+  text-align:center;
+  margin-top:15px;
+  font-size:13px;
+  min-height:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h1>
+Employee Login
+</h1>
+
+<div class="subtitle">
+Login to your employee account
+</div>
+
+
+<form id="loginForm">
+
+<label>
+Username
+</label>
+
+<input
+id="username"
+type="text"
+placeholder="Enter username"
+autocomplete="username"
+required
+>
+
+
+<label>
+Password
+</label>
+
+<input
+id="password"
+type="password"
+placeholder="Enter password"
+autocomplete="current-password"
+required
+>
+
+
+<button
+class="login-button"
+type="submit">
+
+LOGIN
+
+</button>
+
+</form>
+
+
+<div
+id="message"
+class="message">
+</div>
+
+</div>
+
+
+<script>
+
+/*
+EMPLOYEE ACCOUNTS
+
+DEMO ONLY.
+*/
+
+const employees = {
+
+EMP001:{
+password:"EMP001123"
+},
+
+EMP002:{
+password:"EMP002123"
+},
+
+EMP003:{
+password:"EMP003123"
+},
+
+EMP004:{
+password:"EMP004123"
+},
+
+EMP005:{
+password:"EMP005123"
+},
+
+EMP006:{
+password:"EMP006123"
+},
+
+EMP007:{
+password:"EMP007123"
+},
+
+EMP008:{
+password:"EMP008123"
+},
+
+EMP009:{
+password:"EMP009123"
+},
+
+EMP010:{
+password:"EMP010123"
+}
+
+};
+
+
+document.getElementById(
+"loginForm"
+).addEventListener(
+"submit",
+function(event){
+
+event.preventDefault();
+
+
+const username =
+document.getElementById(
+"username"
+).value
+.trim()
+.toUpperCase();
+
+
+const password =
+document.getElementById(
+"password"
+).value;
+
+
+const message =
+document.getElementById(
+"message"
+);
+
+
+if(
+!employees[username] ||
+employees[username].password !== password
+){
+
+message.textContent =
+"Incorrect username or password.";
+
+message.style.color =
+"#ff4d4d";
+
+return;
+
+}
+
+
+message.textContent =
+"Login successful...";
+
+message.style.color =
+"#16c784";
+
+
+sessionStorage.setItem(
+"loggedInEmployee",
+username
+);
+
+
+setTimeout(
+function(){
+
+window.location.href =
+"employee-dashboard.html?employee=" +
+encodeURIComponent(username);
+
+},
+800
+);
+
+});
+
+</script>
+
+</body>
+</html>
