@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
+<meta
+name="viewport"
 content="width=device-width,initial-scale=1.0">
 
 <title>Employee Login</title>
@@ -13,87 +13,94 @@ content="width=device-width,initial-scale=1.0">
 <style>
 
 *{
-  box-sizing:border-box;
+box-sizing:border-box;
 }
 
 body{
-  margin:0;
-  min-height:100vh;
-  background:#000;
-  color:#fff;
-  font-family:Arial,sans-serif;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+margin:0;
+min-height:100vh;
+background:#000;
+color:#fff;
+font-family:Arial,sans-serif;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
 }
 
 .login-box{
-  width:100%;
-  max-width:400px;
-  background:#151515;
-  border:1px solid #333;
-  border-radius:18px;
-  padding:25px 20px;
+width:100%;
+max-width:400px;
+background:#151515;
+border:1px solid #333;
+border-radius:18px;
+padding:25px 20px;
 }
 
 h1{
-  text-align:center;
-  margin:0 0 8px;
-  font-size:28px;
+text-align:center;
+margin:0 0 8px;
+font-size:28px;
 }
 
 .subtitle{
-  text-align:center;
-  color:#999;
-  margin-bottom:25px;
-  font-size:14px;
+text-align:center;
+color:#999;
+margin-bottom:25px;
+font-size:14px;
 }
 
 label{
-  display:block;
-  color:#bbb;
-  font-size:14px;
-  margin-bottom:7px;
+display:block;
+color:#bbb;
+font-size:14px;
+margin-bottom:7px;
 }
 
 input{
-  width:100%;
-  padding:14px;
-  margin-bottom:17px;
-  border:1px solid #444;
-  border-radius:9px;
-  background:#080808;
-  color:#fff;
-  font-size:16px;
-  outline:none;
+width:100%;
+padding:14px;
+margin-bottom:17px;
+border:1px solid #444;
+border-radius:9px;
+background:#080808;
+color:#fff;
+font-size:16px;
+outline:none;
 }
 
 input:focus{
-  border-color:#16c784;
+border-color:#16c784;
 }
 
 .login-button{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:9px;
-  background:#16c784;
-  color:#fff;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
+width:100%;
+padding:14px;
+border:0;
+border-radius:9px;
+background:#16c784;
+color:#fff;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
 }
 
 .login-button:active{
-  transform:scale(.98);
+transform:scale(.98);
 }
 
 .message{
-  text-align:center;
-  margin-top:15px;
-  font-size:13px;
-  min-height:20px;
+text-align:center;
+margin-top:15px;
+font-size:13px;
+min-height:20px;
+}
+
+.code{
+margin-top:20px;
+text-align:center;
+font-size:11px;
+color:#666;
 }
 
 </style>
@@ -101,7 +108,6 @@ input:focus{
 </head>
 
 <body>
-
 
 <div class="login-box">
 
@@ -115,7 +121,6 @@ Login to your employee account
 
 
 <form id="loginForm">
-
 
 <label for="username">
 Username
@@ -146,11 +151,8 @@ required
 <button
 class="login-button"
 type="submit">
-
 LOGIN
-
 </button>
-
 
 </form>
 
@@ -161,164 +163,158 @@ class="message">
 </div>
 
 
+<div class="code">
+Employee referral codes: REF-XXXX
+</div>
+
 </div>
 
 
 <script>
 
 /*
-  EMPLOYEE ACCOUNTS
+EMPLOYEE ACCOUNTS
+
+CURRENTLY FRONT-END ONLY.
+FOR REAL SECURITY USE SERVER-SIDE
+AUTHENTICATION.
 */
 
 const employees = {
 
-  Joshua1:{
-    employeeId:"EMP001",
-    password:"123456"
-  },
+Joshua1:{
+employeeId:"REF-A7K2",
+password:"123456"
+},
 
-  Joshua2:{
-    employeeId:"EMP002",
-    password:"123456"
-  },
+Joshua2:{
+employeeId:"REF-B4M8",
+password:"123456"
+},
 
-  Joshua3:{
-    employeeId:"EMP003",
-    password:"123456"
-  },
+Joshua3:{
+employeeId:"REF-C9P3",
+password:"123456"
+},
 
-  Joshua4:{
-    employeeId:"EMP004",
-    password:"123456"
-  },
+Joshua4:{
+employeeId:"REF-D2X6",
+password:"123456"
+},
 
-  Joshua5:{
-    employeeId:"EMP005",
-    password:"123456"
-  },
+Joshua5:{
+employeeId:"REF-E5Q1",
+password:"123456"
+},
 
-  Joshua6:{
-    employeeId:"EMP006",
-    password:"123456"
-  },
+Joshua6:{
+employeeId:"REF-F8L4",
+password:"123456"
+},
 
-  Joshua7:{
-    employeeId:"EMP007",
-    password:"123456"
-  },
+Joshua7:{
+employeeId:"REF-G3N7",
+password:"123456"
+},
 
-  Joshua8:{
-    employeeId:"EMP008",
-    password:"123456"
-  },
+Joshua8:{
+employeeId:"REF-H6R2",
+password:"123456"
+},
 
-  Joshua9:{
-    employeeId:"EMP009",
-    password:"123456"
-  },
+Joshua9:{
+employeeId:"REF-J9T5",
+password:"123456"
+},
 
-  Joshua10:{
-    employeeId:"EMP010",
-    password:"123456"
-  }
+Joshua10:{
+employeeId:"REF-K4W8",
+password:"123456"
+}
 
 };
 
 
-document.getElementById(
-  "loginForm"
-).addEventListener(
-  "submit",
-  function(event){
+/*
+LOGIN
+*/
 
-    event.preventDefault();
+document
+.getElementById("loginForm")
+.addEventListener(
+"submit",
+function(event){
 
-
-    const username =
-      document.getElementById(
-        "username"
-      ).value.trim();
+event.preventDefault();
 
 
-    const password =
-      document.getElementById(
-        "password"
-      ).value;
+const username =
+document
+.getElementById("username")
+.value
+.trim();
 
 
-    const message =
-      document.getElementById(
-        "message"
-      );
+const password =
+document
+.getElementById("password")
+.value;
 
 
-    /*
-      CHECK USERNAME
-    */
-
-    const employee =
-      employees[username];
+const message =
+document
+.getElementById("message");
 
 
-    if(
-      !employee ||
-      employee.password !== password
-    ){
-
-      message.textContent =
-        "Incorrect username or password.";
-
-      message.style.color =
-        "#ff4d4d";
-
-      return;
-
-    }
+const employee =
+employees[username];
 
 
-    /*
-      LOGIN SUCCESS
-    */
+if(
+!employee ||
+employee.password !== password
+){
 
-    message.textContent =
-      "Login successful...";
+message.textContent =
+"Incorrect username or password.";
 
-    message.style.color =
-      "#16c784";
+message.style.color =
+"#ff4d4d";
 
+return;
 
-    /*
-      SAVE EMPLOYEE
-    */
-
-    sessionStorage.setItem(
-      "loggedInEmployee",
-      employee.employeeId
-    );
+}
 
 
-    /*
-      OPEN CORRECT DASHBOARD
-    */
+message.textContent =
+"Login successful...";
 
-    setTimeout(
-      function(){
+message.style.color =
+"#16c784";
 
-        window.location.href =
-          "employee-dashboard.html?employee=" +
-          encodeURIComponent(
-            employee.employeeId
-          );
 
-      },
-      700
-    );
-
-  }
+sessionStorage.setItem(
+"loggedInEmployee",
+employee.employeeId
 );
+
+
+setTimeout(
+function(){
+
+window.location.href =
+"employee-dashboard.html?employee=" +
+encodeURIComponent(
+employee.employeeId
+);
+
+},
+700
+);
+
+});
 
 </script>
 
 </body>
-
 </html>
