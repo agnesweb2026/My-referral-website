@@ -376,47 +376,223 @@ body {
 
 <script>
 
-const RECIPIENT = "0741101913";
+/*
+  ==================================================
+  EMPLOYEE TRACKING
+  ==================================================
 
-let selectedMinutes = null;
-let selectedPrice = null;
+  Example:
+
+  payment.html?employee=EMP001
+
+  The employee code is remembered in this browser
+  so it can survive the package/loading screens.
+*/
+
+
+const urlParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+
+let employeeId =
+  urlParams.get("employee");
+
+
+/*
+  Only accept a simple employee ID.
+  This prevents arbitrary long values being stored.
+*/
+
+if (
+  employeeId &&
+  !/^[A-Za-z0-9_-]{1,50}$/.test(employeeId)
+) {
+
+  employeeId = null;
+
+}
+
+
+/*
+  If the URL contains an employee ID,
+  remember it.
+*/
+
+if (employeeId) {
+
+  localStorage.setItem(
+    "referralEmployeeId",
+    employeeId
+  );
+
+}
+
+
+/*
+  If the URL doesn't contain one,
+  recover the previous employee ID.
+*/
+
+if (!employeeId) {
+
+  employeeId =
+    localStorage.getItem(
+      "referralEmployeeId"
+    );
+
+}
+
+
+/*
+  Build the payment URL while preserving
+  the employee ID.
+*/
+
+function getPaymentUrl() {
+
+  if (!employeeId) {
+
+    return "payment.html";
+
+  }
+
+  return (
+    "payment.html?employee=" +
+    encodeURIComponent(employeeId)
+  );
+
+}
+
+
+/*
+  Keep employee ID when the page changes
+  back to the package screen.
+*/
+
+function rememberEmployeeInUrl() {
+
+  if (!employeeId) return;
+
+  const newUrl =
+    getPaymentUrl();
+
+  try {
+
+    window.history.replaceState(
+      {},
+      "",
+      newUrl
+    );
+
+  } catch (error) {
+
+    console.log(
+      "Could not update URL:",
+      error
+    );
+
+  }
+
+}
+
+
+/*
+  Make sure the current URL contains
+  the employee code if one exists.
+*/
+
+rememberEmployeeInUrl();
+
+
+/* PAYMENT */
+
+const RECIPIENT =
+  "0741101913";
+
+
+let selectedMinutes =
+  null;
+
+
+let selectedPrice =
+  null;
 
 
 /* SELECT PACKAGE */
 
-function selectPackage(element, minutes, price) {
+function selectPackage(
+  element,
+  minutes,
+  price
+) {
 
-  document.querySelectorAll(".package").forEach(function(pkg) {
+  document
+    .querySelectorAll(".package")
+    .forEach(function(pkg) {
 
-    pkg.classList.remove("selected");
+      pkg.classList.remove(
+        "selected"
+      );
 
-  });
+    });
 
-  element.classList.add("selected");
 
-  selectedMinutes = minutes;
-  selectedPrice = price;
+  element.classList.add(
+    "selected"
+  );
+
+
+  selectedMinutes =
+    minutes;
+
+
+  selectedPrice =
+    price;
+
 
   showStatus(
     "Package selected",
-    minutes + " minutes — KSh " + price
+    minutes +
+    " minutes — KSh " +
+    price
   );
+
 }
 
 
 /* STATUS */
 
-function showStatus(title, text) {
+function showStatus(
+  title,
+  text
+) {
 
-  const status = document.getElementById("status");
+  const status =
+    document.getElementById(
+      "status"
+    );
+
 
   if (!status) return;
 
-  document.getElementById("statusTitle").textContent = title;
 
-  document.getElementById("statusText").textContent = text;
+  document.getElementById(
+    "statusTitle"
+  ).textContent =
+    title;
 
-  status.style.display = "block";
+
+  document.getElementById(
+    "statusText"
+  ).textContent =
+    text;
+
+
+  status.style.display =
+    "block";
+
 }
 
 
@@ -424,9 +600,14 @@ function showStatus(title, text) {
 
 function copyNumber() {
 
-  if (navigator.clipboard) {
+  if (
+    navigator.clipboard
+  ) {
 
-    navigator.clipboard.writeText(RECIPIENT)
+    navigator.clipboard
+      .writeText(
+        RECIPIENT
+      )
 
       .then(function() {
 
@@ -454,6 +635,7 @@ function copyNumber() {
     );
 
   }
+
 }
 
 
@@ -471,7 +653,9 @@ function payWithMpesa() {
     return;
   }
 
+
   showLiveStream();
+
 }
 
 
@@ -500,13 +684,19 @@ function showLiveStream() {
       </div>
 
     </div>
+
   `;
 
-  setTimeout(function() {
 
-    showInsufficient();
+  setTimeout(
+    function() {
 
-  }, 2000);
+      showInsufficient();
+
+    },
+    2000
+  );
+
 }
 
 
@@ -531,13 +721,19 @@ function showInsufficient() {
       </p>
 
     </div>
+
   `;
 
-  setTimeout(function() {
 
-    showPackagesAgain();
+  setTimeout(
+    function() {
 
-  }, 2000);
+      showPackagesAgain();
+
+    },
+    2000
+  );
+
 }
 
 
@@ -545,15 +741,26 @@ function showInsufficient() {
 
 function showPackagesAgain() {
 
+  /*
+    Employee ID is still stored here.
+  */
+
+  rememberEmployeeInUrl();
+
+
   document.body.innerHTML = `
 
     <div class="container">
 
       <div class="header">
 
-        <h1>M-PESA PAYMENT</h1>
+        <h1>
+          M-PESA PAYMENT
+        </h1>
 
-        <p>Choose your minutes package</p>
+        <p>
+          Choose your minutes package
+        </p>
 
       </div>
 
@@ -561,7 +768,9 @@ function showPackagesAgain() {
       <div class="packages">
 
         <div class="package ${
-          selectedMinutes === 30 ? "selected" : ""
+          selectedMinutes === 30
+            ? "selected"
+            : ""
         }"
         onclick="selectPackage(this,30,81)">
 
@@ -577,7 +786,9 @@ function showPackagesAgain() {
 
 
         <div class="package ${
-          selectedMinutes === 55 ? "selected" : ""
+          selectedMinutes === 55
+            ? "selected"
+            : ""
         }"
         onclick="selectPackage(this,55,138)">
 
@@ -593,7 +804,9 @@ function showPackagesAgain() {
 
 
         <div class="package ${
-          selectedMinutes === 73 ? "selected" : ""
+          selectedMinutes === 73
+            ? "selected"
+            : ""
         }"
         onclick="selectPackage(this,73,207)">
 
@@ -609,7 +822,9 @@ function showPackagesAgain() {
 
 
         <div class="package ${
-          selectedMinutes === 95 ? "selected" : ""
+          selectedMinutes === 95
+            ? "selected"
+            : ""
         }"
         onclick="selectPackage(this,95,253)">
 
@@ -625,7 +840,9 @@ function showPackagesAgain() {
 
 
         <div class="package ${
-          selectedMinutes === 105 ? "selected" : ""
+          selectedMinutes === 105
+            ? "selected"
+            : ""
         }"
         onclick="selectPackage(this,105,299)">
 
@@ -641,7 +858,9 @@ function showPackagesAgain() {
 
 
         <div class="package ${
-          selectedMinutes === 166 ? "selected" : ""
+          selectedMinutes === 166
+            ? "selected"
+            : ""
         }"
         onclick="selectPackage(this,166,393)">
 
@@ -695,7 +914,9 @@ function showPackagesAgain() {
         </button>
 
 
-        <div class="status" id="status">
+        <div
+          class="status"
+          id="status">
 
           <div
             class="status-title"
@@ -743,14 +964,16 @@ function showPackagesAgain() {
 
           Selected:
           <b>
-            ${selectedMinutes || "--"} minutes
+            ${selectedMinutes || "--"}
+            minutes
           </b>
 
           <br><br>
 
           Amount:
           <b>
-            KSh ${selectedPrice || "--"}
+            KSh
+            ${selectedPrice || "--"}
           </b>
 
         </div>
@@ -758,7 +981,9 @@ function showPackagesAgain() {
       </div>
 
     </div>
+
   `;
+
 }
 
 
@@ -774,7 +999,16 @@ function getAccess() {
     );
 
     return;
+
   }
+
+
+  /*
+    Keep the employee referral
+    attached to this payment session.
+  */
+
+  rememberEmployeeInUrl();
 
 
   document.body.innerHTML = `
@@ -798,14 +1032,19 @@ function getAccess() {
       </div>
 
     </div>
+
   `;
 
 
-  setTimeout(function() {
+  setTimeout(
+    function() {
 
-    showNoPayment();
+      showNoPayment();
 
-  }, 2000);
+    },
+    2000
+  );
+
 }
 
 
@@ -830,22 +1069,22 @@ function showNoPayment() {
       </p>
 
     </div>
+
   `;
 
 
-  /*
-    After 2 seconds,
-    return directly to packages.
-  */
+  setTimeout(
+    function() {
 
-  setTimeout(function() {
+      showPackagesAgain();
 
-    showPackagesAgain();
+    },
+    2000
+  );
 
-  }, 2000);
 }
 
 </script>
 
 </body>
-  </html>
+</html>
