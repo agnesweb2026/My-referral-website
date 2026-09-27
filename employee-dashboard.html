@@ -1,1203 +1,1197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Employee Dashboard</title>
 
 <style>
-
 *{
-box-sizing:border-box;
-}
-
-html,body{
-margin:0;
-padding:0;
-min-height:100%;
-background:#070707;
-color:#fff;
-font-family:Arial,sans-serif;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-padding:14px;
+  font-family:Arial, sans-serif;
+  background:#f3f5f9;
+  color:#172033;
 }
-
-.container{
-width:100%;
-max-width:520px;
-margin:auto;
-}
-
-/* HEADER */
 
 .header{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:12px 2px 20px;
+  background:#111827;
+  color:white;
+  padding:18px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.header-left h1{
-margin:0;
-font-size:25px;
-}
-
-.header-left p{
-margin:5px 0 0;
-font-size:13px;
-color:#888;
+.header h1{
+  font-size:20px;
 }
 
 .logout{
-border:1px solid #333;
-background:#151515;
-color:#fff;
-padding:9px 13px;
-border-radius:9px;
-font-size:12px;
-font-weight:bold;
-cursor:pointer;
+  background:#ef4444;
+  color:white;
+  border:0;
+  border-radius:8px;
+  padding:9px 13px;
+  font-weight:bold;
 }
 
-/* EMPLOYEE CARD */
-
-.employee-card{
-background:linear-gradient(135deg,#171717,#0e0e0e);
-border:1px solid #292929;
-border-radius:18px;
-padding:20px;
-margin-bottom:14px;
+.container{
+  max-width:600px;
+  margin:auto;
+  padding:16px;
 }
 
-.employee-label{
-font-size:11px;
-color:#888;
-letter-spacing:1px;
+.card{
+  background:white;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px rgba(0,0,0,.07);
 }
 
-.employee-name{
-font-size:24px;
-font-weight:bold;
-margin-top:7px;
+.account{
+  display:flex;
+  align-items:center;
+  gap:14px;
 }
 
-.employee-id{
-display:inline-block;
-margin-top:9px;
-padding:6px 10px;
-border-radius:7px;
-background:#102615;
-color:#36df70;
-font-size:12px;
-font-weight:bold;
+.avatar{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:#2563eb;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  font-weight:bold;
 }
 
-/* EARNINGS */
+.account h2{
+  font-size:19px;
+  margin-bottom:5px;
+}
+
+.account p{
+  color:#6b7280;
+  font-size:14px;
+}
 
 .earnings{
-background:linear-gradient(135deg,#12351e,#0b1c11);
-border:1px solid #1d6b36;
-border-radius:18px;
-padding:22px;
-margin-bottom:14px;
+  background:linear-gradient(135deg,#2563eb,#4f46e5);
+  color:white;
 }
 
-.earnings-label{
-font-size:12px;
-color:#a9b5ad;
+.earnings-title{
+  font-size:14px;
+  opacity:.9;
 }
 
-.earnings-amount{
-font-size:34px;
-font-weight:bold;
-margin-top:8px;
+.balance{
+  font-size:34px;
+  font-weight:bold;
+  margin:8px 0 14px;
 }
 
-.rate{
-margin-top:8px;
-font-size:13px;
-color:#39df72;
+.commission{
+  font-size:13px;
+  opacity:.9;
 }
 
-/* STATS */
+.withdraw-btn{
+  width:100%;
+  margin-top:16px;
+  border:0;
+  border-radius:10px;
+  padding:13px;
+  background:white;
+  color:#1d4ed8;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.withdraw-btn:active{
+  transform:scale(.98);
+}
 
 .stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:9px;
-margin-bottom:14px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
 }
 
 .stat{
-background:#121212;
-border:1px solid #292929;
-border-radius:14px;
-padding:15px 6px;
-text-align:center;
+  background:#f8fafc;
+  border-radius:12px;
+  padding:13px 8px;
+  text-align:center;
 }
 
-.stat-number{
-font-size:22px;
-font-weight:bold;
+.stat strong{
+  display:block;
+  font-size:21px;
+  margin-bottom:5px;
 }
 
-.stat-label{
-font-size:10px;
-color:#888;
-margin-top:6px;
-line-height:1.3;
-}
-
-/* PROGRESS */
-
-.progress-card{
-background:#121212;
-border:1px solid #292929;
-border-radius:16px;
-padding:18px;
-margin-bottom:14px;
+.stat span{
+  color:#64748b;
+  font-size:11px;
 }
 
 .section-title{
-font-size:17px;
-font-weight:bold;
-margin-bottom:15px;
+  font-size:17px;
+  margin-bottom:13px;
 }
 
-.progress-top{
-display:flex;
-justify-content:space-between;
-font-size:12px;
-color:#aaa;
-margin-bottom:8px;
+.progress-bg{
+  height:10px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
 }
 
-.progress-bar{
-height:9px;
-background:#252525;
-border-radius:20px;
-overflow:hidden;
+.progress{
+  height:100%;
+  width:0%;
+  background:#2563eb;
 }
 
-.progress-fill{
-height:100%;
-width:0%;
-background:#25d366;
-border-radius:20px;
-transition:width .5s ease;
+.progress-text{
+  font-size:13px;
+  color:#64748b;
+  margin-top:8px;
 }
 
-/* PAYMENTS */
-
-.payments{
-background:#121212;
-border:1px solid #292929;
-border-radius:16px;
-padding:18px;
-margin-bottom:14px;
-}
-
-.payment-row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px 0;
-border-bottom:1px solid #242424;
-gap:10px;
-}
-
-.payment-row:last-child{
-border-bottom:none;
-}
-
-.payment-id{
-font-size:13px;
-font-weight:bold;
-}
-
-.payment-date{
-font-size:10px;
-color:#777;
-margin-top:4px;
-}
-
-.payment-amount{
-font-size:14px;
-font-weight:bold;
-text-align:right;
-}
-
-.payment-commission{
-font-size:11px;
-color:#35dc6d;
-margin-top:4px;
-text-align:right;
-}
-
-.verified{
-display:inline-block;
-margin-top:5px;
-font-size:9px;
-color:#35dc6d;
-}
-
-/* EMPTY */
-
-.empty{
-text-align:center;
-padding:25px 10px;
-color:#777;
-font-size:13px;
-}
-
-/* REFERRAL */
-
-.referral{
-background:#121212;
-border:1px solid #292929;
-border-radius:16px;
-padding:18px;
-margin-bottom:14px;
-}
-
-.referral-link{
-background:#080808;
-border:1px solid #333;
-border-radius:9px;
-padding:12px;
-font-size:11px;
-color:#bbb;
-word-break:break-all;
-line-height:1.5;
+.referral-box{
+  background:#f8fafc;
+  padding:12px;
+  border-radius:10px;
+  word-break:break-all;
+  font-size:13px;
+  margin-bottom:10px;
 }
 
 .button-row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:9px;
-margin-top:10px;
+  display:flex;
+  gap:8px;
 }
 
-.action-button{
-border:0;
-border-radius:9px;
-padding:13px 8px;
-font-size:13px;
-font-weight:bold;
-cursor:pointer;
+.button-row button{
+  flex:1;
+  border:0;
+  border-radius:9px;
+  padding:11px;
+  font-weight:bold;
 }
 
 .copy{
-background:#25d366;
-color:#000;
+  background:#2563eb;
+  color:white;
 }
 
 .share{
-background:#252525;
-color:#fff;
-border:1px solid #3a3a3a;
+  background:#16a34a;
+  color:white;
 }
 
-.action-button:active{
-transform:scale(.98);
+.payment-item,
+.withdrawal-item{
+  border-bottom:1px solid #e5e7eb;
+  padding:12px 0;
 }
 
-/* INFO */
+.payment-item:last-child,
+.withdrawal-item:last-child{
+  border-bottom:0;
+}
+
+.item-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.item-name{
+  font-weight:bold;
+}
+
+.item-date{
+  color:#64748b;
+  font-size:12px;
+  margin-top:4px;
+}
+
+.item-amount{
+  font-weight:bold;
+}
+
+.empty{
+  text-align:center;
+  color:#64748b;
+  padding:15px 5px;
+  font-size:14px;
+}
 
 .info{
-background:#0e0e0e;
-border:1px solid #222;
-border-radius:13px;
-padding:14px;
-text-align:center;
-font-size:11px;
-line-height:1.5;
-color:#777;
-margin-bottom:15px;
+  background:#eff6ff;
+  border-left:4px solid #2563eb;
+  padding:13px;
+  border-radius:8px;
+  font-size:13px;
+  line-height:1.5;
 }
 
-/* ERROR */
+/* WITHDRAW MODAL */
 
-.error{
-min-height:90vh;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-flex-direction:column;
-padding:20px;
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:999;
 }
 
-.error h1{
-color:#ff4444;
+.modal-box{
+  width:100%;
+  max-width:600px;
+  background:white;
+  border-radius:20px 20px 0 0;
+  padding:22px 18px 25px;
+  animation:slideUp .25s ease;
 }
 
-.error p{
-color:#888;
+@keyframes slideUp{
+  from{
+    transform:translateY(100%);
+  }
+  to{
+    transform:translateY(0);
+  }
 }
 
-/* MOBILE */
-
-@media(max-width:380px){
-
-body{
-padding:10px;
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
 }
 
-.header-left h1{
-font-size:22px;
+.modal-header h2{
+  font-size:20px;
 }
 
-.earnings-amount{
-font-size:29px;
+.close{
+  border:0;
+  background:#f1f5f9;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  font-size:22px;
 }
 
-.stat-number{
-font-size:19px;
+.available{
+  background:#eff6ff;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:15px;
 }
 
-.stat-label{
-font-size:9px;
+.available small{
+  color:#64748b;
 }
 
-.payment-row{
-align-items:flex-start;
+.available strong{
+  display:block;
+  font-size:25px;
+  color:#1d4ed8;
+  margin-top:4px;
 }
 
+label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:7px;
 }
 
+input,
+select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:15px;
+  margin-bottom:15px;
+  outline:none;
+}
+
+input:focus,
+select:focus{
+  border-color:#2563eb;
+}
+
+.submit-withdraw{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.cancel{
+  width:100%;
+  padding:13px;
+  border:0;
+  background:#f1f5f9;
+  border-radius:10px;
+  margin-top:8px;
+  font-weight:bold;
+}
+
+.warning{
+  font-size:12px;
+  color:#64748b;
+  line-height:1.4;
+  margin-top:12px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%);
+  background:#111827;
+  color:white;
+  padding:12px 18px;
+  border-radius:10px;
+  display:none;
+  z-index:1200;
+  font-size:13px;
+  max-width:90%;
+  text-align:center;
+}
 </style>
-
 </head>
 
 <body>
 
-<div
-class="container"
-id="dashboard">
-
-
-<!-- HEADER -->
-
 <div class="header">
-
-<div class="header-left">
-
-<h1>
-Employee Dashboard
-</h1>
-
-<p>
-Your referral performance
-</p>
-
+  <h1>Employee Dashboard</h1>
+  <button class="logout" onclick="logout()">LOGOUT</button>
 </div>
 
-<button
-class="logout"
-onclick="logout()">
+<div class="container">
 
-LOGOUT
+  <!-- ACCOUNT -->
+  <div class="card">
+    <div class="account">
+      <div class="avatar" id="avatar">E</div>
 
-</button>
+      <div>
+        <h2 id="employeeName">Employee</h2>
+        <p id="employeeId">REF-XXXX</p>
+      </div>
+    </div>
+  </div>
 
-</div>
+  <!-- EARNINGS -->
+  <div class="card earnings">
 
+    <div class="earnings-title">
+      Available Commission
+    </div>
 
-<!-- EMPLOYEE CARD -->
+    <div class="balance" id="commission">
+      KSh 0
+    </div>
 
-<div class="employee-card">
+    <div class="commission">
+      Commission rate: 25% of verified sales
+    </div>
 
-<div class="employee-label">
-EMPLOYEE ACCOUNT
-</div>
+    <button class="withdraw-btn" onclick="openWithdraw()">
+      WITHDRAW
+    </button>
 
-<div
-class="employee-name"
-id="employeeName">
+  </div>
 
-Employee
+  <!-- STATS -->
+  <div class="card">
 
-</div>
+    <h2 class="section-title">
+      Performance
+    </h2>
 
-<div
-class="employee-id"
-id="employeeId">
+    <div class="stats">
 
-REF-A7K2
+      <div class="stat">
+        <strong id="customers">0</strong>
+        <span>Customers</span>
+      </div>
 
-</div>
+      <div class="stat">
+        <strong id="payments">0</strong>
+        <span>Verified Payments</span>
+      </div>
 
-</div>
+      <div class="stat">
+        <strong id="sales">KSh 0</strong>
+        <span>Total Sales</span>
+      </div>
 
+    </div>
 
-<!-- EARNINGS -->
+  </div>
 
-<div class="earnings">
+  <!-- MONTHLY REFERRALS -->
+  <div class="card">
 
-<div class="earnings-label">
-TOTAL COMMISSION
-</div>
+    <h2 class="section-title">
+      Monthly Referrals
+    </h2>
 
-<div
-class="earnings-amount"
-id="commissionAmount">
+    <div class="progress-bg">
+      <div class="progress" id="progress"></div>
+    </div>
 
-KSh 0
+    <div class="progress-text" id="progressText">
+      0 referrals
+    </div>
 
-</div>
+  </div>
 
-<div class="rate">
-25% commission on verified payments
-</div>
+  <!-- REFERRAL LINK -->
+  <div class="card">
 
-</div>
+    <h2 class="section-title">
+      Your Referral Link
+    </h2>
 
+    <div class="referral-box" id="referralLink"></div>
 
-<!-- STATISTICS -->
+    <div class="button-row">
 
-<div class="stats">
+      <button class="copy" onclick="copyLink()">
+        COPY LINK
+      </button>
 
+      <button class="share" onclick="shareLink()">
+        SHARE LINK
+      </button>
 
-<div class="stat">
+    </div>
 
-<div
-class="stat-number"
-id="customerCount">
+  </div>
 
-0
+  <!-- VERIFIED PAYMENTS -->
+  <div class="card">
 
-</div>
+    <h2 class="section-title">
+      Verified Payments
+    </h2>
 
-<div class="stat-label">
+    <div id="paymentsList">
+      <div class="empty">
+        No verified payments yet.
+      </div>
+    </div>
 
-CUSTOMERS<br>
-REFERRED
+  </div>
 
-</div>
+  <!-- WITHDRAWAL HISTORY -->
+  <div class="card">
 
-</div>
+    <h2 class="section-title">
+      Withdrawal History
+    </h2>
 
+    <div id="withdrawalList">
+      <div class="empty">
+        No withdrawal requests yet.
+      </div>
+    </div>
 
-<div class="stat">
+  </div>
 
-<div
-class="stat-number"
-id="paymentCount">
+  <!-- INFORMATION -->
+  <div class="card">
 
-0
+    <div class="info">
+      Commission is calculated only from payments that have been
+      verified by the payment system. Withdrawal requests are
+      currently recorded as pending. No money is transferred by
+      this dashboard until a real payout system is connected.
+    </div>
 
-</div>
-
-<div class="stat-label">
-
-VERIFIED<br>
-PAYMENTS
-
-</div>
-
-</div>
-
-
-<div class="stat">
-
-<div
-class="stat-number"
-id="totalSales">
-
-KSh 0
-
-</div>
-
-<div class="stat-label">
-
-TOTAL<br>
-SALES
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<!-- PROGRESS -->
-
-<div class="progress-card">
-
-<div class="section-title">
-Monthly Referrals
-</div>
-
-<div class="progress-top">
-
-<span id="progressText">
-0 / 20 customers
-</span>
-
-<span id="progressPercent">
-0%
-</span>
-
-</div>
-
-<div class="progress-bar">
-
-<div
-class="progress-fill"
-id="progressFill">
-</div>
-
-</div>
+  </div>
 
 </div>
 
 
-<!-- VERIFIED PAYMENTS -->
+<!-- WITHDRAW MODAL -->
 
-<div class="payments">
+<div class="modal" id="withdrawModal">
 
-<div class="section-title">
-Verified Payments
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>Withdraw Commission</h2>
+
+      <button class="close" onclick="closeWithdraw()">
+        ×
+      </button>
+
+    </div>
+
+    <div class="available">
+
+      <small>
+        Available to withdraw
+      </small>
+
+      <strong id="modalBalance">
+        KSh 0
+      </strong>
+
+    </div>
+
+    <label for="withdrawAmount">
+      Amount
+    </label>
+
+    <input
+      id="withdrawAmount"
+      type="number"
+      min="1"
+      placeholder="Enter amount"
+    >
+
+    <label for="withdrawMethod">
+      Payment Method
+    </label>
+
+    <select id="withdrawMethod">
+      <option value="M-PESA">
+        M-PESA
+      </option>
+    </select>
+
+    <label for="withdrawPhone">
+      M-PESA Phone Number
+    </label>
+
+    <input
+      id="withdrawPhone"
+      type="tel"
+      placeholder="07XXXXXXXX"
+      maxlength="13"
+    >
+
+    <button
+      class="submit-withdraw"
+      onclick="submitWithdrawal()"
+    >
+      REQUEST WITHDRAWAL
+    </button>
+
+    <button
+      class="cancel"
+      onclick="closeWithdraw()"
+    >
+      CANCEL
+    </button>
+
+    <div class="warning">
+      This is currently a demo withdrawal request.
+      Submitting it does not send money. The real payout
+      connection will be added later.
+    </div>
+
+  </div>
+
 </div>
 
-<div id="paymentList">
-
-<div class="empty">
-
-No verified payments yet.
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- REFERRAL LINK -->
-
-<div class="referral">
-
-<div class="section-title">
-My Referral Link
-</div>
-
-<div
-class="referral-link"
-id="referralLink">
-
-</div>
-
-<div class="button-row">
-
-<button
-class="action-button copy"
-onclick="copyReferralLink()">
-
-COPY LINK
-
-</button>
-
-
-<button
-class="action-button share"
-onclick="shareReferralLink()">
-
-SHARE LINK
-
-</button>
-
-</div>
-
-</div>
-
-
-<!-- INFORMATION -->
-
-<div class="info">
-
-Your commission is calculated only from
-payments that have been verified by the
-payment system.
-
-</div>
-
-</div>
+<div class="toast" id="toast"></div>
 
 
 <script>
 
-
-/*
-EMPLOYEE ACCOUNTS
-
-NEW REF CODES
-*/
+/* =========================================
+   EMPLOYEE DATABASE
+========================================= */
 
 const employees = {
 
-"REF-A7K2":"Employee 1",
-
-"REF-B4M8":"Employee 2",
-
-"REF-C9P3":"Employee 3",
-
-"REF-D2X6":"Employee 4",
-
-"REF-E5Q1":"Employee 5",
-
-"REF-F8L4":"Employee 6",
-
-"REF-G3N7":"Employee 7",
-
-"REF-H6R2":"Employee 8",
-
-"REF-J9T5":"Employee 9",
-
-"REF-K4W8":"Employee 10"
+  "REF-A7K2":"Employee 1",
+  "REF-B4M8":"Employee 2",
+  "REF-C9P3":"Employee 3",
+  "REF-D2X6":"Employee 4",
+  "REF-E5Q1":"Employee 5",
+  "REF-F8L4":"Employee 6",
+  "REF-G3N7":"Employee 7",
+  "REF-H6R2":"Employee 8",
+  "REF-J9T5":"Employee 9",
+  "REF-K4W8":"Employee 10"
 
 };
 
 
+/* =========================================
+   GET LOGGED-IN EMPLOYEE
+========================================= */
+
+const loggedInEmployee =
+  sessionStorage.getItem("loggedInEmployee");
+
+const urlParams =
+  new URLSearchParams(window.location.search);
+
+const urlEmployee =
+  urlParams.get("employee");
+
+let employeeId =
+  loggedInEmployee || urlEmployee;
+
+
 /*
-GET EMPLOYEE CODE
-FROM URL
-*/
-
-const params =
-new URLSearchParams(
-window.location.search
-);
-
-const employeeId =
-params.get("employee");
-
-
-/*
-CHECK EMPLOYEE CODE
+ If nobody is logged in,
+ return to login page.
 */
 
 if(
-!employeeId ||
-!employees[employeeId]
+  !employeeId ||
+  !employees[employeeId]
 ){
 
-document.body.innerHTML = `
-
-<div class="error">
-
-<h1>
-Invalid Employee
-</h1>
-
-<p>
-This employee dashboard does not exist.
-</p>
-
-</div>
-
-`;
-
-throw new Error(
-"Invalid employee ID"
-);
+  window.location.href =
+    "employee-login.html";
 
 }
 
 
-/*
-EMPLOYEE NAME
-*/
+/* =========================================
+   EMPLOYEE INFORMATION
+========================================= */
 
 const employeeName =
-employees[employeeId];
+  employees[employeeId];
+
+document.getElementById("employeeName").textContent =
+  employeeName;
+
+document.getElementById("employeeId").textContent =
+  employeeId;
+
+document.getElementById("avatar").textContent =
+  employeeName.replace("Employee ","E");
 
 
-document.getElementById(
-"employeeName"
-).textContent =
-employeeName;
-
-
-document.getElementById(
-"employeeId"
-).textContent =
-employeeId;
-
-
-/*
-CREATE REFERRAL LINK
-*/
-
-const referralLink =
-window.location.origin +
-"/?employee=" +
-encodeURIComponent(
-employeeId
-);
-
-
-document.getElementById(
-"referralLink"
-).textContent =
-referralLink;
-
+/* =========================================
+   VERIFIED PAYMENTS
+========================================= */
 
 /*
-VERIFIED PAYMENTS
+ IMPORTANT:
 
-IMPORTANT:
+ This is still empty because the website does
+ not yet have a real payment-verification
+ backend.
 
-This array must contain ONLY
-REAL payments verified by your
-payment system.
-
-The current website does not
-automatically create verified
-payments here.
+ Later we will replace this with real verified
+ payment records.
 */
 
-const verifiedPayments = [
-
-/*
-Example structure:
-
-{
-id:"MP001",
-customerId:"CUSTOMER001",
-amount:100,
-date:"28 Sep 2026"
-}
-
-Do not add simulated payments.
-*/
-
-];
+const verifiedPayments = [];
 
 
-/*
-CALCULATE DASHBOARD
-*/
-
-function calculateDashboard(){
-
-
-const paymentCount =
-verifiedPayments.length;
-
-
-const customerSet =
-new Set();
-
-
-verifiedPayments.forEach(
-function(payment){
-
-if(payment.customerId){
-
-customerSet.add(
-payment.customerId
-);
-
-}
-
-});
-
-
-const customerCount =
-customerSet.size;
-
+/* =========================================
+   CALCULATE SALES
+========================================= */
 
 let totalSales = 0;
 
+verifiedPayments.forEach(payment => {
 
-verifiedPayments.forEach(
-function(payment){
-
-totalSales +=
-Number(payment.amount) || 0;
+  totalSales += Number(payment.amount) || 0;
 
 });
 
 
-const commission =
-totalSales * 0.25;
+/* =========================================
+   COMMISSION
+========================================= */
+
+const commissionRate = 0.25;
+
+const totalCommission =
+  totalSales * commissionRate;
 
 
-/*
-UPDATE PAYMENT COUNT
-*/
+/* =========================================
+   DISPLAY COMMISSION
+========================================= */
 
-document.getElementById(
-"paymentCount"
-).textContent =
-paymentCount;
-
-
-/*
-UPDATE CUSTOMER COUNT
-*/
-
-document.getElementById(
-"customerCount"
-).textContent =
-customerCount;
+document.getElementById("commission")
+  .textContent =
+  "KSh " +
+  totalCommission.toLocaleString();
 
 
-/*
-UPDATE TOTAL SALES
-*/
-
-document.getElementById(
-"totalSales"
-).textContent =
-"KSh " +
-totalSales.toLocaleString(
-"en-KE"
-);
+document.getElementById("modalBalance")
+  .textContent =
+  "KSh " +
+  totalCommission.toLocaleString();
 
 
-/*
-UPDATE COMMISSION
-*/
+/* =========================================
+   STATS
+========================================= */
 
-document.getElementById(
-"commissionAmount"
-).textContent =
-"KSh " +
-commission.toLocaleString(
-"en-KE",
-{
-maximumFractionDigits:2
-}
-);
+document.getElementById("customers")
+  .textContent =
+  verifiedPayments.length;
 
+document.getElementById("payments")
+  .textContent =
+  verifiedPayments.length;
 
-/*
-MONTHLY PROGRESS
-*/
-
-const monthlyGoal = 20;
+document.getElementById("sales")
+  .textContent =
+  "KSh " +
+  totalSales.toLocaleString();
 
 
-const percent =
-Math.min(
-(customerCount /
-monthlyGoal) * 100,
-100
-);
+/* =========================================
+   MONTHLY REFERRALS
+========================================= */
+
+const monthlyReferrals =
+  verifiedPayments.length;
+
+const monthlyTarget = 20;
+
+const progressPercent =
+  Math.min(
+    100,
+    (monthlyReferrals / monthlyTarget) * 100
+  );
+
+document.getElementById("progress")
+  .style.width =
+  progressPercent + "%";
+
+document.getElementById("progressText")
+  .textContent =
+  monthlyReferrals +
+  " referrals this month";
 
 
-document.getElementById(
-"progressText"
-).textContent =
-customerCount +
-" / " +
-monthlyGoal +
-" customers";
+/* =========================================
+   REFERRAL LINK
+========================================= */
+
+const baseWebsite =
+  window.location.origin + "/";
+
+const referralLink =
+  baseWebsite +
+  "?employee=" +
+  encodeURIComponent(employeeId);
+
+document.getElementById("referralLink")
+  .textContent =
+  referralLink;
 
 
-document.getElementById(
-"progressPercent"
-).textContent =
-Math.round(percent) +
-"%";
+/* =========================================
+   COPY LINK
+========================================= */
 
+async function copyLink(){
 
-document.getElementById(
-"progressFill"
-).style.width =
-percent + "%";
+  try{
 
-}
+    await navigator.clipboard.writeText(
+      referralLink
+    );
 
+    showToast("Referral link copied");
 
-/*
-DISPLAY VERIFIED PAYMENTS
-*/
+  }catch(error){
 
-function displayPayments(){
+    showToast(
+      "Copy failed. Please copy the link manually."
+    );
 
-
-const list =
-document.getElementById(
-"paymentList"
-);
-
-
-if(
-verifiedPayments.length === 0
-){
-
-list.innerHTML = `
-
-<div class="empty">
-
-No verified payments yet.
-
-</div>
-
-`;
-
-return;
+  }
 
 }
 
 
-list.innerHTML = "";
+/* =========================================
+   SHARE LINK
+========================================= */
 
+async function shareLink(){
 
-verifiedPayments.forEach(
-function(payment){
+  if(
+    navigator.share
+  ){
 
+    try{
 
-const row =
-document.createElement(
-"div"
-);
+      await navigator.share({
 
+        title:"My Referral Link",
 
-row.className =
-"payment-row";
+        text:
+          "Use my referral link:",
 
+        url:
+          referralLink
 
-const amount =
-Number(payment.amount) || 0;
+      });
 
+    }catch(error){
 
-const commission =
-amount * 0.25;
+      /* User cancelled sharing */
 
+    }
 
-row.innerHTML = `
+  }else{
 
-<div>
+    copyLink();
 
-<div class="payment-id">
-
-Payment ${payment.id}
-
-</div>
-
-<div class="payment-date">
-
-${payment.date}
-
-</div>
-
-</div>
-
-
-<div>
-
-<div class="payment-amount">
-
-KSh ${amount.toLocaleString(
-"en-KE"
-)}
-
-</div>
-
-<div class="payment-commission">
-
-Commission:
-KSh ${commission.toLocaleString(
-"en-KE",
-{
-maximumFractionDigits:2
-}
-)}
-
-</div>
-
-<div class="verified">
-
-✓ VERIFIED
-
-</div>
-
-</div>
-
-`;
-
-
-list.appendChild(row);
-
-});
+  }
 
 }
 
 
-/*
-COPY REFERRAL LINK
-*/
+/* =========================================
+   WITHDRAW MODAL
+========================================= */
 
-function copyReferralLink(){
+function openWithdraw(){
 
+  document.getElementById(
+    "modalBalance"
+  ).textContent =
+    "KSh " +
+    totalCommission.toLocaleString();
 
-if(
-navigator.clipboard
-){
+  document.getElementById(
+    "withdrawAmount"
+  ).value = "";
 
-navigator.clipboard
-.writeText(
-referralLink
-)
-.then(
-function(){
+  document.getElementById(
+    "withdrawPhone"
+  ).value = "";
 
-alert(
-"Referral link copied!"
-);
-
-}
-)
-.catch(
-function(){
-
-fallbackCopy();
-
-}
-);
-
-}else{
-
-fallbackCopy();
-
-}
+  document.getElementById(
+    "withdrawModal"
+  ).style.display =
+    "flex";
 
 }
 
 
-/*
-COPY FALLBACK
-*/
+function closeWithdraw(){
 
-function fallbackCopy(){
-
-
-const textarea =
-document.createElement(
-"textarea"
-);
-
-
-textarea.value =
-referralLink;
-
-
-textarea.style.position =
-"fixed";
-
-textarea.style.left =
-"-9999px";
-
-
-document.body.appendChild(
-textarea
-);
-
-
-textarea.focus();
-
-textarea.select();
-
-
-try{
-
-document.execCommand(
-"copy"
-);
-
-alert(
-"Referral link copied!"
-);
-
-}catch(error){
-
-alert(
-"Copy failed. Please copy the link manually."
-);
+  document.getElementById(
+    "withdrawModal"
+  ).style.display =
+    "none";
 
 }
 
 
-document.body.removeChild(
-textarea
-);
+/* =========================================
+   SUBMIT WITHDRAWAL
+========================================= */
+
+function submitWithdrawal(){
+
+  const amount =
+    Number(
+      document.getElementById(
+        "withdrawAmount"
+      ).value
+    );
+
+  const method =
+    document.getElementById(
+      "withdrawMethod"
+    ).value;
+
+  const phone =
+    document.getElementById(
+      "withdrawPhone"
+    ).value.trim();
+
+
+  /* AMOUNT CHECK */
+
+  if(
+    !amount ||
+    amount <= 0
+  ){
+
+    showToast(
+      "Enter a valid withdrawal amount."
+    );
+
+    return;
+
+  }
+
+
+  /* BALANCE CHECK */
+
+  if(
+    amount > totalCommission
+  ){
+
+    showToast(
+      "Amount is greater than your available commission."
+    );
+
+    return;
+
+  }
+
+
+  /* PHONE CHECK */
+
+  if(
+    !/^(\+254|254|0)7\d{8}$/.test(phone)
+  ){
+
+    showToast(
+      "Enter a valid Kenyan M-PESA number."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   Create a local withdrawal request.
+
+   THIS DOES NOT TRANSFER MONEY.
+  */
+
+  const request = {
+
+    id:
+      "WD-" +
+      Date.now(),
+
+    employeeId:
+      employeeId,
+
+    amount:
+      amount,
+
+    method:
+      method,
+
+    phone:
+      phone,
+
+    status:
+      "Pending",
+
+    createdAt:
+      new Date().toLocaleString()
+
+  };
+
+
+  /* =====================================
+     SAVE REQUEST FOR THIS EMPLOYEE
+  ===================================== */
+
+  const storageKey =
+    "withdrawalRequests_" +
+    employeeId;
+
+  let requests =
+    JSON.parse(
+      localStorage.getItem(storageKey) ||
+      "[]"
+    );
+
+  requests.unshift(request);
+
+  localStorage.setItem(
+    storageKey,
+    JSON.stringify(requests)
+  );
+
+
+  closeWithdraw();
+
+  loadWithdrawalHistory();
+
+
+  showToast(
+    "Withdrawal request saved as Pending."
+  );
 
 }
 
 
-/*
-SHARE REFERRAL LINK
-*/
+/* =========================================
+   WITHDRAWAL HISTORY
+========================================= */
 
-function shareReferralLink(){
+function loadWithdrawalHistory(){
+
+  const storageKey =
+    "withdrawalRequests_" +
+    employeeId;
+
+  const requests =
+    JSON.parse(
+      localStorage.getItem(storageKey) ||
+      "[]"
+    );
+
+  const container =
+    document.getElementById(
+      "withdrawalList"
+    );
 
 
-if(
-navigator.share
-){
+  if(
+    requests.length === 0
+  ){
 
-navigator.share({
+    container.innerHTML =
+      '<div class="empty">' +
+      'No withdrawal requests yet.' +
+      '</div>';
 
-title:
-"My Referral Link",
+    return;
 
-text:
-"Join using my referral link.",
+  }
 
-url:
-referralLink
 
-})
-.catch(
-function(){
+  container.innerHTML =
+    "";
+
+
+  requests.forEach(request => {
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "withdrawal-item";
+
+
+    item.innerHTML =
+
+      '<div class="item-top">' +
+
+        '<div>' +
+
+          '<div class="item-name">' +
+            "KSh " +
+            Number(request.amount)
+              .toLocaleString() +
+          '</div>' +
+
+          '<div class="item-date">' +
+            request.method +
+            " • " +
+            request.phone +
+            "<br>" +
+            request.createdAt +
+          '</div>' +
+
+        '</div>' +
+
+        '<div>' +
+
+          '<strong>' +
+            request.status +
+          '</strong>' +
+
+        '</div>' +
+
+      '</div>';
+
+
+    container.appendChild(item);
+
+  });
 
 }
-);
-
-}else{
-
-copyReferralLink();
-
-}
-
-}
 
 
-/*
-LOGOUT
-*/
+/* =========================================
+   LOGOUT
+========================================= */
 
 function logout(){
 
-sessionStorage.removeItem(
-"loggedInEmployee"
-);
+  sessionStorage.removeItem(
+    "loggedInEmployee"
+  );
 
-window.location.href =
-"employee-login.html";
+  window.location.href =
+    "employee-login.html";
 
 }
 
 
-/*
-START DASHBOARD
-*/
+/* =========================================
+   TOAST
+========================================= */
 
-calculateDashboard();
+function showToast(message){
 
-displayPayments();
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent =
+    message;
+
+  toast.style.display =
+    "block";
+
+
+  setTimeout(() => {
+
+    toast.style.display =
+      "none";
+
+  },3000);
+
+}
+
+
+/* =========================================
+   LOAD HISTORY
+========================================= */
+
+loadWithdrawalHistory();
 
 </script>
 
