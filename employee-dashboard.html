@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Employee Dashboard</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  background:#050505;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  padding:16px;
+}
+
+.container{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+}
+
+
+/* HEADER */
+
+.header{
+  text-align:center;
+  padding:18px 0 22px;
+}
+
+.header h1{
+  margin:0;
+  font-size:28px;
+}
+
+.header p{
+  margin:8px 0 0;
+  color:#aaa;
+  font-size:14px;
+}
+
+
+/* EMPLOYEE */
+
+.employee-box{
+  background:#111;
+  border:1px solid #333;
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:15px;
+}
+
+.employee-label{
+  color:#999;
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+.employee-name{
+  font-size:24px;
+  font-weight:bold;
+}
+
+.employee-id{
+  margin-top:7px;
+  color:#32cd32;
+  font-size:15px;
+  font-weight:bold;
+}
+
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.stat{
+  background:#111;
+  border:1px solid #292929;
+  border-radius:14px;
+  padding:18px 12px;
+  text-align:center;
+}
+
+.stat-label{
+  color:#999;
+  font-size:12px;
+  margin-bottom:9px;
+}
+
+.stat-value{
+  font-size:23px;
+  font-weight:bold;
+}
+
+
+/* COMMISSION */
+
+.commission{
+  margin-top:15px;
+  background:#102010;
+  border:1px solid #32cd32;
+  border-radius:15px;
+  padding:20px;
+  text-align:center;
+}
+
+.commission-title{
+  font-size:14px;
+  color:#aaa;
+}
+
+.commission-rate{
+  margin-top:7px;
+  font-size:28px;
+  color:#32cd32;
+  font-weight:bold;
+}
+
+.commission-amount{
+  margin-top:8px;
+  font-size:25px;
+  font-weight:bold;
+}
+
+
+/* PAYMENTS */
+
+.payments{
+  margin-top:15px;
+  background:#111;
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:18px;
+}
+
+.payments h2{
+  margin:0 0 15px;
+  font-size:19px;
+}
+
+.payment-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid #292929;
+}
+
+.payment-row:last-child{
+  border-bottom:none;
+}
+
+.payment-left{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.payment-id{
+  font-size:14px;
+  font-weight:bold;
+}
+
+.payment-date{
+  color:#888;
+  font-size:11px;
+}
+
+.payment-right{
+  text-align:right;
+}
+
+.payment-amount{
+  font-weight:bold;
+}
+
+.payment-status{
+  margin-top:4px;
+  color:#32cd32;
+  font-size:11px;
+}
+
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+  padding:25px 10px;
+  color:#888;
+  font-size:14px;
+}
+
+
+/* REFERRAL */
+
+.referral{
+  margin-top:15px;
+  background:#111;
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:18px;
+}
+
+.referral h2{
+  margin:0 0 12px;
+  font-size:18px;
+}
+
+.referral-link{
+  background:#050505;
+  border:1px solid #333;
+  border-radius:9px;
+  padding:12px;
+  word-break:break-all;
+  font-size:12px;
+  color:#ccc;
+}
+
+.copy-btn{
+  width:100%;
+  margin-top:10px;
+  padding:13px;
+  border:none;
+  border-radius:9px;
+  background:#32cd32;
+  color:#000;
+  font-weight:bold;
+  font-size:15px;
+}
+
+
+/* INFO */
+
+.info{
+  margin-top:15px;
+  padding:15px;
+  background:#0d0d0d;
+  border:1px solid #222;
+  border-radius:12px;
+  color:#888;
+  font-size:12px;
+  line-height:1.5;
+  text-align:center;
+}
+
+
+/* ERROR */
+
+.error{
+  min-height:80vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+}
+
+.error h1{
+  color:red;
+}
+
+.error p{
+  color:#aaa;
+}
+
+
+@media(max-width:380px){
+
+  body{
+    padding:12px;
+  }
+
+  .employee-name{
+    font-size:21px;
+  }
+
+  .stat-value{
+    font-size:20px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container"
+     id="dashboard">
+
+  <div class="header">
+
+    <h1>
+      Employee Dashboard
+    </h1>
+
+    <p>
+      Referral performance
+    </p>
+
+  </div>
+
+
+  <!-- EMPLOYEE -->
+
+  <div class="employee-box">
+
+    <div class="employee-label">
+      EMPLOYEE
+    </div>
+
+    <div
+      class="employee-name"
+      id="employeeName">
+      Employee
+    </div>
+
+    <div
+      class="employee-id"
+      id="employeeId">
+      EMP001
+    </div>
+
+  </div>
+
+
+  <!-- STATS -->
+
+  <div class="stats">
+
+    <div class="stat">
+
+      <div class="stat-label">
+        VERIFIED PAYMENTS
+      </div>
+
+      <div
+        class="stat-value"
+        id="paymentCount">
+        0
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-label">
+        REFERRED CUSTOMERS
+      </div>
+
+      <div
+        class="stat-value"
+        id="customerCount">
+        0
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- COMMISSION -->
+
+  <div class="commission">
+
+    <div class="commission-title">
+      COMMISSION RATE
+    </div>
+
+    <div class="commission-rate">
+      25%
+    </div>
+
+    <div
+      class="commission-amount"
+      id="commissionAmount">
+      KSh 0
+    </div>
+
+  </div>
+
+
+  <!-- PAYMENTS -->
+
+  <div class="payments">
+
+    <h2>
+      Verified Payments
+    </h2>
+
+    <div id="paymentList">
+
+      <div class="empty">
+        No verified payments yet.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- REFERRAL -->
+
+  <div class="referral">
+
+    <h2>
+      My Referral Link
+    </h2>
+
+    <div
+      class="referral-link"
+      id="referralLink">
+    </div>
+
+    <button
+      class="copy-btn"
+      onclick="copyReferralLink()">
+
+      COPY REFERRAL LINK
+
+    </button>
+
+  </div>
+
+
+  <div class="info">
+
+    Commission is calculated only from
+    payments that are verified by the
+    payment system.
+
+  </div>
+
+</div>
+
+
+<script>
+
+/*
+  ==========================================
+  EMPLOYEE DASHBOARD
+  ==========================================
+
+  Dashboard URL example:
+
+  employee-dashboard.html?employee=EMP001
+
+  Each employee gets their own employee ID.
+*/
+
+
+/*
+  EMPLOYEE LIST
+*/
+
+const employees = {
+
+  EMP001:"Employee 1",
+
+  EMP002:"Employee 2",
+
+  EMP003:"Employee 3",
+
+  EMP004:"Employee 4",
+
+  EMP005:"Employee 5",
+
+  EMP006:"Employee 6",
+
+  EMP007:"Employee 7",
+
+  EMP008:"Employee 8",
+
+  EMP009:"Employee 9",
+
+  EMP010:"Employee 10"
+
+};
+
+
+/*
+  GET EMPLOYEE ID
+*/
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+
+let employeeId =
+  params.get("employee");
+
+
+/*
+  VALIDATE EMPLOYEE ID
+*/
+
+if(
+  !employeeId ||
+  !employees[employeeId]
+){
+
+  document.body.innerHTML = `
+
+    <div class="error">
+
+      <h1>
+        Invalid Employee
+      </h1>
+
+      <p>
+        This employee dashboard
+        does not exist.
+      </p>
+
+    </div>
+
+  `;
+
+  throw new Error(
+    "Invalid employee ID"
+  );
+
+}
+
+
+/*
+  EMPLOYEE NAME
+*/
+
+const employeeName =
+  employees[employeeId];
+
+
+/*
+  DISPLAY EMPLOYEE
+*/
+
+document.getElementById(
+  "employeeName"
+).textContent =
+  employeeName;
+
+
+document.getElementById(
+  "employeeId"
+).textContent =
+  employeeId;
+
+
+/*
+  REFERRAL LINK
+*/
+
+const referralLink =
+  window.location.origin +
+  "/?employee=" +
+  encodeURIComponent(
+    employeeId
+  );
+
+
+document.getElementById(
+  "referralLink"
+).textContent =
+  referralLink;
+
+
+/*
+  ==========================================
+  VERIFIED PAYMENT DATA
+  ==========================================
+
+  IMPORTANT:
+
+  This is intentionally empty.
+
+  Real payments must come from your
+  payment backend after verification.
+
+  Do NOT manually put customer payments
+  here and treat them as verified.
+*/
+
+
+const verifiedPayments = [];
+
+
+/*
+  CALCULATE STATISTICS
+*/
+
+function calculateDashboard(){
+
+  const paymentCount =
+    verifiedPayments.length;
+
+
+  const customerCount =
+    new Set(
+      verifiedPayments.map(
+        function(payment){
+
+          return payment.customerId;
+
+        }
+      )
+    ).size;
+
+
+  let totalPayments = 0;
+
+
+  verifiedPayments.forEach(
+    function(payment){
+
+      totalPayments +=
+        Number(
+          payment.amount
+        ) || 0;
+
+    }
+  );
+
+
+  /*
+    25% employee commission
+  */
+
+  const commission =
+    totalPayments * 0.25;
+
+
+  document.getElementById(
+    "paymentCount"
+  ).textContent =
+    paymentCount;
+
+
+  document.getElementById(
+    "customerCount"
+  ).textContent =
+    customerCount;
+
+
+  document.getElementById(
+    "commissionAmount"
+  ).textContent =
+    "KSh " +
+    commission.toLocaleString(
+      "en-KE",
+      {
+        maximumFractionDigits:2
+      }
+    );
+
+}
+
+
+/*
+  DISPLAY PAYMENTS
+*/
+
+function displayPayments(){
+
+  const list =
+    document.getElementById(
+      "paymentList"
+    );
+
+
+  if(
+    !verifiedPayments.length
+  ){
+
+    list.innerHTML = `
+
+      <div class="empty">
+
+        No verified payments yet.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  list.innerHTML = "";
+
+
+  verifiedPayments.forEach(
+    function(payment){
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+
+      row.className =
+        "payment-row";
+
+
+      row.innerHTML = `
+
+        <div class="payment-left">
+
+          <div class="payment-id">
+            Payment ${payment.id}
+          </div>
+
+          <div class="payment-date">
+            ${payment.date}
+          </div>
+
+        </div>
+
+
+        <div class="payment-right">
+
+          <div class="payment-amount">
+            KSh ${Number(payment.amount)
+              .toLocaleString("en-KE")}
+          </div>
+
+          <div class="payment-status">
+            VERIFIED
+          </div>
+
+        </div>
+
+      `;
+
+
+      list.appendChild(
+        row
+      );
+
+    }
+  );
+
+}
+
+
+/*
+  COPY REFERRAL LINK
+*/
+
+function copyReferralLink(){
+
+  const link =
+    referralLink;
+
+
+  if(
+    navigator.clipboard
+  ){
+
+    navigator.clipboard
+      .writeText(link)
+
+      .then(
+        function(){
+
+          alert(
+            "Referral link copied!"
+          );
+
+        }
+      )
+
+      .catch(
+        function(){
+
+          alert(link);
+
+        }
+      );
+
+  }else{
+
+    alert(link);
+
+  }
+
+}
+
+
+/*
+  START
+*/
+
+calculateDashboard();
+
+displayPayments();
+
+</script>
+
+
+</body>
+
+      </html>
