@@ -1,7 +1,8 @@
 const crypto = require("crypto");
 
 function json(res, status, data) {
-  res.status(status).setHeader("Content-Type", "application/json");
+  res.status(status);
+  res.setHeader("Content-Type", "application/json");
   return res.end(JSON.stringify(data));
 }
 
@@ -21,46 +22,58 @@ module.exports = async (req, res) => {
       description
     } = req.body || {};
 
+    // Clean phone number
     const cleanPhone = String(phone || "")
-      .replace(/\s+/g, "");
+      .replace(/\s+/g, "")
+      .trim();
 
+    // Convert amount to number
     const cleanAmount = Number(amount);
 
+    // Clean reference
     const cleanReference = String(reference || "")
       .trim()
       .slice(0, 100);
 
+    // Clean description
     const cleanDescription = String(
       description || "M-PESA payment"
     )
       .trim()
       .slice(0, 100);
 
+    // Validate phone
     if (!/^2547\d{8}$/.test(cleanPhone)) {
       return json(res, 400, {
         success: false,
         message:
-          "Enter a valid Kenyan M-PESA number in 2547XXXXXXXX format."
+          "Enter a valid Safaricom M-PESA number, for example 254712345678.",
+        validation: "phone"
       });
     }
 
+    // Validate amount
     if (
       !Number.isInteger(cleanAmount) ||
       cleanAmount < 1
     ) {
       return json(res, 400, {
         success: false,
-        message: "Invalid amount."
+        message: "Invalid payment amount.",
+        validation: "amount"
       });
     }
 
+    // Validate reference
     if (!cleanReference) {
       return json(res, 400, {
         success: false,
-        message: "Missing payment reference."
+        message: "Missing payment reference.",
+        validation: "reference"
       });
     }
 
+    // Read Neptune keys from Vercel Environment Variables
     const publicKey =
       process.env.NEPTUNE_PUBLIC_KEY;
 
@@ -71,13 +84,17 @@ module.exports = async (req, res) => {
       return json(res, 500, {
         success: false,
         message:
-          "Neptune Pay keys are not configured."
+          "Neptune Pay keys are not configured on the server."
       });
     }
 
+    // Current Unix timestamp
     const timestamp =
       Math.floor(Date.now() / 1000).toString();
 
+    // IMPORTANT:
+    // This exact object must be used when creating
+    // the Neptune HMAC signature.
     const body = {
       phone: cleanPhone,
       amount: cleanAmount,
@@ -85,15 +102,17 @@ module.exports = async (req, res) => {
       description: cleanDescription
     };
 
+    const bodyString = JSON.stringify(body);
+
+    // Neptune HMAC-SHA256 signature
     const signature = crypto
       .createHmac("sha256", secretKey)
       .update(
-        timestamp +
-        "." +
-        JSON.stringify(body)
+        timestamp + "." + bodyString
       )
       .digest("hex");
 
+    // Send STK Push to Neptune
     const response = await fetch(
       "https://api.neptunepay.co.ke/api/v1/payments/stk-push",
       {
@@ -106,10 +125,11 @@ module.exports = async (req, res) => {
           "x-timestamp": timestamp
         },
 
-        body: JSON.stringify(body)
+        body: bodyString
       }
     );
 
+    // Read Neptune response
     const text = await response.text();
 
     let data;
@@ -120,16 +140,17 @@ module.exports = async (req, res) => {
       data = {
         success: false,
         message:
-          text ||
-          "Invalid Neptune Pay response."
+          text || "Invalid Neptune Pay response."
       };
     }
 
-    return json(
-      res,
-      response.status,
-      data
-    );
+    // Return Neptune's response to the website.
+    // This also exposes the HTTP status so we can
+    // diagnose a validation error.
+    return json(res, response.status, {
+      ...data,
+      neptuneHttpStatus: response.status
+    });
 
   } catch (error) {
 
@@ -141,7 +162,11 @@ module.exports = async (req, res) => {
     return json(res, 500, {
       success: false,
       message:
-        "Unable to start the M-PESA prompt."
+        "Unable to start the M-PESA prompt.",
+      error:
+        process.env.NODE_ENV === "development"
+          ? String(error.message || error)
+          : undefined
     });
   }
 };
