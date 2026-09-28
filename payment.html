@@ -271,6 +271,7 @@ body{
   color:#aaa;
   margin-top:10px;
   line-height:1.5;
+  max-width:400px;
 }
 
 .success-icon{
@@ -280,6 +281,31 @@ body{
 
 .success-title{
   color:#32cd32 !important;
+}
+
+.debug-box{
+  width:100%;
+  max-width:430px;
+  margin-top:18px;
+  background:#111;
+  border:1px solid #333;
+  border-radius:12px;
+  padding:14px;
+  text-align:left;
+  overflow-wrap:anywhere;
+}
+
+.debug-title{
+  color:#32cd32;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.debug-text{
+  color:#ddd;
+  font-size:13px;
+  line-height:1.5;
+  white-space:pre-wrap;
 }
 
 @keyframes spin{
@@ -406,7 +432,10 @@ body{
     <h3>How to pay and get access</h3>
 
     <ol>
-      <li>Select your minutes package.</li>
+
+      <li>
+        Select your minutes package.
+      </li>
 
       <li>
         Enter the M-PESA number that will make the payment.
@@ -423,6 +452,7 @@ body{
       <li>
         Enter your M-PESA PIN on the official M-PESA prompt.
       </li>
+
     </ol>
 
     <div class="note">
@@ -457,7 +487,6 @@ const urlParams =
 let employeeId =
   urlParams.get("employee");
 
-
 if(
   employeeId &&
   !/^[A-Za-z0-9_-]{1,50}$/.test(
@@ -467,11 +496,6 @@ if(
   employeeId = null;
 }
 
-
-/*
-Remember employee referral.
-*/
-
 if(employeeId){
 
   localStorage.setItem(
@@ -480,11 +504,6 @@ if(employeeId){
   );
 
 }
-
-
-/*
-Recover referral if URL no longer contains it.
-*/
 
 if(!employeeId){
 
@@ -513,7 +532,9 @@ let selectedPrice =
 
 
 /*
-Unique local payment session ID.
+==================================================
+PAYMENT SESSION ID
+==================================================
 */
 
 const paymentSessionId =
@@ -563,15 +584,10 @@ function savePaymentSession(
 
   };
 
-
   localStorage.setItem(
-
     "paymentSession",
-
     JSON.stringify(session)
-
   );
-
 
   if(employeeId){
 
@@ -611,11 +627,9 @@ function selectPackage(
 
     });
 
-
   element.classList.add(
     "selected"
   );
-
 
   selectedMinutes =
     minutes;
@@ -623,9 +637,7 @@ function selectPackage(
   selectedPrice =
     price;
 
-
   savePaymentSession();
-
 
   showStatus(
 
@@ -658,18 +670,15 @@ function showStatus(
 
   if(!status) return;
 
-
   document.getElementById(
     "statusTitle"
   ).textContent =
     title;
 
-
   document.getElementById(
     "statusText"
   ).textContent =
     text;
-
 
   status.style.display =
     "block";
@@ -679,7 +688,7 @@ function showStatus(
 
 /*
 ==================================================
-NORMALIZE KENYAN PHONE NUMBER
+PHONE NUMBER
 ==================================================
 */
 
@@ -692,14 +701,12 @@ function normalizeKenyanPhone(
       .replace(/\s+/g,"")
       .replace(/-/g,"");
 
-
   if(/^07\d{8}$/.test(phone)){
 
     return "254" +
       phone.substring(1);
 
   }
-
 
   if(/^01\d{8}$/.test(phone)){
 
@@ -708,20 +715,17 @@ function normalizeKenyanPhone(
 
   }
 
-
   if(/^2547\d{8}$/.test(phone)){
 
     return phone;
 
   }
 
-
   if(/^2541\d{8}$/.test(phone)){
 
     return phone;
 
   }
-
 
   return null;
 
@@ -730,7 +734,7 @@ function normalizeKenyanPhone(
 
 /*
 ==================================================
-GENERATE PAYMENT REFERENCE
+PAYMENT REFERENCE
 ==================================================
 */
 
@@ -751,7 +755,134 @@ function createPaymentReference(){
 
 /*
 ==================================================
-REAL NEPTUNE M-PESA STK PUSH
+GET REAL SERVER ERROR
+==================================================
+*/
+
+function getServerError(
+  data,
+  responseStatus
+){
+
+  if(!data){
+
+    return {
+      message:
+        "No response received from payment server.",
+      details:
+        "HTTP " + responseStatus
+    };
+
+  }
+
+  let message =
+    data.message ||
+    data.error ||
+    data.statusMessage ||
+    "Payment server rejected the request.";
+
+  let details = [];
+
+  if(data.validation){
+
+    details.push(
+      "Validation: " +
+      String(data.validation)
+    );
+
+  }
+
+  if(data.neptuneHttpStatus){
+
+    details.push(
+      "Neptune HTTP: " +
+      String(data.neptuneHttpStatus)
+    );
+
+  }
+
+  if(data.details){
+
+    if(typeof data.details === "string"){
+
+      details.push(
+        data.details
+      );
+
+    }else{
+
+      details.push(
+        JSON.stringify(
+          data.details,
+          null,
+          2
+        )
+      );
+
+    }
+
+  }
+
+  if(data.neptuneResponse){
+
+    if(typeof data.neptuneResponse === "string"){
+
+      details.push(
+        data.neptuneResponse
+      );
+
+    }else{
+
+      details.push(
+        JSON.stringify(
+          data.neptuneResponse,
+          null,
+          2
+        )
+      );
+
+    }
+
+  }
+
+  if(!details.length){
+
+    const copy = {
+      ...data
+    };
+
+    delete copy.success;
+
+    if(Object.keys(copy).length){
+
+      details.push(
+        JSON.stringify(
+          copy,
+          null,
+          2
+        )
+      );
+
+    }
+
+  }
+
+  return {
+
+    message:
+      message,
+
+    details:
+      details.join("\n")
+
+  };
+
+}
+
+
+/*
+==================================================
+REAL NEPTUNE STK PUSH
 ==================================================
 */
 
@@ -771,24 +902,20 @@ async function payWithMpesa(){
 
   }
 
-
   const phoneInput =
     document.getElementById(
       "customerPhone"
     );
-
 
   const rawPhone =
     phoneInput
       ? phoneInput.value
       : "";
 
-
   const phone =
     normalizeKenyanPhone(
       rawPhone
     );
-
 
   if(!phone){
 
@@ -810,12 +937,10 @@ async function payWithMpesa(){
 
   }
 
-
   const button =
     document.getElementById(
       "payButton"
     );
-
 
   if(button){
 
@@ -826,10 +951,8 @@ async function payWithMpesa(){
 
   }
 
-
   const reference =
     createPaymentReference();
-
 
   savePaymentSession(
 
@@ -847,7 +970,6 @@ async function payWithMpesa(){
 
   );
 
-
   showLoadingScreen(
 
     "Sending M-PESA prompt...",
@@ -855,7 +977,6 @@ async function payWithMpesa(){
     "Please wait. Do not close this page."
 
   );
-
 
   try{
 
@@ -896,13 +1017,10 @@ async function payWithMpesa(){
 
       );
 
-
     const text =
       await response.text();
 
-
     let data;
-
 
     try{
 
@@ -916,12 +1034,19 @@ async function payWithMpesa(){
         success:false,
 
         message:
-          "The payment server returned an invalid response."
+          "The payment server returned a non-JSON response.",
+
+        details:
+          text || "Empty response."
 
       };
 
     }
 
+
+    /*
+    SUCCESS
+    */
 
     if(
       response.ok &&
@@ -953,7 +1078,6 @@ async function payWithMpesa(){
 
       );
 
-
       showPromptSent(
 
         data.paymentId ||
@@ -961,11 +1085,20 @@ async function payWithMpesa(){
 
       );
 
-
       return;
 
     }
 
+
+    /*
+    ERROR
+    */
+
+    const serverError =
+      getServerError(
+        data,
+        response.status
+      );
 
     savePaymentSession(
 
@@ -980,18 +1113,22 @@ async function payWithMpesa(){
           reference,
 
         error:
-          data.message ||
-          "Unable to start M-PESA prompt."
+          serverError.message,
+
+        errorDetails:
+          serverError.details
 
       }
 
     );
 
-
     showPaymentError(
 
-      data.message ||
-      "Unable to start the M-PESA prompt."
+      serverError.message,
+
+      serverError.details,
+
+      response.status
 
     );
 
@@ -1003,7 +1140,6 @@ async function payWithMpesa(){
       error
     );
 
-
     savePaymentSession(
 
       "stk_error",
@@ -1014,16 +1150,28 @@ async function payWithMpesa(){
           phone,
 
         reference:
-          reference
+          reference,
+
+        error:
+          String(
+            error.message ||
+            error
+          )
 
       }
 
     );
 
-
     showPaymentError(
 
-      "Unable to connect to the payment server. Please try again."
+      "Unable to connect to the payment server.",
+
+      String(
+        error.message ||
+        error
+      ),
+
+      0
 
     );
 
@@ -1072,7 +1220,7 @@ function showLoadingScreen(
 
 /*
 ==================================================
-STK PROMPT SENT
+SUCCESS
 ==================================================
 */
 
@@ -1110,8 +1258,7 @@ function showPromptSent(
 
       <p>
         Your payment is still being
-        processed. Do not make another
-        payment unless necessary.
+        processed.
       </p>
 
       <button
@@ -1132,13 +1279,21 @@ function showPromptSent(
 
 /*
 ==================================================
-PAYMENT ERROR
+ERROR SCREEN
 ==================================================
 */
 
 function showPaymentError(
-  message
+  message,
+  details = "",
+  httpStatus = 0
 ){
+
+  const statusText =
+    httpStatus
+      ? "HTTP Status: " +
+        httpStatus
+      : "";
 
   document.body.innerHTML = `
 
@@ -1155,6 +1310,34 @@ function showPaymentError(
       <p>
         ${escapeHtml(message)}
       </p>
+
+      ${
+        statusText
+        ? `
+          <p>
+            ${escapeHtml(statusText)}
+          </p>
+        `
+        : ""
+      }
+
+      ${
+        details
+        ? `
+          <div class="debug-box">
+
+            <div class="debug-title">
+              Server details
+            </div>
+
+            <div class="debug-text">
+              ${escapeHtml(details)}
+            </div>
+
+          </div>
+        `
+        : ""
+      }
 
       <button
         class="main-btn"
@@ -1174,7 +1357,7 @@ function showPaymentError(
 
 /*
 ==================================================
-SAFE HTML TEXT
+ESCAPE HTML
 ==================================================
 */
 
@@ -1194,7 +1377,7 @@ function escapeHtml(
 
 /*
 ==================================================
-INITIAL PAYMENT SESSION
+INITIAL SESSION
 ==================================================
 */
 
@@ -1205,4 +1388,4 @@ savePaymentSession(
 </script>
 
 </body>
-      </html>
+  </html>
