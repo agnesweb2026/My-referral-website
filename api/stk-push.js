@@ -15,35 +15,24 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const {
-      phone,
-      amount,
-      reference
-    } = req.body || {};
+    const { phone, amount, reference } = req.body || {};
 
-    // =========================================
-    // CLEAN PHONE NUMBER
-    // =========================================
+    // -----------------------------
+    // PHONE
+    // -----------------------------
+    const rawPhone = String(phone || "").replace(/\D/g, "");
 
-    const cleanPhone = String(phone || "")
-      .replace(/\D/g, "");
+    let mpesaPhone = rawPhone;
 
-    let mpesaPhone = cleanPhone;
-
-    // 07XXXXXXXX -> 2547XXXXXXXX
-    if (/^07\d{8}$/.test(cleanPhone)) {
-      mpesaPhone =
-        "254" + cleanPhone.substring(1);
+    // 0712345678 -> 254712345678
+    if (/^07\d{8}$/.test(rawPhone)) {
+      mpesaPhone = "254" + rawPhone.substring(1);
     }
 
-    // 2547XXXXXXXX
-    if (/^2547\d{8}$/.test(cleanPhone)) {
-      mpesaPhone = cleanPhone;
+    // 254712345678
+    if (/^2547\d{8}$/.test(rawPhone)) {
+      mpesaPhone = rawPhone;
     }
-
-    // =========================================
-    // VALIDATE SAFARICOM NUMBER
-    // =========================================
 
     if (!/^2547\d{8}$/.test(mpesaPhone)) {
       return json(res, 400, {
@@ -54,10 +43,9 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================================
+    // -----------------------------
     // AMOUNT
-    // =========================================
-
+    // -----------------------------
     const cleanAmount = Number(amount);
 
     if (
@@ -71,10 +59,9 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================================
+    // -----------------------------
     // REFERENCE
-    // =========================================
-
+    // -----------------------------
     const cleanReference = String(reference || "")
       .trim()
       .replace(/[^A-Za-z0-9_-]/g, "")
@@ -88,15 +75,16 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================================
+    // -----------------------------
     // NEPTUNE KEYS
-    // =========================================
+    // -----------------------------
+    const publicKey = String(
+      process.env.NEPTUNE_PUBLIC_KEY || ""
+    ).trim();
 
-    const publicKey =
-      process.env.NEPTUNE_PUBLIC_KEY;
-
-    const secretKey =
-      process.env.NEPTUNE_SECRET_KEY;
+    const secretKey = String(
+      process.env.NEPTUNE_SECRET_KEY || ""
+    ).trim();
 
     if (!publicKey || !secretKey) {
       return json(res, 500, {
@@ -106,18 +94,11 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================================
-    // TIMESTAMP
-    // =========================================
-
+    // -----------------------------
+    // EXACT NEPTUNE REQUEST
+    // -----------------------------
     const timestamp =
       Math.floor(Date.now() / 1000).toString();
-
-    // =========================================
-    // NEPTUNE BODY
-    // =========================================
-    // Keep this EXACTLY as documented:
-    // phone, amount, reference
 
     const body = {
       phone: mpesaPhone,
@@ -125,28 +106,18 @@ module.exports = async (req, res) => {
       reference: cleanReference
     };
 
-    const bodyString =
-      JSON.stringify(body);
+    const bodyString = JSON.stringify(body);
 
-    // =========================================
-    // HMAC SHA256 SIGNATURE
-    // =========================================
+    const signature = crypto
+      .createHmac("sha256", secretKey)
+      .update(
+        timestamp + "." + bodyString
+      )
+      .digest("hex");
 
-    const signature =
-      crypto
-        .createHmac(
-          "sha256",
-          secretKey
-        )
-        .update(
-          timestamp + "." + bodyString
-        )
-        .digest("hex");
-
-    // =========================================
-    // SEND STK PUSH
-    // =========================================
-
+    // -----------------------------
+    // SEND TO NEPTUNE
+    // -----------------------------
     const response = await fetch(
       "https://api.neptunepay.co.ke/api/v1/payments/stk-push",
       {
@@ -163,10 +134,9 @@ module.exports = async (req, res) => {
       }
     );
 
-    // =========================================
+    // -----------------------------
     // READ NEPTUNE RESPONSE
-    // =========================================
-
+    // -----------------------------
     const responseText =
       await response.text();
 
@@ -183,51 +153,72 @@ module.exports = async (req, res) => {
       };
     }
 
-    // =========================================
-    // RETURN RESULT TO WEBSITE
-    // =========================================
+    // IMPORTANT:
+    // This appears in Vercel Runtime Logs.
+    // It does NOT expose the secret key.
+    console.log(
+      "NEPTUNE_STK_RESULT",
+      JSON.stringify({
+        httpStatus: response.status,
+        phone: mpesaPhone,
+        amount: cleanAmount,
+        reference: cleanReference,
+        response: data
+      })
+    );
 
+    // -----------------------------
+    // SUCCESS
+    // -----------------------------
+    if (
+      response.ok &&
+      data.success === true
+    ) {
+      return json(res, 200, {
+        success: true,
+        message:
+          data.message ||
+          "M-PESA prompt sent successfully.",
+        paymentId:
+          data.paymentId || null,
+        status:
+          data.status || "pending",
+        reference:
+          data.reference ||
+          cleanReference
+      });
+    }
+
+    // -----------------------------
+    // NEPTUNE ERROR
+    // -----------------------------
     return json(res, response.status, {
-      success:
-        data.success === true,
+      success: false,
 
       message:
         data.message ||
         data.error ||
-        "Payment request was rejected.",
-
-      paymentId:
-        data.paymentId ||
-        null,
-
-      status:
-        data.status ||
-        null,
-
-      reference:
-        data.reference ||
-        cleanReference,
+        "Neptune Pay rejected the payment request.",
 
       validation:
-        data.validation ||
-        null,
+        data.validation || null,
+
+      code:
+        data.code || null,
 
       errors:
-        data.errors ||
-        null,
+        data.errors || null,
 
       details:
-        data.details ||
-        null,
+        data.details || null,
 
       neptuneHttpStatus:
         response.status
     });
 
   } catch (error) {
-
     console.error(
-      "Neptune STK Push error:",
+      "NEPTUNE_STK_ERROR",
       error
     );
 
