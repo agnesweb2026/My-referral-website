@@ -7,6 +7,7 @@ function json(res, status, data) {
 }
 
 module.exports = async (req, res) => {
+
   if (req.method !== "POST") {
     return json(res, 405, {
       success: false,
@@ -15,6 +16,7 @@ module.exports = async (req, res) => {
   }
 
   try {
+
     const {
       phone,
       amount,
@@ -22,135 +24,287 @@ module.exports = async (req, res) => {
       description
     } = req.body || {};
 
-    // Clean phone number
+
+    /*
+    ================================================
+    CLEAN INPUTS
+    ================================================
+    */
+
     const cleanPhone = String(phone || "")
       .replace(/\s+/g, "")
       .trim();
 
-    // Convert amount to number
     const cleanAmount = Number(amount);
 
-    // Clean reference
     const cleanReference = String(reference || "")
       .trim()
       .slice(0, 100);
 
-    // Clean description
     const cleanDescription = String(
       description || "M-PESA payment"
     )
       .trim()
       .slice(0, 100);
 
-    // Validate phone
+
+    /*
+    ================================================
+    VALIDATE PHONE
+    ================================================
+    */
+
     if (!/^2547\d{8}$/.test(cleanPhone)) {
+
       return json(res, 400, {
         success: false,
         message:
           "Enter a valid Safaricom M-PESA number, for example 254712345678.",
         validation: "phone"
       });
+
     }
 
-    // Validate amount
+
+    /*
+    ================================================
+    VALIDATE AMOUNT
+    ================================================
+    */
+
     if (
       !Number.isInteger(cleanAmount) ||
       cleanAmount < 1
     ) {
+
       return json(res, 400, {
         success: false,
-        message: "Invalid payment amount.",
+        message:
+          "Invalid payment amount.",
         validation: "amount"
       });
+
     }
 
-    // Validate reference
+
+    /*
+    ================================================
+    VALIDATE REFERENCE
+    ================================================
+    */
+
     if (!cleanReference) {
+
       return json(res, 400, {
         success: false,
-        message: "Missing payment reference.",
+        message:
+          "Missing payment reference.",
         validation: "reference"
       });
+
     }
 
-    // Read Neptune keys from Vercel Environment Variables
+
+    /*
+    ================================================
+    READ VERCEL ENVIRONMENT VARIABLES
+    ================================================
+    */
+
     const publicKey =
       process.env.NEPTUNE_PUBLIC_KEY;
 
     const secretKey =
       process.env.NEPTUNE_SECRET_KEY;
 
+
     if (!publicKey || !secretKey) {
+
       return json(res, 500, {
         success: false,
         message:
           "Neptune Pay keys are not configured on the server."
       });
+
     }
 
-    // Current Unix timestamp
-    const timestamp =
-      Math.floor(Date.now() / 1000).toString();
 
-    // IMPORTANT:
-    // This exact object must be used when creating
-    // the Neptune HMAC signature.
+    /*
+    ================================================
+    TIMESTAMP
+    ================================================
+    */
+
+    const timestamp =
+      Math.floor(
+        Date.now() / 1000
+      ).toString();
+
+
+    /*
+    ================================================
+    NEPTUNE REQUEST BODY
+    ================================================
+    */
+
     const body = {
-      phone: cleanPhone,
-      amount: cleanAmount,
-      reference: cleanReference,
-      description: cleanDescription
+
+      phone:
+        cleanPhone,
+
+      amount:
+        cleanAmount,
+
+      reference:
+        cleanReference,
+
+      description:
+        cleanDescription
+
     };
 
-    const bodyString = JSON.stringify(body);
 
-    // Neptune HMAC-SHA256 signature
-    const signature = crypto
-      .createHmac("sha256", secretKey)
-      .update(
-        timestamp + "." + bodyString
-      )
-      .digest("hex");
+    const bodyString =
+      JSON.stringify(body);
 
-    // Send STK Push to Neptune
-    const response = await fetch(
-      "https://api.neptunepay.co.ke/api/v1/payments/stk-push",
-      {
-        method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
-          "x-public-key": publicKey,
-          "x-signature": signature,
-          "x-timestamp": timestamp
-        },
+    /*
+    ================================================
+    CREATE HMAC SIGNATURE
+    ================================================
+    */
 
-        body: bodyString
-      }
-    );
+    const signature =
+      crypto
+        .createHmac(
+          "sha256",
+          secretKey
+        )
+        .update(
+          timestamp +
+          "." +
+          bodyString
+        )
+        .digest("hex");
 
-    // Read Neptune response
-    const text = await response.text();
+
+    /*
+    ================================================
+    SEND REQUEST TO NEPTUNE
+    ================================================
+    */
+
+    const response =
+      await fetch(
+        "https://api.neptunepay.co.ke/api/v1/payments/stk-push",
+        {
+
+          method:
+            "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json",
+
+            "x-public-key":
+              publicKey,
+
+            "x-signature":
+              signature,
+
+            "x-timestamp":
+              timestamp
+
+          },
+
+          body:
+            bodyString
+
+        }
+      );
+
+
+    /*
+    ================================================
+    READ NEPTUNE RESPONSE
+    ================================================
+    */
+
+    const responseText =
+      await response.text();
+
 
     let data;
 
+
     try {
-      data = JSON.parse(text);
+
+      data =
+        JSON.parse(
+          responseText
+        );
+
     } catch {
+
       data = {
-        success: false,
+
+        success:
+          false,
+
         message:
-          text || "Invalid Neptune Pay response."
+          responseText ||
+          "Neptune returned an empty response."
+
       };
+
     }
 
-    // Return Neptune's response to the website.
-    // This also exposes the HTTP status so we can
-    // diagnose a validation error.
-    return json(res, response.status, {
-      ...data,
-      neptuneHttpStatus: response.status
-    });
+
+    /*
+    ================================================
+    RETURN NEPTUNE RESPONSE
+    ================================================
+    
+    IMPORTANT:
+    We do NOT return the secret key,
+    signature, or other credentials.
+    */
+
+    return json(
+      res,
+      response.status,
+      {
+
+        success:
+          Boolean(data.success),
+
+        message:
+          data.message ||
+          data.error ||
+          "Neptune Pay rejected the request.",
+
+        error:
+          data.error ||
+          null,
+
+        validation:
+          data.validation ||
+          null,
+
+        details:
+          data.details ||
+          null,
+
+        neptuneResponse:
+          data,
+
+        neptuneHttpStatus:
+          response.status
+
+      }
+    );
+
 
   } catch (error) {
 
@@ -159,14 +313,27 @@ module.exports = async (req, res) => {
       error
     );
 
-    return json(res, 500, {
-      success: false,
-      message:
-        "Unable to start the M-PESA prompt.",
-      error:
-        process.env.NODE_ENV === "development"
-          ? String(error.message || error)
-          : undefined
-    });
+
+    return json(
+      res,
+      500,
+      {
+
+        success:
+          false,
+
+        message:
+          "Unable to start the M-PESA prompt.",
+
+        error:
+          String(
+            error.message ||
+            error
+          )
+
+      }
+    );
+
   }
+
 };
