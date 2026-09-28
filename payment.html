@@ -105,14 +105,16 @@ body{
   font-size:19px;
 }
 
-.recipient{
-  display:flex;
-  align-items:center;
-  gap:8px;
+.label{
+  display:block;
+  margin-top:15px;
+  margin-bottom:7px;
+  color:#bbb;
+  font-size:13px;
 }
 
 .number{
-  flex:1;
+  width:100%;
   background:#050505;
   border:1px solid #333;
   border-radius:9px;
@@ -120,16 +122,22 @@ body{
   font-size:18px;
   text-align:center;
   font-weight:bold;
+  color:white;
 }
 
-.copy-btn{
-  border:none;
-  background:#333;
-  color:white;
-  padding:13px 12px;
+.phone-input{
+  width:100%;
+  background:#050505;
+  border:1px solid #444;
   border-radius:9px;
-  cursor:pointer;
-  font-weight:bold;
+  padding:14px;
+  font-size:17px;
+  color:white;
+  outline:none;
+}
+
+.phone-input:focus{
+  border-color:#32cd32;
 }
 
 .main-btn{
@@ -143,6 +151,11 @@ body{
   font-size:17px;
   font-weight:bold;
   cursor:pointer;
+}
+
+.main-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
 }
 
 .status{
@@ -163,6 +176,7 @@ body{
   margin-top:6px;
   color:#bbb;
   font-size:13px;
+  line-height:1.5;
 }
 
 .instructions{
@@ -210,8 +224,8 @@ body{
 }
 
 .screen-title{
-  color:red;
-  font-size:30px;
+  color:#32cd32;
+  font-size:27px;
   font-weight:bold;
   margin-bottom:25px;
 }
@@ -220,7 +234,7 @@ body{
   width:65px;
   height:65px;
   border:5px solid #222;
-  border-top:5px solid red;
+  border-top:5px solid #32cd32;
   border-radius:50%;
   animation:spin 1s linear infinite;
 }
@@ -229,12 +243,13 @@ body{
   margin-top:22px;
   color:#aaa;
   font-size:15px;
+  line-height:1.5;
 }
 
 .dot{
   width:12px;
   height:12px;
-  background:red;
+  background:#32cd32;
   border-radius:50%;
   display:inline-block;
   margin-right:8px;
@@ -256,6 +271,15 @@ body{
   color:#aaa;
   margin-top:10px;
   line-height:1.5;
+}
+
+.success-icon{
+  font-size:65px;
+  margin-bottom:20px;
+}
+
+.success-title{
+  color:#32cd32 !important;
 }
 
 @keyframes spin{
@@ -332,31 +356,46 @@ body{
 
     <h2>Pay with M-PESA</h2>
 
-    <div class="recipient">
+    <label class="label">
+      Receiving Till
+    </label>
 
-      <div class="number">
-        0741101913
-      </div>
-
-      <button class="copy-btn"
-              onclick="copyNumber()">
-        COPY
-      </button>
-
+    <div class="number">
+      1605854
     </div>
 
-    <button class="main-btn"
-            onclick="payWithMpesa()">
+    <label class="label">
+      Your M-PESA phone number
+    </label>
+
+    <input
+      id="customerPhone"
+      class="phone-input"
+      type="tel"
+      inputmode="numeric"
+      autocomplete="tel"
+      placeholder="07XXXXXXXX"
+      maxlength="12"
+    >
+
+    <button
+      id="payButton"
+      class="main-btn"
+      onclick="payWithMpesa()">
       PAY WITH M-PESA
     </button>
 
     <div class="status" id="status">
 
-      <div class="status-title"
-           id="statusTitle"></div>
+      <div
+        class="status-title"
+        id="statusTitle">
+      </div>
 
-      <div class="status-text"
-           id="statusText"></div>
+      <div
+        class="status-text"
+        id="statusText">
+      </div>
 
     </div>
 
@@ -368,19 +407,40 @@ body{
 
     <ol>
       <li>Select your minutes package.</li>
-      <li>Complete your M-PESA payment.</li>
-      <li>Tap GET ACCESS.</li>
-      <li>Wait while the payment is checked.</li>
+
+      <li>
+        Enter the M-PESA number that will make the payment.
+      </li>
+
+      <li>
+        Tap PAY WITH M-PESA.
+      </li>
+
+      <li>
+        Check your phone for the M-PESA prompt.
+      </li>
+
+      <li>
+        Enter your M-PESA PIN on the official M-PESA prompt.
+      </li>
     </ol>
 
     <div class="note">
-      M-PESA number:
-      <b>0741101913</b>
+
+      Receiving Till:
+      <b>1605854</b>
+
+      <br><br>
+
+      Your M-PESA PIN should only be entered
+      on the official M-PESA prompt.
+
     </div>
 
   </div>
 
 </div>
+
 <script>
 
 /*
@@ -397,9 +457,6 @@ const urlParams =
 let employeeId =
   urlParams.get("employee");
 
-/*
-Accept only simple referral IDs.
-*/
 
 if(
   employeeId &&
@@ -409,6 +466,7 @@ if(
 ){
   employeeId = null;
 }
+
 
 /*
 Remember employee referral.
@@ -422,6 +480,7 @@ if(employeeId){
   );
 
 }
+
 
 /*
 Recover referral if URL no longer contains it.
@@ -443,8 +502,8 @@ PAYMENT INFORMATION
 ==================================================
 */
 
-const RECIPIENT =
-  "0741101913";
+const TILL_NUMBER =
+  "1605854";
 
 let selectedMinutes =
   null;
@@ -454,7 +513,7 @@ let selectedPrice =
 
 
 /*
-Create a unique session ID.
+Unique local payment session ID.
 */
 
 const paymentSessionId =
@@ -472,7 +531,10 @@ SAVE PAYMENT SESSION
 ==================================================
 */
 
-function savePaymentSession(){
+function savePaymentSession(
+  status = "pending",
+  extra = {}
+){
 
   const session = {
 
@@ -488,14 +550,16 @@ function savePaymentSession(){
     amount:
       selectedPrice,
 
-    recipient:
-      RECIPIENT,
+    till:
+      TILL_NUMBER,
 
     status:
-      "pending",
+      status,
 
     createdAt:
-      new Date().toISOString()
+      new Date().toISOString(),
+
+    ...extra
 
   };
 
@@ -508,10 +572,6 @@ function savePaymentSession(){
 
   );
 
-
-  /*
-  Also keep employee-specific session.
-  */
 
   if(employeeId){
 
@@ -619,67 +679,83 @@ function showStatus(
 
 /*
 ==================================================
-COPY M-PESA NUMBER
+NORMALIZE KENYAN PHONE NUMBER
 ==================================================
 */
 
-function copyNumber(){
+function normalizeKenyanPhone(
+  value
+){
 
-  if(
-    navigator.clipboard
-  ){
+  let phone =
+    String(value || "")
+      .replace(/\s+/g,"")
+      .replace(/-/g,"");
 
-    navigator.clipboard
-      .writeText(
-        RECIPIENT
-      )
 
-      .then(function(){
+  if(/^07\d{8}$/.test(phone)){
 
-        showStatus(
-
-          "Copied",
-
-          "M-PESA number copied successfully."
-
-        );
-
-      })
-
-      .catch(function(){
-
-        showStatus(
-
-          "M-PESA number",
-
-          RECIPIENT
-
-        );
-
-      });
-
-  }else{
-
-    showStatus(
-
-      "M-PESA number",
-
-      RECIPIENT
-
-    );
+    return "254" +
+      phone.substring(1);
 
   }
+
+
+  if(/^01\d{8}$/.test(phone)){
+
+    return "254" +
+      phone.substring(1);
+
+  }
+
+
+  if(/^2547\d{8}$/.test(phone)){
+
+    return phone;
+
+  }
+
+
+  if(/^2541\d{8}$/.test(phone)){
+
+    return phone;
+
+  }
+
+
+  return null;
 
 }
 
 
 /*
 ==================================================
-PAY WITH M-PESA
+GENERATE PAYMENT REFERENCE
 ==================================================
 */
 
-function payWithMpesa(){
+function createPaymentReference(){
+
+  return (
+    "ORD-" +
+    Date.now() +
+    "-" +
+    Math.random()
+      .toString(36)
+      .substring(2,7)
+      .toUpperCase()
+  );
+
+}
+
+
+/*
+==================================================
+REAL NEPTUNE M-PESA STK PUSH
+==================================================
+*/
+
+async function payWithMpesa(){
 
   if(!selectedPrice){
 
@@ -687,7 +763,7 @@ function payWithMpesa(){
 
       "Select a package first",
 
-      "Please choose a package before continuing."
+      "Please choose a minutes package before paying."
 
     );
 
@@ -696,490 +772,373 @@ function payWithMpesa(){
   }
 
 
-  savePaymentSession();
+  const phoneInput =
+    document.getElementById(
+      "customerPhone"
+    );
 
 
-  showLiveStream();
+  const rawPhone =
+    phoneInput
+      ? phoneInput.value
+      : "";
 
-}
 
+  const phone =
+    normalizeKenyanPhone(
+      rawPhone
+    );
 
-/*
-==================================================
-LOADING
-==================================================
-*/
 
-function showLiveStream(){
-
-  document.body.innerHTML = `
-
-    <div class="full-screen">
-
-      <div class="screen-title">
-
-        <span class="dot"></span>
-
-        LIVE STREAM
-
-      </div>
-
-      <div class="loading-ring"></div>
-
-      <div class="loading-text">
-
-        Connecting...
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  setTimeout(
-
-    function(){
-
-      showInsufficient();
-
-    },
-
-    2000
-
-  );
-
-}
-
-
-/*
-==================================================
-INSUFFICIENT MINUTES
-==================================================
-*/
-
-function showInsufficient(){
-
-  document.body.innerHTML = `
-
-    <div class="full-screen">
-
-      <div class="warning">
-        ⚠️
-      </div>
-
-      <h1>
-        Insufficient Minutes
-      </h1>
-
-      <p>
-        You need more minutes to continue.
-      </p>
-
-    </div>
-
-  `;
-
-
-  setTimeout(
-
-    function(){
-
-      showPackagesAgain();
-
-    },
-
-    2000
-
-  );
-
-}
-
-
-/*
-==================================================
-PACKAGES AGAIN
-==================================================
-*/
-
-function showPackagesAgain(){
-
-  document.body.innerHTML = `
-
-    <div class="container">
-
-      <div class="header">
-
-        <h1>
-          M-PESA PAYMENT
-        </h1>
-
-        <p>
-          Choose your minutes package
-        </p>
-
-      </div>
-
-
-      <div class="packages">
-
-        <div class="package ${
-          selectedMinutes === 30
-            ? "selected"
-            : ""
-        }"
-        onclick="selectPackage(this,30,81)">
-
-          <div class="minutes">
-            30 Mins
-          </div>
-
-          <div class="price">
-            KSh 81
-          </div>
-
-        </div>
-
-
-        <div class="package ${
-          selectedMinutes === 55
-            ? "selected"
-            : ""
-        }"
-        onclick="selectPackage(this,55,138)">
-
-          <div class="minutes">
-            55 Mins
-          </div>
-
-          <div class="price">
-            KSh 138
-          </div>
-
-        </div>
-
-
-        <div class="package ${
-          selectedMinutes === 73
-            ? "selected"
-            : ""
-        }"
-        onclick="selectPackage(this,73,207)">
-
-          <div class="minutes">
-            73 Mins
-          </div>
-
-          <div class="price">
-            KSh 207
-          </div>
-
-        </div>
-
-
-        <div class="package ${
-          selectedMinutes === 95
-            ? "selected"
-            : ""
-        }"
-        onclick="selectPackage(this,95,253)">
-
-          <div class="minutes">
-            95 Mins
-          </div>
-
-          <div class="price">
-            KSh 253
-          </div>
-
-        </div>
-
-
-        <div class="package ${
-          selectedMinutes === 105
-            ? "selected"
-            : ""
-        }"
-        onclick="selectPackage(this,105,299)">
-
-          <div class="minutes">
-            105 Mins
-          </div>
-
-          <div class="price">
-            KSh 299
-          </div>
-
-        </div>
-
-
-        <div class="package ${
-          selectedMinutes === 166
-            ? "selected"
-            : ""
-        }"
-        onclick="selectPackage(this,166,393)">
-
-          <span class="hot">
-            HOT
-          </span>
-
-          <div class="minutes">
-            166 Mins
-          </div>
-
-          <div class="price">
-            KSh 393
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="payment-box">
-
-        <h2>
-          Pay with M-PESA
-        </h2>
-
-
-        <div class="recipient">
-
-          <div class="number">
-            ${RECIPIENT}
-          </div>
-
-          <button
-            class="copy-btn"
-            onclick="copyNumber()">
-
-            COPY
-
-          </button>
-
-        </div>
-
-
-        <button
-          class="main-btn"
-          onclick="getAccess()">
-
-          GET ACCESS
-
-        </button>
-
-
-        <div
-          class="status"
-          id="status">
-
-          <div
-            class="status-title"
-            id="statusTitle">
-          </div>
-
-          <div
-            class="status-text"
-            id="statusText">
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="instructions">
-
-        <h3>
-          Process to pay and get access
-        </h3>
-
-        <ol>
-
-          <li>
-            Select your preferred package.
-          </li>
-
-          <li>
-            Check the exact amount.
-          </li>
-
-          <li>
-            Complete your M-PESA payment.
-          </li>
-
-          <li>
-            Tap GET ACCESS.
-          </li>
-
-        </ol>
-
-
-        <div class="note">
-
-          Selected:
-
-          <b>
-            ${selectedMinutes || "--"}
-            minutes
-          </b>
-
-          <br><br>
-
-          Amount:
-
-          <b>
-            KSh
-            ${selectedPrice || "--"}
-          </b>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/*
-==================================================
-GET ACCESS
-==================================================
-*/
-
-function getAccess(){
-
-  if(!selectedPrice){
+  if(!phone){
 
     showStatus(
 
-      "Select a package first",
+      "Invalid M-PESA number",
 
-      "Choose a package before continuing."
+      "Enter a valid Kenyan M-PESA number, for example 07XXXXXXXX."
 
     );
 
-    return;
+    if(phoneInput){
 
-  }
-
-
-  /*
-  Save the selected package again
-  before checking payment.
-  */
-
-  savePaymentSession();
-
-
-  document.body.innerHTML = `
-
-    <div class="full-screen">
-
-      <div class="screen-title">
-
-        <span class="dot"></span>
-
-        LOADING
-
-      </div>
-
-      <div class="loading-ring"></div>
-
-      <div class="loading-text">
-
-        Checking payment...
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  setTimeout(
-
-    function(){
-
-      showNoPayment();
-
-    },
-
-    2000
-
-  );
-
-}
-
-
-/*
-==================================================
-NO PAYMENT
-==================================================
-*/
-
-function showNoPayment(){
-
-  /*
-  IMPORTANT:
-  This is NOT a successful payment.
-
-  We keep the session as pending.
-  */
-
-  const session =
-    localStorage.getItem(
-      "paymentSession"
-    );
-
-
-  if(session){
-
-    try{
-
-      const data =
-        JSON.parse(session);
-
-      data.status =
-        "pending";
-
-      localStorage.setItem(
-
-        "paymentSession",
-
-        JSON.stringify(data)
-
-      );
-
-
-      if(data.employeeId){
-
-        localStorage.setItem(
-
-          "paymentSession_" +
-          data.employeeId,
-
-          JSON.stringify(data)
-
-        );
-
-      }
-
-    }catch(error){
-
-      console.log(
-        "Session update error:",
-        error
-      );
+      phoneInput.focus();
 
     }
 
+    return;
+
   }
 
+
+  const button =
+    document.getElementById(
+      "payButton"
+    );
+
+
+  if(button){
+
+    button.disabled = true;
+
+    button.textContent =
+      "SENDING PROMPT...";
+
+  }
+
+
+  const reference =
+    createPaymentReference();
+
+
+  savePaymentSession(
+
+    "stk_pending",
+
+    {
+
+      customerPhone:
+        phone,
+
+      reference:
+        reference
+
+    }
+
+  );
+
+
+  showLoadingScreen(
+
+    "Sending M-PESA prompt...",
+
+    "Please wait. Do not close this page."
+
+  );
+
+
+  try{
+
+    const response =
+      await fetch(
+
+        "/api/stk-push",
+
+        {
+
+          method:
+            "POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+
+              phone:
+                phone,
+
+              amount:
+                selectedPrice,
+
+              reference:
+                reference,
+
+              description:
+                selectedMinutes +
+                " minutes"
+
+            })
+
+        }
+
+      );
+
+
+    const text =
+      await response.text();
+
+
+    let data;
+
+
+    try{
+
+      data =
+        JSON.parse(text);
+
+    }catch(error){
+
+      data = {
+
+        success:false,
+
+        message:
+          "The payment server returned an invalid response."
+
+      };
+
+    }
+
+
+    if(
+      response.ok &&
+      data &&
+      data.success
+    ){
+
+      savePaymentSession(
+
+        "stk_pending",
+
+        {
+
+          customerPhone:
+            phone,
+
+          reference:
+            reference,
+
+          paymentId:
+            data.paymentId ||
+            null,
+
+          neptuneStatus:
+            data.status ||
+            "pending"
+
+        }
+
+      );
+
+
+      showPromptSent(
+
+        data.paymentId ||
+        null
+
+      );
+
+
+      return;
+
+    }
+
+
+    savePaymentSession(
+
+      "stk_failed",
+
+      {
+
+        customerPhone:
+          phone,
+
+        reference:
+          reference,
+
+        error:
+          data.message ||
+          "Unable to start M-PESA prompt."
+
+      }
+
+    );
+
+
+    showPaymentError(
+
+      data.message ||
+      "Unable to start the M-PESA prompt."
+
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "STK Push error:",
+      error
+    );
+
+
+    savePaymentSession(
+
+      "stk_error",
+
+      {
+
+        customerPhone:
+          phone,
+
+        reference:
+          reference
+
+      }
+
+    );
+
+
+    showPaymentError(
+
+      "Unable to connect to the payment server. Please try again."
+
+    );
+
+  }
+
+}
+
+
+/*
+==================================================
+LOADING SCREEN
+==================================================
+*/
+
+function showLoadingScreen(
+  title,
+  text
+){
+
+  document.body.innerHTML = `
+
+    <div class="full-screen">
+
+      <div class="screen-title">
+
+        <span class="dot"></span>
+
+        ${escapeHtml(title)}
+
+      </div>
+
+      <div class="loading-ring"></div>
+
+      <div class="loading-text">
+
+        ${escapeHtml(text)}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/*
+==================================================
+STK PROMPT SENT
+==================================================
+*/
+
+function showPromptSent(
+  paymentId
+){
+
+  const idText =
+    paymentId
+      ? "Payment ID: " +
+        paymentId
+      : "Payment request sent.";
+
+  document.body.innerHTML = `
+
+    <div class="full-screen">
+
+      <div class="success-icon">
+        📱
+      </div>
+
+      <h1 class="success-title">
+        M-PESA PROMPT SENT
+      </h1>
+
+      <p>
+        Check the M-PESA phone and
+        complete the payment using your
+        M-PESA PIN.
+      </p>
+
+      <p>
+        ${escapeHtml(idText)}
+      </p>
+
+      <p>
+        Your payment is still being
+        processed. Do not make another
+        payment unless necessary.
+      </p>
+
+      <button
+        class="main-btn"
+        style="max-width:330px;"
+        onclick="location.reload()">
+
+        BACK TO PAYMENT
+
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+/*
+==================================================
+PAYMENT ERROR
+==================================================
+*/
+
+function showPaymentError(
+  message
+){
 
   document.body.innerHTML = `
 
@@ -1190,33 +1149,60 @@ function showNoPayment(){
       </div>
 
       <h1>
-        No payment is done
+        Payment not started
       </h1>
 
       <p>
-        No payment was detected.
+        ${escapeHtml(message)}
       </p>
+
+      <button
+        class="main-btn"
+        style="max-width:330px;"
+        onclick="location.reload()">
+
+        TRY AGAIN
+
+      </button>
 
     </div>
 
   `;
 
+}
 
-  setTimeout(
 
-    function(){
+/*
+==================================================
+SAFE HTML TEXT
+==================================================
+*/
 
-      showPackagesAgain();
+function escapeHtml(
+  value
+){
 
-    },
-
-    2000
-
-  );
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
+
+
+/*
+==================================================
+INITIAL PAYMENT SESSION
+==================================================
+*/
+
+savePaymentSession(
+  "pending"
+);
 
 </script>
 
 </body>
-</html>
+      </html>
