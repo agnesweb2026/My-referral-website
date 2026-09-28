@@ -736,19 +736,35 @@ function normalizeKenyanPhone(
 ==================================================
 PAYMENT REFERENCE
 ==================================================
+
+IMPORTANT:
+Neptune allows a maximum of 12 characters.
+
+The old reference was:
+
+ORD-1790597435582-3RAHR
+
+which was too long.
+
+This version always creates exactly
+12 characters:
+
+ORD + 9 random characters
+==================================================
 */
 
 function createPaymentReference(){
 
-  return (
-    "ORD-" +
-    Date.now() +
-    "-" +
+  const randomPart =
     Math.random()
       .toString(36)
-      .substring(2,7)
-      .toUpperCase()
-  );
+      .substring(2,11)
+      .toUpperCase();
+
+  return (
+    "ORD" +
+    randomPart
+  ).substring(0,12);
 
 }
 
@@ -769,8 +785,10 @@ function getServerError(
     return {
       message:
         "No response received from payment server.",
+
       details:
-        "HTTP " + responseStatus
+        "HTTP " +
+        responseStatus
     };
 
   }
@@ -814,6 +832,28 @@ function getServerError(
       details.push(
         JSON.stringify(
           data.details,
+          null,
+          2
+        )
+      );
+
+    }
+
+  }
+
+  if(data.errors){
+
+    if(typeof data.errors === "string"){
+
+      details.push(
+        data.errors
+      );
+
+    }else{
+
+      details.push(
+        JSON.stringify(
+          data.errors,
           null,
           2
         )
@@ -951,6 +991,11 @@ async function payWithMpesa(){
 
   }
 
+  /*
+  IMPORTANT:
+  This reference is now <= 12 characters.
+  */
+
   const reference =
     createPaymentReference();
 
@@ -1005,11 +1050,7 @@ async function payWithMpesa(){
                 selectedPrice,
 
               reference:
-                reference,
-
-              description:
-                selectedMinutes +
-                " minutes"
+                reference
 
             })
 
@@ -1037,7 +1078,8 @@ async function payWithMpesa(){
           "The payment server returned a non-JSON response.",
 
         details:
-          text || "Empty response."
+          text ||
+          "Empty response."
 
       };
 
@@ -1388,4 +1430,4 @@ savePaymentSession(
 </script>
 
 </body>
-  </html>
+    </html>
