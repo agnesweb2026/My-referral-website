@@ -6,275 +6,273 @@
 <title>M-PESA Payment</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #050505;
-  color: white;
-  min-height: 100vh;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#050505;
+  color:white;
+  min-height:100vh;
 }
 
-.container {
-  width: 100%;
-  max-width: 520px;
-  margin: auto;
-  padding: 18px;
+.container{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  padding:18px;
 }
 
-.header {
-  text-align: center;
-  padding: 15px 0 20px;
+.header{
+  text-align:center;
+  padding:15px 0 20px;
 }
 
-.header h1 {
-  margin: 0;
-  font-size: 27px;
-  color: #32cd32;
+.header h1{
+  margin:0;
+  font-size:27px;
+  color:#32cd32;
 }
 
-.header p {
-  margin: 8px 0 0;
-  color: #aaa;
-  font-size: 14px;
+.header p{
+  margin:8px 0 0;
+  color:#aaa;
+  font-size:14px;
 }
 
-.packages {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.packages{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
 
-.package {
-  position: relative;
-  background: #111;
-  border: 1px solid #333;
-  border-radius: 14px;
-  padding: 18px 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: .2s;
+.package{
+  position:relative;
+  background:#111;
+  border:1px solid #333;
+  border-radius:14px;
+  padding:18px 10px;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.package:active {
-  transform: scale(.97);
+.package:active{
+  transform:scale(.97);
 }
 
-.package.selected {
-  border: 2px solid #32cd32;
-  background: #102010;
+.package.selected{
+  border:2px solid #32cd32;
+  background:#102010;
 }
 
-.minutes {
-  font-size: 21px;
-  font-weight: bold;
+.minutes{
+  font-size:21px;
+  font-weight:bold;
 }
 
-.price {
-  margin-top: 8px;
-  font-size: 18px;
-  color: #32cd32;
-  font-weight: bold;
+.price{
+  margin-top:8px;
+  font-size:18px;
+  color:#32cd32;
+  font-weight:bold;
 }
 
-.hot {
-  position: absolute;
-  top: -8px;
-  right: -5px;
-  background: red;
-  color: white;
-  font-size: 10px;
-  font-weight: bold;
-  padding: 4px 7px;
-  border-radius: 10px;
+.hot{
+  position:absolute;
+  top:-8px;
+  right:-5px;
+  background:red;
+  color:white;
+  font-size:10px;
+  font-weight:bold;
+  padding:4px 7px;
+  border-radius:10px;
 }
 
-.payment-box {
-  margin-top: 18px;
-  background: #101010;
-  border: 1px solid #292929;
-  border-radius: 15px;
-  padding: 18px;
+.payment-box{
+  margin-top:18px;
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:18px;
 }
 
-.payment-box h2 {
-  margin: 0 0 15px;
-  font-size: 19px;
+.payment-box h2{
+  margin:0 0 15px;
+  font-size:19px;
 }
 
-.recipient {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.recipient{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-.number {
-  flex: 1;
-  background: #050505;
-  border: 1px solid #333;
-  border-radius: 9px;
-  padding: 13px;
-  font-size: 18px;
-  text-align: center;
-  font-weight: bold;
+.number{
+  flex:1;
+  background:#050505;
+  border:1px solid #333;
+  border-radius:9px;
+  padding:13px;
+  font-size:18px;
+  text-align:center;
+  font-weight:bold;
 }
 
-.copy-btn {
-  border: none;
-  background: #333;
-  color: white;
-  padding: 13px 12px;
-  border-radius: 9px;
-  cursor: pointer;
-  font-weight: bold;
+.copy-btn{
+  border:none;
+  background:#333;
+  color:white;
+  padding:13px 12px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
-.main-btn {
-  width: 100%;
-  margin-top: 16px;
-  padding: 15px;
-  border: none;
-  border-radius: 11px;
-  background: #32cd32;
-  color: #000;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
+.main-btn{
+  width:100%;
+  margin-top:16px;
+  padding:15px;
+  border:none;
+  border-radius:11px;
+  background:#32cd32;
+  color:#000;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.status {
-  display: none;
-  margin-top: 16px;
-  padding: 14px;
-  border-radius: 10px;
-  text-align: center;
-  background: #171717;
+.status{
+  display:none;
+  margin-top:16px;
+  padding:14px;
+  border-radius:10px;
+  text-align:center;
+  background:#171717;
 }
 
-.status-title {
-  font-weight: bold;
-  font-size: 17px;
+.status-title{
+  font-weight:bold;
+  font-size:17px;
 }
 
-.status-text {
-  margin-top: 6px;
-  color: #bbb;
-  font-size: 13px;
+.status-text{
+  margin-top:6px;
+  color:#bbb;
+  font-size:13px;
 }
 
-.instructions {
-  margin-top: 18px;
-  background: #0d0d0d;
-  border-radius: 12px;
-  padding: 16px;
-  border: 1px solid #242424;
+.instructions{
+  margin-top:18px;
+  background:#0d0d0d;
+  border-radius:12px;
+  padding:16px;
+  border:1px solid #242424;
 }
 
-.instructions h3 {
-  margin-top: 0;
-  color: #32cd32;
+.instructions h3{
+  margin-top:0;
+  color:#32cd32;
 }
 
-.instructions ol {
-  padding-left: 22px;
+.instructions ol{
+  padding-left:22px;
 }
 
-.instructions li {
-  margin-bottom: 10px;
-  color: #ddd;
-  line-height: 1.4;
+.instructions li{
+  margin-bottom:10px;
+  color:#ddd;
+  line-height:1.4;
 }
 
-.note {
-  margin-top: 15px;
-  color: #aaa;
-  font-size: 13px;
-  line-height: 1.5;
-  text-align: center;
+.note{
+  margin-top:15px;
+  color:#aaa;
+  font-size:13px;
+  line-height:1.5;
+  text-align:center;
 }
 
-/* FULL SCREEN */
-
-.full-screen {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 25px;
-  z-index: 9999;
+.full-screen{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:25px;
+  z-index:9999;
 }
 
-.screen-title {
-  color: red;
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 25px;
+.screen-title{
+  color:red;
+  font-size:30px;
+  font-weight:bold;
+  margin-bottom:25px;
 }
 
-.loading-ring {
-  width: 65px;
-  height: 65px;
-  border: 5px solid #222;
-  border-top: 5px solid red;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.loading-ring{
+  width:65px;
+  height:65px;
+  border:5px solid #222;
+  border-top:5px solid red;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
 }
 
-.loading-text {
-  margin-top: 22px;
-  color: #aaa;
-  font-size: 15px;
+.loading-text{
+  margin-top:22px;
+  color:#aaa;
+  font-size:15px;
 }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  background: red;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 8px;
-  animation: blink .8s infinite;
+.dot{
+  width:12px;
+  height:12px;
+  background:red;
+  border-radius:50%;
+  display:inline-block;
+  margin-right:8px;
+  animation:blink .8s infinite;
 }
 
-.warning {
-  font-size: 60px;
-  margin-bottom: 20px;
+.warning{
+  font-size:60px;
+  margin-bottom:20px;
 }
 
-.full-screen h1 {
-  color: red;
-  font-size: 28px;
-  margin: 0;
+.full-screen h1{
+  color:red;
+  font-size:28px;
+  margin:0;
 }
 
-.full-screen p {
-  color: #aaa;
-  margin-top: 10px;
-  line-height: 1.5;
+.full-screen p{
+  color:#aaa;
+  margin-top:10px;
+  line-height:1.5;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
   }
 }
 
-@keyframes blink {
-  50% {
-    opacity: .2;
+@keyframes blink{
+  50%{
+    opacity:.2;
   }
 }
 
-@media (max-width: 380px) {
-  .packages {
-    grid-template-columns: 1fr;
+@media(max-width:380px){
+  .packages{
+    grid-template-columns:1fr;
   }
 }
 </style>
@@ -291,32 +289,38 @@ body {
 
   <div class="packages">
 
-    <div class="package" onclick="selectPackage(this,30,81)">
+    <div class="package"
+         onclick="selectPackage(this,30,81)">
       <div class="minutes">30 Mins</div>
       <div class="price">KSh 81</div>
     </div>
 
-    <div class="package" onclick="selectPackage(this,55,138)">
+    <div class="package"
+         onclick="selectPackage(this,55,138)">
       <div class="minutes">55 Mins</div>
       <div class="price">KSh 138</div>
     </div>
 
-    <div class="package" onclick="selectPackage(this,73,207)">
+    <div class="package"
+         onclick="selectPackage(this,73,207)">
       <div class="minutes">73 Mins</div>
       <div class="price">KSh 207</div>
     </div>
 
-    <div class="package" onclick="selectPackage(this,95,253)">
+    <div class="package"
+         onclick="selectPackage(this,95,253)">
       <div class="minutes">95 Mins</div>
       <div class="price">KSh 253</div>
     </div>
 
-    <div class="package" onclick="selectPackage(this,105,299)">
+    <div class="package"
+         onclick="selectPackage(this,105,299)">
       <div class="minutes">105 Mins</div>
       <div class="price">KSh 299</div>
     </div>
 
-    <div class="package" onclick="selectPackage(this,166,393)">
+    <div class="package"
+         onclick="selectPackage(this,166,393)">
       <span class="hot">HOT</span>
       <div class="minutes">166 Mins</div>
       <div class="price">KSh 393</div>
@@ -334,21 +338,25 @@ body {
         0741101913
       </div>
 
-      <button class="copy-btn" onclick="copyNumber()">
+      <button class="copy-btn"
+              onclick="copyNumber()">
         COPY
       </button>
 
     </div>
 
-    <button class="main-btn" onclick="payWithMpesa()">
+    <button class="main-btn"
+            onclick="payWithMpesa()">
       PAY WITH M-PESA
     </button>
 
     <div class="status" id="status">
 
-      <div class="status-title" id="statusTitle"></div>
+      <div class="status-title"
+           id="statusTitle"></div>
 
-      <div class="status-text" id="statusText"></div>
+      <div class="status-text"
+           id="statusText"></div>
 
     </div>
 
@@ -360,67 +368,53 @@ body {
 
     <ol>
       <li>Select your minutes package.</li>
-      <li>Tap PAY WITH M-PESA.</li>
-      <li>Wait for the loading screen.</li>
-      <li>After the packages return, select your package again.</li>
+      <li>Complete your M-PESA payment.</li>
+      <li>Tap GET ACCESS.</li>
+      <li>Wait while the payment is checked.</li>
     </ol>
 
     <div class="note">
-      M-PESA number: <b>0741101913</b>
+      M-PESA number:
+      <b>0741101913</b>
     </div>
 
   </div>
 
 </div>
-
-
 <script>
 
 /*
-  ==================================================
-  EMPLOYEE TRACKING
-  ==================================================
-
-  Example:
-
-  payment.html?employee=EMP001
-
-  The employee code is remembered in this browser
-  so it can survive the package/loading screens.
+==================================================
+EMPLOYEE REFERRAL TRACKING
+==================================================
 */
-
 
 const urlParams =
   new URLSearchParams(
     window.location.search
   );
 
-
 let employeeId =
   urlParams.get("employee");
 
-
 /*
-  Only accept a simple employee ID.
-  This prevents arbitrary long values being stored.
+Accept only simple referral IDs.
 */
 
-if (
+if(
   employeeId &&
-  !/^[A-Za-z0-9_-]{1,50}$/.test(employeeId)
-) {
-
+  !/^[A-Za-z0-9_-]{1,50}$/.test(
+    employeeId
+  )
+){
   employeeId = null;
-
 }
 
-
 /*
-  If the URL contains an employee ID,
-  remember it.
+Remember employee referral.
 */
 
-if (employeeId) {
+if(employeeId){
 
   localStorage.setItem(
     "referralEmployeeId",
@@ -429,13 +423,11 @@ if (employeeId) {
 
 }
 
-
 /*
-  If the URL doesn't contain one,
-  recover the previous employee ID.
+Recover referral if URL no longer contains it.
 */
 
-if (!employeeId) {
+if(!employeeId){
 
   employeeId =
     localStorage.getItem(
@@ -446,91 +438,112 @@ if (!employeeId) {
 
 
 /*
-  Build the payment URL while preserving
-  the employee ID.
+==================================================
+PAYMENT INFORMATION
+==================================================
 */
-
-function getPaymentUrl() {
-
-  if (!employeeId) {
-
-    return "payment.html";
-
-  }
-
-  return (
-    "payment.html?employee=" +
-    encodeURIComponent(employeeId)
-  );
-
-}
-
-
-/*
-  Keep employee ID when the page changes
-  back to the package screen.
-*/
-
-function rememberEmployeeInUrl() {
-
-  if (!employeeId) return;
-
-  const newUrl =
-    getPaymentUrl();
-
-  try {
-
-    window.history.replaceState(
-      {},
-      "",
-      newUrl
-    );
-
-  } catch (error) {
-
-    console.log(
-      "Could not update URL:",
-      error
-    );
-
-  }
-
-}
-
-
-/*
-  Make sure the current URL contains
-  the employee code if one exists.
-*/
-
-rememberEmployeeInUrl();
-
-
-/* PAYMENT */
 
 const RECIPIENT =
   "0741101913";
 
-
 let selectedMinutes =
   null;
-
 
 let selectedPrice =
   null;
 
 
-/* SELECT PACKAGE */
+/*
+Create a unique session ID.
+*/
+
+const paymentSessionId =
+  "PAY-" +
+  Date.now() +
+  "-" +
+  Math.random()
+    .toString(36)
+    .substring(2,8);
+
+
+/*
+==================================================
+SAVE PAYMENT SESSION
+==================================================
+*/
+
+function savePaymentSession(){
+
+  const session = {
+
+    paymentSessionId:
+      paymentSessionId,
+
+    employeeId:
+      employeeId || null,
+
+    minutes:
+      selectedMinutes,
+
+    amount:
+      selectedPrice,
+
+    recipient:
+      RECIPIENT,
+
+    status:
+      "pending",
+
+    createdAt:
+      new Date().toISOString()
+
+  };
+
+
+  localStorage.setItem(
+
+    "paymentSession",
+
+    JSON.stringify(session)
+
+  );
+
+
+  /*
+  Also keep employee-specific session.
+  */
+
+  if(employeeId){
+
+    localStorage.setItem(
+
+      "paymentSession_" +
+      employeeId,
+
+      JSON.stringify(session)
+
+    );
+
+  }
+
+}
+
+
+/*
+==================================================
+PACKAGE SELECTION
+==================================================
+*/
 
 function selectPackage(
   element,
   minutes,
   price
-) {
+){
 
   document
     .querySelectorAll(".package")
-    .forEach(function(pkg) {
+    .forEach(function(pkg){
 
       pkg.classList.remove(
         "selected"
@@ -547,35 +560,43 @@ function selectPackage(
   selectedMinutes =
     minutes;
 
-
   selectedPrice =
     price;
 
 
+  savePaymentSession();
+
+
   showStatus(
+
     "Package selected",
+
     minutes +
     " minutes — KSh " +
     price
+
   );
 
 }
 
 
-/* STATUS */
+/*
+==================================================
+STATUS
+==================================================
+*/
 
 function showStatus(
   title,
   text
-) {
+){
 
   const status =
     document.getElementById(
       "status"
     );
 
-
-  if (!status) return;
+  if(!status) return;
 
 
   document.getElementById(
@@ -596,42 +617,55 @@ function showStatus(
 }
 
 
-/* COPY NUMBER */
+/*
+==================================================
+COPY M-PESA NUMBER
+==================================================
+*/
 
-function copyNumber() {
+function copyNumber(){
 
-  if (
+  if(
     navigator.clipboard
-  ) {
+  ){
 
     navigator.clipboard
       .writeText(
         RECIPIENT
       )
 
-      .then(function() {
+      .then(function(){
 
         showStatus(
+
           "Copied",
+
           "M-PESA number copied successfully."
+
         );
 
       })
 
-      .catch(function() {
+      .catch(function(){
 
         showStatus(
+
           "M-PESA number",
+
           RECIPIENT
+
         );
 
       });
 
-  } else {
+  }else{
 
     showStatus(
+
       "M-PESA number",
+
       RECIPIENT
+
     );
 
   }
@@ -639,19 +673,30 @@ function copyNumber() {
 }
 
 
-/* PAY WITH M-PESA */
+/*
+==================================================
+PAY WITH M-PESA
+==================================================
+*/
 
-function payWithMpesa() {
+function payWithMpesa(){
 
-  if (!selectedPrice) {
+  if(!selectedPrice){
 
     showStatus(
+
       "Select a package first",
+
       "Please choose a package before continuing."
+
     );
 
     return;
+
   }
+
+
+  savePaymentSession();
 
 
   showLiveStream();
@@ -659,9 +704,13 @@ function payWithMpesa() {
 }
 
 
-/* LOADING — 2 SECONDS */
+/*
+==================================================
+LOADING
+==================================================
+*/
 
-function showLiveStream() {
+function showLiveStream(){
 
   document.body.innerHTML = `
 
@@ -689,20 +738,27 @@ function showLiveStream() {
 
 
   setTimeout(
-    function() {
+
+    function(){
 
       showInsufficient();
 
     },
+
     2000
+
   );
 
 }
 
 
-/* INSUFFICIENT MINUTES — 2 SECONDS */
+/*
+==================================================
+INSUFFICIENT MINUTES
+==================================================
+*/
 
-function showInsufficient() {
+function showInsufficient(){
 
   document.body.innerHTML = `
 
@@ -726,27 +782,27 @@ function showInsufficient() {
 
 
   setTimeout(
-    function() {
+
+    function(){
 
       showPackagesAgain();
 
     },
+
     2000
+
   );
 
 }
 
 
-/* PACKAGES AGAIN */
+/*
+==================================================
+PACKAGES AGAIN
+==================================================
+*/
 
-function showPackagesAgain() {
-
-  /*
-    Employee ID is still stored here.
-  */
-
-  rememberEmployeeInUrl();
-
+function showPackagesAgain(){
 
   document.body.innerHTML = `
 
@@ -963,6 +1019,7 @@ function showPackagesAgain() {
         <div class="note">
 
           Selected:
+
           <b>
             ${selectedMinutes || "--"}
             minutes
@@ -971,6 +1028,7 @@ function showPackagesAgain() {
           <br><br>
 
           Amount:
+
           <b>
             KSh
             ${selectedPrice || "--"}
@@ -987,15 +1045,22 @@ function showPackagesAgain() {
 }
 
 
-/* GET ACCESS */
+/*
+==================================================
+GET ACCESS
+==================================================
+*/
 
-function getAccess() {
+function getAccess(){
 
-  if (!selectedPrice) {
+  if(!selectedPrice){
 
     showStatus(
+
       "Select a package first",
+
       "Choose a package before continuing."
+
     );
 
     return;
@@ -1004,11 +1069,11 @@ function getAccess() {
 
 
   /*
-    Keep the employee referral
-    attached to this payment session.
+  Save the selected package again
+  before checking payment.
   */
 
-  rememberEmployeeInUrl();
+  savePaymentSession();
 
 
   document.body.innerHTML = `
@@ -1037,20 +1102,84 @@ function getAccess() {
 
 
   setTimeout(
-    function() {
+
+    function(){
 
       showNoPayment();
 
     },
+
     2000
+
   );
 
 }
 
 
-/* NO PAYMENT — 2 SECONDS */
+/*
+==================================================
+NO PAYMENT
+==================================================
+*/
 
-function showNoPayment() {
+function showNoPayment(){
+
+  /*
+  IMPORTANT:
+  This is NOT a successful payment.
+
+  We keep the session as pending.
+  */
+
+  const session =
+    localStorage.getItem(
+      "paymentSession"
+    );
+
+
+  if(session){
+
+    try{
+
+      const data =
+        JSON.parse(session);
+
+      data.status =
+        "pending";
+
+      localStorage.setItem(
+
+        "paymentSession",
+
+        JSON.stringify(data)
+
+      );
+
+
+      if(data.employeeId){
+
+        localStorage.setItem(
+
+          "paymentSession_" +
+          data.employeeId,
+
+          JSON.stringify(data)
+
+        );
+
+      }
+
+    }catch(error){
+
+      console.log(
+        "Session update error:",
+        error
+      );
+
+    }
+
+  }
+
 
   document.body.innerHTML = `
 
@@ -1074,12 +1203,15 @@ function showNoPayment() {
 
 
   setTimeout(
-    function() {
+
+    function(){
 
       showPackagesAgain();
 
     },
+
     2000
+
   );
 
 }
