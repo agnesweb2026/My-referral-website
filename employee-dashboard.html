@@ -3,394 +3,371 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Employee Dashboard</title>
+<title>Employee Portal</title>
 
 <style>
 *{
-  box-sizing:border-box;
+box-sizing:border-box;
 }
 
 body{
-  margin:0;
-  background:#070707;
-  color:#fff;
-  font-family:Arial,sans-serif;
+margin:0;
+background:#070707;
+color:#fff;
+font-family:Arial,sans-serif;
 }
 
 button{
-  border:0;
-  cursor:pointer;
-  font-weight:bold;
+border:0;
+cursor:pointer;
+font-weight:bold;
+}
+
+input{
+font-family:Arial,sans-serif;
 }
 
 header{
-  background:#101010;
-  padding:15px;
-  border-bottom:1px solid #292929;
+background:#101010;
+padding:15px;
+border-bottom:1px solid #292929;
 }
 
 .header-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
 }
 
 .logo{
-  font-size:21px;
-  font-weight:bold;
+font-size:21px;
+font-weight:bold;
 }
 
 .muted{
-  color:#999;
-  font-size:12px;
+color:#999;
+font-size:12px;
 }
 
 .online{
-  color:#39e875;
-  font-size:11px;
-  margin-top:4px;
+color:#39e875;
+font-size:11px;
+margin-top:4px;
 }
 
 .logout-btn{
-  background:#ff3d3d;
-  color:#fff;
-  padding:10px 13px;
-  border-radius:9px;
-  font-size:11px;
+background:#ff3d3d;
+color:#fff;
+padding:10px 13px;
+border-radius:9px;
+font-size:11px;
 }
 
 main{
-  width:100%;
-  max-width:650px;
-  margin:auto;
-  padding:15px;
+width:100%;
+max-width:650px;
+margin:auto;
+padding:15px;
 }
 
 .card{
-  background:#111;
-  border:1px solid #292929;
-  border-radius:15px;
-  padding:17px;
-  margin-bottom:15px;
+background:#111;
+border:1px solid #292929;
+border-radius:15px;
+padding:17px;
+margin-bottom:15px;
 }
 
 .card-title{
-  font-size:16px;
-  font-weight:bold;
-  margin-bottom:15px;
+font-size:16px;
+font-weight:bold;
+margin-bottom:15px;
 }
 
 .profile{
-  display:flex;
-  align-items:center;
-  gap:13px;
+display:flex;
+align-items:center;
+gap:13px;
 }
 
 .avatar{
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:#222;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:23px;
-  font-weight:bold;
+width:55px;
+height:55px;
+border-radius:50%;
+background:#222;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:23px;
+font-weight:bold;
 }
 
 .name{
-  font-size:18px;
-  font-weight:bold;
+font-size:18px;
+font-weight:bold;
 }
 
 .badge{
-  display:inline-block;
-  margin-top:5px;
-  padding:5px 9px;
-  border-radius:20px;
-  background:#173b25;
-  color:#42e878;
-  font-size:11px;
-  font-weight:bold;
+display:inline-block;
+margin-top:5px;
+padding:5px 9px;
+border-radius:20px;
+background:#173b25;
+color:#42e878;
+font-size:11px;
+font-weight:bold;
 }
 
 .ref-box{
-  background:#080808;
-  border:1px solid #292929;
-  border-radius:10px;
-  padding:12px;
-  word-break:break-all;
-  color:#aaa;
-  font-size:13px;
+background:#080808;
+border:1px solid #292929;
+border-radius:10px;
+padding:12px;
+word-break:break-all;
+color:#aaa;
+font-size:13px;
 }
 
 .copy-btn{
-  width:100%;
-  margin-top:10px;
-  background:#fff;
-  color:#000;
-  padding:12px;
-  border-radius:10px;
+width:100%;
+margin-top:10px;
+background:#fff;
+color:#000;
+padding:12px;
+border-radius:10px;
 }
 
 .grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
 }
 
 .stat{
-  background:#090909;
-  border:1px solid #222;
-  border-radius:11px;
-  padding:14px;
+background:#090909;
+border:1px solid #222;
+border-radius:11px;
+padding:14px;
 }
 
 .stat-label{
-  color:#999;
-  font-size:11px;
+color:#999;
+font-size:11px;
 }
 
 .stat-value{
-  font-size:20px;
-  font-weight:bold;
-  margin-top:7px;
+font-size:20px;
+font-weight:bold;
+margin-top:7px;
 }
 
 .green{
-  color:#42e878;
+color:#42e878;
 }
 
 .yellow{
-  color:#ffd15c;
+color:#ffd15c;
 }
 
 .red{
-  color:#ff5555;
+color:#ff5555;
 }
 
 .withdraw-btn{
-  width:100%;
-  margin-top:12px;
-  background:#42e878;
-  color:#000;
-  padding:13px;
-  border-radius:10px;
+width:100%;
+margin-top:12px;
+background:#42e878;
+color:#000;
+padding:13px;
+border-radius:10px;
 }
 
 .section-note{
-  color:#777;
-  font-size:11px;
-  margin-top:8px;
-}
+color:#777;
+font-size:11px;
+margin-top:8px;
 
 
 /* LOGIN */
-
 #loginScreen{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
 }
 
 .login-box{
-  width:100%;
-  max-width:420px;
-  background:#111;
-  border:1px solid #292929;
-  border-radius:18px;
-  padding:25px;
+width:100%;
+max-width:420px;
+background:#111;
+border:1px solid #292929;
+border-radius:18px;
+padding:25px;
 }
 
 .login-logo{
-  text-align:center;
-  font-size:25px;
-  font-weight:bold;
-  margin-bottom:8px;
+text-align:center;
+font-size:25px;
+font-weight:bold;
+margin-bottom:8px;
 }
 
 .login-subtitle{
-  text-align:center;
-  color:#999;
-  font-size:13px;
-  margin-bottom:25px;
+text-align:center;
+color:#999;
+font-size:13px;
+margin-bottom:25px;
 }
 
 .login-label{
-  display:block;
-  color:#aaa;
-  font-size:12px;
-  margin-bottom:7px;
+display:block;
+color:#aaa;
+font-size:12px;
+margin-bottom:7px;
 }
 
-.login-select{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:1px solid #333;
-  background:#080808;
-  color:#fff;
-  font-size:14px;
-  margin-bottom:15px;
+.login-input{
+width:100%;
+padding:14px;
+border-radius:10px;
+border:1px solid #333;
+background:#080808;
+color:#fff;
+font-size:14px;
+margin-bottom:15px;
+outline:none;
+}
+
+.login-input:focus{
+border-color:#42e878;
 }
 
 .login-btn{
-  width:100%;
-  background:#42e878;
-  color:#000;
-  padding:14px;
-  border-radius:10px;
-  font-size:14px;
+width:100%;
+background:#42e878;
+color:#000;
+padding:14px;
+border-radius:10px;
+font-size:14px;
 }
 
 .login-message{
-  text-align:center;
-  color:#ff5555;
-  font-size:12px;
-  margin-top:12px;
-  display:none;
-}
-
-
-/* WITHDRAW MODAL */
-
-#withdrawModal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  padding:20px;
-  z-index:99;
-}
-
-.modal-box{
-  max-width:430px;
-  margin:80px auto;
-  background:#151515;
-  border:1px solid #333;
-  border-radius:15px;
-  padding:20px;
-}
-
-.input{
-  width:100%;
-  padding:13px;
-  background:#080808;
-  color:white;
-  border:1px solid #333;
-  border-radius:9px;
-  margin-bottom:10px;
-}
-
-.request-btn{
-  width:100%;
-  background:#42e878;
-  color:#000;
-  padding:13px;
-  border-radius:9px;
-}
-
-.cancel-btn{
-  width:100%;
-  margin-top:8px;
-  background:#292929;
-  color:white;
-  padding:13px;
-  border-radius:9px;
+text-align:center;
+color:#ff5555;
+font-size:12px;
+margin-top:12px;
+display:none;
 }
 
 #dashboardScreen{
-  display:none;
+display:none;
+}
+
+/* WITHDRAW */
+#withdrawModal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
+padding:20px;
+z-index:99;
+}
+
+.modal-box{
+max-width:430px;
+margin:80px auto;
+background:#151515;
+border:1px solid #333;
+border-radius:15px;
+padding:20px;
+}
+
+.input{
+width:100%;
+padding:13px;
+background:#080808;
+color:white;
+border:1px solid #333;
+border-radius:9px;
+margin-bottom:10px;
+}
+
+.request-btn{
+width:100%;
+background:#42e878;
+color:#000;
+padding:13px;
+border-radius:9px;
+}
+
+.cancel-btn{
+width:100%;
+margin-top:8px;
+background:#292929;
+color:white;
+padding:13px;
+border-radius:9px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- LOGIN SCREEN -->
 
 <div id="loginScreen">
 
-  <div class="login-box">
+<div class="login-box">
 
-    <div class="login-logo">
-      EMP.PORTAL
-    </div>
+<div class="login-logo">
+EMP.PORTAL
+</div>
 
-    <div class="login-subtitle">
-      Employee Login
-    </div>
+<div class="login-subtitle">
+Employee Login
+</div>
 
-    <label class="login-label">
-      SELECT EMPLOYEE
-    </label>
+<label class="login-label">
+USERNAME
+</label>
 
-    <select id="employeeSelect" class="login-select">
+<input
+id="loginUsername"
+class="login-input"
+type="text"
+placeholder="Enter username"
+autocomplete="username"
+>
 
-      <option value="">
-        Select your account
-      </option>
+<label class="login-label">
+PASSWORD
+</label>
 
-      <option value="REF-A7K2">
-        Joshua
-      </option>
+<input
+id="loginPassword"
+class="login-input"
+type="password"
+placeholder="Enter password"
+autocomplete="current-password"
+>
 
-      <option value="REF-B3M9">
-        Agnes
-      </option>
+<button
+class="login-btn"
+onclick="loginEmployee()"
+>
+LOGIN
+</button>
 
-      <option value="REF-C8P4">
-        Becky
-      </option>
+<div
+id="loginMessage"
+class="login-message"
+>
+Incorrect username or password.
+</div>
 
-      <option value="REF-D2L6">
-        Dorry
-      </option>
-
-      <option value="REF-E5N1">
-        Mercy
-      </option>
-
-      <option value="REF-F9Q3">
-        Sharon
-      </option>
-
-      <option value="REF-G4R7">
-        Brenda
-      </option>
-
-      <option value="REF-H6T2">
-        Faith
-      </option>
-
-      <option value="REF-J8V5">
-        Cynthia
-      </option>
-
-      <option value="REF-K4W8">
-        Mary
-      </option>
-
-    </select>
-
-    <button
-      class="login-btn"
-      onclick="loginEmployee()"
-    >
-      LOGIN
-    </button>
-
-    <div
-      id="loginMessage"
-      class="login-message"
-    >
-      Please select an employee account.
-    </div>
-
-  </div>
+</div>
 
 </div>
 
@@ -401,375 +378,379 @@ main{
 
 <header>
 
-  <div class="header-row">
+<div class="header-row">
 
-    <div>
+<div>
 
-      <div class="logo">
-        EMP.PORTAL
-      </div>
+<div class="logo">
+EMP.PORTAL
+</div>
 
-      <div class="muted">
-        Hello
-        <span id="employeeName">
-          Employee
-        </span>
-      </div>
+<div class="muted">
+Hello
+<span id="employeeName">
+Employee
+</span>
+</div>
 
-      <div class="online">
-        ● ONLINE
-      </div>
+<div class="online">
+● ONLINE
+</div>
 
-    </div>
+</div>
 
-    <button
-      class="logout-btn"
-      onclick="logoutEmployee()"
-    >
-      LOG OUT
-    </button>
+<button
+class="logout-btn"
+onclick="logoutEmployee()"
+>
+LOG OUT
+</button>
 
-  </div>
+</div>
 
 </header>
 
 
 <main>
 
+<!-- ACCOUNT -->
+
 <div class="card">
 
-  <div class="card-title">
-    Employee Account
-  </div>
+<div class="card-title">
+Employee Account
+</div>
 
-  <div class="profile">
+<div class="profile">
 
-    <div
-      class="avatar"
-      id="avatar"
-    >
-      E
-    </div>
+<div
+class="avatar"
+id="avatar"
+>
+E
+</div>
 
-    <div>
+<div>
 
-      <div
-        class="name"
-        id="profileName"
-      >
-        Employee
-      </div>
+<div
+class="name"
+id="profileName"
+>
+Employee
+</div>
 
-      <div class="muted">
-        Referral Code:
-        <span id="refCode">
-          REF-A7K2
-        </span>
-      </div>
+<div class="muted">
+Username:
+<span id="usernameDisplay">
+-
+</span>
+</div>
 
-      <span class="badge">
-        EMPLOYEE
-      </span>
+<div class="muted">
+Referral Code:
+<span id="refCode">
+-
+</span>
+</div>
 
-    </div>
+<span class="badge">
+EMPLOYEE
+</span>
 
-  </div>
+</div>
+
+</div>
 
 </div>
 
 
+<!-- REFERRAL -->
+
 <div class="card">
 
-  <div class="card-title">
-    Your Referral Link
-  </div>
+<div class="card-title">
+Your Referral Link
+</div>
 
-  <div
-    class="ref-box"
-    id="referralLink"
-  ></div>
+<div
+class="ref-box"
+id="referralLink"
+></div>
 
-  <button
-    class="copy-btn"
-    onclick="copyReferral()"
-  >
-    COPY REFERRAL LINK
-  </button>
+<button
+class="copy-btn"
+onclick="copyReferral()"
+>
+COPY REFERRAL LINK
+</button>
 
-  <div class="section-note">
-    Share this link with customers to record your sales.
-  </div>
+<div class="section-note">
+Share this link with customers to record your sales.
+</div>
 
 </div>
 
 
+<!-- WALLET -->
+
 <div class="card">
 
-  <div class="card-title">
-    Wallet
-  </div>
+<div class="card-title">
+Wallet
+</div>
 
-  <div class="grid">
+<div class="grid">
 
-    <div class="stat">
+<div class="stat">
 
-      <div class="stat-label">
-        AVAILABLE BALANCE
-      </div>
+<div class="stat-label">
+AVAILABLE BALANCE
+</div>
 
-      <div class="stat-value green">
-        KSh
-        <span id="availableBalance">
-          0
-        </span>
-      </div>
-
-    </div>
-
-    <div class="stat">
-
-      <div class="stat-label">
-        TOTAL EARNED
-      </div>
-
-      <div class="stat-value">
-        KSh
-        <span id="totalEarned">
-          0
-        </span>
-      </div>
-
-    </div>
-
-    <div class="stat">
-
-      <div class="stat-label">
-        IN FLIGHT
-      </div>
-
-      <div class="stat-value yellow">
-        KSh
-        <span id="inFlight">
-          0
-        </span>
-      </div>
-
-    </div>
-
-    <div class="stat">
-
-      <div class="stat-label">
-        LOST
-      </div>
-
-      <div class="stat-value red">
-        KSh
-        <span id="lostAmount">
-          0
-        </span>
-      </div>
-
-    </div>
-
-  </div>
-
-  <button
-    class="withdraw-btn"
-    onclick="openWithdraw()"
-  >
-    WITHDRAW
-  </button>
+<div class="stat-value green">
+KSh
+<span id="availableBalance">
+0
+</span>
+</div>
 
 </div>
+
+<div class="stat">
+
+<div class="stat-label">
+TOTAL EARNED
+</div>
+
+<div class="stat-value">
+KSh
+<span id="totalEarned">
+0
+</span>
+</div>
+
+</div>
+
+<div class="stat">
+
+<div class="stat-label">
+IN FLIGHT
+</div>
+
+<div class="stat-value yellow">
+KSh
+<span id="inFlight">
+0
+</span>
+</div>
+
+</div>
+
+<div class="stat">
+
+<div class="stat-label">
+LOST
+</div>
+
+<div class="stat-value red">
+KSh
+<span id="lostAmount">
+0
+</span>
+</div>
+
+</div>
+
+</div>
+
+<button
+class="withdraw-btn"
+onclick="openWithdraw()"
+>
+WITHDRAW
+</button>
+
+</div>
+<!-- COMMISSION EARNINGS -->
+
 <div class="card">
 
-  <div class="card-title">
-    Commission Earnings
-  </div>
+<div class="card-title">
+Commission Earnings
+</div>
 
-  <div class="grid">
+<div class="grid">
 
-    <div class="stat">
+<div class="stat">
+<div class="stat-label">
+TODAY
+</div>
 
-      <div class="stat-label">
-        TODAY
-      </div>
+<div class="stat-value green">
+KSh
+<span id="todayEarned">
+0
+</span>
+</div>
+</div>
 
-      <div class="stat-value green">
-        KSh
-        <span id="todayEarned">
-          0
-        </span>
-      </div>
+<div class="stat">
+<div class="stat-label">
+THIS WEEK
+</div>
 
-    </div>
+<div class="stat-value">
+KSh
+<span id="weekEarned">
+0
+</span>
+</div>
+</div>
 
+<div class="stat">
+<div class="stat-label">
+THIS MONTH
+</div>
 
-    <div class="stat">
+<div class="stat-value">
+KSh
+<span id="monthEarned">
+0
+</span>
+</div>
+</div>
 
-      <div class="stat-label">
-        THIS WEEK
-      </div>
+<div class="stat">
+<div class="stat-label">
+ALL TIME
+</div>
 
-      <div class="stat-value">
-        KSh
-        <span id="weekEarned">
-          0
-        </span>
-      </div>
+<div class="stat-value">
+KSh
+<span id="allTimeEarned">
+0
+</span>
+</div>
+</div>
 
-    </div>
-
-
-    <div class="stat">
-
-      <div class="stat-label">
-        THIS MONTH
-      </div>
-
-      <div class="stat-value">
-        KSh
-        <span id="monthEarned">
-          0
-        </span>
-      </div>
-
-    </div>
-
-
-    <div class="stat">
-
-      <div class="stat-label">
-        ALL TIME
-      </div>
-
-      <div class="stat-value">
-        KSh
-        <span id="allTimeEarned">
-          0
-        </span>
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 </div>
 
 
+<!-- SALES ACTIVITY -->
 
 <div class="card">
 
-  <div class="card-title">
-    Sales Activity
-  </div>
+<div class="card-title">
+Sales Activity
+</div>
 
-  <div class="grid">
+<div class="grid">
 
-    <div class="stat">
+<div class="stat">
 
-      <div class="stat-label">
-        SUCCESSFUL
-      </div>
+<div class="stat-label">
+SUCCESSFUL
+</div>
 
-      <div
-        class="stat-value green"
-        id="successfulSales"
-      >
-        0
-      </div>
+<div
+class="stat-value green"
+id="successfulSales"
+>
+0
+</div>
 
-    </div>
+</div>
 
+<div class="stat">
 
-    <div class="stat">
+<div class="stat-label">
+FAILED
+</div>
 
-      <div class="stat-label">
-        FAILED
-      </div>
+<div
+class="stat-value red"
+id="failedSales"
+>
+0
+</div>
 
-      <div
-        class="stat-value red"
-        id="failedSales"
-      >
-        0
-      </div>
+</div>
 
-    </div>
+<div class="stat">
 
+<div class="stat-label">
+PENDING
+</div>
 
-    <div class="stat">
+<div
+class="stat-value yellow"
+id="pendingSales"
+>
+0
+</div>
 
-      <div class="stat-label">
-        PENDING
-      </div>
+</div>
 
-      <div
-        class="stat-value yellow"
-        id="pendingSales"
-      >
-        0
-      </div>
+<div class="stat">
 
-    </div>
+<div class="stat-label">
+AVERAGE SALE
+</div>
 
+<div class="stat-value">
+KSh
+<span id="averageSale">
+0
+</span>
+</div>
 
-    <div class="stat">
+</div>
 
-      <div class="stat-label">
-        AVERAGE SALE
-      </div>
-
-      <div class="stat-value">
-        KSh
-        <span id="averageSale">
-          0
-        </span>
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 </div>
 
 
+<!-- PAYMENT INFORMATION -->
 
 <div class="card">
 
-  <div class="card-title">
-    Payment Information
-  </div>
+<div class="card-title">
+Payment Information
+</div>
 
-  <div class="stat">
+<div class="stat">
 
-    <div class="stat-label">
-      PAYMENT STATUS
-    </div>
+<div class="stat-label">
+PAYMENT STATUS
+</div>
 
-    <div style="margin-top:7px">
-      Commission is added after a customer payment is successfully verified.
-    </div>
+<div style="margin-top:7px">
+Commission is added after a customer payment is successfully verified.
+</div>
 
-  </div>
+</div>
 
 </div>
 
 
+<!-- RECENT ACTIVITY -->
 
 <div class="card">
 
-  <div class="card-title">
-    Recent Activity
-  </div>
+<div class="card-title">
+Recent Activity
+</div>
 
-  <div id="activityList">
+<div id="activityList">
 
-    <div class="muted">
-      No activity yet.
-    </div>
+<div class="muted">
+No activity yet.
+</div>
 
-  </div>
+</div>
 
 </div>
 
@@ -778,1052 +759,1183 @@ main{
 </div>
 
 
-
 <!-- WITHDRAW MODAL -->
 
 <div id="withdrawModal">
 
-  <div class="modal-box">
+<div class="modal-box">
 
-    <h3 style="margin-top:0">
-      Withdraw Earnings
-    </h3>
+<h3 style="margin-top:0">
+Withdraw Earnings
+</h3>
 
-    <div class="muted">
+<div class="muted">
+Available:
+KSh
+<span id="modalBalance">
+0
+</span>
+</div>
 
-      Available:
-      KSh
-      <span id="modalBalance">
-        0
-      </span>
+<br>
 
-    </div>
+<input
+id="withdrawPhone"
+class="input"
+placeholder="Payment phone number"
+type="tel"
+>
 
-    <br>
+<input
+id="withdrawAmount"
+class="input"
+placeholder="Amount in KSh"
+type="number"
+>
 
-    <input
-      id="withdrawPhone"
-      class="input"
-      placeholder="Payment phone number"
-      type="tel"
-    >
+<button
+class="request-btn"
+onclick="submitWithdrawal()"
+>
+REQUEST WITHDRAWAL
+</button>
 
-    <input
-      id="withdrawAmount"
-      class="input"
-      placeholder="Amount in KSh"
-      type="number"
-    >
+<button
+class="cancel-btn"
+onclick="closeWithdraw()"
+>
+CANCEL
+</button>
 
-    <button
-      class="request-btn"
-      onclick="submitWithdrawal()"
-    >
-      REQUEST WITHDRAWAL
-    </button>
-
-    <button
-      class="cancel-btn"
-      onclick="closeWithdraw()"
-    >
-      CANCEL
-    </button>
-
-  </div>
+</div>
 
 </div>
 
 
-
 <script>
+
+/* =========================
+   EMPLOYEE ACCOUNTS
+========================= */
 
 const COMMISSION_RATE = 0.25;
 
-
 const EMPLOYEES = {
 
-  "REF-A7K2":"Joshua",
+"Joshua1":{
+password:"123456",
+name:"Joshua1",
+ref:"REF-A7K2"
+},
 
-  "REF-B3M9":"Agnes",
+"Joshua2":{
+password:"123456",
+name:"Joshua2",
+ref:"REF-B3M9"
+},
 
-  "REF-C8P4":"Becky",
+"Joshua3":{
+password:"123456",
+name:"Joshua3",
+ref:"REF-C8P4"
+},
 
-  "REF-D2L6":"Dorry",
+"Joshua4":{
+password:"123456",
+name:"Joshua4",
+ref:"REF-D2L6"
+},
 
-  "REF-E5N1":"Mercy",
+"Joshua5":{
+password:"123456",
+name:"Joshua5",
+ref:"REF-E5N1"
+},
 
-  "REF-F9Q3":"Sharon",
+"Joshua6":{
+password:"123456",
+name:"Joshua6",
+ref:"REF-F9Q3"
+},
 
-  "REF-G4R7":"Brenda",
+"Joshua7":{
+password:"123456",
+name:"Joshua7",
+ref:"REF-G4R7"
+},
 
-  "REF-H6T2":"Faith",
+"Joshua8":{
+password:"123456",
+name:"Joshua8",
+ref:"REF-H6T2"
+},
 
-  "REF-J8V5":"Cynthia",
+"Joshua9":{
+password:"123456",
+name:"Joshua9",
+ref:"REF-J8V5"
+},
 
-  "REF-K4W8":"Mary"
+"Joshua10":{
+password:"123456",
+name:"Joshua10",
+ref:"REF-K4W8"
+}
 
 };
 
 
+/* =========================
+   CURRENT LOGIN
+========================= */
 
-let employeeRef =
+let employeeUsername =
 localStorage.getItem(
-  "loggedInEmployee"
+"loggedInEmployee"
 );
 
+let employeeRef = null;
 
+
+/* =========================
+   LOGIN
+========================= */
 
 function loginEmployee(){
 
-  const selected =
-    document.getElementById(
-      "employeeSelect"
-    ).value;
+const username =
+document.getElementById(
+"loginUsername"
+).value.trim();
+
+const password =
+document.getElementById(
+"loginPassword"
+).value;
+
+const message =
+document.getElementById(
+"loginMessage"
+);
 
 
-  const message =
-    document.getElementById(
-      "loginMessage"
-    );
+if(
+!EMPLOYEES[username] ||
+EMPLOYEES[username].password !== password
+){
 
+message.style.display =
+"block";
 
-  if(!selected){
-
-    message.style.display =
-      "block";
-
-    return;
-
-  }
-
-
-  localStorage.setItem(
-    "loggedInEmployee",
-    selected
-  );
-
-
-  employeeRef =
-    selected;
-
-
-  message.style.display =
-    "none";
-
-
-  showDashboard();
+return;
 
 }
 
 
+employeeUsername =
+username;
+
+employeeRef =
+EMPLOYEES[username].ref;
+
+
+localStorage.setItem(
+"loggedInEmployee",
+username
+);
+
+
+message.style.display =
+"none";
+
+
+document.getElementById(
+"loginPassword"
+).value =
+"";
+
+
+showDashboard();
+
+}
+
+
+/* =========================
+   LOG OUT
+========================= */
 
 function logoutEmployee(){
 
-  const confirmed =
-    confirm(
-      "Are you sure you want to log out?"
-    );
+const confirmed =
+confirm(
+"Are you sure you want to log out?"
+);
 
 
-  if(!confirmed){
-
-    return;
-
-  }
+if(!confirmed){
+return;
+}
 
 
-  localStorage.removeItem(
-    "loggedInEmployee"
-  );
+localStorage.removeItem(
+"loggedInEmployee"
+);
 
 
-  employeeRef =
-    null;
+employeeUsername =
+null;
+
+employeeRef =
+null;
 
 
-  document.getElementById(
-    "dashboardScreen"
-  ).style.display =
-    "none";
+document.getElementById(
+"dashboardScreen"
+).style.display =
+"none";
 
 
-  document.getElementById(
-    "loginScreen"
-  ).style.display =
-    "flex";
+document.getElementById(
+"loginScreen"
+).style.display =
+"flex";
 
 
-  document.getElementById(
-    "employeeSelect"
-  ).value =
-    "";
+document.getElementById(
+"loginUsername"
+).value =
+"";
+
+document.getElementById(
+"loginPassword"
+).value =
+"";
+
+document.getElementById(
+"loginMessage"
+).style.display =
+"none";
 
 }
 
 
+/* =========================
+   SHOW DASHBOARD
+========================= */
 
 function showDashboard(){
 
-  if(
-    !employeeRef ||
-    !EMPLOYEES[employeeRef]
-  ){
+if(
+!employeeUsername ||
+!EMPLOYEES[employeeUsername]
+){
 
-    document.getElementById(
-      "loginScreen"
-    ).style.display =
-      "flex";
+document.getElementById(
+"loginScreen"
+).style.display =
+"flex";
 
+document.getElementById(
+"dashboardScreen"
+).style.display =
+"none";
 
-    document.getElementById(
-      "dashboardScreen"
-    ).style.display =
-      "none";
-
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "loginScreen"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "dashboardScreen"
-  ).style.display =
-    "block";
-
-
-  const employeeName =
-    EMPLOYEES[employeeRef];
-
-
-  document.getElementById(
-    "employeeName"
-  ).textContent =
-    employeeName;
-
-
-  document.getElementById(
-    "profileName"
-  ).textContent =
-    employeeName;
-
-
-  document.getElementById(
-    "refCode"
-  ).textContent =
-    employeeRef;
-
-
-  document.getElementById(
-    "avatar"
-  ).textContent =
-    employeeName
-      .charAt(0)
-      .toUpperCase();
-
-
-  updateReferralLink();
-
-  refreshDashboard();
+return;
 
 }
 
 
+const account =
+EMPLOYEES[
+employeeUsername
+];
+
+
+employeeRef =
+account.ref;
+
+
+document.getElementById(
+"loginScreen"
+).style.display =
+"none";
+
+
+document.getElementById(
+"dashboardScreen"
+).style.display =
+"block";
+
+
+document.getElementById(
+"employeeName"
+).textContent =
+account.name;
+
+
+document.getElementById(
+"profileName"
+).textContent =
+account.name;
+
+
+document.getElementById(
+"usernameDisplay"
+).textContent =
+employeeUsername;
+
+
+document.getElementById(
+"refCode"
+).textContent =
+account.ref;
+
+
+document.getElementById(
+"avatar"
+).textContent =
+account.name
+.charAt(0)
+.toUpperCase();
+
+
+updateReferralLink();
+
+refreshDashboard();
+
+}
+
+
+/* =========================
+   REFERRAL LINK
+========================= */
 
 function updateReferralLink(){
 
-  const referralLink =
-    location.origin +
-    "/?ref=" +
-    employeeRef;
+const referralLink =
+location.origin +
+"/?ref=" +
+employeeRef;
 
 
-  document.getElementById(
-    "referralLink"
-  ).textContent =
-    referralLink;
+document.getElementById(
+"referralLink"
+).textContent =
+referralLink;
 
 }
 
 
+/* =========================
+   STORAGE
+========================= */
 
 function getStorageKey(){
 
-  return (
-    "employeeDashboard_" +
-    employeeRef
-  );
+return (
+"employeeDashboard_" +
+employeeRef
+);
 
 }
-
 
 
 function getData(){
 
-  try{
+try{
 
-    return JSON.parse(
-      localStorage.getItem(
-        getStorageKey()
-      )
-    ) || {
+return JSON.parse(
+localStorage.getItem(
+getStorageKey()
+)
+) || {
 
-      payments:[],
+payments:[],
+withdrawals:[]
 
-      withdrawals:[]
+};
 
-    };
+}catch(e){
 
-  }catch(e){
+return {
 
-    return {
+payments:[],
+withdrawals:[]
 
-      payments:[],
-
-      withdrawals:[]
-
-    };
-
-  }
+};
 
 }
 
+}
 
 
 let dashboardData;
 
 
+/* =========================
+   SAVE DATA
+========================= */
 
 function saveData(){
 
-  localStorage.setItem(
+localStorage.setItem(
 
-    getStorageKey(),
+getStorageKey(),
 
-    JSON.stringify(
-      dashboardData
-    )
+JSON.stringify(
+dashboardData
+)
 
-  );
+);
 
 }
 
 
+/* =========================
+   COMMISSION
+========================= */
 
 function getCommission(payment){
 
-  if(
-    payment.status !==
-    "verified"
-  ){
+if(
+payment.status !==
+"verified"
+){
 
-    return 0;
-
-  }
-
-
-  return Number(
-    payment.amount || 0
-  ) * COMMISSION_RATE;
+return 0;
 
 }
 
 
+return Number(
+payment.amount || 0
+) *
+COMMISSION_RATE;
+
+}
+
+
+/* =========================
+   MONEY
+========================= */
 
 function money(value){
 
-  return Math.round(
-    Number(value) || 0
-  );
+return Math.round(
+Number(value) || 0
+);
 
 }
-
-
+  /* =========================
+   REFRESH DASHBOARD
+========================= */
 
 function refreshDashboard(){
 
-  if(!employeeRef){
-
-    return;
-
-  }
-
-
-  dashboardData =
-    getData();
-
-
-  const payments =
-    dashboardData.payments || [];
-
-
-  const withdrawals =
-    dashboardData.withdrawals || [];
-
-
-  const totalEarned =
-    payments.reduce(
-
-      (total,payment)=>{
-
-        return (
-          total +
-          getCommission(payment)
-        );
-
-      },
-
-      0
-
-    );
-
-
-  const pendingWithdrawals =
-    withdrawals
-
-      .filter(
-        w=>w.status==="pending"
-      )
-
-      .reduce(
-
-        (total,w)=>{
-
-          return (
-            total +
-            Number(w.amount || 0)
-          );
-
-        },
-
-        0
-
-      );
-
-
-  const paidWithdrawals =
-    withdrawals
-
-      .filter(
-        w=>w.status==="paid"
-      )
-
-      .reduce(
-
-        (total,w)=>{
-
-          return (
-            total +
-            Number(w.amount || 0)
-          );
-
-        },
-
-        0
-
-      );
-
-
-  const available =
-    totalEarned -
-    pendingWithdrawals -
-    paidWithdrawals;
-
-
-  const lost =
-    payments
-
-      .filter(
-        p=>p.status==="failed"
-      )
-
-      .reduce(
-
-        (total,p)=>{
-
-          return (
-            total +
-            Number(p.amount || 0) *
-            COMMISSION_RATE
-          );
-
-        },
-
-        0
-
-      );
-
-
-  document.getElementById(
-    "totalEarned"
-  ).textContent =
-    money(totalEarned);
-
-
-  document.getElementById(
-    "availableBalance"
-  ).textContent =
-    money(
-      Math.max(0,available)
-    );
-
-
-  document.getElementById(
-    "inFlight"
-  ).textContent =
-    money(
-      pendingWithdrawals
-    );
-
-
-  document.getElementById(
-    "lostAmount"
-  ).textContent =
-    money(lost);
-
-
-
-  const successful =
-    payments.filter(
-      p=>p.status==="verified"
-    );
-
-
-  const failed =
-    payments.filter(
-      p=>p.status==="failed"
-    );
-
-
-  const pending =
-    payments.filter(
-      p=>p.status==="pending"
-    );
-
-
-  document.getElementById(
-    "successfulSales"
-  ).textContent =
-    successful.length;
-
-
-  document.getElementById(
-    "failedSales"
-  ).textContent =
-    failed.length;
-
-
-  document.getElementById(
-    "pendingSales"
-  ).textContent =
-    pending.length;
-
-
-
-  const totalSuccessfulAmount =
-    successful.reduce(
-
-      (sum,p)=>{
-
-        return (
-          sum +
-          Number(p.amount || 0)
-        );
-
-      },
-
-      0
-
-    );
-
-
-  document.getElementById(
-    "averageSale"
-  ).textContent =
-
-    successful.length
-
-    ? money(
-        totalSuccessfulAmount /
-        successful.length
-      )
-
-    : 0;
-
-
-
-  const now =
-    new Date();
-
-
-  let today = 0;
-
-  let week = 0;
-
-  let month = 0;
-
-
-  successful.forEach(
-    payment=>{
-
-      const date =
-        new Date(payment.date);
-
-
-      const commission =
-        getCommission(payment);
-
-
-      if(
-        date.toDateString() ===
-        now.toDateString()
-      ){
-
-        today += commission;
-
-      }
-
-
-      if(
-        now - date <=
-        7 * 24 * 60 * 60 * 1000 &&
-        now - date >= 0
-      ){
-
-        week += commission;
-
-      }
-
-
-      if(
-        date.getMonth() ===
-        now.getMonth() &&
-
-        date.getFullYear() ===
-        now.getFullYear()
-      ){
-
-        month += commission;
-
-      }
-
-    }
-  );
-
-
-  document.getElementById(
-    "todayEarned"
-  ).textContent =
-    money(today);
-
-
-  document.getElementById(
-    "weekEarned"
-  ).textContent =
-    money(week);
-
-
-  document.getElementById(
-    "monthEarned"
-  ).textContent =
-    money(month);
-
-
-  document.getElementById(
-    "allTimeEarned"
-  ).textContent =
-    money(totalEarned);
-
-
-  renderActivity();
-
+if(!employeeRef){
+return;
 }
-  function renderActivity(){
 
-  const box =
-    document.getElementById(
-      "activityList"
-    );
 
+dashboardData =
+getData();
 
-  const payments =
-    dashboardData.payments || [];
 
+const payments =
+dashboardData.payments || [];
 
-  const withdrawals =
-    dashboardData.withdrawals || [];
 
+const withdrawals =
+dashboardData.withdrawals || [];
 
-  const items = [
 
-    ...payments.map(p=>({
+const totalEarned =
+payments.reduce(
 
-      type:"Sale",
+(total,payment)=>{
 
-      amount:p.amount,
+return total +
+getCommission(payment);
 
-      status:p.status,
+},
 
-      date:p.date
+0
 
-    })),
+);
 
-    ...withdrawals.map(w=>({
 
-      type:"Withdrawal",
+const pendingWithdrawals =
+withdrawals
+.filter(
+w=>w.status==="pending"
+)
+.reduce(
 
-      amount:w.amount,
+(total,w)=>{
 
-      status:w.status,
+return total +
+Number(w.amount || 0);
 
-      date:w.date
+},
 
-    }))
+0
 
-  ];
+);
 
 
-  items.sort(
+const paidWithdrawals =
+withdrawals
+.filter(
+w=>w.status==="paid"
+)
+.reduce(
 
-    (a,b)=>
-      new Date(b.date) -
-      new Date(a.date)
+(total,w)=>{
 
-  );
+return total +
+Number(w.amount || 0);
 
+},
 
-  const recent =
-    items.slice(0,10);
+0
 
+);
 
-  if(!recent.length){
 
-    box.innerHTML =
-      '<div class="muted">No activity yet.</div>';
+const available =
+totalEarned -
+pendingWithdrawals -
+paidWithdrawals;
 
-    return;
 
-  }
+const lost =
+payments
+.filter(
+p=>p.status==="failed"
+)
+.reduce(
 
+(total,p)=>{
 
-  box.innerHTML = "";
+return total +
+Number(p.amount || 0) *
+COMMISSION_RATE;
 
+},
 
-  recent.forEach(
-    item=>{
+0
 
-      const row =
-        document.createElement(
-          "div"
-        );
+);
 
 
-      row.style.padding =
-        "12px 0";
+document.getElementById(
+"totalEarned"
+).textContent =
+money(totalEarned);
 
 
-      row.style.borderBottom =
-        "1px solid #222";
+document.getElementById(
+"availableBalance"
+).textContent =
+money(
+Math.max(0,available)
+);
 
 
-      let statusClass = "";
+document.getElementById(
+"inFlight"
+).textContent =
+money(
+pendingWithdrawals
+);
 
 
-      if(
-        item.status ===
-        "verified"
-      ){
+document.getElementById(
+"lostAmount"
+).textContent =
+money(lost);
 
-        statusClass =
-          "green";
 
-      }
+/* SALES */
 
+const successful =
+payments.filter(
+p=>p.status==="verified"
+);
 
-      if(
-        item.status ===
-        "failed"
-      ){
 
-        statusClass =
-          "red";
+const failed =
+payments.filter(
+p=>p.status==="failed"
+);
 
-      }
 
+const pending =
+payments.filter(
+p=>p.status==="pending"
+);
 
-      if(
-        item.status ===
-        "pending"
-      ){
 
-        statusClass =
-          "yellow";
+document.getElementById(
+"successfulSales"
+).textContent =
+successful.length;
 
-      }
 
+document.getElementById(
+"failedSales"
+).textContent =
+failed.length;
 
-      row.innerHTML = `
 
-        <div>
+document.getElementById(
+"pendingSales"
+).textContent =
+pending.length;
 
-          <b>
-            ${item.type}
-          </b>
 
-          <span style="float:right">
+/* AVERAGE SALE */
 
-            KSh
-            ${money(item.amount)}
+const totalSuccessfulAmount =
+successful.reduce(
 
-          </span>
+(sum,p)=>{
 
-        </div>
+return sum +
+Number(p.amount || 0);
 
-        <div
-          class="${statusClass}"
-          style="font-size:11px;margin-top:4px"
-        >
+},
 
-          ${item.status}
+0
 
-        </div>
+);
 
-      `;
 
+document.getElementById(
+"averageSale"
+).textContent =
 
-      box.appendChild(row);
+successful.length
 
-    }
-  );
+? money(
+totalSuccessfulAmount /
+successful.length
+)
+
+: 0;
+
+
+/* PERIOD EARNINGS */
+
+const now =
+new Date();
+
+let today = 0;
+let week = 0;
+let month = 0;
+
+
+successful.forEach(
+payment=>{
+
+const date =
+new Date(payment.date);
+
+
+const commission =
+getCommission(payment);
+
+
+if(
+date.toDateString() ===
+now.toDateString()
+){
+
+today += commission;
 
 }
 
 
+if(
+now - date <=
+7 * 24 * 60 * 60 * 1000 &&
+now - date >= 0
+){
+
+week += commission;
+
+}
+
+
+if(
+date.getMonth() ===
+now.getMonth() &&
+
+date.getFullYear() ===
+now.getFullYear()
+){
+
+month += commission;
+
+}
+
+}
+);
+
+
+document.getElementById(
+"todayEarned"
+).textContent =
+money(today);
+
+
+document.getElementById(
+"weekEarned"
+).textContent =
+money(week);
+
+
+document.getElementById(
+"monthEarned"
+).textContent =
+money(month);
+
+
+document.getElementById(
+"allTimeEarned"
+).textContent =
+money(totalEarned);
+
+
+renderActivity();
+
+}
+
+
+/* =========================
+   ACTIVITY
+========================= */
+
+function renderActivity(){
+
+const box =
+document.getElementById(
+"activityList"
+);
+
+
+const payments =
+dashboardData.payments || [];
+
+
+const withdrawals =
+dashboardData.withdrawals || [];
+
+
+const items = [
+
+...payments.map(p=>({
+
+type:"Sale",
+amount:p.amount,
+status:p.status,
+date:p.date
+
+})),
+
+...withdrawals.map(w=>({
+
+type:"Withdrawal",
+amount:w.amount,
+status:w.status,
+date:w.date
+
+}))
+
+];
+
+
+items.sort(
+
+(a,b)=>
+new Date(b.date) -
+new Date(a.date)
+
+);
+
+
+const recent =
+items.slice(0,10);
+
+
+if(!recent.length){
+
+box.innerHTML =
+'<div class="muted">No activity yet.</div>';
+
+return;
+
+}
+
+
+box.innerHTML = "";
+
+
+recent.forEach(
+item=>{
+
+const row =
+document.createElement(
+"div"
+);
+
+
+row.style.padding =
+"12px 0";
+
+row.style.borderBottom =
+"1px solid #222";
+
+
+let statusClass = "";
+
+
+if(
+item.status ===
+"verified"
+){
+
+statusClass =
+"green";
+
+}
+
+
+if(
+item.status ===
+"failed"
+){
+
+statusClass =
+"red";
+
+}
+
+
+if(
+item.status ===
+"pending"
+){
+
+statusClass =
+"yellow";
+
+}
+
+
+row.innerHTML = `
+
+<div>
+
+<b>
+${item.type}
+</b>
+
+<span style="float:right">
+KSh ${money(item.amount)}
+</span>
+
+</div>
+
+<div
+class="${statusClass}"
+style="font-size:11px;margin-top:4px"
+>
+
+${item.status}
+
+</div>
+
+`;
+
+
+box.appendChild(row);
+
+}
+
+);
+
+}
+
+
+/* =========================
+   COPY REFERRAL
+========================= */
 
 function copyReferral(){
 
-  const referralLink =
-    location.origin +
-    "/?ref=" +
-    employeeRef;
+const referralLink =
+location.origin +
+"/?ref=" +
+employeeRef;
 
 
-  navigator.clipboard
+if(
+navigator.clipboard
+){
 
-    .writeText(
-      referralLink
-    )
+navigator.clipboard
+.writeText(
+referralLink
+)
+.then(()=>{
 
-    .then(()=>{
+alert(
+"Referral link copied"
+);
 
-      alert(
-        "Referral link copied"
-      );
+})
+.catch(()=>{
 
-    })
+alert(
+"Copy failed. Copy the link manually."
+);
 
-    .catch(()=>{
+});
 
-      alert(
-        "Copy failed. Copy the link manually."
-      );
+}else{
 
-    });
+alert(
+referralLink
+);
+
+}
 
 }
 
 
+/* =========================
+   WITHDRAW
+========================= */
 
 function openWithdraw(){
 
-  refreshDashboard();
+refreshDashboard();
 
 
-  const balance =
-    document.getElementById(
-      "availableBalance"
-    ).textContent;
+const balance =
+document.getElementById(
+"availableBalance"
+).textContent;
 
 
-  document.getElementById(
-    "modalBalance"
-  ).textContent =
-    balance;
+document.getElementById(
+"modalBalance"
+).textContent =
+balance;
 
 
-  document.getElementById(
-    "withdrawModal"
-  ).style.display =
-    "block";
+document.getElementById(
+"withdrawModal"
+).style.display =
+"block";
 
 }
-
 
 
 function closeWithdraw(){
 
-  document.getElementById(
-    "withdrawModal"
-  ).style.display =
-    "none";
+document.getElementById(
+"withdrawModal"
+).style.display =
+"none";
 
 }
 
 
+/* =========================
+   SUBMIT WITHDRAWAL
+========================= */
 
 function submitWithdrawal(){
 
-  const phone =
-    document.getElementById(
-      "withdrawPhone"
-    ).value.trim();
+const phone =
+document.getElementById(
+"withdrawPhone"
+).value.trim();
 
 
-  const amount =
-    Number(
-      document.getElementById(
-        "withdrawAmount"
-      ).value
-    );
+const amount =
+Number(
+document.getElementById(
+"withdrawAmount"
+).value
+);
 
 
-  const balance =
-    Number(
-      document.getElementById(
-        "availableBalance"
-      ).textContent
-    );
+const balance =
+Number(
+document.getElementById(
+"availableBalance"
+).textContent
+);
 
 
-  if(!phone){
+if(!phone){
 
-    alert(
-      "Enter your payment phone number."
-    );
+alert(
+"Enter your payment phone number."
+);
 
-    return;
-
-  }
-
-
-  if(
-    !amount ||
-    amount <= 0
-  ){
-
-    alert(
-      "Enter a valid withdrawal amount."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    amount > balance
-  ){
-
-    alert(
-      "Insufficient available balance."
-    );
-
-    return;
-
-  }
-
-
-  dashboardData.withdrawals.push({
-
-    type:"withdraw",
-
-    employee:
-      EMPLOYEES[employeeRef],
-
-    referral:
-      employeeRef,
-
-    phone:
-      phone,
-
-    amount:
-      amount,
-
-    status:
-      "pending",
-
-    date:
-      new Date().toISOString()
-
-  });
-
-
-  saveData();
-
-
-  closeWithdraw();
-
-
-  document.getElementById(
-    "withdrawPhone"
-  ).value = "";
-
-
-  document.getElementById(
-    "withdrawAmount"
-  ).value = "";
-
-
-  refreshDashboard();
-
-
-  alert(
-    "Withdrawal request submitted."
-  );
+return;
 
 }
 
 
-
-/* START */
-
 if(
-  employeeRef &&
-  EMPLOYEES[employeeRef]
+!amount ||
+amount <= 0
 ){
 
-  showDashboard();
+alert(
+"Enter a valid withdrawal amount."
+);
+
+return;
+
+}
+
+
+if(
+amount > balance
+){
+
+alert(
+"Insufficient available balance."
+);
+
+return;
+
+}
+
+
+dashboardData.withdrawals.push({
+
+type:"withdraw",
+
+employee:
+EMPLOYEES[
+employeeUsername
+].name,
+
+username:
+employeeUsername,
+
+referral:
+employeeRef,
+
+phone:
+phone,
+
+amount:
+amount,
+
+status:
+"pending",
+
+date:
+new Date().toISOString()
+
+});
+
+
+saveData();
+
+
+closeWithdraw();
+
+
+document.getElementById(
+"withdrawPhone"
+).value =
+"";
+
+
+document.getElementById(
+"withdrawAmount"
+).value =
+"";
+
+
+refreshDashboard();
+
+
+alert(
+"Withdrawal request submitted."
+);
+
+}
+
+
+/* =========================
+   ENTER KEY LOGIN
+========================= */
+
+document.getElementById(
+"loginPassword"
+).addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key ===
+"Enter"
+){
+
+loginEmployee();
+
+}
+
+}
+);
+
+
+/* =========================
+   START
+========================= */
+
+if(
+employeeUsername &&
+EMPLOYEES[employeeUsername]
+){
+
+showDashboard();
 
 }else{
 
-  document.getElementById(
-    "loginScreen"
-  ).style.display =
-    "flex";
+document.getElementById(
+"loginScreen"
+).style.display =
+"flex";
 
 
-  document.getElementById(
-    "dashboardScreen"
-  ).style.display =
-    "none";
+document.getElementById(
+"dashboardScreen"
+).style.display =
+"none";
 
 }
 
 
-
-/* AUTO REFRESH */
+/* =========================
+   AUTO REFRESH
+========================= */
 
 setInterval(
 
-  refreshDashboard,
+refreshDashboard,
 
-  5000
+5000
 
 );
 
