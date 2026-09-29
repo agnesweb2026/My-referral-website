@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liparo STK Test</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      padding: 25px;
+    }
+
+    .box {
+      max-width: 400px;
+      margin: 40px auto;
+      background: #222;
+      padding: 25px;
+      border-radius: 15px;
+    }
+
+    input, button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 15px;
+      margin-top: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background: #00c853;
+      color: white;
+      font-weight: bold;
+    }
+
+    #result {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h2>Liparo STK Test</h2>
+
+    <p>Test amount: <strong>KSh 10</strong></p>
+
+    <input
+      id="phone"
+      type="tel"
+      placeholder="07XXXXXXXX"
+      inputmode="numeric"
+    >
+
+    <button onclick="sendTest()">
+      SEND KSh 10 STK
+    </button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function sendTest() {
+      const phone = document.getElementById("phone").value.trim();
+      const result = document.getElementById("result");
+
+      if (!phone) {
+        result.textContent = "Enter your M-PESA number first.";
+        return;
+      }
+
+      result.textContent = "Sending STK request...";
+
+      try {
+        const response = await fetch("/api/liparo-stk", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            phone: phone,
+            amount: 10,
+            reference: "LIPARO-TEST-10"
+          })
+        });
+
+        const data = await response.json();
+
+        result.textContent =
+          "Response:\n\n" +
+          JSON.stringify(data, null, 2);
+
+      } catch (error) {
+        result.textContent =
+          "Error:\n\n" + error.message;
+      }
+    }
+  </script>
+
+</body>
+  </html>
