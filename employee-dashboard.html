@@ -90,7 +90,7 @@ flex-wrap:wrap;
 
 .stats{
 display:grid;
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(2,1fr);
 gap:14px;
 }
 
@@ -142,6 +142,7 @@ color:#9fb0c3;
 padding:5px 9px;
 border-radius:20px;
 font-size:12px;
+font-weight:bold;
 }
 
 .paid{
@@ -159,10 +160,54 @@ background:#7f1d1d;
 color:#fca5a5;
 }
 
+.approved{
+background:#14532d;
+color:#86efac;
+}
+
+.rejected{
+background:#7f1d1d;
+color:#fca5a5;
+}
+
+.withdraw-card{
+border:1px solid #26384d;
+}
+
+.withdraw-item{
+padding:12px 0;
+border-bottom:1px solid #26384d;
+}
+
+.withdraw-item:last-child{
+border-bottom:0;
+}
+
+.withdraw-amount{
+font-size:20px;
+font-weight:bold;
+}
+
+.withdraw-status{
+margin-top:6px;
+}
+
+.success-message{
+color:#86efac;
+}
+
+.warning-message{
+color:#fde68a;
+}
+
+.error-message{
+color:#fca5a5;
+}
+
 @media(max-width:700px){
 
 .stats{
-grid-template-columns:repeat(2,1fr);
+grid-template-columns:1fr;
 }
 
 .referral-box{
@@ -181,19 +226,10 @@ font-size:13px;
 padding:12px;
 }
 }
-
-@media(max-width:430px){
-
-.stats{
-grid-template-columns:1fr;
-}
-}
 </style>
 </head>
 
 <body>
-
-<!-- LOGIN -->
 
 <div id="loginPage" class="container">
 
@@ -230,8 +266,6 @@ LOGIN
 </div>
 
 
-<!-- DASHBOARD -->
-
 <div id="dashboardPage" class="container hidden">
 
 <div class="card">
@@ -263,44 +297,41 @@ LOGOUT
 </div>
 
 
-<!-- STATS -->
-
 <div class="stats">
 
 <div class="stat">
-<small>Total Sales</small>
-<strong id="totalSales">0</strong>
-</div>
 
-<div class="stat">
-<small>Total Amount</small>
-<strong id="totalAmount">
-KSh 0.00
-</strong>
-</div>
+<small>
+Commission 25%
+</small>
 
-<div class="stat">
-<small>Commission 25%</small>
 <strong id="totalCommission">
 KSh 0.00
 </strong>
+
 </div>
 
+
 <div class="stat">
-<small>Wallet</small>
+
+<small>
+Wallet
+</small>
+
 <strong id="wallet">
 KSh 0.00
 </strong>
-</div>
 
 </div>
 
+</div>
 
-<!-- REFERRAL LINK -->
 
 <div class="card">
 
-<h2>Your Referral Link</h2>
+<h2>
+Your Referral Link
+</h2>
 
 <p>
 Share this link with customers.
@@ -326,11 +357,11 @@ OPEN WEBSITE
 </div>
 
 
-<!-- PAYMENT INFORMATION -->
-
 <div class="card">
 
-<h2>Payment Information</h2>
+<h2>
+Payment Information
+</h2>
 
 <p>
 Commission rate:
@@ -350,11 +381,11 @@ Referral code:
 </div>
 
 
-<!-- SALES -->
-
 <div class="card">
 
-<h2>Sales Activity</h2>
+<h2>
+Sales Activity
+</h2>
 
 <div style="overflow-x:auto">
 
@@ -366,7 +397,6 @@ Referral code:
 <th>Date</th>
 <th>Payment</th>
 <th>Minutes</th>
-<th>Amount</th>
 <th>Commission</th>
 <th>Status</th>
 </tr>
@@ -381,13 +411,13 @@ Referral code:
 </div>
 
 </div>
+<!-- WITHDRAW COMMISSION -->
 
+<div class="card withdraw-card">
 
-<!-- WITHDRAW -->
-
-<div class="card">
-
-<h2>Withdraw Commission</h2>
+<h2>
+Withdraw Commission
+</h2>
 
 <p>
 Available wallet:
@@ -395,6 +425,14 @@ Available wallet:
 KSh 0.00
 </strong>
 </p>
+
+<input
+id="withdrawAmount"
+type="number"
+min="1"
+step="1"
+placeholder="Enter amount to withdraw"
+>
 
 <button onclick="requestWithdraw()">
 REQUEST WITHDRAWAL
@@ -405,11 +443,32 @@ REQUEST WITHDRAWAL
 </div>
 
 
+<!-- WITHDRAWAL HISTORY -->
+
+<div class="card">
+
+<h2>
+Withdrawal Requests
+</h2>
+
+<div id="withdrawHistory">
+
+<p style="color:#9fb0c3">
+No withdrawal requests yet.
+</p>
+
+</div>
+
+</div>
+
+
 <!-- RECENT ACTIVITY -->
 
 <div class="card">
 
-<h2>Recent Activity</h2>
+<h2>
+Recent Activity
+</h2>
 
 <div id="recentActivity">
 
@@ -422,11 +481,13 @@ No recent activity.
 </div>
 
 
-<!-- ACCOUNT INFORMATION -->
+<!-- ACCOUNT -->
 
 <div class="card">
 
-<h2>Account Information</h2>
+<h2>
+Account Information
+</h2>
 
 <p>
 <strong>Employee:</strong>
@@ -451,11 +512,13 @@ No recent activity.
 </div>
 
 
-<!-- COMMISSION INFORMATION -->
+<!-- COMMISSION INFO -->
 
 <div class="card">
 
-<h2>How Commission Works</h2>
+<h2>
+How Commission Works
+</h2>
 
 <p>
 Every successful payment made through
@@ -473,6 +536,8 @@ Example:
 KSh 100 payment =
 KSh 25 commission.
 </p>
+
+</div>
 
 </div>
 
@@ -554,57 +619,47 @@ ref:"REF-K4W8"
 };
 
 
-const COMMISSION_RATE=0.25;
+const COMMISSION_RATE = 0.25;
 
-let currentEmployee=null;
+let currentEmployee = null;
 
-
-/* MONEY */
 
 function money(value){
 
-return "KSh "+
-Number(value||0).toFixed(2);
+return "KSh " +
+Number(value || 0).toFixed(2);
 
 }
 
 
-/* LOGIN */
-
 function login(){
 
-const username=
-document.getElementById(
-"username"
-).value.trim();
+const username =
+document.getElementById("username")
+.value.trim();
 
-const password=
-document.getElementById(
-"password"
-).value;
+const password =
+document.getElementById("password")
+.value;
 
-const error=
-document.getElementById(
-"loginError"
-);
+const error =
+document.getElementById("loginError");
 
-error.textContent="";
+error.textContent = "";
 
-let found=null;
+let found = null;
 
-for(
-const ref in EMPLOYEES
-){
+for(const ref in EMPLOYEES){
 
-const employee=
+const employee =
 EMPLOYEES[ref];
 
 if(
-employee.username===username &&
-employee.password===password
+employee.username === username &&
+employee.password === password
 ){
 
-found=employee;
+found = employee;
 break;
 
 }
@@ -613,14 +668,14 @@ break;
 
 if(!found){
 
-error.textContent=
+error.textContent =
 "Incorrect username or password.";
 
 return;
 
 }
 
-currentEmployee=found;
+currentEmployee = found;
 
 localStorage.setItem(
 "loggedEmployee",
@@ -632,15 +687,13 @@ showDashboard();
 }
 
 
-/* LOGOUT */
-
 function logout(){
 
 localStorage.removeItem(
 "loggedEmployee"
 );
 
-currentEmployee=null;
+currentEmployee = null;
 
 document
 .getElementById("dashboardPage")
@@ -653,8 +706,6 @@ document
 }
 
 
-/* SHOW DASHBOARD */
-
 function showDashboard(){
 
 document
@@ -665,42 +716,50 @@ document
 .getElementById("dashboardPage")
 .classList.remove("hidden");
 
+
 document.getElementById(
 "employeeName"
-).textContent=
-currentEmployee.name+
+).textContent =
+currentEmployee.name +
 " Dashboard";
+
 
 document.getElementById(
 "employeeRef"
-).textContent=
-"Referral Code: "+
+).textContent =
+"Referral Code: " +
 currentEmployee.ref;
+
 
 document.getElementById(
 "paymentEmployee"
-).textContent=
+).textContent =
 currentEmployee.name;
+
 
 document.getElementById(
 "paymentRef"
-).textContent=
+).textContent =
 currentEmployee.ref;
+
 
 document.getElementById(
 "accountEmployee"
-).textContent=
+).textContent =
 currentEmployee.name;
+
 
 document.getElementById(
 "accountUsername"
-).textContent=
+).textContent =
 currentEmployee.username;
+
 
 document.getElementById(
 "accountReferral"
-).textContent=
+).textContent =
 currentEmployee.ref;
+
 
 updateReferralLink(
 currentEmployee.ref
@@ -715,27 +774,23 @@ renderRecentActivity();
 }
 
 
-/* REFERRAL LINK */
-
 function updateReferralLink(ref){
 
-const link=
-window.location.origin+
-"/?employee="+
+const link =
+window.location.origin +
+"/?employee=" +
 encodeURIComponent(ref);
 
 document.getElementById(
 "referralLink"
-).value=link;
+).value = link;
 
 }
 
 
-/* COPY */
-
 function copyReferralLink(){
 
-const input=
+const input =
 document.getElementById(
 "referralLink"
 );
@@ -749,9 +804,7 @@ navigator.clipboard.writeText(
 input.value
 ).then(function(){
 
-alert(
-"Referral link copied."
-);
+alert("Referral link copied.");
 
 });
 
@@ -761,20 +814,16 @@ input.select();
 
 document.execCommand("copy");
 
-alert(
-"Referral link copied."
-);
+alert("Referral link copied.");
 
 }
 
 }
 
-
-/* OPEN */
 
 function openReferralLink(){
 
-const link=
+const link =
 document.getElementById(
 "referralLink"
 ).value;
@@ -787,17 +836,15 @@ link,
 }
 
 
-/* GET PAYMENTS */
-
 function getPayments(){
 
 try{
 
-const data=
+const data =
 JSON.parse(
 localStorage.getItem(
 "payments"
-)||"[]"
+) || "[]"
 );
 
 return Array.isArray(data)
@@ -813,8 +860,6 @@ return [];
 }
 
 
-/* CHECK REFERRAL */
-
 function paymentBelongsToRef(
 payment,
 ref
@@ -824,177 +869,240 @@ if(!payment){
 return false;
 }
 
-const values=[
+const values = [
 
 payment.ref,
-
 payment.referral,
-
 payment.referralCode,
-
 payment.employeeRef,
-
 payment.employeeReferral,
-
 payment.referredBy,
-
 payment.employeeId
 
 ];
 
 return values.some(
-value=>
-String(value||"").trim()===
+value =>
+String(value || "").trim() ===
 String(ref).trim()
 );
 
 }
 
 
-/* STATUS */
-
 function paymentStatus(payment){
 
-const status=
+const status =
 String(
-payment.status||
-payment.paymentStatus||
+payment.status ||
+payment.paymentStatus ||
 ""
 ).toLowerCase();
 
+
 if(
-
-status==="paid"||
-status==="success"||
-status==="successful"||
-status==="verified"||
-status==="completed"
-
+status === "paid" ||
+status === "success" ||
+status === "successful" ||
+status === "verified" ||
+status === "completed"
 ){
 
 return "paid";
 
 }
 
+
 if(
-
-status==="failed"||
-status==="rejected"||
-status==="cancelled"
-
+status === "failed" ||
+status === "rejected" ||
+status === "cancelled"
 ){
 
 return "failed";
 
 }
 
+
 return "pending";
 
 }
 
 
-/* REFRESH */
+function getWithdrawals(){
 
-function refreshDashboard(ref){
+try{
 
-const payments=
+const data =
+JSON.parse(
+localStorage.getItem(
+"withdrawalRequests"
+) || "[]"
+);
+
+return Array.isArray(data)
+? data
+: [];
+
+}catch(error){
+
+return [];
+
+}
+
+}
+
+
+function saveWithdrawals(data){
+
+localStorage.setItem(
+"withdrawalRequests",
+JSON.stringify(data)
+);
+
+}
+
+
+function getWithdrawalsForEmployee(ref){
+
+return getWithdrawals().filter(
+item =>
+String(item.employeeId || "").trim() ===
+String(ref || "").trim()
+);
+
+}
+
+
+function calculateCommission(ref){
+
+const payments =
 getPayments().filter(
-payment=>
+payment =>
 paymentBelongsToRef(
 payment,
 ref
 )
 );
 
-let totalSales=0;
-let totalAmount=0;
-let totalCommission=0;
+let totalCommission = 0;
 
 payments.forEach(
-payment=>{
+payment => {
 
-const status=
-paymentStatus(payment);
-
-if(status!=="paid"){
+if(
+paymentStatus(payment) !== "paid"
+){
 return;
 }
 
-const amount=
+const amount =
 Number(
-payment.amount||
-payment.price||
+payment.amount ||
+payment.price ||
 0
 );
 
-totalSales++;
-
-totalAmount+=amount;
-
-totalCommission+=
-amount*
-COMMISSION_RATE;
+totalCommission +=
+amount * COMMISSION_RATE;
 
 }
 );
 
+return totalCommission;
 
-document.getElementById(
-"totalSales"
-).textContent=
-totalSales;
+}
 
-document.getElementById(
-"totalAmount"
-).textContent=
-money(totalAmount);
+
+function calculateWallet(ref){
+
+const totalCommission =
+calculateCommission(ref);
+
+const withdrawals =
+getWithdrawalsForEmployee(ref);
+
+const approved =
+withdrawals
+.filter(
+item =>
+item.status === "APPROVED"
+)
+.reduce(
+(sum,item) =>
+sum + Number(item.amount || 0),
+0
+);
+
+return Math.max(
+0,
+totalCommission - approved
+);
+
+}
+
+
+function refreshDashboard(ref){
+
+const totalCommission =
+calculateCommission(ref);
+
+const wallet =
+calculateWallet(ref);
 
 document.getElementById(
 "totalCommission"
-).textContent=
+).textContent =
 money(totalCommission);
 
 document.getElementById(
 "wallet"
-).textContent=
-money(totalCommission);
+).textContent =
+money(wallet);
 
 document.getElementById(
 "withdrawWallet"
-).textContent=
-money(totalCommission);
+).textContent =
+money(wallet);
+
+const payments =
+getPayments().filter(
+payment =>
+paymentBelongsToRef(
+payment,
+ref
+)
+);
 
 renderSales(payments);
+
+renderWithdrawHistory(
+getWithdrawalsForEmployee(ref)
+);
 
 }
 
 
-/* SALES TABLE */
-
 function renderSales(payments){
 
-const table=
+const table =
 document.getElementById(
 "salesTable"
 );
 
-table.innerHTML="";
+table.innerHTML = "";
 
 if(!payments.length){
 
-table.innerHTML=`
+table.innerHTML = `
 
 <tr>
-
 <td
-colspan="6"
+colspan="5"
 style="text-align:center"
 >
-
 No sales yet
-
 </td>
-
 </tr>
 
 `;
@@ -1003,50 +1111,49 @@ return;
 
 }
 
-
 payments.forEach(
-payment=>{
+payment => {
 
-const status=
+const status =
 paymentStatus(payment);
 
-const amount=
+const amount =
 Number(
-payment.amount||
-payment.price||
+payment.amount ||
+payment.price ||
 0
 );
 
-const commission=
-status==="paid"
-? amount*COMMISSION_RATE
-:0;
+const commission =
+status === "paid"
+? amount * COMMISSION_RATE
+: 0;
 
-const minutes=
+const minutes =
 Number(
-payment.minutes||
-payment.selectedMinutes||
+payment.minutes ||
+payment.selectedMinutes ||
 0
 );
 
-const date=
-payment.date||
-payment.createdAt||
-payment.timestamp||
+const date =
+payment.date ||
+payment.createdAt ||
+payment.timestamp ||
 "";
 
-const row=
+const row =
 document.createElement("tr");
 
-row.innerHTML=`
+row.innerHTML = `
 
 <td>
 ${formatDate(date)}
 </td>
 
 <td>
-${payment.paymentId||
-payment.id||
+${payment.paymentId ||
+payment.id ||
 "-"}
 </td>
 
@@ -1055,19 +1162,13 @@ ${minutes}
 </td>
 
 <td>
-${money(amount)}
-</td>
-
-<td>
 ${money(commission)}
 </td>
 
 <td>
-
 <span class="badge ${status}">
 ${status.toUpperCase()}
 </span>
-
 </td>
 
 `;
@@ -1078,8 +1179,6 @@ table.appendChild(row);
 
 }
 
-
-/* DATE */
 
 function formatDate(value){
 
@@ -1099,40 +1198,220 @@ return String(value);
 }
 
 }
+  function requestWithdraw(){
 
+if(!currentEmployee){
+return;
+}
 
-/* WITHDRAW */
-
-function requestWithdraw(){
-
-const message=
+const message =
 document.getElementById(
 "withdrawMessage"
 );
 
-const wallet=
+const input =
 document.getElementById(
-"withdrawWallet"
-).textContent;
+"withdrawAmount"
+);
 
-message.innerHTML=`
+const amount =
+Number(input.value);
 
-<p style="color:#facc15">
+const wallet =
+calculateWallet(
+currentEmployee.ref
+);
 
-Withdrawal request recorded.
+if(
+!Number.isFinite(amount) ||
+amount <= 0
+){
 
-Available balance:
+message.innerHTML = `
+<p class="error-message">
+Enter a valid withdrawal amount.
+</p>
+`;
 
-${wallet}
+return;
+}
+
+if(amount > wallet){
+
+message.innerHTML = `
+<p class="error-message">
+Withdrawal amount is greater than
+your available wallet.
+</p>
+`;
+
+return;
+}
+
+const requests =
+getWithdrawals();
+
+const pendingAmount =
+getWithdrawalsForEmployee(
+currentEmployee.ref
+)
+.filter(
+item => item.status === "PENDING"
+)
+.reduce(
+(sum,item) =>
+sum + Number(item.amount || 0),
+0
+);
+
+if(amount + pendingAmount > wallet){
+
+message.innerHTML = `
+<p class="error-message">
+You already have a pending
+withdrawal request.
+</p>
+`;
+
+return;
+}
+
+const request = {
+
+id:
+"WD-" +
+Date.now() +
+"-" +
+Math.random()
+.toString(36)
+.substring(2,8)
+.toUpperCase(),
+
+employeeId:
+currentEmployee.ref,
+
+employeeName:
+currentEmployee.name,
+
+amount:
+amount,
+
+status:
+"PENDING",
+
+date:
+new Date().toISOString()
+
+};
+
+requests.push(request);
+
+saveWithdrawals(requests);
+
+input.value = "";
+
+message.innerHTML = `
+<p class="warning-message">
+
+Withdrawal request submitted.
+
+<br><br>
+
+Amount:
+<strong>
+${money(amount)}
+</strong>
+
+<br>
+
+Status:
+<strong>
+PENDING
+</strong>
 
 </p>
-
 `;
+
+renderWithdrawHistory(
+getWithdrawalsForEmployee(
+currentEmployee.ref
+)
+);
 
 }
 
 
-/* RECENT ACTIVITY */
+function renderWithdrawHistory(items){
+
+const box =
+document.getElementById(
+"withdrawHistory"
+);
+
+if(!items.length){
+
+box.innerHTML = `
+<p style="color:#9fb0c3">
+No withdrawal requests yet.
+</p>
+`;
+
+return;
+}
+
+const sorted =
+items.slice().reverse();
+
+box.innerHTML = "";
+
+sorted.forEach(item => {
+
+const div =
+document.createElement("div");
+
+div.className =
+"withdraw-item";
+
+const status =
+String(
+item.status || "PENDING"
+).toLowerCase();
+
+div.innerHTML = `
+
+<div class="withdraw-amount">
+${money(item.amount)}
+</div>
+
+<div class="withdraw-status">
+
+<span class="badge ${status}">
+${String(
+item.status || "PENDING"
+).toUpperCase()}
+</span>
+
+</div>
+
+<div style="
+color:#9fb0c3;
+font-size:12px;
+margin-top:6px;
+">
+
+Requested:
+${formatDate(item.date)}
+
+</div>
+
+`;
+
+box.appendChild(div);
+
+});
+
+}
+
 
 function renderRecentActivity(){
 
@@ -1140,19 +1419,15 @@ if(!currentEmployee){
 return;
 }
 
-const container=
+const container =
 document.getElementById(
 "recentActivity"
 );
 
-if(!container){
-return;
-}
-
-const payments=
+const payments =
 getPayments()
 .filter(
-payment=>
+payment =>
 paymentBelongsToRef(
 payment,
 currentEmployee.ref
@@ -1162,68 +1437,55 @@ currentEmployee.ref
 
 if(!payments.length){
 
-container.innerHTML=`
-
+container.innerHTML = `
 <p style="color:#9fb0c3">
-
 No recent activity.
-
 </p>
-
 `;
 
 return;
-
 }
 
-container.innerHTML="";
+container.innerHTML = "";
 
-payments.forEach(
-payment=>{
+payments.forEach(payment => {
 
-const status=
+const status =
 paymentStatus(payment);
 
-const amount=
+const amount =
 Number(
-payment.amount||
-payment.price||
+payment.amount ||
+payment.price ||
 0
 );
 
-const commission=
-status==="paid"
-? amount*COMMISSION_RATE
-:0;
+const commission =
+status === "paid"
+? amount * COMMISSION_RATE
+: 0;
 
-const item=
+const item =
 document.createElement("div");
 
-item.style.padding=
+item.style.padding =
 "12px 0";
 
-item.style.borderBottom=
+item.style.borderBottom =
 "1px solid #26384d";
 
-item.innerHTML=`
+item.innerHTML = `
 
 <div>
-
 <strong>
 Payment
 </strong>
-
 </div>
 
 <div style="
 color:#9fb0c3;
 margin-top:5px;
 ">
-
-Amount:
-${money(amount)}
-
-&nbsp; | &nbsp;
 
 Commission:
 ${money(commission)}
@@ -1238,9 +1500,7 @@ font-size:13px;
 Status:
 
 <span class="badge ${status}">
-
 ${status.toUpperCase()}
-
 </span>
 
 </div>
@@ -1260,11 +1520,11 @@ container.appendChild(item);
 
 try{
 
-const saved=
+const saved =
 JSON.parse(
 localStorage.getItem(
 "loggedEmployee"
-)||"null"
+) || "null"
 );
 
 if(
@@ -1272,12 +1532,14 @@ saved &&
 saved.ref
 ){
 
-const employee=
-EMPLOYEES[saved.ref];
+const employee =
+EMPLOYEES[
+saved.ref
+];
 
 if(employee){
 
-currentEmployee=
+currentEmployee =
 employee;
 
 showDashboard();
@@ -1325,4 +1587,4 @@ renderRecentActivity();
 </script>
 
 </body>
-  </html>
+</html>
