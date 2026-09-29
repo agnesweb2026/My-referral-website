@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Admin Dashboard</title>
 
   <style>
@@ -16,7 +15,7 @@
 
     body {
       background: #080c12;
-      color: #ffffff;
+      color: #fff;
       min-height: 100vh;
     }
 
@@ -33,9 +32,7 @@
       display: none !important;
     }
 
-    /* =========================
-       LOGIN
-    ========================= */
+    /* LOGIN */
 
     #loginPage {
       min-height: 100vh;
@@ -43,7 +40,6 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-
       background:
         radial-gradient(
           circle at top,
@@ -55,52 +51,36 @@
     .login-box {
       width: 100%;
       max-width: 410px;
-
       background: #111820;
-
       border: 1px solid #263342;
-
       border-radius: 20px;
-
       padding: 30px 22px;
-
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, .5);
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
     }
 
     .admin-icon {
       width: 68px;
       height: 68px;
-
       margin: 0 auto 15px;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       border-radius: 18px;
-
       background: #16a34a;
-
       font-size: 31px;
       font-weight: bold;
     }
 
     .login-box h1 {
       text-align: center;
-
       font-size: 25px;
-
       margin-bottom: 7px;
     }
 
-    .login-box .subtitle {
+    .subtitle {
       text-align: center;
-
       color: #8995a3;
-
       font-size: 14px;
-
       margin-bottom: 26px;
     }
 
@@ -110,29 +90,19 @@
 
     .field label {
       display: block;
-
       color: #aeb8c4;
-
       font-size: 13px;
-
       margin-bottom: 7px;
     }
 
     .field input {
       width: 100%;
-
       padding: 14px;
-
       background: #0a1017;
-
-      color: #ffffff;
-
+      color: #fff;
       border: 1px solid #334150;
-
       border-radius: 10px;
-
       outline: none;
-
       font-size: 15px;
     }
 
@@ -142,42 +112,24 @@
 
     #loginError {
       min-height: 20px;
-
       margin-bottom: 8px;
-
       text-align: center;
-
       color: #ff6262;
-
       font-size: 13px;
     }
 
     .login-btn {
       width: 100%;
-
       padding: 14px;
-
       border: none;
-
       border-radius: 10px;
-
       background: #16a34a;
-
-      color: #ffffff;
-
+      color: #fff;
       font-size: 16px;
-
       font-weight: bold;
     }
 
-    .login-btn:active {
-      transform: scale(.98);
-    }
-
-
-    /* =========================
-       ADMIN DASHBOARD
-    ========================= */
+    /* DASHBOARD */
 
     #adminPage {
       min-height: 100vh;
@@ -185,29 +137,19 @@
 
     .topbar {
       position: sticky;
-
       top: 0;
-
       z-index: 100;
-
       background: #101720;
-
       border-bottom: 1px solid #263341;
-
       padding: 14px 15px;
     }
 
     .topbar-inner {
       max-width: 1100px;
-
       margin: auto;
-
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
-
       gap: 12px;
     }
 
@@ -217,77 +159,48 @@
 
     .title-area p {
       color: #8995a3;
-
       font-size: 12px;
-
       margin-top: 4px;
     }
 
     .logout-btn {
       border: 1px solid #354250;
-
       background: #151d26;
-
-      color: #ffffff;
-
+      color: #fff;
       padding: 9px 13px;
-
       border-radius: 9px;
-
       font-size: 13px;
-    }
-
-    .logout-btn:active {
-      transform: scale(.97);
     }
 
     .container {
       width: 100%;
-
       max-width: 1100px;
-
       margin: auto;
-
       padding: 20px 15px 50px;
     }
 
-
-    /* =========================
-       STAT CARDS
-    ========================= */
-
     .stats {
       display: grid;
-
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
-
       margin-bottom: 20px;
     }
 
     .stat-card {
       background: #111820;
-
       border: 1px solid #263341;
-
       border-radius: 15px;
-
       padding: 18px;
     }
 
     .stat-label {
       color: #8c98a6;
-
       font-size: 13px;
-
       margin-bottom: 8px;
     }
 
     .stat-value {
       font-size: 25px;
-
       font-weight: bold;
     }
 
@@ -299,34 +212,19 @@
       color: #36d675;
     }
 
-
-    /* =========================
-       REQUEST SECTION
-    ========================= */
-
     .section {
       background: #111820;
-
       border: 1px solid #263341;
-
       border-radius: 15px;
-
       overflow: hidden;
-
-      margin-bottom: 18px;
     }
 
     .section-header {
       padding: 16px;
-
       border-bottom: 1px solid #263341;
-
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
-
       gap: 10px;
     }
 
@@ -336,20 +234,11 @@
 
     .refresh-btn {
       background: #17212c;
-
       border: 1px solid #354250;
-
-      color: #ffffff;
-
+      color: #fff;
       padding: 8px 12px;
-
       border-radius: 8px;
-
       font-size: 13px;
-    }
-
-    .refresh-btn:active {
-      transform: scale(.97);
     }
 
     #requestList {
@@ -358,28 +247,16 @@
 
     .empty {
       padding: 40px 15px;
-
       text-align: center;
-
       color: #7f8b98;
-
       font-size: 14px;
     }
 
-
-    /* =========================
-       REQUEST CARD
-    ========================= */
-
     .request-card {
       background: #0c131b;
-
       border: 1px solid #263341;
-
       border-radius: 13px;
-
       padding: 15px;
-
       margin-bottom: 12px;
     }
 
@@ -389,131 +266,94 @@
 
     .request-top {
       display: flex;
-
       justify-content: space-between;
-
       align-items: flex-start;
-
       gap: 10px;
-
       margin-bottom: 13px;
     }
 
     .employee-name {
       font-size: 16px;
-
       font-weight: bold;
     }
 
     .employee-id {
       color: #8995a3;
-
       font-size: 12px;
-
       margin-top: 4px;
     }
 
     .amount {
       color: #36d675;
-
       font-size: 19px;
-
       font-weight: bold;
-
       white-space: nowrap;
     }
 
     .request-info {
       display: grid;
-
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 9px;
-
       margin-bottom: 14px;
     }
 
     .info-box {
       background: #111a23;
-
       border-radius: 9px;
-
       padding: 10px;
     }
 
     .info-label {
       color: #778492;
-
       font-size: 11px;
-
       margin-bottom: 4px;
     }
 
     .info-value {
       color: #dce2e8;
-
       font-size: 13px;
-
       word-break: break-word;
     }
 
     .status {
       display: inline-flex;
-
       align-items: center;
-
       justify-content: center;
-
       padding: 6px 9px;
-
       border-radius: 20px;
-
       font-size: 11px;
-
       font-weight: bold;
     }
 
     .status.pending {
-      background: rgba(245, 185, 66, .12);
-
+      background: rgba(245,185,66,.12);
       color: #f5b942;
     }
 
     .status.approved {
-      background: rgba(54, 214, 117, .12);
-
+      background: rgba(54,214,117,.12);
       color: #36d675;
     }
 
     .status.rejected {
-      background: rgba(255, 91, 91, .12);
-
+      background: rgba(255,91,91,.12);
       color: #ff6464;
     }
 
     .request-actions {
       display: flex;
-
       gap: 9px;
-
       margin-top: 13px;
     }
 
     .approve-btn,
     .reject-btn {
       flex: 1;
-
       padding: 11px;
-
       border-radius: 9px;
-
       border: none;
-
-      color: #ffffff;
-
+      color: #fff;
       font-weight: bold;
-
       font-size: 13px;
     }
 
@@ -525,48 +365,19 @@
       background: #dc2626;
     }
 
-    .approve-btn:active,
-    .reject-btn:active {
-      transform: scale(.98);
-    }
-
     .processed-message {
       margin-top: 12px;
-
       padding: 10px;
-
       border-radius: 9px;
-
       background: #111a23;
-
       color: #8995a3;
-
       text-align: center;
-
       font-size: 12px;
     }
 
-
-    /* =========================
-       MOBILE
-    ========================= */
-
     @media (max-width: 520px) {
-
-      .topbar-inner {
-        align-items: flex-start;
-      }
-
       .title-area h1 {
         font-size: 18px;
-      }
-
-      .logout-btn {
-        padding: 8px 10px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr 1fr;
       }
 
       .stat-card {
@@ -580,16 +391,9 @@
       .request-top {
         flex-direction: column;
       }
-
-      .amount {
-        font-size: 18px;
-      }
-
     }
 
-
     @media (max-width: 360px) {
-
       .stats {
         grid-template-columns: 1fr;
       }
@@ -601,37 +405,27 @@
       .request-actions {
         flex-direction: column;
       }
-
     }
   </style>
 </head>
 
 <body>
 
-
-  <!-- =========================
-       ADMIN LOGIN PAGE
-  ========================= -->
+  <!-- LOGIN -->
 
   <div id="loginPage">
 
     <div class="login-box">
 
-      <div class="admin-icon">
-        A
-      </div>
+      <div class="admin-icon">A</div>
 
-      <h1>
-        Admin Login
-      </h1>
+      <h1>Admin Login</h1>
 
       <p class="subtitle">
         Manage employee withdrawals
       </p>
 
-
       <div class="field">
-
         <label for="adminUsername">
           Username
         </label>
@@ -642,12 +436,9 @@
           placeholder="Enter username"
           autocomplete="username"
         >
-
       </div>
 
-
       <div class="field">
-
         <label for="adminPassword">
           Password
         </label>
@@ -658,12 +449,9 @@
           placeholder="Enter password"
           autocomplete="current-password"
         >
-
       </div>
 
-
       <div id="loginError"></div>
-
 
       <button
         class="login-btn"
@@ -677,9 +465,7 @@
   </div>
 
 
-  <!-- =========================
-       ADMIN DASHBOARD
-  ========================= -->
+  <!-- ADMIN DASHBOARD -->
 
   <div
     id="adminPage"
@@ -702,7 +488,6 @@
 
         </div>
 
-
         <button
           class="logout-btn"
           onclick="adminLogout()"
@@ -716,9 +501,6 @@
 
 
     <main class="container">
-
-
-      <!-- STATISTICS -->
 
       <div class="stats">
 
@@ -756,8 +538,6 @@
       </div>
 
 
-      <!-- WITHDRAWAL REQUESTS -->
-
       <section class="section">
 
         <div class="section-header">
@@ -775,17 +555,15 @@
 
         </div>
 
-
         <div id="requestList">
 
           <div class="empty">
-            Loading requests...
+            No withdrawal requests yet.
           </div>
 
         </div>
 
       </section>
-
 
     </main>
 
@@ -793,10 +571,6 @@
 
 
   <script>
-
-    /* =========================
-       ADMIN SETTINGS
-    ========================= */
 
     const ADMIN_USERNAME = "admin";
 
@@ -806,25 +580,22 @@
       "withdrawalRequests";
 
 
-    /* =========================
-       LOGIN
-    ========================= */
-
     function adminLogin() {
 
       const username =
-        document
-          .getElementById("adminUsername")
-          .value
-          .trim();
+        document.getElementById(
+          "adminUsername"
+        ).value.trim();
 
       const password =
-        document
-          .getElementById("adminPassword")
-          .value;
+        document.getElementById(
+          "adminPassword"
+        ).value;
 
       const error =
-        document.getElementById("loginError");
+        document.getElementById(
+          "loginError"
+        );
 
 
       if (
@@ -891,10 +662,6 @@
     }
 
 
-    /* =========================
-       REQUEST STORAGE
-    ========================= */
-
     function getRequests() {
 
       try {
@@ -934,15 +701,10 @@
     }
 
 
-    /* =========================
-       LOAD REQUESTS
-    ========================= */
-
     function loadRequests() {
 
       const requests =
         getRequests();
-
 
       const pending =
         requests.filter(
@@ -952,26 +714,19 @@
             ).toUpperCase() === "PENDING"
         );
 
-
       document
         .getElementById("pendingCount")
         .textContent =
         pending.length;
 
-
       const total =
         pending.reduce(
-          (sum, request) => {
-
-            return sum +
-              Number(
-                request.amount || 0
-              );
-
-          },
+          (sum, request) =>
+            sum + Number(
+              request.amount || 0
+            ),
           0
         );
-
 
       document
         .getElementById("pendingAmount")
@@ -979,15 +734,10 @@
         "KSh " +
         total.toLocaleString();
 
-
       renderRequests(requests);
 
     }
 
-
-    /* =========================
-       RENDER
-    ========================= */
 
     function renderRequests(requests) {
 
@@ -995,7 +745,6 @@
         document.getElementById(
           "requestList"
         );
-
 
       if (!requests.length) {
 
@@ -1006,274 +755,289 @@
         `;
 
         return;
-
       }
 
+          const sortedRequests =
+        [...requests].sort(
+          (a, b) => {
 
-      // Part 2 continues here.
+            const dateA =
+              new Date(
+                a.createdAt ||
+                a.date ||
+                a.requestedAt ||
+                0
+              ).getTime();
 
-  </script>
-        const sortedRequests = [...requests].sort(
-        (a, b) => {
-          const dateA =
-            new Date(
-              a.createdAt ||
-              a.date ||
-              0
-            ).getTime();
+            const dateB =
+              new Date(
+                b.createdAt ||
+                b.date ||
+                b.requestedAt ||
+                0
+              ).getTime();
 
-          const dateB =
-            new Date(
-              b.createdAt ||
-              b.date ||
-              0
-            ).getTime();
-
-          return dateB - dateA;
-        }
-      );
+            return dateB - dateA;
+          }
+        );
 
 
       list.innerHTML =
         sortedRequests
-          .map((request, index) => {
+          .map(
+            (request, index) => {
 
-            const status =
-              String(
-                request.status ||
-                "PENDING"
-              ).toUpperCase();
-
-
-            const employeeName =
-              request.employeeName ||
-              request.name ||
-              "Employee";
+              const status =
+                String(
+                  request.status ||
+                  "PENDING"
+                ).toUpperCase();
 
 
-            const employeeId =
-              request.employeeId ||
-              request.employee ||
-              request.referralCode ||
-              "Unknown";
+              const employeeName =
+                request.employeeName ||
+                request.name ||
+                "Employee";
 
 
-            const amount =
-              Number(
-                request.amount || 0
-              );
+              const employeeId =
+                request.employeeId ||
+                request.employee ||
+                request.referralCode ||
+                "Unknown";
 
 
-            const dateValue =
-              request.createdAt ||
-              request.date ||
-              request.requestedAt ||
-              "";
+              const amount =
+                Number(
+                  request.amount || 0
+                );
 
 
-            let formattedDate =
-              "Date not available";
+              const requestId =
+                String(
+                  request.id ||
+                  index + 1
+                );
 
 
-            if (dateValue) {
+              const dateValue =
+                request.createdAt ||
+                request.date ||
+                request.requestedAt ||
+                "";
 
-              const date =
-                new Date(dateValue);
 
-              if (
-                !Number.isNaN(
-                  date.getTime()
-                )
-              ) {
+              let formattedDate =
+                "Date not available";
 
-                formattedDate =
-                  date.toLocaleString();
+
+              if (dateValue) {
+
+                const date =
+                  new Date(dateValue);
+
+                if (
+                  !Number.isNaN(
+                    date.getTime()
+                  )
+                ) {
+
+                  formattedDate =
+                    date.toLocaleString();
+
+                }
 
               }
 
-            }
+
+              let statusClass =
+                "pending";
 
 
-            let statusClass =
-              "pending";
+              if (
+                status === "APPROVED"
+              ) {
+
+                statusClass =
+                  "approved";
+
+              }
 
 
-            if (status === "APPROVED") {
-              statusClass = "approved";
-            }
+              if (
+                status === "REJECTED"
+              ) {
 
-            if (status === "REJECTED") {
-              statusClass = "rejected";
-            }
+                statusClass =
+                  "rejected";
 
-
-            const statusText =
-              status === "APPROVED"
-                ? "APPROVED"
-                : status === "REJECTED"
-                  ? "REJECTED"
-                  : "PENDING";
+              }
 
 
-            let actions = "";
+              const statusText =
+                status === "APPROVED"
+                  ? "APPROVED"
+                  : status === "REJECTED"
+                    ? "REJECTED"
+                    : "PENDING";
 
 
-            if (status === "PENDING") {
-
-              actions = `
-                <div class="request-actions">
-
-                  <button
-                    class="approve-btn"
-                    onclick="approveRequest('${escapeAttribute(
-                      request.id || index
-                    )}')"
-                  >
-                    APPROVE
-                  </button>
-
-                  <button
-                    class="reject-btn"
-                    onclick="rejectRequest('${escapeAttribute(
-                      request.id || index
-                    )}')"
-                  >
-                    REJECT
-                  </button>
-
-                </div>
-              `;
-
-            } else {
-
-              actions = `
-                <div class="processed-message">
-                  This request has already been processed.
-                </div>
-              `;
-
-            }
+              let actions = "";
 
 
-            return `
+              if (
+                status === "PENDING"
+              ) {
 
-              <div class="request-card">
+                actions = `
 
-                <div class="request-top">
+                  <div class="request-actions">
 
-                  <div>
+                    <button
+                      class="approve-btn"
+                      onclick="approveRequest('${escapeAttribute(requestId)}')"
+                    >
+                      APPROVE
+                    </button>
 
-                    <div class="employee-name">
-                      ${escapeHTML(
-                        employeeName
-                      )}
-                    </div>
 
-                    <div class="employee-id">
-                      ${escapeHTML(
-                        employeeId
-                      )}
-                    </div>
+                    <button
+                      class="reject-btn"
+                      onclick="rejectRequest('${escapeAttribute(requestId)}')"
+                    >
+                      REJECT
+                    </button>
 
                   </div>
 
+                `;
 
-                  <div class="amount">
-                    KSh ${amount.toLocaleString()}
+              } else {
+
+                actions = `
+
+                  <div class="processed-message">
+                    This request has already been processed.
                   </div>
 
-                </div>
+                `;
+
+              }
 
 
-                <div class="request-info">
+              return `
 
-                  <div class="info-box">
+                <div class="request-card">
 
-                    <div class="info-label">
-                      Request ID
-                    </div>
-
-                    <div class="info-value">
-                      ${escapeHTML(
-                        String(
-                          request.id ||
-                          index + 1
-                        )
-                      )}
-                    </div>
-
-                  </div>
-
-
-                  <div class="info-box">
-
-                    <div class="info-label">
-                      Date
-                    </div>
-
-                    <div class="info-value">
-                      ${escapeHTML(
-                        formattedDate
-                      )}
-                    </div>
-
-                  </div>
-
-
-                  <div class="info-box">
-
-                    <div class="info-label">
-                      M-PESA Number
-                    </div>
-
-                    <div class="info-value">
-                      ${escapeHTML(
-                        request.phone ||
-                        request.mpesaNumber ||
-                        request.phoneNumber ||
-                        "Not provided"
-                      )}
-                    </div>
-
-                  </div>
-
-
-                  <div class="info-box">
-
-                    <div class="info-label">
-                      Status
-                    </div>
+                  <div class="request-top">
 
                     <div>
 
-                      <span
-                        class="status ${statusClass}"
-                      >
-                        ${statusText}
-                      </span>
+                      <div class="employee-name">
+                        ${escapeHTML(
+                          employeeName
+                        )}
+                      </div>
+
+                      <div class="employee-id">
+                        ${escapeHTML(
+                          employeeId
+                        )}
+                      </div>
+
+                    </div>
+
+
+                    <div class="amount">
+                      KSh ${amount.toLocaleString()}
+                    </div>
+
+                  </div>
+
+
+                  <div class="request-info">
+
+                    <div class="info-box">
+
+                      <div class="info-label">
+                        Request ID
+                      </div>
+
+                      <div class="info-value">
+                        ${escapeHTML(
+                          requestId
+                        )}
+                      </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                      <div class="info-label">
+                        Date
+                      </div>
+
+                      <div class="info-value">
+                        ${escapeHTML(
+                          formattedDate
+                        )}
+                      </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                      <div class="info-label">
+                        M-PESA Number
+                      </div>
+
+                      <div class="info-value">
+                        ${escapeHTML(
+                          request.phone ||
+                          request.mpesaNumber ||
+                          request.phoneNumber ||
+                          "Not provided"
+                        )}
+                      </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                      <div class="info-label">
+                        Status
+                      </div>
+
+                      <div>
+
+                        <span
+                          class="status ${statusClass}"
+                        >
+                          ${statusText}
+                        </span>
+
+                      </div>
 
                     </div>
 
                   </div>
 
+
+                  ${actions}
+
                 </div>
 
+              `;
 
-                ${actions}
-
-              </div>
-
-            `;
-
-          })
+            }
+          )
           .join("");
 
     }
 
-
-    /* =========================
-       ESCAPE HTML
-    ========================= */
 
     function escapeHTML(value) {
 
@@ -1296,10 +1060,6 @@
     }
 
 
-    /* =========================
-       FIND REQUEST
-    ========================= */
-
     function findRequest(
       requests,
       requestId
@@ -1309,30 +1069,22 @@
         String(requestId);
 
 
-      const index =
-        requests.findIndex(
-          (request, currentIndex) => {
+      return requests.findIndex(
+        (request, index) => {
 
-            const currentId =
-              String(
-                request.id ??
-                currentIndex
-              );
+          const currentId =
+            String(
+              request.id ??
+              index + 1
+            );
 
-            return currentId === id;
+          return currentId === id;
 
-          }
-        );
-
-
-      return index;
+        }
+      );
 
     }
 
-
-    /* =========================
-       APPROVE REQUEST
-    ========================= */
 
     function approveRequest(
       requestId
@@ -1372,17 +1124,6 @@
           "PENDING"
         ).toUpperCase();
 
-
-      /*
-       * IMPORTANT:
-       *
-       * Only PENDING requests
-       * can be approved.
-       *
-       * This prevents a second
-       * approval from deducting
-       * the same withdrawal twice.
-       */
 
       if (
         currentStatus !==
@@ -1441,14 +1182,6 @@
       }
 
 
-      /*
-       * Re-read storage immediately
-       * before changing status.
-       *
-       * This helps avoid approving
-       * an old copy of the request.
-       */
-
       const latestRequests =
         getRequests();
 
@@ -1502,19 +1235,6 @@
       }
 
 
-      /*
-       * APPROVED is the important
-       * state used by the employee
-       * dashboard.
-       *
-       * The employee wallet is NOT
-       * reduced when the request is
-       * created.
-       *
-       * It is reduced only after
-       * this status becomes APPROVED.
-       */
-
       latestRequest.status =
         "APPROVED";
 
@@ -1545,10 +1265,6 @@
 
     }
 
-
-    /* =========================
-       REJECT REQUEST
-    ========================= */
 
     function rejectRequest(
       requestId
@@ -1685,11 +1401,6 @@
       }
 
 
-      /*
-       * REJECTED requests do NOT
-       * reduce the employee wallet.
-       */
-
       latestRequest.status =
         "REJECTED";
 
@@ -1721,10 +1432,6 @@
     }
 
 
-    /* =========================
-       ENTER KEY LOGIN
-    ========================= */
-
     document.addEventListener(
       "keydown",
       function(event) {
@@ -1750,7 +1457,7 @@
     );
 
 
-    /* =========================
+      /* =========================
        AUTO LOGIN
     ========================= */
 
@@ -1763,7 +1470,9 @@
       showAdmin();
 
     }
-      /* =========================
+
+
+    /* =========================
        AUTO REFRESH
     ========================= */
 
@@ -1773,25 +1482,31 @@
     function startAutoRefresh() {
 
       if (refreshTimer) {
-        clearInterval(refreshTimer);
+
+        clearInterval(
+          refreshTimer
+        );
+
       }
 
-      refreshTimer = setInterval(
-        function() {
 
-          if (
-            localStorage.getItem(
-              "adminLoggedIn"
-            ) === "true"
-          ) {
+      refreshTimer =
+        setInterval(
+          function() {
 
-            loadRequests();
+            if (
+              localStorage.getItem(
+                "adminLoggedIn"
+              ) === "true"
+            ) {
 
-          }
+              loadRequests();
 
-        },
-        5000
-      );
+            }
+
+          },
+          5000
+        );
 
     }
 
@@ -1812,7 +1527,7 @@
 
 
     /* =========================
-       START REFRESH
+       START AUTO REFRESH
     ========================= */
 
     if (
@@ -1827,7 +1542,7 @@
 
 
     /* =========================
-       WATCH STORAGE CHANGES
+       STORAGE UPDATE
     ========================= */
 
     window.addEventListener(
@@ -1848,7 +1563,7 @@
 
 
     /* =========================
-       PAGE VISIBILITY
+       REFRESH WHEN PAGE RETURNS
     ========================= */
 
     document.addEventListener(
@@ -1877,8 +1592,7 @@
 
 
     /* =========================
-       OVERRIDE SHOW ADMIN
-       TO START AUTO REFRESH
+       START REFRESH AFTER LOGIN
     ========================= */
 
     const originalShowAdmin =
@@ -1895,8 +1609,7 @@
 
 
     /* =========================
-       OVERRIDE LOGOUT
-       TO STOP REFRESH
+       STOP REFRESH ON LOGOUT
     ========================= */
 
     const originalAdminLogout =
@@ -1913,7 +1626,7 @@
 
 
     /* =========================
-       INITIAL STATE
+       FINAL PAGE STATE
     ========================= */
 
     if (
@@ -1949,4 +1662,4 @@
   </script>
 
 </body>
-      </html>      
+</html>
