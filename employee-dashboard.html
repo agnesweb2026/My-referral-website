@@ -2,619 +2,723 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Employee Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Dashboard</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+}
 
 body{
+  margin:0;
   font-family:Arial,sans-serif;
-  background:#070707;
+  background:#07111f;
   color:#fff;
-  min-height:100vh
-}
-
-button,input{font-family:inherit}
-
-#loginScreen{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:#080808
-}
-
-.loginBox{
-  width:100%;
-  max-width:390px;
-  background:#111;
-  border:1px solid #292929;
-  border-radius:22px;
-  padding:30px 22px
-}
-
-.logo{
-  text-align:center;
-  font-size:28px;
-  font-weight:900;
-  margin-bottom:8px
-}
-
-.logo span,.portalTitle span{color:#00ff88}
-
-.loginSubtitle{
-  text-align:center;
-  color:#888;
-  font-size:13px;
-  margin-bottom:28px
-}
-
-.loginLabel{
-  display:block;
-  color:#aaa;
-  font-size:12px;
-  margin:0 0 7px 3px
-}
-
-.loginInput{
-  width:100%;
-  height:52px;
-  background:#080808;
-  border:1px solid #303030;
-  border-radius:12px;
-  color:#fff;
-  padding:0 15px;
-  outline:none;
-  margin-bottom:16px
-}
-
-.loginButton{
-  width:100%;
-  height:52px;
-  border:0;
-  border-radius:12px;
-  background:#00ff88;
-  color:#001b0d;
-  font-weight:900;
-  cursor:pointer
-}
-
-.loginError{
-  min-height:20px;
-  text-align:center;
-  color:#ff4d5f;
-  font-size:12px;
-  margin-top:13px
-}
-
-#dashboardScreen{
-  display:none;
-  min-height:100vh;
-  background:#080808
-}
-
-.topBar{
-  height:65px;
-  border-bottom:1px solid #222;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 16px;
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:#080808
-}
-
-.portalTitle{
-  font-size:19px;
-  font-weight:900
-}
-
-.topRight{
-  display:flex;
-  align-items:center;
-  gap:9px
-}
-
-.onlineDot{
-  width:8px;
-  height:8px;
-  background:#00ff88;
-  border-radius:50%
-}
-
-.onlineText{
-  color:#888;
-  font-size:10px
-}
-
-.logoutBtn{
-  border:1px solid #333;
-  background:#151515;
-  color:#ddd;
-  border-radius:8px;
-  padding:8px 10px;
-  font-size:10px;
-  font-weight:bold
 }
 
 .container{
   width:100%;
-  max-width:1000px;
+  max-width:1100px;
   margin:auto;
-  padding:18px
-}
-
-.welcome{margin-bottom:18px}
-
-.welcome h1{
-  font-size:22px;
-  margin-bottom:5px
-}
-
-.welcome p{
-  color:#777;
-  font-size:12px
+  padding:20px;
 }
 
 .card{
-  background:#111;
-  border:1px solid #242424;
-  border-radius:17px;
-  padding:17px;
-  margin-bottom:14px
+  background:#101d2e;
+  border:1px solid #26384d;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:18px;
 }
 
-.cardTitle{
-  color:#888;
-  font-size:10px;
-  text-transform:uppercase;
-  letter-spacing:1.2px;
-  margin-bottom:13px
+h1,h2,h3{
+  margin-top:0;
 }
 
-.accountTop{
-  display:flex;
-  align-items:center;
-  gap:13px
+.login{
+  max-width:420px;
+  margin:50px auto;
 }
 
-.avatar{
-  width:54px;
-  height:54px;
-  border-radius:50%;
-  background:#00ff88;
-  color:#001b0d;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:19px;
-  font-weight:900
-}
-
-.profileName{
-  font-size:17px;
-  font-weight:900
-}
-
-.profileUsername{
-  color:#777;
-  font-size:11px;
-  margin-top:3px
-}
-
-.badge{
-  display:inline-block;
-  margin-top:8px;
-  background:rgba(0,255,136,.1);
-  border:1px solid rgba(0,255,136,.25);
-  color:#00ff88;
-  border-radius:20px;
-  padding:4px 8px;
-  font-size:8px;
-  font-weight:900
-}
-
-.infoRow{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  border-top:1px solid #222;
-  padding-top:12px;
-  margin-top:14px
-}
-
-.infoLabel{color:#777;font-size:10px}
-
-.infoValue{
-  color:#fff;
-  font-size:11px;
-  font-weight:bold;
-  text-align:right;
-  word-break:break-all
-}
-
-.referralBox{
-  display:flex;
-  gap:8px;
-  margin-top:10px
-}
-
-.referralInput{
-  flex:1;
-  min-width:0;
-  background:#080808;
-  border:1px solid #292929;
-  color:#aaa;
+input{
+  width:100%;
+  padding:14px;
   border-radius:10px;
-  padding:11px;
-  font-size:10px
+  border:1px solid #34495e;
+  background:#07111f;
+  color:#fff;
+  margin:8px 0;
+  font-size:16px;
 }
 
-.copyBtn{
+button{
+  width:100%;
+  padding:14px;
   border:0;
   border-radius:10px;
-  background:#00ff88;
-  color:#001b0d;
-  padding:0 13px;
-  font-size:10px;
-  font-weight:900
+  background:#16a34a;
+  color:#fff;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:8px;
 }
 
-.statGrid{
+button:hover{
+  opacity:.9;
+}
+
+.logout{
+  background:#dc2626;
+}
+
+.error{
+  color:#ff6b6b;
+  margin-top:10px;
+}
+
+.hidden{
+  display:none;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.stats{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:9px
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
 }
 
 .stat{
-  background:#090909;
-  border:1px solid #222;
-  border-radius:11px;
-  padding:12px
+  background:#17263a;
+  border-radius:14px;
+  padding:18px;
 }
 
-.statLabel{
-  color:#777;
-  font-size:9px;
-  margin-bottom:7px
+.stat small{
+  color:#9fb0c3;
 }
 
-.statValue{
-  font-size:17px;
-  font-weight:900
+.stat strong{
+  display:block;
+  font-size:24px;
+  margin-top:8px;
 }
 
-.green{color:#00ff88}
-.red{color:#ff4d5f}
-.orange{color:#ffb84d}
-
-.section-note{
-  color:#777;
-  font-size:11px;
-  margin-top:8px
-}
-
-.activity{
-  border-top:1px solid #222;
-  padding:11px 0;
+.referral-box{
   display:flex;
-  justify-content:space-between;
-  gap:10px
+  gap:8px;
 }
 
-.activity:first-child{border-top:0}
-
-.activityTitle{
-  font-size:11px;
-  font-weight:bold
+.referral-box input{
+  flex:1;
 }
 
-.activityDate{
-  color:#666;
-  font-size:9px;
-  margin-top:4px
+.referral-box button{
+  width:110px;
 }
 
-.activityRight{text-align:right}
-
-.activityAmount{
-  font-size:11px;
-  font-weight:bold
-}
-
-.activityStatus{
-  font-size:8px;
-  margin-top:4px
-}
-
-.withdrawBtn{
+table{
   width:100%;
-  height:45px;
-  margin-top:14px;
-  border:0;
-  border-radius:11px;
-  background:#00ff88;
-  color:#001b0d;
-  font-weight:900
+  border-collapse:collapse;
 }
 
-.empty{
-  color:#666;
-  text-align:center;
-  <!-- PART 2/2 -->
+th,td{
+  padding:12px 8px;
+  border-bottom:1px solid #26384d;
+  text-align:left;
+}
 
-        <div class="stat">
-          <div class="statLabel">THIS WEEK</div>
-          <div class="statValue green">
-            KSh <span id="weekEarned">0.00</span>
-          </div>
-        </div>
+th{
+  color:#9fb0c3;
+}
 
-        <div class="stat">
-          <div class="statLabel">THIS MONTH</div>
-          <div class="statValue green">
-            KSh <span id="monthEarned">0.00</span>
-          </div>
-        </div>
+.badge{
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+}
 
-        <div class="stat">
-          <div class="statLabel">ALL TIME</div>
-          <div class="statValue green">
-            KSh <span id="allTimeEarned">0.00</span>
-          </div>
-        </div>
+.paid{
+  background:#14532d;
+  color:#86efac;
+}
 
-      </div>
-    </div>
+.pending{
+  background:#713f12;
+  color:#fde68a;
+}
 
-    <div class="card">
-      <div class="cardTitle">Sales Activity</div>
+.failed{
+  background:#7f1d1d;
+  color:#fca5a5;
+}
 
-      <div class="statGrid">
+@media(max-width:700px){
 
-        <div class="stat">
-          <div class="statLabel">SUCCESSFUL</div>
-          <div class="statValue green" id="successfulSales">0</div>
-        </div>
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-        <div class="stat">
-          <div class="statLabel">FAILED</div>
-          <div class="statValue red" id="failedSales">0</div>
-        </div>
+  .referral-box{
+    flex-direction:column;
+  }
 
-        <div class="stat">
-          <div class="statLabel">PENDING</div>
-          <div class="statValue orange" id="pendingSales">0</div>
-        </div>
+  .referral-box button{
+    width:100%;
+  }
 
-        <div class="stat">
-          <div class="statLabel">AVERAGE SALE</div>
-          <div class="statValue">
-            KSh <span id="averageSale">0.00</span>
-          </div>
-        </div>
+  table{
+    font-size:13px;
+  }
 
-      </div>
-    </div>
+  .container{
+    padding:12px;
+  }
+}
 
-    <div class="card">
-      <div class="cardTitle">Payment Information</div>
+@media(max-width:430px){
 
-      <div class="infoRow">
-        <div class="infoLabel">Account</div>
-        <div class="infoValue" id="paymentAccount">-</div>
-      </div>
+  .stats{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
 
-      <div class="infoRow">
-        <div class="infoLabel">Commission</div>
-        <div class="infoValue green">25%</div>
-      </div>
+<body>
 
-      <div class="infoRow">
-        <div class="infoLabel">Status</div>
-        <div class="infoValue green">ACTIVE</div>
-      </div>
-    </div>
+<!-- LOGIN -->
 
-    <div class="card">
-      <div class="cardTitle">Recent Activity</div>
+<div id="loginPage" class="container">
 
-      <div id="activityList">
-        <div class="empty">No activity yet</div>
-      </div>
-    </div>
+  <div class="card login">
 
-  </div>
-</div>
+    <h1>Employee Login</h1>
 
-
-<div id="withdrawModal" class="modal">
-
-  <div class="modalBox">
-
-    <div class="modalTitle">
-      Withdraw Money
-    </div>
+    <p>
+      Enter your employee account details.
+    </p>
 
     <input
-      id="withdrawPhone"
-      class="modalInput"
-      type="tel"
-      placeholder="M-PESA phone number"
+      id="username"
+      type="text"
+      placeholder="Username"
+      autocomplete="username"
     >
 
     <input
-      id="withdrawAmount"
-      class="modalInput"
-      type="number"
-      placeholder="Amount"
+      id="password"
+      type="password"
+      placeholder="Password"
+      autocomplete="current-password"
     >
 
-    <div class="modalActions">
+    <button onclick="login()">
+      LOGIN
+    </button>
 
-      <button
-        type="button"
-        class="cancelBtn"
-        onclick="closeWithdraw()"
-      >
-        CANCEL
-      </button>
-
-      <button
-        type="button"
-        class="confirmBtn"
-        onclick="submitWithdraw()"
-      >
-        REQUEST
-      </button>
-
-    </div>
-
-    <div
-      id="withdrawMessage"
-      class="modalMessage"
-    ></div>
+    <div id="loginError" class="error"></div>
 
   </div>
 
 </div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboardPage" class="container hidden">
+
+  <div class="card">
+
+    <div class="header">
+
+      <div>
+
+        <h1 id="employeeName">
+          Employee Dashboard
+        </h1>
+
+        <div id="employeeRef">
+          Referral Code
+        </div>
+
+      </div>
+
+      <button
+        class="logout"
+        onclick="logout()"
+        style="width:120px"
+      >
+        LOGOUT
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- STATS -->
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Total Sales</small>
+      <strong id="totalSales">0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Total Amount</small>
+      <strong id="totalAmount">
+        KSh 0.00
+      </strong>
+    </div>
+
+    <div class="stat">
+      <small>Commission 25%</small>
+      <strong id="totalCommission">
+        KSh 0.00
+      </strong>
+    </div>
+
+    <div class="stat">
+      <small>Wallet</small>
+      <strong id="wallet">
+        KSh 0.00
+      </strong>
+    </div>
+
+  </div>
+
+
+  <!-- REFERRAL LINK -->
+
+  <div class="card">
+
+    <h2>Your Referral Link</h2>
+
+    <p>
+      Share this link with customers.
+    </p>
+
+    <div class="referral-box">
+
+      <input
+        id="referralLink"
+        readonly
+      >
+
+      <button onclick="copyReferralLink()">
+        COPY
+      </button>
+
+    </div>
+
+    <button onclick="openReferralLink()">
+      OPEN WEBSITE
+    </button>
+
+  </div>
+
+
+  <!-- PAYMENT INFORMATION -->
+
+  <div class="card">
+
+    <h2>Payment Information</h2>
+
+    <p>
+      Commission rate:
+      <strong>25%</strong>
+    </p>
+
+    <p>
+      Employee:
+      <strong id="paymentEmployee">-</strong>
+    </p>
+
+    <p>
+      Referral code:
+      <strong id="paymentRef">-</strong>
+    </p>
+
+  </div>
+
+
+  <!-- SALES -->
+
+  <div class="card">
+
+    <h2>Sales Activity</h2>
+
+    <div style="overflow-x:auto">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Date</th>
+            <th>Payment</th>
+            <th>Minutes</th>
+            <th>Amount</th>
+            <th>Commission</th>
+            <th>Status</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="salesTable">
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <!-- WITHDRAW -->
+
+  <div class="card">
+
+    <h2>Withdraw Commission</h2>
+
+    <p>
+      Available wallet:
+      <strong id="withdrawWallet">
+        KSh 0.00
+      </strong>
+    </p>
+
+    <button onclick="requestWithdraw()">
+      REQUEST WITHDRAWAL
+    </button>
+
+    <div id="withdrawMessage"></div>
+
+  </div>
+
+
+  <!-- RECENT ACTIVITY -->
+
+  <div class="card">
+
+    <h2>Recent Activity</h2>
+
+    <div id="recentActivity">
+
+      <p style="color:#9fb0c3">
+        No recent activity.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ACCOUNT INFORMATION -->
+
+  <div class="card">
+
+    <h2>Account Information</h2>
+
+    <p>
+      <strong>Employee:</strong>
+      <span id="accountEmployee">-</span>
+    </p>
+
+    <p>
+      <strong>Username:</strong>
+      <span id="accountUsername">-</span>
+    </p>
+
+    <p>
+      <strong>Referral Code:</strong>
+      <span id="accountReferral">-</span>
+    </p>
+
+    <p>
+      <strong>Commission:</strong>
+      25%
+    </p>
+
+  </div>
+
+
+  <!-- COMMISSION INFORMATION -->
+
+  <div class="card">
+
+    <h2>How Commission Works</h2>
+
+    <p>
+      Every successful payment made through
+      your referral link is recorded for your
+      account.
+    </p>
+
+    <p>
+      Your commission rate is:
+      <strong>25%</strong>
+    </p>
+
+    <p>
+      Example:
+      KSh 100 payment =
+      KSh 25 commission.
+    </p>
+
+  </div>
 
 
 <script>
 
+const EMPLOYEES = {
+
+  "REF-A7K2":{
+    username:"Joshua1",
+    password:"123456",
+    name:"Employee 1",
+    ref:"REF-A7K2"
+  },
+
+  "REF-B4M8":{
+    username:"Joshua2",
+    password:"123456",
+    name:"Employee 2",
+    ref:"REF-B4M8"
+  },
+
+  "REF-C9P3":{
+    username:"Joshua3",
+    password:"123456",
+    name:"Employee 3",
+    ref:"REF-C9P3"
+  },
+
+  "REF-D2X6":{
+    username:"Joshua4",
+    password:"123456",
+    name:"Employee 4",
+    ref:"REF-D2X6"
+  },
+
+  "REF-E5Q1":{
+    username:"Joshua5",
+    password:"123456",
+    name:"Employee 5",
+    ref:"REF-E5Q1"
+  },
+
+  "REF-F8L4":{
+    username:"Joshua6",
+    password:"123456",
+    name:"Employee 6",
+    ref:"REF-F8L4"
+  },
+
+  "REF-G3N7":{
+    username:"Joshua7",
+    password:"123456",
+    name:"Employee 7",
+    ref:"REF-G3N7"
+  },
+
+  "REF-H6R2":{
+    username:"Joshua8",
+    password:"123456",
+    name:"Employee 8",
+    ref:"REF-H6R2"
+  },
+
+  "REF-J9T5":{
+    username:"Joshua9",
+    password:"123456",
+    name:"Employee 9",
+    ref:"REF-J9T5"
+  },
+
+  "REF-K4W8":{
+    username:"Joshua10",
+    password:"123456",
+    name:"Employee 10",
+    ref:"REF-K4W8"
+  }
+
+};
+
 const COMMISSION_RATE = 0.25;
 
+let currentEmployee = null;
 
-/* =========================
-   LOGIN
-========================= */
 
-function loginEmployee(){
+function money(value){
+
+  return "KSh " +
+    Number(value || 0).toFixed(2);
+
+}
+
+
+function login(){
 
   const username =
-    document.getElementById("usernameInput")
-    .value.trim();
+    document.getElementById(
+      "username"
+    ).value.trim();
 
   const password =
-    document.getElementById("passwordInput")
-    .value;
+    document.getElementById(
+      "password"
+    ).value;
 
   const error =
-    document.getElementById("loginError");
+    document.getElementById(
+      "loginError"
+    );
 
-  const employee =
-    EMPLOYEES[username];
+  error.textContent = "";
 
-  if(!employee || employee.password !== password){
+  let found = null;
+
+  for(
+    const ref in EMPLOYEES
+  ){
+
+    const employee =
+      EMPLOYEES[ref];
+
+    if(
+      employee.username === username &&
+      employee.password === password
+    ){
+
+      found = employee;
+      break;
+
+    }
+
+  }
+
+  if(!found){
 
     error.textContent =
       "Incorrect username or password.";
 
     return;
+
   }
+
+  currentEmployee = found;
 
   localStorage.setItem(
-    "loggedInEmployee",
-    username
+    "loggedEmployee",
+    JSON.stringify(found)
   );
 
-  error.textContent = "";
-
-  showDashboard(username);
+  showDashboard();
 
 }
 
 
-/* =========================
-   LOGOUT
-========================= */
-
-function logoutEmployee(){
+function logout(){
 
   localStorage.removeItem(
-    "loggedInEmployee"
+    "loggedEmployee"
   );
 
-  document.getElementById(
-    "dashboardScreen"
-  ).style.display = "none";
+  currentEmployee = null;
 
-  document.getElementById(
-    "loginScreen"
-  ).style.display = "flex";
+  document
+    .getElementById(
+      "dashboardPage"
+    )
+    .classList
+    .add("hidden");
 
-}
-
-
-/* =========================
-   DASHBOARD
-========================= */
-
-function showDashboard(username){
-
-  const employee =
-    EMPLOYEES[username];
-
-  if(!employee){
-
-    logoutEmployee();
-    return;
-  }
-
-  document.getElementById(
-    "loginScreen"
-  ).style.display = "none";
-
-  document.getElementById(
-    "dashboardScreen"
-  ).style.display = "block";
-
-  document.getElementById(
-    "welcomeName"
-  ).textContent =
-    "Hello " + employee.name;
-
-  document.getElementById(
-    "profileName"
-  ).textContent =
-    employee.name;
-
-  document.getElementById(
-    "profileUsername"
-  ).textContent =
-    username;
-
-  document.getElementById(
-    "referralCode"
-  ).textContent =
-    employee.ref;
-
-  document.getElementById(
-    "paymentAccount"
-  ).textContent =
-    employee.ref;
-
-  document.getElementById(
-    "avatar"
-  ).textContent =
-    employee.name.charAt(0);
-
-  updateReferralLink(employee.ref);
-
-  refreshDashboard(employee.ref);
+  document
+    .getElementById(
+      "loginPage"
+    )
+    .classList
+    .remove("hidden");
 
 }
 
 
-/* =========================
-   REFERRAL LINK
-========================= */
+function showDashboard(){
 
-function updateReferralLink(ref){
+  document
+    .getElementById(
+      "loginPage"
+    )
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById(
+      "dashboardPage"
+    )
+    .classList
+    .remove("hidden");
+
+  document.getElementById(
+    "employeeName"
+  ).textContent =
+    currentEmployee.name +
+    " Dashboard";
+
+  document.getElementById(
+    "employeeRef"
+  ).textContent =
+    "Referral Code: " +
+    currentEmployee.ref;
+
+  document.getElementById(
+    "paymentEmployee"
+  ).textContent =
+    currentEmployee.name;
+
+  document.getElementById(
+    "paymentRef"
+  ).textContent =
+    currentEmployee.ref;
+
+  document.getElementById(
+    "accountEmployee"
+  ).textContent =
+    currentEmployee.name;
+
+  document.getElementById(
+    "accountUsername"
+  ).textContent =
+    currentEmployee.username;
+
+  document.getElementById(
+    "accountReferral"
+  ).textContent =
+    currentEmployee.ref;
+
+  updateReferralLink(
+    currentEmployee.ref
+  );
+
+  refreshDashboard(
+    currentEmployee.ref
+  );
+
+  renderRecentActivity();
+
+}
+  function updateReferralLink(ref){
 
   const link =
     window.location.origin +
@@ -628,17 +732,68 @@ function updateReferralLink(ref){
 }
 
 
-/* =========================
-   PAYMENT STORAGE
-========================= */
+function copyReferralLink(){
+
+  const input =
+    document.getElementById(
+      "referralLink"
+    );
+
+  if(
+    navigator.clipboard &&
+    navigator.clipboard.writeText
+  ){
+
+    navigator.clipboard.writeText(
+      input.value
+    ).then(function(){
+
+      alert("Referral link copied.");
+
+    });
+
+  }else{
+
+    input.select();
+
+    document.execCommand("copy");
+
+    alert("Referral link copied.");
+
+  }
+
+}
+
+
+function openReferralLink(){
+
+  const link =
+    document.getElementById(
+      "referralLink"
+    ).value;
+
+  window.open(
+    link,
+    "_blank"
+  );
+
+}
+
 
 function getPayments(){
 
   try{
 
-    return JSON.parse(
-      localStorage.getItem("payments") || "[]"
-    );
+    const data =
+      JSON.parse(
+        localStorage.getItem(
+          "payments"
+        ) || "[]"
+      );
+
+    return Array.isArray(data)
+      ? data
+      : [];
 
   }catch(error){
 
@@ -649,71 +804,16 @@ function getPayments(){
 }
 
 
-function getWithdrawals(){
+function paymentBelongsToRef(
+  payment,
+  ref
+){
 
-  try{
-
-    return JSON.parse(
-      localStorage.getItem("withdrawals") || "[]"
-    );
-
-  }catch(error){
-
-    return [];
-
+  if(!payment){
+    return false;
   }
 
-}
-
-
-/* =========================
-   HELPERS
-========================= */
-
-function money(value){
-
-  return Number(value || 0)
-    .toFixed(2);
-
-}
-
-
-function paymentAmount(payment){
-
-  return Number(
-    payment.amount ??
-    payment.price ??
-    payment.total ??
-    0
-  );
-
-}
-
-
-function paymentDate(payment){
-
-  return new Date(
-    payment.date ||
-    payment.createdAt ||
-    payment.timestamp ||
-    Date.now()
-  );
-
-}
-
-
-function paymentStatus(payment){
-
-  return String(
-    payment.status || ""
-  ).toLowerCase();
-
-}
-
-
-function paymentBelongsToRef(payment,ref){
-
-  const refs = [
+  const values = [
 
     payment.ref,
     payment.referral,
@@ -725,20 +825,50 @@ function paymentBelongsToRef(payment,ref){
 
   ];
 
-  return refs.some(
+  return values.some(
     value =>
-      String(value || "")
-      .toUpperCase()
-      ===
-      String(ref).toUpperCase()
+      String(value || "").trim() ===
+      String(ref).trim()
   );
 
 }
 
 
-/* =========================
-   REFRESH DASHBOARD
-========================= */
+function paymentStatus(payment){
+
+  const status =
+    String(
+      payment.status ||
+      payment.paymentStatus ||
+      ""
+    ).toLowerCase();
+
+  if(
+    status === "paid" ||
+    status === "success" ||
+    status === "successful" ||
+    status === "verified" ||
+    status === "completed"
+  ){
+
+    return "paid";
+
+  }
+
+  if(
+    status === "failed" ||
+    status === "rejected" ||
+    status === "cancelled"
+  ){
+
+    return "failed";
+
+  }
+
+  return "pending";
+
+}
+
 
 function refreshDashboard(ref){
 
@@ -751,643 +881,404 @@ function refreshDashboard(ref){
         )
     );
 
-  let successful = [];
-  let failed = [];
-  let pending = [];
+
+  let totalSales = 0;
+  let totalAmount = 0;
+  let totalCommission = 0;
+
 
   payments.forEach(payment => {
 
     const status =
       paymentStatus(payment);
 
-    if(
-      status === "verified" ||
-      status === "success" ||
-      status === "successful" ||
-      status === "paid" ||
-      status === "completed"
-    ){
-
-      successful.push(payment);
-
-    }else if(
-      status === "failed" ||
-      status === "rejected" ||
-      status === "cancelled"
-    ){
-
-      failed.push(payment);
-
-    }else{
-
-      pending.push(payment);
-
+    if(status !== "paid"){
+      return;
     }
 
-  });
+    const amount =
+      Number(
+        payment.amount ||
+        payment.price ||
+        0
+      );
 
+    totalSales++;
 
-  let totalEarned = 0;
+    totalAmount += amount;
 
-  successful.forEach(payment => {
-
-    totalEarned +=
-      paymentAmount(payment)
-      * COMMISSION_RATE;
-
-  });
-
-
-  let lostAmount = 0;
-
-  failed.forEach(payment => {
-
-    lostAmount +=
-      paymentAmount(payment)
-      * COMMISSION_RATE;
-
-  });
-
-
-  let pendingAmount = 0;
-
-  pending.forEach(payment => {
-
-    pendingAmount +=
-      paymentAmount(payment)
-      * COMMISSION_RATE;
-
-  });
-
-
-  const available =
-    Math.max(0,totalEarned);
-
-
-  document.getElementById(
-    "availableBalance"
-  ).textContent =
-    money(available);
-
-
-  document.getElementById(
-    "totalEarned"
-  ).textContent =
-    money(totalEarned);
-
-
-  document.getElementById(
-    "inFlight"
-  ).textContent =
-    money(pendingAmount);
-
-
-  document.getElementById(
-    "lostAmount"
-  ).textContent =
-    money(lostAmount);
-
-
-  /* DATE */
-
-  const now = new Date();
-
-  const todayStart =
-    new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate()
-    );
-
-  const weekStart =
-    new Date(todayStart);
-
-  const day =
-    now.getDay();
-
-  weekStart.setDate(
-    weekStart.getDate() -
-    (day === 0 ? 6 : day - 1)
-  );
-
-  const monthStart =
-    new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      1
-    );
-
-
-  let today = 0;
-  let week = 0;
-  let month = 0;
-
-
-  successful.forEach(payment => {
-
-    const date =
-      paymentDate(payment);
-
-    const commission =
-      paymentAmount(payment)
-      * COMMISSION_RATE;
-
-    if(date >= todayStart){
-      today += commission;
-    }
-
-    if(date >= weekStart){
-      week += commission;
-    }
-
-    if(date >= monthStart){
-      month += commission;
-    }
+    totalCommission +=
+      amount * COMMISSION_RATE;
 
   });
 
 
   document.getElementById(
-    "todayEarned"
+    "totalSales"
   ).textContent =
-    money(today);
-
-  document.getElementById(
-    "weekEarned"
-  ).textContent =
-    money(week);
-
-  document.getElementById(
-    "monthEarned"
-  ).textContent =
-    money(month);
-
-  document.getElementById(
-    "allTimeEarned"
-  ).textContent =
-    money(totalEarned);
-
-
-  /* SALES */
-
-  document.getElementById(
-    "successfulSales"
-  ).textContent =
-    successful.length;
-
-  document.getElementById(
-    "failedSales"
-  ).textContent =
-    failed.length;
-
-  document.getElementById(
-    "pendingSales"
-  ).textContent =
-    pending.length;
-
-
-  let totalSales = 0;
-
-  successful.forEach(payment => {
-
-    totalSales +=
-      paymentAmount(payment);
-
-  });
-
-
-  const average =
-    successful.length
-      ? totalSales / successful.length
-      : 0;
+    totalSales;
 
 
   document.getElementById(
-    "averageSale"
+    "totalAmount"
   ).textContent =
-    money(average);
+    money(totalAmount);
 
 
-  renderActivity(payments);
+  document.getElementById(
+    "totalCommission"
+  ).textContent =
+    money(totalCommission);
+
+
+  document.getElementById(
+    "wallet"
+  ).textContent =
+    money(totalCommission);
+
+
+  document.getElementById(
+    "withdrawWallet"
+  ).textContent =
+    money(totalCommission);
+
+
+  renderSales(payments);
 
 }
 
 
-/* =========================
-   ACTIVITY
-========================= */
+function renderSales(payments){
 
-function renderActivity(payments){
-
-  const list =
+  const table =
     document.getElementById(
-      "activityList"
+      "salesTable"
     );
+
+  table.innerHTML = "";
+
 
   if(!payments.length){
 
-    list.innerHTML =
-      '<div class="empty">No activity yet</div>';
+    table.innerHTML = `
+      <tr>
+        <td
+          colspan="6"
+          style="text-align:center"
+        >
+          No sales yet
+        </td>
+      </tr>
+    `;
 
     return;
+
   }
 
 
-  const recent =
-    [...payments]
-    .sort(
-      (a,b) =>
-        paymentDate(b) -
-        paymentDate(a)
-    )
-    .slice(0,10);
-
-
-  list.innerHTML = "";
-
-
-  recent.forEach(payment => {
-
-    const amount =
-      paymentAmount(payment);
+  payments.forEach(payment => {
 
     const status =
       paymentStatus(payment);
 
-    let text = "PENDING";
-    let css = "orange";
+    const amount =
+      Number(
+        payment.amount ||
+        payment.price ||
+        0
+      );
+
+    const commission =
+      status === "paid"
+        ? amount * COMMISSION_RATE
+        : 0;
+
+    const minutes =
+      Number(
+        payment.minutes ||
+        payment.selectedMinutes ||
+        0
+      );
+
+    const date =
+      payment.date ||
+      payment.createdAt ||
+      payment.timestamp ||
+      "";
 
 
-    if(
-      status === "verified" ||
-      status === "success" ||
-      status === "successful" ||
-      status === "paid" ||
-      status === "completed"
-    ){
-
-      text = "SUCCESSFUL";
-      css = "green";
-
-    }else if(
-      status === "failed" ||
-      status === "rejected" ||
-      status === "cancelled"
-    ){
-
-      text = "FAILED";
-      css = "red";
-
-    }
+    const row =
+      document.createElement("tr");
 
 
-    const item =
-      document.createElement("div");
+    row.innerHTML = `
 
-    item.className =
-      "activity";
+      <td>
+        ${formatDate(date)}
+      </td>
 
+      <td>
+        ${payment.paymentId ||
+          payment.id ||
+          "-"}
+      </td>
 
-    item.innerHTML = `
+      <td>
+        ${minutes}
+      </td>
 
-      <div class="activityLeft">
+      <td>
+        ${money(amount)}
+      </td>
 
-        <div class="activityTitle">
-          Customer Payment
-        </div>
+      <td>
+        ${money(commission)}
+      </td>
 
-        <div class="activityDate">
-          ${paymentDate(payment).toLocaleString()}
-        </div>
-
-      </div>
-
-      <div class="activityRight">
-
-        <div class="activityAmount">
-          KSh ${money(amount)}
-        </div>
-
-        <div class="activityStatus ${css}">
-          ${text}
-        </div>
-
-      </div>
+      <td>
+        <span class="badge ${status}">
+          ${status.toUpperCase()}
+        </span>
+      </td>
 
     `;
 
 
-    list.appendChild(item);
+    table.appendChild(row);
 
   });
 
 }
 
 
-/* =========================
-   COPY LINK
-========================= */
+function formatDate(value){
 
-function copyReferral(){
+  if(!value){
+    return "-";
+  }
 
-  const input =
-    document.getElementById(
-      "referralLink"
-    );
+  try{
 
-  if(navigator.clipboard){
+    return new Date(value)
+      .toLocaleString();
 
-    navigator.clipboard
-      .writeText(input.value)
-      .then(() => {
+  }catch(error){
 
-        const button =
-          document.querySelector(".copyBtn");
-
-        button.textContent =
-          "COPIED";
-
-        setTimeout(() => {
-
-          button.textContent =
-            "COPY";
-
-        },1500);
-
-      });
-
-  }else{
-
-    input.select();
-
-    document.execCommand("copy");
+    return String(value);
 
   }
 
 }
 
 
-/* =========================
-   WITHDRAW
-========================= */
-
-function openWithdraw(){
-
-  document.getElementById(
-    "withdrawModal"
-  ).style.display =
-    "flex";
-
-}
-
-
-function closeWithdraw(){
-
-  document.getElementById(
-    "withdrawModal"
-  ).style.display =
-    "none";
-
-}
-
-
-/* =========================
-   WITHDRAW REQUEST
-========================= */
-
-function submitWithdraw(){
-
-  const phone =
-    document.getElementById(
-      "withdrawPhone"
-    ).value.trim();
-
-  const amount =
-    Number(
-      document.getElementById(
-        "withdrawAmount"
-      ).value
-    );
+function requestWithdraw(){
 
   const message =
     document.getElementById(
       "withdrawMessage"
     );
 
-  const username =
-    localStorage.getItem(
-      "loggedInEmployee"
+  const wallet =
+    document.getElementById(
+      "withdrawWallet"
+    ).textContent;
+
+
+  message.innerHTML = `
+    <p style="color:#facc15">
+      Withdrawal request recorded.
+      Available balance:
+      ${wallet}
+    </p>
+  `;
+
+}
+
+
+function renderRecentActivity(){
+
+  if(!currentEmployee){
+    return;
+  }
+
+  const container =
+    document.getElementById(
+      "recentActivity"
     );
 
-  const employee =
-    EMPLOYEES[username];
-
-
-  if(!phone){
-
-    message.textContent =
-      "Enter your phone number.";
-
+  if(!container){
     return;
-
-  }
-
-
-  if(!amount || amount <= 0){
-
-    message.textContent =
-      "Enter a valid amount.";
-
-    return;
-
-  }
-
-
-  if(!employee){
-
-    message.textContent =
-      "Please login again.";
-
-    return;
-
   }
 
 
   const payments =
-    getPayments().filter(
-      payment =>
+    getPayments()
+      .filter(payment =>
         paymentBelongsToRef(
           payment,
-          employee.ref
+          currentEmployee.ref
         )
-    );
+      )
+      .slice(0,5);
 
 
-  let earned = 0;
+  if(!payments.length){
+
+    container.innerHTML = `
+      <p style="color:#9fb0c3">
+        No recent activity.
+      </p>
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML = "";
+
 
   payments.forEach(payment => {
 
     const status =
       paymentStatus(payment);
 
-    if(
-      status === "verified" ||
-      status === "success" ||
-      status === "successful" ||
-      status === "paid" ||
-      status === "completed"
-    ){
+    const amount =
+      Number(
+        payment.amount ||
+        payment.price ||
+        0
+      );
 
-      earned +=
-        paymentAmount(payment)
-        * COMMISSION_RATE;
+    const commission =
+      status === "paid"
+        ? amount * COMMISSION_RATE
+        : 0;
 
-    }
+
+    const item =
+      document.createElement("div");
+
+
+    item.style.padding =
+      "12px 0";
+
+    item.style.borderBottom =
+      "1px solid #26384d";
+
+
+    item.innerHTML = `
+
+      <div>
+        <strong>
+          Payment
+        </strong>
+      </div>
+
+      <div style="
+        color:#9fb0c3;
+        margin-top:5px;
+      ">
+
+        Amount:
+        ${money(amount)}
+
+        &nbsp; | &nbsp;
+
+        Commission:
+        ${money(commission)}
+
+      </div>
+
+      <div style="
+        margin-top:5px;
+        font-size:13px;
+      ">
+
+        Status:
+
+        <span class="badge ${status}">
+          ${status.toUpperCase()}
+        </span>
+
+      </div>
+
+    `;
+
+
+    container.appendChild(item);
 
   });
-
-
-  if(amount > earned){
-
-    message.textContent =
-      "Insufficient available balance.";
-
-    return;
-
-  }
-
-
-  let withdrawals =
-    getWithdrawals();
-
-
-  withdrawals.push({
-
-    id:
-      "WD-" + Date.now(),
-
-    username:
-      username,
-
-    ref:
-      employee.ref,
-
-    phone:
-      phone,
-
-    amount:
-      amount,
-
-    status:
-      "pending",
-
-    date:
-      new Date().toISOString()
-
-  });
-
-
-  localStorage.setItem(
-    "withdrawals",
-    JSON.stringify(withdrawals)
-  );
-
-
-  message.textContent =
-    "Withdrawal request submitted.";
-
-
-  document.getElementById(
-    "withdrawPhone"
-  ).value = "";
-
-  document.getElementById(
-    "withdrawAmount"
-  ).value = "";
 
 }
 
 
-/* =========================
-   ENTER KEY
-========================= */
+/* AUTO LOGIN */
 
-document.getElementById(
-  "usernameInput"
-).addEventListener(
-  "keydown",
-  function(event){
+(function(){
 
-    if(event.key === "Enter"){
-      loginEmployee();
-    }
+  try{
 
-  }
-);
-
-
-document.getElementById(
-  "passwordInput"
-).addEventListener(
-  "keydown",
-  function(event){
-
-    if(event.key === "Enter"){
-      loginEmployee();
-    }
-
-  }
-);
-
-
-/* =========================
-   AUTO LOGIN
-========================= */
-
-const savedEmployee =
-  localStorage.getItem(
-    "loggedInEmployee"
-  );
-
-
-if(
-  savedEmployee &&
-  EMPLOYEES[savedEmployee]
-){
-
-  showDashboard(
-    savedEmployee
-  );
-
-}
-
-
-/* =========================
-   AUTO REFRESH
-========================= */
-
-setInterval(
-  function(){
-
-    const username =
-      localStorage.getItem(
-        "loggedInEmployee"
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          "loggedEmployee"
+        ) || "null"
       );
+
 
     if(
-      username &&
-      EMPLOYEES[username]
+      saved &&
+      saved.ref
     ){
 
-      refreshDashboard(
-        EMPLOYEES[username].ref
-      );
+      const employee =
+        EMPLOYEES[saved.ref];
+
+
+      if(employee){
+
+        currentEmployee =
+          employee;
+
+        showDashboard();
+
+      }
 
     }
 
-  },
-  5000
-);
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+})();
+
+
+/* AUTO REFRESH */
+
+setInterval(function(){
+
+  if(
+    currentEmployee &&
+    !document
+      .getElementById(
+        "dashboardPage"
+      )
+      .classList
+      .contains("hidden")
+  ){
+
+    refreshDashboard(
+      currentEmployee.ref
+    );
+
+    renderRecentActivity();
+
+  }
+
+},5000);
 
 </script>
 
