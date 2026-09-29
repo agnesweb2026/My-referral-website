@@ -332,7 +332,6 @@ grid-template-columns:1fr;
 
 <div class="packages">
 
-<!-- TEST PACKAGE: KSh 1 -->
 <div class="package"
 onclick="selectPackage(this,30,1)">
 <div class="minutes">30 Mins</div>
@@ -457,6 +456,10 @@ on the official M-PESA prompt.
 
 <script>
 
+/* ================================
+   REFERRAL / EMPLOYEE
+================================ */
+
 const urlParams =
 new URLSearchParams(
 window.location.search
@@ -475,18 +478,27 @@ employeeId=null;
 }
 
 if(employeeId){
+
 localStorage.setItem(
 "referralEmployeeId",
 employeeId
 );
+
 }
 
 if(!employeeId){
+
 employeeId=
 localStorage.getItem(
 "referralEmployeeId"
 );
+
 }
+
+
+/* ================================
+   PAYMENT SETTINGS
+================================ */
 
 const TILL_NUMBER="1605854";
 
@@ -499,20 +511,39 @@ Math.random()
 .toString(36)
 .substring(2,8);
 
+
+/* ================================
+   SAVE PAYMENT SESSION
+================================ */
+
 function savePaymentSession(
 status="pending",
 extra={}
 ){
 
 const session={
+
 paymentSessionId,
-employeeId:employeeId||null,
-minutes:selectedMinutes,
-amount:selectedPrice,
-till:TILL_NUMBER,
+
+employeeId:
+employeeId||null,
+
+minutes:
+selectedMinutes,
+
+amount:
+selectedPrice,
+
+till:
+TILL_NUMBER,
+
 status,
-createdAt:new Date().toISOString(),
+
+createdAt:
+new Date().toISOString(),
+
 ...extra
+
 };
 
 localStorage.setItem(
@@ -531,6 +562,11 @@ JSON.stringify(session)
 
 }
 
+
+/* ================================
+   PACKAGE
+================================ */
+
 function selectPackage(
 element,
 minutes,
@@ -541,11 +577,15 @@ document
 .querySelectorAll(".package")
 .forEach(function(pkg){
 
-pkg.classList.remove("selected");
+pkg.classList.remove(
+"selected"
+);
 
 });
 
-element.classList.add("selected");
+element.classList.add(
+"selected"
+);
 
 selectedMinutes=minutes;
 selectedPrice=price;
@@ -554,10 +594,17 @@ savePaymentSession();
 
 showStatus(
 "Package selected",
-minutes+" minutes — KSh "+price
+minutes+
+" minutes — KSh "+
+price
 );
 
 }
+
+
+/* ================================
+   STATUS
+================================ */
 
 function showStatus(
 title,
@@ -565,7 +612,9 @@ text
 ){
 
 const status=
-document.getElementById("status");
+document.getElementById(
+"status"
+);
 
 if(!status)return;
 
@@ -581,6 +630,11 @@ status.style.display="block";
 
 }
 
+
+/* ================================
+   PHONE
+================================ */
+
 function normalizeKenyanPhone(
 value
 ){
@@ -591,10 +645,12 @@ String(value||"")
 .replace(/-/g,"");
 
 if(/^07\d{8}$/.test(phone))
-return "254"+phone.substring(1);
+return "254"+
+phone.substring(1);
 
 if(/^01\d{8}$/.test(phone))
-return "254"+phone.substring(1);
+return "254"+
+phone.substring(1);
 
 if(/^2547\d{8}$/.test(phone))
 return phone;
@@ -605,6 +661,11 @@ return phone;
 return null;
 
 }
+
+
+/* ================================
+   PAYMENT REFERENCE
+================================ */
 
 function createPaymentReference(){
 
@@ -619,13 +680,29 @@ return(
 ).substring(0,12);
 
 }
-  function getServerError(data,responseStatus){
+
+
+/* ================================
+   SERVER ERROR
+================================ */
+
+function getServerError(
+data,
+responseStatus
+){
 
 if(!data){
+
 return{
-message:"No response received from payment server.",
-details:"HTTP "+responseStatus
+
+message:
+"No response received from payment server.",
+
+details:
+"HTTP "+responseStatus
+
 };
+
 }
 
 let message=
@@ -637,19 +714,32 @@ data.statusMessage||
 let details=[];
 
 if(data.validation){
+
 details.push(
-"Validation: "+String(data.validation)
+"Validation: "+
+String(data.validation)
 );
+
 }
 
 if(data.details){
 
 if(typeof data.details==="string"){
-details.push(data.details);
-}else{
+
 details.push(
-JSON.stringify(data.details,null,2)
+data.details
 );
+
+}else{
+
+details.push(
+JSON.stringify(
+data.details,
+null,
+2
+)
+);
+
 }
 
 }
@@ -657,11 +747,21 @@ JSON.stringify(data.details,null,2)
 if(data.errors){
 
 if(typeof data.errors==="string"){
-details.push(data.errors);
-}else{
+
 details.push(
-JSON.stringify(data.errors,null,2)
+data.errors
 );
+
+}else{
+
+details.push(
+JSON.stringify(
+data.errors,
+null,
+2
+)
+);
+
 }
 
 }
@@ -673,16 +773,26 @@ const copy={...data};
 delete copy.success;
 
 if(Object.keys(copy).length){
+
 details.push(
-JSON.stringify(copy,null,2)
+JSON.stringify(
+copy,
+null,
+2
+)
 );
+
 }
 
 }
 
 return{
+
 message:message,
-details:details.join("\n")
+
+details:
+details.join("\n")
+
 };
 
 }
@@ -702,16 +812,23 @@ showStatus(
 );
 
 return;
+
 }
 
 const phoneInput=
-document.getElementById("customerPhone");
+document.getElementById(
+"customerPhone"
+);
 
 const rawPhone=
-phoneInput ? phoneInput.value : "";
+phoneInput
+? phoneInput.value
+: "";
 
 const phone=
-normalizeKenyanPhone(rawPhone);
+normalizeKenyanPhone(
+rawPhone
+);
 
 if(!phone){
 
@@ -720,18 +837,24 @@ showStatus(
 "Enter a valid Kenyan M-PESA number."
 );
 
-if(phoneInput) phoneInput.focus();
+if(phoneInput)
+phoneInput.focus();
 
 return;
+
 }
 
 const button=
-document.getElementById("payButton");
+document.getElementById(
+"payButton"
+);
 
 if(button){
 
 button.disabled=true;
-button.textContent="SENDING PROMPT...";
+
+button.textContent=
+"SENDING PROMPT...";
 
 }
 
@@ -741,8 +864,11 @@ createPaymentReference();
 savePaymentSession(
 "stk_pending",
 {
+
 customerPhone:phone,
+
 reference:reference
+
 }
 );
 
@@ -757,17 +883,24 @@ const response=
 await fetch(
 "/api/stk-push",
 {
+
 method:"POST",
+
 headers:{
-"Content-Type":"application/json"
+"Content-Type":
+"application/json"
 },
+
 body:JSON.stringify({
 
 phone:phone,
+
 amount:selectedPrice,
+
 reference:reference
 
 })
+
 }
 );
 
@@ -783,10 +916,14 @@ data=JSON.parse(text);
 }catch(error){
 
 data={
+
 success:false,
+
 message:
 "Payment server returned an invalid response.",
+
 details:text
+
 };
 
 }
@@ -810,14 +947,19 @@ savePaymentSession(
 {
 
 customerPhone:phone,
+
 reference:reference,
+
 paymentId:paymentId,
+
 paymentStatus:"Pending"
 
 }
 );
 
-showPromptSent(paymentId);
+showPromptSent(
+paymentId
+);
 
 return;
 
@@ -837,9 +979,14 @@ savePaymentSession(
 {
 
 customerPhone:phone,
+
 reference:reference,
-error:serverError.message,
-errorDetails:serverError.details
+
+error:
+serverError.message,
+
+errorDetails:
+serverError.details
 
 }
 );
@@ -862,8 +1009,11 @@ savePaymentSession(
 {
 
 customerPhone:phone,
+
 reference:reference,
-error:String(
+
+error:
+String(
 error.message||error
 )
 
@@ -872,7 +1022,9 @@ error.message||error
 
 showPaymentError(
 "Unable to connect to the payment server.",
-String(error.message||error),
+String(
+error.message||error
+),
 0
 );
 
@@ -918,7 +1070,7 @@ ${escapeHtml(text)}
 
 
 /* ================================
-   CHECK PAYMENT
+   PAYMENT STATUS
 ================================ */
 
 function showPromptSent(
@@ -934,6 +1086,7 @@ showPaymentError(
 );
 
 return;
+
 }
 
 document.body.innerHTML=`
@@ -1024,13 +1177,16 @@ data.paid===true &&
 data.status==="Completed"
 ){
 
-clearInterval(paymentTimer);
+clearInterval(
+paymentTimer
+);
 
 savePaymentSession(
 "paid",
 {
 
-paymentId:paymentId,
+paymentId:
+paymentId,
 
 paymentStatus:
 "Completed",
@@ -1047,9 +1203,24 @@ data.phone||null
 }
 );
 
-showPaymentSuccessful(data);
+
+/*
+   IMPORTANT:
+   Record the successful payment
+   before opening LIVE access.
+*/
+
+recordEmployeePayment(
+data,
+paymentId
+);
+
+showPaymentSuccessful(
+data
+);
 
 return;
+
 }
 
 
@@ -1084,12 +1255,17 @@ error
 
 if(attempts>=maxAttempts){
 
-clearInterval(paymentTimer);
+clearInterval(
+paymentTimer
+);
 
 savePaymentSession(
 "payment_not_confirmed",
 {
-paymentId:paymentId
+
+paymentId:
+paymentId
+
 }
 );
 
@@ -1105,13 +1281,239 @@ showPaymentNotConfirmed();
 
 
 /* ================================
+   EMPLOYEE COMMISSION
+================================ */
+
+function recordEmployeePayment(
+data,
+paymentId
+){
+
+/*
+   No referral = no employee commission.
+*/
+
+if(
+!employeeId ||
+!paymentId
+){
+
+return;
+
+}
+
+
+/*
+   Payment amount
+*/
+
+const amount=
+Number(
+data &&
+data.amount
+? data.amount
+: selectedPrice || 0
+);
+
+
+/*
+   Employee commission = 25%
+*/
+
+const commission=
+Math.round(
+amount * 0.25 * 100
+) / 100;
+
+
+/*
+   Payment record
+*/
+
+const record={
+
+id:
+paymentId,
+
+paymentId:
+paymentId,
+
+employeeId:
+employeeId,
+
+ref:
+employeeId,
+
+minutes:
+Number(
+selectedMinutes || 0
+),
+
+amount:
+amount,
+
+commission:
+commission,
+
+status:
+"paid",
+
+receipt:
+data &&
+data.receipt
+? data.receipt
+: null,
+
+phone:
+data &&
+data.phone
+? data.phone
+: null,
+
+date:
+new Date().toISOString()
+
+};
+
+
+/*
+   Employee-specific records
+*/
+
+let employeePayments=[];
+
+try{
+
+employeePayments=
+JSON.parse(
+localStorage.getItem(
+"employeePayments_"+
+employeeId
+) || "[]"
+);
+
+}catch(error){
+
+employeePayments=[];
+
+}
+
+
+/*
+   Prevent duplicate records
+*/
+
+const alreadyRecorded=
+employeePayments.some(
+function(item){
+
+return String(
+item.paymentId ||
+item.id
+) === String(
+paymentId
+);
+
+}
+);
+
+
+/*
+   Add payment
+*/
+
+if(!alreadyRecorded){
+
+employeePayments.unshift(
+record
+);
+
+}
+
+
+localStorage.setItem(
+
+"employeePayments_"+
+employeeId,
+
+JSON.stringify(
+employeePayments
+)
+
+);
+
+
+/*
+   Main payments list
+   used by dashboard
+*/
+
+let allPayments=[];
+
+try{
+
+allPayments=
+JSON.parse(
+localStorage.getItem(
+"payments"
+) || "[]"
+);
+
+}catch(error){
+
+allPayments=[];
+
+}
+
+
+/*
+   Prevent duplicate in main list
+*/
+
+const alreadyInMainList=
+allPayments.some(
+function(item){
+
+return String(
+item.paymentId ||
+item.id
+) === String(
+paymentId
+);
+
+}
+);
+
+
+if(!alreadyInMainList){
+
+allPayments.unshift(
+record
+);
+
+localStorage.setItem(
+"payments",
+JSON.stringify(
+allPayments
+)
+);
+
+}
+
+}
+
+
+/* ================================
    PAYMENT SUCCESSFUL
 ================================ */
 
-function showPaymentSuccessful(data){
+function showPaymentSuccessful(
+data
+){
 
 const receipt=
-data && data.receipt
+data &&
+data.receipt
 ? data.receipt
 : "";
 
@@ -1135,7 +1537,8 @@ confirmed successfully.
 ${
 receipt
 ? `<p>
-Receipt: ${escapeHtml(receipt)}
+Receipt:
+${escapeHtml(receipt)}
 </p>`
 : ""
 }
@@ -1177,8 +1580,14 @@ window.location.href=
 2000
 );
 
-  }
-  function showPaymentNotConfirmed(){
+}
+
+
+/* ================================
+   PAYMENT NOT CONFIRMED
+================================ */
+
+function showPaymentNotConfirmed(){
 
 document.body.innerHTML=`
 
@@ -1219,7 +1628,7 @@ BACK TO PACKAGES
 
 
 /* ================================
-   ERROR SCREEN
+   PAYMENT ERROR
 ================================ */
 
 function showPaymentError(
@@ -1251,7 +1660,9 @@ ${escapeHtml(message)}
 
 ${
 statusText
-? `<p>${escapeHtml(statusText)}</p>`
+? `<p>
+${escapeHtml(statusText)}
+</p>`
 : ""
 }
 
@@ -1295,14 +1706,38 @@ TRY AGAIN
    ESCAPE HTML
 ================================ */
 
-function escapeHtml(value){
+function escapeHtml(
+value
+){
 
-return String(value||"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+return String(
+value||""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
@@ -1311,9 +1746,11 @@ return String(value||"")
    START PAYMENT SESSION
 ================================ */
 
-savePaymentSession("pending");
+savePaymentSession(
+"pending"
+);
 
 </script>
 
 </body>
-</html>
+  </html>
