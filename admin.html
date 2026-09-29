@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Approval</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#080b12;
+  color:#fff;
+  min-height:100vh;
+}
+
+.container{
+  width:100%;
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:#111722;
+  border:1px solid #263044;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+h1,h2{
+  margin-top:0;
+}
+
+h1{
+  font-size:28px;
+}
+
+h2{
+  font-size:20px;
+}
+
+.login-box{
+  max-width:430px;
+  margin:60px auto;
+}
+
+input{
+  width:100%;
+  padding:15px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid #39445a;
+  background:#080b12;
+  color:white;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.login-btn{
+  background:#16a34a;
+  color:white;
+  margin-top:10px;
+}
+
+.logout-btn{
+  background:#dc2626;
+  color:white;
+  max-width:150px;
+  float:right;
+}
+
+.message{
+  margin-top:12px;
+  padding:12px;
+  border-radius:8px;
+  display:none;
+}
+
+.error{
+  background:#451515;
+  color:#ffb4b4;
+}
+
+.success{
+  background:#123d25;
+  color:#9ff0b8;
+}
+
+.header{
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.stat{
+  background:#0b1019;
+  padding:18px;
+  border-radius:14px;
+  border:1px solid #263044;
+}
+
+.stat-title{
+  color:#9ca3af;
+  font-size:14px;
+}
+
+.stat-value{
+  font-size:25px;
+  font-weight:bold;
+  margin-top:7px;
+}
+
+.withdrawal{
+  background:#0b1019;
+  border:1px solid #263044;
+  border-radius:14px;
+  padding:18px;
+  margin-top:15px;
+}
+
+.withdrawal.pending{
+  border-left:5px solid #f59e0b;
+}
+
+.employee{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.amount{
+  font-size:25px;
+  font-weight:bold;
+  margin:10px 0;
+}
+
+.status{
+  display:inline-block;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:bold;
+  background:#5b4108;
+  color:#ffd76a;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.actions button{
+  flex:1;
+}
+
+.approve{
+  background:#16a34a;
+  color:white;
+}
+
+.reject{
+  background:#dc2626;
+  color:white;
+}
+
+.empty{
+  text-align:center;
+  color:#9ca3af;
+  padding:30px 10px;
+}
+
+.small{
+  color:#9ca3af;
+  font-size:13px;
+}
+
+.hidden{
+  display:none;
+}
+
+@media(max-width:600px){
+  .container{
+    padding:12px;
+  }
+
+  .stat-grid{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .logout-btn{
+    float:none;
+    width:100%;
+    max-width:none;
+    margin-top:10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ADMIN LOGIN -->
+<div id="loginPage" class="container">
+
+  <div class="card login-box">
+
+    <h1>Admin Approval</h1>
+
+    <p class="small">
+      Login to manage employee withdrawal requests.
+    </p>
+
+    <input
+      id="adminUsername"
+      type="text"
+      placeholder="Admin username"
+      autocomplete="username"
+    >
+
+    <input
+      id="adminPassword"
+      type="password"
+      placeholder="Admin password"
+      autocomplete="current-password"
+    >
+
+    <button class="login-btn" onclick="adminLogin()">
+      ADMIN LOGIN
+    </button>
+
+    <div id="loginMessage" class="message"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ADMIN DASHBOARD -->
+<div id="adminPage" class="container hidden">
+
+  <div class="header">
+
+    <button class="logout-btn" onclick="adminLogout()">
+      LOGOUT
+    </button>
+
+    <h1>Admin Approval Account</h1>
+
+    <div class="small">
+      Manage employee withdrawal requests
+    </div>
+
+  </div>
+
+
+  <!-- SUMMARY -->
+
+  <div class="stat-grid">
+
+    <div class="stat">
+      <div class="stat-title">
+        Pending Withdrawals
+      </div>
+
+      <div id="pendingCount" class="stat-value">
+        0
+      </div>
+    </div>
+
+
+    <div class="stat">
+      <div class="stat-title">
+        Pending Amount
+      </div>
+
+      <div id="pendingAmount" class="stat-value">
+        KSh 0
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- WITHDRAWAL REQUESTS -->
+
+  <div class="card">
+
+    <h2>Withdrawal Requests</h2>
+
+    <div id="withdrawalList">
+
+      <div class="empty">
+        No withdrawal requests yet.
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/*
+  TEMPORARY ADMIN LOGIN
+
+  This is only for the first UI stage.
+  We will replace this with secure server-side
+  admin authentication before using it for real money.
+*/
+
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "Admin12345";
+
+
+function adminLogin(){
+
+  const username =
+    document.getElementById("adminUsername").value.trim();
+
+  const password =
+    document.getElementById("adminPassword").value;
+
+
+  if(
+    username === ADMIN_USERNAME &&
+    password === ADMIN_PASSWORD
+  ){
+
+    localStorage.setItem(
+      "adminLoggedIn",
+      "true"
+    );
+
+    showAdminPage();
+
+  }else{
+
+    showLoginMessage(
+      "Incorrect admin username or password.",
+      true
+    );
+
+  }
+
+}
+
+
+function showLoginMessage(message,isError){
+
+  const box =
+    document.getElementById("loginMessage");
+
+  box.textContent = message;
+
+  box.className =
+    "message " +
+    (isError ? "error" : "success");
+
+  box.style.display = "block";
+
+}
+
+
+function showAdminPage(){
+
+  document
+    .getElementById("loginPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("adminPage")
+    .classList.remove("hidden");
+
+  loadWithdrawals();
+
+}
+
+
+function adminLogout(){
+
+  localStorage.removeItem(
+    "adminLoggedIn"
+  );
+
+  location.reload();
+
+}
+
+
+/*
+  TEMPORARY WITHDRAWAL DATA
+
+  Later this will come from the server/database.
+*/
+
+function getWithdrawals(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem("withdrawalRequests") ||
+      "[]"
+    );
+
+  }catch(error){
+
+    return [];
+
+  }
+
+}
+
+
+function saveWithdrawals(data){
+
+  localStorage.setItem(
+    "withdrawalRequests",
+    JSON.stringify(data)
+  );
+
+}
+
+
+function loadWithdrawals(){
+
+  const requests =
+    getWithdrawals();
+
+  const list =
+    document.getElementById("withdrawalList");
+
+  const pending =
+    requests.filter(
+      item => item.status === "PENDING"
+    );
+
+  document.getElementById("pendingCount")
+    .textContent = pending.length;
+
+
+  const total =
+    pending.reduce(
+      (sum,item) =>
+        sum + Number(item.amount || 0),
+      0
+    );
+
+  document.getElementById("pendingAmount")
+    .textContent =
+      "KSh " +
+      total.toLocaleString();
+
+
+  if(requests.length === 0){
+
+    list.innerHTML = `
+      <div class="empty">
+        No withdrawal requests yet.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  list.innerHTML = "";
+
+
+  requests.forEach((request,index)=>{
+
+    const box =
+      document.createElement("div");
+
+    box.className =
+      "withdrawal " +
+      (
+        request.status === "PENDING"
+        ? "pending"
+        : ""
+      );
+
+
+    box.innerHTML = `
+
+      <div class="employee">
+        ${escapeHtml(
+          request.employeeName ||
+          "Employee"
+        )}
+      </div>
+
+      <div class="small">
+        Employee ID:
+        ${escapeHtml(
+          request.employeeId ||
+          "Unknown"
+        )}
+      </div>
+
+      <div class="amount">
+        KSh ${Number(
+          request.amount || 0
+        ).toLocaleString()}
+      </div>
+
+      <div class="small">
+        Requested:
+        ${escapeHtml(
+          request.date ||
+          "Unknown"
+        )}
+      </div>
+
+      <br>
+
+      <span class="status">
+        ${escapeHtml(
+          request.status ||
+          "PENDING"
+        )}
+      </span>
+
+      ${
+        request.status === "PENDING"
+        ? `
+          <div class="actions">
+
+            <button
+              class="approve"
+              onclick="approveWithdrawal(${index})"
+            >
+              APPROVE
+            </button>
+
+            <button
+              class="reject"
+              onclick="rejectWithdrawal(${index})"
+            >
+              REJECT
+            </button>
+
+          </div>
+        `
+        : ""
+      }
+
+    `;
+
+    list.appendChild(box);
+
+  });
+
+}
+
+
+function approveWithdrawal(index){
+
+  const requests =
+    getWithdrawals();
+
+  const request =
+    requests[index];
+
+
+  if(!request){
+    return;
+  }
+
+
+  if(request.status !== "PENDING"){
+
+    alert(
+      "This withdrawal has already been processed."
+    );
+
+    return;
+
+  }
+
+
+  const amount =
+    Number(request.amount || 0);
+
+
+  if(!confirm(
+    "Approve withdrawal of KSh " +
+    amount.toLocaleString() +
+    " for " +
+    (request.employeeName || "employee") +
+    "?"
+  )){
+
+    return;
+
+  }
+
+
+  /*
+    TEMPORARY UI ACTION.
+
+    IMPORTANT:
+    The real version will deduct the money
+    from the employee balance ONLY after
+    server-side admin approval.
+  */
+
+  request.status = "APPROVED";
+
+  request.approvedAt =
+    new Date().toISOString();
+
+  request.approvedBy =
+    "admin";
+
+
+  saveWithdrawals(requests);
+
+  alert(
+    "Withdrawal approved."
+  );
+
+  loadWithdrawals();
+
+}
+
+
+function rejectWithdrawal(index){
+
+  const requests =
+    getWithdrawals();
+
+  const request =
+    requests[index];
+
+
+  if(!request){
+    return;
+  }
+
+
+  if(request.status !== "PENDING"){
+
+    alert(
+      "This withdrawal has already been processed."
+    );
+
+    return;
+
+  }
+
+
+  if(!confirm(
+    "Reject this withdrawal request?"
+  )){
+
+    return;
+
+  }
+
+
+  request.status = "REJECTED";
+
+  request.rejectedAt =
+    new Date().toISOString();
+
+  request.rejectedBy =
+    "admin";
+
+
+  saveWithdrawals(requests);
+
+  alert(
+    "Withdrawal rejected."
+  );
+
+  loadWithdrawals();
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/*
+  Check login when page opens.
+*/
+
+if(
+  localStorage.getItem("adminLoggedIn")
+  === "true"
+){
+
+  showAdminPage();
+
+}
+
+</script>
+
+</body>
+</html>
