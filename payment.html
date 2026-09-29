@@ -466,7 +466,8 @@ window.location.search
 );
 
 let employeeId =
-urlParams.get("employee");
+urlParams.get("employee") ||
+urlParams.get("ref");
 
 if(
 employeeId &&
