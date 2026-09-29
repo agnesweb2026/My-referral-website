@@ -10,11 +10,11 @@
       font-family: Arial, sans-serif;
       background: #111;
       color: white;
-      padding: 25px;
+      padding: 20px;
     }
 
     .box {
-      max-width: 400px;
+      max-width: 420px;
       margin: 40px auto;
       background: #222;
       padding: 25px;
@@ -24,11 +24,11 @@
     input, button {
       width: 100%;
       box-sizing: border-box;
-      padding: 15px;
+      padding: 16px;
       margin-top: 12px;
       border-radius: 8px;
       border: none;
-      font-size: 16px;
+      font-size: 17px;
     }
 
     button {
@@ -39,6 +39,9 @@
 
     #result {
       margin-top: 20px;
+      padding: 15px;
+      background: #000;
+      border-radius: 8px;
       white-space: pre-wrap;
       word-break: break-word;
     }
@@ -47,62 +50,96 @@
 
 <body>
 
-  <div class="box">
-    <h2>Liparo STK Test</h2>
+<div class="box">
 
-    <p>Test amount: <strong>KSh 10</strong></p>
+  <h2>Liparo STK Test</h2>
 
-    <input
-      id="phone"
-      type="tel"
-      placeholder="07XXXXXXXX"
-      inputmode="numeric"
-    >
+  <p>Test amount: <strong>KSh 10</strong></p>
 
-    <button onclick="sendTest()">
-      SEND KSh 10 STK
-    </button>
+  <input
+    id="phone"
+    type="tel"
+    inputmode="numeric"
+    placeholder="07XXXXXXXX"
+  >
 
-    <div id="result"></div>
+  <button onclick="sendTest()">
+    SEND KSh 10 STK
+  </button>
+
+  <div id="result">
+    Ready for test.
   </div>
 
-  <script>
-    async function sendTest() {
-      const phone = document.getElementById("phone").value.trim();
-      const result = document.getElementById("result");
+</div>
 
-      if (!phone) {
-        result.textContent = "Enter your M-PESA number first.";
-        return;
+<script>
+
+async function sendTest() {
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const result =
+    document.getElementById("result");
+
+  if (!phone) {
+    result.textContent =
+      "Please enter your M-PESA number.";
+    return;
+  }
+
+  result.textContent =
+    "Sending KSh 10 STK request...";
+
+  try {
+
+    const response = await fetch(
+      "/api/liparo-stk",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          phone: phone,
+          amount: 10,
+          reference: "LIPARO-TEST-10"
+        })
       }
+    );
 
-      result.textContent = "Sending STK request...";
+    const text = await response.text();
 
-      try {
-        const response = await fetch("/api/liparo-stk", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            phone: phone,
-            amount: 10,
-            reference: "LIPARO-TEST-10"
-          })
-        });
+    let data;
 
-        const data = await response.json();
-
-        result.textContent =
-          "Response:\n\n" +
-          JSON.stringify(data, null, 2);
-
-      } catch (error) {
-        result.textContent =
-          "Error:\n\n" + error.message;
-      }
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = {
+        raw_response: text
+      };
     }
-  </script>
+
+    result.textContent =
+      "HTTP STATUS: " +
+      response.status +
+      "\n\n" +
+      JSON.stringify(data, null, 2);
+
+  } catch (error) {
+
+    result.textContent =
+      "CONNECTION ERROR\n\n" +
+      error.message;
+
+  }
+
+}
+
+</script>
 
 </body>
-  </html>
+</html>
