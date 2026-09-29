@@ -15,19 +15,17 @@ module.exports = async (req, res) => {
   try {
     const { phone, amount, reference } = req.body || {};
 
-    // =============================
+    // =========================
     // PHONE
-    // =============================
+    // =========================
     const rawPhone = String(phone || "").replace(/\D/g, "");
 
     let mpesaPhone = rawPhone;
 
-    // 0712345678 -> 254712345678
     if (/^07\d{8}$/.test(rawPhone)) {
       mpesaPhone = "254" + rawPhone.substring(1);
     }
 
-    // 254712345678
     if (/^2547\d{8}$/.test(rawPhone)) {
       mpesaPhone = rawPhone;
     }
@@ -41,9 +39,9 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =============================
+    // =========================
     // AMOUNT
-    // =============================
+    // =========================
     const cleanAmount = Number(amount);
 
     if (!Number.isInteger(cleanAmount) || cleanAmount < 1) {
@@ -54,15 +52,13 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =============================
+    // =========================
     // REFERENCE
-    // UnifiedPay recommends 12 chars
-    // or fewer.
-    // =============================
+    // =========================
     const cleanReference = String(reference || "")
       .trim()
       .replace(/[^A-Za-z0-9_-]/g, "")
-      .slice(0, 12);
+      .slice(0, 20);
 
     if (!cleanReference) {
       return json(res, 400, {
@@ -72,10 +68,9 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =============================
-    // UNIFIEDPAY CREDENTIALS
-    // These remain on the server.
-    // =============================
+    // =========================
+    // UNIFIEDPAY ONLY
+    // =========================
     const consumerKey = String(
       process.env.UNIFIEDPAY_CONSUMER_KEY || ""
     ).trim();
@@ -84,31 +79,26 @@ module.exports = async (req, res) => {
       process.env.UNIFIEDPAY_CONSUMER_SECRET || ""
     ).trim();
 
-    const shortcode = String(
-      process.env.UNIFIEDPAY_SHORTCODE || ""
-    ).trim();
+    const apiBaseUrl = String(
+      process.env.UNIFIEDPAY_API_BASE_URL || ""
+    )
+      .trim()
+      .replace(/\/+$/, "");
 
-    if (!consumerKey || !consumerSecret) {
+    if (!consumerKey || !consumerSecret || !apiBaseUrl) {
       return json(res, 500, {
         success: false,
         message:
-          "UnifiedPay credentials are not configured on the server."
+          "UnifiedPay settings are not configured on the server."
       });
     }
 
-    if (!shortcode) {
-      return json(res, 500, {
-        success: false,
-        message:
-          "UnifiedPay shortcode is not configured on the server."
-      });
-    }
-
-    // =============================
+    // =========================
     // UNIFIEDPAY STK PUSH
-    // =============================
+    // =========================
     const url =
-      "https://unifiedpay.co.ke/auth/cred/" +
+      apiBaseUrl +
+      "/auth/cred/" +
       encodeURIComponent(consumerKey) +
       "/" +
       encodeURIComponent(consumerSecret) +
@@ -123,14 +113,12 @@ module.exports = async (req, res) => {
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Accept": "application/json"
       },
       body: JSON.stringify(requestBody)
     });
 
-    // =============================
-    // READ RESPONSE
-    // =============================
     const responseText = await response.text();
 
     let data;
@@ -146,10 +134,9 @@ module.exports = async (req, res) => {
       };
     }
 
-    // =============================
-    // SERVER LOG
-    // Does NOT log consumer secret.
-    // =============================
+    // =========================
+    // LOG RESULT
+    // =========================
     console.log(
       "UNIFIEDPAY_STK_RESULT",
       JSON.stringify({
@@ -161,9 +148,9 @@ module.exports = async (req, res) => {
       })
     );
 
-    // =============================
+    // =========================
     // SUCCESS
-    // =============================
+    // =========================
     if (
       response.ok &&
       data.ResponseCode === "0" &&
@@ -171,6 +158,7 @@ module.exports = async (req, res) => {
     ) {
       return json(res, 200, {
         success: true,
+
         message:
           data.message ||
           "M-PESA prompt sent successfully.",
@@ -193,9 +181,9 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =============================
+    // =========================
     // UNIFIEDPAY ERROR
-    // =============================
+    // =========================
     return json(res, response.status || 500, {
       success: false,
 
@@ -220,8 +208,10 @@ module.exports = async (req, res) => {
 
     return json(res, 500, {
       success: false,
+
       message:
         "Unable to start the M-PESA prompt.",
+
       error:
         String(error.message || error)
     });
