@@ -6,189 +6,187 @@
 <title>Employee Dashboard</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#07111f;
-  color:#fff;
+margin:0;
+font-family:Arial,sans-serif;
+background:#07111f;
+color:#fff;
 }
 
 .container{
-  width:100%;
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
+width:100%;
+max-width:1100px;
+margin:auto;
+padding:20px;
 }
 
 .card{
-  background:#101d2e;
-  border:1px solid #26384d;
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:18px;
+background:#101d2e;
+border:1px solid #26384d;
+border-radius:16px;
+padding:20px;
+margin-bottom:18px;
 }
 
 h1,h2,h3{
-  margin-top:0;
+margin-top:0;
 }
 
 .login{
-  max-width:420px;
-  margin:50px auto;
+max-width:420px;
+margin:50px auto;
 }
 
 input{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:1px solid #34495e;
-  background:#07111f;
-  color:#fff;
-  margin:8px 0;
-  font-size:16px;
+width:100%;
+padding:14px;
+border-radius:10px;
+border:1px solid #34495e;
+background:#07111f;
+color:#fff;
+margin:8px 0;
+font-size:16px;
 }
 
 button{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:10px;
-  background:#16a34a;
-  color:#fff;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:8px;
+width:100%;
+padding:14px;
+border:0;
+border-radius:10px;
+background:#16a34a;
+color:#fff;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+margin-top:8px;
 }
 
 button:hover{
-  opacity:.9;
+opacity:.9;
 }
 
 .logout{
-  background:#dc2626;
+background:#dc2626;
 }
 
 .error{
-  color:#ff6b6b;
-  margin-top:10px;
+color:#ff6b6b;
+margin-top:10px;
 }
 
 .hidden{
-  display:none;
+display:none;
 }
 
 .header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+flex-wrap:wrap;
 }
 
 .stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
 }
 
 .stat{
-  background:#17263a;
-  border-radius:14px;
-  padding:18px;
+background:#17263a;
+border-radius:14px;
+padding:18px;
 }
 
 .stat small{
-  color:#9fb0c3;
+color:#9fb0c3;
 }
 
 .stat strong{
-  display:block;
-  font-size:24px;
-  margin-top:8px;
+display:block;
+font-size:24px;
+margin-top:8px;
 }
 
 .referral-box{
-  display:flex;
-  gap:8px;
+display:flex;
+gap:8px;
 }
 
 .referral-box input{
-  flex:1;
+flex:1;
 }
 
 .referral-box button{
-  width:110px;
+width:110px;
 }
 
 table{
-  width:100%;
-  border-collapse:collapse;
+width:100%;
+border-collapse:collapse;
 }
 
 th,td{
-  padding:12px 8px;
-  border-bottom:1px solid #26384d;
-  text-align:left;
+padding:12px 8px;
+border-bottom:1px solid #26384d;
+text-align:left;
 }
 
 th{
-  color:#9fb0c3;
+color:#9fb0c3;
 }
 
 .badge{
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:12px;
+padding:5px 9px;
+border-radius:20px;
+font-size:12px;
 }
 
 .paid{
-  background:#14532d;
-  color:#86efac;
+background:#14532d;
+color:#86efac;
 }
 
 .pending{
-  background:#713f12;
-  color:#fde68a;
+background:#713f12;
+color:#fde68a;
 }
 
 .failed{
-  background:#7f1d1d;
-  color:#fca5a5;
+background:#7f1d1d;
+color:#fca5a5;
 }
 
 @media(max-width:700px){
 
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
 
-  .referral-box{
-    flex-direction:column;
-  }
+.referral-box{
+flex-direction:column;
+}
 
-  .referral-box button{
-    width:100%;
-  }
+.referral-box button{
+width:100%;
+}
 
-  table{
-    font-size:13px;
-  }
+table{
+font-size:13px;
+}
 
-  .container{
-    padding:12px;
-  }
+.container{
+padding:12px;
+}
 }
 
 @media(max-width:430px){
 
-  .stats{
-    grid-template-columns:1fr;
-  }
+.stats{
+grid-template-columns:1fr;
+}
 }
 </style>
 </head>
@@ -199,35 +197,35 @@ th{
 
 <div id="loginPage" class="container">
 
-  <div class="card login">
+<div class="card login">
 
-    <h1>Employee Login</h1>
+<h1>Employee Login</h1>
 
-    <p>
-      Enter your employee account details.
-    </p>
+<p>
+Enter your employee account details.
+</p>
 
-    <input
-      id="username"
-      type="text"
-      placeholder="Username"
-      autocomplete="username"
-    >
+<input
+id="username"
+type="text"
+placeholder="Username"
+autocomplete="username"
+>
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-      autocomplete="current-password"
-    >
+<input
+id="password"
+type="password"
+placeholder="Password"
+autocomplete="current-password"
+>
 
-    <button onclick="login()">
-      LOGIN
-    </button>
+<button onclick="login()">
+LOGIN
+</button>
 
-    <div id="loginError" class="error"></div>
+<div id="loginError" class="error"></div>
 
-  </div>
+</div>
 
 </div>
 
@@ -236,979 +234,1022 @@ th{
 
 <div id="dashboardPage" class="container hidden">
 
-  <div class="card">
+<div class="card">
 
-    <div class="header">
+<div class="header">
 
-      <div>
+<div>
 
-        <h1 id="employeeName">
-          Employee Dashboard
-        </h1>
+<h1 id="employeeName">
+Employee Dashboard
+</h1>
 
-        <div id="employeeRef">
-          Referral Code
-        </div>
+<div id="employeeRef">
+Referral Code
+</div>
 
-      </div>
+</div>
 
-      <button
-        class="logout"
-        onclick="logout()"
-        style="width:120px"
-      >
-        LOGOUT
-      </button>
+<button
+class="logout"
+onclick="logout()"
+style="width:120px"
+>
+LOGOUT
+</button>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 
-  <!-- STATS -->
+<!-- STATS -->
 
-  <div class="stats">
+<div class="stats">
 
-    <div class="stat">
-      <small>Total Sales</small>
-      <strong id="totalSales">0</strong>
-    </div>
+<div class="stat">
+<small>Total Sales</small>
+<strong id="totalSales">0</strong>
+</div>
 
-    <div class="stat">
-      <small>Total Amount</small>
-      <strong id="totalAmount">
-        KSh 0.00
-      </strong>
-    </div>
+<div class="stat">
+<small>Total Amount</small>
+<strong id="totalAmount">
+KSh 0.00
+</strong>
+</div>
 
-    <div class="stat">
-      <small>Commission 25%</small>
-      <strong id="totalCommission">
-        KSh 0.00
-      </strong>
-    </div>
+<div class="stat">
+<small>Commission 25%</small>
+<strong id="totalCommission">
+KSh 0.00
+</strong>
+</div>
 
-    <div class="stat">
-      <small>Wallet</small>
-      <strong id="wallet">
-        KSh 0.00
-      </strong>
-    </div>
+<div class="stat">
+<small>Wallet</small>
+<strong id="wallet">
+KSh 0.00
+</strong>
+</div>
 
-  </div>
+</div>
 
 
-  <!-- REFERRAL LINK -->
+<!-- REFERRAL LINK -->
 
-  <div class="card">
+<div class="card">
 
-    <h2>Your Referral Link</h2>
+<h2>Your Referral Link</h2>
 
-    <p>
-      Share this link with customers.
-    </p>
+<p>
+Share this link with customers.
+</p>
 
-    <div class="referral-box">
+<div class="referral-box">
 
-      <input
-        id="referralLink"
-        readonly
-      >
+<input
+id="referralLink"
+readonly
+>
 
-      <button onclick="copyReferralLink()">
-        COPY
-      </button>
+<button onclick="copyReferralLink()">
+COPY
+</button>
 
-    </div>
+</div>
 
-    <button onclick="openReferralLink()">
-      OPEN WEBSITE
-    </button>
+<button onclick="openReferralLink()">
+OPEN WEBSITE
+</button>
 
-  </div>
+</div>
 
 
-  <!-- PAYMENT INFORMATION -->
+<!-- PAYMENT INFORMATION -->
 
-  <div class="card">
+<div class="card">
 
-    <h2>Payment Information</h2>
+<h2>Payment Information</h2>
 
-    <p>
-      Commission rate:
-      <strong>25%</strong>
-    </p>
+<p>
+Commission rate:
+<strong>25%</strong>
+</p>
 
-    <p>
-      Employee:
-      <strong id="paymentEmployee">-</strong>
-    </p>
+<p>
+Employee:
+<strong id="paymentEmployee">-</strong>
+</p>
 
-    <p>
-      Referral code:
-      <strong id="paymentRef">-</strong>
-    </p>
+<p>
+Referral code:
+<strong id="paymentRef">-</strong>
+</p>
 
-  </div>
+</div>
 
 
-  <!-- SALES -->
+<!-- SALES -->
 
-  <div class="card">
+<div class="card">
 
-    <h2>Sales Activity</h2>
+<h2>Sales Activity</h2>
 
-    <div style="overflow-x:auto">
+<div style="overflow-x:auto">
 
-      <table>
+<table>
 
-        <thead>
+<thead>
 
-          <tr>
-            <th>Date</th>
-            <th>Payment</th>
-            <th>Minutes</th>
-            <th>Amount</th>
-            <th>Commission</th>
-            <th>Status</th>
-          </tr>
+<tr>
+<th>Date</th>
+<th>Payment</th>
+<th>Minutes</th>
+<th>Amount</th>
+<th>Commission</th>
+<th>Status</th>
+</tr>
 
-        </thead>
+</thead>
 
-        <tbody id="salesTable">
-        </tbody>
+<tbody id="salesTable">
+</tbody>
 
-      </table>
+</table>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 
-  <!-- WITHDRAW -->
+<!-- WITHDRAW -->
 
-  <div class="card">
+<div class="card">
 
-    <h2>Withdraw Commission</h2>
+<h2>Withdraw Commission</h2>
 
-    <p>
-      Available wallet:
-      <strong id="withdrawWallet">
-        KSh 0.00
-      </strong>
-    </p>
+<p>
+Available wallet:
+<strong id="withdrawWallet">
+KSh 0.00
+</strong>
+</p>
 
-    <button onclick="requestWithdraw()">
-      REQUEST WITHDRAWAL
-    </button>
+<button onclick="requestWithdraw()">
+REQUEST WITHDRAWAL
+</button>
 
-    <div id="withdrawMessage"></div>
+<div id="withdrawMessage"></div>
 
-  </div>
+</div>
 
 
-  <!-- RECENT ACTIVITY -->
+<!-- RECENT ACTIVITY -->
 
-  <div class="card">
+<div class="card">
 
-    <h2>Recent Activity</h2>
+<h2>Recent Activity</h2>
 
-    <div id="recentActivity">
+<div id="recentActivity">
 
-      <p style="color:#9fb0c3">
-        No recent activity.
-      </p>
+<p style="color:#9fb0c3">
+No recent activity.
+</p>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 
-  <!-- ACCOUNT INFORMATION -->
+<!-- ACCOUNT INFORMATION -->
 
-  <div class="card">
+<div class="card">
 
-    <h2>Account Information</h2>
+<h2>Account Information</h2>
 
-    <p>
-      <strong>Employee:</strong>
-      <span id="accountEmployee">-</span>
-    </p>
+<p>
+<strong>Employee:</strong>
+<span id="accountEmployee">-</span>
+</p>
 
-    <p>
-      <strong>Username:</strong>
-      <span id="accountUsername">-</span>
-    </p>
+<p>
+<strong>Username:</strong>
+<span id="accountUsername">-</span>
+</p>
 
-    <p>
-      <strong>Referral Code:</strong>
-      <span id="accountReferral">-</span>
-    </p>
+<p>
+<strong>Referral Code:</strong>
+<span id="accountReferral">-</span>
+</p>
 
-    <p>
-      <strong>Commission:</strong>
-      25%
-    </p>
+<p>
+<strong>Commission:</strong>
+25%
+</p>
 
-  </div>
+</div>
 
 
-  <!-- COMMISSION INFORMATION -->
+<!-- COMMISSION INFORMATION -->
 
-  <div class="card">
+<div class="card">
 
-    <h2>How Commission Works</h2>
+<h2>How Commission Works</h2>
 
-    <p>
-      Every successful payment made through
-      your referral link is recorded for your
-      account.
-    </p>
+<p>
+Every successful payment made through
+your referral link is recorded for your
+account.
+</p>
 
-    <p>
-      Your commission rate is:
-      <strong>25%</strong>
-    </p>
+<p>
+Your commission rate is:
+<strong>25%</strong>
+</p>
 
-    <p>
-      Example:
-      KSh 100 payment =
-      KSh 25 commission.
-    </p>
+<p>
+Example:
+KSh 100 payment =
+KSh 25 commission.
+</p>
 
-  </div>
+</div>
 
 
 <script>
 
 const EMPLOYEES = {
 
-  "REF-A7K2":{
-    username:"Joshua1",
-    password:"123456",
-    name:"Employee 1",
-    ref:"REF-A7K2"
-  },
+"REF-A7K2":{
+username:"Joshua1",
+password:"123456",
+name:"Employee 1",
+ref:"REF-A7K2"
+},
 
-  "REF-B4M8":{
-    username:"Joshua2",
-    password:"123456",
-    name:"Employee 2",
-    ref:"REF-B4M8"
-  },
+"REF-B4M8":{
+username:"Joshua2",
+password:"123456",
+name:"Employee 2",
+ref:"REF-B4M8"
+},
 
-  "REF-C9P3":{
-    username:"Joshua3",
-    password:"123456",
-    name:"Employee 3",
-    ref:"REF-C9P3"
-  },
+"REF-C9P3":{
+username:"Joshua3",
+password:"123456",
+name:"Employee 3",
+ref:"REF-C9P3"
+},
 
-  "REF-D2X6":{
-    username:"Joshua4",
-    password:"123456",
-    name:"Employee 4",
-    ref:"REF-D2X6"
-  },
+"REF-D2X6":{
+username:"Joshua4",
+password:"123456",
+name:"Employee 4",
+ref:"REF-D2X6"
+},
 
-  "REF-E5Q1":{
-    username:"Joshua5",
-    password:"123456",
-    name:"Employee 5",
-    ref:"REF-E5Q1"
-  },
+"REF-E5Q1":{
+username:"Joshua5",
+password:"123456",
+name:"Employee 5",
+ref:"REF-E5Q1"
+},
 
-  "REF-F8L4":{
-    username:"Joshua6",
-    password:"123456",
-    name:"Employee 6",
-    ref:"REF-F8L4"
-  },
+"REF-F8L4":{
+username:"Joshua6",
+password:"123456",
+name:"Employee 6",
+ref:"REF-F8L4"
+},
 
-  "REF-G3N7":{
-    username:"Joshua7",
-    password:"123456",
-    name:"Employee 7",
-    ref:"REF-G3N7"
-  },
+"REF-G3N7":{
+username:"Joshua7",
+password:"123456",
+name:"Employee 7",
+ref:"REF-G3N7"
+},
 
-  "REF-H6R2":{
-    username:"Joshua8",
-    password:"123456",
-    name:"Employee 8",
-    ref:"REF-H6R2"
-  },
+"REF-H6R2":{
+username:"Joshua8",
+password:"123456",
+name:"Employee 8",
+ref:"REF-H6R2"
+},
 
-  "REF-J9T5":{
-    username:"Joshua9",
-    password:"123456",
-    name:"Employee 9",
-    ref:"REF-J9T5"
-  },
+"REF-J9T5":{
+username:"Joshua9",
+password:"123456",
+name:"Employee 9",
+ref:"REF-J9T5"
+},
 
-  "REF-K4W8":{
-    username:"Joshua10",
-    password:"123456",
-    name:"Employee 10",
-    ref:"REF-K4W8"
-  }
+"REF-K4W8":{
+username:"Joshua10",
+password:"123456",
+name:"Employee 10",
+ref:"REF-K4W8"
+}
 
 };
 
-const COMMISSION_RATE = 0.25;
 
-let currentEmployee = null;
+const COMMISSION_RATE=0.25;
 
+let currentEmployee=null;
+
+
+/* MONEY */
 
 function money(value){
 
-  return "KSh " +
-    Number(value || 0).toFixed(2);
+return "KSh "+
+Number(value||0).toFixed(2);
 
 }
 
+
+/* LOGIN */
 
 function login(){
 
-  const username =
-    document.getElementById(
-      "username"
-    ).value.trim();
+const username=
+document.getElementById(
+"username"
+).value.trim();
 
-  const password =
-    document.getElementById(
-      "password"
-    ).value;
+const password=
+document.getElementById(
+"password"
+).value;
 
-  const error =
-    document.getElementById(
-      "loginError"
-    );
+const error=
+document.getElementById(
+"loginError"
+);
 
-  error.textContent = "";
+error.textContent="";
 
-  let found = null;
+let found=null;
 
-  for(
-    const ref in EMPLOYEES
-  ){
+for(
+const ref in EMPLOYEES
+){
 
-    const employee =
-      EMPLOYEES[ref];
+const employee=
+EMPLOYEES[ref];
 
-    if(
-      employee.username === username &&
-      employee.password === password
-    ){
+if(
+employee.username===username &&
+employee.password===password
+){
 
-      found = employee;
-      break;
-
-    }
-
-  }
-
-  if(!found){
-
-    error.textContent =
-      "Incorrect username or password.";
-
-    return;
-
-  }
-
-  currentEmployee = found;
-
-  localStorage.setItem(
-    "loggedEmployee",
-    JSON.stringify(found)
-  );
-
-  showDashboard();
+found=employee;
+break;
 
 }
 
+}
+
+if(!found){
+
+error.textContent=
+"Incorrect username or password.";
+
+return;
+
+}
+
+currentEmployee=found;
+
+localStorage.setItem(
+"loggedEmployee",
+JSON.stringify(found)
+);
+
+showDashboard();
+
+}
+
+
+/* LOGOUT */
 
 function logout(){
 
-  localStorage.removeItem(
-    "loggedEmployee"
-  );
+localStorage.removeItem(
+"loggedEmployee"
+);
 
-  currentEmployee = null;
+currentEmployee=null;
 
-  document
-    .getElementById(
-      "dashboardPage"
-    )
-    .classList
-    .add("hidden");
+document
+.getElementById("dashboardPage")
+.classList.add("hidden");
 
-  document
-    .getElementById(
-      "loginPage"
-    )
-    .classList
-    .remove("hidden");
+document
+.getElementById("loginPage")
+.classList.remove("hidden");
 
 }
 
+
+/* SHOW DASHBOARD */
 
 function showDashboard(){
 
-  document
-    .getElementById(
-      "loginPage"
-    )
-    .classList
-    .add("hidden");
+document
+.getElementById("loginPage")
+.classList.add("hidden");
 
-  document
-    .getElementById(
-      "dashboardPage"
-    )
-    .classList
-    .remove("hidden");
+document
+.getElementById("dashboardPage")
+.classList.remove("hidden");
 
-  document.getElementById(
-    "employeeName"
-  ).textContent =
-    currentEmployee.name +
-    " Dashboard";
+document.getElementById(
+"employeeName"
+).textContent=
+currentEmployee.name+
+" Dashboard";
 
-  document.getElementById(
-    "employeeRef"
-  ).textContent =
-    "Referral Code: " +
-    currentEmployee.ref;
+document.getElementById(
+"employeeRef"
+).textContent=
+"Referral Code: "+
+currentEmployee.ref;
 
-  document.getElementById(
-    "paymentEmployee"
-  ).textContent =
-    currentEmployee.name;
+document.getElementById(
+"paymentEmployee"
+).textContent=
+currentEmployee.name;
 
-  document.getElementById(
-    "paymentRef"
-  ).textContent =
-    currentEmployee.ref;
+document.getElementById(
+"paymentRef"
+).textContent=
+currentEmployee.ref;
 
-  document.getElementById(
-    "accountEmployee"
-  ).textContent =
-    currentEmployee.name;
+document.getElementById(
+"accountEmployee"
+).textContent=
+currentEmployee.name;
 
-  document.getElementById(
-    "accountUsername"
-  ).textContent =
-    currentEmployee.username;
+document.getElementById(
+"accountUsername"
+).textContent=
+currentEmployee.username;
 
-  document.getElementById(
-    "accountReferral"
-  ).textContent =
-    currentEmployee.ref;
+document.getElementById(
+"accountReferral"
+).textContent=
+currentEmployee.ref;
 
-  updateReferralLink(
-    currentEmployee.ref
-  );
+updateReferralLink(
+currentEmployee.ref
+);
 
-  refreshDashboard(
-    currentEmployee.ref
-  );
+refreshDashboard(
+currentEmployee.ref
+);
 
-  renderRecentActivity();
-
-}
-  function updateReferralLink(ref){
-
-  const link =
-    window.location.origin +
-    "/?employee=" +
-    encodeURIComponent(ref);
-
-  document.getElementById(
-    "referralLink"
-  ).value = link;
+renderRecentActivity();
 
 }
 
+
+/* REFERRAL LINK */
+
+function updateReferralLink(ref){
+
+const link=
+window.location.origin+
+"/?employee="+
+encodeURIComponent(ref);
+
+document.getElementById(
+"referralLink"
+).value=link;
+
+}
+
+
+/* COPY */
 
 function copyReferralLink(){
 
-  const input =
-    document.getElementById(
-      "referralLink"
-    );
+const input=
+document.getElementById(
+"referralLink"
+);
 
-  if(
-    navigator.clipboard &&
-    navigator.clipboard.writeText
-  ){
+if(
+navigator.clipboard &&
+navigator.clipboard.writeText
+){
 
-    navigator.clipboard.writeText(
-      input.value
-    ).then(function(){
+navigator.clipboard.writeText(
+input.value
+).then(function(){
 
-      alert("Referral link copied.");
+alert(
+"Referral link copied."
+);
 
-    });
+});
 
-  }else{
+}else{
 
-    input.select();
+input.select();
 
-    document.execCommand("copy");
+document.execCommand("copy");
 
-    alert("Referral link copied.");
-
-  }
+alert(
+"Referral link copied."
+);
 
 }
 
+}
+
+
+/* OPEN */
 
 function openReferralLink(){
 
-  const link =
-    document.getElementById(
-      "referralLink"
-    ).value;
+const link=
+document.getElementById(
+"referralLink"
+).value;
 
-  window.open(
-    link,
-    "_blank"
-  );
+window.open(
+link,
+"_blank"
+);
 
 }
 
+
+/* GET PAYMENTS */
 
 function getPayments(){
 
-  try{
+try{
 
-    const data =
-      JSON.parse(
-        localStorage.getItem(
-          "payments"
-        ) || "[]"
-      );
+const data=
+JSON.parse(
+localStorage.getItem(
+"payments"
+)||"[]"
+);
 
-    return Array.isArray(data)
-      ? data
-      : [];
+return Array.isArray(data)
+? data
+: [];
 
-  }catch(error){
+}catch(error){
 
-    return [];
-
-  }
+return [];
 
 }
 
+}
+
+
+/* CHECK REFERRAL */
 
 function paymentBelongsToRef(
-  payment,
-  ref
+payment,
+ref
 ){
 
-  if(!payment){
-    return false;
-  }
+if(!payment){
+return false;
+}
 
-  const values = [
+const values=[
 
-    payment.ref,
-    payment.referral,
-    payment.referralCode,
-    payment.employeeRef,
-    payment.employeeReferral,
-    payment.referredBy,
-    payment.employeeId
+payment.ref,
 
-  ];
+payment.referral,
 
-  return values.some(
-    value =>
-      String(value || "").trim() ===
-      String(ref).trim()
-  );
+payment.referralCode,
+
+payment.employeeRef,
+
+payment.employeeReferral,
+
+payment.referredBy,
+
+payment.employeeId
+
+];
+
+return values.some(
+value=>
+String(value||"").trim()===
+String(ref).trim()
+);
 
 }
 
+
+/* STATUS */
 
 function paymentStatus(payment){
 
-  const status =
-    String(
-      payment.status ||
-      payment.paymentStatus ||
-      ""
-    ).toLowerCase();
+const status=
+String(
+payment.status||
+payment.paymentStatus||
+""
+).toLowerCase();
 
-  if(
-    status === "paid" ||
-    status === "success" ||
-    status === "successful" ||
-    status === "verified" ||
-    status === "completed"
-  ){
+if(
 
-    return "paid";
+status==="paid"||
+status==="success"||
+status==="successful"||
+status==="verified"||
+status==="completed"
 
-  }
+){
 
-  if(
-    status === "failed" ||
-    status === "rejected" ||
-    status === "cancelled"
-  ){
-
-    return "failed";
-
-  }
-
-  return "pending";
+return "paid";
 
 }
 
+if(
+
+status==="failed"||
+status==="rejected"||
+status==="cancelled"
+
+){
+
+return "failed";
+
+}
+
+return "pending";
+
+}
+
+
+/* REFRESH */
 
 function refreshDashboard(ref){
 
-  const payments =
-    getPayments().filter(
-      payment =>
-        paymentBelongsToRef(
-          payment,
-          ref
-        )
-    );
+const payments=
+getPayments().filter(
+payment=>
+paymentBelongsToRef(
+payment,
+ref
+)
+);
+
+let totalSales=0;
+let totalAmount=0;
+let totalCommission=0;
+
+payments.forEach(
+payment=>{
+
+const status=
+paymentStatus(payment);
+
+if(status!=="paid"){
+return;
+}
+
+const amount=
+Number(
+payment.amount||
+payment.price||
+0
+);
+
+totalSales++;
+
+totalAmount+=amount;
+
+totalCommission+=
+amount*
+COMMISSION_RATE;
+
+}
+);
 
 
-  let totalSales = 0;
-  let totalAmount = 0;
-  let totalCommission = 0;
+document.getElementById(
+"totalSales"
+).textContent=
+totalSales;
 
+document.getElementById(
+"totalAmount"
+).textContent=
+money(totalAmount);
 
-  payments.forEach(payment => {
+document.getElementById(
+"totalCommission"
+).textContent=
+money(totalCommission);
 
-    const status =
-      paymentStatus(payment);
+document.getElementById(
+"wallet"
+).textContent=
+money(totalCommission);
 
-    if(status !== "paid"){
-      return;
-    }
+document.getElementById(
+"withdrawWallet"
+).textContent=
+money(totalCommission);
 
-    const amount =
-      Number(
-        payment.amount ||
-        payment.price ||
-        0
-      );
-
-    totalSales++;
-
-    totalAmount += amount;
-
-    totalCommission +=
-      amount * COMMISSION_RATE;
-
-  });
-
-
-  document.getElementById(
-    "totalSales"
-  ).textContent =
-    totalSales;
-
-
-  document.getElementById(
-    "totalAmount"
-  ).textContent =
-    money(totalAmount);
-
-
-  document.getElementById(
-    "totalCommission"
-  ).textContent =
-    money(totalCommission);
-
-
-  document.getElementById(
-    "wallet"
-  ).textContent =
-    money(totalCommission);
-
-
-  document.getElementById(
-    "withdrawWallet"
-  ).textContent =
-    money(totalCommission);
-
-
-  renderSales(payments);
+renderSales(payments);
 
 }
 
+
+/* SALES TABLE */
 
 function renderSales(payments){
 
-  const table =
-    document.getElementById(
-      "salesTable"
-    );
+const table=
+document.getElementById(
+"salesTable"
+);
 
-  table.innerHTML = "";
+table.innerHTML="";
 
+if(!payments.length){
 
-  if(!payments.length){
+table.innerHTML=`
 
-    table.innerHTML = `
-      <tr>
-        <td
-          colspan="6"
-          style="text-align:center"
-        >
-          No sales yet
-        </td>
-      </tr>
-    `;
+<tr>
 
-    return;
+<td
+colspan="6"
+style="text-align:center"
+>
 
-  }
+No sales yet
 
+</td>
 
-  payments.forEach(payment => {
+</tr>
 
-    const status =
-      paymentStatus(payment);
+`;
 
-    const amount =
-      Number(
-        payment.amount ||
-        payment.price ||
-        0
-      );
-
-    const commission =
-      status === "paid"
-        ? amount * COMMISSION_RATE
-        : 0;
-
-    const minutes =
-      Number(
-        payment.minutes ||
-        payment.selectedMinutes ||
-        0
-      );
-
-    const date =
-      payment.date ||
-      payment.createdAt ||
-      payment.timestamp ||
-      "";
-
-
-    const row =
-      document.createElement("tr");
-
-
-    row.innerHTML = `
-
-      <td>
-        ${formatDate(date)}
-      </td>
-
-      <td>
-        ${payment.paymentId ||
-          payment.id ||
-          "-"}
-      </td>
-
-      <td>
-        ${minutes}
-      </td>
-
-      <td>
-        ${money(amount)}
-      </td>
-
-      <td>
-        ${money(commission)}
-      </td>
-
-      <td>
-        <span class="badge ${status}">
-          ${status.toUpperCase()}
-        </span>
-      </td>
-
-    `;
-
-
-    table.appendChild(row);
-
-  });
+return;
 
 }
 
+
+payments.forEach(
+payment=>{
+
+const status=
+paymentStatus(payment);
+
+const amount=
+Number(
+payment.amount||
+payment.price||
+0
+);
+
+const commission=
+status==="paid"
+? amount*COMMISSION_RATE
+:0;
+
+const minutes=
+Number(
+payment.minutes||
+payment.selectedMinutes||
+0
+);
+
+const date=
+payment.date||
+payment.createdAt||
+payment.timestamp||
+"";
+
+const row=
+document.createElement("tr");
+
+row.innerHTML=`
+
+<td>
+${formatDate(date)}
+</td>
+
+<td>
+${payment.paymentId||
+payment.id||
+"-"}
+</td>
+
+<td>
+${minutes}
+</td>
+
+<td>
+${money(amount)}
+</td>
+
+<td>
+${money(commission)}
+</td>
+
+<td>
+
+<span class="badge ${status}">
+${status.toUpperCase()}
+</span>
+
+</td>
+
+`;
+
+table.appendChild(row);
+
+});
+
+}
+
+
+/* DATE */
 
 function formatDate(value){
 
-  if(!value){
-    return "-";
-  }
+if(!value){
+return "-";
+}
 
-  try{
+try{
 
-    return new Date(value)
-      .toLocaleString();
+return new Date(value)
+.toLocaleString();
 
-  }catch(error){
+}catch(error){
 
-    return String(value);
-
-  }
+return String(value);
 
 }
 
+}
+
+
+/* WITHDRAW */
 
 function requestWithdraw(){
 
-  const message =
-    document.getElementById(
-      "withdrawMessage"
-    );
+const message=
+document.getElementById(
+"withdrawMessage"
+);
 
-  const wallet =
-    document.getElementById(
-      "withdrawWallet"
-    ).textContent;
+const wallet=
+document.getElementById(
+"withdrawWallet"
+).textContent;
 
+message.innerHTML=`
 
-  message.innerHTML = `
-    <p style="color:#facc15">
-      Withdrawal request recorded.
-      Available balance:
-      ${wallet}
-    </p>
-  `;
+<p style="color:#facc15">
+
+Withdrawal request recorded.
+
+Available balance:
+
+${wallet}
+
+</p>
+
+`;
 
 }
 
 
+/* RECENT ACTIVITY */
+
 function renderRecentActivity(){
 
-  if(!currentEmployee){
-    return;
-  }
+if(!currentEmployee){
+return;
+}
 
-  const container =
-    document.getElementById(
-      "recentActivity"
-    );
+const container=
+document.getElementById(
+"recentActivity"
+);
 
-  if(!container){
-    return;
-  }
+if(!container){
+return;
+}
 
+const payments=
+getPayments()
+.filter(
+payment=>
+paymentBelongsToRef(
+payment,
+currentEmployee.ref
+)
+)
+.slice(0,5);
 
-  const payments =
-    getPayments()
-      .filter(payment =>
-        paymentBelongsToRef(
-          payment,
-          currentEmployee.ref
-        )
-      )
-      .slice(0,5);
+if(!payments.length){
 
+container.innerHTML=`
 
-  if(!payments.length){
+<p style="color:#9fb0c3">
 
-    container.innerHTML = `
-      <p style="color:#9fb0c3">
-        No recent activity.
-      </p>
-    `;
+No recent activity.
 
-    return;
+</p>
 
-  }
+`;
 
+return;
 
-  container.innerHTML = "";
+}
 
+container.innerHTML="";
 
-  payments.forEach(payment => {
+payments.forEach(
+payment=>{
 
-    const status =
-      paymentStatus(payment);
+const status=
+paymentStatus(payment);
 
-    const amount =
-      Number(
-        payment.amount ||
-        payment.price ||
-        0
-      );
+const amount=
+Number(
+payment.amount||
+payment.price||
+0
+);
 
-    const commission =
-      status === "paid"
-        ? amount * COMMISSION_RATE
-        : 0;
+const commission=
+status==="paid"
+? amount*COMMISSION_RATE
+:0;
 
+const item=
+document.createElement("div");
 
-    const item =
-      document.createElement("div");
+item.style.padding=
+"12px 0";
 
+item.style.borderBottom=
+"1px solid #26384d";
 
-    item.style.padding =
-      "12px 0";
+item.innerHTML=`
 
-    item.style.borderBottom =
-      "1px solid #26384d";
+<div>
 
+<strong>
+Payment
+</strong>
 
-    item.innerHTML = `
+</div>
 
-      <div>
-        <strong>
-          Payment
-        </strong>
-      </div>
+<div style="
+color:#9fb0c3;
+margin-top:5px;
+">
 
-      <div style="
-        color:#9fb0c3;
-        margin-top:5px;
-      ">
+Amount:
+${money(amount)}
 
-        Amount:
-        ${money(amount)}
+&nbsp; | &nbsp;
 
-        &nbsp; | &nbsp;
+Commission:
+${money(commission)}
 
-        Commission:
-        ${money(commission)}
+</div>
 
-      </div>
+<div style="
+margin-top:5px;
+font-size:13px;
+">
 
-      <div style="
-        margin-top:5px;
-        font-size:13px;
-      ">
+Status:
 
-        Status:
+<span class="badge ${status}">
 
-        <span class="badge ${status}">
-          ${status.toUpperCase()}
-        </span>
+${status.toUpperCase()}
 
-      </div>
+</span>
 
-    `;
+</div>
 
+`;
 
-    container.appendChild(item);
+container.appendChild(item);
 
-  });
+});
 
 }
 
@@ -1217,70 +1258,71 @@ function renderRecentActivity(){
 
 (function(){
 
-  try{
+try{
 
-    const saved =
-      JSON.parse(
-        localStorage.getItem(
-          "loggedEmployee"
-        ) || "null"
-      );
+const saved=
+JSON.parse(
+localStorage.getItem(
+"loggedEmployee"
+)||"null"
+);
 
+if(
+saved &&
+saved.ref
+){
 
-    if(
-      saved &&
-      saved.ref
-    ){
+const employee=
+EMPLOYEES[saved.ref];
 
-      const employee =
-        EMPLOYEES[saved.ref];
+if(employee){
 
+currentEmployee=
+employee;
 
-      if(employee){
+showDashboard();
 
-        currentEmployee =
-          employee;
+}
 
-        showDashboard();
+}
 
-      }
+}catch(error){
 
-    }
+console.log(error);
 
-  }catch(error){
-
-    console.log(error);
-
-  }
+}
 
 })();
 
 
 /* AUTO REFRESH */
 
-setInterval(function(){
+setInterval(
+function(){
 
-  if(
-    currentEmployee &&
-    !document
-      .getElementById(
-        "dashboardPage"
-      )
-      .classList
-      .contains("hidden")
-  ){
+if(
+currentEmployee &&
+!document
+.getElementById(
+"dashboardPage"
+)
+.classList
+.contains("hidden")
+){
 
-    refreshDashboard(
-      currentEmployee.ref
-    );
+refreshDashboard(
+currentEmployee.ref
+);
 
-    renderRecentActivity();
+renderRecentActivity();
 
-  }
+}
 
-},5000);
+},
+5000
+);
 
 </script>
 
 </body>
-</html>
+  </html>
