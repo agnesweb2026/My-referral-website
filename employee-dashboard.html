@@ -445,9 +445,6 @@
     }
 
     /* =========================
-       PART 2 CONTINUES HERE
-    ========================= */
-        /* =========================
        WITHDRAWAL HISTORY
     ========================= */
 
@@ -733,7 +730,6 @@
         padding: 12px;
       }
     }
-
   </style>
 </head>
 
@@ -837,7 +833,6 @@
 
     <main class="container">
 
-
       <!-- PROFILE -->
 
       <section class="profile-card">
@@ -885,7 +880,6 @@
       <!-- STATS -->
 
       <div class="stats">
-
 
         <div class="stat-card">
 
@@ -967,7 +961,6 @@
 
         <div class="section-body">
 
-
           <div class="balance-box">
 
             <div class="balance-label">
@@ -1037,10 +1030,8 @@
 
         </div>
 
-      </section>
-
-
-      <!-- COMMISSION -->
+          </section>
+                <!-- COMMISSION -->
 
       <section class="section">
 
@@ -1184,724 +1175,818 @@
 
   <script>
 
-    /* =========================
-       PART 3 CONTINUES HERE
-    ========================= */
     const EMPLOYEE_KEY = "employeeSession";
-const WITHDRAWAL_KEY = "withdrawalRequests";
-
-/*
-  DEMO EMPLOYEE ACCOUNTS
-
-  These can be changed later.
-  No database is used in this version.
-*/
-
-const EMPLOYEES = [
-  {
-    username: "employee1",
-    password: "Employee123",
-    name: "Employee 1",
-    id: "EMP001",
-    referral: "EMP001",
-    earnings: 0,
-    withdrawn: 0
-  },
-  {
-    username: "employee2",
-    password: "Employee123",
-    name: "Employee 2",
-    id: "EMP002",
-    referral: "EMP002",
-    earnings: 0,
-    withdrawn: 0
-  },
-  {
-    username: "employee3",
-    password: "Employee123",
-    name: "Employee 3",
-    id: "EMP003",
-    referral: "EMP003",
-    earnings: 0,
-    withdrawn: 0
-  },
-  {
-    username: "employee4",
-    password: "Employee123",
-    name: "Employee 4",
-    id: "EMP004",
-    referral: "EMP004",
-    earnings: 0,
-    withdrawn: 0
-  },
-  {
-    username: "employee5",
-    password: "Employee123",
-    name: "Employee 5",
-    id: "EMP005",
-    referral: "EMP005",
-    earnings: 0,
-    withdrawn: 0
-  },
-  {
-    username: "employee6",
-    password: "Employee123",
-    name: "Employee 6",
-    id: "EMP006",
-    referral: "EMP006",
-    earnings: 0,
-    withdrawn: 0
-  },
-  {
-    username: "employee7",
-    password: "Employee123",
-    name: "Employee 7",
-    id: "EMP007",
-    referral: "EMP007",
-    earnings: 0,
-    withdrawn: 0
-  },
-  {
-    username: "employee8",
-    password: "Employee123",
-    name: "Employee 8",
-    id: "EMP008",
-    referral: "EMP008",
-    earnings: 0,
-    withdrawn: 0
-  },
-  {
-    username: "employee9",
-    password: "Employee123",
-    name: "Employee 9",
-    id: "EMP009",
-    referral: "EMP009",
-    earnings: 0,
-    withdrawn: 0
-  },
-  {
-    username: "employee10",
-    password: "Employee123",
-    name: "Employee 10",
-    id: "EMP010",
-    referral: "EMP010",
-    earnings: 0,
-    withdrawn: 0
-  }
-];
+    const WITHDRAWAL_KEY = "withdrawalRequests";
 
 
-/* =========================
-   LOGIN
-========================= */
+    /*
+      EMPLOYEE ACCOUNTS
 
-function employeeLogin() {
+      Username:
+      joshua1 - joshua10
 
-  const username =
-    document.getElementById("employeeUsername")
-      .value.trim();
+      Password:
+      123456
 
-  const password =
-    document.getElementById("employeePassword")
-      .value;
+      Referral codes:
+      REF-A7K2
+      REF-B4M8
+      REF-C9P3
+      REF-D2X6
+      REF-E5Q1
+      REF-F8L4
+      REF-G3N7
+      REF-H6R2
+      REF-J9T5
+      REF-K4W8
+    */
 
-  const error =
-    document.getElementById("loginError");
+    const EMPLOYEES = [
 
-  const employee = EMPLOYEES.find(function(item) {
+      {
+        username: "joshua1",
+        password: "123456",
+        name: "Joshua 1",
+        id: "JOSHUA1",
+        referral: "REF-A7K2",
+        earnings: 0,
+        withdrawn: 0
+      },
 
-    return (
-      item.username === username &&
-      item.password === password
-    );
+      {
+        username: "joshua2",
+        password: "123456",
+        name: "Joshua 2",
+        id: "JOSHUA2",
+        referral: "REF-B4M8",
+        earnings: 0,
+        withdrawn: 0
+      },
 
-  });
+      {
+        username: "joshua3",
+        password: "123456",
+        name: "Joshua 3",
+        id: "JOSHUA3",
+        referral: "REF-C9P3",
+        earnings: 0,
+        withdrawn: 0
+      },
 
-  if (!employee) {
+      {
+        username: "joshua4",
+        password: "123456",
+        name: "Joshua 4",
+        id: "JOSHUA4",
+        referral: "REF-D2X6",
+        earnings: 0,
+        withdrawn: 0
+      },
 
-    error.textContent =
-      "Incorrect username or password.";
+      {
+        username: "joshua5",
+        password: "123456",
+        name: "Joshua 5",
+        id: "JOSHUA5",
+        referral: "REF-E5Q1",
+        earnings: 0,
+        withdrawn: 0
+      },
 
-    return;
-  }
+      {
+        username: "joshua6",
+        password: "123456",
+        name: "Joshua 6",
+        id: "JOSHUA6",
+        referral: "REF-F8L4",
+        earnings: 0,
+        withdrawn: 0
+      },
 
-  error.textContent = "";
+      {
+        username: "joshua7",
+        password: "123456",
+        name: "Joshua 7",
+        id: "JOSHUA7",
+        referral: "REF-G3N7",
+        earnings: 0,
+        withdrawn: 0
+      },
 
-  localStorage.setItem(
-    EMPLOYEE_KEY,
-    JSON.stringify(employee)
-  );
+      {
+        username: "joshua8",
+        password: "123456",
+        name: "Joshua 8",
+        id: "JOSHUA8",
+        referral: "REF-H6R2",
+        earnings: 0,
+        withdrawn: 0
+      },
 
-  showDashboard();
-}
+      {
+        username: "joshua9",
+        password: "123456",
+        name: "Joshua 9",
+        id: "JOSHUA9",
+        referral: "REF-J9T5",
+        earnings: 0,
+        withdrawn: 0
+      },
 
+      {
+        username: "joshua10",
+        password: "123456",
+        name: "Joshua 10",
+        id: "JOSHUA10",
+        referral: "REF-K4W8",
+        earnings: 0,
+        withdrawn: 0
+      }
 
-/* =========================
-   LOGOUT
-========================= */
-
-function employeeLogout() {
-
-  localStorage.removeItem(EMPLOYEE_KEY);
-
-  document
-    .getElementById("dashboardPage")
-    .classList.add("hidden");
-
-  document
-    .getElementById("loginPage")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("employeeUsername")
-    .value = "";
-
-  document
-    .getElementById("employeePassword")
-    .value = "";
-
-}
+    ];
 
 
-/* =========================
-   GET CURRENT EMPLOYEE
-========================= */
+    /* =========================
+       LOGIN
+    ========================= */
 
-function getCurrentEmployee() {
+    function employeeLogin() {
+
+      const username =
+        document
+          .getElementById("employeeUsername")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("employeePassword")
+          .value;
+
+      const error =
+        document
+          .getElementById("loginError");
+
+
+      const employee =
+        EMPLOYEES.find(function(item) {
+
+          return (
+            item.username === username &&
+            item.password === password
+          );
+
+        });
+
+
+      if (!employee) {
+
+        error.textContent =
+          "Incorrect username or password.";
+
+        return;
+      }
+
+
+      error.textContent = "";
+
+
+      localStorage.setItem(
+        EMPLOYEE_KEY,
+        JSON.stringify(employee)
+      );
+
+
+      showDashboard();
+
+    }
+
+
+    /* =========================
+       LOGOUT
+    ========================= */
+
+    function employeeLogout() {
+
+      localStorage.removeItem(
+        EMPLOYEE_KEY
+      );
+
+
+      document
+        .getElementById("dashboardPage")
+        .classList.add("hidden");
+
+
+      document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
+
+
+      document
+        .getElementById("employeeUsername")
+        .value = "";
+
+
+      document
+        .getElementById("employeePassword")
+        .value = "";
+
+    }
+
+
+    /* =========================
+       GET CURRENT EMPLOYEE
+    ========================= */
+
+    function getCurrentEmployee() {
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            EMPLOYEE_KEY
+          );
+
+
+        if (!saved) {
+          return null;
+        }
+
+
+        return JSON.parse(saved);
+
+      } catch (error) {
+
+        return null;
+
+      }
+
+    }
+
+
+    /* =========================
+       SHOW DASHBOARD
+    ========================= */
+
+    function showDashboard() {
+
+      const employee =
+        getCurrentEmployee();
+
+
+      if (!employee) {
+        return;
+      }
+
+
+      document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+
+      document
+        .getElementById("dashboardPage")
+        .classList.remove("hidden");
+
+
+      loadEmployeeData();
+
+    }
+
+
+    /* =========================
+       LOAD EMPLOYEE DATA
+       LOCAL 25% COMMISSION
+    ========================= */
+
+    function loadEmployeeData() {
+
+      const employee =
+        getCurrentEmployee();
+
+
+      if (!employee) {
+        return;
+      }
+
+
+      /*
+        Payment page stores successful
+        referral payments here:
+
+        employeePayments_REF-A7K2
+        employeePayments_REF-B4M8
+        etc.
+
+        We calculate earnings from the
+        commission field stored there.
+      */
+
+      const employeeKey =
+        employee.referral ||
+        employee.id ||
+        employee.username;
+
+
+      let paymentRecords = [];
+
+
+      try {
+
+        paymentRecords =
+          JSON.parse(
+            localStorage.getItem(
+              "employeePayments_" +
+              employeeKey
+            ) || "[]"
+          );
+
+
+        if (!Array.isArray(paymentRecords)) {
+
+          paymentRecords = [];
+
+        }
+
+      } catch (error) {
+
+        paymentRecords = [];
+
+      }
+
+
+      const calculatedEarnings =
+        paymentRecords.reduce(
+          function(total, item) {
+
+            return (
+              total +
+              Number(
+                item.commission || 0
+              )
+            );
+
+          },
+          0
+        );
+
+
+      const earnings =
+        Math.round(
+          calculatedEarnings * 100
+        ) / 100;
+
+
+      const withdrawn =
+        Number(
+          employee.withdrawn || 0
+        );
+
+
+      const available =
+        Math.max(
+          0,
+          earnings - withdrawn
+        );
+
+
+      /*
+        Keep the calculated earnings
+        in the current local employee
+        session.
+      */
+
+      employee.earnings =
+        earnings;
+
+
+      localStorage.setItem(
+        EMPLOYEE_KEY,
+        JSON.stringify(employee)
+      );
+
+
+      document
+        .getElementById("profileName")
+        .textContent =
+          employee.name ||
+          "Employee";
+
+
+      document
+        .getElementById("profileId")
+        .textContent =
+          employee.id ||
+          "Employee ID";
+
+
+      document
+        .getElementById("profileAvatar")
+        .textContent =
+          String(
+            employee.name || "E"
+          )
+          .charAt(0)
+          .toUpperCase();
+
+
+      document
+        .getElementById("totalEarnings")
+        .textContent =
+          "KSh " +
+          earnings.toLocaleString();
+
+
+      document
+        .getElementById("availableBalance")
+        .textContent =
+          "KSh " +
+          available.toLocaleString();
+
+
+      document
+        .getElementById("withdrawBalance")
+        .textContent =
+          "KSh " +
+          available.toLocaleString();
+
+
+      document
+        .getElementById("totalWithdrawn")
+        .textContent =
+          "KSh " +
+          withdrawn.toLocaleString();
+
+
+      document
+        .getElementById("commissionRate")
+        .textContent =
+          "25%";
+
+
+      /*
+        Referral link uses the
+        professional provisional code.
+      */
+
+      const referralCode =
+        employee.referral ||
+        employee.id ||
+        employee.username;
+
+
+      const referralLink =
+        window.location.origin +
+        "/?ref=" +
+        encodeURIComponent(
+          referralCode
+        );
+
+
+      document
+        .getElementById("referralLink")
+        .textContent =
+          referralLink;
+
+
+      loadWithdrawalHistory();
+
+    }
+
+
+    /* =========================
+       WITHDRAWAL REQUEST
+    ========================= */
+
+    function requestWithdrawal() {
+
+      const employee =
+        getCurrentEmployee();
+
+
+      if (!employee) {
+        return;
+      }
+
+
+      /*
+        Recalculate local earnings
+        before processing withdrawal.
+      */
+
+      loadEmployeeData();
+
+
+      const refreshedEmployee =
+        getCurrentEmployee();
+
+
+      const phone =
+        document
+          .getElementById("mpesaNumber")
+          .value
+          .trim();
+
+
+      const amount =
+        Number(
+          document
+            .getElementById("withdrawAmount")
+            .value
+        );
+
+
+      const message =
+        document.getElementById(
+          "withdrawMessage"
+        );
+
+
+      message.textContent = "";
+
+      message.style.color =
+        "#ff6464";
+
+
+      if (!/^07\d{8}$/.test(phone)) {
+
+        message.textContent =
+          "Enter a valid M-PESA number.";
+
+        return;
+      }
+
+
+      if (
+        !Number.isFinite(amount) ||
+        amount <= 0
+      ) {
+
+        message.textContent =
+          "Enter a valid withdrawal amount.";
+
+        return;
+      }
+
+
+      const earnings =
+        Number(
+          refreshedEmployee.earnings || 0
+        );
+
+
+      const withdrawn =
+        Number(
+          refreshedEmployee.withdrawn || 0
+        );
+
+
+      const available =
+        Math.max(
+          0,
+          earnings - withdrawn
+        );
+
+
+      if (amount > available) {
+
+        message.textContent =
+          "Insufficient available balance.";
+
+        return;
+      }
+
+
+      const requests =
+        getWithdrawalRequests();
+
+
+      const alreadyPending =
+        requests.some(
+          function(request) {
+
+            return (
+              String(
+                request.employeeId
+              ) ===
+              String(
+                refreshedEmployee.id
+              ) &&
+
+              String(
+                request.status ||
+                "PENDING"
+              ).toUpperCase() ===
+              "PENDING"
+            );
+
+          }
+        );
+
+
+      if (alreadyPending) {
+
+        message.textContent =
+          "You already have a pending withdrawal request.";
+
+        return;
+      }
+
+
+      const request = {
+
+        id:
+          "WD-" +
+          Date.now(),
+
+        employeeName:
+          refreshedEmployee.name,
+
+        employeeId:
+          refreshedEmployee.id,
+
+        username:
+          refreshedEmployee.username,
+
+        referral:
+          refreshedEmployee.referral,
+
+        amount:
+          amount,
+
+        phone:
+          phone,
+
+        status:
+          "PENDING",
+
+        createdAt:
+          new Date().toISOString()
+
+      };
+
+
+      requests.push(request);
+
+
+      saveWithdrawalRequests(
+        requests
+      );
+
+
+      /*
+        Balance is NOT reduced until
+        an administrator approves
+        the withdrawal.
+      */
+
+
+      document
+        .getElementById(
+          "withdrawAmount"
+        )
+        .value = "";
+
+
+      message.style.color =
+        "#36d675";
+
+
+      message.textContent =
+        "Withdrawal request submitted successfully.";
+
+
+      loadWithdrawalHistory();
+
+    }
+
+
+    /* =========================
+       WITHDRAWAL STORAGE
+    ========================= */
+
+    function getWithdrawalRequests() {
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            WITHDRAWAL_KEY
+          );
+
+
+        if (!saved) {
+          return [];
+        }
+
+
+        const parsed =
+          JSON.parse(saved);
+
+
+        return Array.isArray(parsed)
+          ? parsed
+          : [];
+
+      } catch (error) {
+
+        return [];
+
+      }
+
+    }
+
+
+    function saveWithdrawalRequests(
+      requests
+    ) {
+
+      localStorage.setItem(
+        WITHDRAWAL_KEY,
+        JSON.stringify(requests)
+      );
+
+    }
+    function loadWithdrawalHistory() {
+
+  const employee = getCurrentEmployee();
+
+  if (!employee) return;
+
+  let requests = [];
 
   try {
 
-    const saved =
-      localStorage.getItem(EMPLOYEE_KEY);
-
-    if (!saved) {
-      return null;
-    }
-
-    return JSON.parse(saved);
+    requests = JSON.parse(
+      localStorage.getItem(WITHDRAWAL_KEY) || "[]"
+    );
 
   } catch (error) {
 
-    return null;
+    requests = [];
 
   }
 
-}
+  const employeeRequests =
+    requests.filter(function(request) {
 
-
-/* =========================
-   SHOW DASHBOARD
-========================= */
-
-function showDashboard() {
-
-  const employee =
-    getCurrentEmployee();
-
-  if (!employee) {
-    return;
-  }
-
-  document
-    .getElementById("loginPage")
-    .classList.add("hidden");
-
-  document
-    .getElementById("dashboardPage")
-    .classList.remove("hidden");
-
-  loadEmployeeData();
-
-}
-
-
-/* =========================
-   LOAD EMPLOYEE DATA
-========================= */
-
-function loadEmployeeData() {
-
-  const employee =
-    getCurrentEmployee();
-
-  if (!employee) {
-    return;
-  }
-
-  const earnings =
-    Number(employee.earnings || 0);
-
-  const withdrawn =
-    Number(employee.withdrawn || 0);
-
-  const available =
-    Math.max(0, earnings - withdrawn);
-
-
-  document
-    .getElementById("profileName")
-    .textContent =
-      employee.name || "Employee";
-
-
-  document
-    .getElementById("profileId")
-    .textContent =
-      employee.id || "Employee ID";
-
-
-  document
-    .getElementById("profileAvatar")
-    .textContent =
-      String(employee.name || "E")
-        .charAt(0)
-        .toUpperCase();
-
-
-  document
-    .getElementById("totalEarnings")
-    .textContent =
-      "KSh " + earnings.toLocaleString();
-
-
-  document
-    .getElementById("availableBalance")
-    .textContent =
-      "KSh " + available.toLocaleString();
-
-
-  document
-    .getElementById("withdrawBalance")
-    .textContent =
-      "KSh " + available.toLocaleString();
-
-
-  document
-    .getElementById("totalWithdrawn")
-    .textContent =
-      "KSh " + withdrawn.toLocaleString();
-
-
-  document
-    .getElementById("commissionRate")
-    .textContent =
-      "25%";
-
-
-  const referralCode =
-    employee.referral ||
-    employee.id ||
-    employee.username;
-
-
-  const referralLink =
-    window.location.origin +
-    "/?ref=" +
-    encodeURIComponent(referralCode);
-
-
-  document
-    .getElementById("referralLink")
-    .textContent =
-      referralLink;
-
-
-  loadWithdrawalHistory();
-
-}
-
-
-/* =========================
-   WITHDRAWAL REQUEST
-========================= */
-
-function requestWithdrawal() {
-
-  const employee =
-    getCurrentEmployee();
-
-  if (!employee) {
-    return;
-  }
-
-
-  const phone =
-    document
-      .getElementById("mpesaNumber")
-      .value.trim();
-
-
-  const amount =
-    Number(
-      document
-        .getElementById("withdrawAmount")
-        .value
-    );
-
-
-  const message =
-    document.getElementById(
-      "withdrawMessage"
-    );
-
-
-  message.textContent = "";
-  message.style.color = "#ff6464";
-
-
-  if (!/^07\d{8}$/.test(phone)) {
-
-    message.textContent =
-      "Enter a valid M-PESA number.";
-
-    return;
-  }
-
-
-  if (!Number.isFinite(amount) || amount <= 0) {
-
-    message.textContent =
-      "Enter a valid withdrawal amount.";
-
-    return;
-  }
-
-
-  const earnings =
-    Number(employee.earnings || 0);
-
-  const withdrawn =
-    Number(employee.withdrawn || 0);
-
-  const available =
-    Math.max(0, earnings - withdrawn);
-
-
-  if (amount > available) {
-
-    message.textContent =
-      "Insufficient available balance.";
-
-    return;
-  }
-
-
-  const requests =
-    getWithdrawalRequests();
-
-
-  const alreadyPending =
-    requests.some(function(request) {
-
-      return (
-        String(request.employeeId) ===
-          String(employee.id) &&
-        String(request.status || "PENDING")
-          .toUpperCase() === "PENDING"
-      );
+      return request.employeeId === employee.referral;
 
     });
 
+  const history =
+    document.getElementById("withdrawalHistory");
 
-  if (alreadyPending) {
+  if (!history) return;
 
-    message.textContent =
-      "You already have a pending withdrawal request.";
+  if (employeeRequests.length === 0) {
 
-    return;
-  }
-
-
-  const request = {
-
-    id:
-      "WD-" +
-      Date.now(),
-
-    employeeName:
-      employee.name,
-
-    employeeId:
-      employee.id,
-
-    username:
-      employee.username,
-
-    amount:
-      amount,
-
-    phone:
-      phone,
-
-    status:
-      "PENDING",
-
-    createdAt:
-      new Date().toISOString()
-
-  };
-
-
-  requests.push(request);
-
-
-  saveWithdrawalRequests(requests);
-
-
-  /*
-    IMPORTANT:
-
-    We do NOT reduce the employee balance here.
-
-    The balance is only considered withdrawn
-    after an approved payment in a real backend.
-  */
-
-
-  document
-    .getElementById("withdrawAmount")
-    .value = "";
-
-
-  message.style.color = "#36d675";
-
-  message.textContent =
-    "Withdrawal request submitted successfully.";
-
-
-  loadWithdrawalHistory();
-
-}
-
-
-/* =========================
-   WITHDRAWAL STORAGE
-========================= */
-
-function getWithdrawalRequests() {
-
-  try {
-
-    const saved =
-      localStorage.getItem(
-        WITHDRAWAL_KEY
-      );
-
-    if (!saved) {
-      return [];
-    }
-
-    const parsed =
-      JSON.parse(saved);
-
-    return Array.isArray(parsed)
-      ? parsed
-      : [];
-
-  } catch (error) {
-
-    return [];
-
-  }
-
-}
-
-
-function saveWithdrawalRequests(
-  requests
-) {
-
-  localStorage.setItem(
-    WITHDRAWAL_KEY,
-    JSON.stringify(requests)
-  );
-
-}
-
-
-/* =========================
-   WITHDRAWAL HISTORY
-========================= */
-
-function loadWithdrawalHistory() {
-
-  const employee =
-    getCurrentEmployee();
-
-  if (!employee) {
-    return;
-  }
-
-
-  const requests =
-    getWithdrawalRequests();
-
-
-  const employeeRequests =
-    requests
-      .filter(function(request) {
-
-        return (
-          String(request.employeeId) ===
-          String(employee.id)
-        );
-
-      })
-      .sort(function(a, b) {
-
-        return (
-          new Date(
-            b.createdAt || 0
-          ).getTime() -
-
-          new Date(
-            a.createdAt || 0
-          ).getTime()
-        );
-
-      });
-
-
-  const list =
-    document.getElementById(
-      "historyList"
-    );
-
-
-  if (!employeeRequests.length) {
-
-    list.innerHTML = `
+    history.innerHTML = `
       <div class="empty-history">
         No withdrawal requests yet.
       </div>
     `;
 
     return;
+
   }
 
-
-  list.innerHTML =
+  history.innerHTML =
     employeeRequests
+      .slice()
+      .reverse()
       .map(function(request) {
 
         const status =
-          String(
-            request.status || "PENDING"
-          ).toUpperCase();
-
-
-        let statusClass =
-          "pending";
-
-        if (status === "APPROVED") {
-          statusClass = "approved";
-        }
-
-        if (status === "REJECTED") {
-          statusClass = "rejected";
-        }
-
-
-        const date =
-          request.createdAt
-            ? new Date(
-                request.createdAt
-              ).toLocaleString()
-            : "Date unavailable";
-
+          request.status || "Pending";
 
         return `
-
           <div class="history-item">
 
-            <div class="history-top">
+            <div class="history-left">
 
-              <div>
+              <strong>
+                KSh ${Number(
+                  request.amount || 0
+                ).toLocaleString()}
+              </strong>
 
-                <div class="history-amount">
-                  KSh ${Number(
-                    request.amount || 0
-                  ).toLocaleString()}
-                </div>
+              <span>
+                ${request.date || ""}
+              </span>
 
-                <div class="history-date">
-                  ${escapeHTML(date)}
-                </div>
-
-              </div>
-
-              <span
-                class="history-status ${statusClass}"
-              >
-                ${escapeHTML(status)}
+              <span>
+                ${request.method || "M-PESA"}
               </span>
 
             </div>
 
-
-            <div class="history-details">
-
-              <div class="history-detail">
-
-                <div class="history-detail-label">
-                  Request ID
-                </div>
-
-                <div class="history-detail-value">
-                  ${escapeHTML(
-                    request.id || "N/A"
-                  )}
-                </div>
-
-              </div>
-
-
-              <div class="history-detail">
-
-                <div class="history-detail-label">
-                  M-PESA Number
-                </div>
-
-                <div class="history-detail-value">
-                  ${escapeHTML(
-                    request.phone || "N/A"
-                  )}
-                </div>
-
-              </div>
-
-
-              <div class="history-detail">
-
-                <div class="history-detail-label">
-                  Status
-                </div>
-
-                <div class="history-detail-value">
-                  ${escapeHTML(status)}
-                </div>
-
-              </div>
-
-
-              <div class="history-detail">
-
-                <div class="history-detail-label">
-                  Employee ID
-                </div>
-
-                <div class="history-detail-value">
-                  ${escapeHTML(
-                    request.employeeId || "N/A"
-                  )}
-                </div>
-
-              </div>
-
+            <div class="history-status ${status.toLowerCase()}">
+              ${status}
             </div>
 
           </div>
-
         `;
 
       })
@@ -1910,41 +1995,34 @@ function loadWithdrawalHistory() {
 }
 
 
-/* =========================
-   COPY REFERRAL LINK
-========================= */
-
 function copyReferralLink() {
 
+  const employee =
+    getCurrentEmployee();
+
+  if (!employee) return;
+
+  const referralCode =
+    employee.referral;
+
   const link =
-    document
-      .getElementById("referralLink")
-      .textContent;
-
-
-  const message =
-    document.getElementById(
-      "copyMessage"
+    window.location.origin +
+    "/?ref=" +
+    encodeURIComponent(
+      referralCode
     );
-
 
   if (
     navigator.clipboard &&
     navigator.clipboard.writeText
   ) {
 
-    navigator.clipboard
-      .writeText(link)
+    navigator.clipboard.writeText(link)
       .then(function() {
 
-        message.textContent =
-          "Referral link copied.";
-
-        setTimeout(function() {
-
-          message.textContent = "";
-
-        }, 2500);
+        showNotice(
+          "Referral link copied successfully."
+        );
 
       })
       .catch(function() {
@@ -1964,127 +2042,140 @@ function copyReferralLink() {
 
 function fallbackCopy(text) {
 
-  const textarea =
+  const input =
     document.createElement("textarea");
 
-  textarea.value = text;
+  input.value = text;
 
-  textarea.style.position =
-    "fixed";
+  input.style.position = "fixed";
+  input.style.opacity = "0";
 
-  textarea.style.opacity =
-    "0";
+  document.body.appendChild(input);
 
-  document.body.appendChild(
-    textarea
-  );
-
-  textarea.select();
+  input.focus();
+  input.select();
 
   try {
 
     document.execCommand("copy");
 
-    document.getElementById(
-      "copyMessage"
-    ).textContent =
-      "Referral link copied.";
+    showNotice(
+      "Referral link copied successfully."
+    );
 
   } catch (error) {
 
-    document.getElementById(
-      "copyMessage"
-    ).textContent =
-      "Copy failed. Please copy the link manually.";
+    showNotice(
+      "Copy failed. Please copy the link manually."
+    );
 
   }
 
-  document.body.removeChild(
-    textarea
+  document.body.removeChild(input);
+
+}
+
+
+function showNotice(message) {
+
+  const notice =
+    document.getElementById("notice");
+
+  if (!notice) return;
+
+  notice.textContent = message;
+
+  notice.classList.add("show");
+
+  setTimeout(function() {
+
+    notice.classList.remove("show");
+
+  }, 2500);
+
+}
+
+
+function logoutEmployee() {
+
+  localStorage.removeItem(
+    EMPLOYEE_KEY
   );
 
-}
-
-
-/* =========================
-   SECURITY HELPERS
-========================= */
-
-function escapeHTML(value) {
-
-  return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+  window.location.reload();
 
 }
 
-
-/* =========================
-   ENTER KEY LOGIN
-========================= */
 
 document.addEventListener(
-  "keydown",
-  function(event) {
+  "DOMContentLoaded",
+  function() {
 
-    const loginPage =
+    const session =
+      getCurrentEmployee();
+
+    if (session) {
+
+      showDashboard();
+
+    } else {
+
+      showLogin();
+
+    }
+
+    const usernameInput =
       document.getElementById(
-        "loginPage"
+        "username"
       );
 
+    const passwordInput =
+      document.getElementById(
+        "password"
+      );
 
-    if (
-      event.key === "Enter" &&
-      !loginPage.classList.contains(
-        "hidden"
-      )
-    ) {
+    if (usernameInput) {
 
-      employeeLogin();
+      usernameInput.addEventListener(
+        "keydown",
+        function(event) {
+
+          if (
+            event.key === "Enter"
+          ) {
+
+            loginEmployee();
+
+          }
+
+        }
+      );
+
+    }
+
+    if (passwordInput) {
+
+      passwordInput.addEventListener(
+        "keydown",
+        function(event) {
+
+          if (
+            event.key === "Enter"
+          ) {
+
+            loginEmployee();
+
+          }
+
+        }
+      );
 
     }
 
   }
 );
 
-
-/* =========================
-   AUTO LOGIN
-========================= */
-
-if (
-  localStorage.getItem(
-    EMPLOYEE_KEY
-  )
-) {
-
-  showDashboard();
-
-    }
-    </script>
+</script>
 
 </body>
 </html>
