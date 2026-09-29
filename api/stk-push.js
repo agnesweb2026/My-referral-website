@@ -1,5 +1,3 @@
-const crypto = require("crypto");
-
 function json(res, status, data) {
   res.status(status);
   res.setHeader("Content-Type", "application/json");
@@ -17,9 +15,9 @@ module.exports = async (req, res) => {
   try {
     const { phone, amount, reference } = req.body || {};
 
-    // -----------------------------
+    // =============================
     // PHONE
-    // -----------------------------
+    // =============================
     const rawPhone = String(phone || "").replace(/\D/g, "");
 
     let mpesaPhone = rawPhone;
@@ -43,15 +41,12 @@ module.exports = async (req, res) => {
       });
     }
 
-    // -----------------------------
+    // =============================
     // AMOUNT
-    // -----------------------------
+    // =============================
     const cleanAmount = Number(amount);
 
-    if (
-      !Number.isInteger(cleanAmount) ||
-      cleanAmount < 1
-    ) {
+    if (!Number.isInteger(cleanAmount) || cleanAmount < 1) {
       return json(res, 400, {
         success: false,
         message: "Invalid payment amount.",
@@ -59,13 +54,15 @@ module.exports = async (req, res) => {
       });
     }
 
-    // -----------------------------
+    // =============================
     // REFERENCE
-    // -----------------------------
+    // UnifiedPay recommends 12 chars
+    // or fewer.
+    // =============================
     const cleanReference = String(reference || "")
       .trim()
       .replace(/[^A-Za-z0-9_-]/g, "")
-      .slice(0, 50);
+      .slice(0, 12);
 
     if (!cleanReference) {
       return json(res, 400, {
@@ -75,70 +72,66 @@ module.exports = async (req, res) => {
       });
     }
 
-    // -----------------------------
-    // NEPTUNE KEYS
-    // -----------------------------
-    const publicKey = String(
-      process.env.NEPTUNE_PUBLIC_KEY || ""
+    // =============================
+    // UNIFIEDPAY CREDENTIALS
+    // These remain on the server.
+    // =============================
+    const consumerKey = String(
+      process.env.UNIFIEDPAY_CONSUMER_KEY || ""
     ).trim();
 
-    const secretKey = String(
-      process.env.NEPTUNE_SECRET_KEY || ""
+    const consumerSecret = String(
+      process.env.UNIFIEDPAY_CONSUMER_SECRET || ""
     ).trim();
 
-    if (!publicKey || !secretKey) {
+    const shortcode = String(
+      process.env.UNIFIEDPAY_SHORTCODE || ""
+    ).trim();
+
+    if (!consumerKey || !consumerSecret) {
       return json(res, 500, {
         success: false,
         message:
-          "Neptune Pay keys are not configured on the server."
+          "UnifiedPay credentials are not configured on the server."
       });
     }
 
-    // -----------------------------
-    // EXACT NEPTUNE REQUEST
-    // -----------------------------
-    const timestamp =
-      Math.floor(Date.now() / 1000).toString();
+    if (!shortcode) {
+      return json(res, 500, {
+        success: false,
+        message:
+          "UnifiedPay shortcode is not configured on the server."
+      });
+    }
 
-    const body = {
-      phone: mpesaPhone,
+    // =============================
+    // UNIFIEDPAY STK PUSH
+    // =============================
+    const url =
+      "https://unifiedpay.co.ke/auth/cred/" +
+      encodeURIComponent(consumerKey) +
+      "/" +
+      encodeURIComponent(consumerSecret) +
+      "/sendstk";
+
+    const requestBody = {
       amount: cleanAmount,
+      msisdn: mpesaPhone,
       reference: cleanReference
     };
 
-    const bodyString = JSON.stringify(body);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(requestBody)
+    });
 
-    const signature = crypto
-      .createHmac("sha256", secretKey)
-      .update(
-        timestamp + "." + bodyString
-      )
-      .digest("hex");
-
-    // -----------------------------
-    // SEND TO NEPTUNE
-    // -----------------------------
-    const response = await fetch(
-      "https://api.neptunepay.co.ke/api/v1/payments/stk-push",
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-          "x-public-key": publicKey,
-          "x-signature": signature,
-          "x-timestamp": timestamp
-        },
-
-        body: bodyString
-      }
-    );
-
-    // -----------------------------
-    // READ NEPTUNE RESPONSE
-    // -----------------------------
-    const responseText =
-      await response.text();
+    // =============================
+    // READ RESPONSE
+    // =============================
+    const responseText = await response.text();
 
     let data;
 
@@ -149,15 +142,16 @@ module.exports = async (req, res) => {
         success: false,
         message:
           responseText ||
-          "Neptune returned an invalid response."
+          "UnifiedPay returned an invalid response."
       };
     }
 
-    // IMPORTANT:
-    // This appears in Vercel Runtime Logs.
-    // It does NOT expose the secret key.
+    // =============================
+    // SERVER LOG
+    // Does NOT log consumer secret.
+    // =============================
     console.log(
-      "NEPTUNE_STK_RESULT",
+      "UNIFIEDPAY_STK_RESULT",
       JSON.stringify({
         httpStatus: response.status,
         phone: mpesaPhone,
@@ -167,11 +161,12 @@ module.exports = async (req, res) => {
       })
     );
 
-    // -----------------------------
+    // =============================
     // SUCCESS
-    // -----------------------------
+    // =============================
     if (
       response.ok &&
+      data.ResponseCode === "0" &&
       data.success === true
     ) {
       return json(res, 200, {
@@ -179,46 +174,47 @@ module.exports = async (req, res) => {
         message:
           data.message ||
           "M-PESA prompt sent successfully.",
+
         paymentId:
-          data.paymentId || null,
-        status:
-          data.status || "pending",
-        reference:
-          data.reference ||
-          cleanReference
+          data.transaction_request_id || null,
+
+        transaction_request_id:
+          data.transaction_request_id || null,
+
+        MerchantRequestID:
+          data.MerchantRequestID || null,
+
+        CheckoutRequestID:
+          data.CheckoutRequestID || null,
+
+        status: "pending",
+
+        reference: cleanReference
       });
     }
 
-    // -----------------------------
-    // NEPTUNE ERROR
-    // -----------------------------
-    return json(res, response.status, {
+    // =============================
+    // UNIFIEDPAY ERROR
+    // =============================
+    return json(res, response.status || 500, {
       success: false,
 
       message:
+        data.errorMessage ||
         data.message ||
-        data.error ||
-        "Neptune Pay rejected the payment request.",
-
-      validation:
-        data.validation || null,
+        "UnifiedPay rejected the payment request.",
 
       code:
-        data.code || null,
+        data.ResultCode ||
+        data.ResponseCode ||
+        null,
 
-      errors:
-        data.errors || null,
-
-      details:
-        data.details || null,
-
-      neptuneHttpStatus:
-        response.status
+      details: data
     });
 
   } catch (error) {
     console.error(
-      "NEPTUNE_STK_ERROR",
+      "UNIFIEDPAY_STK_ERROR",
       error
     );
 
@@ -227,10 +223,7 @@ module.exports = async (req, res) => {
       message:
         "Unable to start the M-PESA prompt.",
       error:
-        String(
-          error.message ||
-          error
-        )
+        String(error.message || error)
     });
   }
 };
