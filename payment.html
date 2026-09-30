@@ -2,1388 +2,1198 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>M-PESA PAYMENT</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
 body{
- margin:0;
- background:#050505;
- color:#fff;
- font-family:Arial,sans-serif
+  font-family:Arial,sans-serif;
+  background:#050505;
+  color:#fff;
+  min-height:100vh;
 }
 
-.hidden{display:none!important}
-
-.container{
- max-width:500px;
- margin:auto;
- padding:15px
+.hidden{
+  display:none !important;
 }
 
-h1{
- text-align:center;
- font-size:24px;
- margin:10px 0 20px
+#packagesPage{
+  min-height:100vh;
+  padding:20px 14px 40px;
 }
 
-/* PACKAGES */
+.header{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.header h1{
+  color:#00ff66;
+  font-size:27px;
+  margin-bottom:7px;
+}
+
+.header p{
+  color:#aaa;
+  font-size:14px;
+}
 
 .packages{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  max-width:520px;
+  margin:0 auto;
 }
 
 .package{
- position:relative;
- background:#171717;
- border:2px solid #444;
- border-radius:13px;
- padding:18px 10px;
- text-align:center;
- cursor:pointer;
- transition:.2s;
- min-height:105px
-}
-
-.package:active{
- transform:scale(.97)
+  position:relative;
+  background:#111;
+  border:1px solid #333;
+  border-radius:14px;
+  padding:18px 10px;
+  text-align:center;
+  cursor:pointer;
 }
 
 .package.selected{
- border:3px solid #00ff66;
- background:#102719;
- box-shadow:0 0 18px rgba(0,255,102,.45);
- transform:scale(1.02)
-}
-
-.selectedText{
- display:none;
- position:absolute;
- top:7px;
- right:7px;
- background:#00d95f;
- color:#000;
- font-size:9px;
- font-weight:bold;
- padding:3px 5px;
- border-radius:5px
-}
-
-.package.selected .selectedText{
- display:block
+  border-color:#00ff66;
+  box-shadow:0 0 12px rgba(0,255,102,.2);
 }
 
 .minutes{
- font-size:20px;
- font-weight:bold;
- margin-top:4px
+  font-size:22px;
+  font-weight:bold;
+}
+
+.minutes span{
+  font-size:13px;
+  color:#aaa;
+  font-weight:normal;
 }
 
 .price{
- color:#00ff66;
- font-size:18px;
- font-weight:bold;
- margin-top:8px
+  margin-top:8px;
+  color:#00ff66;
+  font-size:20px;
+  font-weight:bold;
 }
 
 .hot{
- display:inline-block;
- background:red;
- color:#fff;
- font-size:10px;
- font-weight:bold;
- padding:4px 7px;
- border-radius:5px
+  position:absolute;
+  top:-8px;
+  right:8px;
+  background:red;
+  color:#fff;
+  padding:4px 8px;
+  border-radius:8px;
+  font-size:10px;
+  font-weight:bold;
 }
-
-/* SELECTED PACKAGE */
-
-.selectedInfo{
- margin-top:15px;
- background:#101810;
- border:1px solid #00c853;
- border-radius:10px;
- padding:12px;
- text-align:center;
- color:#00ff66;
- font-weight:bold
-}
-
-/* PAYMENT */
 
 .paymentBox{
- background:#151515;
- border-radius:14px;
- padding:18px;
- margin-top:15px
+  max-width:520px;
+  margin:20px auto 0;
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:18px;
 }
 
 .paymentBox h2{
- text-align:center;
- margin:0 0 12px;
- font-size:19px
+  text-align:center;
+  color:#00ff66;
+  font-size:20px;
+  margin-bottom:15px;
+}
+
+.tillRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#181818;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:12px;
+}
+
+.tillNumber{
+  font-size:19px;
+  font-weight:bold;
+}
+
+.copyBtn{
+  border:0;
+  background:#00ff66;
+  color:#000;
+  font-weight:bold;
+  padding:8px 12px;
+  border-radius:8px;
+}
+
+label{
+  display:block;
+  color:#bbb;
+  font-size:13px;
+  margin:12px 0 6px;
 }
 
 input{
- width:100%;
- padding:14px;
- border-radius:9px;
- border:1px solid #444;
- background:#080808;
- color:#fff;
- font-size:16px;
- outline:none
+  width:100%;
+  padding:13px;
+  background:#080808;
+  color:#fff;
+  border:1px solid #333;
+  border-radius:9px;
+  outline:none;
 }
 
-input:focus{
- border-color:#00ff66
+.mainBtn{
+  width:100%;
+  border:0;
+  background:#00ff66;
+  color:#000;
+  font-size:17px;
+  font-weight:bold;
+  padding:14px;
+  border-radius:10px;
+  margin-top:15px;
 }
 
-button{
- width:100%;
- border:0;
- border-radius:9px;
- padding:14px;
- margin-top:12px;
- font-size:16px;
- font-weight:bold
+.error{
+  color:#ff3333;
+  text-align:center;
+  font-size:13px;
+  margin-top:10px;
 }
 
-.mpesaBtn{
- background:#00c853;
- color:#fff
+.statusPage{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:25px;
 }
 
-.mpesaBtn:disabled{
- background:#555
+.statusBox{
+  width:100%;
+  max-width:430px;
+  background:#111;
+  border:1px solid #292929;
+  border-radius:18px;
+  padding:35px 20px;
 }
 
-.status{
- text-align:center;
- min-height:22px;
- margin-top:12px;
- color:#ddd
+.loader{
+  width:45px;
+  height:45px;
+  border:4px solid #333;
+  border-top-color:#00ff66;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:0 auto 20px;
 }
 
-/* LIVE */
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+
+.statusBox h2{
+  font-size:25px;
+  margin-bottom:10px;
+}
+
+.statusBox p{
+  color:#aaa;
+}
 
 #livePage{
- min-height:100vh;
- background:#000
-}
-
-.liveHeader{
- height:48px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:0 12px;
- background:#111
-}
-
-.liveTitle{
- font-weight:bold
-}
-
-.liveBadge{
- background:red;
- padding:5px 9px;
- border-radius:6px;
- font-size:13px;
- font-weight:bold
-}
-
-.videoBox{
- position:relative;
- width:100%;
- background:#000
+  min-height:100vh;
+  background:#000;
+  position:relative;
 }
 
 #liveVideo{
- width:100%;
- display:block;
- background:#000;
- max-height:70vh;
- object-fit:contain
+  width:100%;
+  height:100vh;
+  object-fit:cover;
+  display:block;
 }
 
-.videoTime{
- position:absolute;
- bottom:8px;
- right:10px;
- background:rgba(0,0,0,.75);
- padding:5px 8px;
- border-radius:5px;
- font-size:12px
+.liveTop{
+  position:absolute;
+  top:18px;
+  left:18px;
+  background:red;
+  color:white;
+  padding:7px 12px;
+  border-radius:7px;
+  font-weight:bold;
+  z-index:5;
 }
-
-/* CHAT */
-
-.chatBox{
- background:#111;
- padding:10px
-}
-
-.chatTitle{
- font-size:16px;
- font-weight:bold;
- padding:5px 2px 10px;
- border-bottom:1px solid #292929
-}
-
-.comments{
- height:230px;
- overflow:hidden
-}
-
-.comment{
- display:flex;
- gap:9px;
- padding:8px 3px;
- border-bottom:1px solid #202020
-}
-
-.avatar{
- width:34px;
- height:34px;
- border-radius:50%;
- background:#333;
- display:flex;
- align-items:center;
- justify-content:center;
- flex-shrink:0;
- font-weight:bold
-}
-
-.commentText{
- font-size:14px;
- line-height:1.35
-}
-
-.commentName{
- color:#00e676;
- font-weight:bold
-}
-
-.commentTime{
- color:#777;
- font-size:10px;
- margin-left:5px
-}
-
-.commentInput{
- display:flex;
- gap:7px;
- margin-top:8px
-}
-
-.commentInput input{
- margin:0
-}
-
-.commentInput button{
- width:auto;
- margin:0;
- background:#00c853;
- color:#fff
-}
-
-/* INSUFFICIENT */
 
 #insufficientPage{
- min-height:100vh;
- display:flex;
- align-items:center;
- justify-content:center;
- text-align:center;
- padding:20px;
- background:#050505
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
 }
 
 .insufficientBox{
- width:100%;
- max-width:380px;
- background:#151515;
- border:1px solid #333;
- border-radius:15px;
- padding:30px 20px
+  background:#111;
+  border:1px solid #333;
+  border-radius:18px;
+  padding:35px 20px;
+  max-width:420px;
 }
 
 .insufficientBox h2{
- color:#ff3030;
- font-size:23px
+  color:#ff3333;
+  margin-bottom:12px;
 }
 
-.timer{
- font-size:30px;
- font-weight:bold
+.insufficientBox p{
+  color:#aaa;
+}
+
+.chatBox{
+  max-width:520px;
+  margin:20px auto;
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:15px;
+}
+
+.chatBox h3{
+  color:#00ff66;
+  margin-bottom:10px;
+}
+
+.comments{
+  height:130px;
+  overflow:auto;
+  background:#080808;
+  border-radius:10px;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.comment{
+  font-size:13px;
+  margin-bottom:7px;
+  color:#ddd;
+}
+
+.comment b{
+  color:#00ff66;
+}
+
+.chatRow{
+  display:flex;
+  gap:8px;
+}
+
+.chatRow input{
+  flex:1;
+}
+
+.chatRow button{
+  background:#00ff66;
+  border:0;
+  border-radius:8px;
+  padding:0 15px;
+  font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= PACKAGES ================= -->
+<section id="packagesPage">
 
-<div id="packagesPage">
-<div class="container">
+  <div class="header">
+    <h1>M-PESA PAYMENT</h1>
+    <p>Select your minutes package</p>
+  </div>
 
-<h1>M-PESA PAYMENT</h1>
+  <div class="packages">
 
-<div class="packages">
+    <div class="package selected"
+         data-minutes="30"
+         data-price="95">
+      <div class="minutes">
+        30 <span>MIN</span>
+      </div>
+      <div class="price">KSh 95</div>
+    </div>
 
-<div class="package" data-minutes="30" data-price="95">
- <span class="selectedText">SELECTED</span>
- <div class="minutes">30 MIN</div>
- <div class="price">KSh 95</div>
-</div>
+    <div class="package"
+         data-minutes="55"
+         data-price="138">
+      <div class="minutes">
+        55 <span>MIN</span>
+      </div>
+      <div class="price">KSh 138</div>
+    </div>
 
-<div class="package" data-minutes="55" data-price="138">
- <span class="selectedText">SELECTED</span>
- <div class="minutes">55 MIN</div>
- <div class="price">KSh 138</div>
-</div>
+    <div class="package"
+         data-minutes="73"
+         data-price="207">
+      <div class="minutes">
+        73 <span>MIN</span>
+      </div>
+      <div class="price">KSh 207</div>
+    </div>
 
-<div class="package" data-minutes="73" data-price="207">
- <span class="selectedText">SELECTED</span>
- <div class="minutes">73 MIN</div>
- <div class="price">KSh 207</div>
-</div>
+    <div class="package"
+         data-minutes="95"
+         data-price="253">
+      <div class="minutes">
+        95 <span>MIN</span>
+      </div>
+      <div class="price">KSh 253</div>
+    </div>
 
-<div class="package" data-minutes="95" data-price="253">
- <span class="selectedText">SELECTED</span>
- <div class="minutes">95 MIN</div>
- <div class="price">KSh 253</div>
-</div>
+    <div class="package"
+         data-minutes="105"
+         data-price="299">
+      <div class="minutes">
+        105 <span>MIN</span>
+      </div>
+      <div class="price">KSh 299</div>
+    </div>
 
-<div class="package" data-minutes="105" data-price="299">
- <span class="selectedText">SELECTED</span>
- <div class="minutes">105 MIN</div>
- <div class="price">KSh 299</div>
-</div>
+    <div class="package"
+         data-minutes="166"
+         data-price="393">
+      <div class="hot">HOT</div>
+      <div class="minutes">
+        166 <span>MIN</span>
+      </div>
+      <div class="price">KSh 393</div>
+    </div>
 
-<div class="package" data-minutes="166" data-price="393">
- <span class="hot">HOT</span>
- <span class="selectedText">SELECTED</span>
- <div class="minutes">166 MIN</div>
- <div class="price">KSh 393</div>
-</div>
+  </div>
 
-</div>
+  <div class="paymentBox">
 
-<div id="selectedInfo" class="selectedInfo">
-Selected: 30 MIN — KSh 95
-</div>
+    <h2>PAY WITH M-PESA</h2>
 
-<div class="paymentBox">
+    <div class="tillRow">
 
-<h2>PAY WITH M-PESA</h2>
+      <div>
+        <div style="font-size:11px;color:#888;">
+          PAYMENT NUMBER
+        </div>
 
-<input
- id="customerPhone"
- type="tel"
- inputmode="numeric"
- placeholder="Enter M-PESA phone number">
+        <div class="tillNumber"
+             id="paymentNumber">
+          0741101913
+        </div>
+      </div>
 
-<button
- id="payButton"
- class="mpesaBtn"
- onclick="payWithMpesa()">
- PAY WITH M-PESA
-</button>
+      <button class="copyBtn"
+              id="copyBtn">
+        COPY
+      </button>
 
-<div id="status" class="status"></div>
+    </div>
 
-</div>
+    <label for="phone">
+      M-PESA phone number
+    </label>
 
-</div>
-</div>
+    <input
+      id="phone"
+      type="tel"
+      inputmode="numeric"
+      placeholder="Enter M-PESA number"
+    >
 
+    <div id="errorMessage"
+         class="error hidden">
+    </div>
 
-<!-- ================= LIVE PAGE ================= -->
+    <button class="mainBtn"
+            id="getAccessBtn">
+      GET ACCESS
+    </button>
 
-<div id="livePage" class="hidden">
+  </div>
 
-<div class="liveHeader">
- <div class="liveTitle">LIVE</div>
- <div class="liveBadge">● LIVE</div>
-</div>
+  <div class="chatBox">
 
-<div class="videoBox">
+    <h3>Live comments</h3>
 
-<video
- id="liveVideo"
- playsinline
- preload="auto">
- <source src="./preview_20_seconds.mp4" type="video/mp4">
-</video>
+    <div id="comments"
+         class="comments">
+    </div>
 
-<div id="videoTime" class="videoTime">
-00:00 / 00:20
-</div>
+    <div class="chatRow">
 
-</div>
+      <input
+        id="commentInput"
+        type="text"
+        placeholder="Write a comment..."
+      >
 
-<div class="chatBox">
+      <button id="sendComment">
+        SEND
+      </button>
 
-<div class="chatTitle">
-Live chat
-</div>
+    </div>
 
-<div id="comments" class="comments"></div>
+  </div>
 
-<div class="commentInput">
-
-<input
- id="commentInput"
- type="text"
- placeholder="Write a comment...">
-
-<button onclick="sendComment()">SEND</button>
-
-</div>
-
-</div>
-
-</div>
+</section>
 
 
-<!-- ================= INSUFFICIENT ================= -->
+<section id="loadingPage"
+         class="statusPage hidden">
 
-<div id="insufficientPage" class="hidden">
+  <div class="statusBox">
 
-<div class="insufficientBox">
+    <div class="loader"></div>
 
-<h2>INSUFFICIENT MINUTES</h2>
+    <h2>LOADING</h2>
 
-<p>Your minutes have ended.</p>
+    <p id="loadingText">
+      Checking payment...
+    </p>
 
-<div id="insufficientTimer" class="timer">2</div>
+  </div>
 
-</div>
+</section>
 
-</div>
+
+<section id="livePage"
+         class="hidden">
+
+  <div class="liveTop">
+    🔴 LIVE
+  </div>
+
+  <video
+    id="liveVideo"
+    playsinline
+    preload="auto"
+  >
+    <source
+      src="preview_20_seconds.mp4"
+      type="video/mp4"
+    >
+  </video>
+
+</section>
+
+
+<section id="insufficientPage"
+         class="hidden">
+
+  <div class="insufficientBox">
+
+    <h2>Insufficient Minutes</h2>
+
+    <p>
+      Your available minutes are not enough.
+      Please select another package to continue.
+    </p>
+
+  </div>
+
+</section>
 
 
 <script>
 
-/* =========================
-   VARIABLES
-========================= */
+const packagesPage =
+  document.getElementById("packagesPage");
+
+const loadingPage =
+  document.getElementById("loadingPage");
+
+const livePage =
+  document.getElementById("livePage");
+
+const insufficientPage =
+  document.getElementById("insufficientPage");
+
+const getAccessBtn =
+  document.getElementById("getAccessBtn");
+
+const phoneInput =
+  document.getElementById("phone");
+
+const errorMessage =
+  document.getElementById("errorMessage");
+
+const liveVideo =
+  document.getElementById("liveVideo");
 
 let selectedMinutes = 30;
-let selectedPrice = 90;
-let paymentChecking = false;
-let liveFinished = false;
-let commentTimer = null;
-
-
-/* =========================
-   REFERRAL
-========================= */
+let selectedPrice = 95;
+let transactionRequestId = "";
 
 const params =
- new URLSearchParams(window.location.search);
+  new URLSearchParams(window.location.search);
 
-const employeeFromUrl =
- params.get("employee") ||
- params.get("ref") ||
- "";
+let referralEmployeeId =
+  params.get("employee") ||
+  params.get("ref") ||
+  localStorage.getItem("referralEmployeeId") ||
+  "";
 
-if(employeeFromUrl){
- localStorage.setItem(
-  "referralEmployeeId",
-  employeeFromUrl
- );
+if(referralEmployeeId){
+
+  localStorage.setItem(
+    "referralEmployeeId",
+    referralEmployeeId
+  );
+
 }
 
-const employeeId =
- employeeFromUrl ||
- localStorage.getItem("referralEmployeeId") ||
- "";
 
+/* PACKAGE SELECTION */
 
-/* =========================
-   PACKAGE SELECTION
-========================= */
+document.querySelectorAll(".package")
+.forEach(pkg => {
 
-const packages =
- document.querySelectorAll(".package");
+  pkg.addEventListener("click", () => {
 
-const selectedInfo =
- document.getElementById("selectedInfo");
+    document.querySelectorAll(".package")
+    .forEach(p => {
+      p.classList.remove("selected");
+    });
 
-packages.forEach(function(pkg){
+    pkg.classList.add("selected");
 
- pkg.addEventListener("click",function(){
+    selectedMinutes =
+      Number(pkg.dataset.minutes);
 
-  packages.forEach(function(p){
-   p.classList.remove("selected");
+    selectedPrice =
+      Number(pkg.dataset.price);
+
   });
-
-  this.classList.add("selected");
-
-  selectedMinutes =
-   Number(this.dataset.minutes);
-
-  selectedPrice =
-   Number(this.dataset.price);
-
-  selectedInfo.textContent =
-   "Selected: " +
-   selectedMinutes +
-   " MIN — KSh " +
-   selectedPrice;
-
- });
 
 });
 
 
-/* FIRST PACKAGE */
+/* COPY */
 
-if(packages.length){
- packages[0].classList.add("selected");
-}
+document.getElementById("copyBtn")
+.addEventListener("click", async () => {
+
+  const number =
+    document.getElementById("paymentNumber")
+    .textContent.trim();
+
+  try{
+
+    await navigator.clipboard.writeText(number);
+
+  }catch(e){
+
+    const textarea =
+      document.createElement("textarea");
+
+    textarea.value = number;
+
+    document.body.appendChild(textarea);
+
+    textarea.select();
+
+    document.execCommand("copy");
+
+    textarea.remove();
+
+  }
+
+  const btn =
+    document.getElementById("copyBtn");
+
+  btn.textContent = "COPIED";
+
+  setTimeout(() => {
+    btn.textContent = "COPY";
+  },1500);
+
+});
 
 
-/* =========================
-   PHONE
-========================= */
+/* PHONE */
 
-function normalizePhone(phone){
+function normalizePhone(value){
 
- phone =
-  phone.replace(/\s+/g,"").trim();
+  let phone =
+    String(value || "")
+    .replace(/\D/g,"");
 
- if(phone.startsWith("+254")){
-  return "254" + phone.substring(4);
- }
+  if(phone.startsWith("254")){
+    return phone;
+  }
 
- if(phone.startsWith("254")){
+  if(phone.startsWith("07")){
+    return "254" + phone.substring(1);
+  }
+
+  if(phone.startsWith("01")){
+    return "254" + phone.substring(1);
+  }
+
+  if(phone.startsWith("7")){
+    return "254" + phone;
+  }
+
+  if(phone.startsWith("1")){
+    return "254" + phone;
+  }
+
   return phone;
- }
-
- if(phone.startsWith("0")){
-  return "254" + phone.substring(1);
- }
-
- return phone;
 }
 
 
-/* =========================
-   PAYMENT
-========================= */
+function showError(message){
+
+  errorMessage.textContent =
+    message;
+
+  errorMessage.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+function hideError(){
+
+  errorMessage.classList.add(
+    "hidden"
+  );
+
+}
+
+
+/* COMMISSION */
+
+function saveCommission(){
+
+  if(!referralEmployeeId){
+    return;
+  }
+
+  const data = {
+
+    employee:
+      referralEmployeeId,
+
+    minutes:
+      selectedMinutes,
+
+    amount:
+      selectedPrice,
+
+    commissionPercent:
+      25,
+
+    commissionAmount:
+      Math.round(
+        selectedPrice * 0.25 * 100
+      ) / 100,
+
+    time:
+      new Date().toISOString()
+
+  };
+
+  localStorage.setItem(
+    "lastReferralCommission",
+    JSON.stringify(data)
+  );
+
+}
+     
+/* ================================
+   START M-PESA PAYMENT
+================================ */
 
 async function payWithMpesa(){
 
- if(paymentChecking){
-  return;
- }
+  hideError();
 
- const phone =
-  normalizePhone(
-   document.getElementById(
-    "customerPhone"
-   ).value
-  );
+  const phone =
+    normalizePhone(phoneInput.value);
 
- const status =
-  document.getElementById("status");
+  if(!phone){
 
- const button =
-  document.getElementById("payButton");
+    showError(
+      "Enter your M-PESA phone number"
+    );
 
- if(!phone || phone.length < 12){
-
-  status.textContent =
-   "Enter a valid M-PESA number.";
-
-  return;
- }
-
- paymentChecking = true;
-
- button.disabled = true;
-
- button.textContent =
-  "PROCESSING...";
-
- status.textContent =
-  "Sending M-PESA prompt...";
-
- try{
-
-  const response =
-   await fetch("/api/stk-push",{
-
-    method:"POST",
-
-    headers:{
-     "Content-Type":
-      "application/json"
-    },
-
-    body:JSON.stringify({
-
-     phone:phone,
-
-     amount:selectedPrice,
-
-     reference:
-      employeeId
-       ? employeeId +
-         "-" +
-         selectedMinutes
-       : "PAYMENT-" +
-         selectedMinutes
-
-    })
-
-   });
-
-  const data =
-   await response.json();
-
-  if(!response.ok){
-
-   throw new Error(
-    data.message ||
-    "Payment request failed"
-   );
-
+    return;
   }
 
-  const checkoutRequestID =
-   data.checkoutRequestID ||
-   data.CheckoutRequestID ||
-   data.checkout_request_id ||
-   data.checkoutRequestId ||
-   data.id ||
-   "";
+  if(phone.length !== 12){
 
-  if(!checkoutRequestID){
+    showError(
+      "Enter a valid Kenyan M-PESA number"
+    );
 
-   status.textContent =
-    "Payment request sent.";
-
-   button.disabled = false;
-
-   button.textContent =
-    "PAY WITH M-PESA";
-
-   paymentChecking = false;
-
-   return;
+    return;
   }
 
-  status.textContent =
-   "Check your phone and enter your M-PESA PIN.";
+  getAccessBtn.disabled = true;
 
-  checkPayment(checkoutRequestID);
+  packagesPage.classList.add("hidden");
+  loadingPage.classList.remove("hidden");
 
- }catch(error){
+  document.getElementById(
+    "loadingText"
+  ).textContent =
+    "Starting M-PESA payment...";
 
-  console.error(error);
+  try{
 
-  status.textContent =
-   error.message ||
-   "Unable to start payment.";
+    const reference =
+      referralEmployeeId
+        ? referralEmployeeId + "-" + Date.now()
+        : "PAY-" + Date.now();
 
-  button.disabled = false;
+    const response =
+      await fetch(
+        "/api/stk-push",
+        {
+          method:"POST",
 
-  button.textContent =
-   "PAY WITH M-PESA";
+          headers:{
+            "Content-Type":"application/json"
+          },
 
-  paymentChecking = false;
+          body:JSON.stringify({
 
- }
+            phone:phone,
 
+            amount:selectedPrice,
+
+            reference:reference
+
+          })
+        }
+      );
+
+    const data =
+      await response.json();
+
+    console.log(
+      "STK response:",
+      data
+    );
+
+    if(!response.ok){
+
+      throw new Error(
+        data.message ||
+        "Unable to start payment"
+      );
+    }
+
+    /*
+      IMPORTANT:
+      Your payment-status API expects
+      transaction_request_id.
+    */
+
+    transactionRequestId =
+      data.transaction_request_id ||
+      data.transactionRequestId ||
+      data.checkoutRequestID ||
+      data.CheckoutRequestID ||
+      data.checkout_request_id ||
+      data.checkoutRequestId ||
+      data.id ||
+      "";
+
+    if(!transactionRequestId){
+
+      throw new Error(
+        "No transaction request ID was returned"
+      );
+    }
+
+    document.getElementById(
+      "loadingText"
+    ).textContent =
+      "Checking payment...";
+
+    await checkPayment(
+      transactionRequestId
+    );
+
+  }catch(error){
+
+    console.error(
+      "STK payment error:",
+      error
+    );
+
+    loadingPage.classList.add("hidden");
+    packagesPage.classList.remove("hidden");
+
+    getAccessBtn.disabled = false;
+
+    showError(
+      error.message ||
+      "Payment could not be started"
+    );
+  }
 }
 
 
-/* =========================
-   CHECK PAYMENT
-========================= */
+/* ================================
+   CHECK PAYMENT STATUS
+================================ */
 
 async function checkPayment(id){
 
- let attempts = 0;
+  let attempts = 0;
 
- const maxAttempts = 20;
+  /*
+    12 attempts × 3 seconds
+    = about 36 seconds.
+  */
 
- const timer =
-  setInterval(async function(){
+  const maxAttempts = 12;
 
-   attempts++;
+  while(attempts < maxAttempts){
 
-   try{
+    attempts++;
 
-    const response =
-     await fetch(
-      "/api/payment-status?checkoutRequestID=" +
-      encodeURIComponent(id)
-     );
+    try{
 
-    const data =
-     await response.json();
+      const response =
+        await fetch(
+          "/api/payment-status",
+          {
+            method:"POST",
 
-    console.log(
-     "Payment status:",
-     data
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
+
+            body:JSON.stringify({
+
+              transaction_request_id:id
+
+            })
+          }
+        );
+
+      const data =
+        await response.json();
+
+      console.log(
+        "Payment status:",
+        data
+      );
+
+      /*
+        PAYMENT CONFIRMED
+      */
+
+      if(
+        data.paid === true ||
+        data.status === "Completed" ||
+        data.status === "completed"
+      ){
+
+        saveCommission();
+
+        await startLiveVideo();
+
+        return;
+      }
+
+      /*
+        DEFINITELY FAILED
+      */
+
+      if(
+        data.status === "Failed" ||
+        data.status === "failed" ||
+        data.status === "Cancelled" ||
+        data.status === "cancelled" ||
+        data.status === "Rejected" ||
+        data.status === "rejected"
+      ){
+
+        break;
+      }
+
+    }catch(error){
+
+      console.error(
+        "Payment status error:",
+        error
+      );
+
+    }
+
+    await new Promise(
+      resolve =>
+        setTimeout(resolve,3000)
+    );
+  }
+
+  /*
+    Do NOT give access when payment
+    has not been confirmed.
+  */
+
+  showNoPayment();
+}
+
+
+/* ================================
+   SUCCESSFUL PAYMENT
+================================ */
+
+async function startLiveVideo(){
+
+  loadingPage.classList.add("hidden");
+
+  livePage.classList.remove("hidden");
+
+  liveVideo.currentTime = 0;
+
+  try{
+
+    await liveVideo.play();
+
+  }catch(error){
+
+    console.error(
+      "Video play error:",
+      error
     );
 
-    /*
-      ACCEPT BOTH:
-      paid=true
-      OR status=Completed
-    */
-
-    if(
-     data.paid === true ||
-     data.status === "Completed" ||
-     data.status === "completed"
-    ){
-
-     clearInterval(timer);
-
-     paymentChecking = false;
-
-     recordPayment(
-      data,
-      employeeId
-     );
-
-     showLive();
-
-     return;
-    }
-
-    if(
-     data.status === "Failed" ||
-     data.status === "Cancelled" ||
-     data.status === "failed" ||
-     data.status === "cancelled"
-    ){
-
-     clearInterval(timer);
-
-     paymentChecking = false;
-
-     const button =
-      document.getElementById(
-       "payButton"
-      );
-
-     button.disabled = false;
-
-     button.textContent =
-      "PAY WITH M-PESA";
-
-     document.getElementById("status")
-      .textContent =
-      "No payment is done.";
-
-     return;
-    }
-
-    document.getElementById("status")
-     .textContent =
-     "Checking payment...";
-
-    if(attempts >= maxAttempts){
-
-     clearInterval(timer);
-
-     paymentChecking = false;
-
-     const button =
-      document.getElementById(
-       "payButton"
-      );
-
-     button.disabled = false;
-
-     button.textContent =
-      "PAY WITH M-PESA";
-
-     document.getElementById("status")
-      .textContent =
-      "No payment is done.";
-
-    }
-
-   }catch(error){
-
-    console.error(error);
-
-    if(attempts >= maxAttempts){
-
-     clearInterval(timer);
-
-     paymentChecking = false;
-
-     document.getElementById("status")
-      .textContent =
-      "No payment is done.";
-
-     const button =
-      document.getElementById(
-       "payButton"
-      );
-
-     button.disabled = false;
-
-     button.textContent =
-      "PAY WITH M-PESA";
-
-    }
-
-   }
-
-  },3000);
-
-}
-
-
-/* =========================
-   COMMISSION
-========================= */
-
-function recordPayment(data,id){
-
- if(!id){
-  return;
- }
-
- const amount =
-  Number(
-   data.amount ||
-   selectedPrice ||
-   0
-  );
-
- const commission =
-  amount * 0.25;
-
- const key =
-  "employeePayments_" + id;
-
- let payments = [];
-
- try{
-
-  payments =
-   JSON.parse(
-    localStorage.getItem(key) ||
-    "[]"
-   );
-
- }catch(e){
-
-  payments = [];
-
- }
-
- payments.push({
-
-  amount:amount,
-
-  commission:commission,
-
-  minutes:selectedMinutes,
-
-  date:new Date().toISOString(),
-
-  transaction:
-   data.receipt ||
-   data.MpesaReceiptNumber ||
-   data.receiptNumber ||
-   ""
-
- });
-
- localStorage.setItem(
-  key,
-  JSON.stringify(payments)
- );
-
-}
-
-
-/* =========================
-   SHOW LIVE
-========================= */
-
-function showLive(){
-
- document
-  .getElementById("packagesPage")
-  .classList.add("hidden");
-
- document
-  .getElementById("insufficientPage")
-  .classList.add("hidden");
-
- document
-  .getElementById("livePage")
-  .classList.remove("hidden");
-
- liveFinished = false;
-
- startLive();
-
-}
-
-
-/* =========================
-   COMMENTS
-========================= */
-
-const commentsData = [
-
- ["Grace","Hello ❤️"],
- ["Mimi","Wow 😍"],
- ["Sharon","Hi everyone"],
- ["Asha","This is nice"],
- ["Nadia","Hello dear"],
- ["Bella","❤️❤️❤️"],
- ["Neema","I am here"],
- ["Jessica","Wow"],
- ["Cute","Hello"],
- ["Ashley","Hi 👋"],
- ["Lilian","Amazing"],
- ["Rehema","😍😍"],
- ["Sophie","Hello everyone"],
- ["Zawadi","So nice"],
- ["Emily","Hi"],
- ["Peace","❤️"],
- ["Joy","Wow wow"],
- ["Favour","Hello"],
- ["Blessing","I love this"],
- ["Princess","Hi dear"],
- ["Thandi","Hello ❤️"],
- ["Lerato","Nice live"],
- ["Dorry","Hey everyone"],
- ["Becky","😍😍😍"],
- ["Sarah","Hello"],
- ["Mary","Wow ❤️"],
- ["Lucy","Hi"],
- ["Ann","Beautiful"],
- ["Mercy","Hello there"],
- ["Faith","❤️❤️"],
- ["Esther","Hi everyone"],
- ["Janet","Wow"],
- ["Ruth","Hello"],
- ["Cynthia","😍"],
- ["Nancy","Nice"],
- ["Vicky","Hey"],
- ["Diana","Hello ❤️"],
- ["Irene","Wow"],
- ["Stacy","Hi"],
- ["Monica","❤️"],
- ["Caroline","Hello"],
- ["Wendy","Nice live"],
- ["Rachel","😍😍"],
- ["Linda","Hello dear"],
- ["Betty","Wow"],
- ["Naomi","❤️❤️❤️"],
- ["Susan","Hi everyone"],
- ["Angela","Amazing"],
- ["Rebecca","Hello"],
- ["Alice","Wow 😍"]
-
-];
-
-
-function escapeHTML(text){
-
- return text
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-
-}
-
-
-function addComment(name,message){
-
- const box =
-  document.getElementById(
-   "comments"
-  );
-
- const div =
-  document.createElement("div");
-
- div.className =
-  "comment";
-
- div.innerHTML = `
-
-  <div class="avatar">
-   ${escapeHTML(name.charAt(0))}
-  </div>
-
-  <div class="commentText">
-
-   <span class="commentName">
-    ${escapeHTML(name)}
-   </span>
-
-   <span class="commentTime">
-    now
-   </span>
-
-   <br>
-
-   ${escapeHTML(message)}
-
-  </div>
-
- `;
-
- box.appendChild(div);
-
- while(box.children.length > 9){
-  box.removeChild(
-   box.firstChild
-  );
- }
-
-}
-
-
-function startComments(){
-
- const box =
-  document.getElementById(
-   "comments"
-  );
-
- box.innerHTML = "";
-
- if(commentTimer){
-  clearInterval(commentTimer);
- }
-
- let index = 0;
-
- for(let i=0;i<9;i++){
-
-  const item =
-   commentsData[index];
-
-  addComment(
-   item[0],
-   item[1]
-  );
-
-  index++;
-
- }
-
- commentTimer =
-  setInterval(function(){
-
-   if(index >= commentsData.length){
-    index = 0;
-   }
-
-   const item =
-    commentsData[index];
-
-   addComment(
-    item[0],
-    item[1]
-   );
-
-   index++;
-
-  },900);
-
-}
-
-
-/* =========================
-   SEND COMMENT
-========================= */
-
-function sendComment(){
-
- const input =
-  document.getElementById(
-   "commentInput"
-  );
-
- const message =
-  input.value.trim();
-
- if(!message){
-  return;
- }
-
- addComment(
-  "You",
-  message
- );
-
- input.value = "";
-
-}
-
-
-document
- .getElementById("commentInput")
- .addEventListener(
-  "keydown",
-  function(e){
-
-   if(e.key === "Enter"){
-    sendComment();
-   }
-
-  }
- );
-
-
-/* =========================
-   VIDEO 1 → 20
-========================= */
-
-function startLive(){
-
- const video =
-  document.getElementById(
-   "liveVideo"
-  );
-
- const time =
-  document.getElementById(
-   "videoTime"
-  );
-
- liveFinished = false;
-
- video.pause();
-
- /*
-   NORMAL PLAYBACK:
-   0 → 20 seconds
- */
-
- video.currentTime = 0;
-
- startComments();
-
- function updateTime(){
-
-  let current =
-   Math.floor(
-    video.currentTime
-   );
-
-  if(current > 20){
-   current = 20;
   }
 
-  time.textContent =
-   formatTime(current) +
-   " / 00:20";
+  /*
+    After video finishes,
+    show insufficient minutes
+    for 2 seconds.
+  */
 
- }
+  liveVideo.onended = () => {
 
- video.addEventListener(
-  "timeupdate",
-  updateTime
- );
+    livePage.classList.add("hidden");
 
- video.addEventListener(
-  "ended",
-  finishLive
- );
+    showInsufficient();
 
- video.play()
-  .then(function(){
-
-   console.log(
-    "Video started normally"
-   );
-
-  })
-  .catch(function(error){
-
-   console.log(
-    "Browser blocked autoplay:",
-    error
-   );
-
-   /*
-     The payment button was already
-     clicked by the user, so retry
-     after a very short delay.
-   */
-
-   setTimeout(function(){
-
-    video.play()
-     .catch(function(err){
-      console.log(err);
-     });
-
-   },200);
-
-  });
+  };
 
 }
 
 
-function formatTime(seconds){
+/* ================================
+   NO PAYMENT
+================================ */
 
- seconds =
-  Math.max(
-   0,
-   Math.floor(seconds)
+function showNoPayment(){
+
+  loadingPage.classList.add("hidden");
+
+  packagesPage.classList.remove("hidden");
+
+  getAccessBtn.disabled = false;
+
+  showError(
+    "No payment is done"
   );
 
- return "00:" +
-  String(seconds)
-   .padStart(2,"0");
-
 }
 
 
-/* =========================
-   VIDEO FINISHED
-========================= */
-
-function finishLive(){
-
- if(liveFinished){
-  return;
- }
-
- liveFinished = true;
-
- const video =
-  document.getElementById(
-   "liveVideo"
-  );
-
- video.pause();
-
- showInsufficient();
-
-}
-
-
-/* =========================
-   INSUFFICIENT
-========================= */
+/* ================================
+   INSUFFICIENT MINUTES
+================================ */
 
 function showInsufficient(){
 
- if(commentTimer){
-  clearInterval(commentTimer);
-  commentTimer = null;
- }
-
- document
-  .getElementById("livePage")
-  .classList.add("hidden");
-
- document
-  .getElementById("insufficientPage")
-  .classList.remove("hidden");
-
- let seconds = 2;
-
- const timer =
-  document.getElementById(
-   "insufficientTimer"
+  insufficientPage.classList.remove(
+    "hidden"
   );
 
- timer.textContent = seconds;
+  setTimeout(() => {
 
- const countdown =
-  setInterval(function(){
+    insufficientPage.classList.add(
+      "hidden"
+    );
 
-   seconds--;
+    packagesPage.classList.remove(
+      "hidden"
+    );
 
-   timer.textContent =
-    seconds;
+    getAccessBtn.disabled = false;
 
-   if(seconds <= 0){
-
-    clearInterval(countdown);
-
-    backToPackages();
-
-   }
-
-  },1000);
+  },2000);
 
 }
 
 
-/* =========================
-   RETURN TO PACKAGES
-========================= */
+/* ================================
+   GET ACCESS BUTTON
+================================ */
 
-function backToPackages(){
+getAccessBtn.addEventListener(
+  "click",
+  payWithMpesa
+);
 
- const video =
+
+/* ================================
+   COMMENTS
+================================ */
+
+const comments =
   document.getElementById(
-   "liveVideo"
+    "comments"
   );
 
- video.pause();
-
- video.currentTime = 0;
-
- document
-  .getElementById("livePage")
-  .classList.add("hidden");
-
- document
-  .getElementById("insufficientPage")
-  .classList.add("hidden");
-
- document
-  .getElementById("packagesPage")
-  .classList.remove("hidden");
-
- document
-  .getElementById("status")
-  .textContent = "";
-
- const button =
+const commentInput =
   document.getElementById(
-   "payButton"
+    "commentInput"
   );
 
- button.disabled = false;
+const sendComment =
+  document.getElementById(
+    "sendComment"
+  );
 
- button.textContent =
-  "PAY WITH M-PESA";
 
- paymentChecking = false;
+function addComment(
+  name,
+  message
+){
 
+  const div =
+    document.createElement("div");
+
+  div.className =
+    "comment";
+
+  const nameElement =
+    document.createElement("b");
+
+  nameElement.textContent =
+    name + ":";
+
+  div.appendChild(
+    nameElement
+  );
+
+  div.appendChild(
+    document.createTextNode(
+      " " + message
+    )
+  );
+
+  comments.appendChild(div);
+
+  comments.scrollTop =
+    comments.scrollHeight;
 }
 
 
-/* =========================
-   END
-========================= */
+sendComment.addEventListener(
+  "click",
+  () => {
+
+    const message =
+      commentInput.value.trim();
+
+    if(!message){
+      return;
+    }
+
+    addComment(
+      "You",
+      message
+    );
+
+    commentInput.value = "";
+
+  }
+);
+
+
+commentInput.addEventListener(
+  "keydown",
+  event => {
+
+    if(event.key === "Enter"){
+
+      event.preventDefault();
+
+      sendComment.click();
+
+    }
+
+  }
+);
+
+
+/* SAMPLE COMMENTS */
+
+[
+  ["Aisha","Hello ❤️"],
+  ["Mary","Is anyone online?"],
+  ["Lucy","Hi there"],
+  ["Jane","Hello everyone"],
+  ["Grace","😍😍"],
+  ["Sarah","Anyone available?"],
+  ["Diana","Hi ❤️"]
+].forEach(item => {
+
+  addComment(
+    item[0],
+    item[1]
+  );
+
+});
+
+
+/* ================================
+   PAGE INITIAL STATE
+================================ */
+
+packagesPage.classList.remove(
+  "hidden"
+);
+
+loadingPage.classList.add(
+  "hidden"
+);
+
+livePage.classList.add(
+  "hidden"
+);
+
+insufficientPage.classList.add(
+  "hidden"
+);
 
 </script>
 
 </body>
-  </html>
+</html>
