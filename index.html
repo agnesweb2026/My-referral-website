@@ -38,7 +38,9 @@ body{
 }
 
 
-/* WELCOME */
+/* =========================
+   WELCOME
+========================= */
 
 #welcomeScreen{
   min-height:100vh;
@@ -62,7 +64,9 @@ body{
 }
 
 
-/* LIVE PHOTOS */
+/* =========================
+   LIVE PHOTOS
+========================= */
 
 #photosPage{
   padding:12px;
@@ -93,11 +97,11 @@ body{
 
 @keyframes blinkGreen{
   0%,100%{
-    opacity:1
+    opacity:1;
   }
 
   50%{
-    opacity:.25
+    opacity:.25;
   }
 }
 
@@ -196,7 +200,9 @@ body{
 }
 
 
-/* VIDEO PLAY */
+/* =========================
+   VIDEO PLAY ICON
+========================= */
 
 .videoPlayIcon{
   position:absolute;
@@ -238,262 +244,812 @@ body{
 }
 
 
-/* INCOMING CALL */
+/* =========================
+   MODERN INCOMING CALL
+========================= */
 
 .incoming-screen{
+
+  position:relative;
+
   width:100%;
   min-height:100vh;
+
   display:flex;
   align-items:center;
   justify-content:flex-start;
-  flex-direction:column;
-  text-align:center;
-  padding:55px 18px 25px;
 
-  background:
-    radial-gradient(
-      circle at 50% 25%,
-      rgba(55,65,125,.4),
-      transparent 45%
-    ),
-    #050608;
+  flex-direction:column;
+
+  text-align:center;
+
+  padding:
+    45px
+    18px
+    25px;
 
   overflow:hidden;
+
+  background:
+
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(50,80,180,.35),
+      transparent 38%
+    ),
+
+    radial-gradient(
+      circle at 50% 70%,
+      rgba(0,180,90,.08),
+      transparent 45%
+    ),
+
+    linear-gradient(
+      180deg,
+      #080b14 0%,
+      #030407 100%
+    );
 }
 
-.incoming-photo{
-  width:165px;
-  height:165px;
-  object-fit:cover;
+
+/* soft animated background */
+
+.incoming-screen::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:260px;
+  height:260px;
+
+  top:-100px;
+  left:50%;
+
+  transform:translateX(-50%);
+
   border-radius:50%;
-  border:2px solid rgba(255,255,255,.7);
+
+  background:
+    rgba(70,110,255,.12);
+
+  filter:blur(30px);
+
+  animation:
+    incomingGlow 3s
+    ease-in-out
+    infinite;
+
+}
+
+@keyframes incomingGlow{
+
+  0%,100%{
+    opacity:.45;
+    transform:
+      translateX(-50%)
+      scale(1);
+  }
+
+  50%{
+    opacity:.9;
+    transform:
+      translateX(-50%)
+      scale(1.18);
+  }
+
+}
+
+
+/* LIVE badge */
+
+.incoming-live{
+
+  position:relative;
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  padding:
+    7px
+    12px;
+
+  border-radius:20px;
+
+  background:
+    rgba(220,0,0,.15);
+
+  border:
+    1px solid
+    rgba(255,50,50,.45);
+
+  color:#fff;
+
+  font-size:12px;
+
+  font-weight:bold;
+
+  letter-spacing:.7px;
+
+  z-index:5;
 
   box-shadow:
-    0 0 18px rgba(80,130,255,.5);
-}
+    0 0 18px
+    rgba(255,0,0,.15);
 
-.incoming-name{
-  margin-top:18px;
-  font-size:27px;
-  font-weight:bold;
-}
-
-.incoming-text{
-  margin-top:7px;
-  color:#b8bfd0;
-  font-size:16px;
-}
-
-.incoming-camera{
-  font-size:23px;
-  margin-right:5px;
 }
 
 
-/* SWIPE */
+/* red live dot */
 
-.swipe-area{
-  width:100%;
-  max-width:380px;
-  margin-top:auto;
-  padding-bottom:20px;
+.incoming-live-dot{
 
-  display:flex;
-  flex-direction:column;
-  gap:14px;
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:#ff3030;
+
+  box-shadow:
+    0 0 8px
+    rgba(255,30,30,.9);
+
+  animation:
+    incomingLivePulse
+    1s infinite;
+
 }
 
-.swipe-bar{
-  height:68px;
-  width:100%;
-  border-radius:36px;
+@keyframes incomingLivePulse{
+
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+  50%{
+    opacity:.35;
+    transform:scale(.72);
+  }
+
+}
+
+
+/* caller photo outer ring */
+
+.caller-photo-wrap{
+
   position:relative;
+
+  width:190px;
+  height:190px;
+
+  margin-top:30px;
 
   display:flex;
   align-items:center;
+  justify-content:center;
+
+  z-index:3;
+
+}
+
+
+/* animated rings */
+
+.caller-photo-wrap::before,
+.caller-photo-wrap::after{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  border-radius:50%;
+
+  border:
+    1px solid
+    rgba(90,150,255,.55);
+
+  animation:
+    callerRing
+    2.2s
+    ease-out
+    infinite;
+
+}
+
+.caller-photo-wrap::after{
+
+  animation-delay:
+    1.1s;
+
+}
+
+@keyframes callerRing{
+
+  0%{
+    transform:scale(.82);
+    opacity:.9;
+  }
+
+  100%{
+    transform:scale(1.25);
+    opacity:0;
+  }
+
+}
+
+
+/* caller image */
+
+.incoming-photo{
+
+  position:relative;
+
+  width:158px;
+  height:158px;
+
+  object-fit:cover;
+
+  border-radius:50%;
+
+  border:
+    3px solid
+    rgba(255,255,255,.9);
+
+  box-shadow:
+
+    0 0 0 5px
+    rgba(80,130,255,.10),
+
+    0 0 35px
+    rgba(70,120,255,.45);
+
+  z-index:4;
+
+}
+
+
+/* caller name */
+
+.incoming-name{
+
+  position:relative;
+
+  margin-top:23px;
+
+  font-size:30px;
+
+  font-weight:700;
+
+  letter-spacing:.2px;
+
+  z-index:5;
+
+  text-shadow:
+    0 2px 12px
+    rgba(0,0,0,.7);
+
+}
+
+
+/* incoming text */
+
+.incoming-text{
+
+  position:relative;
+
+  margin-top:8px;
+
+  color:#b9c0d0;
+
+  font-size:15px;
+
+  z-index:5;
+
+}
+
+
+/* small video icon */
+
+.incoming-camera{
+
+  display:inline-flex;
+
+  align-items:center;
+  justify-content:center;
+
+  width:22px;
+  height:22px;
+
+  margin-right:5px;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.08);
+
+  font-size:12px;
+
+}
+
+
+/* ringing indicator */
+
+.ringing-status{
+
+  position:relative;
+
+  margin-top:18px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  color:#8e98ad;
+
+  font-size:13px;
+
+  z-index:5;
+
+}
+
+.ringing-bars{
+
+  display:flex;
+
+  align-items:flex-end;
+
+  gap:3px;
+
+  height:15px;
+
+}
+
+.ringing-bars span{
+
+  width:3px;
+
+  border-radius:3px;
+
+  background:#42df85;
+
+  animation:
+    ringingBar
+    .9s
+    ease-in-out
+    infinite;
+
+}
+
+.ringing-bars span:nth-child(1){
+  height:7px;
+  animation-delay:0s;
+}
+
+.ringing-bars span:nth-child(2){
+  height:12px;
+  animation-delay:.15s;
+}
+
+.ringing-bars span:nth-child(3){
+  height:9px;
+  animation-delay:.3s;
+}
+
+.ringing-bars span:nth-child(4){
+  height:14px;
+  animation-delay:.45s;
+}
+
+@keyframes ringingBar{
+
+  0%,100%{
+    transform:scaleY(.45);
+    opacity:.45;
+  }
+
+  50%{
+    transform:scaleY(1);
+    opacity:1;
+  }
+
+}
+
+
+/* =========================
+   CALL ACTION AREA
+========================= */
+
+.swipe-area{
+
+  position:relative;
+
+  width:100%;
+  max-width:390px;
+
+  margin-top:auto;
+
+  padding-bottom:12px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:12px;
+
+  z-index:10;
+
+}
+
+
+/* swipe bar */
+
+.swipe-bar{
+
+  height:64px;
+
+  width:100%;
+
+  border-radius:34px;
+
+  position:relative;
+
+  display:flex;
+
+  align-items:center;
 
   overflow:hidden;
+
   user-select:none;
+
   touch-action:pan-y;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+
 }
+
+.swipe-bar:active{
+
+  transform:scale(.98);
+
+}
+
+
+/* decline */
 
 .decline-swipe{
+
   background:
     linear-gradient(
       90deg,
-      rgba(180,0,0,.3),
-      rgba(30,30,35,.8)
+      rgba(200,25,40,.25),
+      rgba(25,28,38,.82)
     );
 
-  border:1px solid rgba(255,50,50,.35);
+  border:
+    1px solid
+    rgba(255,55,70,.38);
+
+  box-shadow:
+    0 8px 25px
+    rgba(0,0,0,.25);
+
 }
+
+
+/* answer */
 
 .answer-swipe{
+
   background:
     linear-gradient(
       90deg,
-      rgba(30,30,35,.8),
-      rgba(0,150,70,.3)
+      rgba(25,28,38,.82),
+      rgba(0,165,80,.25)
     );
 
-  border:1px solid rgba(0,255,100,.35);
+  border:
+    1px solid
+    rgba(35,230,120,.38);
+
+  box-shadow:
+    0 8px 25px
+    rgba(0,0,0,.25);
+
 }
 
+
+/* swipe button */
+
 .swipe-icon{
+
   position:absolute;
-  width:56px;
-  height:56px;
+
+  width:54px;
+  height:54px;
+
   top:5px;
 
   border-radius:50%;
 
   display:flex;
+
   align-items:center;
   justify-content:center;
 
   color:#fff;
-  font-size:24px;
+
+  font-size:22px;
+
   font-weight:bold;
 
   z-index:3;
 
   box-shadow:
-    0 0 15px rgba(0,0,0,.5);
+    0 5px 18px
+    rgba(0,0,0,.45);
+
 }
+
+
+/* decline icon */
 
 .decline-swipe .swipe-icon{
+
   left:5px;
-  background:#f02030;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ff3948,
+      #d80018
+    );
+
 }
+
+
+/* answer icon */
 
 .answer-swipe .swipe-icon{
+
   right:5px;
-  background:#12d65b;
+
+  background:
+    linear-gradient(
+      145deg,
+      #29e978,
+      #0ab94e
+    );
+
 }
+
+
+/* labels */
 
 .swipe-label{
+
   position:absolute;
+
   width:100%;
+
   text-align:center;
-  font-size:16px;
-  font-weight:bold;
+
+  font-size:14px;
+
+  font-weight:600;
+
   color:#d9deea;
+
   pointer-events:none;
+
 }
 
+
+/* arrows */
+
 .swipe-arrows{
+
   position:absolute;
-  font-size:23px;
+
+  font-size:22px;
+
   font-weight:bold;
-  opacity:.85;
+
+  opacity:.9;
+
   pointer-events:none;
+
+  letter-spacing:-3px;
+
 }
 
 .decline-swipe .swipe-arrows{
-  left:82px;
-  color:#ff3948;
+
+  left:78px;
+
+  color:#ff5260;
+
 }
 
 .answer-swipe .swipe-arrows{
-  right:82px;
-  color:#22df72;
+
+  right:78px;
+
+  color:#42eb8a;
+
 }
+
+
+/* hint */
 
 .swipe-hint{
+
   margin-top:2px;
-  color:#777f91;
+
+  color:#697386;
+
   font-size:11px;
+
 }
-  /* LIVE VIDEO */
+
+
+/* =========================
+   LIVE VIDEO
+========================= */
 
 #liveSoundPage{
+
   position:relative;
+
   background:#000;
+
   min-height:100vh;
+
   align-items:center;
+
   justify-content:center;
+
 }
 
 .liveBadgeTop{
+
   position:absolute;
+
   top:15px;
+
   left:15px;
 
   background:#e00000;
+
   color:#fff;
 
   padding:7px 11px;
+
   border-radius:5px;
 
   font-size:13px;
+
   font-weight:bold;
 
   z-index:20;
+
 }
 
 .greenLiveDot{
+
   display:inline-block;
+
   width:8px;
+
   height:8px;
+
   border-radius:50%;
+
   background:#20e070;
+
   margin-right:5px;
+
   animation:blinkGreen 1s infinite;
+
 }
 
 #liveSoundVideo{
+
   width:100%;
+
   max-height:100vh;
+
   object-fit:contain;
+
   background:#000;
+
 }
 
 
-/* BLACK LIVE */
+/* =========================
+   BLACK LIVE
+========================= */
 
 #blackLivePage{
+
   position:relative;
+
   min-height:100vh;
+
   background:#000;
 
   align-items:center;
+
   justify-content:center;
+
   flex-direction:column;
+
 }
 
 .blackLiveText{
+
   color:#aaa;
+
   font-size:18px;
+
 }
 
 
-/* INSUFFICIENT */
+/* =========================
+   INSUFFICIENT
+========================= */
 
 #insufficientPage{
+
   min-height:100vh;
+
   background:#000;
 
   align-items:center;
+
   justify-content:center;
+
   flex-direction:column;
 
   text-align:center;
+
   padding:25px;
+
 }
 
 .insufficientTitle{
+
   font-size:23px;
+
   font-weight:bold;
+
   margin-bottom:12px;
+
 }
 
 .insufficientText{
+
   color:#aaa;
+
   font-size:14px;
+
 }
 
 
-/* SMALL PHONES */
+/* =========================
+   SMALL PHONES
+========================= */
 
 @media(max-width:360px){
 
@@ -509,9 +1065,15 @@ body{
     height:155px;
   }
 
+  .caller-photo-wrap{
+    width:170px;
+    height:170px;
+    margin-top:24px;
+  }
+
   .incoming-photo{
-    width:145px;
-    height:145px;
+    width:142px;
+    height:142px;
   }
 
   .incoming-name{
@@ -519,7 +1081,7 @@ body{
   }
 
   .swipe-bar{
-    height:62px;
+    height:60px;
   }
 
   .swipe-icon{
@@ -528,7 +1090,7 @@ body{
   }
 
   .swipe-label{
-    font-size:14px;
+    font-size:13px;
   }
 
 }
@@ -540,9 +1102,13 @@ body{
 <body>
 
 
-<!-- WELCOME -->
+<!-- =========================
+     WELCOME
+========================= -->
 
-<div id="welcomeScreen" class="page">
+<div
+  id="welcomeScreen"
+  class="page">
 
   <div class="welcomeTitle">
     WELCOME
@@ -555,9 +1121,13 @@ body{
 </div>
 
 
-<!-- LIVE PHOTOS -->
+<!-- =========================
+     LIVE PHOTOS
+========================= -->
 
-<div id="photosPage" class="page">
+<div
+  id="photosPage"
+  class="page">
 
   <div class="topBar">
 
@@ -579,28 +1149,52 @@ body{
 
   </div>
 
-  <div id="photoGrid"
-       class="photoGrid">
+  <div
+    id="photoGrid"
+    class="photoGrid">
   </div>
 
 </div>
-<!-- INCOMING CALL -->
 
-<div id="incomingCall" class="page">
+
+<!-- =========================
+     MODERN INCOMING CALL
+========================= -->
+
+<div
+  id="incomingCall"
+  class="page">
 
   <div class="incoming-screen">
 
-    <img
-      id="callerImage"
-      class="incoming-photo"
-      src=""
-      alt="Caller"
-    >
+
+    <div class="incoming-live">
+
+      <span
+        class="incoming-live-dot">
+      </span>
+
+      LIVE VIDEO CALL
+
+    </div>
+
+
+    <div class="caller-photo-wrap">
+
+      <img
+        id="callerImage"
+        class="incoming-photo"
+        src=""
+        alt="Caller">
+
+    </div>
+
 
     <div
       id="callerName"
       class="incoming-name">
     </div>
+
 
     <div class="incoming-text">
 
@@ -608,12 +1202,29 @@ body{
         ▣
       </span>
 
-      Incoming video call...
+      Incoming video call
+
+    </div>
+
+
+    <div class="ringing-status">
+
+      <div class="ringing-bars">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </div>
+
+      Ringing...
 
     </div>
 
 
     <div class="swipe-area">
+
 
       <div
         id="declineSwipe"
@@ -652,9 +1263,11 @@ body{
 
       </div>
 
+
       <div class="swipe-hint">
         Swipe the control to respond
       </div>
+
 
     </div>
 
@@ -663,10 +1276,13 @@ body{
 </div>
 
 
-<!-- FIRST LIVE VIDEO -->
+<!-- =========================
+     FIRST LIVE VIDEO
+========================= -->
 
-<div id="liveSoundPage"
-     class="page">
+<div
+  id="liveSoundPage"
+  class="page">
 
   <div class="liveBadgeTop">
 
@@ -690,10 +1306,13 @@ body{
 </div>
 
 
-<!-- SECOND BLACK LIVE -->
+<!-- =========================
+     SECOND BLACK LIVE
+========================= -->
 
-<div id="blackLivePage"
-     class="page">
+<div
+  id="blackLivePage"
+  class="page">
 
   <div class="liveBadgeTop">
 
@@ -710,10 +1329,13 @@ body{
 </div>
 
 
-<!-- INSUFFICIENT -->
+<!-- =========================
+     INSUFFICIENT
+========================= -->
 
-<div id="insufficientPage"
-     class="page">
+<div
+  id="insufficientPage"
+  class="page">
 
   <div class="insufficientTitle">
     Insufficient Minutes
@@ -727,7 +1349,9 @@ body{
 </div>
 
 
-<!-- RANDOM AUDIO -->
+<!-- =========================
+     RANDOM AUDIO
+========================= -->
 
 <audio
   id="backgroundSound"
@@ -737,152 +1361,74 @@ body{
 
 
 <script>
+  <script>
+const PAYMENT_PAGE_URL = "payment.html";
 
-const GITHUB_OWNER =
-  "agnesweb2026";
+const SAMPLE_DURATION = 20000;
+const INSUFFICIENT_DURATION = 2000;
+const BLACK_LIVE_DURATION = 5000;
+const PHOTO_WAIT_DURATION = 20000;
 
-const GITHUB_REPO =
-  "My-referral-website";
+const SAMPLE_STORAGE_KEY = "myReferralSampleWatched";
+const RED_LIVE_STORAGE_KEY = "redLiveVideoSeen";
+const REFERRAL_STORAGE_KEY = "referralEmployeeId";
 
-const GITHUB_BRANCH =
-  "main";
+/* =========================
+   REFERRAL TRACKING
+========================= */
 
-const MAX_PHOTOS =
-  24;
+const referralParams = new URLSearchParams(window.location.search);
 
-const PHOTOS_DURATION =
-  20000;
+const urlReferral =
+  referralParams.get("employee") ||
+  referralParams.get("ref");
 
-const SECOND_CALL_SOUND_DURATION =
-  5000;
+const VALID_REFERRALS = [
+  "REF-A7K2",
+  "REF-B4M8",
+  "REF-C9P3",
+  "REF-D2X6",
+  "REF-E5Q1",
+  "REF-F8L4",
+  "REF-G3N7",
+  "REF-H6R2",
+  "REF-J9T5",
+  "REF-K4W8"
+];
 
-const INSUFFICIENT_DURATION =
-  2000;
+let referralEmployeeId = null;
 
-const BUSY_CHANGE_DURATION =
-  300000;
-
-const PAYMENT_PAGE_URL =
-  "payment.html";
-
-
-/*
-  EMPLOYEE REFERRAL TRACKING
-*/
-
-const referralParams =
-  new URLSearchParams(
-    window.location.search
-  );
-
-let referralEmployeeId =
-  referralParams.get("employee");
-
-
-if(
-  referralEmployeeId &&
-  /^[A-Za-z0-9_-]{1,50}$/.test(
-    referralEmployeeId
-  )
-){
+if (
+  urlReferral &&
+  VALID_REFERRALS.includes(urlReferral)
+) {
+  referralEmployeeId = urlReferral;
 
   localStorage.setItem(
-    "referralEmployeeId",
-    referralEmployeeId
+    REFERRAL_STORAGE_KEY,
+    urlReferral
   );
+} else {
 
-}else{
-
-  referralEmployeeId =
+  const savedReferral =
     localStorage.getItem(
-      "referralEmployeeId"
+      REFERRAL_STORAGE_KEY
     );
 
-}
-
-
-/*
-  OPEN PAYMENT WITH EMPLOYEE ID
-*/
-
-function openPaymentPage(){
-
-  const employeeId =
-    referralEmployeeId ||
-    localStorage.getItem(
-      "referralEmployeeId"
-    );
-
-
-  if(employeeId){
-
-    window.location.href =
-      PAYMENT_PAGE_URL +
-      "?employee=" +
-      encodeURIComponent(
-        employeeId
-      );
-
-  }else{
-
-    window.location.href =
-      PAYMENT_PAGE_URL;
-
+  if (
+    savedReferral &&
+    VALID_REFERRALS.includes(savedReferral)
+  ) {
+    referralEmployeeId = savedReferral;
   }
-
 }
 
 
-const RED_LIVE_KEY =
-  "redLiveVideoSeen";
+/* =========================
+   PHOTO DATA
+========================= */
 
-
-let redLiveShownThisVisit =
-  localStorage.getItem(
-    RED_LIVE_KEY
-  ) === "yes";
-
-
-let websiteStarted =
-  false;
-
-let photosData =
-  [];
-
-let currentCaller =
-  null;
-
-
-let photoTimer =
-  null;
-
-let incomingTimer =
-  null;
-
-let insufficientTimer =
-  null;
-
-let busyRotationTimer =
-  null;
-
-let soundTimer =
-  null;
-
-let liveVideoSafetyTimer =
-  null;
-
-
-/*
-  RANDOM AUDIO FILES
-*/
-
-let audioFiles = [];
-
-let currentAudio = null;
-  /* NAMES */
-
-const names = [
-
+const PHOTO_NAMES = [
   "Cute",
   "Becky",
   "Dorry",
@@ -907,1472 +1453,873 @@ const names = [
   "Irene",
   "Rose",
   "Fellow"
-
 ];
 
-
-/* AGES */
-
-const ages = [
-
+const PHOTO_AGES = [
   19,23,25,18,24,24,
   26,30,27,23,29,33,
   25,25,31,25,23,19,
   22,24,23,27,28,21
+];
 
+const PHOTO_COUNTRIES = [
+  "🇰🇪","🇰🇪","🇰🇪","🇰🇪","🇰🇪",
+  "🇹🇿","🇹🇿","🇹🇿","🇹🇿",
+  "🇳🇬","🇳🇬","🇳🇬","🇳🇬",
+  "🇨🇩","🇨🇩","🇨🇩","🇨🇩","🇨🇩",
+  "🇨🇦","🇨🇦",
+  "🇿🇦","🇿🇦",
+  "🇺🇸","🇺🇸"
 ];
 
 
-/* COUNTRIES */
+/* =========================
+   GITHUB IMAGE SETTINGS
+========================= */
 
-const countries = [
+const GITHUB_OWNER = "agnesweb2026";
+const GITHUB_REPO = "My-referral-website";
+const GITHUB_BRANCH = "main";
 
-  {name:"Kenya",flag:"🇰🇪"},
-  {name:"Kenya",flag:"🇰🇪"},
-  {name:"Kenya",flag:"🇰🇪"},
-  {name:"Kenya",flag:"🇰🇪"},
-  {name:"Kenya",flag:"🇰🇪"},
-
-  {name:"Tanzania",flag:"🇹🇿"},
-  {name:"Tanzania",flag:"🇹🇿"},
-  {name:"Tanzania",flag:"🇹🇿"},
-  {name:"Tanzania",flag:"🇹🇿"},
-
-  {name:"Nigeria",flag:"🇳🇬"},
-  {name:"Nigeria",flag:"🇳🇬"},
-  {name:"Nigeria",flag:"🇳🇬"},
-  {name:"Nigeria",flag:"🇳🇬"},
-
-  {name:"Congo",flag:"🇨🇩"},
-  {name:"Congo",flag:"🇨🇩"},
-  {name:"Congo",flag:"🇨🇩"},
-  {name:"Congo",flag:"🇨🇩"},
-  {name:"Congo",flag:"🇨🇩"},
-
-  {name:"Canada",flag:"🇨🇦"},
-  {name:"Canada",flag:"🇨🇦"},
-
-  {name:"South Africa",flag:"🇿🇦"},
-  {name:"South Africa",flag:"🇿🇦"},
-
-  {name:"USA",flag:"🇺🇸"},
-  {name:"USA",flag:"🇺🇸"}
-
-];
+const IMAGE_BASE =
+  `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/`;
 
 
-/* ELEMENTS */
+/* =========================
+   ELEMENTS
+========================= */
 
 const welcomeScreen =
-  document.getElementById(
-    "welcomeScreen"
-  );
+  document.getElementById("welcomeScreen");
 
 const photosPage =
-  document.getElementById(
-    "photosPage"
-  );
+  document.getElementById("photosPage");
 
 const incomingCall =
-  document.getElementById(
-    "incomingCall"
-  );
-
-const liveSoundPage =
-  document.getElementById(
-    "liveSoundPage"
-  );
-
-const blackLivePage =
-  document.getElementById(
-    "blackLivePage"
-  );
-
-const insufficientPage =
-  document.getElementById(
-    "insufficientPage"
-  );
-
-const photoGrid =
-  document.getElementById(
-    "photoGrid"
-  );
-
-const backgroundSound =
-  document.getElementById(
-    "backgroundSound"
-  );
-
-const liveSoundVideo =
-  document.getElementById(
-    "liveSoundVideo"
-  );
+  document.getElementById("incomingCall");
 
 const callerImage =
-  document.getElementById(
-    "callerImage"
-  );
+  document.getElementById("callerImage");
 
 const callerName =
-  document.getElementById(
-    "callerName"
-  );
+  document.getElementById("callerName");
 
 const answerSwipe =
-  document.getElementById(
-    "answerSwipe"
-  );
+  document.getElementById("answerSwipe");
 
 const declineSwipe =
-  document.getElementById(
-    "declineSwipe"
-  );
+  document.getElementById("declineSwipe");
+
+const livePhotos =
+  document.getElementById("livePhotos");
+
+const onlineCount =
+  document.getElementById("onlineCount");
+
+const blackLive =
+  document.getElementById("blackLive");
+
+const blackLiveAudio =
+  document.getElementById("blackLiveAudio");
+
+const insufficientPage =
+  document.getElementById("insufficientPage");
+
+const insufficientTimer =
+  document.getElementById("insufficientTimer");
+
+const redLiveVideo =
+  document.getElementById("redLiveVideo");
 
 
-function hideAllPages(){
+/* =========================
+   STATE
+========================= */
 
-  welcomeScreen.style.display =
-    "none";
+let currentCaller = 0;
+let callTimer = null;
+let photoTimer = null;
+let onlineTimer = null;
+let audioTimer = null;
 
-  photosPage.style.display =
-    "none";
+let answeredFirstCall = false;
+let callInProgress = false;
 
-  incomingCall.style.display =
-    "none";
 
-  liveSoundPage.style.display =
-    "none";
+/* =========================
+   HELPERS
+========================= */
 
-  blackLivePage.style.display =
-    "none";
+function hideAllScreens(){
 
-  insufficientPage.style.display =
-    "none";
+  if(welcomeScreen)
+    welcomeScreen.style.display = "none";
 
+  if(photosPage)
+    photosPage.style.display = "none";
+
+  if(incomingCall)
+    incomingCall.style.display = "none";
+
+  if(blackLive)
+    blackLive.style.display = "none";
+
+  if(insufficientPage)
+    insufficientPage.style.display = "none";
 }
 
 
-function clearAllTimers(){
+function clearTimers(){
 
-  clearTimeout(photoTimer);
+  if(callTimer){
+    clearTimeout(callTimer);
+    callTimer = null;
+  }
 
-  clearTimeout(incomingTimer);
+  if(photoTimer){
+    clearTimeout(photoTimer);
+    photoTimer = null;
+  }
 
-  clearTimeout(insufficientTimer);
+  if(onlineTimer){
+    clearInterval(onlineTimer);
+    onlineTimer = null;
+  }
 
-  clearTimeout(soundTimer);
-
-  clearTimeout(liveVideoSafetyTimer);
-
+  if(audioTimer){
+    clearTimeout(audioTimer);
+    audioTimer = null;
+  }
 }
 
 
-function stopBackgroundSound(){
+function stopVideo(video){
+
+  if(!video) return;
 
   try{
-
-    backgroundSound.pause();
-
-    backgroundSound.currentTime = 0;
-
+    video.pause();
+    video.currentTime = 0;
   }catch(e){}
-
 }
 
 
-function stopLiveVideo(){
+function stopAudio(){
+
+  if(!blackLiveAudio) return;
 
   try{
-
-    liveSoundVideo.pause();
-
-    liveSoundVideo.currentTime = 0;
-
+    blackLiveAudio.pause();
+    blackLiveAudio.currentTime = 0;
   }catch(e){}
-
-}
-  /* SHUFFLE */
-
-function shuffleArray(array){
-
-  const arr =
-    [...array];
-
-  for(
-    let i = arr.length - 1;
-    i > 0;
-    i--
-  ){
-
-    const j =
-      Math.floor(
-        Math.random() * (i + 1)
-      );
-
-    [
-      arr[i],
-      arr[j]
-    ] =
-    [
-      arr[j],
-      arr[i]
-    ];
-
-  }
-
-  return arr;
-
 }
 
 
-/* GITHUB */
+/* =========================
+   ONLINE NUMBER
+========================= */
 
-async function getGitHubContents(
-  path = ""
-){
+function updateOnline(){
 
-  const url =
-    `https://api.github.com/repos/` +
-    `${GITHUB_OWNER}/${GITHUB_REPO}` +
-    `/contents/${path}?ref=${GITHUB_BRANCH}`;
-
-  const response =
-    await fetch(url);
-
-  if(!response.ok){
-
-    throw new Error(
-      "GitHub request failed"
-    );
-
-  }
-
-  return await response.json();
-
-}
-
-
-function isImageFile(name){
-
-  return /\.(jpg|jpeg|png|webp|gif)$/i
-    .test(name);
-
-}
-
-
-function isAudioFile(name){
-
-  return /\.(mp3|wav|m4a|ogg|aac|mp4)$/i
-    .test(name);
-
-}
-
-
-async function collectImages(
-  path = "",
-  result = []
-){
-
-  const items =
-    await getGitHubContents(
-      path
-    );
-
-
-  for(
-    const item of items
-  ){
-
-    if(
-      item.type === "file" &&
-      isImageFile(item.name)
-    ){
-
-      result.push(
-        item.path
-      );
-
-    }
-
-
-    if(item.type === "dir"){
-
-      await collectImages(
-        item.path,
-        result
-      );
-
-    }
-
-
-    if(
-      result.length >=
-      MAX_PHOTOS
-    ){
-
-      break;
-
-    }
-
-  }
-
-
-  return result;
-
-}
-
-
-/*
-  COLLECT ALL SOUNDS
-*/
-
-async function collectAudioFiles(
-  path = "",
-  result = []
-){
-
-  const items =
-    await getGitHubContents(
-      path
-    );
-
-
-  for(
-    const item of items
-  ){
-
-    if(
-      item.type === "file" &&
-      isAudioFile(item.name)
-    ){
-
-      result.push(
-        item.path
-      );
-
-    }
-
-
-    if(item.type === "dir"){
-
-      await collectAudioFiles(
-        item.path,
-        result
-      );
-
-    }
-
-  }
-
-
-  return result;
-
-}
-
-
-function getFileUrl(path){
-
-  return (
-    "https://raw.githubusercontent.com/" +
-    GITHUB_OWNER + "/" +
-    GITHUB_REPO + "/" +
-    GITHUB_BRANCH + "/" +
-    path
-  );
-
-}
-
-
-/*
-  LOAD PHOTOS
-*/
-
-async function loadPhotos(){
-
-  let imagePaths = [];
-
-
-  try{
-
-    imagePaths =
-      await collectImages(
-        "",
-        []
-      );
-
-  }catch(error){
-
-    console.error(
-      "Photo loading error:",
-      error
-    );
-
-    return;
-
-  }
-
-
-  imagePaths =
-    imagePaths.slice(
-      0,
-      MAX_PHOTOS
-    );
-
-
-  photosData =
-    imagePaths.map(
-      (path,index)=>({
-
-        path:path,
-
-        url:
-          getFileUrl(path),
-
-        name:
-          names[index] ||
-          `User ${index+1}`,
-
-        age:
-          ages[index] ||
-          25,
-
-        country:
-          countries[index] ||
-          {
-            name:"Kenya",
-            flag:"🇰🇪"
-          }
-
-      })
-    );
-
-  }
-  /*
-  LOAD AUDIO
-*/
-
-async function loadAudioFiles(){
-
-  try{
-
-    audioFiles =
-      await collectAudioFiles(
-        "",
-        []
-      );
-
-
-    console.log(
-      "Audio files found:",
-      audioFiles
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Audio loading error:",
-      error
-    );
-
-  }
-
-}
-
-
-/*
-  RANDOM SOUND
-*/
-
-async function playRandomSound(){
-
-  try{
-
-    if(!audioFiles.length){
-
-      await loadAudioFiles();
-
-    }
-
-
-    if(!audioFiles.length){
-
-      console.log(
-        "NO AUDIO FILES FOUND"
-      );
-
-      return;
-
-    }
-
-
-    const randomIndex =
-      Math.floor(
-        Math.random() *
-        audioFiles.length
-      );
-
-
-    const selectedAudio =
-      audioFiles[randomIndex];
-
-
-    backgroundSound.pause();
-
-    backgroundSound.currentTime =
-      0;
-
-
-    backgroundSound.src =
-      getFileUrl(
-        selectedAudio
-      );
-
-
-    backgroundSound.load();
-
-    backgroundSound.volume =
-      1;
-
-
-    const playPromise =
-      backgroundSound.play();
-
-
-    if(playPromise){
-
-      playPromise.catch(
-        function(error){
-
-          console.log(
-            "Audio play blocked:",
-            error
-          );
-
-        }
-      );
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Random sound error:",
-      error
-    );
-
-  }
-
-}
-
-
-/*
-  RANDOM BUSY
-*/
-
-function getRandomBusyIndexes(){
-
-  const indexes = [];
-
-
-  for(
-    let i = 0;
-    i < MAX_PHOTOS;
-    i++
-  ){
-
-    indexes.push(i);
-
-  }
-
-
-  return shuffleArray(
-    indexes
-  ).slice(0,5);
-
-}
-
-
-/*
-  RENDER PHOTOS
-*/
-
-function renderPhotos(){
-
-  photoGrid.innerHTML = "";
-
-
-  if(!photosData.length){
-
-    photoGrid.innerHTML = `
-      <div style="
-        grid-column:1/-1;
-        text-align:center;
-        padding:40px;
-        color:#aaa;
-      ">
-        Loading photos...
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  const displayPhotos =
-    shuffleArray(
-      photosData
-    );
-
-
-  const busyIndexes =
-    getRandomBusyIndexes();
-
-
-  displayPhotos.forEach(
-    (photo,index)=>{
-
-      const card =
-        document.createElement(
-          "div"
-        );
-
-
-      card.className =
-        "photoCard";
-
-
-      const img =
-        document.createElement(
-          "img"
-        );
-
-
-      img.src =
-        photo.url;
-
-      img.alt =
-        photo.name;
-
-      img.loading =
-        "lazy";
-
-
-      card.appendChild(
-        img
-      );
-
-
-      const isBusy =
-        busyIndexes.includes(
-          index
-        );
-
-
-      const status =
-        document.createElement(
-          "div"
-        );
-
-
-      status.className =
-        "statusBadge";
-
-
-      if(isBusy){
-
-        status.classList.add(
-          "offlineBadge"
-        );
-
-        status.textContent =
-          "OFFLINE";
-
-
-        const closed =
-          document.createElement(
-            "div"
-          );
-
-
-        closed.className =
-          "roomClosed";
-
-
-        closed.textContent =
-          "ROOM CLOSED";
-
-
-        card.appendChild(
-          closed
-        );
-
-
-      }else{
-
-        status.classList.add(
-          "liveBadge"
-        );
-
-
-        const dot =
-          document.createElement(
-            "span"
-          );
-
-
-        dot.className =
-          "liveDot";
-
-
-        status.appendChild(
-          dot
-        );
-
-
-        status.appendChild(
-          document.createTextNode(
-            "LIVE"
-          )
-        );
-
-
-        card.addEventListener(
-          "click",
-          function(){
-
-            openPaymentPage();
-
-          }
-        );
-
-      }
-
-
-      card.appendChild(
-        status
-      );
-
-
-      const icon =
-        document.createElement(
-          "div"
-        );
-
-
-      icon.className =
-        "videoPlayIcon";
-
-
-      icon.textContent =
-        "▶";
-
-
-      card.appendChild(
-        icon
-      );
-
-
-      const info =
-        document.createElement(
-          "div"
-        );
-
-
-      info.className =
-        "photoInfo";
-
-
-      info.innerHTML = `
-
-        <div class="photoName">
-          ${photo.name}
-        </div>
-
-        <div class="photoAge">
-          ${photo.country.flag}
-          ${photo.age} yrs
-        </div>
-
-      `;
-
-
-      card.appendChild(
-        info
-      );
-
-
-      photoGrid.appendChild(
-        card
-      );
-
-    }
-  );
-
-}
-
-
-/* ONLINE NUMBER */
-
-function updateOnlineNumber(){
+  if(!onlineCount) return;
 
   const number =
-    document.getElementById(
-      "onlineNumber"
-    );
+    Math.floor(
+      Math.random() * 8
+    ) + 18;
 
-
-  if(number){
-
-    number.textContent =
-      Math.floor(
-        18 +
-        Math.random() * 8
-      );
-
-  }
-
-}
-  /* LIVE PHOTOS */
-
-function showLivePhotos(){
-
-  clearAllTimers();
-
-  stopLiveVideo();
-
-  stopBackgroundSound();
-
-  hideAllPages();
-
-
-  photosPage.style.display =
-    "block";
-
-
-  renderPhotos();
-
-  updateOnlineNumber();
-
-
-  clearInterval(
-    busyRotationTimer
-  );
-
-
-  busyRotationTimer =
-    setInterval(
-      function(){
-
-        if(
-          photosPage.style.display !==
-          "none"
-        ){
-
-          renderPhotos();
-
-        }
-
-      },
-      BUSY_CHANGE_DURATION
-    );
-
-
-  incomingTimer =
-    setTimeout(
-      function(){
-
-        showIncomingCall();
-
-      },
-      PHOTOS_DURATION
-    );
-
+  onlineCount.textContent =
+    number;
 }
 
 
-/* INCOMING CALL */
+/* =========================
+   WELCOME
+========================= */
+
+function startWebsite(){
+
+  hideAllScreens();
+  clearTimers();
+
+  if(welcomeScreen)
+    welcomeScreen.style.display = "flex";
+
+  setTimeout(() => {
+
+    showIncomingCall();
+
+  }, 3000);
+}
+
+
+/* =========================
+   INCOMING CALL
+========================= */
 
 function showIncomingCall(){
 
-  clearAllTimers();
+  clearTimers();
 
-  stopBackgroundSound();
+  callInProgress = true;
 
-  stopLiveVideo();
+  hideAllScreens();
 
-  hideAllPages();
+  if(incomingCall)
+    incomingCall.style.display = "flex";
 
+  const index =
+    currentCaller %
+    PHOTO_NAMES.length;
 
-  incomingCall.style.display =
-    "block";
+  if(callerName){
 
-
-  if(!photosData.length){
-
-    return;
-
+    callerName.textContent =
+      PHOTO_NAMES[index];
   }
 
+  if(callerImage){
 
-  const randomIndex =
-    Math.floor(
-      Math.random() *
-      photosData.length
-    );
+    const imageName =
+      PHOTO_NAMES[index]
+        .toLowerCase()
+        .replace(/\s+/g,"");
 
+    callerImage.src =
+      IMAGE_BASE +
+      imageName +
+      ".jpg";
 
-  currentCaller =
-    photosData[randomIndex];
+    callerImage.onerror = () => {
 
+      callerImage.src =
+        IMAGE_BASE +
+        imageName +
+        ".png";
+    };
+  }
 
-  callerImage.src =
-    currentCaller.url;
+  if(answerSwipe)
+    answerSwipe.style.transform =
+      "translateX(0)";
 
+  if(declineSwipe)
+    declineSwipe.style.transform =
+      "translateX(0)";
 
-  callerName.textContent =
-    currentCaller.name;
+  /*
+     Ring for 7 seconds.
+     If nobody answers, return
+     to live photos.
+  */
 
-}
+  callTimer = setTimeout(() => {
 
+    if(callInProgress){
 
-/* FIRST RED LIVE */
+      callInProgress = false;
 
-function showLiveSound(){
-
-  clearAllTimers();
-
-  stopBackgroundSound();
-
-  hideAllPages();
-
-
-  liveSoundPage.style.display =
-    "flex";
-
-
-  try{
-
-    liveSoundVideo.currentTime =
-      0;
-
-    liveSoundVideo.volume =
-      1;
-
-
-    const playPromise =
-      liveSoundVideo.play();
-
-
-    if(playPromise){
-
-      playPromise.catch(
-        function(error){
-
-          console.log(
-            "Video play error:",
-            error
-          );
-
-        }
-      );
+      showLivePhotos();
 
     }
 
-  }catch(e){}
-
-
-  liveVideoSafetyTimer =
-    setTimeout(
-      function(){
-
-        showBlackLive();
-
-      },
-      20000
-    );
-
+  }, 7000);
 }
 
 
-/*
-  SECOND BLACK LIVE
-*/
+/* =========================
+   ANSWER CALL
+========================= */
 
-function showBlackLive(){
+function answerCall(){
 
-  clearAllTimers();
+  if(!callInProgress)
+    return;
 
-  stopLiveVideo();
+  callInProgress = false;
 
-  stopBackgroundSound();
+  clearTimers();
 
-  hideAllPages();
+  answeredFirstCall = true;
 
+  /*
+     First answered call:
+     show red LIVE video only once.
+  */
 
-  blackLivePage.style.display =
-    "flex";
-
-
-  playRandomSound();
-
-
-  soundTimer =
-    setTimeout(
-      function(){
-
-        stopBackgroundSound();
-
-        showInsufficient();
-
-      },
-      SECOND_CALL_SOUND_DURATION
+  const redSeen =
+    localStorage.getItem(
+      RED_LIVE_STORAGE_KEY
     );
 
-}
-
-
-/* INSUFFICIENT */
-
-function showInsufficient(){
-
-  clearAllTimers();
-
-  stopLiveVideo();
-
-  stopBackgroundSound();
-
-  hideAllPages();
-
-
-  insufficientPage.style.display =
-    "flex";
-
-
-  insufficientTimer =
-    setTimeout(
-      function(){
-
-        showLivePhotos();
-
-      },
-      INSUFFICIENT_DURATION
-    );
-
-}
-
-
-/* ANSWER */
-
-function answerIncomingCall(){
-
-  clearAllTimers();
-
-
-  if(
-    !redLiveShownThisVisit
-  ){
-
-    redLiveShownThisVisit =
-      true;
-
+  if(!redSeen){
 
     localStorage.setItem(
-      RED_LIVE_KEY,
-      "yes"
+      RED_LIVE_STORAGE_KEY,
+      "1"
     );
 
-
-    showLiveSound();
-
+    showRedLiveVideo();
 
   }else{
 
     showBlackLive();
 
   }
-
 }
 
 
-/* DECLINE */
+/* =========================
+   DECLINE CALL
+========================= */
 
-function declineIncomingCall(){
+function declineCall(){
 
-  clearAllTimers();
+  callInProgress = false;
 
-  stopLiveVideo();
-
-  stopBackgroundSound();
+  clearTimers();
 
   showLivePhotos();
-
 }
-  /* REAL SWIPE */
+
+
+/* =========================
+   RED LIVE VIDEO
+========================= */
+
+function showRedLiveVideo(){
+
+  clearTimers();
+
+  hideAllScreens();
+
+  if(redLiveVideo){
+
+    redLiveVideo.style.display =
+      "flex";
+
+    try{
+
+      redLiveVideo.currentTime = 0;
+
+      const playPromise =
+        redLiveVideo.play();
+
+      if(
+        playPromise &&
+        playPromise.catch
+      ){
+        playPromise.catch(
+          () => {}
+        );
+      }
+
+    }catch(e){}
+  }
+
+  /*
+     Red LIVE video is shown
+     only once.
+  */
+
+  callTimer = setTimeout(() => {
+
+    stopVideo(redLiveVideo);
+
+    showBlackLive();
+
+  }, 5000);
+}
+
+
+/* =========================
+   BLACK LIVE
+========================= */
+
+function showBlackLive(){
+
+  clearTimers();
+
+  hideAllScreens();
+
+  if(blackLive)
+    blackLive.style.display =
+      "flex";
+
+  playLiveAudio();
+
+  callTimer = setTimeout(() => {
+
+    stopAudio();
+
+    showInsufficient();
+
+  }, BLACK_LIVE_DURATION);
+}
+
+
+/* =========================
+   LIVE AUDIO
+========================= */
+
+function playLiveAudio(){
+
+  if(!blackLiveAudio)
+    return;
+
+  try{
+
+    blackLiveAudio.currentTime = 0;
+
+    const p =
+      blackLiveAudio.play();
+
+    if(
+      p &&
+      p.catch
+    ){
+      p.catch(
+        () => {}
+      );
+    }
+
+  }catch(e){}
+}
+
+
+/* =========================
+   INSUFFICIENT MINUTES
+========================= */
+
+function showInsufficient(){
+
+  clearTimers();
+
+  hideAllScreens();
+
+  if(insufficientPage)
+    insufficientPage.style.display =
+      "flex";
+
+  let seconds = 2;
+
+  if(insufficientTimer)
+    insufficientTimer.textContent =
+      seconds;
+
+  const interval =
+    setInterval(() => {
+
+      seconds--;
+
+      if(insufficientTimer)
+        insufficientTimer.textContent =
+          seconds;
+
+      if(seconds <= 0){
+
+        clearInterval(interval);
+
+        showLivePhotos();
+      }
+
+    },1000);
+}
+
+
+/* =========================
+   LIVE PHOTOS
+========================= */
+
+function showLivePhotos(){
+
+  clearTimers();
+
+  callInProgress = false;
+
+  hideAllScreens();
+
+  if(photosPage)
+    photosPage.style.display =
+      "block";
+
+  buildPhotoGrid();
+
+  updateOnline();
+
+  onlineTimer =
+    setInterval(
+      updateOnline,
+      10000
+    );
+
+  /*
+     Wait before next incoming call.
+  */
+
+  photoTimer =
+    setTimeout(() => {
+
+      currentCaller++;
+
+      showIncomingCall();
+
+    }, PHOTO_WAIT_DURATION);
+}
+
+
+/* =========================
+   PHOTO GRID
+========================= */
+
+function buildPhotoGrid(){
+
+  if(!livePhotos)
+    return;
+
+  livePhotos.innerHTML = "";
+
+  /*
+     Five random profiles
+     appear offline.
+  */
+
+  const offlineIndexes =
+    new Set();
+
+  while(
+    offlineIndexes.size < 5 &&
+    offlineIndexes.size <
+      PHOTO_NAMES.length
+  ){
+
+    offlineIndexes.add(
+      Math.floor(
+        Math.random() *
+        PHOTO_NAMES.length
+      )
+    );
+  }
+
+  PHOTO_NAMES.forEach(
+    (name,index) => {
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "photo-card";
+
+      const offline =
+        offlineIndexes.has(index);
+
+      const country =
+        PHOTO_COUNTRIES[index] ||
+        "🌍";
+
+      const age =
+        PHOTO_AGES[index] ||
+        21;
+
+      const imageName =
+        name
+          .toLowerCase()
+          .replace(/\s+/g,"");
+
+      card.innerHTML = `
+
+        <div class="photo-image-wrap">
+
+          <img
+            class="profile-photo"
+            src="${IMAGE_BASE}${imageName}.jpg"
+            alt="${name}"
+            loading="lazy"
+          >
+
+          <div class="photo-play">
+            ▶
+          </div>
+
+          <div class="${
+            offline
+              ? "offline-badge"
+              : "live-badge"
+          }">
+
+            <span></span>
+
+            ${
+              offline
+                ? "OFFLINE"
+                : "LIVE"
+            }
+
+          </div>
+
+        </div>
+
+        <div class="photo-info">
+
+          <div class="photo-name">
+            ${name}
+          </div>
+
+          <div class="photo-meta">
+            ${country} ${age}
+          </div>
+
+        </div>
+      `;
+
+      const img =
+        card.querySelector(
+          ".profile-photo"
+        );
+
+      if(img){
+
+        img.onerror = () => {
+
+          img.src =
+            `${IMAGE_BASE}${imageName}.png`;
+
+          img.onerror = () => {
+
+            img.src =
+              `${IMAGE_BASE}${imageName}.webp`;
+
+          };
+
+        };
+      }
+
+      /*
+         Tapping any photo opens
+         payment.html and carries
+         the correct employee referral.
+      */
+
+      card.addEventListener(
+        "click",
+        () => {
+
+          openPaymentPage();
+
+        }
+      );
+
+      livePhotos.appendChild(
+        card
+      );
+    }
+  );
+}
+
+
+/* =========================
+   PAYMENT LINK
+========================= */
+
+function openPaymentPage(){
+
+  /*
+     Save return state so that
+     Back/loading can return
+     to live photos.
+  */
+
+  sessionStorage.setItem(
+    "returnToLivePhotos",
+    "1"
+  );
+
+  let url =
+    PAYMENT_PAGE_URL;
+
+  if(referralEmployeeId){
+
+    url +=
+      "?employee=" +
+      encodeURIComponent(
+        referralEmployeeId
+      );
+  }
+
+  window.location.href =
+    url;
+}
+
+
+/* =========================
+   ANSWER / DECLINE BUTTONS
+========================= */
+
+if(answerSwipe){
+
+  answerSwipe.addEventListener(
+    "click",
+    answerCall
+  );
+}
+
+if(declineSwipe){
+
+  declineSwipe.addEventListener(
+    "click",
+    declineCall
+  );
+}
+
+
+/* =========================
+   SWIPE SUPPORT
+========================= */
 
 function enableSwipe(
   element,
-  direction,
-  action
+  callback
 ){
 
+  if(!element)
+    return;
+
   let startX = 0;
-
-  let startY = 0;
-
+  let currentX = 0;
+  let dragging = false;
 
   element.addEventListener(
     "touchstart",
-    function(e){
+    (e) => {
 
-      if(
-        !e.touches.length
-      ){
-
+      if(!e.touches[0])
         return;
-
-      }
-
 
       startX =
         e.touches[0].clientX;
 
-      startY =
-        e.touches[0].clientY;
+      currentX =
+        startX;
+
+      dragging = true;
 
     },
     {passive:true}
   );
 
+  element.addEventListener(
+    "touchmove",
+    (e) => {
+
+      if(!dragging)
+        return;
+
+      if(!e.touches[0])
+        return;
+
+      currentX =
+        e.touches[0].clientX;
+
+      const distance =
+        currentX - startX;
+
+      if(
+        Math.abs(distance) >
+        10
+      ){
+
+        element.style.transform =
+          `translateX(${distance}px)`;
+      }
+
+    },
+    {passive:true}
+  );
 
   element.addEventListener(
     "touchend",
-    function(e){
+    () => {
 
-      if(
-        !e.changedTouches.length
-      ){
-
+      if(!dragging)
         return;
 
-      }
+      dragging = false;
 
+      const distance =
+        currentX - startX;
 
-      const endX =
-        e.changedTouches[0].clientX;
-
-      const endY =
-        e.changedTouches[0].clientY;
-
-      const dx =
-        endX - startX;
-
-      const dy =
-        endY - startY;
-
+      element.style.transform =
+        "translateX(0)";
 
       if(
-        Math.abs(dy) >
-        Math.abs(dx)
+        Math.abs(distance) >
+        80
       ){
 
-        return;
+        callback();
 
       }
 
-
-      if(
-        Math.abs(dx) < 80
-      ){
-
-        return;
-
-      }
-
-
-      if(
-        direction === "left" &&
-        dx < 0
-      ){
-
-        action();
-
-      }
-
-
-      if(
-        direction === "right" &&
-        dx > 0
-      ){
-
-        action();
-
-      }
-
-    },
-    {passive:true}
+    }
   );
-
 }
 
-
-/*
-  DECLINE
-*/
-
-enableSwipe(
-  declineSwipe,
-  "left",
-  function(){
-
-    declineIncomingCall();
-
-  }
-);
-
-
-/*
-  ANSWER
-*/
 
 enableSwipe(
   answerSwipe,
-  "right",
-  function(){
+  answerCall
+);
 
-    answerIncomingCall();
-
-  }
+enableSwipe(
+  declineSwipe,
+  declineCall
 );
 
 
-/* RETURN FROM PAYMENT */
-
-function checkPaymentReturn(){
-
-  const returning =
-    sessionStorage.getItem(
-      "returnToLivePhotos"
-    );
-
-
-  if(
-    returning === "yes"
-  ){
-
-    sessionStorage.removeItem(
-      "returnToLivePhotos"
-    );
-
-
-    setTimeout(
-      function(){
-
-        showLivePhotos();
-
-      },
-      100
-    );
-
-
-    return true;
-
-  }
-
-
-  return false;
-
-}
-
-
-/* START WEBSITE */
-
-async function startWebsite(){
-
-  if(
-    checkPaymentReturn()
-  ){
-
-    websiteStarted =
-      true;
-
-    return;
-
-  }
-
-
-  hideAllPages();
-
-
-  welcomeScreen.style.display =
-    "flex";
-
-
-  await Promise.all([
-
-    loadPhotos(),
-
-    loadAudioFiles(),
-
-    new Promise(
-      function(resolve){
-
-        setTimeout(
-          resolve,
-          3000
-        );
-
-      }
-    )
-
-  ]);
-
-
-  welcomeScreen.style.display =
-    "none";
-
-
-  showIncomingCall();
-
-
-  websiteStarted =
-    true;
-
-}
-
-
-/* ONLINE NUMBER */
-
-setInterval(
-  function(){
-
-    updateOnlineNumber();
-
-  },
-  10000
-);
-
-
-/* PREPARE VIDEO */
-
-function prepareVideo(){
-
-  try{
-
-    liveSoundVideo.load();
-
-  }catch(e){}
-
-}
-
-
-/* PREPARE AUDIO */
-
-function prepareAudio(){
-
-  try{
-
-    backgroundSound.load();
-
-  }catch(e){}
-
-}
-
-
-/* PAGE SHOW */
+/* =========================
+   RETURN FROM PAYMENT
+========================= */
 
 window.addEventListener(
   "pageshow",
-  function(){
+  () => {
 
-    stopBackgroundSound();
-
-    stopLiveVideo();
-
-
-    if(!websiteStarted){
-
-      return;
-
-    }
-
+    /*
+       If payment page sends
+       the visitor back here,
+       immediately show photos.
+    */
 
     if(
       sessionStorage.getItem(
         "returnToLivePhotos"
-      ) === "yes"
+      ) === "1"
     ){
 
       sessionStorage.removeItem(
         "returnToLivePhotos"
       );
 
-
-      setTimeout(
-        function(){
-
-          showLivePhotos();
-
-        },
-        50
-      );
-
+      showLivePhotos();
     }
 
   }
 );
 
 
-/* VISIBILITY */
+/* =========================
+   START
+========================= */
 
 document.addEventListener(
-  "visibilitychange",
-  function(){
-
-    if(
-      document.hidden
-    ){
-
-      stopBackgroundSound();
-
-    }
-
-  }
-);
-
-
-/* CLOSE */
-
-window.addEventListener(
-  "beforeunload",
-  function(){
-
-    stopBackgroundSound();
-
-    stopLiveVideo();
-
-  }
-);
-
-
-/* START */
-
-window.addEventListener(
-  "load",
-  function(){
-
-    prepareVideo();
-
-    prepareAudio();
+  "DOMContentLoaded",
+  () => {
 
     startWebsite();
 
   }
 );
-
 </script>
-
+</script>
 </body>
-
 </html>
