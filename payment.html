@@ -1,473 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>M-PESA Payment</title>
 
 <style>
 *{box-sizing:border-box}
-
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#050505;
-color:#fff;
-min-height:100vh
+margin:0;background:#050505;color:white;
+font-family:Arial
 }
-
-.container{
-width:100%;
-max-width:520px;
-margin:auto;
-padding:18px
-}
-
-.header{
-text-align:center;
-padding:15px 0 20px
-}
-
-.header h1{
-margin:0;
-font-size:27px;
-color:#32cd32
-}
-
-.header p{
-margin:8px 0 0;
-color:#aaa;
-font-size:14px
-}
-
+.container{max-width:520px;margin:auto;padding:18px}
+h1{text-align:center;color:#32cd32}
 .packages{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px
+display:grid;grid-template-columns:1fr 1fr;gap:12px
 }
-
 .package{
-position:relative;
-background:#111;
-border:1px solid #333;
-border-radius:14px;
-padding:18px 10px;
-text-align:center;
-cursor:pointer
-}
-
-.package:active{
-transform:scale(.97)
-}
-
-.package.selected{
-border:2px solid #32cd32;
-background:#102010
-}
-
-.minutes{
-font-size:21px;
-font-weight:bold
-}
-
-.price{
-margin-top:8px;
-font-size:18px;
-color:#32cd32;
-font-weight:bold
-}
-
-.hot{
-position:absolute;
-top:-8px;
-right:-5px;
-background:red;
-color:#fff;
-font-size:10px;
-font-weight:bold;
-padding:4px 7px;
-border-radius:10px
-}
-
-.payment-box{
-margin-top:18px;
-background:#101010;
-border:1px solid #292929;
-border-radius:15px;
-padding:18px
-}
-
-.payment-box h2{
-margin:0 0 15px;
-font-size:19px
-}
-
-.label{
-display:block;
-margin-top:15px;
-margin-bottom:7px;
-color:#bbb;
-font-size:13px
-}
-
-.phone-input{
-width:100%;
-background:#050505;
-border:1px solid #444;
-border-radius:9px;
-padding:14px;
-font-size:17px;
-color:#fff;
-outline:none
-}
-
-.phone-input:focus{
-border-color:#32cd32
-}
-
-.main-btn{
-width:100%;
-margin-top:16px;
-padding:15px;
-border:none;
-border-radius:11px;
-background:#32cd32;
-color:#000;
-font-size:17px;
-font-weight:bold;
-cursor:pointer
-}
-
-.main-btn:disabled{
-opacity:.5
-}
-
-.status{
-display:none;
-margin-top:16px;
-padding:14px;
-border-radius:10px;
-text-align:center;
-background:#171717
-}
-
-.status-title{
-font-weight:bold;
-font-size:17px
-}
-
-.status-text{
-margin-top:6px;
-color:#bbb;
-font-size:13px;
-line-height:1.5
-}
-
-.instructions{
-margin-top:18px;
-background:#0d0d0d;
-border-radius:12px;
-padding:16px;
-border:1px solid #242424
-}
-
-.instructions h3{
-margin-top:0;
-color:#32cd32
-}
-
-.instructions li{
-margin-bottom:10px;
-color:#ddd;
-line-height:1.4
-}
-
-.note{
-margin-top:15px;
-color:#aaa;
-font-size:13px;
-line-height:1.5;
+background:#111;border:1px solid #333;
+border-radius:14px;padding:18px 8px;
 text-align:center
 }
-
-.full-screen{
-position:fixed;
-inset:0;
-background:#000;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:25px;
-z-index:9999
+.package.selected{
+border:2px solid #32cd32;background:#102010
 }
-
-.screen-title{
-color:#32cd32;
-font-size:27px;
-font-weight:bold;
-margin-bottom:25px
+.minutes{font-size:21px;font-weight:bold}
+.price{color:#32cd32;font-size:18px;margin-top:8px}
+.hot{
+position:absolute;background:red;padding:4px 7px;
+border-radius:8px;font-size:10px
 }
+.payment-box,.instructions{
+margin-top:18px;background:#101010;
+padding:18px;border-radius:15px
+}
+input{
+width:100%;padding:14px;background:#050505;
+color:white;border:1px solid #444;border-radius:9px;
+font-size:17px
+}
+button{
+width:100%;padding:15px;margin-top:15px;
+border:0;border-radius:10px;
+background:#32cd32;font-weight:bold;font-size:16px
+}
+.status{text-align:center;margin-top:15px;color:#aaa}
 
-.loading-ring{
-width:65px;
-height:65px;
+/* LIVE */
+.live{
+position:fixed;inset:0;background:#000;
+z-index:9999;display:flex;flex-direction:column
+}
+.videoBox{
+height:62vh;position:relative;background:#000
+}
+.video{
+width:100%;height:100%;object-fit:cover
+}
+.liveBadge{
+position:absolute;top:15px;left:15px;
+background:red;padding:7px 12px;
+border-radius:7px;font-weight:bold
+}
+.viewers{
+position:absolute;top:15px;right:15px;
+background:#000b;padding:7px 10px;
+border-radius:15px
+}
+.chat{
+height:38vh;display:flex;flex-direction:column;
+background:#090909
+}
+.chatTitle{
+padding:11px;border-bottom:1px solid #222;
+font-weight:bold
+}
+.messages{
+flex:1;overflow:hidden;padding:10px;
+display:flex;flex-direction:column;
+justify-content:flex-end;gap:7px
+}
+.msg{font-size:13px}
+.name{color:#32cd32;font-weight:bold}
+.heart{color:#ff4b6e}
+.insufficient{
+position:fixed;inset:0;background:#050505;
+z-index:10000;display:flex;
+align-items:center;justify-content:center;
+text-align:center
+}
+.insufficient h1{color:red}
+.spinner{
+width:55px;height:55px;margin:25px auto;
 border:5px solid #222;
-border-top:5px solid #32cd32;
+border-top-color:#32cd32;
 border-radius:50%;
 animation:spin 1s linear infinite
 }
-
-.loading-text{
-margin-top:22px;
-color:#aaa;
-font-size:15px;
-line-height:1.5
-}
-
-.dot{
-width:12px;
-height:12px;
-background:#32cd32;
-border-radius:50%;
-display:inline-block;
-margin-right:8px;
-animation:blink .8s infinite
-}
-
-.warning{
-font-size:60px;
-margin-bottom:20px
-}
-
-.full-screen h1{
-color:red;
-font-size:28px;
-margin:0
-}
-
-.full-screen p{
-color:#aaa;
-margin-top:10px;
-line-height:1.5;
-max-width:400px
-}
-
-.success-icon{
-font-size:65px;
-margin-bottom:20px
-}
-
-.success-title{
-color:#32cd32!important
-}
-
-.debug-box{
-width:100%;
-max-width:430px;
-margin-top:18px;
-background:#111;
-border:1px solid #333;
-border-radius:12px;
-padding:14px;
-text-align:left;
-overflow-wrap:anywhere
-}
-
-.debug-title{
-color:#32cd32;
-font-weight:bold;
-margin-bottom:8px
-}
-
-.debug-text{
-color:#ddd;
-font-size:13px;
-line-height:1.5;
-white-space:pre-wrap
-}
-
-
-/* =================================
-   LIVE-STYLE VIDEO + CHAT
-================================= */
-
-.live-style-screen{
-position:fixed;
-inset:0;
-background:#000;
-z-index:99999;
-display:flex;
-flex-direction:column;
-overflow:hidden
-}
-
-.live-video-area{
-position:relative;
-width:100%;
-height:62vh;
-background:#000;
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden
-}
-
-.live-video{
-width:100%;
-height:100%;
-object-fit:cover;
-background:#000
-}
-
-.live-style-badge{
-position:absolute;
-top:15px;
-left:15px;
-background:#e60000;
-color:#fff;
-font-weight:bold;
-font-size:14px;
-padding:7px 12px;
-border-radius:7px;
-box-shadow:0 0 12px rgba(255,0,0,.7)
-}
-
-.live-viewers{
-position:absolute;
-top:15px;
-right:15px;
-background:rgba(0,0,0,.65);
-padding:7px 11px;
-border-radius:15px;
-font-size:13px
-}
-
-.chat-area{
-height:38vh;
-background:#090909;
-border-top:1px solid #252525;
-display:flex;
-flex-direction:column
-}
-
-.chat-header{
-padding:11px 15px;
-border-bottom:1px solid #222;
-font-weight:bold;
-font-size:15px
-}
-
-.chat-messages{
-flex:1;
-overflow:hidden;
-padding:10px 13px;
-display:flex;
-flex-direction:column;
-justify-content:flex-end;
-gap:7px
-}
-
-.chat-message{
-font-size:13px;
-line-height:1.35;
-animation:chatIn .25s ease
-}
-
-.chat-name{
-font-weight:bold;
-color:#32cd32;
-margin-right:5px
-}
-
-.chat-text{
-color:#eee
-}
-
-.chat-heart{
-color:#ff4b6e;
-margin-left:4px
-}
-
-.chat-input-bar{
-height:48px;
-border-top:1px solid #222;
-display:flex;
-align-items:center;
-padding:7px 10px;
-color:#777;
-font-size:13px
-}
-
-.insufficient-live-screen{
-position:fixed;
-inset:0;
-background:#050505;
-z-index:100000;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:25px
-}
-
-.insufficient-live-box{
-width:100%;
-max-width:400px
-}
-
-.insufficient-live-box h1{
-color:#ff3333;
-font-size:28px;
-margin-bottom:12px
-}
-
-.insufficient-live-box p{
-color:#aaa;
-line-height:1.5
-}
-
-.insufficient-spinner{
-width:55px;
-height:55px;
-margin:25px auto;
-border:5px solid #222;
-border-top:5px solid #32cd32;
-border-radius:50%;
-animation:spin 1s linear infinite
-}
-
-@keyframes spin{
-to{
-transform:rotate(360deg)
-}
-}
-
-@keyframes blink{
-50%{
-opacity:.2
-}
-}
-
-@keyframes chatIn{
-from{
-opacity:0;
-transform:translateY(10px)
-}
-to{
-opacity:1;
-transform:translateY(0)
-}
-}
-
-@media(max-width:380px){
-
-.packages{
-grid-template-columns:1fr
-}
-
-}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 
@@ -475,10 +105,10 @@ grid-template-columns:1fr
 
 <div class="container">
 
-<div class="header">
 <h1>M-PESA PAYMENT</h1>
-<p>Choose your minutes package</p>
-</div>
+<p style="text-align:center;color:#aaa">
+Choose your minutes package
+</p>
 
 <div class="packages">
 
@@ -514,7 +144,6 @@ onclick="selectPackage(this,105,299)">
 
 <div class="package"
 onclick="selectPackage(this,166,393)">
-<span class="hot">HOT</span>
 <div class="minutes">166 Mins</div>
 <div class="price">KSh 393</div>
 </div>
@@ -523,969 +152,233 @@ onclick="selectPackage(this,166,393)">
 
 <div class="payment-box">
 
-<h2>Pay with M-PESA</h2>
-
-<label class="label">
-Your M-PESA phone number
-</label>
+<h3>Pay with M-PESA</h3>
 
 <input
 id="customerPhone"
-class="phone-input"
 type="tel"
 inputmode="numeric"
-autocomplete="tel"
-placeholder="07XXXXXXXX"
-maxlength="12">
+placeholder="07XXXXXXXX">
 
-<button
-id="payButton"
-class="main-btn"
+<button id="payButton"
 onclick="payWithMpesa()">
 PAY WITH M-PESA
 </button>
 
-<div class="status" id="status">
-<div class="status-title" id="statusTitle"></div>
-<div class="status-text" id="statusText"></div>
-</div>
+<div id="status" class="status"></div>
 
 </div>
 
 <div class="instructions">
-
-<h3>How to pay and get access</h3>
-
+<h3>How to pay</h3>
 <ol>
-<li>Select your minutes package.</li>
-<li>Enter the M-PESA number that will make the payment.</li>
-<li>Tap PAY WITH M-PESA.</li>
-<li>Check your phone for the M-PESA prompt.</li>
-<li>Enter your M-PESA PIN on the official M-PESA prompt.</li>
+<li>Select package</li>
+<li>Enter M-PESA number</li>
+<li>Tap PAY WITH M-PESA</li>
+<li>Complete the M-PESA prompt</li>
 </ol>
-
-<div class="note">
-Your M-PESA PIN should only be entered
-on the official M-PESA prompt.
 </div>
 
 </div>
-
-</div>
-
 <script>
-   /* ================================
-   REFERRAL / EMPLOYEE
-================================ */
 
-const urlParams=new URLSearchParams(
-window.location.search
-);
+const params=new URLSearchParams(location.search);
 
 let employeeId=
-urlParams.get("employee")||
-urlParams.get("ref");
+params.get("employee")||
+params.get("ref")||
+localStorage.getItem("referralEmployeeId");
 
-if(
-employeeId &&
-!/^[A-Za-z0-9_-]{1,50}$/.test(employeeId)
-){
-employeeId=null;
-}
-
-if(employeeId){
-
-localStorage.setItem(
-"referralEmployeeId",
-employeeId
-);
-
-}
-
-if(!employeeId){
-
-employeeId=
-localStorage.getItem(
-"referralEmployeeId"
-);
-
-}
-
-
-/* ================================
-   PAYMENT SETTINGS
-================================ */
+if(employeeId)
+localStorage.setItem("referralEmployeeId",employeeId);
 
 const TILL_NUMBER="1605854";
 
 let selectedMinutes=null;
 let selectedPrice=null;
 
-const paymentSessionId=
-"PAY-"+Date.now()+"-"+
-Math.random()
-.toString(36)
-.substring(2,8);
+function selectPackage(el,m,p){
 
+document.querySelectorAll(".package")
+.forEach(x=>x.classList.remove("selected"));
 
-/* ================================
-   SAVE SESSION
-================================ */
+el.classList.add("selected");
 
-function savePaymentSession(
-status="pending",
-extra={}
-){
+selectedMinutes=m;
+selectedPrice=p;
 
-const session={
-
-paymentSessionId,
-
-employeeId:
-employeeId||null,
-
-minutes:
-selectedMinutes,
-
-amount:
-selectedPrice,
-
-till:
-TILL_NUMBER,
-
-status,
-
-createdAt:
-new Date().toISOString(),
-
-...extra
-
-};
-
-localStorage.setItem(
-"paymentSession",
-JSON.stringify(session)
-);
-
-if(employeeId){
-
-localStorage.setItem(
-"paymentSession_"+employeeId,
-JSON.stringify(session)
-);
-
+document.getElementById("status").textContent=
+m+" minutes — KSh "+p;
 }
 
-}
+function phone(v){
 
+v=v.replace(/\s|-/g,"");
 
-/* ================================
-   PACKAGE
-================================ */
+if(/^07\d{8}$/.test(v))
+return "254"+v.slice(1);
 
-function selectPackage(
-element,
-minutes,
-price
-){
+if(/^01\d{8}$/.test(v))
+return "254"+v.slice(1);
 
-document
-.querySelectorAll(".package")
-.forEach(function(pkg){
-
-pkg.classList.remove("selected");
-
-});
-
-element.classList.add("selected");
-
-selectedMinutes=minutes;
-selectedPrice=price;
-
-savePaymentSession();
-
-showStatus(
-"Package selected",
-minutes+
-" minutes — KSh "+
-price
-);
-
-}
-
-
-/* ================================
-   STATUS
-================================ */
-
-function showStatus(
-title,
-text
-){
-
-const status=
-document.getElementById("status");
-
-if(!status)return;
-
-document.getElementById(
-"statusTitle"
-).textContent=title;
-
-document.getElementById(
-"statusText"
-).textContent=text;
-
-status.style.display="block";
-
-}
-
-
-/* ================================
-   PHONE
-================================ */
-
-function normalizeKenyanPhone(value){
-
-let phone=String(value||"")
-.replace(/\s+/g,"")
-.replace(/-/g,"");
-
-if(/^07\d{8}$/.test(phone))
-return "254"+phone.substring(1);
-
-if(/^01\d{8}$/.test(phone))
-return "254"+phone.substring(1);
-
-if(/^2547\d{8}$/.test(phone))
-return phone;
-
-if(/^2541\d{8}$/.test(phone))
-return phone;
+if(/^254[17]\d{8}$/.test(v))
+return v;
 
 return null;
-
 }
 
-
-/* ================================
-   REFERENCE
-================================ */
-
-function createPaymentReference(){
-
-const randomPart=
-Math.random()
-.toString(36)
-.substring(2,11)
-.toUpperCase();
-
-return(
-"ORD"+randomPart
-).substring(0,12);
-
+function ref(){
+return("ORD"+Math.random()
+.toString(36).slice(2,11))
+.toUpperCase().slice(0,12);
 }
-
-
-/* ================================
-   ERROR
-================================ */
-
-function getServerError(
-data,
-responseStatus
-){
-
-if(!data){
-
-return{
-
-message:
-"No response received from payment server.",
-
-details:
-"HTTP "+responseStatus
-
-};
-
-}
-
-let message=
-data.message||
-data.error||
-data.statusMessage||
-"Payment server rejected the request.";
-
-let details=[];
-
-if(data.validation){
-
-details.push(
-"Validation: "+
-String(data.validation)
-);
-
-}
-
-if(data.details){
-
-if(typeof data.details==="string"){
-
-details.push(data.details);
-
-}else{
-
-details.push(
-JSON.stringify(
-data.details,
-null,
-2
-)
-);
-
-}
-
-}
-
-if(data.errors){
-
-if(typeof data.errors==="string"){
-
-details.push(data.errors);
-
-}else{
-
-details.push(
-JSON.stringify(
-data.errors,
-null,
-2
-)
-);
-
-}
-
-}
-
-return{
-
-message:message,
-
-details:
-details.join("\n")
-
-};
-
-}
-
-
-/* ================================
-   M-PESA STK PUSH
-================================ */
 
 async function payWithMpesa(){
 
 if(!selectedPrice){
-
-showStatus(
-"Select a package first",
-"Please choose a minutes package before paying."
-);
-
+alert("Select a package first");
 return;
-
 }
 
-const phoneInput=
-document.getElementById(
-"customerPhone"
+let p=phone(
+document.getElementById("customerPhone").value
 );
 
-const phone=
-normalizeKenyanPhone(
-phoneInput.value
-);
-
-if(!phone){
-
-showStatus(
-"Invalid M-PESA number",
-"Enter a valid Kenyan M-PESA number."
-);
-
-phoneInput.focus();
-
+if(!p){
+alert("Enter a valid M-PESA number");
 return;
-
 }
 
-const button=
-document.getElementById(
-"payButton"
-);
+document.getElementById("payButton").disabled=true;
 
-button.disabled=true;
-
-button.textContent=
-"SENDING PROMPT...";
-
-const reference=
-createPaymentReference();
-
-savePaymentSession(
-"stk_pending",
-{
-customerPhone:phone,
-reference:reference
-}
-);
-
-showLoadingScreen(
-"Sending M-PESA prompt...",
-"Please wait. Do not close this page."
-);
+document.getElementById("status").textContent=
+"Sending M-PESA prompt...";
 
 try{
 
-const response=
-await fetch(
-"/api/stk-push",
-{
+let r=await fetch("/api/stk-push",{
 method:"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
+headers:{"Content-Type":"application/json"},
 body:JSON.stringify({
-
-phone:phone,
-
+phone:p,
 amount:selectedPrice,
-
-reference:reference
-
+reference:ref()
 })
+});
 
-}
+let d=await r.json();
+
+if(!r.ok||!d.success)
+throw new Error(d.message||"Payment failed");
+
+checkPayment(
+d.paymentId||d.transaction_request_id
 );
 
-const responseText=
-await response.text();
+}catch(e){
 
-let data;
+document.getElementById("status").textContent=e.message;
+
+document.getElementById("payButton").disabled=false;
+}
+
+}
+
+function checkPayment(id){
+
+document.body.innerHTML=`
+<div style="
+position:fixed;inset:0;background:#000;
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;
+text-align:center;color:white">
+
+<h1 style="color:#32cd32">CHECK YOUR PHONE</h1>
+<p>Complete the M-PESA prompt</p>
+<div class="spinner"></div>
+<p id="checking">Waiting...</p>
+
+</div>`;
+
+let n=0;
+
+let timer=setInterval(async()=>{
+
+n++;
 
 try{
 
-data=
-JSON.parse(responseText);
-
-}catch(error){
-
-data={
-
-success:false,
-
-message:
-"Payment server returned an invalid response.",
-
-details:
-responseText
-
-};
-
-}
-
-if(
-response.ok &&
-data &&
-data.success
-){
-
-const paymentId=
-data.paymentId||
-data.transaction_request_id||
-null;
-
-savePaymentSession(
-"stk_pending",
-{
-
-customerPhone:phone,
-
-reference:reference,
-
-paymentId:paymentId,
-
-paymentStatus:"Pending"
-
-}
-);
-
-showPromptSent(paymentId);
-
-return;
-
-}
-
-const serverError=
-getServerError(
-data,
-response.status
-);
-
-savePaymentSession(
-"stk_failed",
-{
-
-customerPhone:phone,
-
-reference:reference,
-
-error:
-serverError.message,
-
-errorDetails:
-serverError.details
-
-}
-);
-
-showPaymentError(
-serverError.message,
-serverError.details,
-response.status
-);
-
-}catch(error){
-
-console.error(
-"STK Push error:",
-error
-);
-
-savePaymentSession(
-"stk_error",
-{
-
-customerPhone:phone,
-
-reference:reference,
-
-error:String(
-error.message||error
-)
-
-}
-);
-
-showPaymentError(
-"Unable to connect to the payment server.",
-String(
-error.message||error
-),
-0
-);
-
-}
-
-}
-
-
-/* ================================
-   LOADING
-================================ */
-
-function showLoadingScreen(
-title,
-text
-){
-
-document.body.innerHTML=`
-
-<div class="full-screen">
-
-<div class="screen-title">
-
-<span class="dot"></span>
-
-${escapeHtml(title)}
-
-</div>
-
-<div class="loading-ring"></div>
-
-<div class="loading-text">
-
-${escapeHtml(text)}
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* ================================
-   CHECK PAYMENT
-================================ */
-
-function showPromptSent(
-paymentId
-){
-
-if(!paymentId){
-
-showPaymentError(
-"M-PESA prompt was sent, but no transaction ID was returned.",
-"Payment cannot be verified automatically.",
-0
-);
-
-return;
-
-}
-
-document.body.innerHTML=`
-
-<div class="full-screen">
-
-<div class="success-icon">
-📱
-</div>
-
-<h1 class="success-title">
-CHECK YOUR PHONE
-</h1>
-
-<p>
-Complete the M-PESA payment using
-the official M-PESA prompt.
-</p>
-
-<div class="loading-ring"></div>
-
-<p id="paymentCheckText">
-Waiting for payment confirmation...
-</p>
-
-</div>
-
-`;
-
-let attempts=0;
-
-const maxAttempts=20;
-
-const paymentTimer=
-setInterval(async function(){
-
-attempts++;
-
-try{
-
-const response=
-await fetch(
-"/api/payment-status",
-{
+let r=await fetch("/api/payment-status",{
 method:"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
+headers:{"Content-Type":"application/json"},
 body:JSON.stringify({
-
-transaction_request_id:
-paymentId
-
+transaction_request_id:id
 })
+});
 
-}
-);
+let d=await r.json();
 
-const text=
-await response.text();
+if(d.paid===true&&d.status==="Completed"){
 
-let data;
+clearInterval(timer);
 
-try{
+recordPayment(d,id);
 
-data=
-JSON.parse(text);
-
-}catch(error){
-
-data={
-
-success:false,
-
-paid:false
-
-};
-
-}
-
-
-/* PAYMENT COMPLETED */
-
-if(
-data &&
-data.paid===true &&
-data.status==="Completed"
-){
-
-clearInterval(paymentTimer);
-
-savePaymentSession(
-"paid",
-{
-
-paymentId:
-paymentId,
-
-paymentStatus:
-"Completed",
-
-receipt:
-data.receipt||null,
-
-paidAmount:
-data.amount||selectedPrice,
-
-paidPhone:
-data.phone||null
-
-}
-);
-
-
-/*
-IMPORTANT:
-Referral payment is recorded
-before access is opened.
-*/
-
-recordEmployeePayment(
-data,
-paymentId
-);
-
-showPaymentSuccessful(data);
+showLive();
 
 return;
-
 }
 
+document.getElementById("checking").textContent=
+"Waiting for confirmation "+n+"/20";
 
-/* STILL WAITING */
+}catch(e){}
 
-const checkText=
-document.getElementById(
-"paymentCheckText"
-);
+if(n>=20){
 
-if(checkText){
+clearInterval(timer);
 
-checkText.textContent=
-"Waiting for payment confirmation... "+
-attempts+
-"/"+
-maxAttempts;
-
-}
-
-}catch(error){
-
-console.error(
-"Payment status error:",
-error
-);
-
-}
-
-
-/* TIMEOUT */
-
-if(attempts>=maxAttempts){
-
-clearInterval(paymentTimer);
-
-savePaymentSession(
-"payment_not_confirmed",
-{
-
-paymentId:
-paymentId
-
-}
-);
-
-showPaymentNotConfirmed();
+location.reload();
 
 }
 
 },3000);
-
 }
 
+function recordPayment(d,id){
 
-/* ================================
-   25% EMPLOYEE COMMISSION
-================================ */
+if(!employeeId)return;
 
-function recordEmployeePayment(
-data,
-paymentId
-){
-
-if(!employeeId||!paymentId)
-return;
-
-const amount=
-Number(
-data&&data.amount
-?data.amount
-:selectedPrice||0
+let amount=Number(
+d.amount||selectedPrice||0
 );
 
-const commission=
-Math.round(
-amount*0.25*100
-)/100;
-
-const record={
-
-id:
-paymentId,
-
-paymentId:
-paymentId,
-
-employeeId:
-employeeId,
-
-ref:
-employeeId,
-
-minutes:
-Number(
-selectedMinutes||0
-),
-
-amount:
-amount,
-
-commission:
-commission,
-
-commissionRate:
-25,
-
-status:
-"paid",
-
-receipt:
-data&&data.receipt
-?data.receipt
-:null,
-
-phone:
-data&&data.phone
-?data.phone
-:null,
-
-date:
-new Date().toISOString()
-
+let record={
+id:id,
+paymentId:id,
+employeeId:employeeId,
+ref:employeeId,
+minutes:selectedMinutes,
+amount:amount,
+commission:Math.round(amount*.25*100)/100,
+commissionRate:25,
+status:"paid",
+receipt:d.receipt||null,
+date:new Date().toISOString()
 };
 
+let key="employeePayments_"+employeeId;
 
-/* EMPLOYEE RECORDS */
-
-let employeePayments=[];
-
-try{
-
-employeePayments=
-JSON.parse(
-localStorage.getItem(
-"employeePayments_"+employeeId
-)||"[]"
+let list=JSON.parse(
+localStorage.getItem(key)||"[]"
 );
 
-}catch(error){
+if(!list.some(x=>String(x.paymentId)==String(id))){
 
-employeePayments=[];
-
-}
-
-const alreadyRecorded=
-employeePayments.some(
-function(item){
-
-return String(
-item.paymentId||item.id
-)===String(paymentId);
-
-}
-);
-
-if(!alreadyRecorded){
-
-employeePayments.unshift(
-record
-);
-
-}
+list.unshift(record);
 
 localStorage.setItem(
-"employeePayments_"+employeeId,
-JSON.stringify(employeePayments)
-);
-
-
-/* GLOBAL PAYMENT RECORDS */
-
-let allPayments=[];
-
-try{
-
-allPayments=
-JSON.parse(
-localStorage.getItem(
-"payments"
-)||"[]"
-);
-
-}catch(error){
-
-allPayments=[];
-
-}
-
-const alreadyInMainList=
-allPayments.some(
-function(item){
-
-return String(
-item.paymentId||item.id
-)===String(paymentId);
-
-}
-);
-
-if(!alreadyInMainList){
-
-allPayments.unshift(record);
-
-localStorage.setItem(
-"payments",
-JSON.stringify(allPayments)
+key,JSON.stringify(list)
 );
 
 }
@@ -1493,408 +386,230 @@ JSON.stringify(allPayments)
 }
 
 
-/* ================================
-   PAYMENT SUCCESS
-================================ */
+/* =========================
+   LIVE SCREEN
+========================= */
 
-function showPaymentSuccessful(data){
-
-/*
-Payment has already been confirmed
-and employee commission recorded.
-
-Now open the LIVE-STYLE screen.
-*/
-
-showLiveStyleVideo();
-
-}
-
-
-/* ================================
-   LIVE-STYLE VIDEO
-================================ */
-
-function showLiveStyleVideo(){
+function showLive(){
 
 document.body.innerHTML=`
 
-<div
-class="live-style-screen"
-id="liveStyleScreen">
+<div class="live">
 
-<div class="live-video-area">
+<div class="videoBox">
 
 <video
-id="liveStyleVideo"
-class="live-video"
+id="liveVideo"
+class="video"
 playsinline
-preload="auto">
+autoplay
+preload="auto"
+disablepictureinpicture
+controlslist="nodownload nofullscreen noremoteplayback">
 
 <source
-src="preview_20_seconds.mp4"
+src="https://raw.githubusercontent.com/agnesweb2026/My-referral-website/main/preview_20_seconds.mp4"
 type="video/mp4">
 
 </video>
 
-<div class="live-style-badge">
-● LIVE-STYLE
+<div class="liveBadge">● LIVE</div>
+
+<div class="viewers">
+👁 <span id="views">20</span>
 </div>
 
-<div class="live-viewers">
-👁 <span id="viewerNumber">23</span>
 </div>
 
-</div>
+<div class="chat">
 
-<div class="chat-area">
-
-<div class="chat-header">
+<div class="chatTitle">
 💬 Live chat
 </div>
 
-<div
-id="chatMessages"
-class="chat-messages">
-</div>
-
-<div class="chat-input-bar">
-💬 Live chat is active
-</div>
+<div id="messages"
+class="messages"></div>
 
 </div>
 
 </div>
-
 `;
 
-startLiveStylePlayback();
+startLive();
 
 }
+   <script>
 
+function startLive(){
 
-/* ================================
-   LIVE-STYLE PLAYBACK
-================================ */
+const v=document.getElementById("liveVideo");
+const box=document.getElementById("messages");
+const views=document.getElementById("views");
 
-function startLiveStylePlayback(){
-
-const video=
-document.getElementById(
-"liveStyleVideo"
-);
-
-const chatBox=
-document.getElementById(
-"chatMessages"
-);
-
-const viewerNumber=
-document.getElementById(
-"viewerNumber"
-);
-
-if(!video){
-
-showInsufficientAfterLive();
-
-return;
-
-}
-
-
-/* RANDOM VIEWERS */
-
-viewerNumber.textContent=
-Math.floor(
-Math.random()*16
-)+15;
-
-
-/* ================================
-   CHAT DATA
-================================ */
-
-const chatNames=[
-
-"Asha",
-"Brian",
-"Mercy",
-"Kevin",
-"Sarah",
-"John",
-"Linda",
-"Mike",
-"Grace",
-"Daniel",
-"Sharon",
-"David",
-"Lucy",
-"James",
-"Mary",
-"Alex",
-"Faith",
-"Chris",
-"Ann",
-"Peter"
-
+const names=[
+"Asha","Brian","Mercy","Kevin",
+"Sarah","John","Linda","Mike",
+"Grace","Daniel","Sharon","David",
+"Lucy","James","Mary","Alex"
 ];
 
-const chatMessages=[
-
+const comments=[
 "Hey 😍",
-"Wow!",
 "Hello ❤️",
-"Can you reply?",
+"Wow!",
 "Looking good 😍",
 "Hi beautiful",
-"Wow wow!",
 "I just joined 👋",
 "Hello everyone ❤️",
-"She's so cute 😍",
-"Can you see my comment?",
-"Heyyy 😍",
+"Wow wow!",
+"Can you reply?",
 "Don't go 😂",
-"Anyone else watching?",
-"This is amazing ❤️",
-"Hi!",
 "Beautiful 😍",
-"Hello everyone!",
-"Wow 😍",
-"Please reply"
-
+"Anyone watching?",
+"Hello!",
+"Wow ❤️",
+"Please reply",
+"Heyyy 😍"
 ];
 
-let chatIndex=0;
+function add(){
 
-function addChatMessage(){
+let d=document.createElement("div");
 
-if(!chatBox)return;
+d.className="msg";
 
-const name=
-chatNames[
-Math.floor(
-Math.random()*
-chatNames.length
-)
-];
+d.innerHTML=
+`<span class="name">${
+names[Math.floor(Math.random()*names.length)]
+}:</span>
+<span>${comments[
+Math.floor(Math.random()*comments.length)
+]}</span>
+<span class="heart"> ❤️</span>`;
 
-const message=
-chatMessages[
-chatIndex%
-chatMessages.length
-];
+box.appendChild(d);
 
-chatIndex++;
-
-const div=
-document.createElement("div");
-
-div.className=
-"chat-message";
-
-div.innerHTML=`
-
-<span class="chat-name">
-${escapeHtml(name)}:
-</span>
-
-<span class="chat-text">
-${escapeHtml(message)}
-</span>
-
-<span class="chat-heart">
-${Math.random()>.55?"❤️":""}
-</span>
-
-`;
-
-chatBox.appendChild(div);
-
-while(
-chatBox.children.length>12
-){
-
-chatBox.removeChild(
-chatBox.firstChild
-);
+while(box.children.length>12)
+box.removeChild(box.firstChild);
 
 }
 
-chatBox.scrollTop=
-chatBox.scrollHeight;
+for(let i=0;i<7;i++)add();
 
-}
+let chat=setInterval(add,600);
 
-
-/* Initial comments */
-
-for(
-let i=0;
-i<7;
-i++
-){
-
-addChatMessage();
-
-}
-
-const chatTimer=
-setInterval(
-function(){
-
-addChatMessage();
-
-},
-700
-);
+let viewers=setInterval(()=>{
+views.textContent=
+15+Math.floor(Math.random()*16);
+},2500);
 
 
-/* Random viewer count */
+/* VIDEO */
 
-const viewerTimer=
-setInterval(
-function(){
+v.removeAttribute("controls");
 
-viewerNumber.textContent=
-Math.floor(
-Math.random()*16
-)+15;
+v.controls=false;
 
-},
-3000
-);
+v.addEventListener("contextmenu",e=>e.preventDefault());
+
+v.addEventListener("loadedmetadata",()=>{
+
+let start=Math.min(20,v.duration);
+
+v.currentTime=start;
+
+/*
+Try sound automatically.
+The browser may still block
+unmuted autoplay.
+*/
+
+v.muted=false;
+v.volume=1;
+
+v.play().catch(()=>{
+
+/*
+If browser blocks sound,
+retry from the user interaction
+that led to payment completion.
+*/
+
+v.muted=false;
+
+});
 
 
-/* ================================
-   VIDEO REVERSE
-   20 → 1
-================================ */
+/*
+20 -> 1
+*/
 
-function beginReverse(){
+let begin=null;
 
-const duration=
-Number(video.duration)||20;
+function reverse(t){
 
-const start=
-Math.min(20,duration);
+if(begin===null)
+begin=t;
 
-video.pause();
-
-video.currentTime=start;
-
-let reverseStart=null;
-
-let running=true;
-
-function reverseFrame(now){
-
-if(!running)
-return;
-
-if(reverseStart===null){
-
-reverseStart=now;
-
-}
-
-const elapsed=
-(now-reverseStart)/1000;
-
-const current=
-start-elapsed;
+let elapsed=(t-begin)/1000;
+let current=start-elapsed;
 
 if(current<=1){
 
-running=false;
+clearInterval(chat);
+clearInterval(viewers);
 
-video.pause();
+v.pause();
+v.currentTime=1;
 
-video.currentTime=1;
-
-clearInterval(chatTimer);
-
-clearInterval(viewerTimer);
-
-showInsufficientAfterLive();
+showInsufficient();
 
 return;
+}
+
+v.currentTime=current;
+
+requestAnimationFrame(reverse);
 
 }
 
-try{
+requestAnimationFrame(reverse);
 
-video.currentTime=current;
+},{once:true});
 
-}catch(error){
-
-console.log(
-"Video seek:",
-error
-);
-
-}
-
-requestAnimationFrame(
-reverseFrame
-);
-
-}
-
-requestAnimationFrame(
-reverseFrame
-);
+v.load();
 
 }
 
 
-/* Wait for video metadata */
+/* BLOCK VIDEO CONTROLS */
 
-if(video.readyState>=1){
-
-beginReverse();
-
-}else{
-
-video.addEventListener(
-"loadedmetadata",
-beginReverse,
-{once:true}
-);
-
-}
-
-
-/* Fallback if metadata takes too long */
-
-setTimeout(
-function(){
+document.addEventListener("keydown",e=>{
 
 if(
-video.readyState>=1 &&
-video.currentTime===0
+e.code==="Space"||
+e.code==="ArrowLeft"||
+e.code==="ArrowRight"
 ){
 
-beginReverse();
+let v=document.getElementById("liveVideo");
+
+if(v)e.preventDefault();
 
 }
 
-},
-1500
-);
+});
 
-   }
-   /* ================================
-   INSUFFICIENT MINUTES
-================================ */
 
-function showInsufficientAfterLive(){
+/* INSUFFICIENT */
+
+function showInsufficient(){
 
 document.body.innerHTML=`
 
-<div class="insufficient-live-screen">
+<div class="insufficient">
 
-<div class="insufficient-live-box">
+<div>
 
 <div style="font-size:60px">
 ⏱️
@@ -1908,8 +623,7 @@ INSUFFICIENT MINUTES
 Your available minutes have ended.
 </p>
 
-<div class="insufficient-spinner">
-</div>
+<div class="spinner"></div>
 
 <p>
 Returning to packages...
@@ -1918,155 +632,13 @@ Returning to packages...
 </div>
 
 </div>
-
 `;
 
-setTimeout(
-function(){
-
+setTimeout(()=>{
 location.reload();
-
-},
-2000
-);
+},2000);
 
 }
-
-
-/* ================================
-   NOT CONFIRMED
-================================ */
-
-function showPaymentNotConfirmed(){
-
-document.body.innerHTML=`
-
-<div class="full-screen">
-
-<div class="warning">
-⚠️
-</div>
-
-<h1>
-PAYMENT NOT CONFIRMED
-</h1>
-
-<p>
-We did not receive confirmation
-of the M-PESA payment yet.
-</p>
-
-<p>
-If you completed the payment,
-please wait a moment and try again.
-</p>
-
-<button
-class="main-btn"
-style="max-width:330px"
-onclick="location.reload()">
-
-BACK TO PACKAGES
-
-</button>
-
-</div>
-
-`;
-
-}
-
-
-/* ================================
-   PAYMENT ERROR
-================================ */
-
-function showPaymentError(
-message,
-details="",
-httpStatus=0
-){
-
-document.body.innerHTML=`
-
-<div class="full-screen">
-
-<div class="warning">
-⚠️
-</div>
-
-<h1>
-Payment not started
-</h1>
-
-<p>
-${escapeHtml(message)}
-</p>
-
-${
-httpStatus
-?`<p>HTTP Status: ${httpStatus}</p>`
-:""
-}
-
-${
-details
-?`
-
-<div class="debug-box">
-
-<div class="debug-title">
-Server details
-</div>
-
-<div class="debug-text">
-${escapeHtml(details)}
-</div>
-
-</div>
-
-`
-:""
-}
-
-<button
-class="main-btn"
-style="max-width:330px"
-onclick="location.reload()">
-
-TRY AGAIN
-
-</button>
-
-</div>
-
-`;
-
-}
-
-
-/* ================================
-   ESCAPE HTML
-================================ */
-
-function escapeHtml(value){
-
-return String(value||"")
-
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-
-/* ================================
-   START SESSION
-================================ */
-
-savePaymentSession("pending");
 
 </script>
 
