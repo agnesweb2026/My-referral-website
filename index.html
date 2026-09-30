@@ -401,11 +401,10 @@ body{
 
 
 /* =========================
-   LIVE VIDEO PAGES
+   LIVE VIDEO
 ========================= */
 
-#redLiveVideoPage,
-#blackLivePage{
+#redLiveVideoPage{
   position:fixed;
   inset:0;
 
@@ -475,6 +474,7 @@ body{
   border-radius:12px;
 
   padding:30px 20px;
+
 }
 
 .insufficient-box h2{
@@ -537,6 +537,11 @@ body{
 
 <body>
 
+
+<!-- =========================
+     WELCOME
+========================= -->
+
 <div id="welcomeScreen" class="page">
 
   <div class="welcome-box">
@@ -550,6 +555,11 @@ body{
   </div>
 
 </div>
+
+
+<!-- =========================
+     PHOTOS
+========================= -->
 
 <div id="photosPage" class="page hidden">
 
@@ -576,6 +586,8 @@ body{
   <div id="photoGrid"></div>
 
 </div>
+
+
 <!-- =========================
      INCOMING CALL
 ========================= -->
@@ -622,7 +634,7 @@ body{
 
 
 <!-- =========================
-     RED LIVE VIDEO
+     FIRST 40 SECOND VIDEO
 ========================= -->
 
 <div
@@ -635,28 +647,6 @@ body{
 
   <video
     id="redLiveVideo"
-    class="live-video"
-    playsinline
-    preload="auto">
-  </video>
-
-</div>
-
-
-<!-- =========================
-     BLACK LIVE
-========================= -->
-
-<div
-  id="blackLivePage"
-  class="hidden">
-
-  <div class="red-live-label">
-    ● LIVE
-  </div>
-
-  <video
-    id="blackLiveSoundVideo"
     class="live-video"
     playsinline
     preload="auto">
@@ -693,51 +683,107 @@ body{
 </div>
 
 
-<!--
-  IMPORTANT:
-  Do NOT put another <script> here.
+<script>
 
-  Part 3 will contain the ONE
-  JavaScript block and will close
-  the HTML document.
--->
-  <script>
+
+/* =========================
+   SETTINGS
+========================= */
 
 const IMAGE_BASE = "./";
-const VIDEO_URL = "./IMG_20261001_011110_570.mp4";
-const SAMPLE_KEY = "myReferralSampleWatched";
 
-const welcomeScreen = document.getElementById("welcomeScreen");
-const photosPage = document.getElementById("photosPage");
-const photoGrid = document.getElementById("photoGrid");
 
-const incomingCall = document.getElementById("incomingCall");
-const callerImage = document.getElementById("callerImage");
-const callerName = document.getElementById("callerName");
+/*
+  YOUR NEW VIDEO FILE
+*/
+const VIDEO_URL =
+  "./IMG_20261001_011110_570.mp4";
 
-const declineButton = document.getElementById("declineButton");
-const answerButton = document.getElementById("answerButton");
+
+/*
+  Remembers that the first
+  visitor call has been used.
+*/
+const SAMPLE_KEY =
+  "myReferralSampleWatched";
+
+
+/*
+  FIRST CALL VIDEO DURATION
+  40 seconds
+*/
+const FIRST_CALL_DURATION =
+  40000;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const welcomeScreen =
+  document.getElementById(
+    "welcomeScreen"
+  );
+
+const photosPage =
+  document.getElementById(
+    "photosPage"
+  );
+
+const photoGrid =
+  document.getElementById(
+    "photoGrid"
+  );
+
+const incomingCall =
+  document.getElementById(
+    "incomingCall"
+  );
+
+const callerImage =
+  document.getElementById(
+    "callerImage"
+  );
+
+const callerName =
+  document.getElementById(
+    "callerName"
+  );
+
+const declineButton =
+  document.getElementById(
+    "declineButton"
+  );
+
+const answerButton =
+  document.getElementById(
+    "answerButton"
+  );
 
 const redLiveVideoPage =
-  document.getElementById("redLiveVideoPage");
+  document.getElementById(
+    "redLiveVideoPage"
+  );
 
 const redLiveVideo =
-  document.getElementById("redLiveVideo");
-
-const blackLivePage =
-  document.getElementById("blackLivePage");
-
-const blackLiveSoundVideo =
-  document.getElementById("blackLiveSoundVideo");
+  document.getElementById(
+    "redLiveVideo"
+  );
 
 const insufficientPage =
-  document.getElementById("insufficientPage");
+  document.getElementById(
+    "insufficientPage"
+  );
 
 const insufficientTimer =
-  document.getElementById("insufficientTimer");
+  document.getElementById(
+    "insufficientTimer"
+  );
 
 const onlineNumber =
-  document.getElementById("onlineNumber");
+  document.getElementById(
+    "onlineNumber"
+  );
 
 
 /* =========================
@@ -745,7 +791,9 @@ const onlineNumber =
 ========================= */
 
 const params =
-  new URLSearchParams(window.location.search);
+  new URLSearchParams(
+    window.location.search
+  );
 
 const employee =
   params.get("employee");
@@ -756,29 +804,37 @@ const ref =
 
 function openPaymentPage(){
 
-  let url = "payment.html";
+  let url =
+    "payment.html";
+
 
   if(employee){
 
     url +=
       "?employee=" +
-      encodeURIComponent(employee);
+      encodeURIComponent(
+        employee
+      );
 
   }else if(ref){
 
     url +=
       "?ref=" +
-      encodeURIComponent(ref);
+      encodeURIComponent(
+        ref
+      );
 
   }
 
-  window.location.href = url;
+
+  window.location.href =
+    url;
 
 }
 
 
 /* =========================
-   REAL FILES IN YOUR REPO
+   REAL IMAGE FILES
 ========================= */
 
 const imageFiles = [
@@ -839,11 +895,12 @@ const profiles = [
 
 
 /* =========================
-   OFFLINE
+   OFFLINE SYSTEM
 ========================= */
 
 let offlinePeople =
   new Set();
+
 
 const OFFLINE_TIME =
   5 * 60 * 1000;
@@ -853,6 +910,7 @@ function shuffle(array){
 
   const result =
     [...array];
+
 
   for(
     let i = result.length - 1;
@@ -865,6 +923,7 @@ function shuffle(array){
         Math.random() * (i + 1)
       );
 
+
     [
       result[i],
       result[j]
@@ -875,6 +934,7 @@ function shuffle(array){
     ];
 
   }
+
 
   return result;
 
@@ -889,8 +949,12 @@ function chooseFiveOffline(){
         profiles.map(
           (_,i)=>i
         )
-      ).slice(0,5)
+      ).slice(
+        0,
+        5
+      )
     );
+
 
   updateStatuses();
 
@@ -912,12 +976,16 @@ function updateStatuses(){
           "dot-" + index
         );
 
+
       if(!badge || !dot){
         return;
       }
 
+
       if(
-        offlinePeople.has(index)
+        offlinePeople.has(
+          index
+        )
       ){
 
         badge.textContent =
@@ -955,12 +1023,14 @@ function updateStatuses(){
 
 
 /* =========================
-   CREATE LIVE PHOTOS
+   CREATE PHOTOS
 ========================= */
 
 function createPhotos(){
 
-  photoGrid.innerHTML = "";
+  photoGrid.innerHTML =
+    "";
+
 
   profiles.forEach(
     (profile,index)=>{
@@ -977,13 +1047,19 @@ function createPhotos(){
       const flag =
         profile[3];
 
+
       const file =
         imageFiles[
-          index % imageFiles.length
+          index %
+          imageFiles.length
         ];
 
+
       const card =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       card.className =
         "photoCard";
@@ -1007,9 +1083,12 @@ function createPhotos(){
             ● LIVE
           </div>
 
-          <div class="photo-play"></div>
+          <div
+            class="photo-play">
+          </div>
 
         </div>
+
 
         <div class="photo-info">
 
@@ -1026,8 +1105,14 @@ function createPhotos(){
 
           </div>
 
+
           <div class="photo-meta">
-            ${flag} ${country} • ${age}
+
+            ${flag}
+            ${country}
+            •
+            ${age}
+
           </div>
 
         </div>
@@ -1043,7 +1128,9 @@ function createPhotos(){
       );
 
 
-      photoGrid.appendChild(card);
+      photoGrid.appendChild(
+        card
+      );
 
     }
   );
@@ -1108,10 +1195,6 @@ function showPhotos(){
     "hidden"
   );
 
-  blackLivePage.classList.add(
-    "hidden"
-  );
-
   insufficientPage.classList.add(
     "hidden"
   );
@@ -1155,13 +1238,16 @@ function showIncomingCall(){
 
   const file =
     imageFiles[
-      index % imageFiles.length
+      index %
+      imageFiles.length
     ];
 
 
   callerImage.src =
     IMAGE_BASE +
-    encodeURIComponent(file);
+    encodeURIComponent(
+      file
+    );
 
 }
 
@@ -1173,13 +1259,20 @@ function showIncomingCall(){
 createPhotos();
 
 
+/*
+  Welcome screen:
+  3 seconds
+*/
+
 setTimeout(
   ()=>{
 
     showPhotos();
 
+
     /*
-      Photos visible for 2 seconds
+      Photos visible
+      for 2 seconds
     */
 
     setTimeout(
@@ -1230,6 +1323,7 @@ answerButton.addEventListener(
       return;
     }
 
+
     callActive =
       true;
 
@@ -1238,6 +1332,10 @@ answerButton.addEventListener(
       "hidden"
     );
 
+
+    /*
+      FIRST VISITOR
+    */
 
     if(
       !localStorage.getItem(
@@ -1250,11 +1348,17 @@ answerButton.addEventListener(
         "true"
       );
 
-      playRedLive();
+
+      playFirstVisitorVideo();
+
 
     }else{
 
-      playReturningCall();
+      /*
+        Returning visitor
+      */
+
+      showInsufficient();
 
     }
 
@@ -1263,19 +1367,32 @@ answerButton.addEventListener(
 
 
 /* =========================
-   RED LIVE
-   10s → 17s
+   FIRST VISITOR VIDEO
+   EXACTLY 40 SECONDS
 ========================= */
 
-function playRedLive(){
+function playFirstVisitorVideo(){
 
   redLiveVideoPage.classList.remove(
     "hidden"
   );
 
 
+  /*
+    Load your video
+  */
+
   redLiveVideo.src =
     VIDEO_URL;
+
+
+  /*
+    Start from beginning
+  */
+
+  redLiveVideo.currentTime =
+    0;
+
 
   redLiveVideo.muted =
     false;
@@ -1284,19 +1401,24 @@ function playRedLive(){
     1;
 
 
-  function start(){
+  function startVideo(){
 
     try{
 
       redLiveVideo.currentTime =
-        10;
+        0;
 
     }catch(e){}
 
 
     redLiveVideo.play()
       .catch(
-        ()=>{}
+        ()=>{
+          /*
+            Browser may block
+            autoplay with sound.
+          */
+        }
       );
 
   }
@@ -1306,128 +1428,58 @@ function playRedLive(){
     redLiveVideo.readyState >= 1
   ){
 
-    start();
+    startVideo();
 
   }else{
 
     redLiveVideo.addEventListener(
       "loadedmetadata",
-      start,
+      startVideo,
       {once:true}
     );
 
   }
 
 
+  /*
+    PLAY FOR 40 SECONDS
+  */
+
   setTimeout(
     ()=>{
 
       redLiveVideo.pause();
 
+
+      redLiveVideo.removeAttribute(
+        "src"
+      );
+
+      redLiveVideo.load();
+
+
       redLiveVideoPage.classList.add(
         "hidden"
       );
 
-      playBlackLive();
 
-    },
-    7000
-  );
-
-}
-
-
-/* =========================
-   BLACK LIVE
-========================= */
-
-function playBlackLive(){
-
-  blackLivePage.classList.remove(
-    "hidden"
-  );
-
-
-  blackLiveSoundVideo.src =
-    VIDEO_URL;
-
-  blackLiveSoundVideo.muted =
-    false;
-
-  blackLiveSoundVideo.volume =
-    1;
-
-
-  blackLiveSoundVideo.play()
-    .catch(
-      ()=>{}
-    );
-
-
-  setTimeout(
-    ()=>{
-
-      blackLiveSoundVideo.pause();
-
-      blackLiveSoundVideo.removeAttribute(
-        "src"
-      );
-
-      blackLiveSoundVideo.load();
-
-
-      blackLivePage.classList.add(
-        "hidden"
-      );
-
+      /*
+        After 40 seconds:
+        show insufficient minutes
+      */
 
       showInsufficient();
 
+
     },
-    5000
+    FIRST_CALL_DURATION
   );
 
 }
 
 
 /* =========================
-   RETURNING VISITOR
-========================= */
-
-function playReturningCall(){
-
-  blackLivePage.classList.remove(
-    "hidden"
-  );
-
-
-  blackLiveSoundVideo.pause();
-
-  blackLiveSoundVideo.removeAttribute(
-    "src"
-  );
-
-  blackLiveSoundVideo.load();
-
-
-  setTimeout(
-    ()=>{
-
-      blackLivePage.classList.add(
-        "hidden"
-      );
-
-      showInsufficient();
-
-    },
-    2000
-  );
-
-}
-
-
-/* =========================
-   INSUFFICIENT
+   INSUFFICIENT MINUTES
 ========================= */
 
 function showInsufficient(){
@@ -1454,14 +1506,19 @@ function showInsufficient(){
 
         if(seconds <= 0){
 
-          clearInterval(timer);
+          clearInterval(
+            timer
+          );
+
 
           insufficientPage.classList.add(
             "hidden"
           );
 
+
           callActive =
             false;
+
 
           showPhotos();
 
@@ -1472,6 +1529,7 @@ function showInsufficient(){
     );
 
 }
+
 
 </script>
 
