@@ -3,16 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Live Profiles</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
-html,body{
+html,
+body{
   width:100%;
   min-height:100%;
   background:#000;
@@ -32,20 +35,22 @@ button{
   display:none;
   width:100%;
   min-height:100vh;
-  background:#000;
 }
 
-/* =========================
+
+/* =================================
    WELCOME
-========================= */
+================================= */
 
 #welcomeScreen{
-  display:flex;
   width:100%;
   min-height:100vh;
+
+  display:flex;
   align-items:center;
   justify-content:center;
   flex-direction:column;
+
   text-align:center;
   background:#000;
 }
@@ -53,22 +58,25 @@ button{
 .welcome-title{
   font-size:30px;
   font-weight:900;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
 .welcome-subtitle{
-  color:#999;
+  color:#888;
   font-size:14px;
 }
 
-/* =========================
+
+/* =================================
    LIVE PHOTOS
-========================= */
+================================= */
 
 #photosPage{
   display:none;
+
   width:100%;
   min-height:100vh;
+
   background:#000;
 }
 
@@ -76,12 +84,16 @@ button{
   position:sticky;
   top:0;
   z-index:30;
+
   width:100%;
   height:56px;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
+
   padding:0 12px;
+
   background:#090909;
   border-bottom:1px solid #222;
 }
@@ -95,17 +107,22 @@ button{
   display:flex;
   align-items:center;
   gap:6px;
+
   color:#ddd;
   font-size:13px;
-  font-weight:600;
+  font-weight:700;
 }
 
 .online-dot{
   width:9px;
   height:9px;
+
   border-radius:50%;
+
   background:#18e66a;
-  box-shadow:0 0 8px rgba(24,230,106,.8);
+
+  box-shadow:
+    0 0 8px rgba(24,230,106,.8);
 }
 
 .live-header{
@@ -114,119 +131,148 @@ button{
   font-weight:900;
 }
 
+
+/* =================================
+   PHOTO GRID
+================================= */
+
 #photoGrid{
   width:100%;
+
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:4px;
+
   padding:4px;
+
   background:#000;
 }
 
 .photoCard{
   position:relative;
+
   width:100%;
+
   overflow:hidden;
-  background:#101010;
+
+  background:#111;
+
   border-radius:5px;
+
   cursor:pointer;
 }
 
 .photo-image-wrap{
   position:relative;
+
   width:100%;
+
   aspect-ratio:.72;
+
   overflow:hidden;
-  background:#161616;
+
+  background:#151515;
 }
 
 .profile-photo{
   display:block;
+
   width:100%;
   height:100%;
+
   object-fit:cover;
-  background:#161616;
-}
 
-.photo-placeholder{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
   background:#151515;
-  color:#666;
-  font-size:11px;
-  text-align:center;
-}
-
-.photo-placeholder-icon{
-  font-size:30px;
-  margin-bottom:7px;
 }
 
 .photo-play{
   position:absolute;
+
   left:50%;
   top:50%;
-  transform:translate(-50%,-50%);
-  width:46px;
-  height:46px;
+
+  transform:
+    translate(-50%,-50%);
+
+  width:45px;
+  height:45px;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   border-radius:50%;
-  background:rgba(0,0,0,.65);
-  border:2px solid rgba(255,255,255,.9);
+
+  background:
+    rgba(0,0,0,.68);
+
+  border:
+    2px solid rgba(255,255,255,.9);
+
   color:#fff;
-  font-size:20px;
-  animation:playPulse 1.5s infinite;
+
+  font-size:19px;
+
+  animation:
+    playPulse 1.5s infinite;
 }
 
 @keyframes playPulse{
+
   0%,100%{
-    transform:translate(-50%,-50%) scale(1);
+    transform:
+      translate(-50%,-50%)
+      scale(1);
   }
 
   50%{
-    transform:translate(-50%,-50%) scale(1.08);
+    transform:
+      translate(-50%,-50%)
+      scale(1.08);
   }
+
+}
+
+.live-badge,
+.offline-badge{
+  position:absolute;
+
+  top:6px;
+  left:6px;
+
+  padding:4px 7px;
+
+  border-radius:5px;
+
+  color:#fff;
+
+  font-size:9px;
+  font-weight:900;
 }
 
 .live-badge{
-  position:absolute;
-  top:6px;
-  left:6px;
-  padding:4px 7px;
-  border-radius:5px;
   background:#e60000;
-  color:#fff;
-  font-size:9px;
-  font-weight:900;
 }
 
 .offline-badge{
-  position:absolute;
-  top:6px;
-  left:6px;
-  padding:4px 7px;
-  border-radius:5px;
   background:#555;
-  color:#fff;
-  font-size:9px;
-  font-weight:900;
 }
 
 .photo-info{
   padding:7px;
+
   background:#0b0b0b;
 }
 
 .photo-name{
   color:#fff;
+
   font-size:13px;
   font-weight:800;
+
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -234,91 +280,122 @@ button{
 
 .photo-meta{
   margin-top:3px;
+
   color:#999;
+
   font-size:10px;
 }
 
-.offline-meta{
-  color:#777;
-}
 
-/* =========================
+/* =================================
    INCOMING CALL
-========================= */
+================================= */
 
 #incomingCall{
   display:none;
+
   position:fixed;
   inset:0;
-  z-index:100;
+
+  z-index:1000;
+
   width:100%;
   min-height:100vh;
+
   align-items:center;
   justify-content:center;
   flex-direction:column;
+
   text-align:center;
+
   background:#050505;
 }
 
 .incoming-label{
   margin-bottom:18px;
+
   color:#ff2020;
+
   font-size:14px;
   font-weight:900;
+
   letter-spacing:1px;
 }
 
 .caller-photo-wrap{
-  width:145px;
-  height:145px;
+  width:140px;
+  height:140px;
+
   padding:4px;
+
   margin-bottom:18px;
+
   border-radius:50%;
-  background:#e90000;
-  box-shadow:0 0 30px rgba(255,0,0,.35);
+
+  background:#e60000;
+
+  box-shadow:
+    0 0 30px
+    rgba(255,0,0,.35);
 }
 
 #callerImage{
-  display:block;
   width:100%;
   height:100%;
+
+  display:block;
+
   border-radius:50%;
+
   object-fit:cover;
+
   background:#111;
 }
 
 #callerName{
-  margin-bottom:7px;
+  margin-bottom:8px;
+
   font-size:24px;
   font-weight:900;
 }
 
 .caller-status{
   margin-bottom:28px;
+
   color:#999;
+
   font-size:14px;
 }
 
 .call-buttons{
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   gap:18px;
+
   width:100%;
+
   padding:0 15px;
 }
 
 .call-button{
   min-width:125px;
   height:52px;
-  padding:0 22px;
+
+  padding:0 24px;
+
   border:0;
+
   border-radius:28px;
+
   color:#fff;
+
   font-size:16px;
   font-weight:900;
+
   cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
 }
 
 .call-button:active{
@@ -333,88 +410,62 @@ button{
   background:#16b957;
 }
 
-/* =========================
-   LOADING BEFORE CALL
-========================= */
 
-#callLoadingPage{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:95;
-  width:100%;
-  min-height:100vh;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  text-align:center;
-  background:#000;
-}
-
-.loading-spinner{
-  width:48px;
-  height:48px;
-  border:4px solid #333;
-  border-top:4px solid #fff;
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  margin-bottom:18px;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-.loading-title{
-  font-size:18px;
-  font-weight:900;
-}
-
-.loading-text{
-  margin-top:7px;
-  color:#777;
-  font-size:13px;
-}
-
-/* =========================
-   RED LIVE VIDEO
-========================= */
+/* =================================
+   FIRST RED LIVE
+================================= */
 
 #redLiveVideoPage{
   display:none;
+
   position:fixed;
   inset:0;
-  z-index:90;
+
+  z-index:900;
+
   width:100%;
   min-height:100vh;
+
   align-items:center;
   justify-content:center;
+
   background:#000;
+
   overflow:hidden;
 }
 
 #redLiveVideo{
   display:block;
+
   width:100%;
   height:100%;
+
   object-fit:cover;
+
   background:#000;
 }
 
 .red-live-badge{
   position:absolute;
+
   top:18px;
   left:18px;
+
   z-index:10;
+
   display:flex;
   align-items:center;
+
   gap:7px;
+
   padding:7px 11px;
+
   border-radius:7px;
+
   background:#e60000;
+
   color:#fff;
+
   font-size:13px;
   font-weight:900;
 }
@@ -422,24 +473,33 @@ button{
 .red-live-dot{
   width:8px;
   height:8px;
+
   border-radius:50%;
+
   background:#fff;
 }
 
-/* =========================
-   BLACK LIVE
-========================= */
+
+/* =================================
+   SECOND CALL
+   BLACK SCREEN
+================================= */
 
 #blackLivePage{
   display:none;
+
   position:fixed;
   inset:0;
-  z-index:80;
+
+  z-index:800;
+
   width:100%;
   min-height:100vh;
+
   align-items:center;
   justify-content:center;
   flex-direction:column;
+
   background:#000;
 }
 
@@ -447,10 +507,15 @@ button{
   display:flex;
   align-items:center;
   gap:8px;
+
   padding:8px 13px;
+
   border-radius:7px;
+
   background:#e60000;
+
   color:#fff;
+
   font-size:14px;
   font-weight:900;
 }
@@ -458,76 +523,82 @@ button{
 .black-live-dot{
   width:8px;
   height:8px;
+
   border-radius:50%;
+
   background:#fff;
-  animation:blackPulse 1s infinite;
-}
-
-@keyframes blackPulse{
-  0%,100%{
-    opacity:1;
-  }
-
-  50%{
-    opacity:.3;
-  }
 }
 
 .black-live-text{
-  margin-top:18px;
-  color:#666;
-  font-size:13px;
+  margin-top:15px;
+
+  color:#555;
+
+  font-size:12px;
 }
+
+
+/*
+   The second call MUST NOT
+   play any video or sound.
+*/
 
 #blackLiveSoundVideo{
-  position:fixed;
-  left:-100px;
-  top:-100px;
-  width:1px;
-  height:1px;
-  opacity:0;
-  pointer-events:none;
+  display:none;
 }
 
-/* =========================
-   INSUFFICIENT
-========================= */
+
+/* =================================
+   INSUFFICIENT MINUTES
+================================= */
 
 #insufficientPage{
   display:none;
+
   position:fixed;
   inset:0;
-  z-index:70;
+
+  z-index:700;
+
   width:100%;
   min-height:100vh;
+
   align-items:center;
   justify-content:center;
   flex-direction:column;
+
   text-align:center;
+
   background:#050505;
 }
 
 .insufficient-title{
   margin-bottom:10px;
+
   color:#ff2020;
-  font-size:27px;
+
+  font-size:26px;
   font-weight:900;
 }
 
 .insufficient-text{
   color:#999;
+
   font-size:14px;
 }
 
 #insufficientTimer{
   margin-top:12px;
+
   color:#fff;
+
   font-size:14px;
 }
 
-/* =========================
+
+/* =================================
    MOBILE
-========================= */
+================================= */
 
 @media(max-width:600px){
 
@@ -541,7 +612,9 @@ button{
   }
 
   #photoGrid{
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:
+      repeat(3,1fr);
+
     gap:3px;
     padding:3px;
   }
@@ -561,8 +634,8 @@ button{
   }
 
   .caller-photo-wrap{
-    width:130px;
-    height:130px;
+    width:125px;
+    height:125px;
   }
 
   #callerName{
@@ -575,22 +648,42 @@ button{
 
   .call-button{
     min-width:0;
+
     flex:1;
+
     max-width:145px;
+
     height:50px;
   }
+
 }
+
 </style>
 </head>
 
 <body>
 
+
+<!-- =================================
+     WELCOME
+================================= -->
+
 <section id="welcomeScreen">
-  <div class="welcome-title">Welcome</div>
+
+  <div class="welcome-title">
+    Welcome
+  </div>
+
   <div class="welcome-subtitle">
     Connecting you to live profiles...
   </div>
+
 </section>
+
+
+<!-- =================================
+     LIVE PHOTOS
+================================= -->
 
 <section id="photosPage">
 
@@ -601,8 +694,13 @@ button{
     </div>
 
     <div class="online-box">
+
       <span class="online-dot"></span>
-      <span id="onlineNumber">21 online</span>
+
+      <span id="onlineNumber">
+        21 online
+      </span>
+
     </div>
 
     <div class="live-header">
@@ -611,9 +709,15 @@ button{
 
   </div>
 
+
   <div id="photoGrid"></div>
 
 </section>
+
+
+<!-- =================================
+     INCOMING CALL
+================================= -->
 
 <section id="incomingCall">
 
@@ -621,17 +725,26 @@ button{
     INCOMING LIVE CALL
   </div>
 
+
   <div class="caller-photo-wrap">
-    <img id="callerImage" src="" alt="Caller">
+
+    <img
+      id="callerImage"
+      src="photo1.jpg"
+      alt="Caller">
+
   </div>
+
 
   <div id="callerName">
     Incoming Call
   </div>
 
+
   <div class="caller-status">
     Someone is calling you...
   </div>
+
 
   <div class="call-buttons">
 
@@ -639,40 +752,40 @@ button{
       id="declineButton"
       class="call-button decline-button"
       type="button">
+
       Decline
+
     </button>
+
 
     <button
       id="answerButton"
       class="call-button answer-button"
       type="button">
+
       Answer
+
     </button>
 
   </div>
 
 </section>
 
-<section id="callLoadingPage">
 
-  <div class="loading-spinner"></div>
-
-  <div class="loading-title">
-    Connecting live call...
-  </div>
-
-  <div class="loading-text">
-    Please wait
-  </div>
-
-</section>
+<!-- =================================
+     FIRST RED LIVE
+================================= -->
 
 <section id="redLiveVideoPage">
 
   <div class="red-live-badge">
+
     <span class="red-live-dot"></span>
+
     LIVE
+
   </div>
+
 
   <video
     id="redLiveVideo"
@@ -687,29 +800,39 @@ button{
 
 </section>
 
+
+<!-- =================================
+     SECOND CALL BLACK SCREEN
+================================= -->
+
 <section id="blackLivePage">
 
   <div class="black-live-label">
+
     <span class="black-live-dot"></span>
+
     LIVE
+
   </div>
+
 
   <div class="black-live-text">
     Live connection
   </div>
 
+
+  <!-- Never played -->
   <video
     id="blackLiveSoundVideo"
-    playsinline
-    preload="auto">
-
-    <source
-      src="preview_20_seconds.mp4"
-      type="video/mp4">
-
+    playsinline>
   </video>
 
 </section>
+
+
+<!-- =================================
+     INSUFFICIENT MINUTES
+================================= -->
 
 <section id="insufficientPage">
 
@@ -727,378 +850,534 @@ button{
 
   </section>
   <script>
-/* ================================
-   REFERRAL SYSTEM
-================================ */
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+const WELCOME_DURATION = 3000;
+
+/*
+   Live Photos remain visible for
+   exactly 2 seconds before the call.
+*/
+const PHOTOS_BEFORE_CALL = 2000;
+
+
+/*
+   First Red LIVE:
+
+   video starts at 10 seconds
+   and plays for 7 seconds.
+*/
+const FIRST_RED_START = 10;
+const FIRST_RED_DURATION = 7000;
+
+
+/*
+   Second and later answered calls:
+
+   black screen
+   no video
+   no sound
+   exactly 2 seconds
+*/
+const SECOND_CALL_DURATION = 2000;
+
+
+/*
+   Insufficient Minutes
+*/
+const INSUFFICIENT_DURATION = 2000;
+
+
+/*
+   Offline profile duration
+*/
+const OFFLINE_DURATION =
+  5 * 60 * 1000;
+
+
+/*
+   This remembers that the visitor
+   has already received the first
+   Red LIVE video.
+
+   It survives reload/revisit.
+*/
+const FIRST_RED_SEEN_KEY =
+  "firstRedLiveAlreadyShown";
+
+
+/* =====================================================
+   REFERRAL CODES
+===================================================== */
 
 const VALID_REFERRALS = {
+
   "REF-A7K2": "joshua1",
+
   "REF-B4M8": "joshua2",
+
   "REF-C9P3": "joshua3",
+
   "REF-D2X6": "joshua4",
+
   "REF-E5Q1": "joshua5",
+
   "REF-F8L4": "joshua6",
+
   "REF-G3N7": "joshua7",
+
   "REF-H6R2": "joshua8",
+
   "REF-J9T5": "joshua9",
+
   "REF-K4W8": "joshua10"
+
 };
 
-const REFERRAL_STORAGE_KEY = "referralEmployeeId";
 
-function saveReferral() {
-  const params = new URLSearchParams(window.location.search);
+function saveReferral(){
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
 
   const ref =
     params.get("ref") ||
     params.get("employee") ||
     params.get("code");
 
-  if (!ref) return;
 
-  const employee = VALID_REFERRALS[ref.toUpperCase()];
+  if(!ref){
+    return;
+  }
 
-  if (employee) {
+
+  const employee =
+    VALID_REFERRALS[
+      ref.toUpperCase()
+    ];
+
+
+  if(employee){
+
     localStorage.setItem(
-      REFERRAL_STORAGE_KEY,
+      "referralEmployeeId",
       employee
     );
+
   }
+
 }
+
 
 saveReferral();
 
-function getEmployeeId() {
-  return localStorage.getItem(
-    REFERRAL_STORAGE_KEY
-  );
-}
 
-
-/* ================================
+/* =====================================================
    ELEMENTS
-================================ */
+===================================================== */
 
 const welcomeScreen =
-  document.getElementById("welcomeScreen");
+  document.getElementById(
+    "welcomeScreen"
+  );
+
 
 const photosPage =
-  document.getElementById("photosPage");
+  document.getElementById(
+    "photosPage"
+  );
+
 
 const photoGrid =
-  document.getElementById("photoGrid");
+  document.getElementById(
+    "photoGrid"
+  );
+
 
 const incomingCall =
-  document.getElementById("incomingCall");
+  document.getElementById(
+    "incomingCall"
+  );
+
 
 const callerImage =
-  document.getElementById("callerImage");
+  document.getElementById(
+    "callerImage"
+  );
+
 
 const callerName =
-  document.getElementById("callerName");
+  document.getElementById(
+    "callerName"
+  );
 
-const declineButton =
-  document.getElementById("declineButton");
 
 const answerButton =
-  document.getElementById("answerButton");
+  document.getElementById(
+    "answerButton"
+  );
 
-const callLoadingPage =
-  document.getElementById("callLoadingPage");
+
+const declineButton =
+  document.getElementById(
+    "declineButton"
+  );
+
 
 const redLiveVideoPage =
-  document.getElementById("redLiveVideoPage");
+  document.getElementById(
+    "redLiveVideoPage"
+  );
+
 
 const redLiveVideo =
-  document.getElementById("redLiveVideo");
+  document.getElementById(
+    "redLiveVideo"
+  );
+
 
 const blackLivePage =
-  document.getElementById("blackLivePage");
+  document.getElementById(
+    "blackLivePage"
+  );
 
-const blackLiveSoundVideo =
-  document.getElementById("blackLiveSoundVideo");
 
 const insufficientPage =
-  document.getElementById("insufficientPage");
+  document.getElementById(
+    "insufficientPage"
+  );
+
 
 const insufficientTimer =
-  document.getElementById("insufficientTimer");
+  document.getElementById(
+    "insufficientTimer"
+  );
+
 
 const onlineNumber =
-  document.getElementById("onlineNumber");
+  document.getElementById(
+    "onlineNumber"
+  );
 
 
-/* ================================
-   SETTINGS
-================================ */
-
-const RED_LIVE_START_TIME = 10;
-
-const RED_LIVE_DURATION = 7000;
-
-const BLACK_LIVE_DURATION = 5000;
-
-const LOADING_DURATION = 2000;
-
-const INSUFFICIENT_DURATION = 2000;
-
-const OFFLINE_DURATION =
-  5 * 60 * 1000;
-
-const RED_LIVE_SEEN_KEY =
-  "redLiveVideoSeen";
-
-
-/* ================================
-   PROFILE DATA
-================================ */
+/* =====================================================
+   PROFILES
+===================================================== */
 
 const profiles = [
+
   {
-    name: "Cute",
-    age: 24,
-    country: "Kenya",
-    flag: "🇰🇪"
-  },
-  {
-    name: "Becky",
-    age: 22,
-    country: "Kenya",
-    flag: "🇰🇪"
-  },
-  {
-    name: "Dorry",
-    age: 26,
-    country: "Kenya",
-    flag: "🇰🇪"
-  },
-  {
-    name: "Sharon",
-    age: 23,
-    country: "Kenya",
-    flag: "🇰🇪"
-  },
-  {
-    name: "Lilian",
-    age: 27,
-    country: "Kenya",
-    flag: "🇰🇪"
+    name:"Cute",
+    age:24,
+    country:"Kenya",
+    flag:"🇰🇪"
   },
 
   {
-    name: "Asha",
-    age: 25,
-    country: "Tanzania",
-    flag: "🇹🇿"
-  },
-  {
-    name: "Neema",
-    age: 23,
-    country: "Tanzania",
-    flag: "🇹🇿"
-  },
-  {
-    name: "Zawadi",
-    age: 28,
-    country: "Tanzania",
-    flag: "🇹🇿"
-  },
-  {
-    name: "Rehema",
-    age: 24,
-    country: "Tanzania",
-    flag: "🇹🇿"
+    name:"Becky",
+    age:22,
+    country:"Kenya",
+    flag:"🇰🇪"
   },
 
   {
-    name: "Blessing",
-    age: 22,
-    country: "Nigeria",
-    flag: "🇳🇬"
-  },
-  {
-    name: "Favour",
-    age: 26,
-    country: "Nigeria",
-    flag: "🇳🇬"
-  },
-  {
-    name: "Peace",
-    age: 25,
-    country: "Nigeria",
-    flag: "🇳🇬"
-  },
-  {
-    name: "Joy",
-    age: 27,
-    country: "Nigeria",
-    flag: "🇳🇬"
+    name:"Dorry",
+    age:26,
+    country:"Kenya",
+    flag:"🇰🇪"
   },
 
   {
-    name: "Grace",
-    age: 24,
-    country: "Congo",
-    flag: "🇨🇩"
-  },
-  {
-    name: "Mimi",
-    age: 23,
-    country: "Congo",
-    flag: "🇨🇩"
-  },
-  {
-    name: "Nadia",
-    age: 26,
-    country: "Congo",
-    flag: "🇨🇩"
-  },
-  {
-    name: "Bella",
-    age: 25,
-    country: "Congo",
-    flag: "🇨🇩"
-  },
-  {
-    name: "Princess",
-    age: 28,
-    country: "Congo",
-    flag: "🇨🇩"
+    name:"Sharon",
+    age:23,
+    country:"Kenya",
+    flag:"🇰🇪"
   },
 
   {
-    name: "Emily",
-    age: 24,
-    country: "Canada",
-    flag: "🇨🇦"
+    name:"Lilian",
+    age:27,
+    country:"Kenya",
+    flag:"🇰🇪"
   },
+
+
   {
-    name: "Sophie",
-    age: 27,
-    country: "Canada",
-    flag: "🇨🇦"
+    name:"Asha",
+    age:25,
+    country:"Tanzania",
+    flag:"🇹🇿"
   },
 
   {
-    name: "Thandi",
-    age: 25,
-    country: "South Africa",
-    flag: "🇿🇦"
-  },
-  {
-    name: "Lerato",
-    age: 29,
-    country: "South Africa",
-    flag: "🇿🇦"
+    name:"Neema",
+    age:23,
+    country:"Tanzania",
+    flag:"🇹🇿"
   },
 
   {
-    name: "Ashley",
-    age: 23,
-    country: "USA",
-    flag: "🇺🇸"
+    name:"Zawadi",
+    age:28,
+    country:"Tanzania",
+    flag:"🇹🇿"
   },
+
   {
-    name: "Jessica",
-    age: 26,
-    country: "USA",
-    flag: "🇺🇸"
+    name:"Rehema",
+    age:24,
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+
+  {
+    name:"Blessing",
+    age:22,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Favour",
+    age:26,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Peace",
+    age:25,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Joy",
+    age:27,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+
+  {
+    name:"Grace",
+    age:24,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Mimi",
+    age:23,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Nadia",
+    age:26,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Bella",
+    age:25,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Princess",
+    age:28,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+
+  {
+    name:"Emily",
+    age:24,
+    country:"Canada",
+    flag:"🇨🇦"
+  },
+
+  {
+    name:"Sophie",
+    age:27,
+    country:"Canada",
+    flag:"🇨🇦"
+  },
+
+
+  {
+    name:"Thandi",
+    age:25,
+    country:"South Africa",
+    flag:"🇿🇦"
+  },
+
+  {
+    name:"Lerato",
+    age:29,
+    country:"South Africa",
+    flag:"🇿🇦"
+  },
+
+
+  {
+    name:"Ashley",
+    age:23,
+    country:"USA",
+    flag:"🇺🇸"
+  },
+
+  {
+    name:"Jessica",
+    age:26,
+    country:"USA",
+    flag:"🇺🇸"
   }
+
 ];
 
 
-/* ================================
-   REAL IMAGE FILES
-   These are files already in repo.
-================================ */
+/* =====================================================
+   ACTUAL IMAGE FILES IN REPOSITORY
+===================================================== */
 
 const imageFiles = [
+
   "photo1.jpg",
+
   "photo2.jpg",
+
   "photo4.jpg",
+
   "photo5.jpg",
 
   "1785179340825.jpg",
+
   "1785179340825 (1).jpg",
+
   "1785179362758.jpg",
+
   "1785179915649.jpg",
 
   "Screenshot_20260731-045343.png"
+
 ];
 
 
-/* ================================
-   IMAGE URL
-================================ */
-
-const GITHUB_IMAGE_BASE =
+const IMAGE_BASE =
   "https://raw.githubusercontent.com/" +
   "agnesweb2026/My-referral-website/main/";
 
 
-function getImage(index) {
+function getImage(index){
 
   const file =
     imageFiles[
       index % imageFiles.length
     ];
 
-  return GITHUB_IMAGE_BASE +
-    encodeURIComponent(file);
+
+  return (
+    IMAGE_BASE +
+    encodeURIComponent(file)
+  );
+
 }
 
 
-/* ================================
+/* =====================================================
    OFFLINE SYSTEM
-================================ */
+===================================================== */
 
 const offlineUntil = {};
 
-function isOffline(index) {
 
-  if (!offlineUntil[index]) {
+function isOffline(index){
+
+  if(
+    !offlineUntil[index]
+  ){
+
     return false;
+
   }
 
-  return Date.now() <
-    offlineUntil[index];
+
+  if(
+    Date.now() >=
+    offlineUntil[index]
+  ){
+
+    delete offlineUntil[index];
+
+    return false;
+
+  }
+
+
+  return true;
+
 }
 
 
-function randomOfflineStatus() {
+function createRandomOffline(){
 
   /*
-    Clear expired offline users.
+    Remove expired offline profiles.
   */
 
-  Object.keys(offlineUntil)
-    .forEach(index => {
+  Object.keys(
+    offlineUntil
+  ).forEach(
+    function(index){
 
-      if (
+      if(
         Date.now() >=
         offlineUntil[index]
-      ) {
+      ){
+
         delete offlineUntil[index];
+
       }
 
-    });
+    }
+  );
 
 
   /*
-    Keep existing offline users.
-    Only create a new random offline
-    profile when none currently exists.
+    Do not keep creating a new
+    offline profile every refresh.
   */
 
-  const currentlyOffline =
-    Object.keys(offlineUntil)
-      .filter(index =>
-        isOffline(Number(index))
-      );
+  const activeOffline =
+    Object.keys(
+      offlineUntil
+    ).filter(
+      function(index){
 
-  if (
-    currentlyOffline.length === 0
-  ) {
+        return isOffline(
+          Number(index)
+        );
+
+      }
+    );
+
+
+  if(
+    activeOffline.length === 0
+  ){
 
     const randomIndex =
       Math.floor(
@@ -1106,135 +1385,231 @@ function randomOfflineStatus() {
         profiles.length
       );
 
+
     offlineUntil[randomIndex] =
       Date.now() +
       OFFLINE_DURATION;
+
   }
+
 }
 
 
-/* ================================
+/* =====================================================
+   RANDOM ONLINE NUMBER
+===================================================== */
+
+function randomOnlineNumber(){
+
+  /*
+    Number between 15 and 30.
+  */
+
+  const number =
+    Math.floor(
+      Math.random() * 16
+    ) + 15;
+
+
+  if(onlineNumber){
+
+    onlineNumber.textContent =
+      number + " online";
+
+  }
+
+}
+
+
+/*
+   Change the number at a random
+   interval between 15 and 35 seconds.
+*/
+
+function scheduleOnlineNumber(){
+
+  const delay =
+    Math.floor(
+      Math.random() * 20000
+    ) + 15000;
+
+
+  setTimeout(
+    function(){
+
+      randomOnlineNumber();
+
+      scheduleOnlineNumber();
+
+    },
+    delay
+  );
+
+}
+
+
+/* =====================================================
    BUILD PHOTO GRID
-================================ */
+===================================================== */
 
-function buildPhotoGrid() {
+function buildPhotoGrid(){
 
-  if (!photoGrid) return;
+  if(!photoGrid){
+    return;
+  }
 
-  randomOfflineStatus();
+
+  createRandomOffline();
+
 
   photoGrid.innerHTML = "";
 
+
   profiles.forEach(
-    (profile, index) => {
+    function(profile,index){
 
       const offline =
         isOffline(index);
 
+
       const card =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       card.className =
         "photoCard";
 
-      card.dataset.index =
-        index;
 
       const imageWrap =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       imageWrap.className =
         "photo-image-wrap";
 
 
       const img =
-        document.createElement("img");
+        document.createElement(
+          "img"
+        );
+
 
       img.className =
         "profile-photo";
 
+
       img.src =
         getImage(index);
+
 
       img.alt =
         profile.name;
 
 
-      img.onerror = function() {
+      img.onerror =
+        function(){
 
-        /*
-          Fallback to first image
-          if one image fails.
-        */
+          /*
+             If an image fails,
+             use photo1.jpg.
+          */
 
-        if (
-          this.dataset.fallback !== "1"
-        ) {
+          if(
+            this.dataset.fallback !==
+            "yes"
+          ){
 
-          this.dataset.fallback =
-            "1";
+            this.dataset.fallback =
+              "yes";
 
-          this.src =
-            GITHUB_IMAGE_BASE +
-            "photo1.jpg";
-        }
 
-      };
+            this.src =
+              IMAGE_BASE +
+              "photo1.jpg";
+
+          }
+
+        };
 
 
       imageWrap.appendChild(img);
 
 
       const play =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       play.className =
         "photo-play";
 
-      play.innerHTML =
+
+      play.textContent =
         "▶";
+
 
       imageWrap.appendChild(play);
 
 
       const badge =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       badge.className =
         offline
           ? "offline-badge"
           : "live-badge";
 
+
       badge.textContent =
         offline
           ? "OFFLINE"
           : "LIVE";
 
+
       imageWrap.appendChild(badge);
 
 
       const info =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       info.className =
         "photo-info";
 
 
       const name =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       name.className =
         "photo-name";
+
 
       name.textContent =
         profile.name;
 
 
       const meta =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       meta.className =
         "photo-meta";
+
 
       meta.textContent =
         profile.flag +
@@ -1243,20 +1618,30 @@ function buildPhotoGrid() {
 
 
       info.appendChild(name);
+
       info.appendChild(meta);
 
 
       card.appendChild(imageWrap);
+
       card.appendChild(info);
 
 
+      /*
+        Only LIVE profiles open
+        payment.html.
+      */
+
       card.addEventListener(
         "click",
-        function() {
+        function(){
 
-          if (offline) {
+          if(offline){
+
             return;
+
           }
+
 
           openPaymentPage();
 
@@ -1269,140 +1654,175 @@ function buildPhotoGrid() {
     }
   );
 
-
-  /*
-    Keep online number realistic.
-  */
-
-  const offlineCount =
-    Object.keys(offlineUntil)
-      .filter(index =>
-        isOffline(Number(index))
-      ).length;
-
-  const onlineCount =
-    Math.max(
-      1,
-      profiles.length -
-      offlineCount
-    );
-
-  if (onlineNumber) {
-    onlineNumber.textContent =
-      onlineCount + " online";
-  }
 }
 
 
-/* ================================
-   SHOW / HIDE PAGES
-================================ */
+/* =====================================================
+   PAGE CONTROL
+===================================================== */
 
-function hideAllPages() {
+function hideAll(){
 
-  if (welcomeScreen)
+  if(welcomeScreen){
+
     welcomeScreen.style.display =
       "none";
 
-  if (photosPage)
+  }
+
+
+  if(photosPage){
+
     photosPage.style.display =
       "none";
 
-  if (incomingCall)
+  }
+
+
+  if(incomingCall){
+
     incomingCall.style.display =
       "none";
 
-  if (callLoadingPage)
-    callLoadingPage.style.display =
-      "none";
+  }
 
-  if (redLiveVideoPage)
+
+  if(redLiveVideoPage){
+
     redLiveVideoPage.style.display =
       "none";
 
-  if (blackLivePage)
+  }
+
+
+  if(blackLivePage){
+
     blackLivePage.style.display =
       "none";
 
-  if (insufficientPage)
+  }
+
+
+  if(insufficientPage){
+
     insufficientPage.style.display =
       "none";
+
+  }
+
 }
 
 
-function showPhotos() {
+function showPhotos(){
 
-  hideAllPages();
+  hideAll();
 
-  if (photosPage)
+
+  if(photosPage){
+
     photosPage.style.display =
       "block";
 
+  }
+
+
   buildPhotoGrid();
+
 }
 
 
-/* ================================
-   INCOMING CALL
-================================ */
+/* =====================================================
+   CHOOSE CALLER
+===================================================== */
 
 let currentCallerIndex = -1;
 
 
-function chooseCaller() {
+function chooseCaller(){
 
-  const available =
-    profiles
-      .map((profile, index) => index)
-      .filter(index =>
+  const available = [];
+
+
+  profiles.forEach(
+    function(profile,index){
+
+      if(
         !isOffline(index)
-      );
+      ){
 
-  if (
+        available.push(index);
+
+      }
+
+    }
+  );
+
+
+  if(
     available.length === 0
-  ) {
-    randomOfflineStatus();
+  ){
+
+    /*
+      Safety fallback.
+    */
+
+    Object.keys(
+      offlineUntil
+    ).forEach(
+      function(index){
+
+        delete offlineUntil[index];
+
+      }
+    );
+
+
     return chooseCaller();
+
   }
 
-  const random =
+
+  const randomPosition =
     Math.floor(
       Math.random() *
       available.length
     );
 
-  return available[random];
+
+  return available[
+    randomPosition
+  ];
+
 }
 
 
-function showIncomingCall() {
+/* =====================================================
+   SHOW INCOMING CALL
+===================================================== */
+
+function showIncomingCall(){
 
   currentCallerIndex =
     chooseCaller();
 
+
   const profile =
-    profiles[currentCallerIndex];
+    profiles[
+      currentCallerIndex
+    ];
 
 
-  if (callerImage) {
+  if(callerImage){
 
     callerImage.src =
       getImage(
         currentCallerIndex
       );
 
-    callerImage.onerror =
-      function() {
-
-        this.src =
-          GITHUB_IMAGE_BASE +
-          "photo1.jpg";
-
-      };
   }
 
 
-  if (callerName) {
+  if(callerName){
 
     callerName.textContent =
       profile.name;
@@ -1410,23 +1830,58 @@ function showIncomingCall() {
   }
 
 
-  hideAllPages();
+  hideAll();
 
-  if (incomingCall)
+
+  if(incomingCall){
+
     incomingCall.style.display =
       "flex";
+
+  }
+
+}
+    <script>
+
+/* =====================================================
+   AUTOMATIC FIRST CALL
+===================================================== */
+
+function startCallTimer(){
+
+  /*
+    Live Photos appear first.
+
+    After exactly 2 seconds,
+    incoming call appears.
+  */
+
+  setTimeout(
+    function(){
+
+      showIncomingCall();
+
+    },
+    PHOTOS_BEFORE_CALL
+  );
+
 }
 
 
-/* ================================
+/* =====================================================
    DECLINE
-================================ */
+===================================================== */
 
-if (declineButton) {
+if(declineButton){
 
   declineButton.addEventListener(
     "click",
-    function() {
+    function(){
+
+      /*
+        Decline simply returns
+        to Live Photos.
+      */
 
       showPhotos();
 
@@ -1436,58 +1891,62 @@ if (declineButton) {
 }
 
 
-/* ================================
+/* =====================================================
    ANSWER
-================================ */
+===================================================== */
 
-if (answerButton) {
+if(answerButton){
 
   answerButton.addEventListener(
     "click",
-    function() {
+    function(){
 
       /*
-        Immediately prepare the red
-        video while user activation
-        is still available.
+        Check visitor history.
       */
 
-      if (
-        redLiveVideo &&
-        !localStorage.getItem(
-          RED_LIVE_SEEN_KEY
-        )
-      ) {
+      const firstRedAlreadyShown =
+        localStorage.getItem(
+          FIRST_RED_SEEN_KEY
+        );
 
-        try {
 
-          redLiveVideo.currentTime =
-            RED_LIVE_START_TIME;
+      /*
+        FIRST CALL FOR THIS VISITOR
+        ===========================
 
-        } catch (error) {}
+        Red LIVE
+        Real video
+        Sound ON
+        Starts at 10 seconds
+        Plays 7 seconds
+      */
+
+      if(
+        !firstRedAlreadyShown
+      ){
+
+        playFirstRedLive();
 
       }
 
 
       /*
-        Show 2-second connecting page.
+        SECOND / LATER CALL
+        ===================
+
+        No video.
+        No sound.
+        Black screen.
+        Red LIVE.
+        2 seconds.
       */
 
-      hideAllPages();
+      else{
 
-      if (callLoadingPage)
-        callLoadingPage.style.display =
-          "flex";
+        playSecondBlackLive();
 
-
-      setTimeout(
-        function() {
-
-          startAnsweredCall();
-
-        },
-        LOADING_DURATION
-      );
+      }
 
     }
   );
@@ -1495,78 +1954,81 @@ if (answerButton) {
 }
 
 
-/* ================================
-   ANSWERED CALL FLOW
-================================ */
+/* =====================================================
+   FIRST RED LIVE
+===================================================== */
 
-function startAnsweredCall() {
+function playFirstRedLive(){
 
-  const redSeen =
-    localStorage.getItem(
-      RED_LIVE_SEEN_KEY
-    );
+  hideAll();
 
 
-  if (!redSeen) {
+  if(!redLiveVideoPage){
 
-    playRedLive();
-
-  } else {
-
-    playBlackLive();
+    return;
 
   }
-
-}
-
-
-/* ================================
-   RED LIVE
-   Starts at 10 seconds
-   Plays until 17 seconds
-================================ */
-
-function playRedLive() {
-
-  hideAllPages();
-
-  if (!redLiveVideoPage)
-    return;
 
 
   redLiveVideoPage.style.display =
     "flex";
 
 
-  if (!redLiveVideo)
+  if(!redLiveVideo){
+
     return;
 
+  }
 
-  try {
+
+  /*
+    IMPORTANT:
+
+    The video play() is called
+    directly from the Answer
+    button flow.
+
+    This gives the browser the
+    best chance of allowing
+    sound because the visitor
+    just interacted with the page.
+  */
+
+  try{
 
     redLiveVideo.pause();
 
+
+    /*
+      Start at exactly 10 seconds.
+    */
+
     redLiveVideo.currentTime =
-      RED_LIVE_START_TIME;
+      FIRST_RED_START;
 
-    redLiveVideo.volume = 1;
 
-    redLiveVideo.muted = false;
+    redLiveVideo.muted =
+      false;
+
+
+    redLiveVideo.volume =
+      1;
+
 
     const playPromise =
       redLiveVideo.play();
 
 
-    if (
+    if(
       playPromise &&
       playPromise.catch
-    ) {
+    ){
 
       playPromise.catch(
-        function(error) {
+        function(error){
 
           console.log(
-            "Red LIVE autoplay blocked:",
+            "Video playback blocked:",
             error
           );
 
@@ -1575,160 +2037,173 @@ function playRedLive() {
 
     }
 
-  } catch (error) {
+  }
+  catch(error){
 
     console.log(error);
 
   }
 
 
-  setTimeout(
-    function() {
+  /*
+    Mark the visitor as having
+    already received the first
+    Red LIVE.
 
-      try {
+    This happens BEFORE the
+    7-second timer finishes, so
+    refresh/revisit will not
+    accidentally get another
+    first Red LIVE.
+  */
+
+  localStorage.setItem(
+    FIRST_RED_SEEN_KEY,
+    "yes"
+  );
+
+
+  /*
+    Stop after exactly 7 seconds.
+
+    10s -> 17s
+  */
+
+  setTimeout(
+    function(){
+
+      try{
 
         redLiveVideo.pause();
 
+
         redLiveVideo.currentTime =
-          RED_LIVE_START_TIME;
+          FIRST_RED_START;
 
-      } catch (error) {}
-
-
-      localStorage.setItem(
-        RED_LIVE_SEEN_KEY,
-        "1"
-      );
-
-
-      playBlackLive();
-
-    },
-    RED_LIVE_DURATION
-  );
-
-}
-
-
-/* ================================
-   BLACK LIVE
-================================ */
-
-function playBlackLive() {
-
-  hideAllPages();
-
-  if (!blackLivePage)
-    return;
-
-
-  blackLivePage.style.display =
-    "flex";
-
-
-  if (!blackLiveSoundVideo)
-    return;
-
-
-  try {
-
-    blackLiveSoundVideo.currentTime =
-      0;
-
-    blackLiveSoundVideo.volume =
-      1;
-
-    blackLiveSoundVideo.muted =
-      false;
-
-
-    const playPromise =
-      blackLiveSoundVideo.play();
-
-
-    if (
-      playPromise &&
-      playPromise.catch
-    ) {
-
-      playPromise.catch(
-        function(error) {
-
-          console.log(
-            "Black LIVE autoplay blocked:",
-            error
-          );
-
-        }
-      );
-
-    }
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-
-  setTimeout(
-    function() {
-
-      try {
-
-        blackLiveSoundVideo.pause();
-
-        blackLiveSoundVideo.currentTime =
-          0;
-
-      } catch (error) {}
+      }
+      catch(error){}
 
 
       showInsufficient();
 
     },
-    BLACK_LIVE_DURATION
+    FIRST_RED_DURATION
   );
 
 }
 
 
-/* ================================
+/* =====================================================
+   SECOND / LATER CALL
+===================================================== */
+
+function playSecondBlackLive(){
+
+  hideAll();
+
+
+  if(!blackLivePage){
+
+    return;
+
+  }
+
+
+  /*
+    Black screen only.
+  */
+
+  blackLivePage.style.display =
+    "flex";
+
+
+  /*
+    Make absolutely sure the
+    real video is not playing.
+  */
+
+  if(redLiveVideo){
+
+    try{
+
+      redLiveVideo.pause();
+
+      redLiveVideo.muted =
+        true;
+
+      redLiveVideo.volume =
+        0;
+
+    }
+    catch(error){}
+
+  }
+
+
+  /*
+    Exactly 2 seconds.
+  */
+
+  setTimeout(
+    function(){
+
+      showInsufficient();
+
+    },
+    SECOND_CALL_DURATION
+  );
+
+}
+
+
+/* =====================================================
    INSUFFICIENT MINUTES
-================================ */
+===================================================== */
 
-function showInsufficient() {
+function showInsufficient(){
 
-  hideAllPages();
+  hideAll();
 
-  if (insufficientPage)
+
+  if(insufficientPage){
+
     insufficientPage.style.display =
       "flex";
+
+  }
 
 
   let seconds = 2;
 
-  if (insufficientTimer) {
+
+  if(insufficientTimer){
 
     insufficientTimer.textContent =
       seconds;
 
-    const countdown =
+
+    const timer =
       setInterval(
-        function() {
+        function(){
 
           seconds--;
 
-          if (seconds >= 0) {
+
+          if(
+            seconds >= 0
+          ){
 
             insufficientTimer.textContent =
               seconds;
 
           }
 
-          if (seconds <= 0) {
 
-            clearInterval(countdown);
+          if(
+            seconds <= 0
+          ){
+
+            clearInterval(timer);
 
           }
 
@@ -1739,10 +2214,22 @@ function showInsufficient() {
   }
 
 
+  /*
+    After 2 seconds return
+    to Live Photos.
+
+    Then another automatic
+    incoming call can appear
+    after 2 more seconds.
+  */
+
   setTimeout(
-    function() {
+    function(){
 
       showPhotos();
+
+
+      startCallTimer();
 
     },
     INSUFFICIENT_DURATION
@@ -1751,19 +2238,23 @@ function showInsufficient() {
 }
 
 
-/* ================================
-   PAYMENT
-================================ */
+/* =====================================================
+   PAYMENT PAGE
+===================================================== */
 
-function openPaymentPage() {
+function openPaymentPage(){
 
   const employee =
-    getEmployeeId();
+    localStorage.getItem(
+      "referralEmployeeId"
+    );
+
 
   let url =
     "payment.html";
 
-  if (employee) {
+
+  if(employee){
 
     url +=
       "?employee=" +
@@ -1773,52 +2264,93 @@ function openPaymentPage() {
 
   }
 
+
   window.location.href =
     url;
 
 }
 
 
-/* ================================
+/* =====================================================
    START WEBSITE
-================================ */
+===================================================== */
 
-function startWebsite() {
+function startWebsite(){
 
-  hideAllPages();
+  hideAll();
 
-  if (welcomeScreen) {
+
+  /*
+    Welcome page first.
+  */
+
+  if(welcomeScreen){
 
     welcomeScreen.style.display =
       "flex";
 
-    setTimeout(
-      function() {
-
-        showPhotos();
-
-      },
-      3000
-    );
-
-  } else {
-
-    showPhotos();
-
   }
+
+
+  /*
+    Welcome lasts 3 seconds.
+  */
+
+  setTimeout(
+    function(){
+
+      showPhotos();
+
+
+      /*
+        Live Photos are shown.
+
+        After 2 seconds:
+        INCOMING CALL.
+      */
+
+      startCallTimer();
+
+    },
+    WELCOME_DURATION
+  );
 
 }
 
 
-/* ================================
-   START
-================================ */
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
 document.addEventListener(
   "DOMContentLoaded",
-  function() {
+  function(){
+
+    /*
+      Initial random online number.
+    */
+
+    randomOnlineNumber();
+
+
+    /*
+      Continue changing it at
+      random intervals.
+    */
+
+    scheduleOnlineNumber();
+
+
+    /*
+      Build photos.
+    */
 
     buildPhotoGrid();
+
+
+    /*
+      Start complete flow.
+    */
 
     startWebsite();
 
@@ -1826,508 +2358,92 @@ document.addEventListener(
 );
 
 
-/* ================================
-   REFRESH PHOTOS EVERY 10 SECONDS
-================================ */
+/* =====================================================
+   OFFLINE PROFILE UPDATE
+===================================================== */
 
 setInterval(
-  function() {
+  function(){
 
-    if (
+    createRandomOffline();
+
+
+    /*
+      Rebuild only when the
+      visitor is currently looking
+      at Live Photos.
+    */
+
+    if(
       photosPage &&
       photosPage.style.display !==
       "none"
-    ) {
+    ){
 
       buildPhotoGrid();
 
     }
 
   },
-  10000
+  30000
 );
 
 
-/* ================================
-   CHECK OFFLINE USERS EVERY MINUTE
-================================ */
-
-setInterval(
-  function() {
-
-    randomOfflineStatus();
-
-    if (
-      photosPage &&
-      photosPage.style.display !==
-      "none"
-    ) {
-
-      buildPhotoGrid();
-
-    }
-
-  },
-  60000
-);
-
-  </script>
-  <!-- ================================
-     PART 3 / 3
-     VIDEO + FINAL PAGE STRUCTURE
-================================ -->
-
-<style>
-/* ================================
-   CALL LOADING
-================================ */
-
-#callLoadingPage {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  color: #fff;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 9999;
-}
-
-.call-spinner {
-  width: 45px;
-  height: 45px;
-  border: 4px solid rgba(255,255,255,.25);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 18px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-/* ================================
-   RED LIVE PAGE
-================================ */
-
-#redLiveVideoPage {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 9998;
-}
-
-.red-live-title {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-  background: #e60000;
-  color: #fff;
-  font-weight: 800;
-  padding: 7px 13px;
-  border-radius: 7px;
-  font-size: 14px;
-  z-index: 10;
-}
-
-#redLiveVideo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background: #000;
-}
-
-
-/* ================================
-   BLACK LIVE PAGE
-================================ */
-
-#blackLivePage {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 9997;
-  overflow: hidden;
-}
-
-.black-live-title {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-  background: #e60000;
-  color: #fff;
-  font-weight: 800;
-  padding: 7px 13px;
-  border-radius: 7px;
-  font-size: 14px;
-  z-index: 10;
-}
-
-#blackLiveSoundVideo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background: #000;
-}
-
-
-/* ================================
-   INSUFFICIENT PAGE
-================================ */
-
-#insufficientPage {
-  position: fixed;
-  inset: 0;
-  background: #050505;
-  color: #fff;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  z-index: 9996;
-}
-
-.insufficient-box {
-  width: min(90%, 360px);
-  padding: 30px 20px;
-  border-radius: 16px;
-  background: #111;
-  border: 1px solid #292929;
-}
-
-.insufficient-box h2 {
-  margin: 0 0 12px;
-  font-size: 24px;
-}
-
-.insufficient-box p {
-  margin: 7px 0;
-  color: #bbb;
-}
-
-#insufficientTimer {
-  font-size: 30px;
-  font-weight: 800;
-  margin-top: 12px;
-}
-
-
-/* ================================
-   NORMAL INCOMING CALL
-================================ */
-
-#incomingCall {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.96);
-  color: #fff;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 10000;
-  text-align: center;
-}
-
-.incoming-label {
-  color: #ff2020;
-  font-size: 15px;
-  font-weight: 800;
-  margin-bottom: 18px;
-}
-
-#callerImage {
-  width: 125px;
-  height: 125px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid #fff;
-  margin-bottom: 15px;
-}
-
-#callerName {
-  font-size: 25px;
-  font-weight: 800;
-  margin-bottom: 8px;
-}
-
-.incoming-subtitle {
-  color: #aaa;
-  margin-bottom: 28px;
-}
-
-.call-buttons {
-  display: flex;
-  gap: 18px;
-  justify-content: center;
-}
-
-.call-buttons button {
-  border: 0;
-  border-radius: 50px;
-  padding: 14px 30px;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-#declineButton {
-  background: #e60000;
-  color: #fff;
-}
-
-#answerButton {
-  background: #16a34a;
-  color: #fff;
-}
-
-.call-buttons button:active {
-  transform: scale(.96);
-}
-
-
-/* ================================
-   PHOTO FALLBACK
-================================ */
-
-.profile-photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background: #171717;
-}
-
-.photoCard {
-  overflow: hidden;
-}
-
-.photo-image-wrap {
-  position: relative;
-  overflow: hidden;
-}
-
-
-/* ================================
-   MOBILE
-================================ */
-
-@media (max-width: 600px) {
-
-  #callerImage {
-    width: 110px;
-    height: 110px;
-  }
-
-  #callerName {
-    font-size: 23px;
-  }
-
-  .call-buttons {
-    gap: 12px;
-  }
-
-  .call-buttons button {
-    padding: 13px 24px;
-  }
-
-}
-</style>
-
-
-<!-- ================================
-     CALL LOADING PAGE
-================================ -->
-
-<div id="callLoadingPage">
-
-  <div class="call-spinner"></div>
-
-  <div>
-    Connecting live call...
-  </div>
-
-</div>
-
-
-<!-- ================================
-     RED LIVE VIDEO
-     STARTS AT 10 SECONDS
-     STOPS AFTER 7 SECONDS
-================================ -->
-
-<div id="redLiveVideoPage">
-
-  <div class="red-live-title">
-    🔴 LIVE
-  </div>
-
-  <video
-    id="redLiveVideo"
-    playsinline
-    preload="auto"
-    src="preview_20_seconds.mp4">
-  </video>
-
-</div>
-
-
-<!-- ================================
-     BLACK LIVE WITH SOUND
-================================ -->
-
-<div id="blackLivePage">
-
-  <div class="black-live-title">
-    🔴 LIVE
-  </div>
-
-  <video
-    id="blackLiveSoundVideo"
-    playsinline
-    preload="auto"
-    src="preview_20_seconds.mp4">
-  </video>
-
-</div>
-
-
-<!-- ================================
-     INSUFFICIENT MINUTES
-================================ -->
-
-<div id="insufficientPage">
-
-  <div class="insufficient-box">
-
-    <h2>
-      Insufficient Minutes
-    </h2>
-
-    <p>
-      You need more minutes to continue the live call.
-    </p>
-
-    <p>
-      Returning to live profiles...
-    </p>
-
-    <div id="insufficientTimer">
-      2
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- ================================
-     NORMAL INCOMING CALL
-     NO SWIPE
-================================ -->
-
-<div id="incomingCall">
-
-  <div class="incoming-label">
-    INCOMING LIVE CALL
-  </div>
-
-  <img
-    id="callerImage"
-    src="photo1.jpg"
-    alt="Caller">
-
-  <div id="callerName">
-    Incoming call
-  </div>
-
-  <div class="incoming-subtitle">
-    Someone is calling you...
-  </div>
-
-  <div class="call-buttons">
-
-    <button
-      id="declineButton"
-      type="button">
-      Decline
-    </button>
-
-    <button
-      id="answerButton"
-      type="button">
-      Answer
-    </button>
-
-  </div>
-
-</div>
-
-
-<script>
-
-/* ==========================================
-   EXTRA SAFETY FOR VIDEO TIMING
-========================================== */
-
-if (redLiveVideo) {
-
-  redLiveVideo.addEventListener(
-    "loadedmetadata",
-    function() {
-
-      /*
-        Do not seek beyond the actual
-        length of the video.
-      */
-
-      if (
-        redLiveVideo.duration >=
-        RED_LIVE_START_TIME
-      ) {
-
-        try {
-
-          redLiveVideo.currentTime =
-            RED_LIVE_START_TIME;
-
-        } catch (e) {}
-
-      }
-
-    }
-  );
-
-
-  /*
-    Prevent the red video from continuing
-    beyond the required 7-second section.
-  */
+/* =====================================================
+   RED VIDEO SAFETY
+===================================================== */
+
+if(redLiveVideo){
 
   redLiveVideo.addEventListener(
     "timeupdate",
-    function() {
+    function(){
 
-      if (
+      /*
+        Never allow the first
+        video to continue beyond
+        17 seconds.
+      */
+
+      if(
         redLiveVideo.currentTime >=
-        RED_LIVE_START_TIME + 7
-      ) {
+        FIRST_RED_START + 7
+      ){
 
-        redLiveVideo.pause();
+        try{
+
+          redLiveVideo.pause();
+
+        }
+        catch(error){}
+
+      }
+
+    }
+  );
+
+
+  redLiveVideo.addEventListener(
+    "loadedmetadata",
+    function(){
+
+      /*
+        Only seek to 10 seconds
+        if the video is long enough.
+      */
+
+      if(
+        redLiveVideo.duration >=
+        FIRST_RED_START
+      ){
+
+        try{
+
+          redLiveVideo.currentTime =
+            FIRST_RED_START;
+
+        }
+        catch(error){}
 
       }
 
@@ -2337,51 +2453,29 @@ if (redLiveVideo) {
 }
 
 
-/* ==========================================
-   BLACK VIDEO LOOP SAFETY
-========================================== */
-
-if (blackLiveSoundVideo) {
-
-  blackLiveSoundVideo.addEventListener(
-    "ended",
-    function() {
-
-      try {
-
-        blackLiveSoundVideo.currentTime = 0;
-
-      } catch (e) {}
-
-    }
-  );
-
-}
-
-
-/* ==========================================
-   CLEAN VIDEO WHEN LEAVING PAGE
-========================================== */
+/* =====================================================
+   STOP VIDEO WHEN PAGE IS LEFT
+===================================================== */
 
 window.addEventListener(
   "pagehide",
-  function() {
+  function(){
 
-    try {
+    try{
 
-      if (redLiveVideo)
+      if(redLiveVideo){
+
         redLiveVideo.pause();
 
-      if (blackLiveSoundVideo)
-        blackLiveSoundVideo.pause();
+      }
 
-    } catch (e) {}
+    }
+    catch(error){}
 
   }
 );
 
 </script>
-
 
 </body>
 </html>
