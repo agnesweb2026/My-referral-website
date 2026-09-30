@@ -1,1499 +1,904 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
-
-<title>My Referral Website</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Girls</title>
 
 <style>
-
 *{
   box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 html,body{
-  margin:0;
-  padding:0;
   width:100%;
   min-height:100%;
   background:#000;
   color:#fff;
-  font-family:Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
   overflow-x:hidden;
 }
 
-.page{
+/* =========================
+   COMMON SCREENS
+========================= */
+
+.screen{
   display:none;
   width:100%;
   min-height:100vh;
   background:#000;
 }
 
+.center-screen{
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+}
 
 /* =========================
    WELCOME
 ========================= */
 
 #welcomeScreen{
-  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
+  min-height:100vh;
   flex-direction:column;
-  text-align:center;
   background:#000;
 }
 
-.welcomeTitle{
-  font-size:32px;
-  font-weight:bold;
-  margin-bottom:20px;
+.welcome-title{
+  font-size:30px;
+  font-weight:800;
+  color:#fff;
+  margin-bottom:12px;
 }
 
-.loadingText{
-  font-size:18px;
+.welcome-subtitle{
   color:#aaa;
+  font-size:15px;
 }
-
 
 /* =========================
-   LIVE PHOTOS
+   PHOTOS PAGE
 ========================= */
 
 #photosPage{
-  padding:12px;
+  display:none;
+  min-height:100vh;
   background:#000;
 }
 
-.topBar{
+.top-bar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  width:100%;
+  height:58px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:8px 4px 14px;
+  justify-content:space-between;
+  padding:0 14px;
+  background:#090909;
+  border-bottom:1px solid #222;
 }
 
-.onlineText{
+.site-title{
+  font-size:20px;
+  font-weight:800;
+}
+
+.online-box{
+  display:flex;
+  align-items:center;
+  gap:7px;
   font-size:14px;
   color:#ddd;
 }
 
-.onlineDot{
-  display:inline-block;
-  width:8px;
-  height:8px;
+.online-dot{
+  width:9px;
+  height:9px;
   border-radius:50%;
-  background:#20e070;
-  margin-right:5px;
-  animation:blinkGreen 1s infinite;
+  background:#20e56a;
+  box-shadow:0 0 8px #20e56a;
 }
 
-@keyframes blinkGreen{
-  0%,100%{
-    opacity:1;
-  }
-
-  50%{
-    opacity:.25;
-  }
+.live-header{
+  color:#ff3030;
+  font-weight:800;
+  font-size:13px;
 }
 
-.liveTitle{
-  font-size:20px;
-  font-weight:bold;
-}
-
-.photoGrid{
+#photoGrid{
+  width:100%;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:8px;
+  gap:4px;
+  padding:4px;
+  background:#000;
 }
 
 .photoCard{
   position:relative;
+  width:100%;
   overflow:hidden;
-  border-radius:10px;
   background:#111;
-  min-height:240px;
+  border-radius:5px;
   cursor:pointer;
 }
 
-.photoCard img{
+.photo-image-wrap{
+  position:relative;
   width:100%;
-  height:180px;
-  object-fit:cover;
+  aspect-ratio:0.72;
+  overflow:hidden;
+  background:#111;
+}
+
+.profile-photo{
+  width:100%;
+  height:100%;
   display:block;
+  object-fit:cover;
 }
 
-.statusBadge{
+.photo-play{
   position:absolute;
-  top:8px;
-  left:8px;
-  padding:4px 8px;
-  border-radius:5px;
-  font-size:11px;
-  font-weight:bold;
-  z-index:10;
-}
-
-.liveBadge{
-  background:#e00000;
-  color:#fff;
-}
-
-.offlineBadge{
-  background:#555;
-  color:#fff;
-}
-
-.liveDot{
-  display:inline-block;
-  width:7px;
-  height:7px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:48px;
+  height:48px;
   border-radius:50%;
-  background:#25e66d;
-  margin-right:4px;
-  animation:blinkGreen 1s infinite;
-}
-
-.roomClosed{
-  position:absolute;
-  inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
   background:rgba(0,0,0,.62);
-  font-size:18px;
-  font-weight:bold;
-  z-index:7;
+  border:2px solid rgba(255,255,255,.9);
+  font-size:21px;
+  color:#fff;
+  animation:playPulse 1.5s infinite;
 }
 
-.photoInfo{
+@keyframes playPulse{
+  0%,100%{
+    transform:translate(-50%,-50%) scale(1);
+  }
+  50%{
+    transform:translate(-50%,-50%) scale(1.08);
+  }
+}
+
+.live-badge{
   position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  padding:25px 10px 9px;
-  background:linear-gradient(
-    transparent,
-    rgba(0,0,0,.9)
-  );
-  z-index:9;
+  left:6px;
+  top:6px;
+  padding:4px 7px;
+  border-radius:5px;
+  background:#e90000;
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
 }
 
-.photoName{
-  font-size:16px;
-  font-weight:bold;
+.offline-badge{
+  position:absolute;
+  left:6px;
+  top:6px;
+  padding:4px 7px;
+  border-radius:5px;
+  background:#555;
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
 }
 
-.photoAge{
+.photo-info{
+  padding:7px 7px 9px;
+  background:#0b0b0b;
+}
+
+.photo-name{
+  font-size:14px;
+  font-weight:700;
+  color:#fff;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.photo-meta{
   margin-top:3px;
-  font-size:12px;
-  color:#ddd;
+  color:#aaa;
+  font-size:11px;
 }
-
 
 /* =========================
-   VIDEO PLAY ICON
+   INCOMING CALL
 ========================= */
 
-.videoPlayIcon{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:rgba(0,0,0,.58);
-  border:1px solid rgba(255,255,255,.35);
-  display:flex;
+#incomingCall{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  min-height:100vh;
+  background:#050505;
   align-items:center;
   justify-content:center;
-  color:#fff;
-  font-size:22px;
-  z-index:8;
-  pointer-events:none;
-  animation:videoPulse 1.5s infinite;
-}
-
-@keyframes videoPulse{
-
-  0%{
-    transform:translate(-50%,-50%) scale(1);
-    opacity:1;
-  }
-
-  50%{
-    transform:translate(-50%,-50%) scale(1.12);
-    opacity:.72;
-  }
-
-  100%{
-    transform:translate(-50%,-50%) scale(1);
-    opacity:1;
-  }
-
-}
-
-
-/* =========================
-   MODERN INCOMING CALL
-========================= */
-
-.incoming-screen{
-
-  position:relative;
-
-  width:100%;
-  min-height:100vh;
-
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-
   flex-direction:column;
-
   text-align:center;
-
-  padding:
-    45px
-    18px
-    25px;
-
-  overflow:hidden;
-
-  background:
-
-    radial-gradient(
-      circle at 50% 15%,
-      rgba(50,80,180,.35),
-      transparent 38%
-    ),
-
-    radial-gradient(
-      circle at 50% 70%,
-      rgba(0,180,90,.08),
-      transparent 45%
-    ),
-
-    linear-gradient(
-      180deg,
-      #080b14 0%,
-      #030407 100%
-    );
 }
 
-
-/* soft animated background */
-
-.incoming-screen::before{
-
-  content:"";
-
-  position:absolute;
-
-  width:260px;
-  height:260px;
-
-  top:-100px;
-  left:50%;
-
-  transform:translateX(-50%);
-
-  border-radius:50%;
-
-  background:
-    rgba(70,110,255,.12);
-
-  filter:blur(30px);
-
-  animation:
-    incomingGlow 3s
-    ease-in-out
-    infinite;
-
+.incoming-label{
+  color:#ff3030;
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:18px;
+  letter-spacing:1px;
 }
-
-@keyframes incomingGlow{
-
-  0%,100%{
-    opacity:.45;
-    transform:
-      translateX(-50%)
-      scale(1);
-  }
-
-  50%{
-    opacity:.9;
-    transform:
-      translateX(-50%)
-      scale(1.18);
-  }
-
-}
-
-
-/* LIVE badge */
-
-.incoming-live{
-
-  position:relative;
-
-  display:inline-flex;
-
-  align-items:center;
-
-  gap:6px;
-
-  padding:
-    7px
-    12px;
-
-  border-radius:20px;
-
-  background:
-    rgba(220,0,0,.15);
-
-  border:
-    1px solid
-    rgba(255,50,50,.45);
-
-  color:#fff;
-
-  font-size:12px;
-
-  font-weight:bold;
-
-  letter-spacing:.7px;
-
-  z-index:5;
-
-  box-shadow:
-    0 0 18px
-    rgba(255,0,0,.15);
-
-}
-
-
-/* red live dot */
-
-.incoming-live-dot{
-
-  width:8px;
-  height:8px;
-
-  border-radius:50%;
-
-  background:#ff3030;
-
-  box-shadow:
-    0 0 8px
-    rgba(255,30,30,.9);
-
-  animation:
-    incomingLivePulse
-    1s infinite;
-
-}
-
-@keyframes incomingLivePulse{
-
-  0%,100%{
-    opacity:1;
-    transform:scale(1);
-  }
-
-  50%{
-    opacity:.35;
-    transform:scale(.72);
-  }
-
-}
-
-
-/* caller photo outer ring */
 
 .caller-photo-wrap{
-
-  position:relative;
-
-  width:190px;
-  height:190px;
-
-  margin-top:30px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  z-index:3;
-
-}
-
-
-/* animated rings */
-
-.caller-photo-wrap::before,
-.caller-photo-wrap::after{
-
-  content:"";
-
-  position:absolute;
-
-  inset:0;
-
+  width:145px;
+  height:145px;
   border-radius:50%;
-
-  border:
-    1px solid
-    rgba(90,150,255,.55);
-
-  animation:
-    callerRing
-    2.2s
-    ease-out
-    infinite;
-
+  padding:4px;
+  background:#e90000;
+  box-shadow:0 0 30px rgba(255,0,0,.35);
+  margin-bottom:18px;
 }
 
-.caller-photo-wrap::after{
-
-  animation-delay:
-    1.1s;
-
-}
-
-@keyframes callerRing{
-
-  0%{
-    transform:scale(.82);
-    opacity:.9;
-  }
-
-  100%{
-    transform:scale(1.25);
-    opacity:0;
-  }
-
-}
-
-
-/* caller image */
-
-.incoming-photo{
-
-  position:relative;
-
-  width:158px;
-  height:158px;
-
+#callerImage{
+  width:100%;
+  height:100%;
+  border-radius:50%;
   object-fit:cover;
-
-  border-radius:50%;
-
-  border:
-    3px solid
-    rgba(255,255,255,.9);
-
-  box-shadow:
-
-    0 0 0 5px
-    rgba(80,130,255,.10),
-
-    0 0 35px
-    rgba(70,120,255,.45);
-
-  z-index:4;
-
 }
 
-
-/* caller name */
-
-.incoming-name{
-
-  position:relative;
-
-  margin-top:23px;
-
-  font-size:30px;
-
-  font-weight:700;
-
-  letter-spacing:.2px;
-
-  z-index:5;
-
-  text-shadow:
-    0 2px 12px
-    rgba(0,0,0,.7);
-
+#callerName{
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:7px;
 }
 
-
-/* incoming text */
-
-.incoming-text{
-
-  position:relative;
-
-  margin-top:8px;
-
-  color:#b9c0d0;
-
-  font-size:15px;
-
-  z-index:5;
-
-}
-
-
-/* small video icon */
-
-.incoming-camera{
-
-  display:inline-flex;
-
-  align-items:center;
-  justify-content:center;
-
-  width:22px;
-  height:22px;
-
-  margin-right:5px;
-
-  border-radius:50%;
-
-  background:
-    rgba(255,255,255,.08);
-
-  font-size:12px;
-
-}
-
-
-/* ringing indicator */
-
-.ringing-status{
-
-  position:relative;
-
-  margin-top:18px;
-
-  display:flex;
-
-  align-items:center;
-
-  gap:7px;
-
-  color:#8e98ad;
-
-  font-size:13px;
-
-  z-index:5;
-
-}
-
-.ringing-bars{
-
-  display:flex;
-
-  align-items:flex-end;
-
-  gap:3px;
-
-  height:15px;
-
-}
-
-.ringing-bars span{
-
-  width:3px;
-
-  border-radius:3px;
-
-  background:#42df85;
-
-  animation:
-    ringingBar
-    .9s
-    ease-in-out
-    infinite;
-
-}
-
-.ringing-bars span:nth-child(1){
-  height:7px;
-  animation-delay:0s;
-}
-
-.ringing-bars span:nth-child(2){
-  height:12px;
-  animation-delay:.15s;
-}
-
-.ringing-bars span:nth-child(3){
-  height:9px;
-  animation-delay:.3s;
-}
-
-.ringing-bars span:nth-child(4){
-  height:14px;
-  animation-delay:.45s;
-}
-
-@keyframes ringingBar{
-
-  0%,100%{
-    transform:scaleY(.45);
-    opacity:.45;
-  }
-
-  50%{
-    transform:scaleY(1);
-    opacity:1;
-  }
-
-}
-
-
-/* =========================
-   CALL ACTION AREA
-========================= */
-
-.swipe-area{
-
-  position:relative;
-
-  width:100%;
-  max-width:390px;
-
-  margin-top:auto;
-
-  padding-bottom:12px;
-
-  display:flex;
-
-  flex-direction:column;
-
-  gap:12px;
-
-  z-index:10;
-
-}
-
-
-/* swipe bar */
-
-.swipe-bar{
-
-  height:64px;
-
-  width:100%;
-
-  border-radius:34px;
-
-  position:relative;
-
-  display:flex;
-
-  align-items:center;
-
-  overflow:hidden;
-
-  user-select:none;
-
-  touch-action:pan-y;
-
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease;
-
-}
-
-.swipe-bar:active{
-
-  transform:scale(.98);
-
-}
-
-
-/* decline */
-
-.decline-swipe{
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(200,25,40,.25),
-      rgba(25,28,38,.82)
-    );
-
-  border:
-    1px solid
-    rgba(255,55,70,.38);
-
-  box-shadow:
-    0 8px 25px
-    rgba(0,0,0,.25);
-
-}
-
-
-/* answer */
-
-.answer-swipe{
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(25,28,38,.82),
-      rgba(0,165,80,.25)
-    );
-
-  border:
-    1px solid
-    rgba(35,230,120,.38);
-
-  box-shadow:
-    0 8px 25px
-    rgba(0,0,0,.25);
-
-}
-
-
-/* swipe button */
-
-.swipe-icon{
-
-  position:absolute;
-
-  width:54px;
-  height:54px;
-
-  top:5px;
-
-  border-radius:50%;
-
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
-  color:#fff;
-
-  font-size:22px;
-
-  font-weight:bold;
-
-  z-index:3;
-
-  box-shadow:
-    0 5px 18px
-    rgba(0,0,0,.45);
-
-}
-
-
-/* decline icon */
-
-.decline-swipe .swipe-icon{
-
-  left:5px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #ff3948,
-      #d80018
-    );
-
-}
-
-
-/* answer icon */
-
-.answer-swipe .swipe-icon{
-
-  right:5px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #29e978,
-      #0ab94e
-    );
-
-}
-
-
-/* labels */
-
-.swipe-label{
-
-  position:absolute;
-
-  width:100%;
-
-  text-align:center;
-
+.caller-status{
+  color:#aaa;
   font-size:14px;
-
-  font-weight:600;
-
-  color:#d9deea;
-
-  pointer-events:none;
-
+  margin-bottom:28px;
 }
 
+/* NORMAL BUTTONS — NO SWIPE */
 
-/* arrows */
-
-.swipe-arrows{
-
-  position:absolute;
-
-  font-size:22px;
-
-  font-weight:bold;
-
-  opacity:.9;
-
-  pointer-events:none;
-
-  letter-spacing:-3px;
-
+.call-buttons{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:24px;
 }
 
-.decline-swipe .swipe-arrows{
-
-  left:78px;
-
-  color:#ff5260;
-
+.call-button{
+  border:0;
+  min-width:125px;
+  height:52px;
+  padding:0 22px;
+  border-radius:28px;
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
 }
 
-.answer-swipe .swipe-arrows{
-
-  right:78px;
-
-  color:#42eb8a;
-
+.call-button:active{
+  transform:scale(.96);
 }
 
-
-/* hint */
-
-.swipe-hint{
-
-  margin-top:2px;
-
-  color:#697386;
-
-  font-size:11px;
-
+.decline-button{
+  background:#e90000;
 }
 
+.answer-button{
+  background:#16b957;
+}
 
 /* =========================
-   LIVE VIDEO
+   RED LIVE VIDEO
 ========================= */
 
-#liveSoundPage{
-
-  position:relative;
-
-  background:#000;
-
+#redLiveVideoPage{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:90;
   min-height:100vh;
-
-  align-items:center;
-
-  justify-content:center;
-
-}
-
-.liveBadgeTop{
-
-  position:absolute;
-
-  top:15px;
-
-  left:15px;
-
-  background:#e00000;
-
-  color:#fff;
-
-  padding:7px 11px;
-
-  border-radius:5px;
-
-  font-size:13px;
-
-  font-weight:bold;
-
-  z-index:20;
-
-}
-
-.greenLiveDot{
-
-  display:inline-block;
-
-  width:8px;
-
-  height:8px;
-
-  border-radius:50%;
-
-  background:#20e070;
-
-  margin-right:5px;
-
-  animation:blinkGreen 1s infinite;
-
-}
-
-#liveSoundVideo{
-
-  width:100%;
-
-  max-height:100vh;
-
-  object-fit:contain;
-
   background:#000;
-
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
+#redLiveVideo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  background:#000;
+}
+
+.red-live-badge{
+  position:absolute;
+  top:18px;
+  left:18px;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 11px;
+  border-radius:7px;
+  background:#e90000;
+  color:#fff;
+  font-size:13px;
+  font-weight:900;
+}
+
+.red-live-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#fff;
+}
 
 /* =========================
-   BLACK LIVE
+   BLACK LIVE PAGE
 ========================= */
 
 #blackLivePage{
-
-  position:relative;
-
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:80;
   min-height:100vh;
-
   background:#000;
-
   align-items:center;
-
   justify-content:center;
-
   flex-direction:column;
-
 }
 
-.blackLiveText{
-
-  color:#aaa;
-
-  font-size:18px;
-
+.black-live-label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 13px;
+  border-radius:7px;
+  background:#e90000;
+  color:#fff;
+  font-size:14px;
+  font-weight:900;
 }
 
+.black-live-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#fff;
+  animation:blackDotPulse 1s infinite;
+}
+
+@keyframes blackDotPulse{
+  0%,100%{
+    opacity:1;
+  }
+  50%{
+    opacity:.35;
+  }
+}
+
+.black-live-text{
+  margin-top:18px;
+  color:#777;
+  font-size:13px;
+}
+
+/* hidden sound video */
+#blackLiveSoundVideo{
+  position:fixed;
+  width:1px;
+  height:1px;
+  opacity:0;
+  pointer-events:none;
+  left:-100px;
+  top:-100px;
+}
 
 /* =========================
-   INSUFFICIENT
+   INSUFFICIENT PAGE
 ========================= */
 
 #insufficientPage{
-
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:70;
   min-height:100vh;
-
-  background:#000;
-
+  background:#050505;
   align-items:center;
-
   justify-content:center;
-
   flex-direction:column;
-
   text-align:center;
-
-  padding:25px;
-
 }
 
-.insufficientTitle{
-
-  font-size:23px;
-
-  font-weight:bold;
-
-  margin-bottom:12px;
-
+.insufficient-title{
+  color:#ff3030;
+  font-size:27px;
+  font-weight:900;
+  margin-bottom:10px;
 }
 
-.insufficientText{
-
+.insufficient-text{
   color:#aaa;
-
   font-size:14px;
-
 }
 
+#insufficientTimer{
+  margin-top:12px;
+  color:#fff;
+  font-size:14px;
+}
 
 /* =========================
-   SMALL PHONES
+   MOBILE
 ========================= */
 
-@media(max-width:360px){
+@media(max-width:600px){
 
-  .photoGrid{
-    gap:6px;
+  .top-bar{
+    height:54px;
+    padding:0 10px;
   }
 
-  .photoCard{
-    min-height:210px;
+  .site-title{
+    font-size:18px;
   }
 
-  .photoCard img{
-    height:155px;
+  #photoGrid{
+    grid-template-columns:repeat(3,1fr);
+    gap:3px;
+    padding:3px;
+  }
+
+  .photo-name{
+    font-size:12px;
+  }
+
+  .photo-meta{
+    font-size:10px;
+  }
+
+  .photo-play{
+    width:42px;
+    height:42px;
+    font-size:18px;
   }
 
   .caller-photo-wrap{
-    width:170px;
-    height:170px;
-    margin-top:24px;
+    width:130px;
+    height:130px;
   }
 
-  .incoming-photo{
-    width:142px;
-    height:142px;
+  #callerName{
+    font-size:22px;
   }
 
-  .incoming-name{
-    font-size:24px;
+  .call-buttons{
+    gap:14px;
+    width:100%;
+    padding:0 15px;
   }
 
-  .swipe-bar{
-    height:60px;
-  }
-
-  .swipe-icon{
-    width:50px;
+  .call-button{
+    min-width:0;
+    flex:1;
+    max-width:145px;
     height:50px;
   }
-
-  .swipe-label{
-    font-size:13px;
-  }
-
 }
-
 </style>
-
 </head>
 
 <body>
-
 
 <!-- =========================
      WELCOME
 ========================= -->
 
-<div
-  id="welcomeScreen"
-  class="page">
-
-  <div class="welcomeTitle">
-    WELCOME
-  </div>
-
-  <div class="loadingText">
-    Loading...
-  </div>
-
-</div>
-
+<section id="welcomeScreen">
+  <div class="welcome-title">Welcome</div>
+  <div class="welcome-subtitle">Connecting you to live profiles...</div>
+</section>
 
 <!-- =========================
      LIVE PHOTOS
 ========================= -->
 
-<div
-  id="photosPage"
-  class="page">
+<section id="photosPage">
 
-  <div class="topBar">
+  <div class="top-bar">
 
-    <div class="onlineText">
-
-      <span class="onlineDot"></span>
-
-      <span id="onlineNumber">
-        21
-      </span>
-
-      online
-
+    <div class="site-title">
+      Live
     </div>
 
-    <div class="liveTitle">
+    <div class="online-box">
+      <span class="online-dot"></span>
+      <span id="onlineNumber">21 online</span>
+    </div>
+
+    <div class="live-header">
       LIVE
     </div>
 
   </div>
 
-  <div
-    id="photoGrid"
-    class="photoGrid">
-  </div>
+  <div id="photoGrid"></div>
 
-</div>
-
+</section>
 
 <!-- =========================
-     MODERN INCOMING CALL
+     INCOMING CALL
 ========================= -->
 
-<div
-  id="incomingCall"
-  class="page">
+<section id="incomingCall">
 
-  <div class="incoming-screen">
+  <div class="incoming-label">
+    INCOMING LIVE CALL
+  </div>
 
+  <div class="caller-photo-wrap">
+    <img id="callerImage" src="" alt="Caller">
+  </div>
 
-    <div class="incoming-live">
+  <div id="callerName">
+    Incoming Call
+  </div>
 
-      <span
-        class="incoming-live-dot">
-      </span>
+  <div class="caller-status">
+    Someone is calling you...
+  </div>
 
-      LIVE VIDEO CALL
+  <div class="call-buttons">
 
-    </div>
+    <button
+      id="declineButton"
+      class="call-button decline-button"
+      type="button">
+      Decline
+    </button>
 
-
-    <div class="caller-photo-wrap">
-
-      <img
-        id="callerImage"
-        class="incoming-photo"
-        src=""
-        alt="Caller">
-
-    </div>
-
-
-    <div
-      id="callerName"
-      class="incoming-name">
-    </div>
-
-
-    <div class="incoming-text">
-
-      <span class="incoming-camera">
-        ▣
-      </span>
-
-      Incoming video call
-
-    </div>
-
-
-    <div class="ringing-status">
-
-      <div class="ringing-bars">
-
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-
-      </div>
-
-      Ringing...
-
-    </div>
-
-
-    <div class="swipe-area">
-
-
-      <div
-        id="declineSwipe"
-        class="swipe-bar decline-swipe">
-
-        <div class="swipe-icon">
-          ☎
-        </div>
-
-        <div class="swipe-arrows">
-          ‹ ‹ ‹
-        </div>
-
-        <div class="swipe-label">
-          Swipe left to decline
-        </div>
-
-      </div>
-
-
-      <div
-        id="answerSwipe"
-        class="swipe-bar answer-swipe">
-
-        <div class="swipe-label">
-          Swipe right to answer
-        </div>
-
-        <div class="swipe-arrows">
-          › › ›
-        </div>
-
-        <div class="swipe-icon">
-          ▣
-        </div>
-
-      </div>
-
-
-      <div class="swipe-hint">
-        Swipe the control to respond
-      </div>
-
-
-    </div>
+    <button
+      id="answerButton"
+      class="call-button answer-button"
+      type="button">
+      Answer
+    </button>
 
   </div>
 
-</div>
-
+</section>
 
 <!-- =========================
-     FIRST LIVE VIDEO
+     RED LIVE VIDEO
 ========================= -->
 
-<div
-  id="liveSoundPage"
-  class="page">
+<section id="redLiveVideoPage">
 
-  <div class="liveBadgeTop">
-
-    <span class="greenLiveDot"></span>
-
+  <div class="red-live-badge">
+    <span class="red-live-dot"></span>
     LIVE
-
   </div>
 
   <video
-    id="liveSoundVideo"
+    id="redLiveVideo"
     playsinline
     preload="auto">
-
-    <source
-      src="preview_20_seconds.mp4"
-      type="video/mp4">
-
+    <source src="preview_20_seconds.mp4" type="video/mp4">
   </video>
 
-</div>
-
+</section>
 
 <!-- =========================
-     SECOND BLACK LIVE
+     BLACK LIVE
 ========================= -->
 
-<div
-  id="blackLivePage"
-  class="page">
+<section id="blackLivePage">
 
-  <div class="liveBadgeTop">
-
-    <span class="greenLiveDot"></span>
-
+  <div class="black-live-label">
+    <span class="black-live-dot"></span>
     LIVE
-
   </div>
 
-  <div class="blackLiveText">
-    Loading...
+  <div class="black-live-text">
+    Live connection
   </div>
 
-</div>
+  <video
+    id="blackLiveSoundVideo"
+    playsinline
+    preload="auto">
+    <source src="preview_20_seconds.mp4" type="video/mp4">
+  </video>
 
+  <audio
+    id="blackLiveAudio"
+    preload="auto">
+  </audio>
+
+</section>
 
 <!-- =========================
-     INSUFFICIENT
+     INSUFFICIENT MINUTES
 ========================= -->
 
-<div
-  id="insufficientPage"
-  class="page">
+<section id="insufficientPage">
 
-  <div class="insufficientTitle">
+  <div class="insufficient-title">
     Insufficient Minutes
   </div>
 
-  <div class="insufficientText">
-    You don't have enough minutes
-    for this call.
+  <div class="insufficient-text">
+    You need more minutes to continue the live call.
   </div>
 
-</div>
+  <div id="insufficientTimer">
+    2
+  </div>
 
-
-<!-- =========================
-     RANDOM AUDIO
-========================= -->
-
-<audio
-  id="backgroundSound"
-  preload="auto"
-  playsinline>
-</audio>
-
+</section>
 
 <script>
-  
+  const IMAGE_BASE =
+  "https://raw.githubusercontent.com/agnesweb2026/My-referral-website/main/";
+
 const PAYMENT_PAGE_URL = "payment.html";
 
-const SAMPLE_DURATION = 20000;
-const INSUFFICIENT_DURATION = 2000;
+const RED_LIVE_DURATION = 5000;
 const BLACK_LIVE_DURATION = 5000;
-const PHOTO_WAIT_DURATION = 20000;
+const INSUFFICIENT_DURATION = 2000;
+const NEXT_CALL_DELAY = 20000;
 
-const SAMPLE_STORAGE_KEY = "myReferralSampleWatched";
-const RED_LIVE_STORAGE_KEY = "redLiveVideoSeen";
+const RED_LIVE_SEEN_KEY = "redLiveVideoSeen";
 const REFERRAL_STORAGE_KEY = "referralEmployeeId";
 
-/* =========================
-   REFERRAL TRACKING
-========================= */
+const VALID_REFERRALS = {
+  "REF-A7K2": "joshua1",
+  "REF-B4M8": "joshua2",
+  "REF-C9P3": "joshua3",
+  "REF-D2X6": "joshua4",
+  "REF-E5Q1": "joshua5",
+  "REF-F8L4": "joshua6",
+  "REF-G3N7": "joshua7",
+  "REF-H6R2": "joshua8",
+  "REF-J9T5": "joshua9",
+  "REF-K4W8": "joshua10"
+};
 
-const referralParams = new URLSearchParams(window.location.search);
 
-const urlReferral =
-  referralParams.get("employee") ||
-  referralParams.get("ref");
+/* =====================================
+   PROFILE DATA
+===================================== */
 
-const VALID_REFERRALS = [
-  "REF-A7K2",
-  "REF-B4M8",
-  "REF-C9P3",
-  "REF-D2X6",
-  "REF-E5Q1",
-  "REF-F8L4",
-  "REF-G3N7",
-  "REF-H6R2",
-  "REF-J9T5",
-  "REF-K4W8"
-];
+const PROFILES = [
+  {
+    name: "Cute",
+    age: 23,
+    country: "Kenya",
+    flag: "🇰🇪",
+    image: "Cute.jpg"
+  },
+  {
+    name: "Becky",
+    age: 25,
+    country: "Kenya",
+    flag: "🇰🇪",
+    image: "Becky.jpg"
+  },
+  {
+    name: "Dorry",
+    age: 22,
+    country: "Kenya",
+    flag: "🇰🇪",
+    image: "Dorry.jpg"
+  },
+  {
+    name: "Sharon",
+    age: 24,
+    country: "Kenya",
+    flag: "🇰🇪",
+    image: "Sharon.jpg"
+  },
+  {
+    name: "Lilian",
+    age: 26,
+    country: "Kenya",
+    flag: "🇰🇪",
+    image: "Lilian.jpg"
+  },
 
-let referralEmployeeId = null;
+  {
+    name: "Asha",
+    age: 24,
+    country: "Tanzania",
+    flag: "🇹🇿",
+    image: "Asha.jpg"
+  },
+  {
+    name: "Neema",
+    age: 22,
+    country: "Tanzania",
+    flag: "🇹🇿",
+    image: "Neema.jpg"
+  },
+  {
+    name: "Zawadi",
+    age: 27,
+    country: "Tanzania",
+    flag: "🇹🇿",
+    image: "Zawadi.jpg"
+  },
+  {
+    name: "Rehema",
+    age: 23,
+    country: "Tanzania",
+    flag: "🇹🇿",
+    image: "Rehema.jpg"
+  },
 
-if (
-  urlReferral &&
-  VALID_REFERRALS.includes(urlReferral)
-) {
-  referralEmployeeId = urlReferral;
+  {
+    name: "Blessing",
+    age: 24,
+    country: "Nigeria",
+    flag: "🇳🇬",
+    image: "Blessing.jpg"
+  },
+  {
+    name: "Favour",
+    age: 26,
+    country: "Nigeria",
+    flag: "🇳🇬",
+    image: "Favour.jpg"
+  },
+  {
+    name: "Peace",
+    age: 23,
+    country: "Nigeria",
+    flag: "🇳🇬",
+    image: "Peace.jpg"
+  },
+  {
+    name: "Joy",
+    age: 25,
+    country: "Nigeria",
+    flag: "🇳🇬",
+    image: "Joy.jpg"
+  },
 
-  localStorage.setItem(
-    REFERRAL_STORAGE_KEY,
-    urlReferral
-  );
-} else {
+  {
+    name: "Grace",
+    age: 22,
+    country: "Congo",
+    flag: "🇨🇩",
+    image: "Grace.jpg"
+  },
+  {
+    name: "Mimi",
+    age: 24,
+    country: "Congo",
+    flag: "🇨🇩",
+    image: "Mimi.jpg"
+  },
+  {
+    name: "Nadia",
+    age: 27,
+    country: "Congo",
+    flag: "🇨🇩",
+    image: "Nadia.jpg"
+  },
+  {
+    name: "Bella",
+    age: 23,
+    country: "Congo",
+    flag: "🇨🇩",
+    image: "Bella.jpg"
+  },
+  {
+    name: "Princess",
+    age: 26,
+    country: "Congo",
+    flag: "🇨🇩",
+    image: "Princess.jpg"
+  },
 
-  const savedReferral =
-    localStorage.getItem(
-      REFERRAL_STORAGE_KEY
-    );
+  {
+    name: "Emily",
+    age: 24,
+    country: "Canada",
+    flag: "🇨🇦",
+    image: "Emily.jpg"
+  },
+  {
+    name: "Sophie",
+    age: 25,
+    country: "Canada",
+    flag: "🇨🇦",
+    image: "Sophie.jpg"
+  },
 
-  if (
-    savedReferral &&
-    VALID_REFERRALS.includes(savedReferral)
-  ) {
-    referralEmployeeId = savedReferral;
+  {
+    name: "Thandi",
+    age: 23,
+    country: "South Africa",
+    flag: "🇿🇦",
+    image: "Thandi.jpg"
+  },
+  {
+    name: "Lerato",
+    age: 26,
+    country: "South Africa",
+    flag: "🇿🇦",
+    image: "Lerato.jpg"
+  },
+
+  {
+    name: "Ashley",
+    age: 24,
+    country: "USA",
+    flag: "🇺🇸",
+    image: "Ashley.jpg"
+  },
+  {
+    name: "Jessica",
+    age: 27,
+    country: "USA",
+    flag: "🇺🇸",
+    image: "Jessica.jpg"
   }
-}
-
-
-/* =========================
-   PHOTO DATA
-========================= */
-
-const PHOTO_NAMES = [
-  "Cute",
-  "Becky",
-  "Dorry",
-  "Jenny",
-  "Ashley",
-  "Mary",
-  "Cindy",
-  "Mercy",
-  "Linda",
-  "Sharon",
-  "Brenda",
-  "Diana",
-  "Faith",
-  "Joy",
-  "Lucy",
-  "Angela",
-  "Betty",
-  "Nancy",
-  "Winnie",
-  "Ann",
-  "Carol",
-  "Irene",
-  "Rose",
-  "Fellow"
-];
-
-const PHOTO_AGES = [
-  19,23,25,18,24,24,
-  26,30,27,23,29,33,
-  25,25,31,25,23,19,
-  22,24,23,27,28,21
-];
-
-const PHOTO_COUNTRIES = [
-  "🇰🇪","🇰🇪","🇰🇪","🇰🇪","🇰🇪",
-  "🇹🇿","🇹🇿","🇹🇿","🇹🇿",
-  "🇳🇬","🇳🇬","🇳🇬","🇳🇬",
-  "🇨🇩","🇨🇩","🇨🇩","🇨🇩","🇨🇩",
-  "🇨🇦","🇨🇦",
-  "🇿🇦","🇿🇦",
-  "🇺🇸","🇺🇸"
 ];
 
 
-/* =========================
-   GITHUB IMAGE SETTINGS
-========================= */
+/* =====================================
+   STATE
+===================================== */
 
-const GITHUB_OWNER = "agnesweb2026";
-const GITHUB_REPO = "My-referral-website";
-const GITHUB_BRANCH = "main";
+let timers = [];
 
-const IMAGE_BASE =
-  `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/`;
+let currentCallerIndex = 0;
+
+let onlineInterval = null;
+
+let referralCode = null;
+
+let referralEmployee = null;
 
 
-/* =========================
+/* =====================================
    ELEMENTS
-========================= */
+===================================== */
 
 const welcomeScreen =
   document.getElementById("welcomeScreen");
 
 const photosPage =
   document.getElementById("photosPage");
+
+const photoGrid =
+  document.getElementById("photoGrid");
 
 const incomingCall =
   document.getElementById("incomingCall");
@@ -1504,20 +909,23 @@ const callerImage =
 const callerName =
   document.getElementById("callerName");
 
-const answerSwipe =
-  document.getElementById("answerSwipe");
+const declineButton =
+  document.getElementById("declineButton");
 
-const declineSwipe =
-  document.getElementById("declineSwipe");
+const answerButton =
+  document.getElementById("answerButton");
 
-const livePhotos =
-  document.getElementById("livePhotos");
+const redLiveVideoPage =
+  document.getElementById("redLiveVideoPage");
 
-const onlineCount =
-  document.getElementById("onlineCount");
+const redLiveVideo =
+  document.getElementById("redLiveVideo");
 
-const blackLive =
-  document.getElementById("blackLive");
+const blackLivePage =
+  document.getElementById("blackLivePage");
+
+const blackLiveSoundVideo =
+  document.getElementById("blackLiveSoundVideo");
 
 const blackLiveAudio =
   document.getElementById("blackLiveAudio");
@@ -1528,329 +936,456 @@ const insufficientPage =
 const insufficientTimer =
   document.getElementById("insufficientTimer");
 
-const redLiveVideo =
-  document.getElementById("redLiveVideo");
+const onlineNumber =
+  document.getElementById("onlineNumber");
 
 
-/* =========================
-   STATE
-========================= */
+/* =====================================
+   REFERRAL TRACKING
+===================================== */
 
-let currentCaller = 0;
-let callTimer = null;
-let photoTimer = null;
-let onlineTimer = null;
-let audioTimer = null;
+function loadReferral() {
 
-let answeredFirstCall = false;
-let callInProgress = false;
+  const params =
+    new URLSearchParams(window.location.search);
 
+  const fromURL =
+    params.get("employee") ||
+    params.get("ref");
 
-/* =========================
-   HELPERS
-========================= */
+  if (
+    fromURL &&
+    VALID_REFERRALS[fromURL]
+  ) {
 
-function hideAllScreens(){
+    referralCode = fromURL;
 
-  if(welcomeScreen)
-    welcomeScreen.style.display = "none";
+    referralEmployee =
+      VALID_REFERRALS[fromURL];
 
-  if(photosPage)
-    photosPage.style.display = "none";
+    localStorage.setItem(
+      REFERRAL_STORAGE_KEY,
+      referralCode
+    );
 
-  if(incomingCall)
-    incomingCall.style.display = "none";
-
-  if(blackLive)
-    blackLive.style.display = "none";
-
-  if(insufficientPage)
-    insufficientPage.style.display = "none";
-}
-
-
-function clearTimers(){
-
-  if(callTimer){
-    clearTimeout(callTimer);
-    callTimer = null;
+    return;
   }
 
-  if(photoTimer){
-    clearTimeout(photoTimer);
-    photoTimer = null;
-  }
+  const saved =
+    localStorage.getItem(
+      REFERRAL_STORAGE_KEY
+    );
 
-  if(onlineTimer){
-    clearInterval(onlineTimer);
-    onlineTimer = null;
-  }
+  if (
+    saved &&
+    VALID_REFERRALS[saved]
+  ) {
 
-  if(audioTimer){
-    clearTimeout(audioTimer);
-    audioTimer = null;
+    referralCode = saved;
+
+    referralEmployee =
+      VALID_REFERRALS[saved];
   }
 }
 
 
-function stopVideo(video){
+/* =====================================
+   HIDE ALL MAIN SCREENS
+===================================== */
 
-  if(!video) return;
+function hideAllScreens() {
 
-  try{
-    video.pause();
-    video.currentTime = 0;
-  }catch(e){}
+  welcomeScreen.style.display = "none";
+
+  photosPage.style.display = "none";
+
+  incomingCall.style.display = "none";
+
+  redLiveVideoPage.style.display = "none";
+
+  blackLivePage.style.display = "none";
+
+  insufficientPage.style.display = "none";
 }
 
 
-function stopAudio(){
+/* =====================================
+   TIMER MANAGEMENT
+===================================== */
 
-  if(!blackLiveAudio) return;
+function addTimer(callback, delay) {
 
-  try{
-    blackLiveAudio.pause();
-    blackLiveAudio.currentTime = 0;
-  }catch(e){}
+  const timer =
+    setTimeout(callback, delay);
+
+  timers.push(timer);
+
+  return timer;
 }
 
 
-/* =========================
-   ONLINE NUMBER
-========================= */
+function clearTimers() {
 
-function updateOnline(){
+  timers.forEach(timer => {
+    clearTimeout(timer);
+  });
 
-  if(!onlineCount) return;
-
-  const number =
-    Math.floor(
-      Math.random() * 8
-    ) + 18;
-
-  onlineCount.textContent =
-    number;
+  timers = [];
 }
 
 
-/* =========================
+/* =====================================
    WELCOME
-========================= */
+===================================== */
 
-function startWebsite(){
+function showWelcome() {
 
   hideAllScreens();
-  clearTimers();
 
-  if(welcomeScreen)
-    welcomeScreen.style.display = "flex";
+  welcomeScreen.style.display = "flex";
 
-  setTimeout(() => {
+  addTimer(() => {
 
-    showIncomingCall();
+    showLivePhotos();
 
   }, 3000);
 }
 
 
-/* =========================
-   INCOMING CALL
-========================= */
+/* =====================================
+   ONLINE NUMBER
+===================================== */
 
-function showIncomingCall(){
+function updateOnlineNumber() {
+
+  const value =
+    Math.floor(
+      Math.random() * 8
+    ) + 18;
+
+  onlineNumber.textContent =
+    value + " online";
+}
+
+
+function startOnlineCounter() {
+
+  if (onlineInterval) {
+    clearInterval(onlineInterval);
+  }
+
+  onlineNumber.textContent =
+    "21 online";
+
+  onlineInterval =
+    setInterval(() => {
+
+      updateOnlineNumber();
+
+    }, 10000);
+}
+
+
+/* =====================================
+   BUILD PHOTO GRID
+===================================== */
+
+function buildPhotoGrid() {
+
+  photoGrid.innerHTML = "";
+
+  PROFILES.forEach((profile, index) => {
+
+    const card =
+      document.createElement("div");
+
+    card.className = "photoCard";
+
+    card.innerHTML = `
+      <div class="photo-image-wrap">
+
+        <img
+          class="profile-photo"
+          src="${IMAGE_BASE}${encodeURIComponent(profile.image)}"
+          alt="${profile.name}"
+          loading="lazy"
+        >
+
+        <div class="live-badge">
+          LIVE
+        </div>
+
+        <div class="photo-play">
+          ▶
+        </div>
+
+      </div>
+
+      <div class="photo-info">
+
+        <div class="photo-name">
+          ${profile.name}
+        </div>
+
+        <div class="photo-meta">
+          ${profile.flag} ${profile.country} · ${profile.age}
+        </div>
+
+      </div>
+    `;
+
+    const image =
+      card.querySelector(".profile-photo");
+
+    image.addEventListener(
+      "error",
+      () => {
+
+        const baseName =
+          profile.image.replace(
+            /\.[^/.]+$/,
+            ""
+          );
+
+        const extensions = [
+          ".png",
+          ".webp",
+          ".jpeg"
+        ];
+
+        const current =
+          image.dataset.fallbackIndex
+            ? Number(image.dataset.fallbackIndex)
+            : 0;
+
+        if (
+          current < extensions.length
+        ) {
+
+          image.dataset.fallbackIndex =
+            String(current + 1);
+
+          image.src =
+            IMAGE_BASE +
+            encodeURIComponent(
+              baseName + extensions[current]
+            );
+
+        } else {
+
+          image.style.background =
+            "#171717";
+
+        }
+      }
+    );
+
+    card.addEventListener(
+      "click",
+      () => {
+
+        openPaymentPage();
+
+      }
+    );
+
+    photoGrid.appendChild(card);
+
+  });
+}
+
+
+/* =====================================
+   LIVE PHOTOS
+===================================== */
+
+function showLivePhotos() {
 
   clearTimers();
-
-  callInProgress = true;
 
   hideAllScreens();
 
-  if(incomingCall)
-    incomingCall.style.display = "flex";
+  photosPage.style.display = "block";
 
-  const index =
-    currentCaller %
-    PHOTO_NAMES.length;
+  buildPhotoGrid();
 
-  if(callerName){
+  startOnlineCounter();
 
-    callerName.textContent =
-      PHOTO_NAMES[index];
-  }
-
-  if(callerImage){
-
-    const imageName =
-      PHOTO_NAMES[index]
-        .toLowerCase()
-        .replace(/\s+/g,"");
-
-    callerImage.src =
-      IMAGE_BASE +
-      imageName +
-      ".jpg";
-
-    callerImage.onerror = () => {
-
-      callerImage.src =
-        IMAGE_BASE +
-        imageName +
-        ".png";
-    };
-  }
-
-  if(answerSwipe)
-    answerSwipe.style.transform =
-      "translateX(0)";
-
-  if(declineSwipe)
-    declineSwipe.style.transform =
-      "translateX(0)";
-
-  /*
-     Ring for 7 seconds.
-     If nobody answers, return
-     to live photos.
-  */
-
-  callTimer = setTimeout(() => {
-
-    if(callInProgress){
-
-      callInProgress = false;
-
-      showLivePhotos();
-
-    }
-
-  }, 7000);
+  scheduleNextIncomingCall();
 }
 
 
-/* =========================
-   ANSWER CALL
-========================= */
+/* =====================================
+   NEXT INCOMING CALL
+===================================== */
 
-function answerCall(){
+function scheduleNextIncomingCall() {
 
-  if(!callInProgress)
-    return;
+  addTimer(() => {
 
-  callInProgress = false;
+    showIncomingCall();
 
-  clearTimers();
-
-  answeredFirstCall = true;
-
-  /*
-     First answered call:
-     show red LIVE video only once.
-  */
-
-  const redSeen =
-    localStorage.getItem(
-      RED_LIVE_STORAGE_KEY
-    );
-
-  if(!redSeen){
-
-    localStorage.setItem(
-      RED_LIVE_STORAGE_KEY,
-      "1"
-    );
-
-    showRedLiveVideo();
-
-  }else{
-
-    showBlackLive();
-
-  }
+  }, NEXT_CALL_DELAY);
 }
 
 
-/* =========================
-   DECLINE CALL
-========================= */
+/* =====================================
+   INCOMING CALL
+===================================== */
 
-function declineCall(){
+function showIncomingCall() {
 
-  callInProgress = false;
+  hideAllScreens();
 
-  clearTimers();
+  const profile =
+    PROFILES[
+      currentCallerIndex %
+      PROFILES.length
+    ];
+
+  callerImage.src =
+    IMAGE_BASE +
+    encodeURIComponent(
+      profile.image
+    );
+
+  callerName.textContent =
+    profile.name;
+
+  incomingCall.style.display =
+    "flex";
+}
+
+
+/* =====================================
+   DECLINE
+===================================== */
+
+function declineCall() {
+
+  hideAllScreens();
 
   showLivePhotos();
 }
 
 
-/* =========================
-   RED LIVE VIDEO
-========================= */
+/* =====================================
+   ANSWER
+===================================== */
 
-function showRedLiveVideo(){
+function answerCall() {
 
   clearTimers();
 
   hideAllScreens();
 
-  if(redLiveVideo){
+  const alreadySeen =
+    localStorage.getItem(
+      RED_LIVE_SEEN_KEY
+    );
 
-    redLiveVideo.style.display =
-      "flex";
+  currentCallerIndex++;
 
-    try{
+  if (!alreadySeen) {
 
-      redLiveVideo.currentTime = 0;
+    localStorage.setItem(
+      RED_LIVE_SEEN_KEY,
+      "1"
+    );
 
-      const playPromise =
-        redLiveVideo.play();
+    showRedLiveVideo();
 
-      if(
-        playPromise &&
-        playPromise.catch
-      ){
-        playPromise.catch(
-          () => {}
-        );
-      }
-
-    }catch(e){}
-  }
-
-  /*
-     Red LIVE video is shown
-     only once.
-  */
-
-  callTimer = setTimeout(() => {
-
-    stopVideo(redLiveVideo);
+  } else {
 
     showBlackLive();
 
-  }, 5000);
+  }
 }
 
 
-/* =========================
-   BLACK LIVE
-========================= */
+/* =====================================
+   RED LIVE VIDEO
+===================================== */
 
-function showBlackLive(){
+function showRedLiveVideo() {
+
+  hideAllScreens();
+
+  redLiveVideoPage.style.display =
+    "flex";
+
+  try {
+
+    redLiveVideo.currentTime = 0;
+
+    const playPromise =
+      redLiveVideo.play();
+
+    if (
+      playPromise &&
+      typeof playPromise.catch === "function"
+    ) {
+
+      playPromise.catch(() => {});
+
+    }
+
+  } catch (error) {}
+
+  addTimer(() => {
+
+    try {
+
+      redLiveVideo.pause();
+
+      redLiveVideo.currentTime = 0;
+
+    } catch (error) {}
+
+    showBlackLive();
+
+  }, RED_LIVE_DURATION);
+}
+
+
+/* =====================================
+   BLACK LIVE
+===================================== */
+
+function showBlackLive() {
 
   clearTimers();
 
   hideAllScreens();
 
-  if(blackLive)
-    blackLive.style.display =
-      "flex";
+  blackLivePage.style.display =
+    "flex";
 
-  playLiveAudio();
+  try {
 
-  callTimer = setTimeout(() => {
+    blackLiveSoundVideo.currentTime = 0;
 
-    stopAudio();
+    blackLiveSoundVideo.muted = false;
+
+    blackLiveSoundVideo.volume = 1;
+
+    const playPromise =
+      blackLiveSoundVideo.play();
+
+    if (
+      playPromise &&
+      typeof playPromise.catch === "function"
+    ) {
+
+      playPromise.catch(() => {});
+
+    }
+
+  } catch (error) {}
+
+  addTimer(() => {
+
+    stopBlackLiveSound();
 
     showInsufficient();
 
@@ -1858,276 +1393,82 @@ function showBlackLive(){
 }
 
 
-/* =========================
-   LIVE AUDIO
-========================= */
+/* =====================================
+   STOP BLACK LIVE SOUND
+===================================== */
 
-function playLiveAudio(){
+function stopBlackLiveSound() {
 
-  if(!blackLiveAudio)
-    return;
+  try {
 
-  try{
+    blackLiveSoundVideo.pause();
+
+    blackLiveSoundVideo.currentTime = 0;
+
+  } catch (error) {}
+
+  try {
+
+    blackLiveAudio.pause();
 
     blackLiveAudio.currentTime = 0;
 
-    const p =
-      blackLiveAudio.play();
-
-    if(
-      p &&
-      p.catch
-    ){
-      p.catch(
-        () => {}
-      );
-    }
-
-  }catch(e){}
+  } catch (error) {}
 }
 
 
-/* =========================
+/* =====================================
    INSUFFICIENT MINUTES
-========================= */
+===================================== */
 
-function showInsufficient(){
+function showInsufficient() {
 
   clearTimers();
 
   hideAllScreens();
 
-  if(insufficientPage)
-    insufficientPage.style.display =
-      "flex";
+  insufficientPage.style.display =
+    "flex";
 
   let seconds = 2;
 
-  if(insufficientTimer)
-    insufficientTimer.textContent =
-      seconds;
+  insufficientTimer.textContent =
+    seconds;
 
-  const interval =
+  const countdown =
     setInterval(() => {
 
       seconds--;
 
-      if(insufficientTimer)
+      if (seconds <= 0) {
+
+        clearInterval(countdown);
+
+        insufficientTimer.textContent =
+          "0";
+
+      } else {
+
         insufficientTimer.textContent =
           seconds;
 
-      if(seconds <= 0){
-
-        clearInterval(interval);
-
-        showLivePhotos();
       }
 
-    },1000);
+    }, 1000);
+
+  addTimer(() => {
+
+    showLivePhotos();
+
+  }, INSUFFICIENT_DURATION);
 }
 
 
-/* =========================
-   LIVE PHOTOS
-========================= */
+/* =====================================
+   OPEN PAYMENT PAGE
+===================================== */
 
-function showLivePhotos(){
-
-  clearTimers();
-
-  callInProgress = false;
-
-  hideAllScreens();
-
-  if(photosPage)
-    photosPage.style.display =
-      "block";
-
-  buildPhotoGrid();
-
-  updateOnline();
-
-  onlineTimer =
-    setInterval(
-      updateOnline,
-      10000
-    );
-
-  /*
-     Wait before next incoming call.
-  */
-
-  photoTimer =
-    setTimeout(() => {
-
-      currentCaller++;
-
-      showIncomingCall();
-
-    }, PHOTO_WAIT_DURATION);
-}
-
-
-/* =========================
-   PHOTO GRID
-========================= */
-
-function buildPhotoGrid(){
-
-  if(!livePhotos)
-    return;
-
-  livePhotos.innerHTML = "";
-
-  /*
-     Five random profiles
-     appear offline.
-  */
-
-  const offlineIndexes =
-    new Set();
-
-  while(
-    offlineIndexes.size < 5 &&
-    offlineIndexes.size <
-      PHOTO_NAMES.length
-  ){
-
-    offlineIndexes.add(
-      Math.floor(
-        Math.random() *
-        PHOTO_NAMES.length
-      )
-    );
-  }
-
-  PHOTO_NAMES.forEach(
-    (name,index) => {
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "photo-card";
-
-      const offline =
-        offlineIndexes.has(index);
-
-      const country =
-        PHOTO_COUNTRIES[index] ||
-        "🌍";
-
-      const age =
-        PHOTO_AGES[index] ||
-        21;
-
-      const imageName =
-        name
-          .toLowerCase()
-          .replace(/\s+/g,"");
-
-      card.innerHTML = `
-
-        <div class="photo-image-wrap">
-
-          <img
-            class="profile-photo"
-            src="${IMAGE_BASE}${imageName}.jpg"
-            alt="${name}"
-            loading="lazy"
-          >
-
-          <div class="photo-play">
-            ▶
-          </div>
-
-          <div class="${
-            offline
-              ? "offline-badge"
-              : "live-badge"
-          }">
-
-            <span></span>
-
-            ${
-              offline
-                ? "OFFLINE"
-                : "LIVE"
-            }
-
-          </div>
-
-        </div>
-
-        <div class="photo-info">
-
-          <div class="photo-name">
-            ${name}
-          </div>
-
-          <div class="photo-meta">
-            ${country} ${age}
-          </div>
-
-        </div>
-      `;
-
-      const img =
-        card.querySelector(
-          ".profile-photo"
-        );
-
-      if(img){
-
-        img.onerror = () => {
-
-          img.src =
-            `${IMAGE_BASE}${imageName}.png`;
-
-          img.onerror = () => {
-
-            img.src =
-              `${IMAGE_BASE}${imageName}.webp`;
-
-          };
-
-        };
-      }
-
-      /*
-         Tapping any photo opens
-         payment.html and carries
-         the correct employee referral.
-      */
-
-      card.addEventListener(
-        "click",
-        () => {
-
-          openPaymentPage();
-
-        }
-      );
-
-      livePhotos.appendChild(
-        card
-      );
-    }
-  );
-}
-
-
-/* =========================
-   PAYMENT LINK
-========================= */
-
-function openPaymentPage(){
-
-  /*
-     Save return state so that
-     Back/loading can return
-     to live photos.
-  */
+function openPaymentPage() {
 
   sessionStorage.setItem(
     "returnToLivePhotos",
@@ -2137,188 +1478,43 @@ function openPaymentPage(){
   let url =
     PAYMENT_PAGE_URL;
 
-  if(referralEmployeeId){
+  if (referralCode) {
 
     url +=
       "?employee=" +
       encodeURIComponent(
-        referralEmployeeId
+        referralCode
       );
+
   }
 
-  window.location.href =
-    url;
+  window.location.href = url;
 }
 
 
-/* =========================
-   ANSWER / DECLINE BUTTONS
-========================= */
+/* =====================================
+   BUTTON EVENTS
+===================================== */
 
-if(answerSwipe){
-
-  answerSwipe.addEventListener(
-    "click",
-    answerCall
-  );
-}
-
-if(declineSwipe){
-
-  declineSwipe.addEventListener(
-    "click",
-    declineCall
-  );
-}
-
-
-/* =========================
-   SWIPE SUPPORT
-========================= */
-
-function enableSwipe(
-  element,
-  callback
-){
-
-  if(!element)
-    return;
-
-  let startX = 0;
-  let currentX = 0;
-  let dragging = false;
-
-  element.addEventListener(
-    "touchstart",
-    (e) => {
-
-      if(!e.touches[0])
-        return;
-
-      startX =
-        e.touches[0].clientX;
-
-      currentX =
-        startX;
-
-      dragging = true;
-
-    },
-    {passive:true}
-  );
-
-  element.addEventListener(
-    "touchmove",
-    (e) => {
-
-      if(!dragging)
-        return;
-
-      if(!e.touches[0])
-        return;
-
-      currentX =
-        e.touches[0].clientX;
-
-      const distance =
-        currentX - startX;
-
-      if(
-        Math.abs(distance) >
-        10
-      ){
-
-        element.style.transform =
-          `translateX(${distance}px)`;
-      }
-
-    },
-    {passive:true}
-  );
-
-  element.addEventListener(
-    "touchend",
-    () => {
-
-      if(!dragging)
-        return;
-
-      dragging = false;
-
-      const distance =
-        currentX - startX;
-
-      element.style.transform =
-        "translateX(0)";
-
-      if(
-        Math.abs(distance) >
-        80
-      ){
-
-        callback();
-
-      }
-
-    }
-  );
-}
-
-
-enableSwipe(
-  answerSwipe,
-  answerCall
-);
-
-enableSwipe(
-  declineSwipe,
+declineButton.addEventListener(
+  "click",
   declineCall
 );
 
-
-/* =========================
-   RETURN FROM PAYMENT
-========================= */
-
-window.addEventListener(
-  "pageshow",
-  () => {
-
-    /*
-       If payment page sends
-       the visitor back here,
-       immediately show photos.
-    */
-
-    if(
-      sessionStorage.getItem(
-        "returnToLivePhotos"
-      ) === "1"
-    ){
-
-      sessionStorage.removeItem(
-        "returnToLivePhotos"
-      );
-
-      showLivePhotos();
-    }
-
-  }
+answerButton.addEventListener(
+  "click",
+  answerCall
 );
 
 
-/* =========================
+/* =====================================
    START
-========================= */
+===================================== */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
+loadReferral();
 
-    startWebsite();
+showWelcome();
+  </script>
 
-  }
-);
-</script>
 </body>
 </html>
