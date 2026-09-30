@@ -3,33 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live</title>
+
+<title>Live Profiles</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
+html,
 body{
+  width:100%;
+  min-height:100%;
   background:#000;
   color:#fff;
   font-family:Arial,sans-serif;
-  min-height:100vh;
-  overflow-x:hidden;
 }
 
-.page{
-  min-height:100vh;
-  width:100%;
+body{
+  overflow-x:hidden;
 }
 
 .hidden{
   display:none !important;
 }
 
-/* WELCOME */
+.page{
+  width:100%;
+  min-height:100vh;
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
 #welcomeScreen{
   min-height:100vh;
   display:flex;
@@ -44,7 +55,7 @@ body{
 }
 
 .welcome-box h1{
-  font-size:28px;
+  font-size:30px;
   margin-bottom:12px;
 }
 
@@ -53,7 +64,11 @@ body{
   font-size:15px;
 }
 
-/* PHOTOS */
+
+/* =========================
+   PHOTOS PAGE
+========================= */
+
 #photosPage{
   min-height:100vh;
   background:#000;
@@ -65,8 +80,11 @@ body{
   align-items:center;
   justify-content:space-between;
   padding:0 14px;
-  border-bottom:1px solid #222;
   background:#080808;
+  border-bottom:1px solid #222;
+  position:sticky;
+  top:0;
+  z-index:20;
 }
 
 .logo{
@@ -83,10 +101,28 @@ body{
   display:inline-block;
   width:8px;
   height:8px;
-  background:#20e060;
   border-radius:50%;
+  background:#19e66b;
   margin-right:5px;
+  animation:onlineBlink 1s infinite;
 }
+
+@keyframes onlineBlink{
+
+  0%,100%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:.25;
+  }
+
+}
+
+
+/* =========================
+   PHOTO GRID
+========================= */
 
 #photoGrid{
   display:grid;
@@ -96,17 +132,17 @@ body{
 }
 
 .photoCard{
+  position:relative;
   background:#111;
   border-radius:5px;
   overflow:hidden;
-  position:relative;
   cursor:pointer;
 }
 
 .photo-image-wrap{
   position:relative;
   width:100%;
-  aspect-ratio:0.78;
+  aspect-ratio:.78;
   overflow:hidden;
   background:#151515;
 }
@@ -118,53 +154,111 @@ body{
   display:block;
 }
 
-.photo-play{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:rgba(0,0,0,.7);
-  border:2px solid #fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-  z-index:3;
-}
 
-.photo-play::after{
-  content:"▶";
-  margin-left:3px;
-}
+/* =========================
+   LIVE BADGE
+========================= */
 
 .live-badge{
   position:absolute;
   top:7px;
   left:7px;
-  background:#e60000;
+  z-index:5;
+
+  background:#e00000;
   color:#fff;
+
   font-size:10px;
   font-weight:bold;
+
   padding:4px 7px;
+
   border-radius:4px;
-  z-index:4;
 }
+
+
+/* =========================
+   OFFLINE BADGE
+========================= */
 
 .offline-badge{
   position:absolute;
   top:7px;
   left:7px;
+  z-index:5;
+
   background:#555;
   color:#fff;
+
   font-size:10px;
   font-weight:bold;
+
   padding:4px 7px;
+
   border-radius:4px;
-  z-index:4;
 }
+
+
+/* =========================
+   VIDEO ICON
+========================= */
+
+.photo-play{
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  width:45px;
+  height:45px;
+
+  border-radius:50%;
+
+  background:rgba(0,0,0,.72);
+
+  border:2px solid #fff;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  z-index:6;
+
+  animation:videoZoom 1.4s ease-in-out infinite;
+}
+
+.photo-play::after{
+  content:"▶";
+
+  color:#fff;
+
+  font-size:19px;
+
+  margin-left:3px;
+}
+
+@keyframes videoZoom{
+
+  0%{
+    transform:translate(-50%,-50%) scale(.82);
+  }
+
+  50%{
+    transform:translate(-50%,-50%) scale(1.16);
+  }
+
+  100%{
+    transform:translate(-50%,-50%) scale(.82);
+  }
+
+}
+
+
+/* =========================
+   PHOTO INFO
+========================= */
 
 .photo-info{
   padding:7px 7px 9px;
@@ -172,9 +266,44 @@ body{
 }
 
 .photo-name{
+  display:flex;
+  align-items:center;
+
+  gap:5px;
+
   font-size:13px;
   font-weight:bold;
+
   margin-bottom:4px;
+}
+
+.name-dot{
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:#19e66b;
+
+  display:inline-block;
+
+  flex:none;
+
+  animation:nameBlink 1s infinite;
+}
+
+@keyframes nameBlink{
+
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+  50%{
+    opacity:.2;
+    transform:scale(.75);
+  }
+
 }
 
 .photo-meta{
@@ -182,49 +311,67 @@ body{
   color:#aaa;
 }
 
-/* INCOMING CALL */
+
+/* =========================
+   INCOMING CALL
+========================= */
+
 #incomingCall{
   position:fixed;
   inset:0;
+
   z-index:1000;
+
   background:#050505;
+
   display:flex;
   flex-direction:column;
+
   align-items:center;
   justify-content:center;
+
   text-align:center;
 }
 
 .call-label{
   color:#aaa;
   font-size:14px;
+
   margin-bottom:20px;
 }
 
 #callerImage{
   width:145px;
   height:145px;
+
   border-radius:50%;
+
   object-fit:cover;
+
   border:3px solid #e00000;
+
   margin-bottom:18px;
 }
 
 #callerName{
   font-size:25px;
   font-weight:bold;
+
   margin-bottom:8px;
 }
 
 .call-status{
   color:#aaa;
   font-size:14px;
+
   margin-bottom:45px;
 }
 
 .call-buttons{
   display:flex;
+
   gap:35px;
+
   align-items:center;
   justify-content:center;
 }
@@ -232,10 +379,15 @@ body{
 .call-btn{
   width:75px;
   height:75px;
-  border-radius:50%;
+
   border:none;
+
+  border-radius:50%;
+
   color:#fff;
+
   font-size:28px;
+
   cursor:pointer;
 }
 
@@ -247,74 +399,124 @@ body{
   background:#16a34a;
 }
 
-/* RED LIVE */
+
+/* =========================
+   LIVE VIDEO PAGES
+========================= */
+
 #redLiveVideoPage,
 #blackLivePage{
   position:fixed;
   inset:0;
+
   z-index:900;
+
   background:#000;
 }
 
 .live-video{
   width:100%;
   height:100%;
+
   object-fit:cover;
+
   background:#000;
 }
 
 .red-live-label{
   position:absolute;
+
   top:15px;
   left:15px;
-  z-index:10;
+
+  z-index:20;
+
   background:#e00000;
+
   color:#fff;
+
   font-size:13px;
   font-weight:bold;
+
   padding:6px 10px;
+
   border-radius:4px;
 }
 
-/* INSUFFICIENT */
+
+/* =========================
+   INSUFFICIENT PAGE
+========================= */
+
 #insufficientPage{
   position:fixed;
   inset:0;
+
   z-index:800;
+
   background:#000;
+
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   text-align:center;
 }
 
 .insufficient-box{
   width:90%;
   max-width:390px;
-  border:1px solid #333;
-  border-radius:12px;
-  padding:30px 20px;
+
   background:#111;
+
+  border:1px solid #333;
+
+  border-radius:12px;
+
+  padding:30px 20px;
 }
 
 .insufficient-box h2{
   color:#ff3333;
+
   margin-bottom:12px;
 }
 
 .insufficient-box p{
   color:#aaa;
+
   font-size:14px;
 }
 
 #insufficientTimer{
   margin-top:18px;
+
   color:#fff;
+
   font-size:13px;
 }
 
-/* MOBILE */
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:600px){
+
+  #photoGrid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .photo-play{
+    width:40px;
+    height:40px;
+  }
+
+  .photo-play::after{
+    font-size:17px;
+  }
+
   .photo-name{
     font-size:12px;
   }
@@ -323,53 +525,80 @@ body{
     font-size:10px;
   }
 
-  .photo-play{
-    width:40px;
-    height:40px;
-    font-size:17px;
-  }
-
   #callerImage{
     width:130px;
     height:130px;
   }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <div id="welcomeScreen" class="page">
+
   <div class="welcome-box">
+
     <h1>Welcome</h1>
-    <p>Connecting you to live profiles...</p>
+
+    <p>
+      Connecting you to live profiles...
+    </p>
+
   </div>
+
 </div>
 
 <div id="photosPage" class="page hidden">
 
   <div class="topbar">
-    <div class="logo">LIVE</div>
+
+    <div class="logo">
+      LIVE
+    </div>
 
     <div class="online">
+
       <span class="online-dot"></span>
-      <span id="onlineNumber">21</span> online
+
+      <span id="onlineNumber">
+        21
+      </span>
+
+      online
+
     </div>
+
   </div>
 
   <div id="photoGrid"></div>
 
 </div>
-<!-- INCOMING CALL -->
+<!-- =========================
+     INCOMING CALL
+========================= -->
+
 <div id="incomingCall" class="hidden">
 
-  <div class="call-label">Incoming video call</div>
+  <div class="call-label">
+    Incoming video call
+  </div>
 
-  <img id="callerImage" src="photo1.jpg" alt="Caller">
+  <img
+    id="callerImage"
+    src="photo1.jpg"
+    alt="Caller"
+  >
 
-  <div id="callerName">Cute</div>
+  <div id="callerName">
+    Cute
+  </div>
 
-  <div class="call-status">is calling you...</div>
+  <div class="call-status">
+    is calling you...
+  </div>
 
   <div class="call-buttons">
 
@@ -392,10 +621,17 @@ body{
 </div>
 
 
-<!-- RED LIVE VIDEO -->
-<div id="redLiveVideoPage" class="hidden">
+<!-- =========================
+     RED LIVE VIDEO
+========================= -->
 
-  <div class="red-live-label">● LIVE</div>
+<div
+  id="redLiveVideoPage"
+  class="hidden">
+
+  <div class="red-live-label">
+    ● LIVE
+  </div>
 
   <video
     id="redLiveVideo"
@@ -407,10 +643,17 @@ body{
 </div>
 
 
-<!-- BLACK LIVE WITH SOUND -->
-<div id="blackLivePage" class="hidden">
+<!-- =========================
+     BLACK LIVE
+========================= -->
 
-  <div class="red-live-label">● LIVE</div>
+<div
+  id="blackLivePage"
+  class="hidden">
+
+  <div class="red-live-label">
+    ● LIVE
+  </div>
 
   <video
     id="blackLiveSoundVideo"
@@ -422,19 +665,27 @@ body{
 </div>
 
 
-<!-- INSUFFICIENT MINUTES -->
-<div id="insufficientPage" class="hidden">
+<!-- =========================
+     INSUFFICIENT MINUTES
+========================= -->
+
+<div
+  id="insufficientPage"
+  class="hidden">
 
   <div class="insufficient-box">
 
-    <h2>Insufficient Minutes</h2>
+    <h2>
+      Insufficient Minutes
+    </h2>
 
     <p>
-      You don't have enough minutes to continue this live call.
+      You don't have enough minutes
+      to continue this live call.
     </p>
 
     <div id="insufficientTimer">
-      Loading...
+      Continuing...
     </div>
 
   </div>
@@ -442,20 +693,33 @@ body{
 </div>
 
 
-<!-- VIDEO FILE -->
-<!-- Make sure preview_20_seconds.mp4 is in your GitHub repository -->
+<!--
+  IMPORTANT:
+  Do NOT put another <script> here.
 
-<script>
-  const IMAGE_BASE =
+  Part 3 will contain the ONE
+  JavaScript block and will close
+  the HTML document.
+-->
+  <script>
+
+/* =====================================================
+   BASIC SETTINGS
+===================================================== */
+
+const IMAGE_BASE =
   "https://raw.githubusercontent.com/agnesweb2026/My-referral-website/main/";
 
 const VIDEO_URL =
   IMAGE_BASE + "preview_20_seconds.mp4";
 
+const SAMPLE_KEY =
+  "myReferralSampleWatched";
 
-/* =========================
-   ELEMENTS
-========================= */
+
+/* =====================================================
+   GET ELEMENTS
+===================================================== */
 
 const welcomeScreen =
   document.getElementById("welcomeScreen");
@@ -503,9 +767,9 @@ const onlineNumber =
   document.getElementById("onlineNumber");
 
 
-/* =========================
-   REFERRAL
-========================= */
+/* =====================================================
+   REFERRAL / EMPLOYEE
+===================================================== */
 
 const params =
   new URLSearchParams(window.location.search);
@@ -522,24 +786,32 @@ function openPaymentPage(){
   let url = "payment.html";
 
   if(employee){
-    url += "?employee=" +
+
+    url +=
+      "?employee=" +
       encodeURIComponent(employee);
+
   }
 
   else if(ref){
-    url += "?ref=" +
+
+    url +=
+      "?ref=" +
       encodeURIComponent(ref);
+
   }
 
   window.location.href = url;
+
 }
 
 
-/* =========================
-   PHOTOS
-========================= */
+/* =====================================================
+   IMAGE FILES
+===================================================== */
 
 const imageFiles = [
+
   "photo1.jpg",
   "photo2.jpg",
   "photo4.jpg",
@@ -549,249 +821,546 @@ const imageFiles = [
   "1785179362758.jpg",
   "1785179915649.jpg",
   "Screenshot_20260731-045343.png"
+
 ];
+
+
+/* =====================================================
+   24 PROFILES
+===================================================== */
 
 const profiles = [
 
-  {name:"Cute",age:24,country:"Kenya",flag:"🇰🇪"},
-  {name:"Becky",age:22,country:"Kenya",flag:"🇰🇪"},
-  {name:"Dorry",age:26,country:"Kenya",flag:"🇰🇪"},
-  {name:"Sharon",age:23,country:"Kenya",flag:"🇰🇪"},
-  {name:"Lilian",age:27,country:"Kenya",flag:"🇰🇪"},
+  {
+    name:"Cute",
+    age:24,
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
 
-  {name:"Asha",age:25,country:"Tanzania",flag:"🇹🇿"},
-  {name:"Neema",age:23,country:"Tanzania",flag:"🇹🇿"},
-  {name:"Zawadi",age:28,country:"Tanzania",flag:"🇹🇿"},
-  {name:"Rehema",age:24,country:"Tanzania",flag:"🇹🇿"},
+  {
+    name:"Becky",
+    age:22,
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
 
-  {name:"Blessing",age:22,country:"Nigeria",flag:"🇳🇬"},
-  {name:"Favour",age:26,country:"Nigeria",flag:"🇳🇬"},
-  {name:"Peace",age:25,country:"Nigeria",flag:"🇳🇬"},
-  {name:"Joy",age:27,country:"Nigeria",flag:"🇳🇬"},
+  {
+    name:"Dorry",
+    age:26,
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
 
-  {name:"Grace",age:24,country:"Congo",flag:"🇨🇩"},
-  {name:"Mimi",age:23,country:"Congo",flag:"🇨🇩"},
-  {name:"Nadia",age:26,country:"Congo",flag:"🇨🇩"},
-  {name:"Bella",age:25,country:"Congo",flag:"🇨🇩"},
-  {name:"Princess",age:28,country:"Congo",flag:"🇨🇩"},
+  {
+    name:"Sharon",
+    age:23,
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
 
-  {name:"Emily",age:24,country:"Canada",flag:"🇨🇦"},
-  {name:"Sophie",age:27,country:"Canada",flag:"🇨🇦"},
+  {
+    name:"Lilian",
+    age:27,
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
 
-  {name:"Thandi",age:25,country:"South Africa",flag:"🇿🇦"},
-  {name:"Lerato",age:29,country:"South Africa",flag:"🇿🇦"},
+  {
+    name:"Asha",
+    age:25,
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
 
-  {name:"Ashley",age:23,country:"USA",flag:"🇺🇸"},
-  {name:"Jessica",age:26,country:"USA",flag:"🇺🇸"}
+  {
+    name:"Neema",
+    age:23,
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+  {
+    name:"Zawadi",
+    age:28,
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+  {
+    name:"Rehema",
+    age:24,
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+  {
+    name:"Blessing",
+    age:22,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Favour",
+    age:26,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Peace",
+    age:25,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Joy",
+    age:27,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Grace",
+    age:24,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Mimi",
+    age:23,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Nadia",
+    age:26,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Bella",
+    age:25,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Princess",
+    age:28,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Emily",
+    age:24,
+    country:"Canada",
+    flag:"🇨🇦"
+  },
+
+  {
+    name:"Sophie",
+    age:27,
+    country:"Canada",
+    flag:"🇨🇦"
+  },
+
+  {
+    name:"Thandi",
+    age:25,
+    country:"South Africa",
+    flag:"🇿🇦"
+  },
+
+  {
+    name:"Lerato",
+    age:29,
+    country:"South Africa",
+    flag:"🇿🇦"
+  },
+
+  {
+    name:"Ashley",
+    age:23,
+    country:"USA",
+    flag:"🇺🇸"
+  },
+
+  {
+    name:"Jessica",
+    age:26,
+    country:"USA",
+    flag:"🇺🇸"
+  }
 
 ];
 
 
-/* =========================
-   CREATE PHOTO GRID
-========================= */
+/* =====================================================
+   OFFLINE STATE
+===================================================== */
+
+let offlinePeople = new Set();
+
+const OFFLINE_TIME =
+  5 * 60 * 1000;
+
+
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
+function shuffle(array){
+
+  const copy =
+    [...array];
+
+  for(
+    let i = copy.length - 1;
+    i > 0;
+    i--
+  ){
+
+    const j =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+
+    [
+      copy[i],
+      copy[j]
+    ] =
+    [
+      copy[j],
+      copy[i]
+    ];
+
+  }
+
+  return copy;
+
+}
+
+
+/* =====================================================
+   SELECT EXACTLY 5 OFFLINE
+===================================================== */
+
+function chooseFiveOffline(){
+
+  offlinePeople =
+    new Set();
+
+  const numbers =
+    shuffle(
+      profiles.map(
+        (_,index)=>index
+      )
+    );
+
+  numbers
+    .slice(0,5)
+    .forEach(index=>{
+
+      offlinePeople.add(index);
+
+    });
+
+  updateProfileStatuses();
+
+}
+
+
+/* =====================================================
+   UPDATE LIVE / OFFLINE DISPLAY
+===================================================== */
+
+function updateProfileStatuses(){
+
+  profiles.forEach(
+    (_,index)=>{
+
+      const badge =
+        document.getElementById(
+          "badge-" + index
+        );
+
+      const dot =
+        document.getElementById(
+          "dot-" + index
+        );
+
+      if(!badge || !dot){
+        return;
+      }
+
+
+      if(
+        offlinePeople.has(index)
+      ){
+
+        badge.textContent =
+          "OFFLINE";
+
+        badge.className =
+          "offline-badge";
+
+        dot.style.background =
+          "#777";
+
+        dot.style.animation =
+          "none";
+
+      }
+
+      else{
+
+        badge.textContent =
+          "● LIVE";
+
+        badge.className =
+          "live-badge";
+
+        dot.style.background =
+          "#19e66b";
+
+        dot.style.animation =
+          "nameBlink 1s infinite";
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   CREATE PHOTO CARDS
+===================================================== */
 
 function createPhotos(){
 
   photoGrid.innerHTML = "";
 
-  profiles.forEach((profile,index)=>{
+  profiles.forEach(
+    (profile,index)=>{
 
-    const card =
-      document.createElement("div");
+      const card =
+        document.createElement("div");
 
-    card.className = "photoCard";
+      card.className =
+        "photoCard";
 
-    const imageFile =
-      imageFiles[index % imageFiles.length];
 
-    card.innerHTML = `
+      const imageFile =
+        imageFiles[
+          index %
+          imageFiles.length
+        ];
 
-      <div class="photo-image-wrap">
 
-        <img
-          class="profile-photo"
-          src="${IMAGE_BASE}${encodeURIComponent(imageFile)}"
-          alt="${profile.name}"
-          loading="lazy"
-        >
+      card.innerHTML = `
 
-        <div
-          class="live-badge"
-          id="badge-${index}">
-          ● LIVE
+        <div class="photo-image-wrap">
+
+          <img
+            class="profile-photo"
+            src="${IMAGE_BASE}${encodeURIComponent(imageFile)}"
+            alt="${profile.name}"
+            loading="lazy"
+          >
+
+          <div
+            id="badge-${index}"
+            class="live-badge">
+            ● LIVE
+          </div>
+
+          <div class="photo-play"></div>
+
         </div>
 
-        <div class="photo-play"></div>
+        <div class="photo-info">
 
-      </div>
+          <div class="photo-name">
 
-      <div class="photo-info">
+            <span
+              id="dot-${index}"
+              class="name-dot">
+            </span>
 
-        <div class="photo-name">
-          ${profile.name}
+            <span>
+              ${profile.name}
+            </span>
+
+          </div>
+
+          <div class="photo-meta">
+
+            ${profile.flag}
+            ${profile.country}
+            •
+            ${profile.age}
+
+          </div>
+
         </div>
 
-        <div class="photo-meta">
-          ${profile.flag} ${profile.country}
-          • ${profile.age}
-        </div>
+      `;
 
-      </div>
 
-    `;
+      card.addEventListener(
+        "click",
+        ()=>{
 
-    card.addEventListener("click",()=>{
+          openPaymentPage();
 
-      openPaymentPage();
+        }
+      );
 
-    });
 
-    photoGrid.appendChild(card);
+      photoGrid.appendChild(card);
 
-  });
+    }
+  );
+
+
+  updateProfileStatuses();
 
 }
 
-createPhotos();
 
-
-/* =========================
+/* =====================================================
    ONLINE NUMBER
-========================= */
+   RANDOM 15–30
+===================================================== */
 
-function randomOnline(){
+function updateOnlineNumber(){
 
   const number =
-    Math.floor(Math.random()*16)+15;
+    Math.floor(
+      Math.random() * 16
+    ) + 15;
 
   onlineNumber.textContent =
     number;
-}
-
-randomOnline();
-
-
-setInterval(()=>{
-
-  randomOnline();
-
-},Math.floor(Math.random()*25000)+15000);
-
-
-/* =========================
-   OFFLINE RANDOM
-   5 MINUTES
-========================= */
-
-const offlineUntil = {};
-
-function randomOffline(){
-
-  const index =
-    Math.floor(Math.random()*profiles.length);
-
-  const badge =
-    document.getElementById("badge-"+index);
-
-  if(!badge) return;
-
-  const now = Date.now();
-
-  if(
-    offlineUntil[index] &&
-    offlineUntil[index] > now
-  ){
-    return;
-  }
-
-  offlineUntil[index] =
-    now + (5 * 60 * 1000);
-
-  badge.textContent =
-    "OFFLINE";
-
-  badge.className =
-    "offline-badge";
-
-  setTimeout(()=>{
-
-    badge.textContent =
-      "● LIVE";
-
-    badge.className =
-      "live-badge";
-
-    delete offlineUntil[index];
-
-  },5 * 60 * 1000);
 
 }
 
 
-/* Random offline approximately every 30–60 seconds */
+function scheduleOnlineNumber(){
 
-setInterval(()=>{
+  updateOnlineNumber();
 
-  randomOffline();
+  const delay =
+    Math.floor(
+      Math.random() * 25000
+    ) + 15000;
 
-},Math.floor(Math.random()*30000)+30000);
+  setTimeout(
+    scheduleOnlineNumber,
+    delay
+  );
 
+}
 
-/* =========================
-   CALL SYSTEM
-========================= */
-
-let firstCallAnswered = false;
-
-let callActive = false;
-
-const SAMPLE_KEY =
-  "myReferralSampleWatched";
+scheduleOnlineNumber();
 
 
-/* =========================
+/* =====================================================
+   OFFLINE CYCLE
+===================================================== */
+
+function startOfflineCycle(){
+
+  chooseFiveOffline();
+
+  setTimeout(
+    startOfflineCycle,
+    OFFLINE_TIME
+  );
+
+}
+
+startOfflineCycle();
+
+
+/* =====================================================
    SHOW PHOTOS
-========================= */
+===================================================== */
 
 function showPhotos(){
 
-  welcomeScreen.classList.add("hidden");
+  welcomeScreen.classList.add(
+    "hidden"
+  );
 
-  incomingCall.classList.add("hidden");
+  incomingCall.classList.add(
+    "hidden"
+  );
 
-  redLiveVideoPage.classList.add("hidden");
+  redLiveVideoPage.classList.add(
+    "hidden"
+  );
 
-  blackLivePage.classList.add("hidden");
+  blackLivePage.classList.add(
+    "hidden"
+  );
 
-  insufficientPage.classList.add("hidden");
+  insufficientPage.classList.add(
+    "hidden"
+  );
 
-  photosPage.classList.remove("hidden");
+  photosPage.classList.remove(
+    "hidden"
+  );
 
 }
 
 
-/* =========================
+/* =====================================================
    SHOW INCOMING CALL
-========================= */
+===================================================== */
 
 function showIncomingCall(){
 
-  photosPage.classList.add("hidden");
+  photosPage.classList.add(
+    "hidden"
+  );
 
-  incomingCall.classList.remove("hidden");
+  incomingCall.classList.remove(
+    "hidden"
+  );
+
 
   const randomIndex =
-    Math.floor(Math.random()*profiles.length);
+    Math.floor(
+      Math.random() *
+      profiles.length
+    );
+
 
   const profile =
     profiles[randomIndex];
 
+
   callerName.textContent =
     profile.name;
 
+
   const imageFile =
-    imageFiles[randomIndex % imageFiles.length];
+    imageFiles[
+      randomIndex %
+      imageFiles.length
+    ];
+
 
   callerImage.src =
     IMAGE_BASE +
@@ -800,163 +1369,236 @@ function showIncomingCall(){
 }
 
 
-/* =========================
-   WELCOME
-========================= */
+/* =====================================================
+   WELCOME → PHOTOS → CALL
+===================================================== */
 
-setTimeout(()=>{
+setTimeout(
+  ()=>{
 
-  showPhotos();
-
-  /*
-    Live photos remain visible
-    for exactly 2 seconds.
-  */
-
-  setTimeout(()=>{
-
-    showIncomingCall();
-
-  },2000);
-
-},3000);
+    showPhotos();
 
 
-/* =========================
-   DECLINE
-========================= */
+    setTimeout(
+      ()=>{
 
-declineButton.addEventListener("click",()=>{
+        showIncomingCall();
 
-  incomingCall.classList.add("hidden");
-
-  showPhotos();
-
-});
-
-
-/* =========================
-   ANSWER
-========================= */
-
-answerButton.addEventListener("click",()=>{
-
-  if(callActive) return;
-
-  callActive = true;
-
-  incomingCall.classList.add("hidden");
-
-
-  /*
-    FIRST VISITOR:
-    Red LIVE starts at 10 seconds
-    and plays for 7 seconds.
-  */
-
-  if(!localStorage.getItem(SAMPLE_KEY)){
-
-    firstCallAnswered = true;
-
-    localStorage.setItem(
-      SAMPLE_KEY,
-      "true"
+      },
+      2000
     );
 
-    playRedLive();
+  },
+  3000
+);
+
+
+/* =====================================================
+   DECLINE
+===================================================== */
+
+declineButton.addEventListener(
+  "click",
+  ()=>{
+
+    incomingCall.classList.add(
+      "hidden"
+    );
+
+    showPhotos();
+
+  }
+);
+
+
+/* =====================================================
+   CALL STATE
+===================================================== */
+
+let callActive =
+  false;
+
+
+/* =====================================================
+   ANSWER
+===================================================== */
+
+answerButton.addEventListener(
+  "click",
+  ()=>{
+
+    if(callActive){
+      return;
+    }
+
+    callActive =
+      true;
+
+
+    incomingCall.classList.add(
+      "hidden"
+    );
+
+
+    /*
+      FIRST VISIT:
+      Red LIVE video
+    */
+
+    if(
+      !localStorage.getItem(
+        SAMPLE_KEY
+      )
+    ){
+
+      localStorage.setItem(
+        SAMPLE_KEY,
+        "true"
+      );
+
+      playRedLive();
+
+    }
+
+    else{
+
+      /*
+        RETURNING VISITOR:
+        Black LIVE only
+        2 seconds
+      */
+
+      playReturningCall();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   RED LIVE
+   START AT 10s
+   STOP AT 17s
+===================================================== */
+
+function playRedLive(){
+
+  redLiveVideoPage.classList.remove(
+    "hidden"
+  );
+
+
+  redLiveVideo.src =
+    VIDEO_URL;
+
+
+  redLiveVideo.muted =
+    false;
+
+  redLiveVideo.volume =
+    1;
+
+
+  /*
+    Wait until metadata is loaded
+    before seeking to 10 seconds.
+  */
+
+  const startVideo =
+    ()=>{
+
+      try{
+
+        redLiveVideo.currentTime =
+          10;
+
+      }
+      catch(e){}
+
+
+      const playPromise =
+        redLiveVideo.play();
+
+
+      if(playPromise){
+
+        playPromise.catch(
+          ()=>{
+
+            /*
+              Browser may block
+              unmuted playback.
+            */
+
+          }
+        );
+
+      }
+
+    };
+
+
+  if(
+    redLiveVideo.readyState >= 1
+  ){
+
+    startVideo();
 
   }
 
   else{
 
-    /*
-      RETURNING VISITOR:
-      black screen for 2 seconds,
-      no sound and no video.
-    */
-
-    playReturningCall();
-
-  }
-
-});
-
-
-/* =========================
-   RED LIVE
-========================= */
-
-function playRedLive(){
-
-  redLiveVideoPage.classList.remove("hidden");
-
-  redLiveVideo.src =
-    VIDEO_URL;
-
-  redLiveVideo.currentTime = 10;
-
-  redLiveVideo.muted = false;
-
-  redLiveVideo.volume = 1;
-
-  /*
-    Answer button click is user initiated,
-    so play immediately.
-  */
-
-  const playPromise =
-    redLiveVideo.play();
-
-  if(playPromise){
-
-    playPromise.catch(()=>{
-
-      /*
-        Some browsers block sound.
-        The video remains available.
-      */
-
-      redLiveVideo.muted = false;
-
-      redLiveVideo.play().catch(()=>{});
-
-    });
+    redLiveVideo.addEventListener(
+      "loadedmetadata",
+      startVideo,
+      {once:true}
+    );
 
   }
 
 
   /*
-    Play from 10s to 17s = 7 seconds
+    10 seconds → 17 seconds
+    = 7 seconds
   */
 
-  setTimeout(()=>{
+  setTimeout(
+    ()=>{
 
-    redLiveVideo.pause();
+      redLiveVideo.pause();
 
-    redLiveVideo.currentTime = 10;
+      redLiveVideo.currentTime =
+        10;
 
-    redLiveVideoPage.classList.add("hidden");
+      redLiveVideoPage.classList.add(
+        "hidden"
+      );
 
-    playBlackLive();
 
-  },7000);
+      playBlackLive();
+
+    },
+    7000
+  );
 
 }
 
 
-/* =========================
+/* =====================================================
    BLACK LIVE WITH SOUND
-========================= */
+===================================================== */
 
 function playBlackLive(){
 
-  blackLivePage.classList.remove("hidden");
+  blackLivePage.classList.remove(
+    "hidden"
+  );
+
 
   blackLiveSoundVideo.src =
     VIDEO_URL;
 
-  blackLiveSoundVideo.currentTime =
-    0;
 
   blackLiveSoundVideo.muted =
     false;
@@ -964,129 +1606,197 @@ function playBlackLive(){
   blackLiveSoundVideo.volume =
     1;
 
-  const playPromise =
-    blackLiveSoundVideo.play();
 
-  if(playPromise){
+  const startBlack =
+    ()=>{
 
-    playPromise.catch(()=>{
+      try{
 
-      blackLiveSoundVideo.play()
-        .catch(()=>{});
+        blackLiveSoundVideo.currentTime =
+          0;
 
-    });
+      }
+      catch(e){}
+
+
+      const playPromise =
+        blackLiveSoundVideo.play();
+
+
+      if(playPromise){
+
+        playPromise.catch(
+          ()=>{}
+        );
+
+      }
+
+    };
+
+
+  if(
+    blackLiveSoundVideo.readyState >= 1
+  ){
+
+    startBlack();
+
+  }
+
+  else{
+
+    blackLiveSoundVideo.addEventListener(
+      "loadedmetadata",
+      startBlack,
+      {once:true}
+    );
 
   }
 
 
-  setTimeout(()=>{
+  /*
+    Black LIVE = 5 seconds
+  */
 
-    blackLiveSoundVideo.pause();
+  setTimeout(
+    ()=>{
 
-    blackLiveSoundVideo.currentTime = 0;
+      blackLiveSoundVideo.pause();
 
-    blackLivePage.classList.add("hidden");
+      blackLiveSoundVideo.removeAttribute(
+        "src"
+      );
 
-    showInsufficient();
+      blackLiveSoundVideo.load();
 
-  },5000);
+      blackLivePage.classList.add(
+        "hidden"
+      );
+
+
+      showInsufficient();
+
+    },
+    5000
+  );
 
 }
 
 
-/* =========================
+/* =====================================================
    RETURNING VISITOR
-========================= */
+===================================================== */
 
 function playReturningCall(){
 
-  blackLivePage.classList.remove("hidden");
+  blackLivePage.classList.remove(
+    "hidden"
+  );
+
 
   blackLiveSoundVideo.pause();
 
-  blackLiveSoundVideo.removeAttribute("src");
+  blackLiveSoundVideo.removeAttribute(
+    "src"
+  );
 
   blackLiveSoundVideo.load();
 
-  blackLiveSoundVideo.style.background =
-    "#000";
 
   /*
-    Exactly 2 seconds black.
+    Black screen.
+    No sound.
+    No video.
+    2 seconds.
   */
 
-  setTimeout(()=>{
+  setTimeout(
+    ()=>{
 
-    blackLivePage.classList.add("hidden");
+      blackLivePage.classList.add(
+        "hidden"
+      );
 
-    showInsufficient();
 
-  },2000);
+      showInsufficient();
+
+    },
+    2000
+  );
 
 }
 
 
-/* =========================
-   INSUFFICIENT
-========================= */
+/* =====================================================
+   INSUFFICIENT MINUTES
+===================================================== */
 
 function showInsufficient(){
 
-  insufficientPage.classList.remove("hidden");
+  insufficientPage.classList.remove(
+    "hidden"
+  );
 
-  let seconds = 2;
+
+  let seconds =
+    2;
+
 
   insufficientTimer.textContent =
     "Continuing...";
 
+
   const timer =
-    setInterval(()=>{
+    setInterval(
+      ()=>{
 
-      seconds--;
+        seconds--;
 
-      if(seconds <= 0){
 
-        clearInterval(timer);
+        if(seconds <= 0){
 
-        insufficientPage.classList.add("hidden");
+          clearInterval(timer);
 
-        showPhotos();
 
-      }
+          insufficientPage.classList.add(
+            "hidden"
+          );
 
-    },1000);
+
+          callActive =
+            false;
+
+
+          showPhotos();
+
+        }
+
+      },
+      1000
+    );
 
 }
 
 
-/* =========================
-   SAFETY
-========================= */
+/* =====================================================
+   CLEAN VIDEO WHEN LEAVING
+===================================================== */
 
-window.addEventListener("pageshow",()=>{
+window.addEventListener(
+  "pagehide",
+  ()=>{
 
-  /*
-    Ensure the correct initial screen
-    after browser back/forward cache.
-  */
+    try{
+      redLiveVideo.pause();
+    }
+    catch(e){}
 
-  if(
-    !incomingCall.classList.contains("hidden") ||
-    !redLiveVideoPage.classList.contains("hidden") ||
-    !blackLivePage.classList.contains("hidden") ||
-    !insufficientPage.classList.contains("hidden")
-  ){
-
-    return;
+    try{
+      blackLiveSoundVideo.pause();
+    }
+    catch(e){}
 
   }
-
-});
-
-
-/* =========================
-   END
-========================= */
+);
 
 </script>
 
