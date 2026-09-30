@@ -3,248 +3,418 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>M-PESA PAYMENT</title>
+<title>Live Access • M-PESA</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
 body{
   margin:0;
-  background:#080808;
-  color:#fff;
-  font-family:Arial,sans-serif;
   min-height:100vh;
+  font-family:Arial,sans-serif;
+  color:#fff;
+  background:
+    radial-gradient(circle at 20% 0%,#183b27 0,transparent 35%),
+    radial-gradient(circle at 100% 30%,#28133b 0,transparent 35%),
+    #050505;
 }
-.container{
+
+.page{
   width:100%;
-  max-width:520px;
+  max-width:560px;
   margin:auto;
-  padding:18px;
+  padding:16px;
 }
-.header{
-  text-align:center;
-  padding:12px 0 20px;
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
 }
-.header h1{
-  margin:0;
-  font-size:27px;
-  letter-spacing:1px;
+
+.brand{
+  font-size:23px;
+  font-weight:900;
 }
-.header p{
-  margin:8px 0 0;
-  color:#aaa;
-}
-.mpesa{
-  color:#39d353;
+
+.live{
+  background:#e90000;
+  border-radius:20px;
+  padding:7px 12px;
+  font-size:12px;
   font-weight:bold;
+  box-shadow:0 0 18px #e9000080;
 }
+
+.live i{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  background:#fff;
+  border-radius:50%;
+  margin-right:5px;
+}
+
+.hero{
+  text-align:center;
+  padding:18px 8px 22px;
+}
+
+.hero h1{
+  margin:0;
+  font-size:32px;
+  line-height:1.1;
+}
+
+.hero p{
+  color:#aaa;
+  margin:10px 0 0;
+}
+
+.stats{
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  margin-top:15px;
+}
+
+.stat{
+  background:#ffffff0d;
+  border:1px solid #ffffff18;
+  padding:8px 12px;
+  border-radius:20px;
+  color:#ccc;
+  font-size:12px;
+}
+
 .card{
-  background:#151515;
+  background:linear-gradient(
+    145deg,
+    #171717,
+    #0c0c0c
+  );
   border:1px solid #292929;
-  border-radius:18px;
+  border-radius:23px;
   padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 15px 40px #0008;
+}
+
+.card-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   margin-bottom:15px;
 }
-.card h2{
-  margin:0 0 15px;
+
+.card-title h2{
+  margin:0;
   font-size:19px;
 }
+
+.card-title span{
+  color:#777;
+  font-size:12px;
+}
+
 .packages{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
+
 .package{
   position:relative;
-  background:#101010;
-  border:2px solid #303030;
-  border-radius:15px;
+  min-height:116px;
   padding:17px 12px;
+  border-radius:18px;
+  background:#101010;
+  border:2px solid #292929;
   text-align:center;
   cursor:pointer;
   transition:.2s;
 }
+
 .package:active{
-  transform:scale(.97);
+  transform:scale(.96);
 }
+
 .package.selected{
-  border-color:#39d353;
-  box-shadow:0 0 14px rgba(57,211,83,.25);
-  background:#122016;
+  border-color:#25e05b;
+  background:
+    linear-gradient(
+      145deg,
+      #12351f,
+      #0b1710
+    );
+  box-shadow:
+    0 0 0 1px #25e05b40,
+    0 0 25px #25e05b25;
 }
+
+.package.selected:after{
+  content:"✓";
+  position:absolute;
+  top:7px;
+  left:8px;
+  width:21px;
+  height:21px;
+  line-height:21px;
+  border-radius:50%;
+  background:#25e05b;
+  color:#061008;
+  font-size:13px;
+  font-weight:bold;
+}
+
 .minutes{
-  font-size:21px;
-  font-weight:bold;
+  font-size:23px;
+  font-weight:900;
+  margin-top:5px;
 }
+
+.minutes small{
+  font-size:12px;
+  color:#aaa;
+}
+
 .price{
-  margin-top:7px;
-  color:#39d353;
-  font-size:18px;
-  font-weight:bold;
+  margin-top:9px;
+  color:#32e867;
+  font-size:19px;
+  font-weight:900;
 }
+
 .hot{
   position:absolute;
   top:-9px;
-  right:8px;
-  background:#ff3030;
-  color:#fff;
+  right:9px;
+  background:linear-gradient(90deg,#ff2525,#ff6b00);
+  padding:5px 9px;
+  border-radius:9px;
   font-size:10px;
-  font-weight:bold;
-  padding:4px 7px;
-  border-radius:8px;
+  font-weight:900;
 }
-.label{
-  display:block;
-  margin:16px 0 7px;
-  color:#bbb;
-  font-size:14px;
+
+.phone-title{
+  color:#aaa;
+  font-size:13px;
+  margin:18px 0 8px;
 }
-input{
+
+.phone{
   width:100%;
-  padding:15px;
-  border-radius:12px;
-  border:1px solid #444;
-  background:#090909;
+  padding:16px;
+  border-radius:14px;
+  border:1px solid #353535;
+  outline:none;
+  background:#080808;
   color:#fff;
   font-size:17px;
-  outline:none;
 }
-input:focus{
-  border-color:#39d353;
+
+.phone:focus{
+  border-color:#25e05b;
+  box-shadow:0 0 0 3px #25e05b18;
 }
-.pay-btn{
+
+.pay{
   width:100%;
+  margin-top:13px;
+  padding:17px;
   border:0;
-  border-radius:13px;
-  padding:16px;
-  margin-top:15px;
-  background:#39d353;
-  color:#061006;
+  border-radius:15px;
+  background:linear-gradient(90deg,#20d957,#62f08a);
+  color:#041007;
   font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
+  font-weight:900;
+  box-shadow:0 10px 25px #25e05b25;
 }
-.pay-btn:active{
+
+.pay:active{
   transform:scale(.98);
 }
+
+.pay:disabled{
+  opacity:.55;
+}
+
 .error{
   display:none;
-  color:#ff4b4b;
+  margin-top:9px;
+  padding:10px;
+  border-radius:10px;
+  background:#3a1010;
+  color:#ff6868;
   text-align:center;
-  margin-top:10px;
-  font-size:14px;
+  font-size:13px;
 }
+
 .screen{
   display:none;
 }
+
 .screen.active{
   display:block;
 }
+
 .center{
-  min-height:75vh;
+  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  text-align:center;
 }
-.wait-box{
+
+.wait{
   width:100%;
-  background:#151515;
-  border-radius:20px;
-  padding:35px 20px;
+  text-align:center;
+  padding:32px 20px;
+  border-radius:25px;
+  background:#111;
+  border:1px solid #292929;
+  box-shadow:0 20px 50px #000;
 }
+
 .spinner{
-  width:55px;
-  height:55px;
-  margin:0 auto 20px;
-  border:5px solid #333;
-  border-top-color:#39d353;
+  width:65px;
+  height:65px;
+  margin:0 auto 22px;
+  border:5px solid #303030;
+  border-top-color:#25e05b;
   border-radius:50%;
   animation:spin 1s linear infinite;
 }
+
 @keyframes spin{
   to{transform:rotate(360deg)}
 }
-.wait-box h2{
-  margin:0 0 10px;
+
+.wait h2{
+  margin:0;
+  font-size:24px;
 }
-.wait-box p{
-  color:#aaa;
+
+.wait p{
+  color:#999;
   line-height:1.5;
+  font-size:14px;
 }
+
 .status{
-  margin-top:15px;
-  color:#39d353;
+  margin-top:16px;
+  color:#32e867;
+  font-size:14px;
   font-weight:bold;
 }
+
 .failed{
-  color:#ff4040!important;
-}
-.back-btn{
-  margin-top:20px;
-  width:100%;
-  padding:14px;
-  border:1px solid #444;
-  background:#111;
-  color:#fff;
-  border-radius:12px;
-  font-weight:bold;
+  color:#ff4141;
+  font-size:42px;
+  margin-bottom:15px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- PACKAGES SCREEN -->
 <div id="packagesScreen" class="screen active">
-  <div class="container">
+  <div class="page">
 
-    <div class="header">
-      <h1><span class="mpesa">M-PESA</span> PAYMENT</h1>
-      <p>Select your minutes and pay securely.</p>
+    <div class="top">
+      <div class="brand">LIVE ACCESS</div>
+      <div class="live">
+        <i></i> LIVE NOW
+      </div>
+    </div>
+
+    <div class="hero">
+      <h1>Choose Your<br>Live Package</h1>
+      <p>Get instant access after M-PESA payment.</p>
+
+      <div class="stats">
+        <div class="stat">🟢 Active</div>
+        <div class="stat">👥 21 online</div>
+        <div class="stat">⚡ Instant access</div>
+      </div>
     </div>
 
     <div class="card">
-      <h2>Choose Package</h2>
+
+      <div class="card-title">
+        <h2>🔥 Available Packages</h2>
+        <span>Select one</span>
+      </div>
 
       <div class="packages">
 
-        <div class="package selected" data-minutes="30" data-price="95">
-          <div class="minutes">30 MIN</div>
+        <div class="package selected"
+             data-minutes="30"
+             data-price="95">
+          <div class="minutes">
+            30 <small>MIN</small>
+          </div>
           <div class="price">KSh 95</div>
         </div>
 
-        <div class="package" data-minutes="55" data-price="138">
-          <div class="minutes">55 MIN</div>
+        <div class="package"
+             data-minutes="55"
+             data-price="138">
+          <div class="minutes">
+            55 <small>MIN</small>
+          </div>
           <div class="price">KSh 138</div>
         </div>
 
-        <div class="package" data-minutes="73" data-price="207">
-          <div class="minutes">73 MIN</div>
+        <div class="package"
+             data-minutes="73"
+             data-price="207">
+          <div class="minutes">
+            73 <small>MIN</small>
+          </div>
           <div class="price">KSh 207</div>
         </div>
 
-        <div class="package" data-minutes="95" data-price="253">
-          <div class="minutes">95 MIN</div>
+        <div class="package"
+             data-minutes="95"
+             data-price="253">
+          <div class="minutes">
+            95 <small>MIN</small>
+          </div>
           <div class="price">KSh 253</div>
         </div>
 
-        <div class="package" data-minutes="105" data-price="299">
-          <div class="minutes">105 MIN</div>
+        <div class="package"
+             data-minutes="105"
+             data-price="299">
+          <div class="minutes">
+            105 <small>MIN</small>
+          </div>
           <div class="price">KSh 299</div>
         </div>
 
-        <div class="package" data-minutes="166" data-price="393">
-          <span class="hot">HOT</span>
-          <div class="minutes">166 MIN</div>
+        <div class="package"
+             data-minutes="166"
+             data-price="393">
+          <div class="hot">🔥 HOT</div>
+          <div class="minutes">
+            166 <small>MIN</small>
+          </div>
           <div class="price">KSh 393</div>
         </div>
 
       </div>
 
-      <label class="label">M-PESA Phone Number</label>
+      <div class="phone-title">
+        M-PESA phone number
+      </div>
 
       <input
         id="phone"
+        class="phone"
         type="tel"
         inputmode="numeric"
         maxlength="13"
@@ -253,74 +423,107 @@ input:focus{
 
       <div id="error" class="error"></div>
 
-      <button id="payButton" class="pay-btn">
-        PAY WITH M-PESA
+      <button id="payButton" class="pay">
+        💚 PAY WITH M-PESA
       </button>
+
     </div>
 
   </div>
 </div>
-
-<!-- WAITING FOR M-PESA PROMPT -->
+<!-- M-PESA WAITING SCREEN -->
 <div id="waitingScreen" class="screen">
-  <div class="container center">
-    <div class="wait-box">
+  <div class="page center">
+
+    <div class="wait">
 
       <div class="spinner"></div>
 
-      <h2 id="waitingTitle">Waiting for M-PESA</h2>
+      <h2 id="waitingTitle">
+        Sending M-PESA Prompt
+      </h2>
 
       <p id="waitingText">
-        Check your phone and enter your M-PESA PIN
-        when the payment prompt appears.
+        Please wait while we send the payment
+        request to your phone.
       </p>
 
       <div id="paymentStatus" class="status">
-        Sending payment request...
+        Connecting to M-PESA...
       </div>
 
     </div>
+
   </div>
 </div>
 
-<!-- FAILED PAYMENT -->
-<div id="failedScreen" class="screen">
-  <div class="container center">
-    <div class="wait-box">
 
-      <h2 class="failed">No payment is done</h2>
+<!-- PAYMENT FAILED SCREEN -->
+<div id="failedScreen" class="screen">
+  <div class="page center">
+
+    <div class="wait">
+
+      <div class="failed">×</div>
+
+      <h2>No payment is done</h2>
 
       <p>
-        We did not receive a successful payment.
-        You can select another package and try again.
+        We did not receive a successful M-PESA
+        payment. You can try again.
       </p>
 
-      <button class="back-btn" onclick="showPackages()">
+      <button
+        onclick="showPackages()"
+        class="pay"
+        style="margin-top:15px"
+      >
         BACK TO PACKAGES
       </button>
 
     </div>
+
   </div>
 </div>
+
+
 <script>
 let selectedMinutes = 30;
 let selectedPrice = 95;
 let transactionId = null;
-let checkTimer = null;
 let attempts = 0;
+let checkTimer = null;
 
-const packagesScreen = document.getElementById("packagesScreen");
-const waitingScreen = document.getElementById("waitingScreen");
-const failedScreen = document.getElementById("failedScreen");
+const packagesScreen =
+  document.getElementById("packagesScreen");
 
-const phoneInput = document.getElementById("phone");
-const payButton = document.getElementById("payButton");
-const errorBox = document.getElementById("error");
-const waitingTitle = document.getElementById("waitingTitle");
-const waitingText = document.getElementById("waitingText");
-const paymentStatus = document.getElementById("paymentStatus");
+const waitingScreen =
+  document.getElementById("waitingScreen");
 
-function showScreen(screen) {
+const failedScreen =
+  document.getElementById("failedScreen");
+
+const phoneInput =
+  document.getElementById("phone");
+
+const payButton =
+  document.getElementById("payButton");
+
+const errorBox =
+  document.getElementById("error");
+
+const waitingTitle =
+  document.getElementById("waitingTitle");
+
+const waitingText =
+  document.getElementById("waitingText");
+
+const paymentStatus =
+  document.getElementById("paymentStatus");
+
+
+function showScreen(screen){
+
   packagesScreen.classList.remove("active");
   waitingScreen.classList.remove("active");
   failedScreen.classList.remove("active");
@@ -328,52 +531,73 @@ function showScreen(screen) {
   screen.classList.add("active");
 }
 
-function showPackages() {
+
+function showPackages(){
+
   clearInterval(checkTimer);
+
   transactionId = null;
   attempts = 0;
 
   showScreen(packagesScreen);
+
   errorBox.style.display = "none";
 
   payButton.disabled = false;
-  payButton.textContent = "PAY WITH M-PESA";
+  payButton.textContent =
+    "💚 PAY WITH M-PESA";
 }
 
-function normalizePhone(phone) {
-  phone = phone.replace(/\D/g, "");
 
-  if (phone.startsWith("0")) {
+function normalizePhone(value){
+
+  let phone =
+    value.replace(/\D/g,"");
+
+  if(phone.startsWith("0")){
     return "254" + phone.substring(1);
   }
 
-  if (phone.startsWith("254")) {
+  if(phone.startsWith("254")){
     return phone;
   }
 
-  if (phone.startsWith("7")) {
+  if(phone.startsWith("7")){
     return "254" + phone;
   }
 
   return phone;
 }
 
-function showError(message) {
+
+function showError(message){
+
   errorBox.textContent = message;
   errorBox.style.display = "block";
 }
 
-document.querySelectorAll(".package").forEach(pkg => {
-  pkg.addEventListener("click", () => {
 
-    document.querySelectorAll(".package").forEach(p => {
-      p.classList.remove("selected");
+/* PACKAGE SELECTION */
+
+document
+.querySelectorAll(".package")
+.forEach(pkg => {
+
+  pkg.addEventListener("click",()=>{
+
+    document
+    .querySelectorAll(".package")
+    .forEach(item=>{
+      item.classList.remove("selected");
     });
 
     pkg.classList.add("selected");
 
-    selectedMinutes = Number(pkg.dataset.minutes);
-    selectedPrice = Number(pkg.dataset.price);
+    selectedMinutes =
+      Number(pkg.dataset.minutes);
+
+    selectedPrice =
+      Number(pkg.dataset.price);
 
     sessionStorage.setItem(
       "selectedMinutes",
@@ -384,75 +608,118 @@ document.querySelectorAll(".package").forEach(pkg => {
       "selectedPrice",
       selectedPrice
     );
+
   });
+
 });
 
-function getReferral() {
-  const params = new URLSearchParams(window.location.search);
 
-  const ref =
+/* REFERRAL TRACKING */
+
+function getReferral(){
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const referral =
     params.get("ref") ||
     params.get("employee") ||
     sessionStorage.getItem("referral") ||
     "";
 
-  if (ref) {
-    sessionStorage.setItem("referral", ref);
+  if(referral){
+
+    sessionStorage.setItem(
+      "referral",
+      referral
+    );
   }
 
-  return ref;
+  return referral;
 }
 
-async function startPayment() {
+
+/* START PAYMENT */
+
+async function startPayment(){
 
   errorBox.style.display = "none";
 
-  const rawPhone = phoneInput.value.trim();
+  const rawPhone =
+    phoneInput.value.trim();
 
-  if (!rawPhone) {
-    showError("Enter your M-PESA phone number.");
+  if(!rawPhone){
+
+    showError(
+      "Enter your M-PESA phone number."
+    );
+
     phoneInput.focus();
     return;
   }
 
-  const phone = normalizePhone(rawPhone);
+  const phone =
+    normalizePhone(rawPhone);
 
-  if (!/^2547\d{8}$/.test(phone)) {
-    showError("Enter a valid Safaricom number.");
+  if(!/^2547\d{8}$/.test(phone)){
+
+    showError(
+      "Enter a valid Safaricom number."
+    );
+
     phoneInput.focus();
     return;
   }
 
   payButton.disabled = true;
-  payButton.textContent = "CONNECTING...";
+
+  payButton.textContent =
+    "CONNECTING...";
 
   showScreen(waitingScreen);
 
-  waitingTitle.textContent = "Sending M-PESA Prompt";
+  waitingTitle.textContent =
+    "Sending M-PESA Prompt";
+
   waitingText.textContent =
-    "Please wait. A payment prompt is being sent to your phone.";
+    "A payment prompt is being sent to your phone. Check your phone and enter your M-PESA PIN.";
+
   paymentStatus.textContent =
     "Connecting to M-PESA...";
 
-  const referral = getReferral();
+  try{
 
-  try {
+    const response =
+      await fetch("/api/stk-push",{
 
-    const response = await fetch("/api/stk-push", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        phone: phone,
-        amount: selectedPrice,
-        reference: referral
-      })
-    });
+        method:"POST",
 
-    const data = await response.json();
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
 
-    if (!response.ok) {
+        body:JSON.stringify({
+
+          phone:phone,
+
+          amount:selectedPrice,
+
+          reference:getReferral()
+
+        })
+
+      });
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
+
       throw new Error(
         data.message ||
         data.error ||
@@ -460,264 +727,311 @@ async function startPayment() {
       );
     }
 
+
     transactionId =
       data.transaction_request_id ||
       data.paymentId ||
       data.transactionId ||
       data.id;
 
-    if (!transactionId) {
+
+    if(!transactionId){
+
       throw new Error(
-        "No payment transaction ID was returned."
+        "Payment transaction was not created."
       );
     }
 
+
     attempts = 0;
+
 
     waitingTitle.textContent =
       "Check Your Phone";
 
     waitingText.textContent =
-      "M-PESA prompt sent. Enter your M-PESA PIN to complete the payment.";
+      "M-PESA prompt sent. Enter your PIN to complete the payment.";
 
     paymentStatus.textContent =
       "Waiting for payment...";
 
+
     checkPaymentStatus();
 
-  } catch (error) {
+
+  }catch(error){
 
     console.error(error);
 
-    paymentFailed(
-      error.message ||
-      "Payment request failed."
-    );
+    paymentFailed();
+
   }
+
 }
 
-async function checkPaymentStatus() {
+
+/* CHECK PAYMENT */
+
+function checkPaymentStatus(){
 
   clearInterval(checkTimer);
 
-  checkTimer = setInterval(async () => {
+  checkTimer =
+    setInterval(async()=>{
 
-    attempts++;
+      attempts++;
 
-    try {
+      try{
 
-      const response = await fetch(
-        "/api/payment-status",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            transaction_request_id: transactionId
-          })
+        const response =
+          await fetch(
+            "/api/payment-status",
+            {
+              method:"POST",
+
+              headers:{
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:JSON.stringify({
+
+                transaction_request_id:
+                  transactionId
+
+              })
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        console.log(
+          "Payment status:",
+          data
+        );
+
+
+        const status =
+          String(
+            data.status || ""
+          ).toLowerCase();
+
+
+        const paid =
+          data.success === true &&
+          data.paid === true;
+
+
+        const paidStatus =
+          status === "paid" ||
+          status === "completed" ||
+          status === "success";
+
+
+        if(paid || paidStatus){
+
+          clearInterval(checkTimer);
+
+          paymentSuccessful();
+
+          return;
         }
-      );
 
-      const data = await response.json();
 
-      console.log("Payment status:", data);
+        const failed =
+          status === "failed" ||
+          status === "cancelled" ||
+          status === "canceled" ||
+          status === "rejected";
 
-      const status = String(
-        data.status || ""
-      ).toLowerCase();
 
-      const paid =
-        data.success === true &&
-        data.paid === true;
+        if(failed){
 
-      const paidStatus =
-        status === "paid" ||
-        status === "completed" ||
-        status === "success";
+          clearInterval(checkTimer);
 
-      if (paid || paidStatus) {
+          paymentFailed();
 
-        clearInterval(checkTimer);
+          return;
+        }
 
-        paymentSuccessful();
-        return;
-      }
 
-      const failed =
-        status === "failed" ||
-        status === "cancelled" ||
-        status === "canceled" ||
-        status === "rejected";
+        paymentStatus.textContent =
+          "Waiting for M-PESA payment...";
 
-      if (failed) {
 
-        clearInterval(checkTimer);
+        if(attempts >= 30){
 
-        paymentFailed(
-          "No payment is done."
+          clearInterval(checkTimer);
+
+          paymentFailed();
+
+        }
+
+
+      }catch(error){
+
+        console.error(
+          "Status error:",
+          error
         );
 
-        return;
+        if(attempts >= 30){
+
+          clearInterval(checkTimer);
+
+          paymentFailed();
+
+        }
+
       }
 
-      paymentStatus.textContent =
-        "Waiting for M-PESA payment...";
+    },2000);
 
-      if (attempts >= 30) {
-
-        clearInterval(checkTimer);
-
-        paymentFailed(
-          "No payment is done."
-        );
-      }
-
-    } catch (error) {
-
-      console.error(
-        "Payment status error:",
-        error
-      );
-
-      if (attempts >= 30) {
-
-        clearInterval(checkTimer);
-
-        paymentFailed(
-          "No payment is done."
-        );
-      }
-    }
-
-  }, 2000);
 }
 
-function paymentSuccessful() {
+
+/* SUCCESS */
+
+function paymentSuccessful(){
+
+  clearInterval(checkTimer);
 
   waitingTitle.textContent =
-    "Payment Successful";
+    "Payment Successful ✓";
 
   waitingText.textContent =
     "Your payment has been received.";
 
   paymentStatus.textContent =
-    "Opening your access...";
+    "Opening your live access...";
 
-  setTimeout(() => {
+  setTimeout(()=>{
+
     showLiveScreen();
-  }, 1500);
+
+  },1500);
+
 }
 
-function paymentFailed(message) {
+
+/* FAILED */
+
+function paymentFailed(){
 
   clearInterval(checkTimer);
 
   transactionId = null;
 
-  waitingTitle.textContent =
-    "Payment Not Completed";
+  showScreen(failedScreen);
 
-  waitingText.textContent =
-    "No successful M-PESA payment was received.";
-
-  paymentStatus.textContent =
-    message || "No payment is done.";
-
-  paymentStatus.classList.add("failed");
-
-  setTimeout(() => {
-
-    paymentStatus.classList.remove("failed");
-
-    showScreen(failedScreen);
-
-  }, 1500);
 }
+
+
+/* BUTTON */
 
 payButton.addEventListener(
   "click",
   startPayment
 );
 
+
+/* PHONE INPUT */
+
 phoneInput.addEventListener(
   "input",
-  () => {
+  ()=>{
     errorBox.style.display = "none";
   }
 );
 
+
+/* RESTORE PACKAGE */
+
 const savedMinutes =
-  sessionStorage.getItem("selectedMinutes");
+  sessionStorage.getItem(
+    "selectedMinutes"
+  );
 
 const savedPrice =
-  sessionStorage.getItem("selectedPrice");
+  sessionStorage.getItem(
+    "selectedPrice"
+  );
 
-if (savedMinutes && savedPrice) {
 
-  selectedMinutes = Number(savedMinutes);
-  selectedPrice = Number(savedPrice);
+if(savedMinutes && savedPrice){
 
-  document.querySelectorAll(".package")
-    .forEach(pkg => {
+  selectedMinutes =
+    Number(savedMinutes);
 
-      pkg.classList.toggle(
-        "selected",
-        Number(pkg.dataset.minutes) ===
-        selectedMinutes
-      );
+  selectedPrice =
+    Number(savedPrice);
 
-    });
+
+  document
+  .querySelectorAll(".package")
+  .forEach(pkg=>{
+
+    pkg.classList.toggle(
+      "selected",
+
+      Number(
+        pkg.dataset.minutes
+      ) === selectedMinutes
+    );
+
+  });
+
 }
-
-function showLiveScreen() {
-  showScreen(document.getElementById("liveScreen"));
-}
-      </script>
-      <!-- LIVE SCREEN -->
+  </script>
+  <!-- LIVE ACCESS SCREEN -->
 <div id="liveScreen" class="screen">
-  <div class="container center">
+  <div class="page center">
 
-    <div class="wait-box">
+    <div class="wait">
 
-      <div style="
+      <div class="live" style="
         display:inline-block;
-        background:#e90000;
-        color:white;
-        padding:7px 13px;
-        border-radius:8px;
-        font-weight:bold;
-        margin-bottom:18px;
+        margin-bottom:15px;
       ">
-        🔴 LIVE
+        <i></i> LIVE NOW
       </div>
 
       <h2>Live Access</h2>
 
+      <p id="liveMessage">
+        Your live session is starting...
+      </p>
+
       <video
         id="liveVideo"
-        controls
         playsinline
+        controls
         style="
           width:100%;
-          border-radius:14px;
+          display:block;
+          margin-top:15px;
+          border-radius:16px;
           background:#000;
-          margin-top:10px;
         "
       >
         <source
           src="preview_20_seconds.mp4"
           type="video/mp4"
         >
-        Your browser does not support video.
       </video>
 
-      <p id="liveMessage" style="
-        color:#aaa;
-        margin-top:15px;
+      <div style="
+        display:flex;
+        justify-content:center;
+        gap:8px;
+        margin-top:14px;
       ">
-        Enjoy your live session.
-      </p>
+        <div class="stat">🔴 LIVE</div>
+        <div class="stat">👥 Online</div>
+      </div>
 
     </div>
 
@@ -725,30 +1039,32 @@ function showLiveScreen() {
 </div>
 
 
-<!-- INSUFFICIENT MINUTES -->
+<!-- INSUFFICIENT MINUTES SCREEN -->
 <div id="insufficientScreen" class="screen">
-  <div class="container center">
+  <div class="page center">
 
-    <div class="wait-box">
+    <div class="wait">
 
       <div style="
         font-size:48px;
-        margin-bottom:15px;
+        margin-bottom:10px;
       ">
         ⏱️
       </div>
 
-      <h2>Insufficient Minutes</h2>
+      <h2>
+        Insufficient Minutes
+      </h2>
 
       <p>
-        Your available minutes have ended.
-        Choose a package to continue.
+        Your live minutes have ended.
+        Choose another package to continue.
       </p>
 
       <div id="countdown" style="
-        font-size:25px;
-        font-weight:bold;
-        margin-top:15px;
+        font-size:28px;
+        font-weight:900;
+        margin-top:18px;
       ">
         2
       </div>
@@ -761,7 +1077,7 @@ function showLiveScreen() {
 
 <script>
 
-function showLiveScreen() {
+function showLiveScreen(){
 
   showScreen(
     document.getElementById("liveScreen")
@@ -778,13 +1094,11 @@ function showLiveScreen() {
   message.textContent =
     "Your live session is starting...";
 
-  video.play().catch(() => {});
-
   let finished = false;
 
-  function finish() {
+  function finishOnce(){
 
-    if (finished) return;
+    if(finished) return;
 
     finished = true;
 
@@ -793,99 +1107,125 @@ function showLiveScreen() {
     finishLiveExperience();
   }
 
-  video.onended = finish;
+  video.onended = finishOnce;
 
-  /*
-    Fallback:
-    If the video does not have the expected
-    duration, the session still finishes
-    after 20 seconds.
-  */
-  setTimeout(finish, 20000);
+  video.play().catch(()=>{
+    message.textContent =
+      "Tap the video to start your live session.";
+  });
+
+  /* Safety timer */
+  setTimeout(
+    finishOnce,
+    20000
+  );
 }
 
 
-function finishLiveExperience() {
+function finishLiveExperience(){
 
-  showScreen(
-    document.getElementById("insufficientScreen")
-  );
+  const screen =
+    document.getElementById(
+      "insufficientScreen"
+    );
+
+  showScreen(screen);
 
   let seconds = 2;
 
   const countdown =
-    document.getElementById("countdown");
+    document.getElementById(
+      "countdown"
+    );
 
   countdown.textContent = seconds;
 
-  const timer = setInterval(() => {
+  const timer =
+    setInterval(()=>{
 
-    seconds--;
+      seconds--;
 
-    countdown.textContent = seconds;
+      countdown.textContent =
+        seconds;
 
-    if (seconds <= 0) {
+      if(seconds <= 0){
 
-      clearInterval(timer);
+        clearInterval(timer);
 
-      showPackages();
-    }
+        showPackages();
 
-  }, 1000);
+      }
+
+    },1000);
 }
 
 
-/*
-  If payment fails, go to packages.
-*/
-function returnToPackages() {
+/* Stop video when leaving LIVE */
 
-  showPackages();
+function stopLiveVideo(){
+
+  const video =
+    document.getElementById(
+      "liveVideo"
+    );
+
+  if(video){
+    video.pause();
+  }
+
 }
 
 
-/*
-  Restore package selection
-*/
+/* Restore selected package */
+
 window.addEventListener(
   "load",
-  () => {
+  ()=>{
 
-    const savedMinutes =
+    const minutes =
       sessionStorage.getItem(
         "selectedMinutes"
       );
 
-    const savedPrice =
+    const price =
       sessionStorage.getItem(
         "selectedPrice"
       );
 
-    if (
-      savedMinutes &&
-      savedPrice
-    ) {
+    if(minutes && price){
 
       selectedMinutes =
-        Number(savedMinutes);
+        Number(minutes);
 
       selectedPrice =
-        Number(savedPrice);
+        Number(price);
 
-      document.querySelectorAll(
-        ".package"
-      ).forEach(pkg => {
+      document
+      .querySelectorAll(".package")
+      .forEach(pkg=>{
 
         pkg.classList.toggle(
           "selected",
+
           Number(
             pkg.dataset.minutes
           ) === selectedMinutes
         );
 
       });
+
     }
 
+  }
+);
+
+
+/* Prevent accidental form reload */
+
+window.addEventListener(
+  "beforeunload",
+  ()=>{
+    clearInterval(checkTimer);
   }
 );
 
