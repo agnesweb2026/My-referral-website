@@ -12,8 +12,7 @@
   padding:0;
 }
 
-html,
-body{
+html,body{
   width:100%;
   min-height:100%;
   background:#000;
@@ -63,7 +62,7 @@ button{
 }
 
 /* =========================
-   PHOTOS PAGE
+   LIVE PHOTOS
 ========================= */
 
 #photosPage{
@@ -335,6 +334,51 @@ button{
 }
 
 /* =========================
+   LOADING BEFORE CALL
+========================= */
+
+#callLoadingPage{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:95;
+  width:100%;
+  min-height:100vh;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  background:#000;
+}
+
+.loading-spinner{
+  width:48px;
+  height:48px;
+  border:4px solid #333;
+  border-top:4px solid #fff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin-bottom:18px;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.loading-title{
+  font-size:18px;
+  font-weight:900;
+}
+
+.loading-text{
+  margin-top:7px;
+  color:#777;
+  font-size:13px;
+}
+
+/* =========================
    RED LIVE VIDEO
 ========================= */
 
@@ -435,10 +479,6 @@ button{
   font-size:13px;
 }
 
-/*
-  This video is invisible.
-  It provides the sound while the screen remains black.
-*/
 #blackLiveSoundVideo{
   position:fixed;
   left:-100px;
@@ -545,26 +585,12 @@ button{
 
 <body>
 
-<!-- =========================
-     WELCOME
-========================= -->
-
 <section id="welcomeScreen">
-
-  <div class="welcome-title">
-    Welcome
-  </div>
-
+  <div class="welcome-title">Welcome</div>
   <div class="welcome-subtitle">
     Connecting you to live profiles...
   </div>
-
 </section>
-
-
-<!-- =========================
-     LIVE PHOTOS
-========================= -->
 
 <section id="photosPage">
 
@@ -589,11 +615,6 @@ button{
 
 </section>
 
-
-<!-- =========================
-     INCOMING CALL
-========================= -->
-
 <section id="incomingCall">
 
   <div class="incoming-label">
@@ -601,13 +622,7 @@ button{
   </div>
 
   <div class="caller-photo-wrap">
-
-    <img
-      id="callerImage"
-      src=""
-      alt="Caller"
-    >
-
+    <img id="callerImage" src="" alt="Caller">
   </div>
 
   <div id="callerName">
@@ -638,19 +653,25 @@ button{
 
 </section>
 
+<section id="callLoadingPage">
 
-<!-- =========================
-     RED LIVE VIDEO
-========================= -->
+  <div class="loading-spinner"></div>
+
+  <div class="loading-title">
+    Connecting live call...
+  </div>
+
+  <div class="loading-text">
+    Please wait
+  </div>
+
+</section>
 
 <section id="redLiveVideoPage">
 
   <div class="red-live-badge">
-
     <span class="red-live-dot"></span>
-
     LIVE
-
   </div>
 
   <video
@@ -666,19 +687,11 @@ button{
 
 </section>
 
-
-<!-- =========================
-     BLACK LIVE
-========================= -->
-
 <section id="blackLivePage">
 
   <div class="black-live-label">
-
     <span class="black-live-dot"></span>
-
     LIVE
-
   </div>
 
   <div class="black-live-text">
@@ -698,11 +711,6 @@ button{
 
 </section>
 
-
-<!-- =========================
-     INSUFFICIENT MINUTES
-========================= -->
-
 <section id="insufficientPage">
 
   <div class="insufficient-title">
@@ -717,29 +725,11 @@ button{
     2
   </div>
 
-</section>
-
-
-<script>
-  const IMAGE_BASE =
-  "https://raw.githubusercontent.com/agnesweb2026/My-referral-website/main/";
-
-const PAYMENT_PAGE_URL = "payment.html";
-
-const RED_LIVE_DURATION = 5000;
-const BLACK_LIVE_DURATION = 5000;
-const INSUFFICIENT_DURATION = 2000;
-const NEXT_CALL_DELAY = 20000;
-
-const OFFLINE_DURATION = 5 * 60 * 1000;
-
-const RED_LIVE_SEEN_KEY = "redLiveVideoSeen";
-const REFERRAL_STORAGE_KEY = "referralEmployeeId";
-
-
-/* =========================
-   REFERRAL CODES
-========================= */
+  </section>
+  <script>
+/* ================================
+   REFERRAL SYSTEM
+================================ */
 
 const VALID_REFERRALS = {
   "REF-A7K2": "joshua1",
@@ -754,65 +744,40 @@ const VALID_REFERRALS = {
   "REF-K4W8": "joshua10"
 };
 
+const REFERRAL_STORAGE_KEY = "referralEmployeeId";
 
-/* =========================
-   PROFILES
-========================= */
+function saveReferral() {
+  const params = new URLSearchParams(window.location.search);
 
-const PROFILES = [
-  {name:"Cute",age:23,country:"Kenya",flag:"🇰🇪",image:"Cute"},
-  {name:"Becky",age:25,country:"Kenya",flag:"🇰🇪",image:"Becky"},
-  {name:"Dorry",age:22,country:"Kenya",flag:"🇰🇪",image:"Dorry"},
-  {name:"Sharon",age:24,country:"Kenya",flag:"🇰🇪",image:"Sharon"},
-  {name:"Lilian",age:26,country:"Kenya",flag:"🇰🇪",image:"Lilian"},
+  const ref =
+    params.get("ref") ||
+    params.get("employee") ||
+    params.get("code");
 
-  {name:"Asha",age:24,country:"Tanzania",flag:"🇹🇿",image:"Asha"},
-  {name:"Neema",age:22,country:"Tanzania",flag:"🇹🇿",image:"Neema"},
-  {name:"Zawadi",age:27,country:"Tanzania",flag:"🇹🇿",image:"Zawadi"},
-  {name:"Rehema",age:23,country:"Tanzania",flag:"🇹🇿",image:"Rehema"},
+  if (!ref) return;
 
-  {name:"Blessing",age:24,country:"Nigeria",flag:"🇳🇬",image:"Blessing"},
-  {name:"Favour",age:26,country:"Nigeria",flag:"🇳🇬",image:"Favour"},
-  {name:"Peace",age:23,country:"Nigeria",flag:"🇳🇬",image:"Peace"},
-  {name:"Joy",age:25,country:"Nigeria",flag:"🇳🇬",image:"Joy"},
+  const employee = VALID_REFERRALS[ref.toUpperCase()];
 
-  {name:"Grace",age:22,country:"Congo",flag:"🇨🇩",image:"Grace"},
-  {name:"Mimi",age:24,country:"Congo",flag:"🇨🇩",image:"Mimi"},
-  {name:"Nadia",age:27,country:"Congo",flag:"🇨🇩",image:"Nadia"},
-  {name:"Bella",age:23,country:"Congo",flag:"🇨🇩",image:"Bella"},
-  {name:"Princess",age:26,country:"Congo",flag:"🇨🇩",image:"Princess"},
+  if (employee) {
+    localStorage.setItem(
+      REFERRAL_STORAGE_KEY,
+      employee
+    );
+  }
+}
 
-  {name:"Emily",age:24,country:"Canada",flag:"🇨🇦",image:"Emily"},
-  {name:"Sophie",age:25,country:"Canada",flag:"🇨🇦",image:"Sophie"},
+saveReferral();
 
-  {name:"Thandi",age:23,country:"South Africa",flag:"🇿🇦",image:"Thandi"},
-  {name:"Lerato",age:26,country:"South Africa",flag:"🇿🇦",image:"Lerato"},
-
-  {name:"Ashley",age:24,country:"USA",flag:"🇺🇸",image:"Ashley"},
-  {name:"Jessica",age:27,country:"USA",flag:"🇺🇸",image:"Jessica"}
-];
+function getEmployeeId() {
+  return localStorage.getItem(
+    REFERRAL_STORAGE_KEY
+  );
+}
 
 
-/* =========================
-   STATE
-========================= */
-
-let currentCallerIndex = 0;
-
-let referralCode = null;
-
-let referralEmployee = null;
-
-let onlineInterval = null;
-
-let timers = [];
-
-let offlineProfiles = new Map();
-
-
-/* =========================
+/* ================================
    ELEMENTS
-========================= */
+================================ */
 
 const welcomeScreen =
   document.getElementById("welcomeScreen");
@@ -838,6 +803,9 @@ const declineButton =
 const answerButton =
   document.getElementById("answerButton");
 
+const callLoadingPage =
+  document.getElementById("callLoadingPage");
+
 const redLiveVideoPage =
   document.getElementById("redLiveVideoPage");
 
@@ -860,293 +828,308 @@ const onlineNumber =
   document.getElementById("onlineNumber");
 
 
-/* =========================
-   REFERRAL
-========================= */
+/* ================================
+   SETTINGS
+================================ */
 
-function loadReferral(){
+const RED_LIVE_START_TIME = 10;
 
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
+const RED_LIVE_DURATION = 7000;
 
-  const fromURL =
-    params.get("employee") ||
-    params.get("ref");
+const BLACK_LIVE_DURATION = 5000;
 
-  if(
-    fromURL &&
-    VALID_REFERRALS[fromURL]
-  ){
+const LOADING_DURATION = 2000;
 
-    referralCode = fromURL;
+const INSUFFICIENT_DURATION = 2000;
 
-    referralEmployee =
-      VALID_REFERRALS[fromURL];
+const OFFLINE_DURATION =
+  5 * 60 * 1000;
 
-    localStorage.setItem(
-      REFERRAL_STORAGE_KEY,
-      referralCode
-    );
+const RED_LIVE_SEEN_KEY =
+  "redLiveVideoSeen";
 
-    return;
+
+/* ================================
+   PROFILE DATA
+================================ */
+
+const profiles = [
+  {
+    name: "Cute",
+    age: 24,
+    country: "Kenya",
+    flag: "🇰🇪"
+  },
+  {
+    name: "Becky",
+    age: 22,
+    country: "Kenya",
+    flag: "🇰🇪"
+  },
+  {
+    name: "Dorry",
+    age: 26,
+    country: "Kenya",
+    flag: "🇰🇪"
+  },
+  {
+    name: "Sharon",
+    age: 23,
+    country: "Kenya",
+    flag: "🇰🇪"
+  },
+  {
+    name: "Lilian",
+    age: 27,
+    country: "Kenya",
+    flag: "🇰🇪"
+  },
+
+  {
+    name: "Asha",
+    age: 25,
+    country: "Tanzania",
+    flag: "🇹🇿"
+  },
+  {
+    name: "Neema",
+    age: 23,
+    country: "Tanzania",
+    flag: "🇹🇿"
+  },
+  {
+    name: "Zawadi",
+    age: 28,
+    country: "Tanzania",
+    flag: "🇹🇿"
+  },
+  {
+    name: "Rehema",
+    age: 24,
+    country: "Tanzania",
+    flag: "🇹🇿"
+  },
+
+  {
+    name: "Blessing",
+    age: 22,
+    country: "Nigeria",
+    flag: "🇳🇬"
+  },
+  {
+    name: "Favour",
+    age: 26,
+    country: "Nigeria",
+    flag: "🇳🇬"
+  },
+  {
+    name: "Peace",
+    age: 25,
+    country: "Nigeria",
+    flag: "🇳🇬"
+  },
+  {
+    name: "Joy",
+    age: 27,
+    country: "Nigeria",
+    flag: "🇳🇬"
+  },
+
+  {
+    name: "Grace",
+    age: 24,
+    country: "Congo",
+    flag: "🇨🇩"
+  },
+  {
+    name: "Mimi",
+    age: 23,
+    country: "Congo",
+    flag: "🇨🇩"
+  },
+  {
+    name: "Nadia",
+    age: 26,
+    country: "Congo",
+    flag: "🇨🇩"
+  },
+  {
+    name: "Bella",
+    age: 25,
+    country: "Congo",
+    flag: "🇨🇩"
+  },
+  {
+    name: "Princess",
+    age: 28,
+    country: "Congo",
+    flag: "🇨🇩"
+  },
+
+  {
+    name: "Emily",
+    age: 24,
+    country: "Canada",
+    flag: "🇨🇦"
+  },
+  {
+    name: "Sophie",
+    age: 27,
+    country: "Canada",
+    flag: "🇨🇦"
+  },
+
+  {
+    name: "Thandi",
+    age: 25,
+    country: "South Africa",
+    flag: "🇿🇦"
+  },
+  {
+    name: "Lerato",
+    age: 29,
+    country: "South Africa",
+    flag: "🇿🇦"
+  },
+
+  {
+    name: "Ashley",
+    age: 23,
+    country: "USA",
+    flag: "🇺🇸"
+  },
+  {
+    name: "Jessica",
+    age: 26,
+    country: "USA",
+    flag: "🇺🇸"
   }
+];
 
-  const saved =
-    localStorage.getItem(
-      REFERRAL_STORAGE_KEY
-    );
 
-  if(
-    saved &&
-    VALID_REFERRALS[saved]
-  ){
+/* ================================
+   REAL IMAGE FILES
+   These are files already in repo.
+================================ */
 
-    referralCode = saved;
+const imageFiles = [
+  "photo1.jpg",
+  "photo2.jpg",
+  "photo4.jpg",
+  "photo5.jpg",
 
-    referralEmployee =
-      VALID_REFERRALS[saved];
-  }
+  "1785179340825.jpg",
+  "1785179340825 (1).jpg",
+  "1785179362758.jpg",
+  "1785179915649.jpg",
+
+  "Screenshot_20260731-045343.png"
+];
+
+
+/* ================================
+   IMAGE URL
+================================ */
+
+const GITHUB_IMAGE_BASE =
+  "https://raw.githubusercontent.com/" +
+  "agnesweb2026/My-referral-website/main/";
+
+
+function getImage(index) {
+
+  const file =
+    imageFiles[
+      index % imageFiles.length
+    ];
+
+  return GITHUB_IMAGE_BASE +
+    encodeURIComponent(file);
 }
 
 
-/* =========================
-   HIDE SCREENS
-========================= */
-
-function hideAllScreens(){
-
-  welcomeScreen.style.display = "none";
-
-  photosPage.style.display = "none";
-
-  incomingCall.style.display = "none";
-
-  redLiveVideoPage.style.display = "none";
-
-  blackLivePage.style.display = "none";
-
-  insufficientPage.style.display = "none";
-}
-
-
-/* =========================
-   TIMERS
-========================= */
-
-function addTimer(callback,delay){
-
-  const timer =
-    setTimeout(
-      callback,
-      delay
-    );
-
-  timers.push(timer);
-
-  return timer;
-}
-
-
-function clearTimers(){
-
-  timers.forEach(
-    timer => clearTimeout(timer)
-  );
-
-  timers = [];
-}
-
-
-/* =========================
-   IMAGE LOADER
-========================= */
-
-function createImageCandidates(name){
-
-  return [
-
-    IMAGE_BASE +
-    encodeURIComponent(name) +
-    ".jpg",
-
-    IMAGE_BASE +
-    encodeURIComponent(name) +
-    ".jpeg",
-
-    IMAGE_BASE +
-    encodeURIComponent(name) +
-    ".png",
-
-    IMAGE_BASE +
-    encodeURIComponent(name) +
-    ".webp"
-
-  ];
-}
-
-
-function setupImageFallback(
-  image,
-  profile
-){
-
-  const sources =
-    createImageCandidates(
-      profile.image
-    );
-
-  let index = 0;
-
-  image.src =
-    sources[index];
-
-  image.addEventListener(
-    "error",
-    function(){
-
-      index++;
-
-      if(index < sources.length){
-
-        image.src =
-          sources[index];
-
-      }else{
-
-        image.style.display =
-          "none";
-
-        const parent =
-          image.parentElement;
-
-        const placeholder =
-          document.createElement("div");
-
-        placeholder.className =
-          "photo-placeholder";
-
-        placeholder.innerHTML = `
-          <div class="photo-placeholder-icon">
-            👤
-          </div>
-          <div>
-            ${profile.name}
-          </div>
-        `;
-
-        parent.appendChild(
-          placeholder
-        );
-      }
-
-    }
-  );
-}
-
-
-/* =========================
+/* ================================
    OFFLINE SYSTEM
-========================= */
+================================ */
 
-function randomOfflineStatus(){
+const offlineUntil = {};
 
-  const now = Date.now();
+function isOffline(index) {
 
-  const status = [];
-
-  PROFILES.forEach(
-    (profile,index) => {
-
-      const existing =
-        offlineProfiles.get(index);
-
-      if(
-        existing &&
-        existing.until > now
-      ){
-
-        status[index] = true;
-
-        return;
-      }
-
-      /*
-        Approximately 20% of profiles
-        become offline.
-      */
-
-      const offline =
-        Math.random() < 0.20;
-
-      if(offline){
-
-        offlineProfiles.set(
-          index,
-          {
-            until:
-              now +
-              OFFLINE_DURATION
-          }
-        );
-
-        status[index] = true;
-
-      }else{
-
-        offlineProfiles.delete(index);
-
-        status[index] = false;
-      }
-
-    }
-  );
-
-  return status;
-}
-
-
-function isProfileOffline(index){
-
-  const item =
-    offlineProfiles.get(index);
-
-  if(!item){
-
+  if (!offlineUntil[index]) {
     return false;
   }
 
-  if(
-    Date.now() <
-    item.until
-  ){
-
-    return true;
-  }
-
-  offlineProfiles.delete(index);
-
-  return false;
+  return Date.now() <
+    offlineUntil[index];
 }
 
 
-/* =========================
-   BUILD PHOTOS
-========================= */
+function randomOfflineStatus() {
 
-function buildPhotoGrid(){
+  /*
+    Clear expired offline users.
+  */
+
+  Object.keys(offlineUntil)
+    .forEach(index => {
+
+      if (
+        Date.now() >=
+        offlineUntil[index]
+      ) {
+        delete offlineUntil[index];
+      }
+
+    });
+
+
+  /*
+    Keep existing offline users.
+    Only create a new random offline
+    profile when none currently exists.
+  */
+
+  const currentlyOffline =
+    Object.keys(offlineUntil)
+      .filter(index =>
+        isOffline(Number(index))
+      );
+
+  if (
+    currentlyOffline.length === 0
+  ) {
+
+    const randomIndex =
+      Math.floor(
+        Math.random() *
+        profiles.length
+      );
+
+    offlineUntil[randomIndex] =
+      Date.now() +
+      OFFLINE_DURATION;
+  }
+}
+
+
+/* ================================
+   BUILD PHOTO GRID
+================================ */
+
+function buildPhotoGrid() {
+
+  if (!photoGrid) return;
+
+  randomOfflineStatus();
 
   photoGrid.innerHTML = "";
 
-  const offlineStatus =
-    randomOfflineStatus();
-
-  PROFILES.forEach(
-    (profile,index) => {
+  profiles.forEach(
+    (profile, index) => {
 
       const offline =
-        offlineStatus[index];
+        isOffline(index);
 
       const card =
         document.createElement("div");
@@ -1154,96 +1137,124 @@ function buildPhotoGrid(){
       card.className =
         "photoCard";
 
-      card.innerHTML = `
+      card.dataset.index =
+        index;
 
-        <div class="photo-image-wrap">
+      const imageWrap =
+        document.createElement("div");
 
-          <img
-            class="profile-photo"
-            alt="${profile.name}"
-          >
-
-          ${
-            offline
-            ?
-            `
-            <div class="offline-badge">
-              OFFLINE
-            </div>
-            `
-            :
-            `
-            <div class="live-badge">
-              LIVE
-            </div>
-            `
-          }
-
-          ${
-            !offline
-            ?
-            `
-            <div class="photo-play">
-              ▶
-            </div>
-            `
-            :
-            ``
-          }
-
-        </div>
-
-        <div class="photo-info">
-
-          <div class="photo-name">
-            ${profile.name}
-          </div>
-
-          <div class="photo-meta ${
-            offline
-            ? "offline-meta"
-            : ""
-          }">
-
-            ${profile.flag}
-            ${profile.country}
-            ·
-            ${profile.age}
-
-            ${
-              offline
-              ? " · Offline"
-              : ""
-            }
-
-          </div>
-
-        </div>
-      `;
+      imageWrap.className =
+        "photo-image-wrap";
 
 
-      const image =
-        card.querySelector(
-          ".profile-photo"
-        );
+      const img =
+        document.createElement("img");
 
-      setupImageFallback(
-        image,
-        profile
-      );
+      img.className =
+        "profile-photo";
+
+      img.src =
+        getImage(index);
+
+      img.alt =
+        profile.name;
+
+
+      img.onerror = function() {
+
+        /*
+          Fallback to first image
+          if one image fails.
+        */
+
+        if (
+          this.dataset.fallback !== "1"
+        ) {
+
+          this.dataset.fallback =
+            "1";
+
+          this.src =
+            GITHUB_IMAGE_BASE +
+            "photo1.jpg";
+        }
+
+      };
+
+
+      imageWrap.appendChild(img);
+
+
+      const play =
+        document.createElement("div");
+
+      play.className =
+        "photo-play";
+
+      play.innerHTML =
+        "▶";
+
+      imageWrap.appendChild(play);
+
+
+      const badge =
+        document.createElement("div");
+
+      badge.className =
+        offline
+          ? "offline-badge"
+          : "live-badge";
+
+      badge.textContent =
+        offline
+          ? "OFFLINE"
+          : "LIVE";
+
+      imageWrap.appendChild(badge);
+
+
+      const info =
+        document.createElement("div");
+
+      info.className =
+        "photo-info";
+
+
+      const name =
+        document.createElement("div");
+
+      name.className =
+        "photo-name";
+
+      name.textContent =
+        profile.name;
+
+
+      const meta =
+        document.createElement("div");
+
+      meta.className =
+        "photo-meta";
+
+      meta.textContent =
+        profile.flag +
+        " " +
+        profile.age;
+
+
+      info.appendChild(name);
+      info.appendChild(meta);
+
+
+      card.appendChild(imageWrap);
+      card.appendChild(info);
 
 
       card.addEventListener(
         "click",
-        function(){
+        function() {
 
-          /*
-            Offline profiles cannot
-            start a live call.
-          */
-
-          if(offline){
-
+          if (offline) {
             return;
           }
 
@@ -1253,505 +1264,1124 @@ function buildPhotoGrid(){
       );
 
 
-      photoGrid.appendChild(
-        card
+      photoGrid.appendChild(card);
+
+    }
+  );
+
+
+  /*
+    Keep online number realistic.
+  */
+
+  const offlineCount =
+    Object.keys(offlineUntil)
+      .filter(index =>
+        isOffline(Number(index))
+      ).length;
+
+  const onlineCount =
+    Math.max(
+      1,
+      profiles.length -
+      offlineCount
+    );
+
+  if (onlineNumber) {
+    onlineNumber.textContent =
+      onlineCount + " online";
+  }
+}
+
+
+/* ================================
+   SHOW / HIDE PAGES
+================================ */
+
+function hideAllPages() {
+
+  if (welcomeScreen)
+    welcomeScreen.style.display =
+      "none";
+
+  if (photosPage)
+    photosPage.style.display =
+      "none";
+
+  if (incomingCall)
+    incomingCall.style.display =
+      "none";
+
+  if (callLoadingPage)
+    callLoadingPage.style.display =
+      "none";
+
+  if (redLiveVideoPage)
+    redLiveVideoPage.style.display =
+      "none";
+
+  if (blackLivePage)
+    blackLivePage.style.display =
+      "none";
+
+  if (insufficientPage)
+    insufficientPage.style.display =
+      "none";
+}
+
+
+function showPhotos() {
+
+  hideAllPages();
+
+  if (photosPage)
+    photosPage.style.display =
+      "block";
+
+  buildPhotoGrid();
+}
+
+
+/* ================================
+   INCOMING CALL
+================================ */
+
+let currentCallerIndex = -1;
+
+
+function chooseCaller() {
+
+  const available =
+    profiles
+      .map((profile, index) => index)
+      .filter(index =>
+        !isOffline(index)
+      );
+
+  if (
+    available.length === 0
+  ) {
+    randomOfflineStatus();
+    return chooseCaller();
+  }
+
+  const random =
+    Math.floor(
+      Math.random() *
+      available.length
+    );
+
+  return available[random];
+}
+
+
+function showIncomingCall() {
+
+  currentCallerIndex =
+    chooseCaller();
+
+  const profile =
+    profiles[currentCallerIndex];
+
+
+  if (callerImage) {
+
+    callerImage.src =
+      getImage(
+        currentCallerIndex
+      );
+
+    callerImage.onerror =
+      function() {
+
+        this.src =
+          GITHUB_IMAGE_BASE +
+          "photo1.jpg";
+
+      };
+  }
+
+
+  if (callerName) {
+
+    callerName.textContent =
+      profile.name;
+
+  }
+
+
+  hideAllPages();
+
+  if (incomingCall)
+    incomingCall.style.display =
+      "flex";
+}
+
+
+/* ================================
+   DECLINE
+================================ */
+
+if (declineButton) {
+
+  declineButton.addEventListener(
+    "click",
+    function() {
+
+      showPhotos();
+
+    }
+  );
+
+}
+
+
+/* ================================
+   ANSWER
+================================ */
+
+if (answerButton) {
+
+  answerButton.addEventListener(
+    "click",
+    function() {
+
+      /*
+        Immediately prepare the red
+        video while user activation
+        is still available.
+      */
+
+      if (
+        redLiveVideo &&
+        !localStorage.getItem(
+          RED_LIVE_SEEN_KEY
+        )
+      ) {
+
+        try {
+
+          redLiveVideo.currentTime =
+            RED_LIVE_START_TIME;
+
+        } catch (error) {}
+
+      }
+
+
+      /*
+        Show 2-second connecting page.
+      */
+
+      hideAllPages();
+
+      if (callLoadingPage)
+        callLoadingPage.style.display =
+          "flex";
+
+
+      setTimeout(
+        function() {
+
+          startAnsweredCall();
+
+        },
+        LOADING_DURATION
       );
 
     }
   );
+
 }
 
 
-/* =========================
-   ONLINE NUMBER
-========================= */
+/* ================================
+   ANSWERED CALL FLOW
+================================ */
 
-function updateOnlineNumber(){
+function startAnsweredCall() {
 
-  const total =
-    PROFILES.length;
-
-  let offlineCount = 0;
-
-  PROFILES.forEach(
-    (_,index) => {
-
-      if(
-        isProfileOffline(index)
-      ){
-
-        offlineCount++;
-      }
-
-    }
-  );
-
-  const online =
-    Math.max(
-      1,
-      total - offlineCount
-    );
-
-  onlineNumber.textContent =
-    online + " online";
-}
-
-
-function startOnlineCounter(){
-
-  if(onlineInterval){
-
-    clearInterval(
-      onlineInterval
-    );
-  }
-
-  onlineNumber.textContent =
-    "21 online";
-
-  onlineInterval =
-    setInterval(
-      function(){
-
-        updateOnlineNumber();
-
-        buildPhotoGrid();
-
-      },
-      10000
-    );
-}
-
-
-/* =========================
-   WELCOME
-========================= */
-
-function showWelcome(){
-
-  clearTimers();
-
-  hideAllScreens();
-
-  welcomeScreen.style.display =
-    "flex";
-
-  addTimer(
-    function(){
-
-      showLivePhotos();
-
-    },
-    3000
-  );
-}
-
-
-/* =========================
-   LIVE PHOTOS
-========================= */
-
-function showLivePhotos(){
-
-  clearTimers();
-
-  hideAllScreens();
-
-  photosPage.style.display =
-    "block";
-
-  buildPhotoGrid();
-
-  startOnlineCounter();
-
-  scheduleNextIncomingCall();
-}
-
-
-/* =========================
-   NEXT CALL
-========================= */
-
-function scheduleNextIncomingCall(){
-
-  addTimer(
-    function(){
-
-      showIncomingCall();
-
-    },
-    NEXT_CALL_DELAY
-  );
-}
-
-
-/* =========================
-   INCOMING CALL
-========================= */
-
-function showIncomingCall(){
-
-  clearTimers();
-
-  hideAllScreens();
-
-  let profileIndex =
-    currentCallerIndex %
-    PROFILES.length;
-
-  /*
-    If selected caller is offline,
-    find another online profile.
-  */
-
-  let attempts = 0;
-
-  while(
-    isProfileOffline(profileIndex) &&
-    attempts < PROFILES.length
-  ){
-
-    profileIndex =
-      (
-        profileIndex + 1
-      ) %
-      PROFILES.length;
-
-    attempts++;
-  }
-
-  currentCallerIndex =
-    profileIndex;
-
-  const profile =
-    PROFILES[profileIndex];
-
-  const sources =
-    createImageCandidates(
-      profile.image
-    );
-
-  callerImage.src =
-    sources[0];
-
-  callerImage.onerror =
-    function(){
-
-      let current =
-        Number(
-          callerImage.dataset.fallback ||
-          0
-        );
-
-      current++;
-
-      if(
-        current <
-        sources.length
-      ){
-
-        callerImage.dataset.fallback =
-          current;
-
-        callerImage.src =
-          sources[current];
-      }
-    };
-
-  callerName.textContent =
-    profile.name;
-
-  incomingCall.style.display =
-    "flex";
-}
-
-
-/* =========================
-   DECLINE
-========================= */
-
-function declineCall(){
-
-  clearTimers();
-
-  showLivePhotos();
-}
-
-
-/* =========================
-   ANSWER
-========================= */
-
-function answerCall(){
-
-  clearTimers();
-
-  hideAllScreens();
-
-  currentCallerIndex++;
-
-  const alreadySeen =
+  const redSeen =
     localStorage.getItem(
       RED_LIVE_SEEN_KEY
     );
 
-  if(!alreadySeen){
 
-    localStorage.setItem(
-      RED_LIVE_SEEN_KEY,
-      "1"
-    );
+  if (!redSeen) {
 
-    showRedLiveVideo();
+    playRedLive();
 
-  }else{
+  } else {
 
-    showBlackLive();
+    playBlackLive();
 
   }
+
 }
 
 
-/* =========================
+/* ================================
    RED LIVE
-========================= */
+   Starts at 10 seconds
+   Plays until 17 seconds
+================================ */
 
-function showRedLiveVideo(){
+function playRedLive() {
 
-  clearTimers();
+  hideAllPages();
 
-  hideAllScreens();
+  if (!redLiveVideoPage)
+    return;
+
 
   redLiveVideoPage.style.display =
     "flex";
 
-  try{
 
-    redLiveVideo.currentTime = 0;
+  if (!redLiveVideo)
+    return;
 
-    redLiveVideo.muted = false;
+
+  try {
+
+    redLiveVideo.pause();
+
+    redLiveVideo.currentTime =
+      RED_LIVE_START_TIME;
 
     redLiveVideo.volume = 1;
 
-    const promise =
+    redLiveVideo.muted = false;
+
+    const playPromise =
       redLiveVideo.play();
 
-    if(
-      promise &&
-      promise.catch
-    ){
 
-      promise.catch(
-        function(){}
+    if (
+      playPromise &&
+      playPromise.catch
+    ) {
+
+      playPromise.catch(
+        function(error) {
+
+          console.log(
+            "Red LIVE autoplay blocked:",
+            error
+          );
+
+        }
       );
+
     }
 
-  }catch(error){}
+  } catch (error) {
+
+    console.log(error);
+
+  }
 
 
-  addTimer(
-    function(){
+  setTimeout(
+    function() {
 
-      try{
+      try {
 
         redLiveVideo.pause();
 
-        redLiveVideo.currentTime = 0;
+        redLiveVideo.currentTime =
+          RED_LIVE_START_TIME;
 
-      }catch(error){}
+      } catch (error) {}
 
-      showBlackLive();
+
+      localStorage.setItem(
+        RED_LIVE_SEEN_KEY,
+        "1"
+      );
+
+
+      playBlackLive();
 
     },
     RED_LIVE_DURATION
   );
+
 }
 
 
-/* =========================
+/* ================================
    BLACK LIVE
-========================= */
+================================ */
 
-function showBlackLive(){
+function playBlackLive() {
 
-  clearTimers();
+  hideAllPages();
 
-  hideAllScreens();
+  if (!blackLivePage)
+    return;
+
 
   blackLivePage.style.display =
     "flex";
 
-  try{
+
+  if (!blackLiveSoundVideo)
+    return;
+
+
+  try {
 
     blackLiveSoundVideo.currentTime =
       0;
 
-    blackLiveSoundVideo.muted =
-      false;
-
     blackLiveSoundVideo.volume =
       1;
 
-    const promise =
+    blackLiveSoundVideo.muted =
+      false;
+
+
+    const playPromise =
       blackLiveSoundVideo.play();
 
-    if(
-      promise &&
-      promise.catch
-    ){
 
-      promise.catch(
-        function(){}
+    if (
+      playPromise &&
+      playPromise.catch
+    ) {
+
+      playPromise.catch(
+        function(error) {
+
+          console.log(
+            "Black LIVE autoplay blocked:",
+            error
+          );
+
+        }
       );
+
     }
 
-  }catch(error){}
+  } catch (error) {
+
+    console.log(error);
+
+  }
 
 
-  addTimer(
-    function(){
+  setTimeout(
+    function() {
 
-      stopBlackLiveSound();
+      try {
+
+        blackLiveSoundVideo.pause();
+
+        blackLiveSoundVideo.currentTime =
+          0;
+
+      } catch (error) {}
+
 
       showInsufficient();
 
     },
     BLACK_LIVE_DURATION
   );
+
 }
 
 
-/* =========================
-   STOP BLACK SOUND
-========================= */
+/* ================================
+   INSUFFICIENT MINUTES
+================================ */
 
-function stopBlackLiveSound(){
+function showInsufficient() {
 
-  try{
+  hideAllPages();
 
-    blackLiveSoundVideo.pause();
+  if (insufficientPage)
+    insufficientPage.style.display =
+      "flex";
 
-    blackLiveSoundVideo.currentTime =
-      0;
-
-  }catch(error){}
-}
-
-
-/* =========================
-   INSUFFICIENT
-========================= */
-
-function showInsufficient(){
-
-  clearTimers();
-
-  hideAllScreens();
-
-  insufficientPage.style.display =
-    "flex";
 
   let seconds = 2;
 
-  insufficientTimer.textContent =
-    seconds;
+  if (insufficientTimer) {
 
-  const countdown =
-    setInterval(
-      function(){
+    insufficientTimer.textContent =
+      seconds;
 
-        seconds--;
+    const countdown =
+      setInterval(
+        function() {
 
-        if(seconds <= 0){
+          seconds--;
 
-          clearInterval(
-            countdown
-          );
+          if (seconds >= 0) {
 
-          insufficientTimer.textContent =
-            "0";
+            insufficientTimer.textContent =
+              seconds;
 
-        }else{
+          }
 
-          insufficientTimer.textContent =
-            seconds;
-        }
+          if (seconds <= 0) {
 
-      },
-      1000
-    );
+            clearInterval(countdown);
+
+          }
+
+        },
+        1000
+      );
+
+  }
 
 
-  addTimer(
-    function(){
+  setTimeout(
+    function() {
 
-      showLivePhotos();
+      showPhotos();
 
     },
     INSUFFICIENT_DURATION
   );
+
 }
 
 
-/* =========================
+/* ================================
    PAYMENT
-========================= */
+================================ */
 
-function openPaymentPage(){
+function openPaymentPage() {
 
-  sessionStorage.setItem(
-    "returnToLivePhotos",
-    "1"
-  );
+  const employee =
+    getEmployeeId();
 
   let url =
-    PAYMENT_PAGE_URL;
+    "payment.html";
 
-  if(referralCode){
+  if (employee) {
 
     url +=
       "?employee=" +
       encodeURIComponent(
-        referralCode
+        employee
       );
+
   }
 
   window.location.href =
     url;
+
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
-
-declineButton.addEventListener(
-  "click",
-  function(){
-
-    declineCall();
-
-  }
-);
-
-answerButton.addEventListener(
-  "click",
-  function(){
-
-    answerCall();
-
-  }
-);
-
-
-/* =========================
+/* ================================
    START WEBSITE
-========================= */
+================================ */
 
-loadReferral();
+function startWebsite() {
 
-showWelcome();
+  hideAllPages();
+
+  if (welcomeScreen) {
+
+    welcomeScreen.style.display =
+      "flex";
+
+    setTimeout(
+      function() {
+
+        showPhotos();
+
+      },
+      3000
+    );
+
+  } else {
+
+    showPhotos();
+
+  }
+
+}
+
+
+/* ================================
+   START
+================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    buildPhotoGrid();
+
+    startWebsite();
+
+  }
+);
+
+
+/* ================================
+   REFRESH PHOTOS EVERY 10 SECONDS
+================================ */
+
+setInterval(
+  function() {
+
+    if (
+      photosPage &&
+      photosPage.style.display !==
+      "none"
+    ) {
+
+      buildPhotoGrid();
+
+    }
+
+  },
+  10000
+);
+
+
+/* ================================
+   CHECK OFFLINE USERS EVERY MINUTE
+================================ */
+
+setInterval(
+  function() {
+
+    randomOfflineStatus();
+
+    if (
+      photosPage &&
+      photosPage.style.display !==
+      "none"
+    ) {
+
+      buildPhotoGrid();
+
+    }
+
+  },
+  60000
+);
+
   </script>
+  <!-- ================================
+     PART 3 / 3
+     VIDEO + FINAL PAGE STRUCTURE
+================================ -->
+
+<style>
+/* ================================
+   CALL LOADING
+================================ */
+
+#callLoadingPage {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.call-spinner {
+  width: 45px;
+  height: 45px;
+  border: 4px solid rgba(255,255,255,.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 18px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ================================
+   RED LIVE PAGE
+================================ */
+
+#redLiveVideoPage {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9998;
+}
+
+.red-live-title {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: #e60000;
+  color: #fff;
+  font-weight: 800;
+  padding: 7px 13px;
+  border-radius: 7px;
+  font-size: 14px;
+  z-index: 10;
+}
+
+#redLiveVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+
+
+/* ================================
+   BLACK LIVE PAGE
+================================ */
+
+#blackLivePage {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9997;
+  overflow: hidden;
+}
+
+.black-live-title {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: #e60000;
+  color: #fff;
+  font-weight: 800;
+  padding: 7px 13px;
+  border-radius: 7px;
+  font-size: 14px;
+  z-index: 10;
+}
+
+#blackLiveSoundVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+
+
+/* ================================
+   INSUFFICIENT PAGE
+================================ */
+
+#insufficientPage {
+  position: fixed;
+  inset: 0;
+  background: #050505;
+  color: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  z-index: 9996;
+}
+
+.insufficient-box {
+  width: min(90%, 360px);
+  padding: 30px 20px;
+  border-radius: 16px;
+  background: #111;
+  border: 1px solid #292929;
+}
+
+.insufficient-box h2 {
+  margin: 0 0 12px;
+  font-size: 24px;
+}
+
+.insufficient-box p {
+  margin: 7px 0;
+  color: #bbb;
+}
+
+#insufficientTimer {
+  font-size: 30px;
+  font-weight: 800;
+  margin-top: 12px;
+}
+
+
+/* ================================
+   NORMAL INCOMING CALL
+================================ */
+
+#incomingCall {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.96);
+  color: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 10000;
+  text-align: center;
+}
+
+.incoming-label {
+  color: #ff2020;
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+#callerImage {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+  margin-bottom: 15px;
+}
+
+#callerName {
+  font-size: 25px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.incoming-subtitle {
+  color: #aaa;
+  margin-bottom: 28px;
+}
+
+.call-buttons {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+}
+
+.call-buttons button {
+  border: 0;
+  border-radius: 50px;
+  padding: 14px 30px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#declineButton {
+  background: #e60000;
+  color: #fff;
+}
+
+#answerButton {
+  background: #16a34a;
+  color: #fff;
+}
+
+.call-buttons button:active {
+  transform: scale(.96);
+}
+
+
+/* ================================
+   PHOTO FALLBACK
+================================ */
+
+.profile-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #171717;
+}
+
+.photoCard {
+  overflow: hidden;
+}
+
+.photo-image-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+  #callerImage {
+    width: 110px;
+    height: 110px;
+  }
+
+  #callerName {
+    font-size: 23px;
+  }
+
+  .call-buttons {
+    gap: 12px;
+  }
+
+  .call-buttons button {
+    padding: 13px 24px;
+  }
+
+}
+</style>
+
+
+<!-- ================================
+     CALL LOADING PAGE
+================================ -->
+
+<div id="callLoadingPage">
+
+  <div class="call-spinner"></div>
+
+  <div>
+    Connecting live call...
+  </div>
+
+</div>
+
+
+<!-- ================================
+     RED LIVE VIDEO
+     STARTS AT 10 SECONDS
+     STOPS AFTER 7 SECONDS
+================================ -->
+
+<div id="redLiveVideoPage">
+
+  <div class="red-live-title">
+    🔴 LIVE
+  </div>
+
+  <video
+    id="redLiveVideo"
+    playsinline
+    preload="auto"
+    src="preview_20_seconds.mp4">
+  </video>
+
+</div>
+
+
+<!-- ================================
+     BLACK LIVE WITH SOUND
+================================ -->
+
+<div id="blackLivePage">
+
+  <div class="black-live-title">
+    🔴 LIVE
+  </div>
+
+  <video
+    id="blackLiveSoundVideo"
+    playsinline
+    preload="auto"
+    src="preview_20_seconds.mp4">
+  </video>
+
+</div>
+
+
+<!-- ================================
+     INSUFFICIENT MINUTES
+================================ -->
+
+<div id="insufficientPage">
+
+  <div class="insufficient-box">
+
+    <h2>
+      Insufficient Minutes
+    </h2>
+
+    <p>
+      You need more minutes to continue the live call.
+    </p>
+
+    <p>
+      Returning to live profiles...
+    </p>
+
+    <div id="insufficientTimer">
+      2
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================================
+     NORMAL INCOMING CALL
+     NO SWIPE
+================================ -->
+
+<div id="incomingCall">
+
+  <div class="incoming-label">
+    INCOMING LIVE CALL
+  </div>
+
+  <img
+    id="callerImage"
+    src="photo1.jpg"
+    alt="Caller">
+
+  <div id="callerName">
+    Incoming call
+  </div>
+
+  <div class="incoming-subtitle">
+    Someone is calling you...
+  </div>
+
+  <div class="call-buttons">
+
+    <button
+      id="declineButton"
+      type="button">
+      Decline
+    </button>
+
+    <button
+      id="answerButton"
+      type="button">
+      Answer
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   EXTRA SAFETY FOR VIDEO TIMING
+========================================== */
+
+if (redLiveVideo) {
+
+  redLiveVideo.addEventListener(
+    "loadedmetadata",
+    function() {
+
+      /*
+        Do not seek beyond the actual
+        length of the video.
+      */
+
+      if (
+        redLiveVideo.duration >=
+        RED_LIVE_START_TIME
+      ) {
+
+        try {
+
+          redLiveVideo.currentTime =
+            RED_LIVE_START_TIME;
+
+        } catch (e) {}
+
+      }
+
+    }
+  );
+
+
+  /*
+    Prevent the red video from continuing
+    beyond the required 7-second section.
+  */
+
+  redLiveVideo.addEventListener(
+    "timeupdate",
+    function() {
+
+      if (
+        redLiveVideo.currentTime >=
+        RED_LIVE_START_TIME + 7
+      ) {
+
+        redLiveVideo.pause();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   BLACK VIDEO LOOP SAFETY
+========================================== */
+
+if (blackLiveSoundVideo) {
+
+  blackLiveSoundVideo.addEventListener(
+    "ended",
+    function() {
+
+      try {
+
+        blackLiveSoundVideo.currentTime = 0;
+
+      } catch (e) {}
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   CLEAN VIDEO WHEN LEAVING PAGE
+========================================== */
+
+window.addEventListener(
+  "pagehide",
+  function() {
+
+    try {
+
+      if (redLiveVideo)
+        redLiveVideo.pause();
+
+      if (blackLiveSoundVideo)
+        blackLiveSoundVideo.pause();
+
+    } catch (e) {}
+
+  }
+);
+
+</script>
+
 
 </body>
 </html>
