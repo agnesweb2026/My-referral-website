@@ -8,96 +8,112 @@
 <style>
 *{box-sizing:border-box}
 body{
-margin:0;background:#050505;color:white;
-font-family:Arial
+ margin:0;background:#050505;color:white;
+ font-family:Arial
 }
-.container{max-width:520px;margin:auto;padding:18px}
+.container{
+ max-width:520px;margin:auto;padding:18px
+}
 h1{text-align:center;color:#32cd32}
 .packages{
-display:grid;grid-template-columns:1fr 1fr;gap:12px
+ display:grid;grid-template-columns:1fr 1fr;gap:12px
 }
 .package{
-background:#111;border:1px solid #333;
-border-radius:14px;padding:18px 8px;
-text-align:center
+ background:#111;border:1px solid #333;
+ border-radius:14px;padding:18px 8px;
+ text-align:center;cursor:pointer
 }
 .package.selected{
-border:2px solid #32cd32;background:#102010
+ border:2px solid #32cd32;
+ background:#102010
 }
-.minutes{font-size:21px;font-weight:bold}
-.price{color:#32cd32;font-size:18px;margin-top:8px}
-.hot{
-position:absolute;background:red;padding:4px 7px;
-border-radius:8px;font-size:10px
+.minutes{
+ font-size:21px;font-weight:bold
+}
+.price{
+ color:#32cd32;font-size:18px;margin-top:8px
 }
 .payment-box,.instructions{
-margin-top:18px;background:#101010;
-padding:18px;border-radius:15px
+ margin-top:18px;background:#101010;
+ padding:18px;border-radius:15px
 }
 input{
-width:100%;padding:14px;background:#050505;
-color:white;border:1px solid #444;border-radius:9px;
-font-size:17px
+ width:100%;padding:14px;background:#050505;
+ color:white;border:1px solid #444;
+ border-radius:9px;font-size:17px
 }
 button{
-width:100%;padding:15px;margin-top:15px;
-border:0;border-radius:10px;
-background:#32cd32;font-weight:bold;font-size:16px
+ width:100%;padding:15px;margin-top:15px;
+ border:0;border-radius:10px;
+ background:#32cd32;font-weight:bold;
+ font-size:16px
 }
-.status{text-align:center;margin-top:15px;color:#aaa}
+button:disabled{opacity:.5}
+.status{
+ text-align:center;margin-top:15px;color:#aaa
+}
 
-/* LIVE */
+/* LIVE-STYLE */
 .live{
-position:fixed;inset:0;background:#000;
-z-index:9999;display:flex;flex-direction:column
+ position:fixed;inset:0;background:#000;
+ z-index:9999;display:flex;
+ flex-direction:column
 }
 .videoBox{
-height:62vh;position:relative;background:#000
+ height:62vh;position:relative;
+ background:#000
 }
 .video{
-width:100%;height:100%;object-fit:cover
+ width:100%;height:100%;
+ object-fit:cover
 }
 .liveBadge{
-position:absolute;top:15px;left:15px;
-background:red;padding:7px 12px;
-border-radius:7px;font-weight:bold
+ position:absolute;top:15px;left:15px;
+ background:red;padding:7px 12px;
+ border-radius:7px;font-weight:bold
 }
 .viewers{
-position:absolute;top:15px;right:15px;
-background:#000b;padding:7px 10px;
-border-radius:15px
+ position:absolute;top:15px;right:15px;
+ background:#000b;padding:7px 10px;
+ border-radius:15px
 }
 .chat{
-height:38vh;display:flex;flex-direction:column;
-background:#090909
+ height:38vh;display:flex;
+ flex-direction:column;background:#090909
 }
 .chatTitle{
-padding:11px;border-bottom:1px solid #222;
-font-weight:bold
+ padding:11px;border-bottom:1px solid #222;
+ font-weight:bold
 }
 .messages{
-flex:1;overflow:hidden;padding:10px;
-display:flex;flex-direction:column;
-justify-content:flex-end;gap:7px
+ flex:1;overflow:hidden;padding:10px;
+ display:flex;flex-direction:column;
+ justify-content:flex-end;gap:7px
 }
 .msg{font-size:13px}
-.name{color:#32cd32;font-weight:bold}
+.name{
+ color:#32cd32;font-weight:bold
+}
 .heart{color:#ff4b6e}
+
 .insufficient{
-position:fixed;inset:0;background:#050505;
-z-index:10000;display:flex;
-align-items:center;justify-content:center;
-text-align:center
+ position:fixed;inset:0;background:#050505;
+ z-index:10000;display:flex;
+ align-items:center;justify-content:center;
+ text-align:center
 }
 .insufficient h1{color:red}
+
 .spinner{
-width:55px;height:55px;margin:25px auto;
-border:5px solid #222;
-border-top-color:#32cd32;
-border-radius:50%;
-animation:spin 1s linear infinite
+ width:55px;height:55px;margin:25px auto;
+ border:5px solid #222;
+ border-top-color:#32cd32;
+ border-radius:50%;
+ animation:spin 1s linear infinite
 }
-@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spin{
+ to{transform:rotate(360deg)}
+}
 </style>
 </head>
 
@@ -106,6 +122,7 @@ animation:spin 1s linear infinite
 <div class="container">
 
 <h1>M-PESA PAYMENT</h1>
+
 <p style="text-align:center;color:#aaa">
 Choose your minutes package
 </p>
@@ -189,8 +206,12 @@ params.get("employee")||
 params.get("ref")||
 localStorage.getItem("referralEmployeeId");
 
-if(employeeId)
-localStorage.setItem("referralEmployeeId",employeeId);
+if(employeeId){
+ localStorage.setItem(
+  "referralEmployeeId",
+  employeeId
+ );
+}
 
 const TILL_NUMBER="1605854";
 
@@ -227,10 +248,17 @@ return v;
 return null;
 }
 
-function ref(){
-return("ORD"+Math.random()
-.toString(36).slice(2,11))
-.toUpperCase().slice(0,12);
+function makeRef(){
+
+return (
+ "ORD"+
+ Math.random()
+ .toString(36)
+ .slice(2,11)
+)
+.toUpperCase()
+.slice(0,12);
+
 }
 
 async function payWithMpesa(){
@@ -249,7 +277,9 @@ alert("Enter a valid M-PESA number");
 return;
 }
 
-document.getElementById("payButton").disabled=true;
+const btn=document.getElementById("payButton");
+
+btn.disabled=true;
 
 document.getElementById("status").textContent=
 "Sending M-PESA prompt...";
@@ -257,29 +287,47 @@ document.getElementById("status").textContent=
 try{
 
 let r=await fetch("/api/stk-push",{
+
 method:"POST",
-headers:{"Content-Type":"application/json"},
+
+headers:{
+"Content-Type":"application/json"
+},
+
 body:JSON.stringify({
+
 phone:p,
+
 amount:selectedPrice,
-reference:ref()
+
+reference:makeRef()
+
 })
+
 });
 
 let d=await r.json();
 
-if(!r.ok||!d.success)
-throw new Error(d.message||"Payment failed");
+if(!r.ok||!d.success){
+
+throw new Error(
+d.message||"Payment failed"
+);
+
+}
 
 checkPayment(
-d.paymentId||d.transaction_request_id
+d.paymentId||
+d.transaction_request_id
 );
 
 }catch(e){
 
-document.getElementById("status").textContent=e.message;
+document.getElementById("status")
+.textContent=e.message;
 
-document.getElementById("payButton").disabled=false;
+btn.disabled=false;
+
 }
 
 }
@@ -287,18 +335,30 @@ document.getElementById("payButton").disabled=false;
 function checkPayment(id){
 
 document.body.innerHTML=`
-<div style="
-position:fixed;inset:0;background:#000;
-display:flex;flex-direction:column;
-align-items:center;justify-content:center;
-text-align:center;color:white">
 
-<h1 style="color:#32cd32">CHECK YOUR PHONE</h1>
+<div style="
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:white">
+
+<h1 style="color:#32cd32">
+CHECK YOUR PHONE
+</h1>
+
 <p>Complete the M-PESA prompt</p>
+
 <div class="spinner"></div>
+
 <p id="checking">Waiting...</p>
 
-</div>`;
+</div>
+`;
 
 let n=0;
 
@@ -308,17 +368,25 @@ n++;
 
 try{
 
-let r=await fetch("/api/payment-status",{
+let r=await fetch(
+"/api/payment-status",
+{
 method:"POST",
-headers:{"Content-Type":"application/json"},
+headers:{
+"Content-Type":"application/json"
+},
 body:JSON.stringify({
 transaction_request_id:id
 })
-});
+}
+);
 
 let d=await r.json();
 
-if(d.paid===true&&d.status==="Completed"){
+if(
+d.paid===true &&
+d.status==="Completed"
+){
 
 clearInterval(timer);
 
@@ -329,8 +397,16 @@ showLive();
 return;
 }
 
-document.getElementById("checking").textContent=
-"Waiting for confirmation "+n+"/20";
+let checking=
+document.getElementById("checking");
+
+if(checking){
+
+checking.textContent=
+"Waiting for confirmation "+
+n+"/20";
+
+}
 
 }catch(e){}
 
@@ -343,6 +419,7 @@ location.reload();
 }
 
 },3000);
+
 }
 
 function recordPayment(d,id){
@@ -350,47 +427,62 @@ function recordPayment(d,id){
 if(!employeeId)return;
 
 let amount=Number(
-d.amount||selectedPrice||0
+d.amount||
+selectedPrice||
+0
 );
 
 let record={
+
 id:id,
+
 paymentId:id,
+
 employeeId:employeeId,
+
 ref:employeeId,
+
 minutes:selectedMinutes,
+
 amount:amount,
-commission:Math.round(amount*.25*100)/100,
+
+commission:
+Math.round(amount*.25*100)/100,
+
 commissionRate:25,
+
 status:"paid",
+
 receipt:d.receipt||null,
+
 date:new Date().toISOString()
+
 };
 
-let key="employeePayments_"+employeeId;
+let key=
+"employeePayments_"+employeeId;
 
 let list=JSON.parse(
 localStorage.getItem(key)||"[]"
 );
 
-if(!list.some(x=>String(x.paymentId)==String(id))){
+if(
+!list.some(
+x=>String(x.paymentId)==String(id)
+)
+){
 
 list.unshift(record);
 
 localStorage.setItem(
-key,JSON.stringify(list)
+key,
+JSON.stringify(list)
 );
 
 }
 
 }
-
-
-/* =========================
-   LIVE SCREEN
-========================= */
-
-function showLive(){
+ function showLive(){
 
 document.body.innerHTML=`
 
@@ -413,7 +505,9 @@ type="video/mp4">
 
 </video>
 
-<div class="liveBadge">● LIVE</div>
+<div class="liveBadge">
+● LIVE-STYLE
+</div>
 
 <div class="viewers">
 👁 <span id="views">20</span>
@@ -427,8 +521,10 @@ type="video/mp4">
 💬 Live chat
 </div>
 
-<div id="messages"
-class="messages"></div>
+<div
+id="messages"
+class="messages">
+</div>
 
 </div>
 
@@ -438,13 +534,17 @@ class="messages"></div>
 startLive();
 
 }
-   <script>
 
 function startLive(){
 
-const v=document.getElementById("liveVideo");
-const box=document.getElementById("messages");
-const views=document.getElementById("views");
+const v=
+document.getElementById("liveVideo");
+
+const box=
+document.getElementById("messages");
+
+const views=
+document.getElementById("views");
 
 const names=[
 "Asha","Brian","Mercy","Kevin",
@@ -472,57 +572,85 @@ const comments=[
 "Heyyy 😍"
 ];
 
-function add(){
+function addComment(){
 
-let d=document.createElement("div");
+let d=
+document.createElement("div");
 
 d.className="msg";
 
+let name=
+names[
+Math.floor(
+Math.random()*names.length
+)
+];
+
+let comment=
+comments[
+Math.floor(
+Math.random()*comments.length
+)
+];
+
 d.innerHTML=
-`<span class="name">${
-names[Math.floor(Math.random()*names.length)]
-}:</span>
-<span>${comments[
-Math.floor(Math.random()*comments.length)
-]}</span>
-<span class="heart"> ❤️</span>`;
+`<span class="name">
+${name}:
+</span>
+<span>${comment}</span>
+<span class="heart">
+ ❤️
+</span>`;
 
 box.appendChild(d);
 
-while(box.children.length>12)
-box.removeChild(box.firstChild);
+while(box.children.length>12){
+
+box.removeChild(
+box.firstChild
+);
 
 }
 
-for(let i=0;i<7;i++)add();
+}
 
-let chat=setInterval(add,600);
+for(let i=0;i<7;i++){
+addComment();
+}
 
-let viewers=setInterval(()=>{
+let chatTimer=
+setInterval(addComment,600);
+
+let viewerTimer=
+setInterval(()=>{
+
 views.textContent=
-15+Math.floor(Math.random()*16);
+15+
+Math.floor(
+Math.random()*16
+);
+
 },2500);
 
 
 /* VIDEO */
 
 v.removeAttribute("controls");
-
 v.controls=false;
 
-v.addEventListener("contextmenu",e=>e.preventDefault());
+v.addEventListener(
+"contextmenu",
+e=>e.preventDefault()
+);
 
-v.addEventListener("loadedmetadata",()=>{
+v.addEventListener(
+"loadedmetadata",
+()=>{
 
-let start=Math.min(20,v.duration);
+let start=
+Math.min(20,v.duration);
 
 v.currentTime=start;
-
-/*
-Try sound automatically.
-The browser may still block
-unmuted autoplay.
-*/
 
 v.muted=false;
 v.volume=1;
@@ -530,9 +658,9 @@ v.volume=1;
 v.play().catch(()=>{
 
 /*
-If browser blocks sound,
-retry from the user interaction
-that led to payment completion.
+Chrome/Android inaweza
+kuzuia autoplay yenye sound.
+Hatuwezi kuvunja browser policy.
 */
 
 v.muted=false;
@@ -541,7 +669,7 @@ v.muted=false;
 
 
 /*
-20 -> 1
+20 seconds -> 1 second
 */
 
 let begin=null;
@@ -551,20 +679,25 @@ function reverse(t){
 if(begin===null)
 begin=t;
 
-let elapsed=(t-begin)/1000;
-let current=start-elapsed;
+let elapsed=
+(t-begin)/1000;
+
+let current=
+start-elapsed;
 
 if(current<=1){
 
-clearInterval(chat);
-clearInterval(viewers);
+clearInterval(chatTimer);
+clearInterval(viewerTimer);
 
 v.pause();
+
 v.currentTime=1;
 
 showInsufficient();
 
 return;
+
 }
 
 v.currentTime=current;
@@ -575,16 +708,20 @@ requestAnimationFrame(reverse);
 
 requestAnimationFrame(reverse);
 
-},{once:true});
+},
+{once:true}
+);
 
 v.load();
 
 }
 
 
-/* BLOCK VIDEO CONTROLS */
+/* ZUIA CONTROLS / FORWARD / BACK */
 
-document.addEventListener("keydown",e=>{
+document.addEventListener(
+"keydown",
+e=>{
 
 if(
 e.code==="Space"||
@@ -592,16 +729,18 @@ e.code==="ArrowLeft"||
 e.code==="ArrowRight"
 ){
 
-let v=document.getElementById("liveVideo");
+let v=
+document.getElementById("liveVideo");
 
 if(v)e.preventDefault();
 
 }
 
-});
+}
+);
 
 
-/* INSUFFICIENT */
+/* INSUFFICIENT MINUTES */
 
 function showInsufficient(){
 
@@ -635,7 +774,14 @@ Returning to packages...
 `;
 
 setTimeout(()=>{
+
+/*
+Reload returns to the
+original packages screen.
+*/
+
 location.reload();
+
 },2000);
 
 }
@@ -643,4 +789,4 @@ location.reload();
 </script>
 
 </body>
-</html>
+</html>  
