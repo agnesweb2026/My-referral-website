@@ -1,672 +1,1085 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
 <title>Request Withdrawal</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#070707;
-color:#fff;
+  min-height:100vh;
+  background:#080c12;
+  color:#fff;
+}
+
+button,
+input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
 }
 
 .container{
-max-width:520px;
-margin:auto;
-padding:20px 15px 40px;
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  padding:18px 15px 40px;
 }
 
-.top{
-display:flex;
-align-items:center;
-gap:12px;
-margin-bottom:20px;
+.topbar{
+  background:#101720;
+  border-bottom:1px solid #263341;
+  padding:15px;
+  margin-bottom:18px;
 }
 
-.back{
-width:44px;
-height:44px;
-border:0;
-border-radius:12px;
-background:#202020;
-color:white;
-font-size:25px;
+.topbar-inner{
+  max-width:520px;
+  margin:auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
 }
 
-h1{
-font-size:24px;
-margin:0;
+.title{
+  font-size:20px;
+  font-weight:bold;
 }
 
-.balance{
-background:#171717;
-border:1px solid #333;
-border-radius:18px;
-padding:22px;
-margin-bottom:18px;
-}
+.back-btn{
+  border:1px solid #354250;
+  background:#151d26;
+  color:#fff;
 
-.balance small{
-color:#aaa;
-}
+  padding:9px 12px;
+  border-radius:9px;
 
-.amount{
-font-size:34px;
-font-weight:bold;
-margin-top:8px;
+  font-size:12px;
 }
 
 .card{
-background:#121212;
-border:1px solid #292929;
-border-radius:18px;
-padding:20px;
+  background:#111820;
+  border:1px solid #263341;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:14px;
 }
 
-label{
-display:block;
-color:#bbb;
-font-size:14px;
-margin-bottom:8px;
+.employee-name{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:5px;
 }
 
-input{
-width:100%;
-padding:15px;
-margin-bottom:16px;
-border-radius:12px;
-border:1px solid #333;
-background:#080808;
-color:#fff;
-font-size:17px;
+.employee-id{
+  color:#8995a3;
+  font-size:12px;
 }
 
-.submit{
-width:100%;
-padding:16px;
-border:0;
-border-radius:13px;
-background:#22c55e;
-color:#000;
-font-weight:bold;
-font-size:17px;
+.balance-box{
+  margin-top:16px;
+  padding:16px;
+
+  background:#0c131b;
+  border:1px solid #263341;
+  border-radius:12px;
+}
+
+.balance-label{
+  color:#8995a3;
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+.balance{
+  color:#36d675;
+  font-size:27px;
+  font-weight:bold;
+}
+
+.field{
+  margin-bottom:15px;
+}
+
+.field label{
+  display:block;
+  color:#aeb8c4;
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.field input{
+  width:100%;
+
+  padding:14px;
+
+  background:#080e14;
+  color:#fff;
+
+  border:1px solid #334150;
+  border-radius:10px;
+
+  outline:none;
+
+  font-size:15px;
+}
+
+.field input:focus{
+  border-color:#16a34a;
+}
+
+.submit-btn{
+  width:100%;
+  padding:14px;
+
+  border:0;
+  border-radius:10px;
+
+  background:#16a34a;
+  color:#fff;
+
+  font-size:15px;
+  font-weight:bold;
 }
 
 .message{
-display:none;
-padding:13px;
-border-radius:12px;
-margin:15px 0;
-text-align:center;
+  min-height:20px;
+  text-align:center;
+  margin-top:10px;
+  font-size:12px;
 }
 
-.success{
-display:block;
-background:#10351e;
-color:#62ff98;
-}
-
-.error{
-display:block;
-background:#351313;
-color:#ff7777;
+.note{
+  color:#7f8b98;
+  font-size:11px;
+  line-height:1.5;
+  margin-top:10px;
 }
 
 .history-title{
-font-size:20px;
-font-weight:bold;
-margin:20px 0 12px;
+  font-size:17px;
+  font-weight:bold;
+  margin-bottom:13px;
 }
 
-.request{
-background:#181818;
-border:1px solid #292929;
-border-radius:15px;
-padding:15px;
-margin-bottom:10px;
+.history-item{
+  background:#0c131b;
+  border:1px solid #263341;
+  border-radius:11px;
+  padding:13px;
+  margin-bottom:9px;
 }
 
-.row{
-display:flex;
-justify-content:space-between;
-gap:10px;
-margin-bottom:7px;
+.history-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
 }
 
-.pending{color:#facc15}
-.approved{color:#4ade80}
-.rejected{color:#f87171}
+.amount{
+  color:#36d675;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.date{
+  color:#74808d;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.status{
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:9px;
+  font-weight:bold;
+}
+
+.status.pending{
+  color:#f5b942;
+  background:rgba(245,185,66,.12);
+}
+
+.status.approved{
+  color:#36d675;
+  background:rgba(54,214,117,.12);
+}
+
+.status.rejected{
+  color:#ff6464;
+  background:rgba(255,100,100,.12);
+}
 
 .empty{
-color:#888;
-text-align:center;
-padding:20px;
+  text-align:center;
+  color:#7f8b98;
+  font-size:12px;
+  padding:25px 5px;
 }
+
+.hidden{
+  display:none;
+}
+
 </style>
+
 </head>
 
 <body>
 
+<div class="topbar">
+
+  <div class="topbar-inner">
+
+    <div class="title">
+      Request Withdrawal
+    </div>
+
+    <button
+      class="back-btn"
+      onclick="goBack()"
+    >
+      ← Dashboard
+    </button>
+
+  </div>
+
+</div>
+
+
 <div class="container">
 
-<div class="top">
-<button class="back" onclick="goBack()">‹</button>
-<h1>Request Withdrawal</h1>
+  <div class="card">
+
+    <div
+      class="employee-name"
+      id="employeeName"
+    >
+      Employee
+    </div>
+
+    <div
+      class="employee-id"
+      id="employeeId"
+    >
+      Employee ID
+    </div>
+
+    <div class="balance-box">
+
+      <div class="balance-label">
+        Available Balance
+      </div>
+
+      <div
+        class="balance"
+        id="availableBalance"
+      >
+        KSh 0
+      </div>
+
+    </div>
+
+  </div>
+    <div class="card">
+
+    <div class="field">
+
+      <label>
+        M-PESA Number
+      </label>
+
+      <input
+        id="phone"
+        type="tel"
+        inputmode="numeric"
+        maxlength="10"
+        placeholder="07XXXXXXXX"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Amount (KSh)
+      </label>
+
+      <input
+        id="amount"
+        type="number"
+        inputmode="decimal"
+        min="1"
+        placeholder="Enter amount"
+      >
+
+    </div>
+
+
+    <button
+      class="submit-btn"
+      onclick="submitWithdrawal()"
+    >
+      SUBMIT WITHDRAWAL REQUEST
+    </button>
+
+
+    <div
+      id="message"
+      class="message"
+    ></div>
+
+
+    <div class="note">
+      Your balance is only reduced after
+      the administrator approves your
+      withdrawal request.
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="history-title">
+      Withdrawal History
+    </div>
+
+    <div id="history">
+
+      <div class="empty">
+        No withdrawal requests yet.
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
-<div class="balance">
-<small>Available Balance</small>
-<div class="amount" id="availableBalance">
-KSh 0
-</div>
-</div>
-
-<div id="message" class="message"></div>
-
-<div class="card">
-
-<label>MPESA Phone Number</label>
-
-<input
-id="phone"
-type="tel"
-inputmode="numeric"
-maxlength="10"
-placeholder="07XXXXXXXX"
->
-
-<label>Amount (KSh)</label>
-
-<input
-id="amount"
-type="number"
-min="1"
-placeholder="Enter amount"
->
-
-<button
-class="submit"
-id="submitButton"
-onclick="requestWithdrawal()"
->
-REQUEST WITHDRAWAL
-</button>
-
-</div>
-
-<div class="history-title">
-Withdrawal History
-</div>
-
-<div id="history"></div>
-
-</div>
 
 <script>
 
-const EMPLOYEE_KEY="employeeSession";
-const WITHDRAWAL_KEY="withdrawalRequests";
+const EMPLOYEE_KEY =
+  "employeeSession";
 
-let currentEmployee=null;
-let availableBalance=0;
-
-
-/* EMPLOYEE */
-
-function getCurrentEmployee(){
-
-try{
-
-const saved=
-localStorage.getItem(EMPLOYEE_KEY);
-
-if(!saved)return null;
-
-return JSON.parse(saved);
-
-}catch(e){
-
-return null;
-
-}
-
-}
+const WITHDRAWAL_KEY =
+  "withdrawalRequests";
 
 
-/* REQUESTS */
+/* =========================
+   GET EMPLOYEE
+========================= */
 
-function getWithdrawalRequests(){
+function getEmployee(){
 
-try{
+  try{
 
-const saved=
-localStorage.getItem(WITHDRAWAL_KEY);
+    const saved =
+      localStorage.getItem(
+        EMPLOYEE_KEY
+      );
 
-if(!saved)return [];
+    if(!saved){
+      return null;
+    }
 
-const data=
-JSON.parse(saved);
+    return JSON.parse(saved);
 
-return Array.isArray(data)?data:[];
+  }catch(error){
 
-}catch(e){
+    return null;
 
-return [];
-
-}
+  }
 
 }
 
 
-/* SAVE */
+/* =========================
+   GET REQUESTS
+========================= */
 
-function saveWithdrawalRequests(requests){
+function getRequests(){
 
-localStorage.setItem(
-WITHDRAWAL_KEY,
-JSON.stringify(requests)
-);
+  try{
 
-}
+    const saved =
+      localStorage.getItem(
+        WITHDRAWAL_KEY
+      );
 
+    if(!saved){
+      return [];
+    }
 
-/* EARNINGS */
+    const requests =
+      JSON.parse(saved);
 
-function getEmployeeEarnings(employee){
+    return Array.isArray(requests)
+      ? requests
+      : [];
 
-const employeeId=
-employee.referral ||
-employee.id ||
-employee.username;
+  }catch(error){
 
-const key=
-"employeePayments_"+employeeId;
+    return [];
 
-try{
-
-const saved=
-localStorage.getItem(key);
-
-if(!saved)return 0;
-
-const payments=
-JSON.parse(saved);
-
-if(!Array.isArray(payments))return 0;
-
-return payments.reduce(
-(total,item)=>
-total+Number(item.commission||0),
-0
-);
-
-}catch(e){
-
-return 0;
-
-}
+  }
 
 }
 
 
-/* BALANCE */
+/* =========================
+   SAVE REQUESTS
+========================= */
 
-function calculateBalance(){
-
-if(!currentEmployee){
-
-availableBalance=0;
-return;
-
-}
-
-const earnings=
-getEmployeeEarnings(currentEmployee);
-
-const employeeId=
-currentEmployee.id ||
-currentEmployee.referral ||
-currentEmployee.username;
-
-const requests=
-getWithdrawalRequests();
-
-let withdrawn=0;
-
-requests.forEach(request=>{
-
-if(
-String(request.employeeId)===
-String(employeeId)&&
-request.status==="APPROVED"
+function saveRequests(
+  requests
 ){
 
-withdrawn+=
-Number(request.amount||0);
-
-}
-
-});
-
-availableBalance=
-Math.max(
-0,
-earnings-withdrawn
-);
+  localStorage.setItem(
+    WITHDRAWAL_KEY,
+    JSON.stringify(requests)
+  );
 
 }
 
 
-/* DISPLAY */
+/* =========================
+   GET EMPLOYEE EARNINGS
+========================= */
 
-function displayBalance(){
+function getEarnings(
+  employee
+){
 
-document.getElementById(
-"availableBalance"
-).textContent=
-"KSh "+
-availableBalance.toLocaleString();
-
-}
-
-
-/* MESSAGE */
-
-function showMessage(text,type){
-
-const box=
-document.getElementById("message");
-
-box.className=
-"message "+type;
-
-box.textContent=text;
-
-box.style.display="block";
-
-setTimeout(()=>{
-
-box.style.display="none";
-
-},4000);
-
-}
+  const key =
+    "employeePayments_" +
+    employee.referral;
 
 
-/* REQUEST */
+  try{
 
-function requestWithdrawal(){
+    const payments =
+      JSON.parse(
+        localStorage.getItem(
+          key
+        ) || "[]"
+      );
 
-if(!currentEmployee){
 
-showMessage(
-"Employee session not found.",
-"error"
-);
+    if(!Array.isArray(payments)){
+      return 0;
+    }
 
-return;
 
-}
+    return payments.reduce(
+      function(total,item){
 
-const phone=
-document.getElementById("phone")
-.value.trim();
+        return (
+          total +
+          Number(
+            item.commission || 0
+          )
+        );
 
-const amount=
-Number(
-document.getElementById("amount")
-.value
-);
+      },
+      0
+    );
 
-if(!/^07\d{8}$/.test(phone)){
+  }catch(error){
 
-showMessage(
-"Enter a valid MPESA number.",
-"error"
-);
+    return 0;
 
-return;
-
-}
-
-if(!amount||amount<=0){
-
-showMessage(
-"Enter a valid withdrawal amount.",
-"error"
-);
-
-return;
-
-}
-
-if(amount>availableBalance){
-
-showMessage(
-"Insufficient available balance.",
-"error"
-);
-
-return;
-
-}
-
-const requests=
-getWithdrawalRequests();
-
-const employeeId=
-currentEmployee.id ||
-currentEmployee.referral ||
-currentEmployee.username;
-
-const pending=
-requests.find(request=>
-
-String(request.employeeId)===
-String(employeeId)&&
-request.status==="PENDING"
-
-);
-
-if(pending){
-
-showMessage(
-"You already have a pending withdrawal request.",
-"error"
-);
-
-return;
-
-}
-
-const request={
-
-id:"WD-"+Date.now(),
-
-employeeName:
-currentEmployee.name||
-currentEmployee.employeeName||
-currentEmployee.username||
-"Employee",
-
-employeeId:employeeId,
-
-username:
-currentEmployee.username||"",
-
-referral:
-currentEmployee.referral||"",
-
-amount:amount,
-
-phone:phone,
-
-status:"PENDING",
-
-createdAt:
-new Date().toISOString(),
-
-approvedAt:null,
-
-rejectedAt:null
-
-};
-
-requests.unshift(request);
-
-saveWithdrawalRequests(requests);
-
-document.getElementById("phone").value="";
-document.getElementById("amount").value="";
-
-showMessage(
-"Withdrawal request submitted successfully.",
-"success"
-);
-
-loadPage();
+  }
 
 }
 
 
-/* HISTORY */
+/* =========================
+   APPROVED WITHDRAWN
+========================= */
 
-function loadHistory(){
+function getApprovedWithdrawals(
+  employee
+){
 
-const history=
-document.getElementById("history");
+  const requests =
+    getRequests();
 
-const requests=
-getWithdrawalRequests();
 
-if(!currentEmployee){
+  return requests.reduce(
+    function(total,request){
 
-history.innerHTML=
-'<div class="empty">Employee session not found.</div>';
+      if(
+        String(
+          request.employeeId
+        ) ===
+        String(
+          employee.id
+        ) &&
+        String(
+          request.status || ""
+        ).toUpperCase() ===
+        "APPROVED"
+      ){
 
-return;
+        return (
+          total +
+          Number(
+            request.amount || 0
+          )
+        );
+
+      }
+
+      return total;
+
+    },
+    0
+  );
 
 }
+  /* =========================
+   AVAILABLE BALANCE
+========================= */
 
-const employeeId=
-currentEmployee.id||
-currentEmployee.referral||
-currentEmployee.username;
+function getAvailableBalance(
+  employee
+){
 
-const mine=
-requests.filter(request=>
+  const earnings =
+    getEarnings(
+      employee
+    );
 
-String(request.employeeId)===
-String(employeeId)
 
-);
+  const withdrawn =
+    getApprovedWithdrawals(
+      employee
+    );
 
-if(mine.length===0){
 
-history.innerHTML=
-'<div class="empty">No withdrawal requests yet.</div>';
-
-return;
-
-}
-
-history.innerHTML=
-mine.map(request=>{
-
-const date=
-request.createdAt
-?new Date(request.createdAt).toLocaleString()
-:"";
-
-const status=
-String(request.status||"").toUpperCase();
-
-const statusClass=
-status==="APPROVED"
-?"approved"
-:status==="REJECTED"
-?"rejected"
-:"pending";
-
-return`
-
-<div class="request">
-
-<div class="row">
-
-<strong>
-KSh ${Number(
-request.amount||0
-).toLocaleString()}
-</strong>
-
-<span class="${statusClass}">
-${status}
-</span>
-
-</div>
-
-<div>
-MPESA: ${request.phone||"-"}
-</div>
-
-<small>${date}</small>
-
-</div>
-
-`;
-
-}).join("");
+  return Math.max(
+    0,
+    earnings - withdrawn
+  );
 
 }
 
 
-/* LOAD */
+/* =========================
+   LOAD PAGE
+========================= */
 
 function loadPage(){
 
-currentEmployee=
-getCurrentEmployee();
+  const employee =
+    getEmployee();
 
-if(!currentEmployee){
 
-document.getElementById(
-"submitButton"
-).disabled=true;
+  if(!employee){
 
-loadHistory();
+    window.location.href =
+      "employee-login.html";
 
-return;
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "employeeName"
+    )
+    .textContent =
+      employee.name ||
+      employee.employeeName ||
+      "Employee";
+
+
+  document
+    .getElementById(
+      "employeeId"
+    )
+    .textContent =
+      employee.id ||
+      employee.employeeId ||
+      "-";
+
+
+  const available =
+    getAvailableBalance(
+      employee
+    );
+
+
+  document
+    .getElementById(
+      "availableBalance"
+    )
+    .textContent =
+      "KSh " +
+      available.toLocaleString();
+
+
+  loadHistory();
 
 }
 
-calculateBalance();
-displayBalance();
-loadHistory();
+
+/* =========================
+   SUBMIT WITHDRAWAL
+========================= */
+
+function submitWithdrawal(){
+
+  const employee =
+    getEmployee();
+
+
+  if(!employee){
+
+    window.location.href =
+      "employee-login.html";
+
+    return;
+
+  }
+
+
+  const phone =
+    document
+      .getElementById(
+        "phone"
+      )
+      .value
+      .trim();
+
+
+  const amount =
+    Number(
+      document
+        .getElementById(
+          "amount"
+        )
+        .value
+    );
+
+
+  const message =
+    document
+      .getElementById(
+        "message"
+      );
+
+
+  message.textContent = "";
+  message.style.color =
+    "#ff6464";
+
+
+  /* PHONE */
+
+  if(
+    !/^07\d{8}$/.test(phone)
+  ){
+
+    message.textContent =
+      "Enter a valid M-PESA number.";
+
+    return;
+
+  }
+
+
+  /* AMOUNT */
+
+  if(
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ){
+
+    message.textContent =
+      "Enter a valid amount.";
+
+    return;
+
+  }
+
+
+  /* BALANCE */
+
+  const available =
+    getAvailableBalance(
+      employee
+    );
+
+
+  if(amount > available){
+
+    message.textContent =
+      "Insufficient available balance.";
+
+    return;
+
+  }
+
+
+  /* CHECK PENDING */
+
+  const requests =
+    getRequests();
+
+
+  const pending =
+    requests.some(
+      function(request){
+
+        return (
+          String(
+            request.employeeId
+          ) ===
+          String(
+            employee.id
+          ) &&
+
+          String(
+            request.status ||
+            "PENDING"
+          ).toUpperCase() ===
+          "PENDING"
+        );
+
+      }
+    );
+
+
+  if(pending){
+
+    message.textContent =
+      "You already have a pending request.";
+
+    return;
+
+  }
+
+
+  /* CREATE */
+
+  const request = {
+
+    id:
+      "WD-" +
+      Date.now(),
+
+    employeeName:
+      employee.name ||
+      employee.employeeName,
+
+    employeeId:
+      employee.id ||
+      employee.employeeId,
+
+    username:
+      employee.username || "",
+
+    referral:
+      employee.referral ||
+      employee.id,
+
+    amount:
+      amount,
+
+    phone:
+      phone,
+
+    status:
+      "PENDING",
+
+    createdAt:
+      new Date().toISOString()
+
+  };
+
+
+  requests.push(
+    request
+  );
+
+
+  saveRequests(
+    requests
+  );
+
+
+  document
+    .getElementById(
+      "phone"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "amount"
+    )
+    .value = "";
+
+
+  message.style.color =
+    "#36d675";
+
+
+  message.textContent =
+    "Withdrawal request submitted successfully.";
+
+
+  loadPage();
 
 }
 
 
-/* BACK */
+/* =========================
+   HISTORY
+========================= */
+
+function loadHistory(){
+
+  const employee =
+    getEmployee();
+
+
+  if(!employee){
+    return;
+  }
+
+
+  const requests =
+    getRequests();
+
+
+  const mine =
+    requests.filter(
+      function(request){
+
+        return (
+          String(
+            request.employeeId
+          ) ===
+          String(
+            employee.id
+          )
+        );
+
+      }
+    );
+
+
+  const history =
+    document.getElementById(
+      "history"
+    );
+
+
+  if(!mine.length){
+
+    history.innerHTML = `
+      <div class="empty">
+        No withdrawal requests yet.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  mine.sort(
+    function(a,b){
+
+      return (
+        new Date(
+          b.createdAt || 0
+        ) -
+        new Date(
+          a.createdAt || 0
+        )
+      );
+
+    }
+  );
+
+
+  history.innerHTML =
+    mine.map(
+      function(request){
+
+        const status =
+          String(
+            request.status ||
+            "PENDING"
+          ).toLowerCase();
+
+
+        const date =
+          request.createdAt
+            ? new Date(
+                request.createdAt
+              ).toLocaleString()
+            : "-";
+
+
+        return `
+
+          <div class="history-item">
+
+            <div class="history-top">
+
+              <div>
+
+                <div class="amount">
+                  KSh ${
+                    Number(
+                      request.amount || 0
+                    ).toLocaleString()
+                  }
+                </div>
+
+                <div class="date">
+                  ${date}
+                </div>
+
+              </div>
+
+
+              <div class="status ${status}">
+                ${status.toUpperCase()}
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+      }
+  /* =========================
+   BACK TO DASHBOARD
+========================= */
 
 function goBack(){
 
-window.location.href=
-"employee-dashboard.html";
+  window.location.href =
+    "employee-dashboard.html";
 
 }
 
 
-/* START */
+/* =========================
+   URL EMPLOYEE CONNECTION
+========================= */
 
-loadPage();
+function checkEmployeeFromURL(){
 
-setInterval(loadPage,3000);
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const employeeCode =
+    params.get(
+      "employee"
+    );
+
+
+  if(!employeeCode){
+    return;
+  }
+
+
+  const employee =
+    getEmployee();
+
+
+  /*
+   If employees.html already created
+   the employeeSession, keep it.
+  */
+
+  if(
+    employee &&
+    (
+      employee.id === employeeCode ||
+      employee.referral === employeeCode
+    )
+  ){
+
+    return;
+
+  }
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    checkEmployeeFromURL();
+
+    loadPage();
+
+  }
+);
+
+
+/* =========================
+   AUTO REFRESH
+========================= */
+
+setInterval(
+  function(){
+
+    const employee =
+      getEmployee();
+
+
+    if(employee){
+
+      loadPage();
+
+    }
+
+  },
+  3000
+);
 
 </script>
 
