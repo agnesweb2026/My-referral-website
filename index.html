@@ -2,16 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>LiveX</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
   margin:0;
   padding:0;
   width:100%;
@@ -26,78 +29,105 @@ body{
 }
 
 .hidden{
-  display:none!important;
+  display:none !important;
 }
 
-button,input{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
+/* =========================
+   WELCOME PAGE
+========================= */
 
 #welcomeScreen{
   position:fixed;
   inset:0;
-  z-index:1000;
-  background:
-    radial-gradient(circle at 50% 35%,#2b0010 0,#090006 35%,#000 75%);
+  z-index:9999;
   display:flex;
   align-items:center;
   justify-content:center;
+  flex-direction:column;
+  background:
+    radial-gradient(
+      circle at center,
+      #3b071d 0%,
+      #10030a 45%,
+      #000 100%
+    );
   text-align:center;
 }
 
-.welcome-content{
-  width:90%;
-  max-width:420px;
-}
-
 .logo{
-  font-size:44px;
+  font-size:48px;
   font-weight:900;
   letter-spacing:-2px;
+  margin-bottom:10px;
+}
+
+.logo span{
   color:#ff1744;
-  text-shadow:0 0 25px rgba(255,23,68,.45);
+}
+
+.welcome-live{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  background:#e6002d;
+  padding:7px 13px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:18px;
+}
+
+.welcome-live i{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#fff;
+  display:block;
+  animation:pulse 1s infinite;
 }
 
 .welcome-title{
-  margin-top:18px;
   font-size:24px;
   font-weight:800;
+  margin:0 20px 8px;
 }
 
 .welcome-text{
-  margin-top:10px;
   color:#aaa;
   font-size:14px;
+  margin:0 20px;
 }
 
-.loading-line{
-  width:220px;
-  height:4px;
-  margin:28px auto 0;
-  background:#222;
-  border-radius:20px;
-  overflow:hidden;
+.loader{
+  width:48px;
+  height:48px;
+  border:4px solid rgba(255,255,255,.15);
+  border-top-color:#ff1744;
+  border-radius:50%;
+  margin-top:28px;
+  animation:spin .8s linear infinite;
 }
 
-.loading-line span{
-  display:block;
-  width:35%;
-  height:100%;
-  background:#ff1744;
-  animation:loading 1.4s infinite ease-in-out;
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
 }
 
-@keyframes loading{
-  0%{transform:translateX(-120%)}
-  100%{transform:translateX(400%)}
+@keyframes pulse{
+  50%{
+    transform:scale(.6);
+    opacity:.5;
+  }
 }
+
+/* =========================
+   TOP BAR
+========================= */
 
 #photosPage{
   min-height:100vh;
+  background:#080808;
   padding-bottom:30px;
 }
 
@@ -105,389 +135,619 @@ button{
   position:sticky;
   top:0;
   z-index:100;
-  min-height:62px;
+  height:62px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:8px;
-  padding:10px 13px;
-  background:rgba(0,0,0,.94);
-  border-bottom:1px solid #242424;
-  backdrop-filter:blur(12px);
+  padding:0 13px;
+  background:rgba(5,5,5,.96);
+  border-bottom:1px solid #222;
+  backdrop-filter:blur(10px);
 }
 
 .brand{
-  color:#ff1744;
-  font-size:24px;
+  font-size:25px;
   font-weight:900;
+  letter-spacing:-1px;
 }
 
-.online-box{
+.brand span{
+  color:#ff1744;
+}
+
+.online{
   display:flex;
   align-items:center;
   gap:7px;
-  font-size:13px;
   color:#ddd;
+  font-size:13px;
+  font-weight:bold;
 }
 
 .online-dot{
   width:9px;
   height:9px;
+  background:#21e66d;
   border-radius:50%;
-  background:#22e56b;
-  box-shadow:0 0 9px rgba(34,229,107,.8);
+  box-shadow:0 0 10px #21e66d;
 }
 
-.live-pill{
-  padding:6px 9px;
-  border-radius:8px;
-  background:#ff1744;
-  color:white;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:.5px;
+/* =========================
+   PHOTO HEADER
+========================= */
+
+.photos-title{
+  padding:15px 12px 10px;
+  font-size:18px;
+  font-weight:800;
 }
 
-.page-title{
-  padding:18px 14px 7px;
-  font-size:21px;
-  font-weight:900;
-}
-
-.page-subtitle{
-  padding:0 14px 15px;
+.photos-title small{
+  display:block;
   color:#888;
-  font-size:13px;
+  font-size:12px;
+  font-weight:normal;
+  margin-top:4px;
 }
 
-.photos-grid{
+/* =========================
+   PHOTO GRID
+========================= */
+
+#photosContainer{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:8px;
-  padding:0 8px;
+  grid-template-columns:
+    repeat(3,1fr);
+  gap:7px;
+  padding:0 7px;
 }
 
 .photo-card{
-  min-width:0;
-  background:#101010;
-  border:1px solid #222;
-  border-radius:12px;
+  background:#111;
+  border-radius:10px;
   overflow:hidden;
-  box-shadow:0 5px 18px rgba(0,0,0,.35);
+  border:1px solid #202020;
+  min-width:0;
 }
 
-.photo-image-wrap{
+.photo-wrapper{
   position:relative;
   width:100%;
-  aspect-ratio:3/4;
-  background:#151515;
+  aspect-ratio:.78;
   overflow:hidden;
+  cursor:pointer;
+  background:#151515;
 }
 
-.photo-image{
+.photo-wrapper img{
   width:100%;
   height:100%;
-  display:block;
   object-fit:cover;
+  display:block;
 }
 
-.status-dot{
+.photo-overlay{
   position:absolute;
-  top:7px;
-  right:7px;
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#22e56b;
-  border:2px solid rgba(0,0,0,.8);
-  box-shadow:0 0 9px rgba(34,229,107,.9);
+  inset:0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.08),
+      transparent 50%,
+      rgba(0,0,0,.72)
+    );
+  pointer-events:none;
 }
 
-.status-dot.offline{
-  background:#777;
-  box-shadow:none;
-}
-
-.photo-live{
+.live-label{
   position:absolute;
-  left:7px;
-  top:7px;
-  padding:4px 6px;
-  border-radius:5px;
-  background:#ff1744;
+  left:6px;
+  top:6px;
+  background:#e90035;
+  color:#fff;
   font-size:9px;
   font-weight:900;
+  padding:4px 6px;
+  border-radius:5px;
+  z-index:2;
 }
 
-.video-icon{
+.offline-label{
+  position:absolute;
+  left:6px;
+  top:6px;
+  background:#555;
+  color:#fff;
+  font-size:9px;
+  font-weight:900;
+  padding:4px 6px;
+  border-radius:5px;
+  z-index:2;
+}
+
+.play-icon{
   position:absolute;
   left:50%;
   top:50%;
-  transform:translate(-50%,-50%);
-  width:43px;
-  height:43px;
+  transform:
+    translate(-50%,-50%);
+  width:48px;
+  height:48px;
   border-radius:50%;
-  background:rgba(0,0,0,.65);
-  border:2px solid rgba(255,255,255,.9);
+  background:rgba(0,0,0,.55);
+  border:2px solid
+    rgba(255,255,255,.9);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:17px;
-  animation:pulse 1.8s infinite;
+  z-index:3;
+  animation:
+    playPulse 1.7s infinite;
 }
 
-@keyframes pulse{
-  0%,100%{
-    transform:translate(-50%,-50%) scale(1)
-  }
+.play-icon:after{
+  content:"";
+  margin-left:4px;
+  width:0;
+  height:0;
+  border-top:9px solid transparent;
+  border-bottom:9px solid transparent;
+  border-left:14px solid #fff;
+}
+
+@keyframes playPulse{
+
   50%{
-    transform:translate(-50%,-50%) scale(1.08)
+    transform:
+      translate(-50%,-50%)
+      scale(1.08);
   }
+
 }
 
 .photo-info{
-  padding:9px 8px 7px;
+  position:absolute;
+  left:7px;
+  right:7px;
+  bottom:7px;
+  z-index:4;
 }
 
 .photo-name{
+  font-weight:900;
   font-size:13px;
-  font-weight:800;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  text-shadow:0 1px 4px #000;
 }
 
-.photo-meta{
-  margin-top:4px;
-  color:#aaa;
-  font-size:11px;
+.photo-age{
+  font-size:10px;
+  color:#ddd;
+  margin-top:2px;
 }
 
-.country{
-  margin-right:3px;
-}
+/* =========================
+   SOCIAL BAR
+========================= */
 
-.activity-label{
-  margin-top:5px;
-  color:#777;
-  font-size:9px;
-}
-
-.social-row{
+.social-bar{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:4px;
-  padding:0 7px 7px;
+  grid-template-columns:
+    repeat(4,1fr);
+  border-top:1px solid #222;
+  background:#0d0d0d;
 }
 
 .social-btn{
-  min-width:0;
-  padding:7px 2px;
-  border:1px solid #2a2a2a;
-  border-radius:8px;
-  background:#191919;
-  color:#ddd;
+  border:0;
+  border-right:1px solid #222;
+  background:#0d0d0d;
+  color:#aaa;
+  min-height:45px;
+  padding:4px 2px;
+  cursor:pointer;
   font-size:9px;
-  font-weight:700;
+  font-weight:bold;
 }
 
-.social-btn:active{
-  transform:scale(.96);
+.social-btn:last-child{
+  border-right:0;
+}
+
+.social-btn .icon{
+  display:block;
+  font-size:18px;
+  line-height:18px;
+  margin-bottom:2px;
 }
 
 .social-btn.active{
-  border-color:#ff1744;
-  color:#ff496b;
-  background:#21070d;
+  color:#ff1744;
 }
 
+.social-btn.follow-active{
+  color:#28e778;
+}
+
+.count{
+  font-size:9px;
+  color:#777;
+}
+
+/* =========================
+   CHAT
+========================= */
+
 .chat-section{
-  margin:0 7px 8px;
-  border-top:1px solid #252525;
-  padding-top:7px;
+  background:#090909;
+  border-top:1px solid #1d1d1d;
+  padding:8px;
 }
 
 .chat-title{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  color:#aaa;
+  align-items:center;
+  color:#ddd;
   font-size:10px;
-  margin-bottom:5px;
+  font-weight:800;
+  margin-bottom:6px;
 }
 
-.demo-label{
-  color:#666;
-  font-size:8px;
+.chat-title span{
+  color:#777;
+  font-weight:normal;
 }
 
 .chat-comments{
-  height:115px;
+  height:132px;
   overflow-y:auto;
   overscroll-behavior:contain;
-  padding:4px 2px;
-  scrollbar-width:thin;
+  padding-right:3px;
+  scroll-behavior:smooth;
+}
+
+.chat-comments::-webkit-scrollbar{
+  width:3px;
+}
+
+.chat-comments::-webkit-scrollbar-thumb{
+  background:#444;
+  border-radius:5px;
 }
 
 .comment{
-  margin-bottom:6px;
-  padding:6px 7px;
-  border-radius:8px;
-  background:#181818;
-  font-size:10px;
-  line-height:1.35;
-  color:#ddd;
+  display:flex;
+  gap:6px;
+  margin-bottom:7px;
 }
 
-.comment-name{
-  color:#ff6680;
+.comment-avatar{
+  flex:0 0 25px;
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  background:
+    linear-gradient(
+      135deg,
+      #ff1744,
+      #7b1530
+    );
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.comment-body{
+  min-width:0;
+  background:#151515;
+  border-radius:9px;
+  padding:5px 7px;
+  flex:1;
+}
+
+.comment-user{
+  font-size:9px;
+  color:#ff7791;
   font-weight:800;
-  margin-right:4px;
+}
+
+.comment-text{
+  font-size:10px;
+  line-height:14px;
+  color:#ddd;
+  word-break:break-word;
 }
 
 .comment-time{
-  display:block;
-  margin-top:2px;
-  color:#555;
+  color:#666;
   font-size:8px;
+  margin-top:2px;
 }
 
-.comment-form{
+.chat-form{
   display:flex;
   gap:5px;
-  margin-top:5px;
+  margin-top:7px;
 }
 
-.comment-input{
+.chat-input{
   min-width:0;
   flex:1;
-  height:32px;
-  padding:0 8px;
-  border:1px solid #303030;
-  border-radius:8px;
+  height:34px;
+  border-radius:17px;
+  border:1px solid #292929;
   outline:none;
-  background:#0d0d0d;
+  background:#151515;
   color:#fff;
-  font-size:10px;
+  padding:0 12px;
+  font-size:11px;
 }
 
-.comment-input:focus{
+.chat-input:focus{
   border-color:#ff1744;
 }
 
-.comment-send{
-  width:42px;
-  height:32px;
+.chat-send{
+  width:38px;
+  height:34px;
   border:0;
-  border-radius:8px;
+  border-radius:17px;
   background:#ff1744;
   color:#fff;
-  font-size:12px;
-  font-weight:900;
+  font-size:15px;
+  cursor:pointer;
 }
+
+/* =========================
+   CALL OVERLAY
+========================= */
 
 #incomingCall{
   position:fixed;
   inset:0;
-  z-index:2000;
-  background:#030303;
+  z-index:5000;
+  background:rgba(0,0,0,.96);
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
 .call-box{
-  width:90%;
-  max-width:390px;
+  width:min(360px,92vw);
   text-align:center;
 }
 
 .call-photo{
-  width:130px;
-  height:130px;
-  object-fit:cover;
+  width:125px;
+  height:125px;
   border-radius:50%;
+  object-fit:cover;
   border:4px solid #ff1744;
-  box-shadow:0 0 35px rgba(255,23,68,.45);
+  box-shadow:
+    0 0 35px
+    rgba(255,23,68,.45);
+  animation:ringPulse 1.4s infinite;
+}
+
+@keyframes ringPulse{
+
+  50%{
+    box-shadow:
+      0 0 0 14px
+      rgba(255,23,68,.08),
+      0 0 40px
+      rgba(255,23,68,.5);
+  }
+
 }
 
 .call-live{
-  display:inline-block;
-  margin-top:18px;
-  padding:6px 10px;
-  border-radius:6px;
-  background:#ff1744;
+  margin:20px auto 10px;
+  display:table;
+  background:#e6002d;
+  padding:5px 10px;
+  border-radius:5px;
   font-size:11px;
-  font-weight:900;
-}
-
-.call-title{
-  margin-top:14px;
-  font-size:23px;
   font-weight:900;
 }
 
 .call-name{
-  margin-top:7px;
-  color:#bbb;
+  font-size:24px;
+  font-weight:900;
+  margin-bottom:5px;
 }
 
-.call-actions{
+.call-text{
+  color:#999;
+  font-size:13px;
+  margin-bottom:25px;
+}
+
+.call-buttons{
   display:flex;
   justify-content:center;
-  gap:20px;
-  margin-top:28px;
+  gap:35px;
 }
 
 .call-btn{
-  width:62px;
-  height:62px;
+  width:65px;
+  height:65px;
   border:0;
   border-radius:50%;
-  color:white;
-  font-size:25px;
+  color:#fff;
+  font-size:26px;
+  cursor:pointer;
 }
 
-.answer-btn{
-  background:#20c96b;
+.answer{
+  background:#18c968;
 }
 
-.reject-btn{
-  background:#ed1743;
+.reject{
+  background:#e51b3e;
 }
 
-#firstVideoPage{
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME PAGE -->
+
+<section id="welcomeScreen">
+
+  <div class="welcome-live">
+    <i></i>
+    LIVE NOW
+  </div>
+
+  <div class="logo">
+    Live<span>X</span>
+  </div>
+
+  <h1 class="welcome-title">
+    Welcome to LiveX
+  </h1>
+
+  <p class="welcome-text">
+    Connecting you with live profiles...
+  </p>
+
+  <div class="loader"></div>
+
+</section>
+
+<!-- PHOTOS PAGE -->
+
+<section id="photosPage" class="hidden">
+
+  <div class="topbar">
+
+    <div class="brand">
+      Live<span>X</span>
+    </div>
+
+    <div class="online">
+
+      <span class="online-dot"></span>
+
+      <span id="onlineNumber">
+        21 online
+      </span>
+
+    </div>
+
+  </div>
+
+  <div class="photos-title">
+
+    Live profiles
+
+    <small>
+      Tap a profile to connect
+    </small>
+
+  </div>
+
+  <div id="photosContainer"></div>
+
+</section>
+
+<!-- INCOMING CALL -->
+
+<section id="incomingCall" class="hidden">
+
+  <div class="call-box">
+
+    <img
+      id="callPhoto"
+      class="call-photo"
+      src="./photo1.jpg"
+      alt="Incoming call"
+    >
+
+    <div class="call-live">
+      🔴 LIVE CALL
+    </div>
+
+    <div id="callName" class="call-name">
+      Cute
+    </div>
+
+    <div class="call-text">
+      Incoming live call...
+    </div>
+
+    <div class="call-buttons">
+
+      <button
+        id="rejectCall"
+        class="call-btn reject"
+        type="button"
+      >
+        ✕
+      </button>
+
+      <button
+        id="answerCall"
+        class="call-btn answer"
+        type="button"
+      >
+        ✓
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- PART 1 INAISHIA HAPA KWA STYLE + HTML YA MWANZO -->
+  <style>
+
+/* =========================
+   VIDEO PAGE
+========================= */
+
+#videoPage{
   position:fixed;
   inset:0;
-  z-index:2100;
+  z-index:4500;
   background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-#firstVideo{
+#liveVideo{
   width:100%;
   height:100%;
-  object-fit:contain;
-  background:#000;
+  object-fit:cover;
 }
 
-.video-live-label{
+.video-live{
   position:absolute;
   top:18px;
   left:18px;
   z-index:5;
-  padding:6px 9px;
+  background:#e6002d;
+  padding:7px 10px;
   border-radius:6px;
-  background:#ff1744;
   font-size:11px;
   font-weight:900;
 }
 
+/* =========================
+   INSUFFICIENT PAGE
+========================= */
+
 #insufficientPage{
   position:fixed;
   inset:0;
-  z-index:2200;
-  background:
-    radial-gradient(circle at 50% 30%,#27000c 0,#090000 42%,#000 80%);
+  z-index:4200;
+  background:#070707;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -495,714 +755,368 @@ button{
 }
 
 .insufficient-box{
-  width:90%;
-  max-width:380px;
+  width:min(360px,90vw);
+  padding:28px;
+  border:1px solid #292929;
+  border-radius:18px;
+  background:#111;
 }
 
-.warning-icon{
-  font-size:50px;
+.warning{
+  font-size:42px;
+  margin-bottom:12px;
 }
 
-.insufficient-title{
-  margin-top:15px;
-  font-size:26px;
-  font-weight:900;
+.insufficient-box h2{
+  margin:0 0 8px;
+  font-size:23px;
 }
 
-.insufficient-text{
-  margin-top:9px;
-  color:#aaa;
-  font-size:14px;
+.insufficient-box p{
+  margin:0;
+  color:#999;
+  font-size:13px;
 }
 
-@media(max-width:380px){
-  .photos-grid{
+/* =========================
+   ROOM CLOSED
+========================= */
+
+#roomClosed{
+  position:fixed;
+  inset:0;
+  z-index:4100;
+  background:#050505;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.closed-box{
+  padding:25px;
+}
+
+.closed-box h2{
+  color:#ff3154;
+}
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media(max-width:360px){
+
+  #photosContainer{
     gap:5px;
     padding:0 5px;
   }
 
-  .photo-info{
-    padding-left:6px;
-    padding-right:6px;
-  }
-
-  .social-row{
-    padding-left:5px;
-    padding-right:5px;
-  }
-
-  .chat-section{
-    margin-left:5px;
-    margin-right:5px;
+  .photo-name{
+    font-size:11px;
   }
 
   .social-btn{
     font-size:8px;
   }
+
+  .social-btn .icon{
+    font-size:16px;
+  }
+
+  .chat-comments{
+    height:120px;
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<div id="welcomeScreen">
-  <div class="welcome-content">
-    <div class="logo">LiveX</div>
-    <div class="welcome-title">Live people are waiting</div>
-    <div class="welcome-text">Connecting you to live profiles...</div>
-    <div class="loading-line"><span></span></div>
-  </div>
-</div>
+<!-- VIDEO -->
 
-<div id="photosPage" class="hidden">
+<section id="videoPage" class="hidden">
 
-  <div class="topbar">
-    <div class="brand">LiveX</div>
-
-    <div class="online-box">
-      <span class="online-dot"></span>
-      <span id="onlineNumber">21 online</span>
-    </div>
-
-    <div class="live-pill">● LIVE</div>
+  <div class="video-live">
+    🔴 LIVE
   </div>
 
-  <div class="page-title">
-    Live Photos
-  </div>
+  <video
+    id="liveVideo"
+    playsinline
+    preload="auto"
+  >
 
-  <div class="page-subtitle">
-    Live profiles • reactions • romantic chats
-  </div>
+    <source
+      src="./IMG_20261001_011110_570.mp4"
+      type="video/mp4"
+    >
 
-  <div id="photosGrid" class="photos-grid"></div>
-
-</div>
-
-<div id="incomingCall" class="hidden">
-  <div class="call-box">
-
-    <img id="callPhoto"
-         class="call-photo"
-         src=""
-         alt="Caller">
-
-    <div class="call-live">
-      ● LIVE CALL
-    </div>
-
-    <div class="call-title">
-      Incoming call
-    </div>
-
-    <div id="callName"
-         class="call-name">
-      Someone is calling you...
-    </div>
-
-    <div class="call-actions">
-
-      <button id="answerCall"
-              class="call-btn answer-btn"
-              type="button">
-        ☎
-      </button>
-
-      <button id="rejectCall"
-              class="call-btn reject-btn"
-              type="button">
-        ✕
-      </button>
-
-    </div>
-
-  </div>
-</div>
-
-<div id="firstVideoPage" class="hidden">
-
-  <div class="video-live-label">
-    ● LIVE
-  </div>
-
-  <video id="firstVideo"
-         playsinline>
   </video>
 
-</div>
+</section>
 
-<div id="insufficientPage" class="hidden">
+<!-- INSUFFICIENT -->
+
+<section
+  id="insufficientPage"
+  class="hidden"
+>
 
   <div class="insufficient-box">
 
-    <div class="warning-icon">
+    <div class="warning">
       ⏱️
     </div>
 
-    <div class="insufficient-title">
+    <h2>
       Insufficient Minutes
-    </div>
+    </h2>
 
-    <div class="insufficient-text">
-      You need more minutes to continue this live call.
-    </div>
+    <p>
+      You need minutes to continue
+      the live conversation.
+    </p>
 
   </div>
 
-</div>
+</section>
+
+<!-- ROOM CLOSED -->
+
+<section
+  id="roomClosed"
+  class="hidden"
+>
+
+  <div class="closed-box">
+
+    <div style="font-size:45px;">
+      🔴
+    </div>
+
+    <h2>
+      Live room closed
+    </h2>
+
+    <p style="color:#888;">
+      This profile is currently offline.
+    </p>
+
+  </div>
+
+</section>
 
 <script>
-  const PAYMENT_PAGE_URL = "payment.html";
 
-const SAMPLE_STORAGE_KEY =
-  "myReferralSampleWatched";
+"use strict";
 
-const MAX_PHOTOS = 24;
-
-const FIRST_VIDEO_DURATION = 40000;
-
-const WELCOME_DURATION = 3000;
-
-const INSUFFICIENT_DURATION = 2000;
-
-const CALL_RING_DURATION = 7000;
-
-const IMAGE_BASE = "./";
-
-const VIDEO_URL =
-  "./IMG_20261001_011110_570.mp4";
-
+/* =========================
+   PROFILE DATA
+========================= */
 
 const profiles = [
 
   {
     name:"Cute",
     age:24,
-    country:"Kenya",
-    flag:"🇰🇪",
+    country:"🇰🇪",
     image:"photo1.jpg",
-    likes:5842,
-    loves:2194,
-    chats:[
-      ["Luna","Your smile is so beautiful ❤️"],
-      ["Mark","You look amazing tonight 😍"],
-      ["Rose","I wish I could talk to you right now 💕"],
-      ["Daniel","That smile got my attention 😘"],
-      ["Mia","You are really gorgeous tonight ❤️"],
-      ["Chris","Are you still online? 💗"],
-      ["Anna","I keep coming back to your photo 😍"],
-      ["Kevin","You have such a lovely vibe ❤️"],
-      ["Joy","Hello beautiful, hope you're smiling 💕"],
-      ["Alex","I would love to know you better 😘"]
-    ]
+    likes:5842
   },
 
   {
     name:"Becky",
     age:22,
-    country:"Kenya",
-    flag:"🇰🇪",
+    country:"🇰🇪",
     image:"photo2.jpg",
-    likes:6317,
-    loves:2481,
-    chats:[
-      ["Sam","You look absolutely lovely ❤️"],
-      ["Nina","That face is unforgettable 😍"],
-      ["James","Can I get a hello from you? 💕"],
-      ["Lily","Your smile is everything tonight 😘"],
-      ["Mike","I think I just found my favorite profile ❤️"],
-      ["Grace","You are glowing today 💗"],
-      ["Ryan","Wish we could chat for hours 😍"],
-      ["Emma","So beautiful and charming 💕"],
-      ["Tom","You caught my attention immediately ❤️"],
-      ["Sarah","I hope you see this message 😘"]
-    ]
+    likes:6317
   },
 
   {
     name:"Dorry",
     age:26,
-    country:"Kenya",
-    flag:"🇰🇪",
+    country:"🇰🇪",
     image:"photo4.jpg",
-    likes:5126,
-    loves:2037,
-    chats:[
-      ["Chris","You have such a sweet smile ❤️"],
-      ["Maya","Absolutely stunning 😍"],
-      ["John","I would love to say hello 💕"],
-      ["Bella","You look so lovely tonight 😘"],
-      ["David","That photo made me smile ❤️"],
-      ["Sophie","Your energy is beautiful 💗"],
-      ["Leo","I could stare at this smile all day 😍"],
-      ["Amy","You seem really sweet 💕"],
-      ["Noah","Are you available for a chat? ❤️"],
-      ["Ella","Beautiful profile 😘"]
-    ]
+    likes:5276
   },
 
   {
     name:"Sharon",
     age:23,
-    country:"Kenya",
-    flag:"🇰🇪",
+    country:"🇰🇪",
     image:"photo5.jpg",
-    likes:7204,
-    loves:3178,
-    chats:[
-      ["Daniel","Wow, you are gorgeous ❤️"],
-      ["Kate","That smile though 😍"],
-      ["Peter","You look so romantic tonight 💕"],
-      ["Mia","I would love to meet you here 😘"],
-      ["Eric","You definitely caught my eye ❤️"],
-      ["Lucy","Such a beautiful profile 💗"],
-      ["Adam","I keep looking at this photo 😍"],
-      ["Jane","You look amazing 💕"],
-      ["Brian","Hello beautiful ❤️"],
-      ["Chloe","Hope you reply to the chat 😘"]
-    ]
+    likes:7128
   },
 
   {
     name:"Lilian",
     age:27,
-    country:"Kenya",
-    flag:"🇰🇪",
+    country:"🇰🇪",
     image:"1785179340825.jpg",
-    likes:5693,
-    loves:2310,
-    chats:[
-      ["Ryan","You look wonderful ❤️"],
-      ["Amy","Your smile is so warm 😍"],
-      ["Mark","I would love to talk with you 💕"],
-      ["Rose","You are looking beautiful 😘"],
-      ["James","Such a lovely photo ❤️"],
-      ["Nora","You have my attention 💗"],
-      ["Kevin","Hello beautiful 😍"],
-      ["Mia","That smile is dangerous 💕"],
-      ["Tom","Can we chat? ❤️"],
-      ["Liam","You seem really sweet 😘"]
-    ]
+    likes:5934
   },
 
   {
     name:"Asha",
     age:25,
-    country:"Tanzania",
-    flag:"🇹🇿",
+    country:"🇹🇿",
     image:"1785179340825 (1).jpg",
-    likes:6835,
-    loves:2712,
-    chats:[
-      ["Ben","You look amazing ❤️"],
-      ["Sarah","Such a beautiful smile 😍"],
-      ["Leo","I wish I could say hello 💕"],
-      ["Maya","You are glowing 😘"],
-      ["Alex","Lovely profile ❤️"],
-      ["Emma","You caught my attention 💗"],
-      ["Noah","Would love to chat with you 😍"],
-      ["Lily","You look so sweet 💕"],
-      ["Chris","Hello beautiful ❤️"],
-      ["Anna","I hope you reply 😘"]
-    ]
+    likes:6842
   },
 
   {
     name:"Neema",
     age:23,
-    country:"Tanzania",
-    flag:"🇹🇿",
+    country:"🇹🇿",
     image:"1785179362758.jpg",
-    likes:5478,
-    loves:2189,
-    chats:[
-      ["Mike","That smile ❤️"],
-      ["Grace","You look gorgeous 😍"],
-      ["David","Would love to know you 💕"],
-      ["Sophie","Such a lovely photo 😘"],
-      ["John","You are beautiful ❤️"],
-      ["Mia","I keep checking your profile 💗"],
-      ["Sam","Hello lovely 😍"],
-      ["Rose","Your smile is perfect 💕"],
-      ["Adam","Can we chat? ❤️"],
-      ["Ella","So charming 😘"]
-    ]
+    likes:7561
   },
 
   {
     name:"Zawadi",
     age:28,
-    country:"Tanzania",
-    flag:"🇹🇿",
+    country:"🇹🇿",
     image:"1785179915649.jpg",
-    likes:7912,
-    loves:3540,
-    chats:[
-      ["Liam","Absolutely beautiful ❤️"],
-      ["Nina","You look incredible 😍"],
-      ["Ryan","I would love to talk 💕"],
-      ["Kate","That smile is lovely 😘"],
-      ["Chris","You caught my eye ❤️"],
-      ["Amy","You look amazing 💗"],
-      ["Daniel","Hello beautiful 😍"],
-      ["Lucy","Your profile is so sweet 💕"],
-      ["Peter","Can I say hi? ❤️"],
-      ["Maya","You are gorgeous 😘"]
-    ]
+    likes:6219
   },
 
   {
     name:"Rehema",
     age:24,
-    country:"Tanzania",
-    flag:"🇹🇿",
+    country:"🇹🇿",
     image:"Screenshot_20260731-045343.png",
-    likes:6124,
-    loves:2397,
-    chats:[
-      ["Tom","Beautiful smile ❤️"],
-      ["Sarah","You look so cute 😍"],
-      ["Mark","I would love a chat 💕"],
-      ["Lily","You are stunning 😘"],
-      ["Noah","Hello beautiful ❤️"],
-      ["Emma","Lovely profile 💗"],
-      ["James","You caught my attention 😍"],
-      ["Rose","That smile 💕"],
-      ["Kevin","Can we talk? ❤️"],
-      ["Anna","You look wonderful 😘"]
-    ]
+    likes:5488
   },
-    {
+
+  {
     name:"Blessing",
     age:22,
-    country:"Nigeria",
-    flag:"🇳🇬",
+    country:"🇳🇬",
     image:"photo1.jpg",
-    likes:8341,
-    loves:4028,
-    chats:[
-      ["Daniel","You look so beautiful ❤️"],
-      ["Mia","Your smile is everything 😍"],
-      ["Alex","I would love to know you 💕"],
-      ["Sarah","You are glowing 😘"],
-      ["Chris","Such a lovely profile ❤️"],
-      ["Emma","Hello beautiful 💗"],
-      ["John","You caught my eye 😍"],
-      ["Lily","I like your vibe 💕"],
-      ["Mark","Can we chat? ❤️"],
-      ["Rose","Absolutely lovely 😘"]
-    ]
+    likes:8234
   },
 
   {
     name:"Favour",
     age:26,
-    country:"Nigeria",
-    flag:"🇳🇬",
+    country:"🇳🇬",
     image:"photo2.jpg",
-    likes:7045,
-    loves:3281,
-    chats:[
-      ["Mike","You look gorgeous ❤️"],
-      ["Anna","That smile 😍"],
-      ["Ryan","Would love to chat with you 💕"],
-      ["Maya","You look lovely tonight 😘"],
-      ["David","Hello beautiful ❤️"],
-      ["Sophie","Such a charming photo 💗"],
-      ["Leo","I keep looking at your profile 😍"],
-      ["Grace","You seem really sweet 💕"],
-      ["Tom","I would love to meet you here ❤️"],
-      ["Nora","You are stunning 😘"]
-    ]
+    likes:6917
   },
 
   {
     name:"Peace",
     age:25,
-    country:"Nigeria",
-    flag:"🇳🇬",
+    country:"🇳🇬",
     image:"photo4.jpg",
-    likes:6259,
-    loves:2814,
-    chats:[
-      ["James","You are beautiful ❤️"],
-      ["Luna","Your smile is amazing 😍"],
-      ["Sam","I wish I could talk to you 💕"],
-      ["Kate","You look so lovely 😘"],
-      ["Eric","That photo is beautiful ❤️"],
-      ["Mia","You caught my attention 💗"],
-      ["Adam","Hello gorgeous 😍"],
-      ["Lucy","Such a sweet profile 💕"],
-      ["Noah","Can we have a chat? ❤️"],
-      ["Amy","You look amazing 😘"]
-    ]
+    likes:5743
   },
 
   {
     name:"Joy",
     age:27,
-    country:"Nigeria",
-    flag:"🇳🇬",
+    country:"🇳🇬",
     image:"photo5.jpg",
-    likes:9156,
-    loves:4372,
-    chats:[
-      ["Chris","Wow, beautiful ❤️"],
-      ["Sarah","You have an amazing smile 😍"],
-      ["Daniel","I would love to talk 💕"],
-      ["Mia","You look fantastic 😘"],
-      ["John","Hello lovely ❤️"],
-      ["Emma","Your profile is adorable 💗"],
-      ["Mike","You got my attention 😍"],
-      ["Rose","I hope you are still online 💕"],
-      ["Alex","Can we chat? ❤️"],
-      ["Lily","So beautiful 😘"]
-    ]
+    likes:6388
   },
 
   {
     name:"Grace",
     age:24,
-    country:"Congo",
-    flag:"🇨🇩",
+    country:"🇨🇩",
     image:"1785179340825.jpg",
-    likes:5772,
-    loves:2268,
-    chats:[
-      ["Ben","You look beautiful ❤️"],
-      ["Nina","That smile 😍"],
-      ["Leo","Would love to meet you here 💕"],
-      ["Amy","You look so sweet 😘"],
-      ["Ryan","Lovely profile ❤️"],
-      ["Kate","You caught my eye 💗"],
-      ["Sam","Hello beautiful 😍"],
-      ["Maya","I like your vibe 💕"],
-      ["Tom","Can we chat? ❤️"],
-      ["Ella","So lovely 😘"]
-    ]
+    likes:9075
   },
 
   {
     name:"Mimi",
     age:23,
-    country:"Congo",
-    flag:"🇨🇩",
+    country:"🇨🇩",
     image:"1785179340825 (1).jpg",
-    likes:6490,
-    loves:3021,
-    chats:[
-      ["James","You are gorgeous ❤️"],
-      ["Lily","Beautiful smile 😍"],
-      ["David","I would love to talk 💕"],
-      ["Anna","You look amazing 😘"],
-      ["Chris","Hello beautiful ❤️"],
-      ["Mia","Such a lovely profile 💗"],
-      ["Noah","You caught my attention 😍"],
-      ["Rose","Your smile is sweet 💕"],
-      ["Mark","Are you online? ❤️"],
-      ["Sophie","Absolutely beautiful 😘"]
-    ]
+    likes:6247
   },
 
   {
     name:"Nadia",
     age:26,
-    country:"Congo",
-    flag:"🇨🇩",
+    country:"🇨🇩",
     image:"1785179362758.jpg",
-    likes:7318,
-    loves:3456,
-    chats:[
-      ["Ryan","You look stunning ❤️"],
-      ["Emma","That smile is lovely 😍"],
-      ["Peter","Would love to chat 💕"],
-      ["Maya","You are beautiful tonight 😘"],
-      ["Alex","Hello gorgeous ❤️"],
-      ["Lucy","Your profile is lovely 💗"],
-      ["Mike","I keep checking this photo 😍"],
-      ["Grace","Such a sweet smile 💕"],
-      ["John","Can we talk? ❤️"],
-      ["Nora","You look amazing 😘"]
-    ]
+    likes:7384
   },
 
   {
     name:"Bella",
     age:25,
-    country:"Congo",
-    flag:"🇨🇩",
+    country:"🇨🇩",
     image:"1785179915649.jpg",
-    likes:8627,
-    loves:3941,
-    chats:[
-      ["Sam","You are so beautiful ❤️"],
-      ["Kate","That smile 😍"],
-      ["Liam","I would love to know you 💕"],
-      ["Sarah","You look lovely 😘"],
-      ["Daniel","Hello beautiful ❤️"],
-      ["Amy","Such a gorgeous photo 💗"],
-      ["Chris","You caught my attention 😍"],
-      ["Lily","I like your energy 💕"],
-      ["Tom","Can we chat? ❤️"],
-      ["Mia","You look fantastic 😘"]
-    ]
+    likes:5812
   },
 
   {
     name:"Princess",
     age:28,
-    country:"Congo",
-    flag:"🇨🇩",
+    country:"🇨🇩",
     image:"Screenshot_20260731-045343.png",
-    likes:9584,
-    loves:4618,
-    chats:[
-      ["Alex","Absolutely gorgeous ❤️"],
-      ["Nina","Your smile is beautiful 😍"],
-      ["Ryan","I wish I could talk with you 💕"],
-      ["Emma","You look stunning 😘"],
-      ["John","You definitely caught my eye ❤️"],
-      ["Rose","Such a lovely profile 💗"],
-      ["Mike","Hello beautiful 😍"],
-      ["Maya","Your vibe is amazing 💕"],
-      ["David","Would love to chat ❤️"],
-      ["Sophie","You are lovely 😘"]
-    ]
+    likes:8651
   },
-    {
+
+  {
     name:"Emily",
     age:24,
-    country:"Canada",
-    flag:"🇨🇦",
+    country:"🇨🇦",
     image:"photo1.jpg",
-    likes:5821,
-    loves:2146,
-    chats:[
-      ["Ryan","You look wonderful ❤️"],
-      ["Lily","Beautiful smile 😍"],
-      ["Chris","I would love to chat 💕"],
-      ["Anna","You look so lovely 😘"],
-      ["Mark","Hello beautiful ❤️"],
-      ["Mia","Such a sweet photo 💗"],
-      ["James","You caught my attention 😍"],
-      ["Rose","I like your vibe 💕"],
-      ["Alex","Can we talk? ❤️"],
-      ["Nora","You look amazing 😘"]
-    ]
+    likes:5937
   },
 
   {
     name:"Sophie",
     age:27,
-    country:"Canada",
-    flag:"🇨🇦",
+    country:"🇨🇦",
     image:"photo2.jpg",
-    likes:6774,
-    loves:2910,
-    chats:[
-      ["Daniel","You are beautiful ❤️"],
-      ["Sarah","That smile is perfect 😍"],
-      ["Tom","Would love to know you 💕"],
-      ["Maya","You look gorgeous 😘"],
-      ["Chris","Hello lovely ❤️"],
-      ["Emma","Your profile is so nice 💗"],
-      ["Leo","You caught my eye 😍"],
-      ["Amy","Such a lovely smile 💕"],
-      ["Noah","Can we chat? ❤️"],
-      ["Luna","You look amazing 😘"]
-    ]
+    likes:6742
   },
 
   {
     name:"Thandi",
     age:25,
-    country:"South Africa",
-    flag:"🇿🇦",
+    country:"🇿🇦",
     image:"photo4.jpg",
-    likes:7462,
-    loves:3275,
-    chats:[
-      ["Mike","You look stunning ❤️"],
-      ["Nina","Your smile is gorgeous 😍"],
-      ["Ryan","I would love to talk 💕"],
-      ["Kate","Beautiful profile 😘"],
-      ["James","Hello beautiful ❤️"],
-      ["Mia","You have a lovely vibe 💗"],
-      ["David","You caught my attention 😍"],
-      ["Rose","Such a sweet photo 💕"],
-      ["Sam","Can we chat? ❤️"],
-      ["Ella","You look wonderful 😘"]
-    ]
+    likes:7148
   },
 
   {
     name:"Lerato",
     age:29,
-    country:"South Africa",
-    flag:"🇿🇦",
+    country:"🇿🇦",
     image:"photo5.jpg",
-    likes:8893,
-    loves:4217,
-    chats:[
-      ["Alex","Absolutely beautiful ❤️"],
-      ["Sarah","That smile 😍"],
-      ["Ben","Would love to talk with you 💕"],
-      ["Maya","You look amazing 😘"],
-      ["Chris","Hello gorgeous ❤️"],
-      ["Lily","Lovely profile 💗"],
-      ["John","You caught my eye 😍"],
-      ["Nora","Your energy is beautiful 💕"],
-      ["Ryan","Can we chat? ❤️"],
-      ["Amy","You are stunning 😘"]
-    ]
+    likes:5426
   },
 
   {
     name:"Ashley",
     age:23,
-    country:"USA",
-    flag:"🇺🇸",
+    country:"🇺🇸",
     image:"1785179340825.jpg",
-    likes:6158,
-    loves:2473,
-    chats:[
-      ["Jake","You look beautiful ❤️"],
-      ["Emma","Your smile is amazing 😍"],
-      ["Chris","I would love to chat 💕"],
-      ["Lily","You look so sweet 😘"],
-      ["Ryan","Hello beautiful ❤️"],
-      ["Mia","Such a lovely profile 💗"],
-      ["Alex","You caught my attention 😍"],
-      ["Sarah","I like your vibe 💕"],
-      ["Mike","Can we talk? ❤️"],
-      ["Nina","You look fantastic 😘"]
-    ]
+    likes:7984
   },
 
   {
     name:"Jessica",
     age:26,
-    country:"USA",
-    flag:"🇺🇸",
-    image:"1785179340825 (1).jpg",
-    likes:8056,
-    loves:3698,
-    chats:[
-      ["Daniel","You are gorgeous ❤️"],
-      ["Kate","Beautiful smile 😍"],
-      ["Liam","Would love to know you 💕"],
-      ["Maya","You look amazing 😘"],
-      ["John","Hello beautiful ❤️"],
-      ["Rose","Your profile is lovely 💗"],
-      ["Chris","You caught my eye 😍"],
-      ["Anna","Such a sweet smile 💕"],
-      ["Ryan","Can we chat? ❤️"],
-      ["Sophie","You look wonderful 😘"]
-    ]
+    country:"🇺🇸",
+    image:"1785179362758.jpg",
+    likes:6623
   }
 
 ];
-  const LIKE_KEY =
+  /* =========================
+   STORAGE KEYS
+========================= */
+
+const LIKE_KEY =
   "liveProfileLikes";
 
 const LOVE_KEY =
@@ -1211,49 +1125,33 @@ const LOVE_KEY =
 const FOLLOW_KEY =
   "liveProfileFollows";
 
-const COMMENT_KEY =
+const COMMENTS_KEY =
   "liveProfileComments";
 
-
-function $(id){
-  return document.getElementById(id);
-}
+const SAMPLE_WATCHED_KEY =
+  "myReferralSampleWatched";
 
 
-function show(id){
-  const element = $(id);
+/* =========================
+   STORAGE HELPERS
+========================= */
 
-  if(element){
-    element.classList.remove("hidden");
-  }
-}
-
-
-function hide(id){
-  const element = $(id);
-
-  if(element){
-    element.classList.add("hidden");
-  }
-}
-
-
-function readStorage(key,fallback){
+function readStorage(key){
 
   try{
 
-    const raw =
+    const value =
       localStorage.getItem(key);
 
-    if(!raw){
-      return fallback;
+    if(!value){
+      return {};
     }
 
-    return JSON.parse(raw);
+    return JSON.parse(value);
 
   }catch(error){
 
-    return fallback;
+    return {};
 
   }
 
@@ -1271,15 +1169,25 @@ function writeStorage(key,value){
 
   }catch(error){
 
-    console.warn(
-      "Storage error",
-      error
-    );
-
   }
 
 }
 
+
+/* =========================
+   PROFILE ID
+========================= */
+
+function profileId(index){
+
+  return "profile_" + index;
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
 
 function escapeHtml(value){
 
@@ -1293,227 +1201,330 @@ function escapeHtml(value){
 }
 
 
-function profileId(index){
+/* =========================
+   NUMBER
+========================= */
 
-  return "profile_" + index;
+function formatNumber(number){
 
-}
-
-
-/*
-  The starting counts are
-  presentation/demo values.
-  User actions are saved locally.
-*/
-
-function initializeDemoCounts(){
-
-  const likes =
-    readStorage(
-      LIKE_KEY,
-      {}
-    );
-
-  const loves =
-    readStorage(
-      LOVE_KEY,
-      {}
-    );
-
-
-  profiles.forEach(
-    function(profile,index){
-
-      const id =
-        profileId(index);
-
-
-      if(
-        typeof likes[id] !==
-        "number"
-      ){
-
-        likes[id] =
-          profile.likes;
-
-      }
-
-
-      if(
-        typeof loves[id] !==
-        "number"
-      ){
-
-        loves[id] =
-          profile.loves;
-
-      }
-
-    }
-  );
-
-
-  writeStorage(
-    LIKE_KEY,
-    likes
-  );
-
-  writeStorage(
-    LOVE_KEY,
-    loves
-  );
-
-}
-
-
-function getNumber(
-  data,
-  id,
-  base
-){
-
-  if(
-    typeof data[id] !==
-    "number"
-  ){
-
-    data[id] =
-      base;
-
-  }
-
-  return data[id];
+  return Number(
+    number || 0
+  ).toLocaleString();
 
 }
 
 
 /* =========================
-   REFERRAL
+   LIKES
 ========================= */
 
-function getReferral(){
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  return {
-
-    ref:
-      params.get("ref") || "",
-
-    employee:
-      params.get("employee") || ""
-
-  };
-
-}
-
-
-function buildPaymentUrl(index){
-
-  const referral =
-    getReferral();
-
-  const params =
-    new URLSearchParams();
-
-
-  params.set(
-    "profile",
-    profiles[index].name
-  );
-
-
-  const employee =
-    referral.employee ||
-    referral.ref ||
-    "";
-
-
-  if(employee){
-
-    params.set(
-      "employee",
-      employee
-    );
-
-  }
-
-
-  return (
-    PAYMENT_PAGE_URL +
-    "?" +
-    params.toString()
-  );
-
-}
-
-
-function openPayment(index){
-
-  window.location.href =
-    buildPaymentUrl(index);
-
-}
-
-
-/* =========================
-   COMMENTS
-========================= */
-
-function getUserComments(index){
+function getLikes(index){
 
   const data =
-    readStorage(
-      COMMENT_KEY,
-      {}
-    );
+    readStorage(LIKE_KEY);
 
   const id =
     profileId(index);
 
-
   if(
-    !Array.isArray(
-      data[id]
-    )
+    data[id] === undefined ||
+    Number(data[id]) <
+    profiles[index].likes
   ){
 
-    data[id] = [];
+    data[id] =
+      profiles[index].likes;
+
+    writeStorage(
+      LIKE_KEY,
+      data
+    );
 
   }
 
-
-  return data[id];
+  return Number(data[id]);
 
 }
 
 
-function saveUserComments(
+/* =========================
+   LOVE
+========================= */
+
+function getLove(index){
+
+  const data =
+    readStorage(LOVE_KEY);
+
+  return !!data[
+    profileId(index)
+  ];
+
+}
+
+
+/* =========================
+   FOLLOW
+========================= */
+
+function getFollow(index){
+
+  const data =
+    readStorage(FOLLOW_KEY);
+
+  return !!data[
+    profileId(index)
+  ];
+
+}
+
+
+/* =========================
+   ROMANTIC COMMENTS
+========================= */
+
+const romanticComments = [
+
+  [
+    ["Milly",
+     "You look so beautiful tonight ❤️",
+     "2m"],
+
+    ["Kevin",
+     "That smile is dangerous 😍",
+     "3m"],
+
+    ["Rose",
+     "I could watch you all night 💕",
+     "5m"],
+
+    ["Daniel",
+     "You are absolutely gorgeous 🔥",
+     "6m"],
+
+    ["Ann",
+     "Your eyes are beautiful ❤️",
+     "8m"],
+
+    ["Mark",
+     "Hello beautiful 😍",
+     "10m"],
+
+    ["Lucy",
+     "Such a lovely smile 🥰",
+     "12m"],
+
+    ["Brian",
+     "You make this room special ❤️",
+     "15m"],
+
+    ["Faith",
+     "So pretty tonight 💕",
+     "18m"],
+
+    ["Chris",
+     "You caught my attention 😍",
+     "21m"]
+  ],
+
+  [
+    ["Mike",
+     "Becky you are stunning ❤️",
+     "1m"],
+
+    ["Jane",
+     "That smile 😍😍",
+     "3m"],
+
+    ["Alex",
+     "You look amazing tonight 💕",
+     "4m"],
+
+    ["Mary",
+     "So beautiful ❤️",
+     "7m"],
+
+    ["John",
+     "I can't stop looking at you 😍",
+     "9m"],
+
+    ["Lydia",
+     "You have such a sweet smile 🥰",
+     "11m"],
+
+    ["Sam",
+     "Beautiful as always ❤️",
+     "14m"],
+
+    ["Linda",
+     "You made my evening better 💕",
+     "17m"],
+
+    ["Peter",
+     "Hello gorgeous 😍",
+     "20m"],
+
+    ["Nora",
+     "You are lovely ❤️",
+     "25m"]
+  ],
+
+  [
+    ["David",
+     "You are gorgeous ❤️",
+     "2m"],
+
+    ["Mercy",
+     "Your smile is everything 😍",
+     "4m"],
+
+    ["James",
+     "So beautiful tonight 💕",
+     "6m"],
+
+    ["Ivy",
+     "You have amazing eyes ❤️",
+     "8m"],
+
+    ["Eric",
+     "Hello beautiful 😍",
+     "11m"],
+
+    ["Sarah",
+     "This smile is amazing 🔥",
+     "13m"],
+
+    ["Tom",
+     "You look incredible ❤️",
+     "16m"],
+
+    ["Grace",
+     "Very lovely 🥰",
+     "19m"],
+
+    ["Paul",
+     "I really like your vibe 💕",
+     "22m"],
+
+    ["Maya",
+     "Beautiful girl ❤️",
+     "27m"]
+  ],
+
+  [
+    ["Kevin",
+     "You are shining tonight ❤️",
+     "2m"],
+
+    ["Bella",
+     "Beautiful smile 😍",
+     "4m"],
+
+    ["Leo",
+     "You look so cute 💕",
+     "5m"],
+
+    ["Ruth",
+     "Your eyes are amazing ❤️",
+     "8m"],
+
+    ["Adam",
+     "Hello beautiful 😍",
+     "10m"],
+
+    ["Emma",
+     "I love your energy 🥰",
+     "12m"],
+
+    ["Noah",
+     "You are gorgeous ❤️",
+     "15m"],
+
+    ["Amy",
+     "Such a sweet smile 💕",
+     "18m"],
+
+    ["Jack",
+     "You caught my attention 😍",
+     "21m"],
+
+    ["Lena",
+     "So beautiful tonight ❤️",
+     "24m"]
+  ]
+
+];
+
+
+/* =========================
+   GET COMMENTS
+========================= */
+
+function getComments(index){
+
+  const data =
+    readStorage(COMMENTS_KEY);
+
+  const id =
+    profileId(index);
+
+  if(
+    Array.isArray(data[id]) &&
+    data[id].length > 0
+  ){
+
+    return data[id];
+
+  }
+
+  const seed =
+    romanticComments[
+      index %
+      romanticComments.length
+    ];
+
+  return seed.map(
+    function(item){
+
+      return {
+        user:item[0],
+        text:item[1],
+        time:item[2]
+      };
+
+    }
+  );
+
+}
+
+
+/* =========================
+   SAVE COMMENTS
+========================= */
+
+function saveComments(
   index,
   comments
 ){
 
   const data =
-    readStorage(
-      COMMENT_KEY,
-      {}
-    );
+    readStorage(COMMENTS_KEY);
 
   data[
     profileId(index)
-  ] =
-    comments;
+  ] = comments;
 
   writeStorage(
-    COMMENT_KEY,
+    COMMENTS_KEY,
     data
   );
 
-    }
-  function renderComments(index){
+  }
+  /* =========================
+   RENDER COMMENTS
+========================= */
+
+function renderComments(index){
 
   const box =
     document.getElementById(
@@ -1523,139 +1534,80 @@ function saveUserComments(
   if(!box){
     return;
   }
-
-
-  const profile =
-    profiles[index];
-
-
-  const demoComments =
-    profile.chats || [];
-
-
-  const userComments =
-    getUserComments(index);
-
-
-  let html = "";
-
-
-  demoComments.forEach(
-    function(item){
-
-      html += `
-        <div class="comment">
-          <span class="comment-name">
-            ${escapeHtml(item[0])}
-          </span>
-          ${escapeHtml(item[1])}
-          <span class="comment-time">
-            demo chat
-          </span>
-        </div>
-      `;
-
-    }
-  );
-
-
-  userComments.forEach(
-    function(item){
-
-      html += `
-        <div class="comment">
-          <span class="comment-name">
-            ${escapeHtml(item.name)}
-          </span>
-          ${escapeHtml(item.text)}
-          <span class="comment-time">
-            just now
-          </span>
-        </div>
-      `;
-
-    }
-  );
-
-
-  box.innerHTML =
-    html;
-
-
-  scrollChatToBottom(
-    index
-  );
-
-}
-
-
-function addComment(
-  index,
-  input
-){
-
-  if(!input){
-    return;
-  }
-
-
-  const text =
-    input.value.trim();
-
-
-  if(!text){
-    return;
-  }
-
 
   const comments =
-    getUserComments(index);
+    getComments(index);
 
+  box.innerHTML = "";
 
-  comments.push({
+  comments.forEach(
+    function(comment){
 
-    name:"You",
+      const row =
+        document.createElement(
+          "div"
+        );
 
-    text:text,
+      row.className =
+        "comment";
 
-    time:Date.now()
+      const avatar =
+        document.createElement(
+          "div"
+        );
 
-  });
+      avatar.className =
+        "comment-avatar";
 
+      avatar.textContent =
+        String(
+          comment.user || "?"
+        )
+        .charAt(0)
+        .toUpperCase();
 
-  saveUserComments(
-    index,
-    comments
+      const body =
+        document.createElement(
+          "div"
+        );
+
+      body.className =
+        "comment-body";
+
+      body.innerHTML =
+
+        '<div class="comment-user">' +
+        escapeHtml(
+          comment.user
+        ) +
+        '</div>' +
+
+        '<div class="comment-text">' +
+        escapeHtml(
+          comment.text
+        ) +
+        '</div>' +
+
+        '<div class="comment-time">' +
+        escapeHtml(
+          comment.time || "now"
+        ) +
+        '</div>';
+
+      row.appendChild(
+        avatar
+      );
+
+      row.appendChild(
+        body
+      );
+
+      box.appendChild(
+        row
+      );
+
+    }
   );
-
-
-  input.value = "";
-
-
-  renderComments(
-    index
-  );
-
-
-  showReaction(
-    index,
-    "Comment added ❤️"
-  );
-
-}
-
-
-function scrollChatToBottom(index){
-
-  const box =
-    document.getElementById(
-      "comments-" + index
-    );
-
-  if(!box){
-    return;
-  }
-
 
   requestAnimationFrame(
     function(){
@@ -1670,486 +1622,44 @@ function scrollChatToBottom(index){
 
 
 /* =========================
-   LIKE
+   ADD COMMENT
 ========================= */
 
-function updateLikeButton(index){
-
-  const data =
-    readStorage(
-      LIKE_KEY,
-      {}
-    );
-
-  const id =
-    profileId(index);
-
-
-  const button =
-    document.getElementById(
-      "like-" + index
-    );
-
-
-  const count =
-    getNumber(
-      data,
-      id,
-      profiles[index].likes
-    );
-
-
-  const liked =
-    data[
-      id + "_me"
-    ] === true;
-
-
-  if(button){
-
-    button.textContent =
-      "👍 " +
-      count.toLocaleString();
-
-    button.classList.toggle(
-      "active",
-      liked
-    );
-
-  }
-
-
-  writeStorage(
-    LIKE_KEY,
-    data
-  );
-
-}
-
-
-function toggleLike(
+function addComment(
   index,
-  event
+  input
 ){
 
-  if(event){
-
-    event.preventDefault();
-    event.stopPropagation();
-
-  }
-
-
-  const data =
-    readStorage(
-      LIKE_KEY,
-      {}
-    );
-
-  const id =
-    profileId(index);
-
-
-  const count =
-    getNumber(
-      data,
-      id,
-      profiles[index].likes
-    );
-
-
-  const liked =
-    data[
-      id + "_me"
-    ] === true;
-
-
-  if(liked){
-
-    data[id] =
-      Math.max(
-        0,
-        count - 1
-      );
-
-    data[
-      id + "_me"
-    ] =
-      false;
-
-  }else{
-
-    data[id] =
-      count + 1;
-
-    data[
-      id + "_me"
-    ] =
-      true;
-
-  }
-
-
-  writeStorage(
-    LIKE_KEY,
-    data
-  );
-
-
-  updateLikeButton(
-    index
-  );
-
-}
-
-
-/* =========================
-   LOVE
-========================= */
-
-function updateLoveButton(index){
-
-  const data =
-    readStorage(
-      LOVE_KEY,
-      {}
-    );
-
-  const id =
-    profileId(index);
-
-
-  const button =
-    document.getElementById(
-      "love-" + index
-    );
-
-
-  const count =
-    getNumber(
-      data,
-      id,
-      profiles[index].loves
-    );
-
-
-  const loved =
-    data[
-      id + "_me"
-    ] === true;
-
-
-  if(button){
-
-    button.textContent =
-      "❤️ " +
-      count.toLocaleString();
-
-    button.classList.toggle(
-      "active",
-      loved
-    );
-
-  }
-
-
-  writeStorage(
-    LOVE_KEY,
-    data
-  );
-
-}
-
-
-function toggleLove(
-  index,
-  event
-){
-
-  if(event){
-
-    event.preventDefault();
-    event.stopPropagation();
-
-  }
-
-
-  const data =
-    readStorage(
-      LOVE_KEY,
-      {}
-    );
-
-  const id =
-    profileId(index);
-
-
-  const count =
-    getNumber(
-      data,
-      id,
-      profiles[index].loves
-    );
-
-
-  const loved =
-    data[
-      id + "_me"
-    ] === true;
-
-
-  if(loved){
-
-    data[id] =
-      Math.max(
-        0,
-        count - 1
-      );
-
-    data[
-      id + "_me"
-    ] =
-      false;
-
-  }else{
-
-    data[id] =
-      count + 1;
-
-    data[
-      id + "_me"
-    ] =
-      true;
-
-  }
-
-
-  writeStorage(
-    LOVE_KEY,
-    data
-  );
-
-
-  updateLoveButton(
-    index
-  );
-
-    }
-  /* =========================
-   FOLLOW
-========================= */
-
-function updateFollowButton(index){
-
-  const data =
-    readStorage(
-      FOLLOW_KEY,
-      {}
-    );
-
-  const id =
-    profileId(index);
-
-
-  const button =
-    document.getElementById(
-      "follow-" + index
-    );
-
-
-  const followed =
-    data[id] === true;
-
-
-  if(button){
-
-    button.textContent =
-      followed
-        ? "✓ Follow"
-        : "＋ Follow";
-
-    button.classList.toggle(
-      "active",
-      followed
-    );
-
-  }
-
-}
-
-
-function toggleFollow(
-  index,
-  event
-){
-
-  if(event){
-
-    event.preventDefault();
-    event.stopPropagation();
-
-  }
-
-
-  const data =
-    readStorage(
-      FOLLOW_KEY,
-      {}
-    );
-
-  const id =
-    profileId(index);
-
-
-  data[id] =
-    data[id] !== true;
-
-
-  writeStorage(
-    FOLLOW_KEY,
-    data
-  );
-
-
-  updateFollowButton(
-    index
-  );
-
-}
-
-
-/* =========================
-   CHAT BUTTON
-========================= */
-
-function toggleChat(
-  index,
-  event
-){
-
-  if(event){
-
-    event.preventDefault();
-    event.stopPropagation();
-
-  }
-
-
-  const section =
-    document.getElementById(
-      "chat-section-" + index
-    );
-
-
-  if(!section){
+  if(!input){
     return;
   }
 
+  const text =
+    input.value.trim();
 
-  section.classList.toggle(
-    "hidden"
-  );
-
-
-  if(
-    !section.classList.contains(
-      "hidden"
-    )
-  ){
-
-    renderComments(
-      index
-    );
-
-
-    const input =
-      document.getElementById(
-        "input-" + index
-      );
-
-
-    if(input){
-
-      setTimeout(
-        function(){
-
-          input.focus();
-
-        },
-        50
-      );
-
-    }
-
-  }
-
-}
-
-
-function showReaction(
-  index,
-  message
-){
-
-  const button =
-    document.getElementById(
-      "chat-" + index
-    );
-
-
-  if(!button){
+  if(!text){
     return;
   }
 
+  const comments =
+    getComments(index);
 
-  const oldText =
-    button.textContent;
+  comments.push({
 
+    user:"You",
 
-  button.textContent =
-    message;
+    text:text,
 
+    time:"now"
 
-  setTimeout(
-    function(){
+  });
 
-      if(
-        document.body.contains(
-          button
-        )
-      ){
-
-        button.textContent =
-          oldText;
-
-      }
-
-    },
-    1000
+  saveComments(
+    index,
+    comments
   );
 
-}
-
-
-/* =========================
-   SOCIAL REFRESH
-========================= */
-
-function refreshProfileSocial(
-  index
-){
-
-  updateLikeButton(
-    index
-  );
-
-  updateLoveButton(
-    index
-  );
-
-  updateFollowButton(
-    index
-  );
+  input.value = "";
 
   renderComments(
     index
@@ -2159,424 +1669,621 @@ function refreshProfileSocial(
 
 
 /* =========================
-   PHOTO CARD
+   LIKE
 ========================= */
 
-function createPhotoCard(
-  profile,
-  index
+function toggleLike(
+  index,
+  button
 ){
+
+  const data =
+    readStorage(LIKE_KEY);
+
+  const id =
+    profileId(index);
+
+  let count =
+    Number(
+      data[id] ||
+      profiles[index].likes
+    );
+
+  const liked =
+    button.dataset.liked ===
+    "true";
+
+  if(liked){
+
+    count--;
+
+    button.dataset.liked =
+      "false";
+
+    button.classList.remove(
+      "active"
+    );
+
+  }else{
+
+    count++;
+
+    button.dataset.liked =
+      "true";
+
+    button.classList.add(
+      "active"
+    );
+
+  }
+
+  data[id] =
+    count;
+
+  writeStorage(
+    LIKE_KEY,
+    data
+  );
+
+  const countElement =
+    button.querySelector(
+      ".count"
+    );
+
+  if(countElement){
+
+    countElement.textContent =
+      formatNumber(count);
+
+  }
+
+}
+
+
+/* =========================
+   LOVE
+========================= */
+
+function toggleLove(
+  index,
+  button
+){
+
+  const data =
+    readStorage(LOVE_KEY);
+
+  const id =
+    profileId(index);
+
+  const active =
+    !!data[id];
+
+  if(active){
+
+    delete data[id];
+
+    button.classList.remove(
+      "active"
+    );
+
+  }else{
+
+    data[id] = true;
+
+    button.classList.add(
+      "active"
+    );
+
+    showReaction("❤️");
+
+  }
+
+  writeStorage(
+    LOVE_KEY,
+    data
+  );
+
+}
+
+
+/* =========================
+   FOLLOW
+========================= */
+
+function toggleFollow(
+  index,
+  button
+){
+
+  const data =
+    readStorage(FOLLOW_KEY);
+
+  const id =
+    profileId(index);
+
+  const active =
+    !!data[id];
+
+  if(active){
+
+    delete data[id];
+
+    button.classList.remove(
+      "follow-active"
+    );
+
+    button.innerHTML =
+      '<span class="icon">＋</span>Follow';
+
+  }else{
+
+    data[id] = true;
+
+    button.classList.add(
+      "follow-active"
+    );
+
+    button.innerHTML =
+      '<span class="icon">✓</span>Following';
+
+    showReaction("💚");
+
+  }
+
+  writeStorage(
+    FOLLOW_KEY,
+    data
+  );
+
+}
+
+
+/* =========================
+   REACTION
+========================= */
+
+function showReaction(
+  symbol
+){
+
+  const reaction =
+    document.createElement(
+      "div"
+    );
+
+  reaction.textContent =
+    symbol;
+
+  reaction.style.position =
+    "fixed";
+
+  reaction.style.left =
+    "50%";
+
+  reaction.style.top =
+    "50%";
+
+  reaction.style.transform =
+    "translate(-50%,-50%)";
+
+  reaction.style.zIndex =
+    "10000";
+
+  reaction.style.fontSize =
+    "60px";
+
+  reaction.style.pointerEvents =
+    "none";
+
+  reaction.style.transition =
+    "all .8s ease";
+
+  document.body.appendChild(
+    reaction
+  );
+
+  requestAnimationFrame(
+    function(){
+
+      reaction.style.transform =
+        "translate(-50%,-90%) scale(1.35)";
+
+      reaction.style.opacity =
+        "0";
+
+    }
+  );
+
+  setTimeout(
+    function(){
+
+      reaction.remove();
+
+    },
+    900
+  );
+
+        }
+  /* =========================
+   OPEN PAYMENT
+========================= */
+
+function openPayment(index){
+
+  const profile =
+    profiles[index];
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const employee =
+    params.get("employee");
+
+  const ref =
+    params.get("ref");
+
+  const paymentParams =
+    new URLSearchParams();
+
+  paymentParams.set(
+    "profile",
+    profile.name
+  );
+
+  if(employee){
+
+    paymentParams.set(
+      "employee",
+      employee
+    );
+
+  }else if(ref){
+
+    paymentParams.set(
+      "ref",
+      ref
+    );
+
+  }
+
+  window.location.href =
+    "payment.html?" +
+    paymentParams.toString();
+
+}
+
+
+/* =========================
+   CREATE PHOTO CARD
+========================= */
+
+function createPhotoCard(index){
+
+  const profile =
+    profiles[index];
 
   const card =
     document.createElement(
-      "div"
+      "article"
     );
 
   card.className =
     "photo-card";
 
+  const likes =
+    getLikes(index);
 
-  const imageWrap =
-    document.createElement(
-      "div"
+  const loved =
+    getLove(index);
+
+  const followed =
+    getFollow(index);
+
+
+  card.innerHTML =
+
+    '<div class="photo-wrapper">' +
+
+      '<img src="' +
+      escapeHtml(
+        profile.image
+      ) +
+      '" alt="' +
+      escapeHtml(
+        profile.name
+      ) +
+      '" loading="lazy">' +
+
+      '<div class="photo-overlay"></div>' +
+
+      '<div class="live-label">' +
+      'LIVE' +
+      '</div>' +
+
+      '<div class="play-icon"></div>' +
+
+      '<div class="photo-info">' +
+
+        '<div class="photo-name">' +
+        escapeHtml(
+          profile.country
+        ) +
+        ' ' +
+        escapeHtml(
+          profile.name
+        ) +
+        '</div>' +
+
+        '<div class="photo-age">' +
+        profile.age +
+        ' years old' +
+        '</div>' +
+
+      '</div>' +
+
+    '</div>' +
+
+
+    '<div class="social-bar">' +
+
+      '<button ' +
+      'type="button" ' +
+      'class="social-btn like-btn">' +
+
+        '<span class="icon">👍</span>' +
+
+        'Like ' +
+
+        '<span class="count">' +
+        formatNumber(likes) +
+        '</span>' +
+
+      '</button>' +
+
+
+      '<button ' +
+      'type="button" ' +
+      'class="social-btn love-btn ' +
+      (
+        loved
+        ? "active"
+        : ""
+      ) +
+      '">' +
+
+        '<span class="icon">❤️</span>' +
+
+        'Love' +
+
+      '</button>' +
+
+
+      '<button ' +
+      'type="button" ' +
+      'class="social-btn follow-btn ' +
+      (
+        followed
+        ? "follow-active"
+        : ""
+      ) +
+      '">' +
+
+        '<span class="icon">' +
+
+        (
+          followed
+          ? "✓"
+          : "＋"
+        ) +
+
+        '</span>' +
+
+        (
+          followed
+          ? "Following"
+          : "Follow"
+        ) +
+
+      '</button>' +
+
+
+      '<button ' +
+      'type="button" ' +
+      'class="social-btn chat-btn">' +
+
+        '<span class="icon">💬</span>' +
+
+        'Chat' +
+
+      '</button>' +
+
+    '</div>' +
+
+
+    '<div class="chat-section">' +
+
+      '<div class="chat-title">' +
+
+        '<span>💬 Live chat</span>' +
+
+        '<span>Sample activity</span>' +
+
+      '</div>' +
+
+      '<div ' +
+      'class="chat-comments" ' +
+      'id="comments-' +
+      index +
+      '">' +
+
+      '</div>' +
+
+      '<form class="chat-form">' +
+
+        '<input ' +
+        'class="chat-input" ' +
+        'type="text" ' +
+        'placeholder="Write a message..." ' +
+        'autocomplete="off">' +
+
+        '<button ' +
+        'class="chat-send" ' +
+        'type="submit">' +
+
+        '➤' +
+
+        '</button>' +
+
+      '</form>' +
+
+    '</div>';
+  /* =========================
+   PHOTO CLICK
+========================= */
+
+  const imageWrapper =
+    card.querySelector(
+      ".photo-wrapper"
     );
 
-  imageWrap.className =
-    "photo-image-wrap";
-
-
-  imageWrap.addEventListener(
+  imageWrapper.addEventListener(
     "click",
     function(){
 
-      openPayment(
-        index
-      );
+      openPayment(index);
 
     }
   );
 
 
-  const image =
-    document.createElement(
-      "img"
+/* =========================
+   LIKE BUTTON
+========================= */
+
+  const likeButton =
+    card.querySelector(
+      ".like-btn"
     );
 
-  image.className =
-    "photo-image";
-
-  image.src =
-    IMAGE_BASE +
-    profile.image;
-
-  image.alt =
-    profile.name;
-
-  image.loading =
-    "lazy";
-
-
-  const live =
-    document.createElement(
-      "div"
-    );
-
-  live.className =
-    "photo-live";
-
-  live.textContent =
-    "● LIVE";
-
-
-  const dot =
-    document.createElement(
-      "div"
-    );
-
-  dot.className =
-    "status-dot";
-
-
-  const videoIcon =
-    document.createElement(
-      "div"
-    );
-
-  videoIcon.className =
-    "video-icon";
-
-  videoIcon.textContent =
-    "▶";
-
-
-  imageWrap.appendChild(
-    image
-  );
-
-  imageWrap.appendChild(
-    live
-  );
-
-  imageWrap.appendChild(
-    dot
-  );
-
-  imageWrap.appendChild(
-    videoIcon
-  );
-
-
-  const info =
-    document.createElement(
-      "div"
-    );
-
-  info.className =
-    "photo-info";
-
-
-  const name =
-    document.createElement(
-      "div"
-    );
-
-  name.className =
-    "photo-name";
-
-  name.textContent =
-    profile.name;
-
-
-  const meta =
-    document.createElement(
-      "div"
-    );
-
-  meta.className =
-    "photo-meta";
-
-  meta.innerHTML =
-    '<span class="country">' +
-    profile.flag +
-    '</span>' +
-    profile.age +
-    ' • ' +
-    escapeHtml(
-      profile.country
-    );
-
-
-  const activity =
-    document.createElement(
-      "div"
-    );
-
-  activity.className =
-    "activity-label";
-
-  activity.textContent =
-    "💬 romantic chat available";
-
-
-  info.appendChild(
-    name
-  );
-
-  info.appendChild(
-    meta
-  );
-
-  info.appendChild(
-    activity
-  );
-
-
-  const social =
-    document.createElement(
-      "div"
-    );
-
-  social.className =
-    "social-row";
-
-
-  const like =
-    document.createElement(
-      "button"
-    );
-
-  like.type =
-    "button";
-
-  like.id =
-    "like-" + index;
-
-  like.className =
-    "social-btn";
-
-  like.addEventListener(
+  likeButton.addEventListener(
     "click",
     function(event){
+
+      event.preventDefault();
+
+      event.stopPropagation();
 
       toggleLike(
         index,
-        event
+        likeButton
       );
 
     }
   );
 
 
-  const love =
-    document.createElement(
-      "button"
+/* =========================
+   LOVE BUTTON
+========================= */
+
+  const loveButton =
+    card.querySelector(
+      ".love-btn"
     );
 
-  love.type =
-    "button";
-
-  love.id =
-    "love-" + index;
-
-  love.className =
-    "social-btn";
-
-  love.addEventListener(
+  loveButton.addEventListener(
     "click",
     function(event){
+
+      event.preventDefault();
+
+      event.stopPropagation();
 
       toggleLove(
         index,
-        event
+        loveButton
       );
 
     }
   );
 
 
-  const follow =
-    document.createElement(
-      "button"
+/* =========================
+   FOLLOW BUTTON
+========================= */
+
+  const followButton =
+    card.querySelector(
+      ".follow-btn"
     );
 
-  follow.type =
-    "button";
-
-  follow.id =
-    "follow-" + index;
-
-  follow.className =
-    "social-btn";
-
-  follow.addEventListener(
+  followButton.addEventListener(
     "click",
     function(event){
+
+      event.preventDefault();
+
+      event.stopPropagation();
 
       toggleFollow(
         index,
-        event
+        followButton
       );
 
     }
   );
 
 
-  const chat =
-    document.createElement(
-      "button"
+/* =========================
+   CHAT BUTTON
+========================= */
+
+  const chatButton =
+    card.querySelector(
+      ".chat-btn"
     );
 
-  chat.type =
-    "button";
-
-  chat.id =
-    "chat-" + index;
-
-  chat.className =
-    "social-btn";
-
-  chat.textContent =
-    "💬 Chat";
-
-  chat.addEventListener(
+  chatButton.addEventListener(
     "click",
     function(event){
 
-      toggleChat(
-        index,
-        event
-      );
+      event.preventDefault();
+
+      event.stopPropagation();
+
+      const section =
+        card.querySelector(
+          ".chat-section"
+        );
+
+      if(section){
+
+        section.scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
+
+      }
 
     }
   );
 
 
-  social.appendChild(
-    like
-  );
-
-  social.appendChild(
-    love
-  );
-
-  social.appendChild(
-    follow
-  );
-
-  social.appendChild(
-    chat
-  );
-
-
-  card.appendChild(
-    imageWrap
-  );
-
-  card.appendChild(
-    info
-  );
-
-  card.appendChild(
-    social
-  );
-    /* =========================
-     CHAT AREA
-  ========================= */
-
-  const chatSection =
-    document.createElement(
-      "div"
-    );
-
-  chatSection.className =
-    "chat-section hidden";
-
-  chatSection.id =
-    "chat-section-" +
-    index;
-
-
-  const chatTitle =
-    document.createElement(
-      "div"
-    );
-
-  chatTitle.className =
-    "chat-title";
-
-  chatTitle.innerHTML =
-    "<span>💬 Live comments</span>" +
-    '<span class="demo-label">sample</span>';
-
-
-  const comments =
-    document.createElement(
-      "div"
-    );
-
-  comments.className =
-    "chat-comments";
-
-  comments.id =
-    "comments-" + index;
-
+/* =========================
+   COMMENT FORM
+========================= */
 
   const form =
-    document.createElement(
-      "form"
+    card.querySelector(
+      ".chat-form"
     );
-
-  form.className =
-    "comment-form";
-
 
   const input =
-    document.createElement(
-      "input"
+    card.querySelector(
+      ".chat-input"
     );
-
-  input.type =
-    "text";
-
-  input.className =
-    "comment-input";
-
-  input.id =
-    "input-" + index;
-
-  input.maxLength =
-    180;
-
-  input.autocomplete =
-    "off";
-
-  input.placeholder =
-    "Write a romantic comment...";
-
-
-  const send =
-    document.createElement(
-      "button"
-    );
-
-  send.type =
-    "submit";
-
-  send.className =
-    "comment-send";
-
-  send.textContent =
-    "➤";
-
-
-  form.appendChild(
-    input
-  );
-
-  form.appendChild(
-    send
-  );
-
 
   form.addEventListener(
     "submit",
@@ -2595,12 +2302,17 @@ function createPhotoCard(
   );
 
 
+/* =========================
+   ENTER TO SEND
+========================= */
+
   input.addEventListener(
     "keydown",
     function(event){
 
       if(
-        event.key === "Enter"
+        event.key === "Enter" &&
+        !event.shiftKey
       ){
 
         event.preventDefault();
@@ -2616,26 +2328,49 @@ function createPhotoCard(
   );
 
 
-  chatSection.appendChild(
-    chatTitle
+/* =========================
+   SOCIAL BAR STOP
+========================= */
+
+  card.querySelector(
+    ".social-bar"
+  ).addEventListener(
+    "click",
+    function(event){
+
+      event.stopPropagation();
+
+    }
   );
 
-  chatSection.appendChild(
-    comments
+
+/* =========================
+   CHAT STOP
+========================= */
+
+  card.querySelector(
+    ".chat-section"
+  ).addEventListener(
+    "click",
+    function(event){
+
+      event.stopPropagation();
+
+    }
   );
 
-  chatSection.appendChild(
-    form
-  );
 
+/* =========================
+   RENDER COMMENTS
+========================= */
 
-  card.appendChild(
-    chatSection
-  );
+  setTimeout(
+    function(){
 
+      renderComments(index);
 
-  refreshProfileSocial(
-    index
+    },
+    0
   );
 
 
@@ -2645,44 +2380,67 @@ function createPhotoCard(
 
 
 /* =========================
-   CREATE PHOTOS
+   CREATE ALL PHOTOS
 ========================= */
 
 function createPhotos(){
 
-  const grid =
-    $("photosGrid");
+  const container =
+    document.getElementById(
+      "photosContainer"
+    );
 
-
-  if(!grid){
+  if(!container){
     return;
   }
 
+  container.innerHTML = "";
 
-  grid.innerHTML =
-    "";
+  profiles.forEach(
+    function(profile,index){
 
+      const card =
+        createPhotoCard(index);
 
-  profiles
-    .slice(
-      0,
-      MAX_PHOTOS
-    )
-    .forEach(
-      function(profile,index){
+      container.appendChild(
+        card
+      );
 
-        grid.appendChild(
-          createPhotoCard(
-            profile,
-            index
-          )
-        );
+    }
+  );
 
-      }
+  }
+  /* =========================
+   SHOW PHOTOS
+========================= */
+
+function showPhotos(){
+
+  const welcome =
+    document.getElementById(
+      "welcomeScreen"
     );
 
+  const photos =
+    document.getElementById(
+      "photosPage"
+    );
 
-  refreshOfflineProfiles();
+  if(welcome){
+
+    welcome.classList.add(
+      "hidden"
+    );
+
+  }
+
+  if(photos){
+
+    photos.classList.remove(
+      "hidden"
+    );
+
+  }
 
 }
 
@@ -2691,338 +2449,124 @@ function createPhotos(){
    ONLINE NUMBER
 ========================= */
 
-function updateOnlineNumber(){
+function updateOnline(){
+
+  const element =
+    document.getElementById(
+      "onlineNumber"
+    );
+
+  if(!element){
+    return;
+  }
 
   const number =
     Math.floor(
       Math.random() * 16
     ) + 15;
 
-
-  const element =
-    $("onlineNumber");
-
-
-  if(element){
-
-    element.textContent =
-      number +
-      " online";
-
-  }
+  element.textContent =
+    number + " online";
 
 }
 
 
 /* =========================
-   OFFLINE PROFILES
+   SHOW INCOMING CALL
 ========================= */
-
-let offlineProfiles =
-  new Set();
-
-
-function refreshOfflineProfiles(){
-
-  offlineProfiles =
-    new Set();
-
-
-  const total =
-    Math.min(
-      profiles.length,
-      MAX_PHOTOS
-    );
-
-
-  const count =
-    Math.min(
-      5,
-      Math.max(
-        0,
-        total - 1
-      )
-    );
-
-
-  while(
-    offlineProfiles.size <
-    count
-  ){
-
-    const random =
-      Math.floor(
-        Math.random() *
-        total
-      );
-
-    offlineProfiles.add(
-      random
-    );
-
-  }
-
-
-  profiles.forEach(
-    function(_,index){
-
-      const card =
-        document.querySelector(
-          "#photosGrid .photo-card:nth-child(" +
-          (index + 1) +
-          ")"
-        );
-
-
-      if(!card){
-        return;
-      }
-
-
-      const dot =
-        card.querySelector(
-          ".status-dot"
-        );
-
-
-      const live =
-        card.querySelector(
-          ".photo-live"
-        );
-
-
-      if(
-        offlineProfiles.has(
-          index
-        )
-      ){
-
-        if(dot){
-
-          dot.classList.add(
-            "offline"
-          );
-
-        }
-
-        if(live){
-
-          live.textContent =
-            "OFFLINE";
-
-          live.style.background =
-            "#555";
-
-        }
-
-      }
-
-    }
-  );
-
-      }
-  /* =========================
-   CALL SYSTEM
-========================= */
-
-let currentCallerIndex =
-  0;
-
-let callTimer =
-  null;
-
-
-function chooseCaller(){
-
-  const available =
-    profiles
-      .map(
-        function(_,index){
-          return index;
-        }
-      )
-      .filter(
-        function(index){
-
-          return !offlineProfiles.has(
-            index
-          );
-
-        }
-      );
-
-
-  if(!available.length){
-
-    return 0;
-
-  }
-
-
-  return available[
-    Math.floor(
-      Math.random() *
-      available.length
-    )
-  ];
-
-}
-
 
 function showIncomingCall(){
 
-  clearTimeout(
-    callTimer
-  );
-
-
-  currentCallerIndex =
-    chooseCaller();
-
-
-  const profile =
-    profiles[
-      currentCallerIndex
-    ];
-
+  const call =
+    document.getElementById(
+      "incomingCall"
+    );
 
   const photo =
-    $("callPhoto");
+    document.getElementById(
+      "callPhoto"
+    );
 
   const name =
-    $("callName");
+    document.getElementById(
+      "callName"
+    );
 
+  const randomIndex =
+    Math.floor(
+      Math.random() *
+      profiles.length
+    );
+
+  const profile =
+    profiles[randomIndex];
 
   if(photo){
 
     photo.src =
-      IMAGE_BASE +
       profile.image;
 
-    photo.alt =
-      profile.name;
-
   }
-
 
   if(name){
 
     name.textContent =
-      profile.name +
-      " is calling you...";
+      profile.name;
 
   }
 
+  if(call){
 
-  hide("photosPage");
-
-  hide("firstVideoPage");
-
-  hide("insufficientPage");
-
-  show("incomingCall");
-
-
-  callTimer =
-    setTimeout(
-      function(){
-
-        rejectIncomingCall();
-
-      },
-      CALL_RING_DURATION
+    call.classList.remove(
+      "hidden"
     );
 
-}
-
-
-function rejectIncomingCall(){
-
-  clearTimeout(
-    callTimer
-  );
-
-  hide("incomingCall");
-
-  showPhotos();
-
-}
-
-
-function answerIncomingCall(){
-
-  clearTimeout(
-    callTimer
-  );
-
-  hide("incomingCall");
-
-  playFirstVisitorVideo();
+  }
 
 }
 
 
 /* =========================
-   SAMPLE / VIDEO
+   HIDE CALL
 ========================= */
 
-function hasWatchedSample(){
+function hideIncomingCall(){
 
-  try{
-
-    return (
-      localStorage.getItem(
-        SAMPLE_STORAGE_KEY
-      ) === "true"
+  const call =
+    document.getElementById(
+      "incomingCall"
     );
 
-  }catch(error){
+  if(call){
 
-    return false;
+    call.classList.add(
+      "hidden"
+    );
 
   }
 
 }
 
 
-function markSampleWatched(){
-
-  try{
-
-    localStorage.setItem(
-      SAMPLE_STORAGE_KEY,
-      "true"
-    );
-
-  }catch(error){}
-
-}
-
+/* =========================
+   VIDEO
+========================= */
 
 function playFirstVisitorVideo(){
 
-  if(
-    hasWatchedSample()
-  ){
+  hideIncomingCall();
 
-    showInsufficient();
-
-    return;
-
-  }
-
-
-  markSampleWatched();
-
-
-  const page =
-    $("firstVideoPage");
+  const videoPage =
+    document.getElementById(
+      "videoPage"
+    );
 
   const video =
-    $("firstVideo");
+    document.getElementById(
+      "liveVideo"
+    );
 
-
-  if(!page || !video){
+  if(!videoPage){
 
     showInsufficient();
 
@@ -3030,109 +2574,86 @@ function playFirstVisitorVideo(){
 
   }
 
-
-  video.src =
-    VIDEO_URL;
-
-  video.currentTime =
-    0;
-
-  video.muted =
-    false;
-
-
-  hide("photosPage");
-
-  hide("incomingCall");
-
-  hide("insufficientPage");
-
-  show("firstVideoPage");
-
-
-  let finished =
-    false;
-
-
-  let timer =
-    null;
-
-
-  function finish(){
-
-    if(finished){
-      return;
-    }
-
-
-    finished =
-      true;
-
-
-    clearTimeout(
-      timer
-    );
-
-
-    try{
-
-      video.pause();
-
-    }catch(error){}
-
-
-    video.removeEventListener(
-      "ended",
-      finish
-    );
-
-
-    hide(
-      "firstVideoPage"
-    );
-
-
-    showInsufficient();
-
-  }
-
-
-  video.addEventListener(
-    "ended",
-    finish
+  videoPage.classList.remove(
+    "hidden"
   );
 
 
-  timer =
+  if(video){
+
+    video.currentTime = 0;
+
+    const playPromise =
+      video.play();
+
+    if(
+      playPromise &&
+      typeof playPromise.catch ===
+      "function"
+    ){
+
+      playPromise.catch(
+        function(){
+
+          /* Browser may block autoplay */
+
+        }
+      );
+
+    }
+
     setTimeout(
-      finish,
-      FIRST_VIDEO_DURATION
-    );
-
-
-  const promise =
-    video.play();
-
-
-  if(
-    promise &&
-    typeof promise.catch ===
-    "function"
-  ){
-
-    promise.catch(
       function(){
 
-        /*
-          Browser may require
-          a user gesture before
-          playing sound.
-        */
+        finishVideo();
 
-      }
+      },
+      40000
+    );
+
+  }else{
+
+    setTimeout(
+      showInsufficient,
+      40000
     );
 
   }
+
+}
+
+
+/* =========================
+   FINISH VIDEO
+========================= */
+
+function finishVideo(){
+
+  const video =
+    document.getElementById(
+      "liveVideo"
+    );
+
+  if(video){
+
+    video.pause();
+
+  }
+
+  const page =
+    document.getElementById(
+      "videoPage"
+    );
+
+  if(page){
+
+    page.classList.add(
+      "hidden"
+    );
+
+  }
+
+  showInsufficient();
 
 }
 
@@ -3143,66 +2664,125 @@ function playFirstVisitorVideo(){
 
 function showInsufficient(){
 
-  hide("welcomeScreen");
+  const page =
+    document.getElementById(
+      "insufficientPage"
+    );
 
-  hide("photosPage");
+  if(page){
 
-  hide("incomingCall");
+    page.classList.remove(
+      "hidden"
+    );
 
-  hide("firstVideoPage");
-
-  show("insufficientPage");
-
+  }
 
   setTimeout(
     function(){
 
+      if(page){
+
+        page.classList.add(
+          "hidden"
+        );
+
+      }
+
       showPhotos();
 
     },
-    INSUFFICIENT_DURATION
+    2000
   );
+
+    }
+  /* =========================
+   ANSWER CALL
+========================= */
+
+function answerCall(){
+
+  hideIncomingCall();
+
+  let watched = false;
+
+  try{
+
+    watched =
+      localStorage.getItem(
+        SAMPLE_WATCHED_KEY
+      ) === "true";
+
+  }catch(error){
+
+    watched = false;
+
+  }
+
+
+  /*
+    Returning visitor:
+    skip sample video.
+  */
+
+  if(watched){
+
+    showInsufficient();
+
+    return;
+
+  }
+
+
+  /*
+    First visitor:
+    mark sample as watched.
+  */
+
+  try{
+
+    localStorage.setItem(
+      SAMPLE_WATCHED_KEY,
+      "true"
+    );
+
+  }catch(error){
+
+  }
+
+  playFirstVisitorVideo();
 
 }
 
 
 /* =========================
-   INITIALIZATION
+   REJECT CALL
 ========================= */
 
-function refreshAllSocialData(){
+function rejectCall(){
 
-  profiles.forEach(
-    function(_,index){
+  hideIncomingCall();
 
-      refreshProfileSocial(
-        index
-      );
-
-    }
-  );
+  showPhotos();
 
 }
 
 
+/* =========================
+   START FLOW
+========================= */
+
 function startWelcomeFlow(){
 
-  hide("photosPage");
-
-  hide("incomingCall");
-
-  hide("firstVideoPage");
-
-  hide("insufficientPage");
-
-  show("welcomeScreen");
-
+  /*
+    Welcome lasts 3 seconds.
+    Then photos appear.
+    Then incoming call appears.
+  */
 
   setTimeout(
     function(){
 
       showPhotos();
-
 
       setTimeout(
         function(){
@@ -3214,258 +2794,179 @@ function startWelcomeFlow(){
       );
 
     },
-    WELCOME_DURATION
+    3000
   );
 
 }
 
 
-initializeDemoCounts();
-
-createPhotos();
-
-refreshAllSocialData();
-
-updateOnlineNumber();
-
-startWelcomeFlow();
-
-
 /* =========================
-   PERIODIC UPDATES
+   DOM READY
+========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    /*
+      Build all photo cards first.
+    */
+
+    createPhotos();
+
+
+    /*
+      Online counter.
+    */
+
+    updateOnline();
+
+    setInterval(
+      updateOnline,
+      20000
+    );
+
+
+    /*
+      Answer button.
+    */
+
+    const answer =
+      document.getElementById(
+        "answerCall"
+      );
+
+    if(answer){
+
+      answer.addEventListener(
+        "click",
+        answerCall
+      );
+
+    }
+
+
+    /*
+      Reject button.
+    */
+
+    const reject =
+      document.getElementById(
+        "rejectCall"
+      );
+
+    if(reject){
+
+      reject.addEventListener(
+        "click",
+        rejectCall
+      );
+
+    }
+
+
+    /*
+      IMPORTANT:
+      Start timer here.
+      This fixes the page-one
+      stuck problem.
+    */
+
+    startWelcomeFlow();
+
+  }
+);
+  /* =========================
+   AUTO CHAT SCROLL
 ========================= */
 
 setInterval(
   function(){
 
-    updateOnlineNumber();
+    profiles.forEach(
+      function(profile,index){
 
-  },
-  20000
-);
+        const box =
+          document.getElementById(
+            "comments-" + index
+          );
 
+        if(!box){
+          return;
+        }
 
-setInterval(
-  function(){
+        /*
+          Keep newest messages visible
+          when user is already near bottom.
+        */
 
-    if(
-      $("photosPage") &&
-      !$("photosPage")
-        .classList
-        .contains("hidden")
-    ){
+        const distance =
+          box.scrollHeight -
+          box.scrollTop -
+          box.clientHeight;
 
-      refreshOfflineProfiles();
+        if(distance < 40){
 
-    }
+          box.scrollTop =
+            box.scrollHeight;
 
-  },
-  300000
-);
-
-
-setInterval(
-  function(){
-
-    if(
-      $("photosPage") &&
-      !$("photosPage")
-        .classList
-        .contains("hidden")
-    ){
-
-      refreshAllSocialData();
-
-    }
-
-  },
-  5000
-);
-
-
-/* =========================
-   RETURN FROM PAYMENT
-========================= */
-
-window.addEventListener(
-  "pageshow",
-  function(){
-
-    if(
-      window.location.pathname
-        .toLowerCase()
-        .endsWith(
-          "index.html"
-        )
-      ||
-      window.location.pathname ===
-      "/"
-    ){
-
-      if(
-        $("photosPage") &&
-        !$("photosPage")
-          .classList
-          .contains("hidden")
-      ){
-
-        createPhotos();
-
-        refreshAllSocialData();
+        }
 
       }
-
-    }
-
-  }
-);
-
-
-/* =========================
-   VISIBILITY
-========================= */
-
-document.addEventListener(
-  "visibilitychange",
-  function(){
-
-    if(!document.hidden){
-
-      refreshAllSocialData();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   SOCIAL EVENT PROTECTION
-========================= */
-
-document.addEventListener(
-  "click",
-  function(event){
-
-    const social =
-      event.target.closest(
-        ".social-btn"
-      );
-
-
-    if(social){
-
-      event.stopPropagation();
-
-    }
-
-
-    const chat =
-      event.target.closest(
-        ".chat-section"
-      );
-
-
-    if(chat){
-
-      event.stopPropagation();
-
-    }
+    );
 
   },
-  true
+  7000
 );
 
 
 /* =========================
-   CALL BUTTONS
-========================= */
-
-const answerButton =
-  $("answerCall");
-
-
-if(answerButton){
-
-  answerButton.addEventListener(
-    "click",
-    function(event){
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
-      answerIncomingCall();
-
-    }
-  );
-
-}
-
-
-const rejectButton =
-  $("rejectCall");
-
-
-if(rejectButton){
-
-  rejectButton.addEventListener(
-    "click",
-    function(event){
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
-      rejectIncomingCall();
-
-    }
-  );
-
-}
-  /* =========================
-   FINAL SAFETY CHECKS
+   SAFETY CHECK
 ========================= */
 
 window.addEventListener(
   "load",
   function(){
 
-    try{
+    /*
+      Make sure photos exist.
+    */
 
-      initializeDemoCounts();
-
-      refreshAllSocialData();
-
-    }catch(error){
-
-      console.warn(
-        "Final setup error:",
-        error
+    const container =
+      document.getElementById(
+        "photosContainer"
       );
 
+    if(
+      container &&
+      container.children.length === 0
+    ){
+
+      createPhotos();
+
     }
+
+    /*
+      Refresh comments.
+    */
+
+    profiles.forEach(
+      function(profile,index){
+
+        renderComments(index);
+
+      }
+    );
 
   }
 );
 
 
-/*
-  IMPORTANT:
-
-  1. Clicking the PHOTO opens payment.html.
-  2. Like does NOT open payment.
-  3. Love does NOT open payment.
-  4. Follow does NOT open payment.
-  5. Chat does NOT open payment.
-  6. Each profile has its own counts.
-  7. Each profile has its own romantic sample chats.
-  8. User comments are saved locally for that profile.
-  9. Comments can scroll up and down.
-  10. Referral information is passed to payment.html.
-*/
-
+/* =========================
+   END JAVASCRIPT
+========================= */
 
 </script>
+
 </body>
 </html>
