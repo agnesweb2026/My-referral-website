@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Request Withdrawal</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+font-family:Arial,sans-serif;
+background:#070707;color:#fff;
+min-height:100vh
+}
+.container{
+max-width:500px;margin:auto;padding:20px 15px 40px
+}
+.header{
+display:flex;align-items:center;gap:12px;margin-bottom:20px
+}
+.back{
+width:42px;height:42px;border:0;border-radius:12px;
+background:#1c1c1c;color:#fff;font-size:22px
+}
+.header h1{font-size:23px}
+.balance-card{
+background:linear-gradient(135deg,#151515,#242424);
+border:1px solid #333;border-radius:20px;
+padding:22px;margin-bottom:20px
+}
+.balance-title{color:#aaa;font-size:14px;margin-bottom:8px}
+.balance{
+font-size:34px;font-weight:bold;color:#35e879
+}
+.balance-sub{
+margin-top:10px;color:#aaa;font-size:13px
+}
+.card{
+background:#111;border:1px solid #292929;
+border-radius:18px;padding:20px;margin-bottom:20px
+}
+.card h2{font-size:18px;margin-bottom:18px}
+label{
+display:block;color:#bbb;font-size:14px;margin-bottom:7px
+}
+input{
+width:100%;padding:15px;background:#080808;color:#fff;
+border:1px solid #383838;border-radius:12px;
+outline:0;font-size:16px;margin-bottom:16px
+}
+input:focus{border-color:#35e879}
+.submit{
+width:100%;padding:16px;border:0;border-radius:13px;
+background:#35e879;color:#000;font-size:16px;
+font-weight:bold
+}
+.message{
+display:none;padding:13px;border-radius:12px;
+margin-bottom:15px;font-size:14px;line-height:1.5
+}
+.success{
+background:#0d321d;border:1px solid #1e8c4a;color:#66f59b
+}
+.error{
+background:#351010;border:1px solid #8c2424;color:#ff7777
+}
+.history-item{
+background:#0b0b0b;border:1px solid #292929;
+border-radius:13px;padding:15px;margin-bottom:10px
+}
+.history-top{
+display:flex;justify-content:space-between;
+gap:10px;margin-bottom:8px
+}
+.amount{font-weight:bold}
+.status{
+font-size:12px;font-weight:bold;
+padding:5px 9px;border-radius:20px
+}
+.pending{background:#332b08;color:#ffd84d}
+.approved{background:#0c351d;color:#55ed8c}
+.rejected{background:#351010;color:#ff6969}
+.history-date{color:#777;font-size:12px}
+.empty{
+color:#777;text-align:center;padding:20px 5px;font-size:14px
+}
+.small{
+color:#888;font-size:12px;margin-top:-8px;margin-bottom:16px
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<button class="back" onclick="goBack()">‹</button>
+<h1>Request Withdrawal</h1>
+</div>
+
+<div class="balance-card">
+<div class="balance-title">Available Balance</div>
+<div class="balance" id="availableBalance">KSh 0</div>
+<div class="balance-sub">
+Your balance updates after an approved withdrawal.
+</div>
+</div>
+
+<div id="message" class="message"></div>
+
+<div class="card">
+
+<h2>Withdrawal Details</h2>
+
+<label>M-PESA Phone Number</label>
+
+<input
+id="phone"
+type="tel"
+placeholder="07XXXXXXXX"
+maxlength="10"
+inputmode="numeric">
+
+<label>Amount (KSh)</label>
+
+<input
+id="amount"
+type="number"
+placeholder="Enter amount"
+min="1"
+inputmode="numeric">
+
+<div class="small">
+Minimum withdrawal: KSh 1
+</div>
+
+<button
+class="submit"
+id="submitButton"
+onclick="requestWithdrawal()">
+REQUEST WITHDRAWAL
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Withdrawal History</h2>
+
+<div id="history">
+<div class="empty">Loading...</div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const EMPLOYEE_KEY="employeeSession";
+const WITHDRAWAL_KEY="withdrawalRequests";
+
+function getCurrentEmployee(){
+
+try{
+const data=localStorage.getItem(EMPLOYEE_KEY);
+return data?JSON.parse(data):null;
+}catch(e){
+return null;
+}
+
+}
+
+function getWithdrawalRequests(){
+
+try{
+const data=localStorage.getItem(WITHDRAWAL_KEY);
+if(!data)return[];
+const requests=JSON.parse(data);
+return Array.isArray(requests)?requests:[];
+}catch(e){
+return[];
+}
+
+}
+
+function saveWithdrawalRequests(requests){
+localStorage.setItem(
+WITHDRAWAL_KEY,
+JSON.stringify(requests)
+);
+}
+
+function getEmployeeId(employee){
+
+return String(
+employee.id||
+employee.referral||
+employee.username||
+""
+);
+
+}
+
+function getEmployeePayments(employee){
+
+const id=getEmployeeId(employee);
+
+if(!id)return[];
+
+try{
+
+const data=localStorage.getItem(
+"employeePayments_"+id
+);
+
+if(!data)return[];
+
+const payments=JSON.parse(data);
+
+return Array.isArray(payments)?payments:[];
+
+}catch(e){
+
+return[];
+
+}
+
+}
+
+function getEmployeeEarnings(employee){
+
+const payments=getEmployeePayments(employee);
+
+let earnings=0;
+
+payments.forEach(payment=>{
+
+const commission=Number(
+payment.commission||0
+);
+
+if(Number.isFinite(commission)&&commission>0){
+earnings+=commission;
+}
+
+});
+
+return earnings;
+
+}
+
+function getApprovedWithdrawals(employee){
+
+const id=getEmployeeId(employee);
+
+const requests=getWithdrawalRequests();
+
+let withdrawn=0;
+
+requests.forEach(request=>{
+
+if(
+String(request.employeeId)===id&&
+String(request.status).toUpperCase()==="APPROVED"
+){
+
+withdrawn+=Number(request.amount||0);
+
+}
+
+});
+
+return withdrawn;
+
+}
+
+function getAvailableBalance(employee){
+
+return Math.max(
+0,
+getEmployeeEarnings(employee)-
+getApprovedWithdrawals(employee)
+);
+
+}
+
+function loadBalance(){
+
+const employee=getCurrentEmployee();
+
+if(!employee){
+document.getElementById(
+"availableBalance"
+).textContent="KSh 0";
+return;
+}
+
+const available=getAvailableBalance(employee);
+
+document.getElementById(
+"availableBalance"
+).textContent=
+"KSh "+available.toLocaleString();
+
+}
+
+function showMessage(message,type){
+
+const box=document.getElementById("message");
+
+box.className="message "+type;
+box.textContent=message;
+box.style.display="block";
+
+}
+
+function hideMessage(){
+
+document.getElementById(
+"message"
+).style.display="none";
+
+}
+  function requestWithdrawal(){
+
+hideMessage();
+
+const employee=getCurrentEmployee();
+
+if(!employee){
+
+showMessage(
+"Employee session not found. Please login again.",
+"error"
+);
+
+return;
+}
+
+const phone=document
+.getElementById("phone")
+.value.trim();
+
+const amount=Number(
+document.getElementById("amount").value
+);
+
+if(!/^07\d{8}$/.test(phone)){
+
+showMessage(
+"Enter a valid M-PESA number starting with 07.",
+"error"
+);
+
+return;
+}
+
+if(!Number.isFinite(amount)||amount<=0){
+
+showMessage(
+"Enter a valid withdrawal amount.",
+"error"
+);
+
+return;
+}
+
+const available=getAvailableBalance(employee);
+
+if(amount>available){
+
+showMessage(
+"Amount is greater than your available balance of KSh "+
+available.toLocaleString()+".",
+"error"
+);
+
+return;
+}
+
+const employeeId=getEmployeeId(employee);
+
+const requests=getWithdrawalRequests();
+
+const pending=requests.find(request=>
+String(request.employeeId)===employeeId &&
+String(request.status).toUpperCase()==="PENDING"
+);
+
+if(pending){
+
+showMessage(
+"You already have a pending withdrawal request. Please wait for admin approval.",
+"error"
+);
+
+return;
+}
+
+const request={
+
+id:"WD-"+Date.now(),
+
+employeeName:
+employee.name||
+employee.employeeName||
+employee.username||
+"Employee",
+
+employeeId:employeeId,
+
+username:employee.username||"",
+
+referral:employee.referral||"",
+
+amount:amount,
+
+phone:phone,
+
+status:"PENDING",
+
+createdAt:new Date().toISOString()
+
+};
+
+requests.push(request);
+
+saveWithdrawalRequests(requests);
+
+document.getElementById("phone").value="";
+document.getElementById("amount").value="";
+
+showMessage(
+"Withdrawal request submitted successfully. Balance will be deducted after admin approval.",
+"success"
+);
+
+loadBalance();
+loadWithdrawalHistory();
+
+}
+
+function loadWithdrawalHistory(){
+
+const container=document.getElementById("history");
+
+const employee=getCurrentEmployee();
+
+if(!employee){
+
+container.innerHTML=
+'<div class="empty">Please login first.</div>';
+
+return;
+}
+
+const employeeId=getEmployeeId(employee);
+
+const requests=getWithdrawalRequests();
+
+const history=requests
+.filter(request=>
+String(request.employeeId)===employeeId
+)
+.sort((a,b)=>
+new Date(b.createdAt)-
+new Date(a.createdAt)
+);
+
+if(history.length===0){
+
+container.innerHTML=
+'<div class="empty">No withdrawal requests yet.</div>';
+
+return;
+}
+
+container.innerHTML="";
+
+history.forEach(request=>{
+
+const item=document.createElement("div");
+
+item.className="history-item";
+
+const top=document.createElement("div");
+
+top.className="history-top";
+
+const amount=document.createElement("div");
+
+amount.className="amount";
+
+amount.textContent=
+"KSh "+
+Number(request.amount||0).toLocaleString();
+
+const status=document.createElement("div");
+
+const statusText=
+String(request.status||"PENDING")
+.toUpperCase();
+
+status.className=
+"status "+
+(
+statusText==="APPROVED"
+?"approved":
+statusText==="REJECTED"
+?"rejected":
+"pending"
+);
+
+status.textContent=statusText;
+
+top.appendChild(amount);
+top.appendChild(status);
+
+const phone=document.createElement("div");
+
+phone.style.color="#aaa";
+phone.style.fontSize="13px";
+phone.style.marginBottom="6px";
+
+phone.textContent=
+"M-PESA: "+
+(request.phone||"N/A");
+
+const date=document.createElement("div");
+
+date.className="history-date";
+
+let dateText="Date unavailable";
+
+if(request.createdAt){
+
+const d=new Date(request.createdAt);
+
+if(!isNaN(d.getTime())){
+
+dateText=d.toLocaleString();
+
+}
+
+}
+
+date.textContent=dateText;
+
+item.appendChild(top);
+item.appendChild(phone);
+item.appendChild(date);
+
+container.appendChild(item);
+
+});
+
+}
+
+function goBack(){
+
+window.location.href=
+"employee-dashboard.html";
+
+}
+
+function refreshPageData(){
+
+loadBalance();
+loadWithdrawalHistory();
+
+}
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+loadBalance();
+loadWithdrawalHistory();
+
+}
+);
+
+setInterval(
+refreshPageData,
+3000
+);
+
+</script>
+
+</body>
+</html>
