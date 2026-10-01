@@ -303,6 +303,80 @@ button{
   color:#fff;
 }
 
+/* CAMERA PERMISSION */
+#cameraPermission{
+  position:fixed;
+  inset:0;
+  z-index:9900;
+  background:
+    radial-gradient(circle at center,#280914 0%,#070707 55%,#000 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.permission-box{
+  width:90%;
+  max-width:390px;
+  padding:28px 22px;
+}
+
+.permission-camera{
+  width:88px;
+  height:88px;
+  margin:auto;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+  background:#171717;
+  border:2px solid #ff1744;
+  box-shadow:0 0 30px rgba(255,23,68,.3);
+}
+
+.permission-title{
+  margin-top:20px;
+  font-size:25px;
+  font-weight:900;
+}
+
+.permission-text{
+  margin-top:10px;
+  color:#aaa;
+  line-height:1.5;
+  font-size:14px;
+}
+
+.permission-btn{
+  width:100%;
+  height:54px;
+  margin-top:25px;
+  border-radius:28px;
+  background:#00c853;
+  color:#fff;
+  font-size:16px;
+  font-weight:900;
+  box-shadow:0 8px 25px rgba(0,200,83,.25);
+}
+
+.permission-skip{
+  width:100%;
+  margin-top:12px;
+  padding:12px;
+  background:transparent;
+  color:#888;
+  font-size:13px;
+}
+
+.permission-status{
+  min-height:20px;
+  margin-top:12px;
+  color:#ff8098;
+  font-size:12px;
+}
+
 /* INCOMING CALL */
 #incomingCall{
   position:fixed;
@@ -388,9 +462,8 @@ button{
 .reject-btn{
   background:#e6002d;
   box-shadow:0 8px 25px rgba(230,0,45,.25);
-}
-
-/* RETURNING LOADING */
+  }
+  /* RETURNING LOADING */
 #returnLoading{
   position:fixed;
   inset:0;
@@ -433,8 +506,9 @@ button{
   to{
     transform:rotate(360deg);
   }
-  }
-  /* VIDEO */
+}
+
+/* VIDEO */
 #videoPage{
   position:fixed;
   inset:0;
@@ -580,8 +654,7 @@ button{
 </head>
 
 <body>
-
-<!-- WELCOME -->
+  <!-- WELCOME -->
 <section id="welcomeScreen">
   <div class="welcome-box">
 
@@ -603,6 +676,8 @@ button{
 
   </div>
 </section>
+
+
 <!-- LIVE PHOTOS -->
 <section id="photosPage" class="hidden">
 
@@ -631,6 +706,47 @@ button{
   <div
     id="photosGrid"
     class="photos-grid">
+  </div>
+
+</section>
+
+
+<!-- CAMERA + MICROPHONE PERMISSION -->
+<section id="cameraPermission" class="hidden">
+
+  <div class="permission-box">
+
+    <div class="permission-camera">
+      📹
+    </div>
+
+    <div class="permission-title">
+      Camera & Mic Access
+    </div>
+
+    <div class="permission-text">
+      To continue with the video experience,
+      allow your camera and microphone when
+      your browser asks for permission.
+    </div>
+
+    <button
+      id="allowCamera"
+      class="permission-btn">
+      Allow Camera & Mic
+    </button>
+
+    <button
+      id="skipCamera"
+      class="permission-skip">
+      Continue without camera
+    </button>
+
+    <div
+      id="permissionStatus"
+      class="permission-status">
+    </div>
+
   </div>
 
 </section>
@@ -783,6 +899,9 @@ button{
 const FIRST_VIDEO_KEY =
   "livex_first_video_played_v1";
 
+const CAMERA_PERMISSION_KEY =
+  "livex_camera_permission_v1";
+
 const VIDEO_FILE =
   "IMG_20261001_011110_570.mp4";
 
@@ -802,6 +921,18 @@ const photosPage =
 
 const photosGrid =
   document.getElementById("photosGrid");
+
+const cameraPermission =
+  document.getElementById("cameraPermission");
+
+const allowCamera =
+  document.getElementById("allowCamera");
+
+const skipCamera =
+  document.getElementById("skipCamera");
+
+const permissionStatus =
+  document.getElementById("permissionStatus");
 
 const incomingCall =
   document.getElementById("incomingCall");
@@ -852,6 +983,9 @@ let photoRotationTimer = null;
 
 let currentCallProfile = null;
 let videoFinished = false;
+
+let cameraStream = null;
+let pendingCameraAction = null;
   /* =========================
    PROFILES
 ========================= */
@@ -1042,9 +1176,7 @@ function shuffleArray(array){
 
   return result;
 }
-
-
-/* =========================
+  /* =========================
    SHOW ONE SCREEN
 ========================= */
 
@@ -1052,6 +1184,7 @@ function showOnly(section){
 
   welcomeScreen.classList.add("hidden");
   photosPage.classList.add("hidden");
+  cameraPermission.classList.add("hidden");
   incomingCall.classList.add("hidden");
   videoPage.classList.add("hidden");
   insufficientPage.classList.add("hidden");
@@ -1060,7 +1193,163 @@ function showOnly(section){
   if(section){
     section.classList.remove("hidden");
   }
-      }
+}
+
+
+/* =========================
+   CAMERA PERMISSION
+========================= */
+
+async function requestCameraPermission(){
+
+  permissionStatus.textContent =
+    "Requesting camera and microphone...";
+
+  try{
+
+    if(
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ){
+
+      throw new Error(
+        "Camera access is not supported by this browser."
+      );
+
+    }
+
+
+    cameraStream =
+      await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:true
+      });
+
+
+    /*
+      We only need the permission.
+      Stop the local camera/microphone
+      after permission is granted.
+    */
+
+    cameraStream
+      .getTracks()
+      .forEach(track=>{
+        track.stop();
+      });
+
+    cameraStream = null;
+
+
+    localStorage.setItem(
+      CAMERA_PERMISSION_KEY,
+      "1"
+    );
+
+
+    permissionStatus.textContent =
+      "Camera and microphone allowed ✓";
+
+
+    setTimeout(()=>{
+
+      continueAfterCameraPermission();
+
+    },500);
+
+
+  }catch(error){
+
+    console.error(
+      "Camera permission error:",
+      error
+    );
+
+
+    permissionStatus.textContent =
+      "Camera or microphone was not allowed. You can continue without it.";
+
+  }
+
+}
+
+
+/* =========================
+   CONTINUE AFTER CAMERA
+========================= */
+
+function continueAfterCameraPermission(){
+
+  const action =
+    pendingCameraAction;
+
+  pendingCameraAction = null;
+
+
+  if(action === "video"){
+
+    startLiveVideo(
+      currentCallProfile
+    );
+
+    return;
+  }
+
+
+  if(action === "answer"){
+
+    answerReturningCallAfterPermission();
+
+    return;
+  }
+
+
+  showOnly(photosPage);
+
+}
+
+
+/* =========================
+   OPEN CAMERA PERMISSION
+========================= */
+
+function openCameraPermission(action){
+
+  pendingCameraAction =
+    action;
+
+  permissionStatus.textContent = "";
+
+  showOnly(cameraPermission);
+
+}
+
+
+/* =========================
+   CONTINUE WITHOUT CAMERA
+========================= */
+
+function continueWithoutCamera(){
+
+  pendingCameraAction = null;
+
+  permissionStatus.textContent = "";
+
+  if(
+    isReturningVisitor()
+  ){
+
+    openIncomingCall();
+
+  }else{
+
+    startLiveVideo(
+      currentCallProfile
+    );
+
+  }
+
+  }
   /* =========================
    PAYMENT LINK
 ========================= */
@@ -1091,7 +1380,10 @@ function getPaymentUrl(profile){
     ).get("ref");
 
   if(ref){
-    params.set("ref",ref);
+    params.set(
+      "ref",
+      ref
+    );
   }
 
   return (
@@ -1381,7 +1673,7 @@ function renderPhotos(){
 
   });
 
-      }
+                   }
   /* =========================
    OFFLINE ROTATION
 ========================= */
@@ -1405,7 +1697,9 @@ function startOfflineRotation(){
           "hidden"
         )
       ){
+
         renderPhotos();
+
       }
 
     },5 * 60 * 1000);
@@ -1417,15 +1711,6 @@ function startOfflineRotation(){
 ========================= */
 
 function openIncomingCall(){
-
-  /*
-    IMPORTANT:
-    Always choose a profile.
-
-    If all profiles happen to be
-    offline, use the first profile
-    instead of cancelling the call.
-  */
 
   const available =
     profiles.filter(
@@ -1467,11 +1752,6 @@ function openIncomingCall(){
     clearTimeout(callTimer);
   }
 
-
-  /*
-    Incoming call remains visible
-    for 15 seconds.
-  */
 
   callTimer =
     setTimeout(()=>{
@@ -1532,18 +1812,37 @@ function answerReturningCall(){
 
 
   /*
-    RETURNING VISITOR:
+    First request real camera
+    and microphone permission.
 
-    Answer
-      ↓
-    Connecting 2 seconds
-      ↓
-    Insufficient Minutes 2 seconds
-      ↓
-    Live Photos
-
-    NO VIDEO PLAYS HERE.
+    If already allowed,
+    continue directly.
   */
+
+  if(
+    localStorage.getItem(
+      CAMERA_PERMISSION_KEY
+    ) === "1"
+  ){
+
+    answerReturningCallAfterPermission();
+
+  }else{
+
+    openCameraPermission(
+      "answer"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   ANSWER AFTER PERMISSION
+========================= */
+
+function answerReturningCallAfterPermission(){
 
   showOnly(returnLoading);
 
@@ -1582,16 +1881,13 @@ function answerReturningCall(){
     },2000);
 
 }
-  /* =========================
+
+
+/* =========================
    FIRST VISITOR VIDEO
 ========================= */
 
 function startLiveVideo(profile){
-
-  /*
-    Choose a profile if one
-    was not supplied.
-  */
 
   if(!profile){
 
@@ -1622,16 +1918,6 @@ function startLiveVideo(profile){
   }
 
 
-  /*
-    Mark visitor immediately.
-
-    FIRST VISIT:
-    automatic video.
-
-    NEXT RELOAD:
-    incoming video call.
-  */
-
   localStorage.setItem(
     FIRST_VIDEO_KEY,
     "1"
@@ -1661,12 +1947,6 @@ function startLiveVideo(profile){
 
   startVideoChat();
 
-
-  /*
-    Try sound first.
-    If mobile browser blocks sound,
-    retry muted.
-  */
 
   liveVideo.muted = false;
   liveVideo.volume = 1;
@@ -1769,10 +2049,8 @@ function startVideoChat(){
     }
   );
 
-}
-
-
-/* =========================
+  }
+  /* =========================
    FINISH VIDEO
 ========================= */
 
@@ -1857,8 +2135,34 @@ liveVideo.addEventListener(
 
   }
 );
-  /* =========================
-   BUTTONS
+
+
+/* =========================
+   CAMERA BUTTON
+========================= */
+
+allowCamera.addEventListener(
+  "click",
+  ()=>{
+    requestCameraPermission();
+  }
+);
+
+
+/* =========================
+   SKIP CAMERA
+========================= */
+
+skipCamera.addEventListener(
+  "click",
+  ()=>{
+    continueWithoutCamera();
+  }
+);
+
+
+/* =========================
+   ANSWER / REJECT
 ========================= */
 
 answerCall.addEventListener(
@@ -1966,8 +2270,7 @@ function startVisitorFlow(){
 
 
     /*
-      Live Photos remain visible
-      for 3.5 seconds.
+      Photos = 3.5 seconds
     */
 
     setTimeout(()=>{
@@ -1978,17 +2281,19 @@ function startVisitorFlow(){
           RETURNING:
 
           Welcome
-          ↓
+             ↓
           Live Photos
-          ↓
-          Incoming Video Call
-          ↓
+             ↓
+          Incoming Call
+             ↓
           Answer
-          ↓
-          Connecting 2s
-          ↓
-          Insufficient 2s
-          ↓
+             ↓
+          Camera + Mic Allow
+             ↓
+          Connecting
+             ↓
+          Insufficient
+             ↓
           Live Photos
         */
 
@@ -2000,17 +2305,52 @@ function startVisitorFlow(){
           NEW:
 
           Welcome
-          ↓
+             ↓
           Live Photos
-          ↓
-          Automatic Video
-          ↓
-          Insufficient 2s
-          ↓
+             ↓
+          Camera + Mic Allow
+             ↓
+          Video
+             ↓
+          Insufficient
+             ↓
           Live Photos
         */
 
-        startLiveVideo();
+        const available =
+          profiles.filter(
+            (item,index)=>
+              !offlineIndexes.includes(index)
+          );
+
+        currentCallProfile =
+          available.length
+          ? available[
+              Math.floor(
+                Math.random() *
+                available.length
+              )
+            ]
+          : profiles[0];
+
+
+        if(
+          localStorage.getItem(
+            CAMERA_PERMISSION_KEY
+          ) === "1"
+        ){
+
+          startLiveVideo(
+            currentCallProfile
+          );
+
+        }else{
+
+          openCameraPermission(
+            "video"
+          );
+
+        }
 
       }
 
@@ -2068,7 +2408,7 @@ startVisitorFlow();
 
 
 /* =========================
-   DEBUG INFORMATION
+   DEBUG
 ========================= */
 
 console.log(
@@ -2076,6 +2416,15 @@ console.log(
   isReturningVisitor()
     ? "RETURNING VISITOR"
     : "NEW VISITOR"
+);
+
+console.log(
+  "Camera permission:",
+  localStorage.getItem(
+    CAMERA_PERMISSION_KEY
+  ) === "1"
+    ? "GRANTED"
+    : "NOT GRANTED"
 );
 
 
