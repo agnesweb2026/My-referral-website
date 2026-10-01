@@ -27,6 +27,15 @@ body{
   overflow-x:hidden;
 }
 
+button,
+input{
+  font-family:Arial,sans-serif;
+}
+
+button{
+  -webkit-tap-highlight-color:transparent;
+}
+
 .hidden{
   display:none !important;
 }
@@ -134,9 +143,10 @@ body{
 .photoCard{
   position:relative;
   background:#111;
-  border-radius:5px;
+  border-radius:7px;
   overflow:hidden;
   cursor:pointer;
+  min-width:0;
 }
 
 .photo-image-wrap{
@@ -175,11 +185,6 @@ body{
 
   border-radius:4px;
 }
-
-
-/* =========================
-   OFFLINE BADGE
-========================= */
 
 .offline-badge{
   position:absolute;
@@ -261,14 +266,13 @@ body{
 ========================= */
 
 .photo-info{
-  padding:7px 7px 9px;
+  padding:7px 7px 8px;
   background:#101010;
 }
 
 .photo-name{
   display:flex;
   align-items:center;
-
   gap:5px;
 
   font-size:13px;
@@ -286,7 +290,6 @@ body{
   background:#19e66b;
 
   display:inline-block;
-
   flex:none;
 
   animation:nameBlink 1s infinite;
@@ -309,6 +312,241 @@ body{
 .photo-meta{
   font-size:11px;
   color:#aaa;
+}
+
+
+/* =========================
+   SOCIAL BUTTONS
+========================= */
+
+.social-actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:3px;
+  margin-top:7px;
+}
+
+.social-btn{
+  min-width:0;
+  border:1px solid #292929;
+  background:#181818;
+  color:#ddd;
+  border-radius:5px;
+  padding:6px 2px;
+
+  font-size:10px;
+  line-height:1.15;
+
+  cursor:pointer;
+  transition:.15s;
+}
+
+.social-btn:active{
+  transform:scale(.94);
+}
+
+.social-btn.like.active{
+  color:#ff4d67;
+  border-color:#ff4d67;
+  background:#211116;
+}
+
+.social-btn.love.active{
+  color:#ff4fd8;
+  border-color:#ff4fd8;
+  background:#211326;
+}
+
+.social-btn.follow.active{
+  color:#19e66b;
+  border-color:#19e66b;
+  background:#102015;
+}
+
+.social-btn.chat.active{
+  color:#5bb8ff;
+  border-color:#5bb8ff;
+  background:#101d28;
+}
+
+.social-count{
+  display:block;
+  font-size:9px;
+  color:#aaa;
+  margin-top:2px;
+}
+  /* =========================
+   CHAT SECTION
+========================= */
+
+.chat-section{
+  display:none;
+  margin-top:7px;
+  padding:7px;
+
+  background:#080808;
+  border:1px solid #292929;
+  border-radius:7px;
+}
+
+.chat-section.open{
+  display:block;
+}
+
+.chat-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  font-size:11px;
+  font-weight:bold;
+
+  margin-bottom:6px;
+}
+
+.chat-live{
+  color:#19e66b;
+  font-size:9px;
+}
+
+.chat-comments{
+  height:110px;
+  overflow-y:auto;
+  overflow-x:hidden;
+
+  padding:5px;
+
+  background:#050505;
+  border-radius:5px;
+
+  border:1px solid #1f1f1f;
+
+  scroll-behavior:smooth;
+}
+
+.chat-comments::-webkit-scrollbar{
+  width:4px;
+}
+
+.chat-comments::-webkit-scrollbar-track{
+  background:#090909;
+}
+
+.chat-comments::-webkit-scrollbar-thumb{
+  background:#444;
+  border-radius:10px;
+}
+
+.chat-comment{
+  padding:5px 6px;
+  margin-bottom:4px;
+
+  background:#151515;
+  border-radius:5px;
+
+  font-size:10px;
+  line-height:1.3;
+
+  word-break:break-word;
+}
+
+.chat-comment:last-child{
+  margin-bottom:0;
+}
+
+.chat-comment-user{
+  color:#6dbbff;
+  font-weight:bold;
+  margin-right:4px;
+}
+
+.chat-empty{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+
+  color:#777;
+  font-size:10px;
+  padding:10px;
+}
+
+.chat-form{
+  display:flex;
+  gap:4px;
+  margin-top:5px;
+}
+
+.chat-input{
+  flex:1;
+  min-width:0;
+
+  background:#151515;
+  color:#fff;
+
+  border:1px solid #333;
+  border-radius:5px;
+
+  padding:8px;
+
+  outline:none;
+
+  font-size:10px;
+}
+
+.chat-input:focus{
+  border-color:#777;
+}
+
+.chat-send{
+  border:none;
+  border-radius:5px;
+
+  background:#1683ff;
+  color:#fff;
+
+  padding:0 9px;
+
+  font-size:10px;
+  font-weight:bold;
+
+  cursor:pointer;
+}
+
+.chat-send:active{
+  transform:scale(.94);
+}
+
+
+/* =========================
+   REACTION ANIMATION
+========================= */
+
+.reaction-pop{
+  position:fixed;
+  z-index:2000;
+
+  pointer-events:none;
+
+  font-size:25px;
+
+  animation:reactionFloat 900ms ease-out forwards;
+}
+
+@keyframes reactionFloat{
+
+  0%{
+    opacity:1;
+    transform:translateY(0) scale(.7);
+  }
+
+  100%{
+    opacity:0;
+    transform:translateY(-80px) scale(1.35);
+  }
+
 }
 
 
@@ -336,7 +574,6 @@ body{
 .call-label{
   color:#aaa;
   font-size:14px;
-
   margin-bottom:20px;
 }
 
@@ -356,14 +593,12 @@ body{
 #callerName{
   font-size:25px;
   font-weight:bold;
-
   margin-bottom:8px;
 }
 
 .call-status{
   color:#aaa;
   font-size:14px;
-
   margin-bottom:45px;
 }
 
@@ -474,26 +709,21 @@ body{
   border-radius:12px;
 
   padding:30px 20px;
-
 }
 
 .insufficient-box h2{
   color:#ff3333;
-
   margin-bottom:12px;
 }
 
 .insufficient-box p{
   color:#aaa;
-
   font-size:14px;
 }
 
 #insufficientTimer{
   margin-top:18px;
-
   color:#fff;
-
   font-size:13px;
 }
 
@@ -523,6 +753,15 @@ body{
 
   .photo-meta{
     font-size:10px;
+  }
+
+  .social-btn{
+    font-size:9px;
+    padding:6px 1px;
+  }
+
+  .social-count{
+    font-size:8px;
   }
 
   #callerImage{
@@ -634,7 +873,7 @@ body{
 
 
 <!-- =========================
-     FIRST 40 SECOND VIDEO
+     FIRST VIDEO
 ========================= -->
 
 <div
@@ -656,7 +895,7 @@ body{
 
 
 <!-- =========================
-     INSUFFICIENT MINUTES
+     INSUFFICIENT
 ========================= -->
 
 <div
@@ -692,26 +931,12 @@ body{
 
 const IMAGE_BASE = "./";
 
-
-/*
-  YOUR NEW VIDEO FILE
-*/
 const VIDEO_URL =
   "./IMG_20261001_011110_570.mp4";
 
-
-/*
-  Remembers that the first
-  visitor call has been used.
-*/
 const SAMPLE_KEY =
   "myReferralSampleWatched";
 
-
-/*
-  FIRST CALL VIDEO DURATION
-  40 seconds
-*/
 const FIRST_CALL_DURATION =
   40000;
 
@@ -807,7 +1032,6 @@ function openPaymentPage(){
   let url =
     "payment.html";
 
-
   if(employee){
 
     url +=
@@ -826,7 +1050,6 @@ function openPaymentPage(){
 
   }
 
-
   window.location.href =
     url;
 
@@ -834,7 +1057,7 @@ function openPaymentPage(){
 
 
 /* =========================
-   REAL IMAGE FILES
+   IMAGE FILES
 ========================= */
 
 const imageFiles = [
@@ -852,10 +1075,8 @@ const imageFiles = [
   "Screenshot_20260731-045343.png"
 
 ];
-
-
-/* =========================
-   24 PROFILES
+  /* =========================
+   PROFILES
 ========================= */
 
 const profiles = [
@@ -895,12 +1116,734 @@ const profiles = [
 
 
 /* =========================
+   LOCAL STORAGE
+========================= */
+
+const LIKE_KEY =
+  "liveProfileLikes";
+
+const LOVE_KEY =
+  "liveProfileLoves";
+
+const FOLLOW_KEY =
+  "liveProfileFollows";
+
+const COMMENT_KEY =
+  "liveProfileComments";
+
+
+function readStorage(key){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(key) || "{}"
+    );
+
+  }catch(error){
+
+    return {};
+
+  }
+
+}
+
+
+function writeStorage(key,data){
+
+  localStorage.setItem(
+    key,
+    JSON.stringify(data)
+  );
+
+}
+
+
+let likeData =
+  readStorage(LIKE_KEY);
+
+let loveData =
+  readStorage(LOVE_KEY);
+
+let followData =
+  readStorage(FOLLOW_KEY);
+
+let commentData =
+  readStorage(COMMENT_KEY);
+
+
+/* =========================
+   PROFILE ID
+========================= */
+
+function profileId(index){
+
+  return "profile_" + index;
+
+}
+
+
+/* =========================
+   SAFE HTML
+========================= */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   COMMENTS
+========================= */
+
+function getComments(index){
+
+  const id =
+    profileId(index);
+
+  if(
+    !Array.isArray(
+      commentData[id]
+    )
+  ){
+
+    commentData[id] = [];
+
+  }
+
+  return commentData[id];
+
+}
+
+
+function saveComments(){
+
+  writeStorage(
+    COMMENT_KEY,
+    commentData
+  );
+
+}
+
+
+function renderComments(index){
+
+  const list =
+    document.getElementById(
+      "comments-" + index
+    );
+
+  if(!list){
+    return;
+  }
+
+
+  const comments =
+    getComments(index);
+
+
+  list.innerHTML =
+    "";
+
+
+  if(comments.length === 0){
+
+    const empty =
+      document.createElement(
+        "div"
+      );
+
+    empty.className =
+      "chat-empty";
+
+    empty.textContent =
+      "No comments yet. Start the conversation.";
+
+    list.appendChild(
+      empty
+    );
+
+    return;
+
+  }
+
+
+  comments.forEach(
+    comment=>{
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+      item.className =
+        "chat-comment";
+
+
+      const user =
+        document.createElement(
+          "span"
+        );
+
+      user.className =
+        "chat-comment-user";
+
+      user.textContent =
+        "You:";
+
+
+      const message =
+        document.createElement(
+          "span"
+        );
+
+      message.textContent =
+        comment;
+
+
+      item.appendChild(
+        user
+      );
+
+      item.appendChild(
+        message
+      );
+
+
+      list.appendChild(
+        item
+      );
+
+    }
+  );
+
+
+  list.scrollTop =
+    list.scrollHeight;
+
+}
+
+
+/* =========================
+   ADD COMMENT
+========================= */
+
+function addComment(index,input){
+
+  const value =
+    input.value.trim();
+
+
+  if(!value){
+    return;
+  }
+
+
+  const comments =
+    getComments(index);
+
+
+  comments.push(
+    value
+  );
+
+
+  saveComments();
+
+
+  input.value =
+    "";
+
+
+  renderComments(index);
+
+
+  const list =
+    document.getElementById(
+      "comments-" + index
+    );
+
+
+  if(list){
+
+    list.scrollTop =
+      list.scrollHeight;
+
+  }
+
+      }
+  /* =========================
+   LIKE
+========================= */
+
+function getNumber(data,index,base){
+
+  const id =
+    profileId(index);
+
+
+  if(
+    typeof data[id] !== "number"
+  ){
+
+    data[id] =
+      base;
+
+  }
+
+
+  return data[id];
+
+}
+
+
+function updateLikeButton(index){
+
+  const button =
+    document.getElementById(
+      "like-" + index
+    );
+
+  const count =
+    document.getElementById(
+      "like-count-" + index
+    );
+
+
+  if(!button || !count){
+    return;
+  }
+
+
+  const id =
+    profileId(index);
+
+
+  const active =
+    !!likeData[
+      id + "_active"
+    ];
+
+
+  const number =
+    getNumber(
+      likeData,
+      id,
+      0
+    );
+
+
+  count.textContent =
+    number;
+
+
+  button.classList.toggle(
+    "active",
+    active
+  );
+
+}
+
+
+function toggleLike(index,event){
+
+  event.stopPropagation();
+
+
+  const id =
+    profileId(index);
+
+
+  const active =
+    !!likeData[
+      id + "_active"
+    ];
+
+
+  if(active){
+
+    likeData[
+      id + "_active"
+    ] = false;
+
+    likeData[id] =
+      Math.max(
+        0,
+        getNumber(
+          likeData,
+          id,
+          0
+        ) - 1
+      );
+
+  }else{
+
+    likeData[
+      id + "_active"
+    ] = true;
+
+    likeData[id] =
+      getNumber(
+        likeData,
+        id,
+        0
+      ) + 1;
+
+
+    showReaction(
+      event,
+      "❤️"
+    );
+
+  }
+
+
+  writeStorage(
+    LIKE_KEY,
+    likeData
+  );
+
+
+  updateLikeButton(
+    index
+  );
+
+}
+
+
+/* =========================
+   LOVE
+========================= */
+
+function updateLoveButton(index){
+
+  const button =
+    document.getElementById(
+      "love-" + index
+    );
+
+  const count =
+    document.getElementById(
+      "love-count-" + index
+    );
+
+
+  if(!button || !count){
+    return;
+  }
+
+
+  const id =
+    profileId(index);
+
+
+  const active =
+    !!loveData[
+      id + "_active"
+    ];
+
+
+  const number =
+    getNumber(
+      loveData,
+      id,
+      0
+    );
+
+
+  count.textContent =
+    number;
+
+
+  button.classList.toggle(
+    "active",
+    active
+  );
+
+}
+
+
+function toggleLove(index,event){
+
+  event.stopPropagation();
+
+
+  const id =
+    profileId(index);
+
+
+  const active =
+    !!loveData[
+      id + "_active"
+    ];
+
+
+  if(active){
+
+    loveData[
+      id + "_active"
+    ] = false;
+
+    loveData[id] =
+      Math.max(
+        0,
+        getNumber(
+          loveData,
+          id,
+          0
+        ) - 1
+      );
+
+  }else{
+
+    loveData[
+      id + "_active"
+    ] = true;
+
+    loveData[id] =
+      getNumber(
+        loveData,
+        id,
+        0
+      ) + 1;
+
+
+    showReaction(
+      event,
+      "💕"
+    );
+
+  }
+
+
+  writeStorage(
+    LOVE_KEY,
+    loveData
+  );
+
+
+  updateLoveButton(
+    index
+  );
+
+}
+
+
+/* =========================
+   FOLLOW
+========================= */
+
+function updateFollowButton(index){
+
+  const button =
+    document.getElementById(
+      "follow-" + index
+    );
+
+
+  if(!button){
+    return;
+  }
+
+
+  const id =
+    profileId(index);
+
+
+  const active =
+    !!followData[id];
+
+
+  button.classList.toggle(
+    "active",
+    active
+  );
+
+
+  button.innerHTML =
+    active
+      ? "✓ Following"
+      : "＋ Follow";
+
+}
+
+
+function toggleFollow(index,event){
+
+  event.stopPropagation();
+
+
+  const id =
+    profileId(index);
+
+
+  followData[id] =
+    !followData[id];
+
+
+  writeStorage(
+    FOLLOW_KEY,
+    followData
+  );
+
+
+  updateFollowButton(
+    index
+  );
+
+}
+
+
+/* =========================
+   CHAT OPEN/CLOSE
+========================= */
+
+function toggleChat(index,event){
+
+  event.stopPropagation();
+
+
+  const section =
+    document.getElementById(
+      "chat-" + index
+    );
+
+
+  if(!section){
+    return;
+  }
+
+
+  section.classList.toggle(
+    "open"
+  );
+
+
+  const button =
+    document.getElementById(
+      "chat-button-" + index
+    );
+
+
+  if(button){
+
+    button.classList.toggle(
+      "active",
+      section.classList.contains(
+        "open"
+      )
+    );
+
+  }
+
+
+  if(
+    section.classList.contains(
+      "open"
+    )
+  ){
+
+    renderComments(
+      index
+    );
+
+
+    const input =
+      document.getElementById(
+        "input-" + index
+      );
+
+
+    if(input){
+
+      setTimeout(
+        ()=>{
+          input.focus();
+        },
+        50
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =========================
+   REACTION POPUP
+========================= */
+
+function showReaction(event,emoji){
+
+  const pop =
+    document.createElement(
+      "div"
+    );
+
+
+  pop.className =
+    "reaction-pop";
+
+
+  pop.textContent =
+    emoji;
+
+
+  let x =
+    window.innerWidth / 2;
+
+  let y =
+    window.innerHeight / 2;
+
+
+  if(event){
+
+    x =
+      event.clientX ||
+      x;
+
+    y =
+      event.clientY ||
+      y;
+
+  }
+
+
+  pop.style.left =
+    (x - 12) + "px";
+
+
+  pop.style.top =
+    (y - 15) + "px";
+
+
+  document.body.appendChild(
+    pop
+  );
+
+
+  setTimeout(
+    ()=>{
+      pop.remove();
+    },
+    1000
+  );
+
+  }
+  /* =========================
    OFFLINE SYSTEM
 ========================= */
 
 let offlinePeople =
   new Set();
-
 
 const OFFLINE_TIME =
   5 * 60 * 1000;
@@ -1023,7 +1966,363 @@ function updateStatuses(){
 
 
 /* =========================
-   CREATE PHOTOS
+   CREATE PHOTO CARD
+========================= */
+
+function createPhotoCard(
+  profile,
+  index
+){
+
+  const name =
+    profile[0];
+
+  const age =
+    profile[1];
+
+  const country =
+    profile[2];
+
+  const flag =
+    profile[3];
+
+
+  const file =
+    imageFiles[
+      index %
+      imageFiles.length
+    ];
+
+
+  const card =
+    document.createElement(
+      "div"
+    );
+
+
+  card.className =
+    "photoCard";
+
+
+  card.innerHTML = `
+
+    <div class="photo-image-wrap">
+
+      <img
+        class="profile-photo"
+        src="${IMAGE_BASE}${encodeURIComponent(file)}"
+        alt="${escapeHtml(name)}"
+        loading="eager"
+        onerror="this.style.display='none';"
+      >
+
+      <div
+        id="badge-${index}"
+        class="live-badge">
+        ● LIVE
+      </div>
+
+      <div class="photo-play"></div>
+
+    </div>
+
+
+    <div class="photo-info">
+
+      <div class="photo-name">
+
+        <span
+          id="dot-${index}"
+          class="name-dot">
+        </span>
+
+        <span>
+          ${escapeHtml(name)}
+        </span>
+
+      </div>
+
+
+      <div class="photo-meta">
+
+        ${flag}
+        ${escapeHtml(country)}
+        •
+        ${age}
+
+      </div>
+
+
+      <div class="social-actions">
+
+        <button
+          id="like-${index}"
+          class="social-btn like"
+          type="button">
+          ❤️ Like
+          <span
+            id="like-count-${index}"
+            class="social-count">
+            0
+          </span>
+        </button>
+
+
+        <button
+          id="love-${index}"
+          class="social-btn love"
+          type="button">
+          💕 Love
+          <span
+            id="love-count-${index}"
+            class="social-count">
+            0
+          </span>
+        </button>
+
+
+        <button
+          id="follow-${index}"
+          class="social-btn follow"
+          type="button">
+          ＋ Follow
+        </button>
+
+
+        <button
+          id="chat-button-${index}"
+          class="social-btn chat"
+          type="button">
+          💬 Chat
+        </button>
+
+      </div>
+
+
+      <div
+        id="chat-${index}"
+        class="chat-section">
+
+        <div class="chat-title">
+
+          <span>
+            💬 Live Chat
+          </span>
+
+          <span class="chat-live">
+            ● LIVE
+          </span>
+
+        </div>
+
+
+        <div
+          id="comments-${index}"
+          class="chat-comments">
+        </div>
+
+
+        <form
+          id="chat-form-${index}"
+          class="chat-form">
+
+          <input
+            id="input-${index}"
+            class="chat-input"
+            type="text"
+            maxlength="300"
+            autocomplete="off"
+            placeholder="Write a comment..."
+          >
+
+          <button
+            class="chat-send"
+            type="submit">
+            Send
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  /* =====================
+     PHOTO CLICK ONLY
+  ===================== */
+
+  const imageWrap =
+    card.querySelector(
+      ".photo-image-wrap"
+    );
+
+
+  imageWrap.addEventListener(
+    "click",
+    ()=>{
+      openPaymentPage();
+    }
+  );
+
+
+  /* =====================
+     LIKE
+  ===================== */
+
+  card
+    .querySelector(
+      "#like-" + index
+    )
+    .addEventListener(
+      "click",
+      event=>{
+        toggleLike(
+          index,
+          event
+        );
+      }
+    );
+
+
+  /* =====================
+     LOVE
+  ===================== */
+
+  card
+    .querySelector(
+      "#love-" + index
+    )
+    .addEventListener(
+      "click",
+      event=>{
+        toggleLove(
+          index,
+          event
+        );
+      }
+    );
+
+
+  /* =====================
+     FOLLOW
+  ===================== */
+
+  card
+    .querySelector(
+      "#follow-" + index
+    )
+    .addEventListener(
+      "click",
+      event=>{
+        toggleFollow(
+          index,
+          event
+        );
+      }
+    );
+
+
+  /* =====================
+     CHAT BUTTON
+  ===================== */
+
+  card
+    .querySelector(
+      "#chat-button-" + index
+    )
+    .addEventListener(
+      "click",
+      event=>{
+        toggleChat(
+          index,
+          event
+        );
+      }
+    );
+    /* =====================
+     COMMENT FORM
+  ===================== */
+
+  const form =
+    card.querySelector(
+      "#chat-form-" + index
+    );
+
+
+  const input =
+    card.querySelector(
+      "#input-" + index
+    );
+
+
+  form.addEventListener(
+    "submit",
+    event=>{
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+
+      addComment(
+        index,
+        input
+      );
+
+    }
+  );
+
+
+  /* =====================
+     PREVENT CARD PAYMENT
+     FROM SOCIAL AREA
+  ===================== */
+
+  const info =
+    card.querySelector(
+      ".photo-info"
+    );
+
+
+  info.addEventListener(
+    "click",
+    event=>{
+      event.stopPropagation();
+    }
+  );
+
+
+  /* =====================
+     INITIAL STATE
+  ===================== */
+
+  updateLikeButton(
+    index
+  );
+
+  updateLoveButton(
+    index
+  );
+
+  updateFollowButton(
+    index
+  );
+
+  renderComments(
+    index
+  );
+
+
+  return card;
+
+}
+
+
+/* =========================
+   CREATE ALL PHOTOS
 ========================= */
 
 function createPhotos(){
@@ -1035,97 +2334,11 @@ function createPhotos(){
   profiles.forEach(
     (profile,index)=>{
 
-      const name =
-        profile[0];
-
-      const age =
-        profile[1];
-
-      const country =
-        profile[2];
-
-      const flag =
-        profile[3];
-
-
-      const file =
-        imageFiles[
-          index %
-          imageFiles.length
-        ];
-
-
       const card =
-        document.createElement(
-          "div"
+        createPhotoCard(
+          profile,
+          index
         );
-
-
-      card.className =
-        "photoCard";
-
-
-      card.innerHTML = `
-
-        <div class="photo-image-wrap">
-
-          <img
-            class="profile-photo"
-            src="${IMAGE_BASE}${encodeURIComponent(file)}"
-            alt="${name}"
-            loading="eager"
-            onerror="this.style.display='none';"
-          >
-
-          <div
-            id="badge-${index}"
-            class="live-badge">
-            ● LIVE
-          </div>
-
-          <div
-            class="photo-play">
-          </div>
-
-        </div>
-
-
-        <div class="photo-info">
-
-          <div class="photo-name">
-
-            <span
-              id="dot-${index}"
-              class="name-dot">
-            </span>
-
-            <span>
-              ${name}
-            </span>
-
-          </div>
-
-
-          <div class="photo-meta">
-
-            ${flag}
-            ${country}
-            •
-            ${age}
-
-          </div>
-
-        </div>
-
-      `;
-
-
-      card.addEventListener(
-        "click",
-        ()=>{
-          openPaymentPage();
-        }
-      );
 
 
       photoGrid.appendChild(
@@ -1204,9 +2417,7 @@ function showPhotos(){
   );
 
 }
-
-
-/* =========================
+  /* =========================
    INCOMING CALL
 ========================= */
 
@@ -1260,7 +2471,7 @@ createPhotos();
 
 
 /*
-  Welcome screen:
+  Welcome:
   3 seconds
 */
 
@@ -1271,8 +2482,8 @@ setTimeout(
 
 
     /*
-      Photos visible
-      for 2 seconds
+      Photos:
+      2 seconds
     */
 
     setTimeout(
@@ -1368,7 +2579,6 @@ answerButton.addEventListener(
 
 /* =========================
    FIRST VISITOR VIDEO
-   EXACTLY 40 SECONDS
 ========================= */
 
 function playFirstVisitorVideo(){
@@ -1378,20 +2588,16 @@ function playFirstVisitorVideo(){
   );
 
 
-  /*
-    Load your video
-  */
-
   redLiveVideo.src =
     VIDEO_URL;
 
 
-  /*
-    Start from beginning
-  */
+  try{
 
-  redLiveVideo.currentTime =
-    0;
+    redLiveVideo.currentTime =
+      0;
+
+  }catch(error){}
 
 
   redLiveVideo.muted =
@@ -1408,15 +2614,16 @@ function playFirstVisitorVideo(){
       redLiveVideo.currentTime =
         0;
 
-    }catch(e){}
+    }catch(error){}
 
 
-    redLiveVideo.play()
+    redLiveVideo
+      .play()
       .catch(
         ()=>{
           /*
-            Browser may block
-            autoplay with sound.
+            Some mobile browsers
+            block autoplay with sound.
           */
         }
       );
@@ -1442,7 +2649,7 @@ function playFirstVisitorVideo(){
 
 
   /*
-    PLAY FOR 40 SECONDS
+    40 seconds
   */
 
   setTimeout(
@@ -1455,6 +2662,7 @@ function playFirstVisitorVideo(){
         "src"
       );
 
+
       redLiveVideo.load();
 
 
@@ -1463,13 +2671,7 @@ function playFirstVisitorVideo(){
       );
 
 
-      /*
-        After 40 seconds:
-        show insufficient minutes
-      */
-
       showInsufficient();
-
 
     },
     FIRST_CALL_DURATION
@@ -1529,8 +2731,315 @@ function showInsufficient(){
     );
 
 }
+  /* =========================
+   KEEP COMMENTS SEPARATE
+========================= */
+
+/*
+  Every profile has its own ID:
+
+  profile_0
+  profile_1
+  profile_2
+  ...
+
+  Therefore comments for Cute
+  do not appear under Becky,
+  and comments for Becky do not
+  appear under Dorry.
+
+  Example:
+
+  Cute:
+  profile_0 comments
+
+  Becky:
+  profile_1 comments
+
+  Dorry:
+  profile_2 comments
+*/
 
 
+/* =========================
+   OPEN CHAT FROM SCRIPT
+========================= */
+
+function openProfileChat(index){
+
+  const section =
+    document.getElementById(
+      "chat-" + index
+    );
+
+
+  const button =
+    document.getElementById(
+      "chat-button-" + index
+    );
+
+
+  if(!section){
+    return;
+  }
+
+
+  section.classList.add(
+    "open"
+  );
+
+
+  if(button){
+
+    button.classList.add(
+      "active"
+    );
+
+  }
+
+
+  renderComments(
+    index
+  );
+
+
+  const input =
+    document.getElementById(
+      "input-" + index
+    );
+
+
+  if(input){
+
+    setTimeout(
+      ()=>{
+        input.focus();
+      },
+      50
+    );
+
+  }
+
+}
+
+
+/* =========================
+   COMMENT SCROLL
+========================= */
+
+function scrollChatToBottom(index){
+
+  const list =
+    document.getElementById(
+      "comments-" + index
+    );
+
+
+  if(!list){
+    return;
+  }
+
+
+  list.scrollTop =
+    list.scrollHeight;
+
+}
+
+
+/* =========================
+   UPDATE ONE PROFILE
+========================= */
+
+function refreshProfileSocial(index){
+
+  updateLikeButton(
+    index
+  );
+
+  updateLoveButton(
+    index
+  );
+
+  updateFollowButton(
+    index
+  );
+
+  renderComments(
+    index
+  );
+
+}
+
+
+/* =========================
+   REBUILD COMMENTS IF NEEDED
+========================= */
+
+profiles.forEach(
+  (_,index)=>{
+
+    if(
+      !Array.isArray(
+        commentData[
+          profileId(index)
+        ]
+      )
+    ){
+
+      commentData[
+        profileId(index)
+      ] = [];
+
+    }
+
+  }
+);
+
+
+saveComments();
+
+
+/* =========================
+   AUTO KEEP CHAT AT BOTTOM
+========================= */
+
+setInterval(
+  ()=>{
+
+    profiles.forEach(
+      (_,index)=>{
+
+        const section =
+          document.getElementById(
+            "chat-" + index
+          );
+
+
+        if(
+          section &&
+          section.classList.contains(
+            "open"
+          )
+        ){
+
+          const list =
+            document.getElementById(
+              "comments-" + index
+            );
+
+
+          if(list){
+
+            /*
+              Only keep the list
+              at bottom when user
+              is already near bottom.
+            */
+
+            const distance =
+              list.scrollHeight -
+              list.scrollTop -
+              list.clientHeight;
+
+
+            if(distance < 40){
+
+              list.scrollTop =
+                list.scrollHeight;
+
+            }
+
+          }
+
+        }
+
+      }
+    );
+
+  },
+  3000
+);
+
+
+/* =========================
+   FINISH INITIAL SETUP
+========================= */
+
+profiles.forEach(
+  (_,index)=>{
+
+    refreshProfileSocial(
+      index
+    );
+
+  }
+);
+  <script>
+profiles.forEach((_, index) => {
+  const input = document.getElementById("input-" + index);
+
+  if (!input) return;
+
+  input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+
+      const text = input.value.trim();
+
+      if (text) {
+        addComment(index, text);
+      }
+    }
+  });
+});
+
+document.addEventListener("click", function(event) {
+  const socialButton = event.target.closest(".social-btn");
+
+  if (socialButton) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  const chatSection = event.target.closest(".chat-section");
+
+  if (chatSection) {
+    event.stopPropagation();
+  }
+});
+
+document.addEventListener("touchstart", function(event) {
+  const socialButton = event.target.closest(".social-btn");
+
+  if (socialButton) {
+    event.stopPropagation();
+  }
+
+  const chatSection = event.target.closest(".chat-section");
+
+  if (chatSection) {
+    event.stopPropagation();
+  }
+}, { passive: true });
+
+function refreshAllSocialData() {
+  profiles.forEach((_, index) => {
+    refreshProfileSocial(index);
+  });
+}
+
+refreshAllSocialData();
+window.addEventListener("load", function() {
+  refreshAllSocialData();
+
+  profiles.forEach((_, index) => {
+    const commentsBox = document.getElementById("comments-" + index);
+
+    if (commentsBox) {
+      commentsBox.scrollTop = commentsBox.scrollHeight;
+    }
+  });
+});
 </script>
 
 </body>
