@@ -98,7 +98,7 @@ button{
 }
 
 
-/* PHOTOS / LIVE VIDEO */
+/* LIVE VIDEO PAGE */
 #photosPage{
   min-height:100vh;
   background:#080808;
@@ -189,8 +189,7 @@ button{
   object-fit:cover;
   display:block;
 }
-
-.online-big-dot{
+  .online-big-dot{
   position:absolute;
   right:7px;
   top:7px;
@@ -231,7 +230,8 @@ button{
   padding-left:3px;
   box-shadow:0 0 20px rgba(255,23,68,.45);
 }
-  .profile-info{
+
+.profile-info{
   padding:8px;
 }
 
@@ -278,7 +278,6 @@ button{
     opacity:0;
     transform:translateY(8px);
   }
-
   to{
     opacity:1;
     transform:translateY(0);
@@ -504,12 +503,8 @@ button{
 <body>
 
 <section id="welcomeScreen">
-
   <div class="welcome-box">
-
-    <div class="logo">
-      Live<span>X</span>
-    </div>
+    <div class="logo">Live<span>X</span></div>
 
     <div class="welcome-title">
       Welcome to LiveX
@@ -522,9 +517,7 @@ button{
     <div class="loading-line">
       <div class="loading-progress"></div>
     </div>
-
   </div>
-
 </section>
 
 
@@ -537,16 +530,13 @@ button{
     </div>
 
     <div class="online-count">
-      <span id="onlineCount">19</span>
+      <span id="onlineCount">9</span>
       online
     </div>
 
     <div class="live-status">
-
       <span class="live-dot"></span>
-
       LIVE
-
     </div>
 
   </div>
@@ -682,9 +672,7 @@ button{
 "use strict";
 
 
-/* =========================
-   BASIC SETTINGS
-========================= */
+/* BASIC SETTINGS */
 
 const FIRST_VIDEO_KEY =
   "livex_first_video_played_v1";
@@ -697,64 +685,40 @@ const PAYMENT_PAGE =
 
 
 const welcomeScreen =
-  document.getElementById(
-    "welcomeScreen"
-  );
+  document.getElementById("welcomeScreen");
 
 const photosPage =
-  document.getElementById(
-    "photosPage"
-  );
+  document.getElementById("photosPage");
 
 const photosGrid =
-  document.getElementById(
-    "photosGrid"
-  );
+  document.getElementById("photosGrid");
 
 const incomingCall =
-  document.getElementById(
-    "incomingCall"
-  );
+  document.getElementById("incomingCall");
 
 const callAvatar =
-  document.getElementById(
-    "callAvatar"
-  );
+  document.getElementById("callAvatar");
 
 const callName =
-  document.getElementById(
-    "callName"
-  );
+  document.getElementById("callName");
 
 const videoPage =
-  document.getElementById(
-    "videoPage"
-  );
+  document.getElementById("videoPage");
 
 const liveVideo =
-  document.getElementById(
-    "liveVideo"
-  );
+  document.getElementById("liveVideo");
 
 const videoName =
-  document.getElementById(
-    "videoName"
-  );
+  document.getElementById("videoName");
 
 const videoChat =
-  document.getElementById(
-    "videoChat"
-  );
+  document.getElementById("videoChat");
 
 const insufficientPage =
-  document.getElementById(
-    "insufficientPage"
-  );
+  document.getElementById("insufficientPage");
 
 const onlineCount =
-  document.getElementById(
-    "onlineCount"
-  );
+  document.getElementById("onlineCount");
 
 
 let currentCallProfile = null;
@@ -766,8 +730,9 @@ let photoOfflineTimer = null;
 let callTimer = null;
 
 let cameraStream = null;
- /* =========================
-   PROFILE DATA
+  /* =========================
+   UNIQUE PROFILE DATA
+   9 DIFFERENT PHOTOS ONLY
 ========================= */
 
 const profiles = [
@@ -887,235 +852,27 @@ const profiles = [
       "I have a message for you",
       "Let's talk 😊"
     ]
-  },
-
-  {
-    name:"Blessing",
-    age:22,
-    country:"Nigeria",
-    flag:"🇳🇬",
-    image:"photo1.jpg",
-    messages:[
-      "Hello ❤️",
-      "How are you?",
-      "I am waiting 😊"
-    ]
-  },
-
-  {
-    name:"Favour",
-    age:26,
-    country:"Nigeria",
-    flag:"🇳🇬",
-    image:"photo2.jpg",
-    messages:[
-      "Hey 😊",
-      "Come chat with me",
-      "I am online ❤️"
-    ]
-  },
-
-  {
-    name:"Peace",
-    age:25,
-    country:"Nigeria",
-    flag:"🇳🇬",
-    image:"photo4.jpg",
-    messages:[
-      "Hi ❤️",
-      "Nice seeing you here",
-      "Let's talk 😊"
-    ]
-  },
-
-  {
-    name:"Joy",
-    age:27,
-    country:"Nigeria",
-    flag:"🇳🇬",
-    image:"photo5.jpg",
-    messages:[
-      "Hello dear 😊",
-      "I am available",
-      "Say hi ❤️"
-    ]
-  },
-
-  {
-    name:"Grace",
-    age:24,
-    country:"Congo",
-    flag:"🇨🇩",
-    image:"1785179340825.jpg",
-    messages:[
-      "Hi ❤️",
-      "You can chat with me",
-      "I am online 😊"
-    ]
-  },
-
-  {
-    name:"Mimi",
-    age:23,
-    country:"Congo",
-    flag:"🇨🇩",
-    image:"1785179340825 (1).jpg",
-    messages:[
-      "Hello 😊",
-      "I am waiting",
-      "Come and talk ❤️"
-    ]
-  },
-
-  {
-    name:"Nadia",
-    age:26,
-    country:"Congo",
-    flag:"🇨🇩",
-    image:"1785179362758.jpg",
-    messages:[
-      "Hey ❤️",
-      "Are you there?",
-      "Let's connect 😊"
-    ]
-  },
-    {
-    name:"Bella",
-    age:25,
-    country:"Congo",
-    flag:"🇨🇩",
-    image:"1785179915649.jpg",
-    messages:[
-      "Hi 😊",
-      "I would like to know you",
-      "Talk to me ❤️"
-    ]
-  },
-
-  {
-    name:"Princess",
-    age:28,
-    country:"Congo",
-    flag:"🇨🇩",
-    image:"Screenshot_20260731-045343.png",
-    messages:[
-      "Hello ❤️",
-      "I am live now",
-      "Come chat 😊"
-    ]
-  },
-
-  {
-    name:"Emily",
-    age:24,
-    country:"Canada",
-    flag:"🇨🇦",
-    image:"photo1.jpg",
-    messages:[
-      "Hi there 😊",
-      "Nice to see you",
-      "Let's chat ❤️"
-    ]
-  },
-
-  {
-    name:"Sophie",
-    age:27,
-    country:"Canada",
-    flag:"🇨🇦",
-    image:"photo2.jpg",
-    messages:[
-      "Hello ❤️",
-      "I am online",
-      "Say hello 😊"
-    ]
-  },
-
-  {
-    name:"Thandi",
-    age:25,
-    country:"South Africa",
-    flag:"🇿🇦",
-    image:"photo4.jpg",
-    messages:[
-      "Hi 😊",
-      "Come chat",
-      "I am here ❤️"
-    ]
-  },
-
-  {
-    name:"Lerato",
-    age:29,
-    country:"South Africa",
-    flag:"🇿🇦",
-    image:"photo5.jpg",
-    messages:[
-      "Hello ❤️",
-      "Are you watching?",
-      "Let's talk 😊"
-    ]
-  },
-
-  {
-    name:"Ashley",
-    age:23,
-    country:"USA",
-    flag:"🇺🇸",
-    image:"1785179340825.jpg",
-    messages:[
-      "Hey ❤️",
-      "I am online",
-      "Come say hi 😊"
-    ]
-  },
-
-  {
-    name:"Jessica",
-    age:26,
-    country:"USA",
-    flag:"🇺🇸",
-    image:"1785179362758.jpg",
-    messages:[
-      "Hello 😊",
-      "Let's have a chat",
-      "I am waiting ❤️"
-    ]
   }
 
 ];
-
-
-/* =========================
+  /* =========================
    UTILITY
 ========================= */
 
 function showOnly(section){
 
-  welcomeScreen.classList.add(
-    "hidden"
-  );
+  welcomeScreen.classList.add("hidden");
 
-  photosPage.classList.add(
-    "hidden"
-  );
+  photosPage.classList.add("hidden");
 
-  incomingCall.classList.add(
-    "hidden"
-  );
+  incomingCall.classList.add("hidden");
 
-  videoPage.classList.add(
-    "hidden"
-  );
+  videoPage.classList.add("hidden");
 
-  insufficientPage.classList.add(
-    "hidden"
-  );
+  insufficientPage.classList.add("hidden");
 
   if(section){
-    section.classList.remove(
-      "hidden"
-    );
+    section.classList.remove("hidden");
   }
 }
 
@@ -1146,10 +903,12 @@ function getPaymentUrl(profile){
     ).get("ref");
 
   if(ref){
+
     params.set(
       "ref",
       ref
     );
+
   }
 
   return PAYMENT_PAGE +
@@ -1162,8 +921,11 @@ function openPayment(profile){
 
   window.location.href =
     getPaymentUrl(profile);
-    }
-  /* =========================
+
+}
+
+
+/* =========================
    RANDOM OFFLINE PEOPLE
 ========================= */
 
@@ -1171,8 +933,14 @@ function chooseOffline(){
 
   const indexes = [];
 
+  const amount =
+    Math.min(
+      3,
+      profiles.length
+    );
+
   while(
-    indexes.length < 5
+    indexes.length < amount
   ){
 
     const randomIndex =
@@ -1192,6 +960,7 @@ function chooseOffline(){
       );
 
     }
+
   }
 
   return indexes;
@@ -1203,7 +972,7 @@ let offlineIndexes =
 
 
 /* =========================
-   SHUFFLE ARRAY
+   SHUFFLE
 ========================= */
 
 function shuffleArray(array){
@@ -1233,13 +1002,12 @@ function shuffleArray(array){
       shuffled[j],
       shuffled[i]
     ];
+
   }
 
   return shuffled;
-}
-
-
-/* =========================
+    }
+  /* =========================
    PHOTO CHAT
    EACH PHOTO INDEPENDENT
 ========================= */
@@ -1259,47 +1027,40 @@ function startPhotoChat(
     return;
   }
 
-
   let messageIndex =
     Math.floor(
       Math.random() *
       profile.messages.length
     );
 
-
   let intervalTimer = null;
-
 
   function showNextMessage(){
 
-    if(
-      !chatBox.isConnected
-    ){
+    if(!chatBox.isConnected){
 
       if(intervalTimer){
+
         clearInterval(
           intervalTimer
         );
 
         intervalTimer = null;
+
       }
 
       return;
     }
 
-
     chatBox.innerHTML = "";
-
 
     const message =
       document.createElement(
         "div"
       );
 
-
     message.className =
       "photo-chat-message";
-
 
     message.textContent =
       profile.messages[
@@ -1307,20 +1068,14 @@ function startPhotoChat(
         profile.messages.length
       ];
 
-
     chatBox.appendChild(
       message
     );
 
-
     messageIndex++;
+
   }
 
-
-  /*
-    Each photo starts at
-    a different random time.
-  */
 
   const firstDelay =
     500 +
@@ -1331,27 +1086,17 @@ function startPhotoChat(
 
   setTimeout(()=>{
 
-    if(
-      !chatBox.isConnected
-    ){
+    if(!chatBox.isConnected){
       return;
     }
 
-
     showNextMessage();
-
-
-    /*
-      Each photo gets its own
-      random interval.
-    */
 
     const nextDelay =
       3500 +
       Math.floor(
         Math.random() * 5000
       );
-
 
     intervalTimer =
       setInterval(
@@ -1361,15 +1106,16 @@ function startPhotoChat(
 
   },firstDelay);
 
-             }
+}
+
+
 /* =========================
-   RENDER ALL PHOTOS
+   RENDER ALL UNIQUE PHOTOS
 ========================= */
 
 function renderPhotos(){
 
   photosGrid.innerHTML = "";
-
 
   onlineCount.textContent =
     String(
@@ -1377,44 +1123,31 @@ function renderPhotos(){
       offlineIndexes.length
     );
 
-
-  /*
-    Every render gets a new
-    random order.
-
-    No 5-second shuffle.
-  */
-
   const shuffledProfiles =
     shuffleArray(
       profiles
     );
 
-
   shuffledProfiles.forEach(
-    (profile)=>{
+    profile=>{
 
       const originalIndex =
         profiles.indexOf(
           profile
         );
 
-
       const offline =
         offlineIndexes.includes(
           originalIndex
         );
-
 
       const card =
         document.createElement(
           "article"
         );
 
-
       card.className =
         "profile-card";
-
 
       card.innerHTML = `
 
@@ -1451,9 +1184,7 @@ function renderPhotos(){
           </div>
 
         </div>
-
-
-        <div class="profile-info">
+                <div class="profile-info">
 
           <div class="profile-name">
             ${profile.name}
@@ -1500,30 +1231,25 @@ function renderPhotos(){
           ".profile-image"
         );
 
-
       const play =
         card.querySelector(
           ".play-icon"
         );
-
 
       const like =
         card.querySelector(
           ".like-btn"
         );
 
-
       const love =
         card.querySelector(
           ".love-btn"
         );
 
-
       const follow =
         card.querySelector(
           ".follow-btn"
         );
-
 
       const chat =
         card.querySelector(
@@ -1534,9 +1260,7 @@ function renderPhotos(){
       image.addEventListener(
         "click",
         ()=>{
-          openPayment(
-            profile
-          );
+          openPayment(profile);
         }
       );
 
@@ -1544,9 +1268,7 @@ function renderPhotos(){
       play.addEventListener(
         "click",
         ()=>{
-          openPayment(
-            profile
-          );
+          openPayment(profile);
         }
       );
 
@@ -1554,16 +1276,14 @@ function renderPhotos(){
       chat.addEventListener(
         "click",
         ()=>{
-          openPayment(
-            profile
-          );
+          openPayment(profile);
         }
       );
 
 
       like.addEventListener(
         "click",
-        (event)=>{
+        event=>{
 
           event.stopPropagation();
 
@@ -1577,7 +1297,7 @@ function renderPhotos(){
 
       love.addEventListener(
         "click",
-        (event)=>{
+        event=>{
 
           event.stopPropagation();
 
@@ -1591,7 +1311,7 @@ function renderPhotos(){
 
       follow.addEventListener(
         "click",
-        (event)=>{
+        event=>{
 
           event.stopPropagation();
 
@@ -1615,12 +1335,10 @@ function renderPhotos(){
 
     }
   );
+
 }
-
-
-/* =========================
+  /* =========================
    OFFLINE ROTATION
-   EVERY 5 MINUTES
 ========================= */
 
 function startOfflineRotation(){
@@ -1633,7 +1351,6 @@ function startOfflineRotation(){
 
   }
 
-
   photoOfflineTimer =
     setInterval(()=>{
 
@@ -1645,7 +1362,9 @@ function startOfflineRotation(){
     },5 * 60 * 1000);
 
 }
-  /* =========================
+
+
+/* =========================
    INCOMING CALL
 ========================= */
 
@@ -1658,6 +1377,7 @@ function openIncomingCall(){
   ){
 
     return;
+
   }
 
 
@@ -1674,7 +1394,6 @@ function openIncomingCall(){
 
 
   if(!available.length){
-
     return;
   }
 
@@ -1743,6 +1462,7 @@ async function requestCameraPermission(){
   ){
 
     return true;
+
   }
 
 
@@ -1779,6 +1499,7 @@ async function requestCameraPermission(){
     return false;
 
   }
+
 }
 
 
@@ -1796,16 +1517,15 @@ async function answerIncomingCall(){
 
   }
 
-
   await requestCameraPermission();
 
-
   startLiveVideo();
+
 }
 
 
 /* =========================
-   START LIVE VIDEO
+   START VIDEO
 ========================= */
 
 function startLiveVideo(){
@@ -1835,22 +1555,17 @@ function startLiveVideo(){
 
   liveVideo.currentTime = 0;
 
-
   liveVideo.muted = false;
 
   liveVideo.volume = 1;
 
-
   videoChat.innerHTML = "";
-
 
   showOnly(
     videoPage
   );
 
-
   startVideoChat();
-
 
   liveVideo
     .play()
@@ -1881,10 +1596,8 @@ function startLiveVideo(){
       40000
     );
 
-}
-
-
-/* =========================
+          }
+  /* =========================
    VIDEO CHAT
 ========================= */
 
@@ -1925,6 +1638,7 @@ function startVideoChat(){
         ){
 
           return;
+
         }
 
 
@@ -1962,9 +1676,10 @@ function startVideoChat(){
     }
   );
 
-    }
+}
 
-  /* =========================
+
+/* =========================
    END VIDEO
 ========================= */
 
@@ -2016,15 +1731,12 @@ document
         "active"
       );
 
-
       this.textContent =
         this.classList.contains(
           "active"
         )
-        ?
-        "❤️ Liked"
-        :
-        "❤️ Like";
+        ? "❤️ Liked"
+        : "❤️ Like";
 
     }
   );
@@ -2040,15 +1752,12 @@ document
         "active"
       );
 
-
       this.textContent =
         this.classList.contains(
           "active"
         )
-        ?
-        "✓ Following"
-        :
-        "+ Follow";
+        ? "✓ Following"
+        : "+ Follow";
 
     }
   );
@@ -2081,7 +1790,6 @@ document
         );
 
       }
-
 
       showOnly(
         photosPage
@@ -2165,7 +1873,6 @@ function startWebsite(){
       photosPage
     );
 
-
     renderPhotos();
 
 
@@ -2174,7 +1881,6 @@ function startWebsite(){
       openIncomingCall();
 
     },3500);
-
 
   },3000);
 
