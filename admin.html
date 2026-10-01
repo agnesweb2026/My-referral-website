@@ -37,12 +37,11 @@ button{
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:
-    radial-gradient(
-      circle at top,
-      #172436 0%,
-      #080c12 60%
-    );
+  background:radial-gradient(
+    circle at top,
+    #172436 0%,
+    #080c12 60%
+  );
 }
 
 .login-box{
@@ -464,6 +463,8 @@ button{
   </div>
 
 </div>
+
+
 <div id="adminPage" class="hidden">
 
   <header class="topbar">
@@ -493,6 +494,7 @@ button{
 
   </header>
 
+
   <main class="container">
 
     <div class="stats">
@@ -512,6 +514,7 @@ button{
 
       </div>
 
+
       <div class="stat-card">
 
         <div class="stat-label">
@@ -528,6 +531,7 @@ button{
       </div>
 
     </div>
+
 
     <section class="section">
 
@@ -546,6 +550,7 @@ button{
 
       </div>
 
+
       <div id="requestList">
 
         <div class="empty">
@@ -560,15 +565,17 @@ button{
 
 </div>
 
+
 <script>
-
-const ADMIN_USERNAME = "admin";
-
+  const ADMIN_USERNAME = "admin";
 const ADMIN_PASSWORD = "Admin12345";
 
-const WITHDRAWAL_KEY =
-  "withdrawalRequests";
+const ADMIN_LOGIN_KEY = "adminLoggedIn";
 
+
+/* =========================
+   LOGIN
+========================= */
 
 function adminLogin(){
 
@@ -587,13 +594,14 @@ function adminLogin(){
     document
       .getElementById("loginError");
 
+
   if(
     username === ADMIN_USERNAME &&
     password === ADMIN_PASSWORD
   ){
 
     localStorage.setItem(
-      "adminLoggedIn",
+      ADMIN_LOGIN_KEY,
       "true"
     );
 
@@ -611,10 +619,14 @@ function adminLogin(){
 }
 
 
+/* =========================
+   LOGOUT
+========================= */
+
 function adminLogout(){
 
   localStorage.removeItem(
-    "adminLoggedIn"
+    ADMIN_LOGIN_KEY
   );
 
   document
@@ -636,6 +648,10 @@ function adminLogout(){
 }
 
 
+/* =========================
+   SHOW ADMIN
+========================= */
+
 function showAdmin(){
 
   document
@@ -651,27 +667,59 @@ function showAdmin(){
 }
 
 
-function getRequests(){
+/* =========================
+   GET SHARED REQUESTS
+========================= */
+
+async function getRequests(){
 
   try{
 
-    const saved =
-      localStorage.getItem(
-        WITHDRAWAL_KEY
+    const response =
+      await fetch(
+        "/api/withdrawals",
+        {
+          method:"GET",
+          cache:"no-store"
+        }
       );
 
-    if(!saved){
-      return [];
+
+    if(!response.ok){
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
     }
 
-    const parsed =
-      JSON.parse(saved);
 
-    return Array.isArray(parsed)
-      ? parsed
-      : [];
+    const data =
+      await response.json();
+
+
+    if(
+      !data ||
+      !Array.isArray(
+        data.requests
+      )
+    ){
+
+      return [];
+
+    }
+
+
+    return data.requests;
+
 
   }catch(error){
+
+    console.error(
+      "Could not load withdrawal requests:",
+      error
+    );
 
     return [];
 
@@ -680,328 +728,160 @@ function getRequests(){
 }
 
 
-function saveRequests(requests){
+/* =========================
+   UPDATE SHARED REQUEST
+========================= */
 
-  localStorage.setItem(
-    WITHDRAWAL_KEY,
-    JSON.stringify(requests)
-  );
+async function updateRequestStatus(
+  requestId,
+  status
+){
+
+  try{
+
+    const response =
+      await fetch(
+        "/api/withdrawals",
+        {
+          method:"PUT",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+            id:requestId,
+            status:status
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
+
+      return {
+        success:false,
+        message:
+          data.message ||
+          "Request update failed."
+      };
+
+    }
+
+
+    return {
+      success:true,
+      request:data.request
+    };
+
+
+  }catch(error){
+
+    console.error(
+      "Update withdrawal error:",
+      error
+    );
+
+    return {
+      success:false,
+      message:
+        "Connection error."
+    };
+
+  }
 
 }
 
 
-function loadRequests(){
+/* =========================
+   LOAD REQUESTS
+========================= */
 
-  const requests =
-    getRequests();
-
-  const pending =
-    requests.filter(
-      request =>
-        String(
-          request.status ||
-          "PENDING"
-        ).toUpperCase() ===
-        "PENDING"
-    );
-
-  document
-    .getElementById("pendingCount")
-    .textContent =
-    pending.length;
-
-  const total =
-    pending.reduce(
-      (sum,request)=>
-        sum +
-        Number(
-          request.amount || 0
-        ),
-      0
-    );
-
-  document
-    .getElementById("pendingAmount")
-    .textContent =
-    "KSh " +
-    total.toLocaleString();
-
-  renderRequests(requests);
-
-}
-
-
-function renderRequests(requests){
+async function loadRequests(){
 
   const list =
     document.getElementById(
       "requestList"
     );
 
-  if(!requests.length){
 
-    list.innerHTML = `
-      <div class="empty">
-        No withdrawal requests yet.
-      </div>
-    `;
+  list.innerHTML = `
+    <div class="empty">
+      Loading withdrawal requests...
+    </div>
+  `;
 
-    return;
 
-  }
+  const requests =
+    await getRequests();
 
-  const sortedRequests =
-    [...requests].sort(
-      (a,b)=>{
 
-        const dateA =
-          new Date(
-            a.createdAt ||
-            a.date ||
-            a.requestedAt ||
-            0
-          ).getTime();
+  const pending =
+    requests.filter(
+      function(request){
 
-        const dateB =
-          new Date(
-            b.createdAt ||
-            b.date ||
-            b.requestedAt ||
-            0
-          ).getTime();
-
-        return dateB-dateA;
+        return (
+          String(
+            request.status ||
+            "PENDING"
+          ).toUpperCase() ===
+          "PENDING"
+        );
 
       }
     );
 
-  list.innerHTML =
-    sortedRequests
-      .map(
-        (request,index)=>{
 
-          const status =
-            String(
-              request.status ||
-              "PENDING"
-            ).toUpperCase();
-
-          const employeeName =
-            request.employeeName ||
-            request.name ||
-            "Employee";
-
-          const employeeId =
-            request.employeeId ||
-            request.employee ||
-            request.referralCode ||
-            "Unknown";
-
-          const amount =
-            Number(
-              request.amount || 0
-            );
-
-          const requestId =
-            String(
-              request.id ||
-              index + 1
-            );
-
-          const dateValue =
-            request.createdAt ||
-            request.date ||
-            request.requestedAt ||
-            "";
-
-          let formattedDate =
-            "Date not available";
-
-          if(dateValue){
-
-            const date =
-              new Date(dateValue);
-
-            if(
-              !Number.isNaN(
-                date.getTime()
-              )
-            ){
-
-              formattedDate =
-                date.toLocaleString();
-
-            }
-
-          }
-
-          let statusClass =
-            "pending";
-
-          if(
-            status === "APPROVED"
-          ){
-
-            statusClass =
-              "approved";
-
-          }
-
-          if(
-            status === "REJECTED"
-          ){
-
-            statusClass =
-              "rejected";
-
-          }
-
-          const statusText =
-            status === "APPROVED"
-              ? "APPROVED"
-              : status === "REJECTED"
-                ? "REJECTED"
-                : "PENDING";
-
-          let actions = "";
-
-          if(
-            status === "PENDING"
-          ){
-
-            actions = `
-
-              <div class="request-actions">
-
-                <button
-                  class="approve-btn"
-                  onclick="approveRequest('${escapeAttribute(requestId)}')"
-                >
-                  APPROVE
-                </button>
-
-                <button
-                  class="reject-btn"
-                  onclick="rejectRequest('${escapeAttribute(requestId)}')"
-                >
-                  REJECT
-                </button>
-
-              </div>
-
-            `;
-
-          }else{
-
-            actions = `
-
-              <div class="processed-message">
-                This request has already been processed.
-              </div>
-
-            `;
-
-          }
-
-          return `
-
-            <div class="request-card">
-
-              <div class="request-top">
-
-                <div>
-
-                  <div class="employee-name">
-                    ${escapeHTML(employeeName)}
-                  </div>
-
-                  <div class="employee-id">
-                    ${escapeHTML(employeeId)}
-                  </div>
-
-                </div>
-
-                <div class="amount">
-                  KSh ${amount.toLocaleString()}
-                </div>
-
-              </div>
-
-              <div class="request-info">
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Request ID
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHTML(requestId)}
-                  </div>
-
-                </div>
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Date
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHTML(formattedDate)}
-                  </div>
-
-                </div>
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    M-PESA Number
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHTML(
-                      request.phone ||
-                      request.mpesaNumber ||
-                      request.phoneNumber ||
-                      "Not provided"
-                    )}
-                  </div>
-
-                </div>
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Status
-                  </div>
-
-                  <div>
-
-                    <span
-                      class="status ${statusClass}"
-                    >
-                      ${statusText}
-                    </span>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              ${actions}
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
+  document
+    .getElementById(
+      "pendingCount"
+    )
+    .textContent =
+      pending.length;
+
+
+  const pendingAmount =
+    pending.reduce(
+      function(total,request){
+
+        return (
+          total +
+          Number(
+            request.amount || 0
+          )
+        );
+
+      },
+      0
+    );
+
+
+  document
+    .getElementById(
+      "pendingAmount"
+    )
+    .textContent =
+      "KSh " +
+      pendingAmount.toLocaleString();
+
+
+  renderRequests(
+    requests
+  );
 
 }
-  function escapeHTML(value){
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value){
 
   return String(value)
 
@@ -1033,81 +913,380 @@ function renderRequests(requests){
 }
 
 
-function escapeAttribute(value){
+/* =========================
+   RENDER REQUESTS
+========================= */
 
-  return String(value)
-
-    .replace(
-      /\\/g,
-      "\\\\"
-    )
-
-    .replace(
-      /'/g,
-      "\\'"
-    );
-
-}
-
-
-function findRequest(
-  requests,
-  requestId
+function renderRequests(
+  requests
 ){
 
-  const id =
-    String(requestId);
-
-  return requests.findIndex(
-    (request,index)=>{
-
-      const currentId =
-        String(
-          request.id ??
-          index + 1
-        );
-
-      return currentId === id;
-
-    }
-  );
-
-}
-
-
-function approveRequest(
-  requestId
-){
-
-  const requests =
-    getRequests();
-
-  const index =
-    findRequest(
-      requests,
-      requestId
+  const list =
+    document.getElementById(
+      "requestList"
     );
 
-  if(index < 0){
 
-    alert(
-      "Withdrawal request was not found."
-    );
+  if(
+    !requests ||
+    requests.length === 0
+  ){
 
-    loadRequests();
+    list.innerHTML = `
+      <div class="empty">
+        No withdrawal requests yet.
+      </div>
+    `;
 
     return;
 
   }
 
+
+  const sorted =
+    [...requests].sort(
+      function(a,b){
+
+        return (
+          new Date(
+            b.createdAt || 0
+          ) -
+          new Date(
+            a.createdAt || 0
+          )
+        );
+
+      }
+    );
+
+
+  list.innerHTML =
+    sorted
+      .map(
+        function(request){
+
+          const status =
+            String(
+              request.status ||
+              "PENDING"
+            ).toUpperCase();
+
+
+          let statusClass =
+            "pending";
+
+
+          if(
+            status === "APPROVED"
+          ){
+
+            statusClass =
+              "approved";
+
+          }
+
+
+          if(
+            status === "REJECTED"
+          ){
+
+            statusClass =
+              "rejected";
+
+          }
+
+
+          const employeeName =
+            request.employeeName ||
+            "Employee";
+
+
+          const employeeId =
+            request.employeeId ||
+            request.referral ||
+            "-";
+
+
+          const username =
+            request.username ||
+            "-";
+
+
+          const referral =
+            request.referral ||
+            "-";
+
+
+          const phone =
+            request.phone ||
+            "-";
+
+
+          const amount =
+            Number(
+              request.amount || 0
+            );
+
+
+          const date =
+            request.createdAt
+              ? new Date(
+                  request.createdAt
+                ).toLocaleString()
+              : "-";
+
+
+          const requestId =
+            request.id ||
+            "-";
+
+
+          let actions = "";
+
+
+          if(
+            status === "PENDING"
+          ){
+
+            actions = `
+
+              <div class="request-actions">
+
+                <button
+                  class="approve-btn"
+                  onclick="approveRequest('${escapeHTML(requestId)}')"
+                >
+                  APPROVE
+                </button>
+
+                <button
+                  class="reject-btn"
+                  onclick="rejectRequest('${escapeHTML(requestId)}')"
+                >
+                  REJECT
+                </button>
+
+              </div>
+
+            `;
+
+          }else{
+
+            actions = `
+
+              <div class="processed-message">
+
+                This request has already been
+                ${status.toLowerCase()}.
+
+              </div>
+
+            `;
+
+          }
+
+
+          return `
+
+            <div class="request-card">
+
+              <div class="request-top">
+
+                <div>
+
+                  <div class="employee-name">
+
+                    ${escapeHTML(
+                      employeeName
+                    )}
+
+                  </div>
+
+                  <div class="employee-id">
+
+                    ${escapeHTML(
+                      employeeId
+                    )}
+
+                  </div>
+
+                </div>
+
+
+                <div class="amount">
+
+                  KSh
+                  ${amount.toLocaleString()}
+
+                </div>
+
+              </div>
+
+
+              <div class="request-info">
+
+                <div class="info-box">
+
+                  <div class="info-label">
+                    Request ID
+                  </div>
+
+                  <div class="info-value">
+
+                    ${escapeHTML(
+                      requestId
+                    )}
+
+                  </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                  <div class="info-label">
+                    Date
+                  </div>
+
+                  <div class="info-value">
+
+                    ${escapeHTML(
+                      date
+                    )}
+
+                  </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                  <div class="info-label">
+                    M-PESA Number
+                  </div>
+
+                  <div class="info-value">
+
+                    ${escapeHTML(
+                      phone
+                    )}
+
+                  </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                  <div class="info-label">
+                    Username
+                  </div>
+
+                  <div class="info-value">
+
+                    ${escapeHTML(
+                      username
+                    )}
+
+                  </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                  <div class="info-label">
+                    Referral
+                  </div>
+
+                  <div class="info-value">
+
+                    ${escapeHTML(
+                      referral
+                    )}
+
+                  </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                  <div class="info-label">
+                    Status
+                  </div>
+
+                  <div>
+
+                    <span
+                      class="status ${statusClass}"
+                    >
+                      ${status}
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              ${actions}
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+  }
+  /* =========================
+   APPROVE REQUEST
+========================= */
+
+async function approveRequest(
+  requestId
+){
+
+  const requests =
+    await getRequests();
+
+
   const request =
-    requests[index];
+    requests.find(
+      function(item){
+
+        return String(
+          item.id
+        ) === String(
+          requestId
+        );
+
+      }
+    );
+
+
+  if(!request){
+
+    alert(
+      "Withdrawal request was not found."
+    );
+
+    await loadRequests();
+
+    return;
+
+  }
+
 
   const currentStatus =
     String(
       request.status ||
       "PENDING"
     ).toUpperCase();
+
 
   if(
     currentStatus !==
@@ -1118,19 +1297,23 @@ function approveRequest(
       "This request has already been processed."
     );
 
-    loadRequests();
+    await loadRequests();
 
     return;
 
   }
+
 
   const amount =
     Number(
       request.amount || 0
     );
 
+
   if(
-    !Number.isFinite(amount) ||
+    !Number.isFinite(
+      amount
+    ) ||
     amount <= 0
   ){
 
@@ -1142,55 +1325,70 @@ function approveRequest(
 
   }
 
-  const employeeName =
-    request.employeeName ||
-    request.name ||
-    "Employee";
 
   const confirmed =
     confirm(
       "Approve KSh " +
       amount.toLocaleString() +
       " withdrawal for " +
-      employeeName +
+      (
+        request.employeeName ||
+        "Employee"
+      ) +
       "?"
     );
 
+
   if(!confirmed){
+
     return;
+
   }
 
-  const latestRequests =
-    getRequests();
 
-  const latestIndex =
-    findRequest(
-      latestRequests,
-      requestId
+  /*
+    Re-read immediately before
+    changing status so we don't
+    approve an old copy.
+  */
+
+  const latestRequests =
+    await getRequests();
+
+
+  const latestRequest =
+    latestRequests.find(
+      function(item){
+
+        return String(
+          item.id
+        ) === String(
+          requestId
+        );
+
+      }
     );
 
-  if(latestIndex < 0){
+
+  if(!latestRequest){
 
     alert(
       "Request no longer exists."
     );
 
-    loadRequests();
+    await loadRequests();
 
     return;
 
   }
 
-  const latestRequest =
-    latestRequests[
-      latestIndex
-    ];
 
   const latestStatus =
     String(
       latestRequest.status ||
       "PENDING"
     ).toUpperCase();
+
 
   if(
     latestStatus !==
@@ -1201,34 +1399,36 @@ function approveRequest(
       "This request has already been processed."
     );
 
-    loadRequests();
+    await loadRequests();
 
     return;
 
   }
 
-  latestRequest.status =
-    "APPROVED";
 
-  latestRequest.approvedAt =
-    new Date().toISOString();
+  const result =
+    await updateRequestStatus(
+      requestId,
+      "APPROVED"
+    );
 
-  latestRequest.processedAt =
-    latestRequest.approvedAt;
 
-  latestRequest.processedBy =
-    "admin";
+  if(!result.success){
 
-  latestRequests[
-    latestIndex
-  ] =
-    latestRequest;
+    alert(
+      result.message ||
+      "Could not approve withdrawal."
+    );
 
-  saveRequests(
-    latestRequests
-  );
+    await loadRequests();
 
-  loadRequests();
+    return;
+
+  }
+
+
+  await loadRequests();
+
 
   alert(
     "Withdrawal approved successfully."
@@ -1237,39 +1437,51 @@ function approveRequest(
 }
 
 
-function rejectRequest(
+/* =========================
+   REJECT REQUEST
+========================= */
+
+async function rejectRequest(
   requestId
 ){
 
   const requests =
-    getRequests();
+    await getRequests();
 
-  const index =
-    findRequest(
-      requests,
-      requestId
+
+  const request =
+    requests.find(
+      function(item){
+
+        return String(
+          item.id
+        ) === String(
+          requestId
+        );
+
+      }
     );
 
-  if(index < 0){
+
+  if(!request){
 
     alert(
       "Withdrawal request was not found."
     );
 
-    loadRequests();
+    await loadRequests();
 
     return;
 
   }
 
-  const request =
-    requests[index];
 
   const currentStatus =
     String(
       request.status ||
       "PENDING"
     ).toUpperCase();
+
 
   if(
     currentStatus !==
@@ -1280,66 +1492,76 @@ function rejectRequest(
       "This request has already been processed."
     );
 
-    loadRequests();
+    await loadRequests();
 
     return;
 
   }
 
-  const employeeName =
-    request.employeeName ||
-    request.name ||
-    "Employee";
 
   const amount =
     Number(
       request.amount || 0
     );
 
+
   const confirmed =
     confirm(
       "Reject KSh " +
       amount.toLocaleString() +
       " withdrawal for " +
-      employeeName +
+      (
+        request.employeeName ||
+        "Employee"
+      ) +
       "?"
     );
 
+
   if(!confirmed){
+
     return;
+
   }
 
-  const latestRequests =
-    getRequests();
 
-  const latestIndex =
-    findRequest(
-      latestRequests,
-      requestId
+  const latestRequests =
+    await getRequests();
+
+
+  const latestRequest =
+    latestRequests.find(
+      function(item){
+
+        return String(
+          item.id
+        ) === String(
+          requestId
+        );
+
+      }
     );
 
-  if(latestIndex < 0){
+
+  if(!latestRequest){
 
     alert(
       "Request no longer exists."
     );
 
-    loadRequests();
+    await loadRequests();
 
     return;
 
   }
 
-  const latestRequest =
-    latestRequests[
-      latestIndex
-    ];
 
   const latestStatus =
     String(
       latestRequest.status ||
       "PENDING"
     ).toUpperCase();
+
 
   if(
     latestStatus !==
@@ -1350,34 +1572,36 @@ function rejectRequest(
       "This request has already been processed."
     );
 
-    loadRequests();
+    await loadRequests();
 
     return;
 
   }
 
-  latestRequest.status =
-    "REJECTED";
 
-  latestRequest.rejectedAt =
-    new Date().toISOString();
+  const result =
+    await updateRequestStatus(
+      requestId,
+      "REJECTED"
+    );
 
-  latestRequest.processedAt =
-    latestRequest.rejectedAt;
 
-  latestRequest.processedBy =
-    "admin";
+  if(!result.success){
 
-  latestRequests[
-    latestIndex
-  ] =
-    latestRequest;
+    alert(
+      result.message ||
+      "Could not reject withdrawal."
+    );
 
-  saveRequests(
-    latestRequests
-  );
+    await loadRequests();
 
-  loadRequests();
+    return;
+
+  }
+
+
+  await loadRequests();
+
 
   alert(
     "Withdrawal rejected."
@@ -1386,40 +1610,9 @@ function rejectRequest(
 }
 
 
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    const loginPage =
-      document.getElementById(
-        "loginPage"
-      );
-
-    if(
-      event.key === "Enter" &&
-      !loginPage.classList.contains(
-        "hidden"
-      )
-    ){
-
-      adminLogin();
-
-    }
-
-  }
-);
-
-
-if(
-  localStorage.getItem(
-    "adminLoggedIn"
-  ) === "true"
-){
-
-  showAdmin();
-
-}
-
+/* =========================
+   AUTO REFRESH
+========================= */
 
 let refreshTimer = null;
 
@@ -1434,17 +1627,18 @@ function startAutoRefresh(){
 
   }
 
+
   refreshTimer =
     setInterval(
-      function(){
+      async function(){
 
         if(
           localStorage.getItem(
-            "adminLoggedIn"
+            ADMIN_LOGIN_KEY
           ) === "true"
         ){
 
-          loadRequests();
+          await loadRequests();
 
         }
 
@@ -1454,6 +1648,10 @@ function startAutoRefresh(){
 
 }
 
+
+/* =========================
+   STOP AUTO REFRESH
+========================= */
 
 function stopAutoRefresh(){
 
@@ -1470,37 +1668,55 @@ function stopAutoRefresh(){
 }
 
 
-if(
-  localStorage.getItem(
-    "adminLoggedIn"
-  ) === "true"
-){
+/* =========================
+   ENTER KEY
+========================= */
 
-  startAutoRefresh();
-
-}
-
-
-window.addEventListener(
-  "storage",
+document.addEventListener(
+  "keydown",
   function(event){
 
     if(
-      event.key ===
-      WITHDRAWAL_KEY
+      event.key !==
+      "Enter"
     ){
 
-      loadRequests();
+      return;
 
     }
+
+
+    const loginPage =
+      document.getElementById(
+        "loginPage"
+      );
+
+
+    if(
+      !loginPage ||
+      loginPage.classList.contains(
+        "hidden"
+      )
+    ){
+
+      return;
+
+    }
+
+
+    adminLogin();
 
   }
 );
 
 
+/* =========================
+   VISIBILITY REFRESH
+========================= */
+
 document.addEventListener(
   "visibilitychange",
-  function(){
+  async function(){
 
     if(
       document.visibilityState ===
@@ -1509,11 +1725,11 @@ document.addEventListener(
 
       if(
         localStorage.getItem(
-          "adminLoggedIn"
+          ADMIN_LOGIN_KEY
         ) === "true"
       ){
 
-        loadRequests();
+        await loadRequests();
 
       }
 
@@ -1521,63 +1737,81 @@ document.addEventListener(
 
   }
 );
-  const originalShowAdmin =
-  showAdmin;
 
 
-showAdmin = function(){
+/* =========================
+   START PAGE
+========================= */
 
-  originalShowAdmin();
+function initializeAdmin(){
 
-  startAutoRefresh();
+  const loggedIn =
+    localStorage.getItem(
+      ADMIN_LOGIN_KEY
+    ) === "true";
 
-};
 
+  if(loggedIn){
+
+    showAdmin();
+
+    startAutoRefresh();
+
+  }else{
+
+    document
+      .getElementById(
+        "loginPage"
+      )
+      .classList.remove(
+        "hidden"
+      );
+
+
+    document
+      .getElementById(
+        "adminPage"
+      )
+      .classList.add(
+        "hidden"
+      );
+
+  }
+
+}
+
+
+/* =========================
+   LOGOUT WRAPPER
+========================= */
 
 const originalAdminLogout =
   adminLogout;
 
 
-adminLogout = function(){
+adminLogout =
+  function(){
 
-  stopAutoRefresh();
+    stopAutoRefresh();
 
-  originalAdminLogout();
+    originalAdminLogout();
 
-};
+  };
 
 
-if(
-  localStorage.getItem(
-    "adminLoggedIn"
-  ) === "true"
-){
+/* =========================
+   INITIALIZE
+========================= */
 
-  document
-    .getElementById("loginPage")
-    .classList.add("hidden");
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
 
-  document
-    .getElementById("adminPage")
-    .classList.remove("hidden");
+    initializeAdmin();
 
-  loadRequests();
-
-  startAutoRefresh();
-
-}else{
-
-  document
-    .getElementById("loginPage")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("adminPage")
-    .classList.add("hidden");
-
-}
-
-</script>
+  }
+);
+  </script>
 
 </body>
 </html>
