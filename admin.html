@@ -1,1665 +1,1583 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 
-    body {
-      background: #080c12;
-      color: #fff;
-      min-height: 100vh;
-    }
+body{
+  background:#080c12;
+  color:#fff;
+  min-height:100vh;
+}
 
-    button,
-    input {
-      font-family: inherit;
-    }
+button,input{
+  font-family:inherit;
+}
 
-    button {
-      cursor: pointer;
-    }
+button{
+  cursor:pointer;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.hidden{
+  display:none !important;
+}
 
-    /* LOGIN */
+#loginPage{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(
+      circle at top,
+      #172436 0%,
+      #080c12 60%
+    );
+}
 
-    #loginPage {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background:
-        radial-gradient(
-          circle at top,
-          #172436 0%,
-          #080c12 60%
-        );
-    }
+.login-box{
+  width:100%;
+  max-width:410px;
+  background:#111820;
+  border:1px solid #263342;
+  border-radius:20px;
+  padding:30px 22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
 
-    .login-box {
-      width: 100%;
-      max-width: 410px;
-      background: #111820;
-      border: 1px solid #263342;
-      border-radius: 20px;
-      padding: 30px 22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.5);
-    }
+.admin-icon{
+  width:68px;
+  height:68px;
+  margin:0 auto 15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:18px;
+  background:#16a34a;
+  font-size:31px;
+  font-weight:bold;
+}
 
-    .admin-icon {
-      width: 68px;
-      height: 68px;
-      margin: 0 auto 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 18px;
-      background: #16a34a;
-      font-size: 31px;
-      font-weight: bold;
-    }
+.login-box h1{
+  text-align:center;
+  font-size:25px;
+  margin-bottom:7px;
+}
 
-    .login-box h1 {
-      text-align: center;
-      font-size: 25px;
-      margin-bottom: 7px;
-    }
+.subtitle{
+  text-align:center;
+  color:#8995a3;
+  font-size:14px;
+  margin-bottom:26px;
+}
 
-    .subtitle {
-      text-align: center;
-      color: #8995a3;
-      font-size: 14px;
-      margin-bottom: 26px;
-    }
+.field{
+  margin-bottom:16px;
+}
 
-    .field {
-      margin-bottom: 16px;
-    }
+.field label{
+  display:block;
+  color:#aeb8c4;
+  font-size:13px;
+  margin-bottom:7px;
+}
 
-    .field label {
-      display: block;
-      color: #aeb8c4;
-      font-size: 13px;
-      margin-bottom: 7px;
-    }
+.field input{
+  width:100%;
+  padding:14px;
+  background:#0a1017;
+  color:#fff;
+  border:1px solid #334150;
+  border-radius:10px;
+  outline:none;
+  font-size:15px;
+}
 
-    .field input {
-      width: 100%;
-      padding: 14px;
-      background: #0a1017;
-      color: #fff;
-      border: 1px solid #334150;
-      border-radius: 10px;
-      outline: none;
-      font-size: 15px;
-    }
+.field input:focus{
+  border-color:#16a34a;
+}
 
-    .field input:focus {
-      border-color: #16a34a;
-    }
+#loginError{
+  min-height:20px;
+  margin-bottom:8px;
+  text-align:center;
+  color:#ff6262;
+  font-size:13px;
+}
 
-    #loginError {
-      min-height: 20px;
-      margin-bottom: 8px;
-      text-align: center;
-      color: #ff6262;
-      font-size: 13px;
-    }
+.login-btn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#16a34a;
+  color:#fff;
+  font-size:16px;
+  font-weight:bold;
+}
 
-    .login-btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
-      background: #16a34a;
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
-    }
+#adminPage{
+  min-height:100vh;
+}
 
-    /* DASHBOARD */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#101720;
+  border-bottom:1px solid #263341;
+  padding:14px 15px;
+}
 
-    #adminPage {
-      min-height: 100vh;
-    }
+.topbar-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #101720;
-      border-bottom: 1px solid #263341;
-      padding: 14px 15px;
-    }
+.title-area h1{
+  font-size:20px;
+}
 
-    .topbar-inner {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
+.title-area p{
+  color:#8995a3;
+  font-size:12px;
+  margin-top:4px;
+}
 
-    .title-area h1 {
-      font-size: 20px;
-    }
+.logout-btn{
+  border:1px solid #354250;
+  background:#151d26;
+  color:#fff;
+  padding:9px 13px;
+  border-radius:9px;
+  font-size:13px;
+}
 
-    .title-area p {
-      color: #8995a3;
-      font-size: 12px;
-      margin-top: 4px;
-    }
+.container{
+  width:100%;
+  max-width:1100px;
+  margin:auto;
+  padding:20px 15px 50px;
+}
 
-    .logout-btn {
-      border: 1px solid #354250;
-      background: #151d26;
-      color: #fff;
-      padding: 9px 13px;
-      border-radius: 9px;
-      font-size: 13px;
-    }
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-bottom:20px;
+}
 
-    .container {
-      width: 100%;
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px 15px 50px;
-    }
+.stat-card{
+  background:#111820;
+  border:1px solid #263341;
+  border-radius:15px;
+  padding:18px;
+}
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
+.stat-label{
+  color:#8c98a6;
+  font-size:13px;
+  margin-bottom:8px;
+}
 
-    .stat-card {
-      background: #111820;
-      border: 1px solid #263341;
-      border-radius: 15px;
-      padding: 18px;
-    }
+.stat-value{
+  font-size:25px;
+  font-weight:bold;
+}
 
-    .stat-label {
-      color: #8c98a6;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
+#pendingCount{
+  color:#f5b942;
+}
 
-    .stat-value {
-      font-size: 25px;
-      font-weight: bold;
-    }
+#pendingAmount{
+  color:#36d675;
+}
 
-    #pendingCount {
-      color: #f5b942;
-    }
+.section{
+  background:#111820;
+  border:1px solid #263341;
+  border-radius:15px;
+  overflow:hidden;
+}
 
-    #pendingAmount {
-      color: #36d675;
-    }
+.section-header{
+  padding:16px;
+  border-bottom:1px solid #263341;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
 
-    .section {
-      background: #111820;
-      border: 1px solid #263341;
-      border-radius: 15px;
-      overflow: hidden;
-    }
+.section-header h2{
+  font-size:17px;
+}
 
-    .section-header {
-      padding: 16px;
-      border-bottom: 1px solid #263341;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
+.refresh-btn{
+  background:#17212c;
+  border:1px solid #354250;
+  color:#fff;
+  padding:8px 12px;
+  border-radius:8px;
+  font-size:13px;
+}
 
-    .section-header h2 {
-      font-size: 17px;
-    }
+#requestList{
+  padding:12px;
+}
 
-    .refresh-btn {
-      background: #17212c;
-      border: 1px solid #354250;
-      color: #fff;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 13px;
-    }
+.empty{
+  padding:40px 15px;
+  text-align:center;
+  color:#7f8b98;
+  font-size:14px;
+}
 
-    #requestList {
-      padding: 12px;
-    }
+.request-card{
+  background:#0c131b;
+  border:1px solid #263341;
+  border-radius:13px;
+  padding:15px;
+  margin-bottom:12px;
+}
 
-    .empty {
-      padding: 40px 15px;
-      text-align: center;
-      color: #7f8b98;
-      font-size: 14px;
-    }
+.request-card:last-child{
+  margin-bottom:0;
+}
 
-    .request-card {
-      background: #0c131b;
-      border: 1px solid #263341;
-      border-radius: 13px;
-      padding: 15px;
-      margin-bottom: 12px;
-    }
+.request-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+  margin-bottom:13px;
+}
 
-    .request-card:last-child {
-      margin-bottom: 0;
-    }
+.employee-name{
+  font-size:16px;
+  font-weight:bold;
+}
 
-    .request-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 13px;
-    }
+.employee-id{
+  color:#8995a3;
+  font-size:12px;
+  margin-top:4px;
+}
 
-    .employee-name {
-      font-size: 16px;
-      font-weight: bold;
-    }
+.amount{
+  color:#36d675;
+  font-size:19px;
+  font-weight:bold;
+  white-space:nowrap;
+}
 
-    .employee-id {
-      color: #8995a3;
-      font-size: 12px;
-      margin-top: 4px;
-    }
+.request-info{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  margin-bottom:14px;
+}
 
-    .amount {
-      color: #36d675;
-      font-size: 19px;
-      font-weight: bold;
-      white-space: nowrap;
-    }
+.info-box{
+  background:#111a23;
+  border-radius:9px;
+  padding:10px;
+}
 
-    .request-info {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 9px;
-      margin-bottom: 14px;
-    }
+.info-label{
+  color:#778492;
+  font-size:11px;
+  margin-bottom:4px;
+}
 
-    .info-box {
-      background: #111a23;
-      border-radius: 9px;
-      padding: 10px;
-    }
+.info-value{
+  color:#dce2e8;
+  font-size:13px;
+  word-break:break-word;
+}
 
-    .info-label {
-      color: #778492;
-      font-size: 11px;
-      margin-bottom: 4px;
-    }
+.status{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
 
-    .info-value {
-      color: #dce2e8;
-      font-size: 13px;
-      word-break: break-word;
-    }
+.status.pending{
+  background:rgba(245,185,66,.12);
+  color:#f5b942;
+}
 
-    .status {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 9px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: bold;
-    }
+.status.approved{
+  background:rgba(54,214,117,.12);
+  color:#36d675;
+}
 
-    .status.pending {
-      background: rgba(245,185,66,.12);
-      color: #f5b942;
-    }
+.status.rejected{
+  background:rgba(255,91,91,.12);
+  color:#ff6464;
+}
 
-    .status.approved {
-      background: rgba(54,214,117,.12);
-      color: #36d675;
-    }
+.request-actions{
+  display:flex;
+  gap:9px;
+  margin-top:13px;
+}
 
-    .status.rejected {
-      background: rgba(255,91,91,.12);
-      color: #ff6464;
-    }
+.approve-btn,
+.reject-btn{
+  flex:1;
+  padding:11px;
+  border-radius:9px;
+  border:none;
+  color:#fff;
+  font-weight:bold;
+  font-size:13px;
+}
 
-    .request-actions {
-      display: flex;
-      gap: 9px;
-      margin-top: 13px;
-    }
+.approve-btn{
+  background:#16a34a;
+}
 
-    .approve-btn,
-    .reject-btn {
-      flex: 1;
-      padding: 11px;
-      border-radius: 9px;
-      border: none;
-      color: #fff;
-      font-weight: bold;
-      font-size: 13px;
-    }
+.reject-btn{
+  background:#dc2626;
+}
 
-    .approve-btn {
-      background: #16a34a;
-    }
+.processed-message{
+  margin-top:12px;
+  padding:10px;
+  border-radius:9px;
+  background:#111a23;
+  color:#8995a3;
+  text-align:center;
+  font-size:12px;
+}
 
-    .reject-btn {
-      background: #dc2626;
-    }
+@media(max-width:520px){
 
-    .processed-message {
-      margin-top: 12px;
-      padding: 10px;
-      border-radius: 9px;
-      background: #111a23;
-      color: #8995a3;
-      text-align: center;
-      font-size: 12px;
-    }
+  .title-area h1{
+    font-size:18px;
+  }
 
-    @media (max-width: 520px) {
-      .title-area h1 {
-        font-size: 18px;
-      }
+  .stat-card{
+    padding:15px;
+  }
 
-      .stat-card {
-        padding: 15px;
-      }
+  .stat-value{
+    font-size:21px;
+  }
 
-      .stat-value {
-        font-size: 21px;
-      }
+  .request-top{
+    flex-direction:column;
+  }
 
-      .request-top {
-        flex-direction: column;
-      }
-    }
+}
 
-    @media (max-width: 360px) {
-      .stats {
-        grid-template-columns: 1fr;
-      }
+@media(max-width:360px){
 
-      .request-info {
-        grid-template-columns: 1fr;
-      }
+  .stats{
+    grid-template-columns:1fr;
+  }
 
-      .request-actions {
-        flex-direction: column;
-      }
-    }
-  </style>
+  .request-info{
+    grid-template-columns:1fr;
+  }
+
+  .request-actions{
+    flex-direction:column;
+  }
+
+}
+</style>
 </head>
 
 <body>
 
-  <!-- LOGIN -->
+<div id="loginPage">
 
-  <div id="loginPage">
+  <div class="login-box">
 
-    <div class="login-box">
+    <div class="admin-icon">A</div>
 
-      <div class="admin-icon">A</div>
+    <h1>Admin Login</h1>
 
-      <h1>Admin Login</h1>
+    <p class="subtitle">
+      Manage employee withdrawals
+    </p>
 
-      <p class="subtitle">
-        Manage employee withdrawals
-      </p>
+    <div class="field">
 
-      <div class="field">
-        <label for="adminUsername">
-          Username
-        </label>
+      <label for="adminUsername">
+        Username
+      </label>
 
-        <input
-          id="adminUsername"
-          type="text"
-          placeholder="Enter username"
-          autocomplete="username"
-        >
+      <input
+        id="adminUsername"
+        type="text"
+        placeholder="Enter username"
+        autocomplete="username"
+      >
+
+    </div>
+
+    <div class="field">
+
+      <label for="adminPassword">
+        Password
+      </label>
+
+      <input
+        id="adminPassword"
+        type="password"
+        placeholder="Enter password"
+        autocomplete="current-password"
+      >
+
+    </div>
+
+    <div id="loginError"></div>
+
+    <button
+      class="login-btn"
+      onclick="adminLogin()"
+    >
+      LOGIN
+    </button>
+
+  </div>
+
+</div>
+<div id="adminPage" class="hidden">
+
+  <header class="topbar">
+
+    <div class="topbar-inner">
+
+      <div class="title-area">
+
+        <h1>
+          Admin Dashboard
+        </h1>
+
+        <p>
+          Employee withdrawal management
+        </p>
+
       </div>
-
-      <div class="field">
-        <label for="adminPassword">
-          Password
-        </label>
-
-        <input
-          id="adminPassword"
-          type="password"
-          placeholder="Enter password"
-          autocomplete="current-password"
-        >
-      </div>
-
-      <div id="loginError"></div>
 
       <button
-        class="login-btn"
-        onclick="adminLogin()"
+        class="logout-btn"
+        onclick="adminLogout()"
       >
-        LOGIN
+        Logout
       </button>
 
     </div>
 
-  </div>
+  </header>
 
+  <main class="container">
 
-  <!-- ADMIN DASHBOARD -->
+    <div class="stats">
 
-  <div
-    id="adminPage"
-    class="hidden"
-  >
+      <div class="stat-card">
 
-    <header class="topbar">
-
-      <div class="topbar-inner">
-
-        <div class="title-area">
-
-          <h1>
-            Admin Dashboard
-          </h1>
-
-          <p>
-            Employee withdrawal management
-          </p>
-
+        <div class="stat-label">
+          Pending Requests
         </div>
 
-        <button
-          class="logout-btn"
-          onclick="adminLogout()"
+        <div
+          id="pendingCount"
+          class="stat-value"
         >
-          Logout
+          0
+        </div>
+
+      </div>
+
+      <div class="stat-card">
+
+        <div class="stat-label">
+          Pending Amount
+        </div>
+
+        <div
+          id="pendingAmount"
+          class="stat-value"
+        >
+          KSh 0
+        </div>
+
+      </div>
+
+    </div>
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <h2>
+          Withdrawal Requests
+        </h2>
+
+        <button
+          class="refresh-btn"
+          onclick="loadRequests()"
+        >
+          Refresh
         </button>
 
       </div>
 
-    </header>
+      <div id="requestList">
 
-
-    <main class="container">
-
-      <div class="stats">
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Pending Requests
-          </div>
-
-          <div
-            id="pendingCount"
-            class="stat-value"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Pending Amount
-          </div>
-
-          <div
-            id="pendingAmount"
-            class="stat-value"
-          >
-            KSh 0
-          </div>
-
+        <div class="empty">
+          No withdrawal requests yet.
         </div>
 
       </div>
 
+    </section>
 
-      <section class="section">
+  </main>
 
-        <div class="section-header">
+</div>
 
-          <h2>
-            Withdrawal Requests
-          </h2>
+<script>
 
-          <button
-            class="refresh-btn"
-            onclick="loadRequests()"
-          >
-            Refresh
-          </button>
+const ADMIN_USERNAME = "admin";
 
-        </div>
+const ADMIN_PASSWORD = "Admin12345";
 
-        <div id="requestList">
-
-          <div class="empty">
-            No withdrawal requests yet.
-          </div>
-
-        </div>
-
-      </section>
-
-    </main>
-
-  </div>
+const WITHDRAWAL_KEY =
+  "withdrawalRequests";
 
 
-  <script>
+function adminLogin(){
 
-    const ADMIN_USERNAME = "admin";
+  const username =
+    document
+      .getElementById("adminUsername")
+      .value
+      .trim();
 
-    const ADMIN_PASSWORD = "Admin12345";
+  const password =
+    document
+      .getElementById("adminPassword")
+      .value;
 
-    const WITHDRAWAL_KEY =
-      "withdrawalRequests";
+  const error =
+    document
+      .getElementById("loginError");
 
+  if(
+    username === ADMIN_USERNAME &&
+    password === ADMIN_PASSWORD
+  ){
 
-    function adminLogin() {
+    localStorage.setItem(
+      "adminLoggedIn",
+      "true"
+    );
 
-      const username =
-        document.getElementById(
-          "adminUsername"
-        ).value.trim();
+    error.textContent = "";
 
-      const password =
-        document.getElementById(
-          "adminPassword"
-        ).value;
+    showAdmin();
 
-      const error =
-        document.getElementById(
-          "loginError"
-        );
+  }else{
 
+    error.textContent =
+      "Incorrect username or password.";
 
-      if (
-        username === ADMIN_USERNAME &&
-        password === ADMIN_PASSWORD
-      ) {
+  }
 
-        localStorage.setItem(
-          "adminLoggedIn",
-          "true"
-        );
-
-        error.textContent = "";
-
-        showAdmin();
-
-      } else {
-
-        error.textContent =
-          "Incorrect username or password.";
-
-      }
-
-    }
+}
 
 
-    function adminLogout() {
+function adminLogout(){
 
-      localStorage.removeItem(
-        "adminLoggedIn"
+  localStorage.removeItem(
+    "adminLoggedIn"
+  );
+
+  document
+    .getElementById("adminPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginPage")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("adminUsername")
+    .value = "";
+
+  document
+    .getElementById("adminPassword")
+    .value = "";
+
+}
+
+
+function showAdmin(){
+
+  document
+    .getElementById("loginPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("adminPage")
+    .classList.remove("hidden");
+
+  loadRequests();
+
+}
+
+
+function getRequests(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(
+        WITHDRAWAL_KEY
       );
 
-      document
-        .getElementById("adminPage")
-        .classList.add("hidden");
-
-      document
-        .getElementById("loginPage")
-        .classList.remove("hidden");
-
-      document
-        .getElementById("adminUsername")
-        .value = "";
-
-      document
-        .getElementById("adminPassword")
-        .value = "";
-
+    if(!saved){
+      return [];
     }
 
+    const parsed =
+      JSON.parse(saved);
 
-    function showAdmin() {
+    return Array.isArray(parsed)
+      ? parsed
+      : [];
 
-      document
-        .getElementById("loginPage")
-        .classList.add("hidden");
+  }catch(error){
 
-      document
-        .getElementById("adminPage")
-        .classList.remove("hidden");
+    return [];
 
-      loadRequests();
+  }
 
-    }
+}
 
 
-    function getRequests() {
+function saveRequests(requests){
 
-      try {
+  localStorage.setItem(
+    WITHDRAWAL_KEY,
+    JSON.stringify(requests)
+  );
 
-        const saved =
-          localStorage.getItem(
-            WITHDRAWAL_KEY
-          );
+}
 
-        if (!saved) {
-          return [];
-        }
 
-        const parsed =
-          JSON.parse(saved);
+function loadRequests(){
 
-        return Array.isArray(parsed)
-          ? parsed
-          : [];
+  const requests =
+    getRequests();
 
-      } catch (error) {
-
-        return [];
-
-      }
-
-    }
-
-
-    function saveRequests(requests) {
-
-      localStorage.setItem(
-        WITHDRAWAL_KEY,
-        JSON.stringify(requests)
-      );
-
-    }
-
-
-    function loadRequests() {
-
-      const requests =
-        getRequests();
-
-      const pending =
-        requests.filter(
-          request =>
-            String(
-              request.status || "PENDING"
-            ).toUpperCase() === "PENDING"
-        );
-
-      document
-        .getElementById("pendingCount")
-        .textContent =
-        pending.length;
-
-      const total =
-        pending.reduce(
-          (sum, request) =>
-            sum + Number(
-              request.amount || 0
-            ),
-          0
-        );
-
-      document
-        .getElementById("pendingAmount")
-        .textContent =
-        "KSh " +
-        total.toLocaleString();
-
-      renderRequests(requests);
-
-    }
-
-
-    function renderRequests(requests) {
-
-      const list =
-        document.getElementById(
-          "requestList"
-        );
-
-      if (!requests.length) {
-
-        list.innerHTML = `
-          <div class="empty">
-            No withdrawal requests yet.
-          </div>
-        `;
-
-        return;
-      }
-
-          const sortedRequests =
-        [...requests].sort(
-          (a, b) => {
-
-            const dateA =
-              new Date(
-                a.createdAt ||
-                a.date ||
-                a.requestedAt ||
-                0
-              ).getTime();
-
-            const dateB =
-              new Date(
-                b.createdAt ||
-                b.date ||
-                b.requestedAt ||
-                0
-              ).getTime();
-
-            return dateB - dateA;
-          }
-        );
-
-
-      list.innerHTML =
-        sortedRequests
-          .map(
-            (request, index) => {
-
-              const status =
-                String(
-                  request.status ||
-                  "PENDING"
-                ).toUpperCase();
-
-
-              const employeeName =
-                request.employeeName ||
-                request.name ||
-                "Employee";
-
-
-              const employeeId =
-                request.employeeId ||
-                request.employee ||
-                request.referralCode ||
-                "Unknown";
-
-
-              const amount =
-                Number(
-                  request.amount || 0
-                );
-
-
-              const requestId =
-                String(
-                  request.id ||
-                  index + 1
-                );
-
-
-              const dateValue =
-                request.createdAt ||
-                request.date ||
-                request.requestedAt ||
-                "";
-
-
-              let formattedDate =
-                "Date not available";
-
-
-              if (dateValue) {
-
-                const date =
-                  new Date(dateValue);
-
-                if (
-                  !Number.isNaN(
-                    date.getTime()
-                  )
-                ) {
-
-                  formattedDate =
-                    date.toLocaleString();
-
-                }
-
-              }
-
-
-              let statusClass =
-                "pending";
-
-
-              if (
-                status === "APPROVED"
-              ) {
-
-                statusClass =
-                  "approved";
-
-              }
-
-
-              if (
-                status === "REJECTED"
-              ) {
-
-                statusClass =
-                  "rejected";
-
-              }
-
-
-              const statusText =
-                status === "APPROVED"
-                  ? "APPROVED"
-                  : status === "REJECTED"
-                    ? "REJECTED"
-                    : "PENDING";
-
-
-              let actions = "";
-
-
-              if (
-                status === "PENDING"
-              ) {
-
-                actions = `
-
-                  <div class="request-actions">
-
-                    <button
-                      class="approve-btn"
-                      onclick="approveRequest('${escapeAttribute(requestId)}')"
-                    >
-                      APPROVE
-                    </button>
-
-
-                    <button
-                      class="reject-btn"
-                      onclick="rejectRequest('${escapeAttribute(requestId)}')"
-                    >
-                      REJECT
-                    </button>
-
-                  </div>
-
-                `;
-
-              } else {
-
-                actions = `
-
-                  <div class="processed-message">
-                    This request has already been processed.
-                  </div>
-
-                `;
-
-              }
-
-
-              return `
-
-                <div class="request-card">
-
-                  <div class="request-top">
-
-                    <div>
-
-                      <div class="employee-name">
-                        ${escapeHTML(
-                          employeeName
-                        )}
-                      </div>
-
-                      <div class="employee-id">
-                        ${escapeHTML(
-                          employeeId
-                        )}
-                      </div>
-
-                    </div>
-
-
-                    <div class="amount">
-                      KSh ${amount.toLocaleString()}
-                    </div>
-
-                  </div>
-
-
-                  <div class="request-info">
-
-                    <div class="info-box">
-
-                      <div class="info-label">
-                        Request ID
-                      </div>
-
-                      <div class="info-value">
-                        ${escapeHTML(
-                          requestId
-                        )}
-                      </div>
-
-                    </div>
-
-
-                    <div class="info-box">
-
-                      <div class="info-label">
-                        Date
-                      </div>
-
-                      <div class="info-value">
-                        ${escapeHTML(
-                          formattedDate
-                        )}
-                      </div>
-
-                    </div>
-
-
-                    <div class="info-box">
-
-                      <div class="info-label">
-                        M-PESA Number
-                      </div>
-
-                      <div class="info-value">
-                        ${escapeHTML(
-                          request.phone ||
-                          request.mpesaNumber ||
-                          request.phoneNumber ||
-                          "Not provided"
-                        )}
-                      </div>
-
-                    </div>
-
-
-                    <div class="info-box">
-
-                      <div class="info-label">
-                        Status
-                      </div>
-
-                      <div>
-
-                        <span
-                          class="status ${statusClass}"
-                        >
-                          ${statusText}
-                        </span>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-
-                  ${actions}
-
-                </div>
-
-              `;
-
-            }
-          )
-          .join("");
-
-    }
-
-
-    function escapeHTML(value) {
-
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    function escapeAttribute(value) {
-
-      return String(value)
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
-
-    }
-
-
-    function findRequest(
-      requests,
-      requestId
-    ) {
-
-      const id =
-        String(requestId);
-
-
-      return requests.findIndex(
-        (request, index) => {
-
-          const currentId =
-            String(
-              request.id ??
-              index + 1
-            );
-
-          return currentId === id;
-
-        }
-      );
-
-    }
-
-
-    function approveRequest(
-      requestId
-    ) {
-
-      const requests =
-        getRequests();
-
-
-      const index =
-        findRequest(
-          requests,
-          requestId
-        );
-
-
-      if (index < 0) {
-
-        alert(
-          "Withdrawal request was not found."
-        );
-
-        loadRequests();
-
-        return;
-
-      }
-
-
-      const request =
-        requests[index];
-
-
-      const currentStatus =
+  const pending =
+    requests.filter(
+      request =>
         String(
           request.status ||
           "PENDING"
-        ).toUpperCase();
-
-
-      if (
-        currentStatus !==
+        ).toUpperCase() ===
         "PENDING"
-      ) {
+    );
 
-        alert(
-          "This request has already been processed."
-        );
+  document
+    .getElementById("pendingCount")
+    .textContent =
+    pending.length;
 
-        loadRequests();
-
-        return;
-
-      }
-
-
-      const amount =
+  const total =
+    pending.reduce(
+      (sum,request)=>
+        sum +
         Number(
           request.amount || 0
-        );
+        ),
+      0
+    );
 
+  document
+    .getElementById("pendingAmount")
+    .textContent =
+    "KSh " +
+    total.toLocaleString();
 
-      if (
-        !Number.isFinite(amount) ||
-        amount <= 0
-      ) {
+  renderRequests(requests);
 
-        alert(
-          "Invalid withdrawal amount."
-        );
+}
 
-        return;
 
-      }
+function renderRequests(requests){
 
+  const list =
+    document.getElementById(
+      "requestList"
+    );
 
-      const employeeName =
-        request.employeeName ||
-        request.name ||
-        "Employee";
+  if(!requests.length){
 
+    list.innerHTML = `
+      <div class="empty">
+        No withdrawal requests yet.
+      </div>
+    `;
 
-      const confirmed =
-        confirm(
-          "Approve KSh " +
-          amount.toLocaleString() +
-          " withdrawal for " +
-          employeeName +
-          "?"
-        );
+    return;
 
+  }
 
-      if (!confirmed) {
-        return;
-      }
+  const sortedRequests =
+    [...requests].sort(
+      (a,b)=>{
 
+        const dateA =
+          new Date(
+            a.createdAt ||
+            a.date ||
+            a.requestedAt ||
+            0
+          ).getTime();
 
-      const latestRequests =
-        getRequests();
+        const dateB =
+          new Date(
+            b.createdAt ||
+            b.date ||
+            b.requestedAt ||
+            0
+          ).getTime();
 
-
-      const latestIndex =
-        findRequest(
-          latestRequests,
-          requestId
-        );
-
-
-      if (latestIndex < 0) {
-
-        alert(
-          "Request no longer exists."
-        );
-
-        loadRequests();
-
-        return;
-
-      }
-
-
-      const latestRequest =
-        latestRequests[
-          latestIndex
-        ];
-
-
-      const latestStatus =
-        String(
-          latestRequest.status ||
-          "PENDING"
-        ).toUpperCase();
-
-
-      if (
-        latestStatus !==
-        "PENDING"
-      ) {
-
-        alert(
-          "This request has already been processed."
-        );
-
-        loadRequests();
-
-        return;
-
-      }
-
-
-      latestRequest.status =
-        "APPROVED";
-
-
-      latestRequest.approvedAt =
-        new Date().toISOString();
-
-
-      latestRequest.processedAt =
-        latestRequest.approvedAt;
-
-
-      latestRequest.processedBy =
-        "admin";
-
-
-      saveRequests(
-        latestRequests
-      );
-
-
-      loadRequests();
-
-
-      alert(
-        "Withdrawal approved successfully."
-      );
-
-    }
-
-
-    function rejectRequest(
-      requestId
-    ) {
-
-      const requests =
-        getRequests();
-
-
-      const index =
-        findRequest(
-          requests,
-          requestId
-        );
-
-
-      if (index < 0) {
-
-        alert(
-          "Withdrawal request was not found."
-        );
-
-        loadRequests();
-
-        return;
-
-      }
-
-
-      const request =
-        requests[index];
-
-
-      const currentStatus =
-        String(
-          request.status ||
-          "PENDING"
-        ).toUpperCase();
-
-
-      if (
-        currentStatus !==
-        "PENDING"
-      ) {
-
-        alert(
-          "This request has already been processed."
-        );
-
-        loadRequests();
-
-        return;
-
-      }
-
-
-      const employeeName =
-        request.employeeName ||
-        request.name ||
-        "Employee";
-
-
-      const amount =
-        Number(
-          request.amount || 0
-        );
-
-
-      const confirmed =
-        confirm(
-          "Reject KSh " +
-          amount.toLocaleString() +
-          " withdrawal for " +
-          employeeName +
-          "?"
-        );
-
-
-      if (!confirmed) {
-        return;
-      }
-
-
-      const latestRequests =
-        getRequests();
-
-
-      const latestIndex =
-        findRequest(
-          latestRequests,
-          requestId
-        );
-
-
-      if (latestIndex < 0) {
-
-        alert(
-          "Request no longer exists."
-        );
-
-        loadRequests();
-
-        return;
-
-      }
-
-
-      const latestRequest =
-        latestRequests[
-          latestIndex
-        ];
-
-
-      const latestStatus =
-        String(
-          latestRequest.status ||
-          "PENDING"
-        ).toUpperCase();
-
-
-      if (
-        latestStatus !==
-        "PENDING"
-      ) {
-
-        alert(
-          "This request has already been processed."
-        );
-
-        loadRequests();
-
-        return;
-
-      }
-
-
-      latestRequest.status =
-        "REJECTED";
-
-
-      latestRequest.rejectedAt =
-        new Date().toISOString();
-
-
-      latestRequest.processedAt =
-        latestRequest.rejectedAt;
-
-
-      latestRequest.processedBy =
-        "admin";
-
-
-      saveRequests(
-        latestRequests
-      );
-
-
-      loadRequests();
-
-
-      alert(
-        "Withdrawal rejected."
-      );
-
-    }
-
-
-    document.addEventListener(
-      "keydown",
-      function(event) {
-
-        const loginPage =
-          document.getElementById(
-            "loginPage"
-          );
-
-
-        if (
-          event.key === "Enter" &&
-          !loginPage.classList.contains(
-            "hidden"
-          )
-        ) {
-
-          adminLogin();
-
-        }
+        return dateB-dateA;
 
       }
     );
 
+  list.innerHTML =
+    sortedRequests
+      .map(
+        (request,index)=>{
 
-      /* =========================
-       AUTO LOGIN
-    ========================= */
+          const status =
+            String(
+              request.status ||
+              "PENDING"
+            ).toUpperCase();
 
-    if (
-      localStorage.getItem(
-        "adminLoggedIn"
-      ) === "true"
-    ) {
+          const employeeName =
+            request.employeeName ||
+            request.name ||
+            "Employee";
 
-      showAdmin();
+          const employeeId =
+            request.employeeId ||
+            request.employee ||
+            request.referralCode ||
+            "Unknown";
 
-    }
+          const amount =
+            Number(
+              request.amount || 0
+            );
 
+          const requestId =
+            String(
+              request.id ||
+              index + 1
+            );
 
-    /* =========================
-       AUTO REFRESH
-    ========================= */
+          const dateValue =
+            request.createdAt ||
+            request.date ||
+            request.requestedAt ||
+            "";
 
-    let refreshTimer = null;
+          let formattedDate =
+            "Date not available";
 
+          if(dateValue){
 
-    function startAutoRefresh() {
+            const date =
+              new Date(dateValue);
 
-      if (refreshTimer) {
+            if(
+              !Number.isNaN(
+                date.getTime()
+              )
+            ){
 
-        clearInterval(
-          refreshTimer
-        );
-
-      }
-
-
-      refreshTimer =
-        setInterval(
-          function() {
-
-            if (
-              localStorage.getItem(
-                "adminLoggedIn"
-              ) === "true"
-            ) {
-
-              loadRequests();
+              formattedDate =
+                date.toLocaleString();
 
             }
 
-          },
-          5000
+          }
+
+          let statusClass =
+            "pending";
+
+          if(
+            status === "APPROVED"
+          ){
+
+            statusClass =
+              "approved";
+
+          }
+
+          if(
+            status === "REJECTED"
+          ){
+
+            statusClass =
+              "rejected";
+
+          }
+
+          const statusText =
+            status === "APPROVED"
+              ? "APPROVED"
+              : status === "REJECTED"
+                ? "REJECTED"
+                : "PENDING";
+
+          let actions = "";
+
+          if(
+            status === "PENDING"
+          ){
+
+            actions = `
+
+              <div class="request-actions">
+
+                <button
+                  class="approve-btn"
+                  onclick="approveRequest('${escapeAttribute(requestId)}')"
+                >
+                  APPROVE
+                </button>
+
+                <button
+                  class="reject-btn"
+                  onclick="rejectRequest('${escapeAttribute(requestId)}')"
+                >
+                  REJECT
+                </button>
+
+              </div>
+
+            `;
+
+          }else{
+
+            actions = `
+
+              <div class="processed-message">
+                This request has already been processed.
+              </div>
+
+            `;
+
+          }
+
+          return `
+
+            <div class="request-card">
+
+              <div class="request-top">
+
+                <div>
+
+                  <div class="employee-name">
+                    ${escapeHTML(employeeName)}
+                  </div>
+
+                  <div class="employee-id">
+                    ${escapeHTML(employeeId)}
+                  </div>
+
+                </div>
+
+                <div class="amount">
+                  KSh ${amount.toLocaleString()}
+                </div>
+
+              </div>
+
+              <div class="request-info">
+
+                <div class="info-box">
+
+                  <div class="info-label">
+                    Request ID
+                  </div>
+
+                  <div class="info-value">
+                    ${escapeHTML(requestId)}
+                  </div>
+
+                </div>
+
+                <div class="info-box">
+
+                  <div class="info-label">
+                    Date
+                  </div>
+
+                  <div class="info-value">
+                    ${escapeHTML(formattedDate)}
+                  </div>
+
+                </div>
+
+                <div class="info-box">
+
+                  <div class="info-label">
+                    M-PESA Number
+                  </div>
+
+                  <div class="info-value">
+                    ${escapeHTML(
+                      request.phone ||
+                      request.mpesaNumber ||
+                      request.phoneNumber ||
+                      "Not provided"
+                    )}
+                  </div>
+
+                </div>
+
+                <div class="info-box">
+
+                  <div class="info-label">
+                    Status
+                  </div>
+
+                  <div>
+
+                    <span
+                      class="status ${statusClass}"
+                    >
+                      ${statusText}
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              ${actions}
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+  function escapeHTML(value){
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+function escapeAttribute(value){
+
+  return String(value)
+
+    .replace(
+      /\\/g,
+      "\\\\"
+    )
+
+    .replace(
+      /'/g,
+      "\\'"
+    );
+
+}
+
+
+function findRequest(
+  requests,
+  requestId
+){
+
+  const id =
+    String(requestId);
+
+  return requests.findIndex(
+    (request,index)=>{
+
+      const currentId =
+        String(
+          request.id ??
+          index + 1
         );
 
-    }
-
-
-    function stopAutoRefresh() {
-
-      if (refreshTimer) {
-
-        clearInterval(
-          refreshTimer
-        );
-
-        refreshTimer = null;
-
-      }
+      return currentId === id;
 
     }
+  );
+
+}
 
 
-    /* =========================
-       START AUTO REFRESH
-    ========================= */
+function approveRequest(
+  requestId
+){
 
-    if (
-      localStorage.getItem(
-        "adminLoggedIn"
-      ) === "true"
-    ) {
+  const requests =
+    getRequests();
 
-      startAutoRefresh();
+  const index =
+    findRequest(
+      requests,
+      requestId
+    );
+
+  if(index < 0){
+
+    alert(
+      "Withdrawal request was not found."
+    );
+
+    loadRequests();
+
+    return;
+
+  }
+
+  const request =
+    requests[index];
+
+  const currentStatus =
+    String(
+      request.status ||
+      "PENDING"
+    ).toUpperCase();
+
+  if(
+    currentStatus !==
+    "PENDING"
+  ){
+
+    alert(
+      "This request has already been processed."
+    );
+
+    loadRequests();
+
+    return;
+
+  }
+
+  const amount =
+    Number(
+      request.amount || 0
+    );
+
+  if(
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ){
+
+    alert(
+      "Invalid withdrawal amount."
+    );
+
+    return;
+
+  }
+
+  const employeeName =
+    request.employeeName ||
+    request.name ||
+    "Employee";
+
+  const confirmed =
+    confirm(
+      "Approve KSh " +
+      amount.toLocaleString() +
+      " withdrawal for " +
+      employeeName +
+      "?"
+    );
+
+  if(!confirmed){
+    return;
+  }
+
+  const latestRequests =
+    getRequests();
+
+  const latestIndex =
+    findRequest(
+      latestRequests,
+      requestId
+    );
+
+  if(latestIndex < 0){
+
+    alert(
+      "Request no longer exists."
+    );
+
+    loadRequests();
+
+    return;
+
+  }
+
+  const latestRequest =
+    latestRequests[
+      latestIndex
+    ];
+
+  const latestStatus =
+    String(
+      latestRequest.status ||
+      "PENDING"
+    ).toUpperCase();
+
+  if(
+    latestStatus !==
+    "PENDING"
+  ){
+
+    alert(
+      "This request has already been processed."
+    );
+
+    loadRequests();
+
+    return;
+
+  }
+
+  latestRequest.status =
+    "APPROVED";
+
+  latestRequest.approvedAt =
+    new Date().toISOString();
+
+  latestRequest.processedAt =
+    latestRequest.approvedAt;
+
+  latestRequest.processedBy =
+    "admin";
+
+  latestRequests[
+    latestIndex
+  ] =
+    latestRequest;
+
+  saveRequests(
+    latestRequests
+  );
+
+  loadRequests();
+
+  alert(
+    "Withdrawal approved successfully."
+  );
+
+}
+
+
+function rejectRequest(
+  requestId
+){
+
+  const requests =
+    getRequests();
+
+  const index =
+    findRequest(
+      requests,
+      requestId
+    );
+
+  if(index < 0){
+
+    alert(
+      "Withdrawal request was not found."
+    );
+
+    loadRequests();
+
+    return;
+
+  }
+
+  const request =
+    requests[index];
+
+  const currentStatus =
+    String(
+      request.status ||
+      "PENDING"
+    ).toUpperCase();
+
+  if(
+    currentStatus !==
+    "PENDING"
+  ){
+
+    alert(
+      "This request has already been processed."
+    );
+
+    loadRequests();
+
+    return;
+
+  }
+
+  const employeeName =
+    request.employeeName ||
+    request.name ||
+    "Employee";
+
+  const amount =
+    Number(
+      request.amount || 0
+    );
+
+  const confirmed =
+    confirm(
+      "Reject KSh " +
+      amount.toLocaleString() +
+      " withdrawal for " +
+      employeeName +
+      "?"
+    );
+
+  if(!confirmed){
+    return;
+  }
+
+  const latestRequests =
+    getRequests();
+
+  const latestIndex =
+    findRequest(
+      latestRequests,
+      requestId
+    );
+
+  if(latestIndex < 0){
+
+    alert(
+      "Request no longer exists."
+    );
+
+    loadRequests();
+
+    return;
+
+  }
+
+  const latestRequest =
+    latestRequests[
+      latestIndex
+    ];
+
+  const latestStatus =
+    String(
+      latestRequest.status ||
+      "PENDING"
+    ).toUpperCase();
+
+  if(
+    latestStatus !==
+    "PENDING"
+  ){
+
+    alert(
+      "This request has already been processed."
+    );
+
+    loadRequests();
+
+    return;
+
+  }
+
+  latestRequest.status =
+    "REJECTED";
+
+  latestRequest.rejectedAt =
+    new Date().toISOString();
+
+  latestRequest.processedAt =
+    latestRequest.rejectedAt;
+
+  latestRequest.processedBy =
+    "admin";
+
+  latestRequests[
+    latestIndex
+  ] =
+    latestRequest;
+
+  saveRequests(
+    latestRequests
+  );
+
+  loadRequests();
+
+  alert(
+    "Withdrawal rejected."
+  );
+
+}
+
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    const loginPage =
+      document.getElementById(
+        "loginPage"
+      );
+
+    if(
+      event.key === "Enter" &&
+      !loginPage.classList.contains(
+        "hidden"
+      )
+    ){
+
+      adminLogin();
 
     }
 
+  }
+);
 
-    /* =========================
-       STORAGE UPDATE
-    ========================= */
 
-    window.addEventListener(
-      "storage",
-      function(event) {
+if(
+  localStorage.getItem(
+    "adminLoggedIn"
+  ) === "true"
+){
 
-        if (
-          event.key ===
-          WITHDRAWAL_KEY
-        ) {
+  showAdmin();
+
+}
+
+
+let refreshTimer = null;
+
+
+function startAutoRefresh(){
+
+  if(refreshTimer){
+
+    clearInterval(
+      refreshTimer
+    );
+
+  }
+
+  refreshTimer =
+    setInterval(
+      function(){
+
+        if(
+          localStorage.getItem(
+            "adminLoggedIn"
+          ) === "true"
+        ){
 
           loadRequests();
 
         }
 
-      }
+      },
+      5000
     );
 
+}
 
-    /* =========================
-       REFRESH WHEN PAGE RETURNS
-    ========================= */
 
-    document.addEventListener(
-      "visibilitychange",
-      function() {
+function stopAutoRefresh(){
 
-        if (
-          document.visibilityState ===
-          "visible"
-        ) {
+  if(refreshTimer){
 
-          if (
-            localStorage.getItem(
-              "adminLoggedIn"
-            ) === "true"
-          ) {
-
-            loadRequests();
-
-          }
-
-        }
-
-      }
+    clearInterval(
+      refreshTimer
     );
 
+    refreshTimer = null;
 
-    /* =========================
-       START REFRESH AFTER LOGIN
-    ========================= */
+  }
 
-    const originalShowAdmin =
-      showAdmin;
+}
 
 
-    showAdmin = function() {
+if(
+  localStorage.getItem(
+    "adminLoggedIn"
+  ) === "true"
+){
 
-      originalShowAdmin();
+  startAutoRefresh();
 
-      startAutoRefresh();
-
-    };
-
-
-    /* =========================
-       STOP REFRESH ON LOGOUT
-    ========================= */
-
-    const originalAdminLogout =
-      adminLogout;
+}
 
 
-    adminLogout = function() {
+window.addEventListener(
+  "storage",
+  function(event){
 
-      stopAutoRefresh();
-
-      originalAdminLogout();
-
-    };
-
-
-    /* =========================
-       FINAL PAGE STATE
-    ========================= */
-
-    if (
-      localStorage.getItem(
-        "adminLoggedIn"
-      ) === "true"
-    ) {
-
-      document
-        .getElementById("loginPage")
-        .classList.add("hidden");
-
-      document
-        .getElementById("adminPage")
-        .classList.remove("hidden");
+    if(
+      event.key ===
+      WITHDRAWAL_KEY
+    ){
 
       loadRequests();
 
-      startAutoRefresh();
+    }
 
-    } else {
+  }
+);
 
-      document
-        .getElementById("loginPage")
-        .classList.remove("hidden");
 
-      document
-        .getElementById("adminPage")
-        .classList.add("hidden");
+document.addEventListener(
+  "visibilitychange",
+  function(){
+
+    if(
+      document.visibilityState ===
+      "visible"
+    ){
+
+      if(
+        localStorage.getItem(
+          "adminLoggedIn"
+        ) === "true"
+      ){
+
+        loadRequests();
+
+      }
 
     }
 
-  </script>
+  }
+);
+  const originalShowAdmin =
+  showAdmin;
+
+
+showAdmin = function(){
+
+  originalShowAdmin();
+
+  startAutoRefresh();
+
+};
+
+
+const originalAdminLogout =
+  adminLogout;
+
+
+adminLogout = function(){
+
+  stopAutoRefresh();
+
+  originalAdminLogout();
+
+};
+
+
+if(
+  localStorage.getItem(
+    "adminLoggedIn"
+  ) === "true"
+){
+
+  document
+    .getElementById("loginPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("adminPage")
+    .classList.remove("hidden");
+
+  loadRequests();
+
+  startAutoRefresh();
+
+}else{
+
+  document
+    .getElementById("loginPage")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("adminPage")
+    .classList.add("hidden");
+
+}
+
+</script>
 
 </body>
 </html>
