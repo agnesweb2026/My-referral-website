@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0,user-scalable=no">
+
 <title>LiveX</title>
 
 <style>
@@ -10,6 +14,7 @@
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
 }
+
 html,body{
   margin:0;
   padding:0;
@@ -19,116 +24,160 @@ html,body{
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
 }
+
 body{
   overflow-x:hidden;
 }
-button,input{
+
+button,
+input{
   font:inherit;
 }
+
 button{
   cursor:pointer;
 }
 
 .screen{
-  min-height:100vh;
   width:100%;
+  min-height:100vh;
 }
+
+/* =========================
+   WELCOME
+========================= */
 
 #welcomeScreen{
   display:flex;
   align-items:center;
   justify-content:center;
   flex-direction:column;
+  min-height:100vh;
   background:
-    radial-gradient(circle at center,#241022 0%,#090509 45%,#000 100%);
+    radial-gradient(
+      circle at center,
+      #2a101d 0%,
+      #0b0609 48%,
+      #000 100%
+    );
+  text-align:center;
 }
+
 .logo{
-  font-size:42px;
+  font-size:44px;
   font-weight:900;
   letter-spacing:-2px;
 }
+
 .logo span{
   color:#ff1744;
 }
+
 .welcomeText{
   margin-top:12px;
-  color:#bbb;
-  font-size:15px;
+  color:#aaa;
+  font-size:14px;
 }
+
 .loadingDots{
   display:flex;
   gap:7px;
-  margin-top:25px;
+  margin-top:24px;
 }
-.loadingDots i{
+
+.loadingDots span{
   width:8px;
   height:8px;
   border-radius:50%;
   background:#ff1744;
-  animation:loadDot 1s infinite;
+  animation:dotPulse 1s infinite;
 }
-.loadingDots i:nth-child(2){animation-delay:.15s}
-.loadingDots i:nth-child(3){animation-delay:.3s}
-@keyframes loadDot{
-  0%,80%,100%{opacity:.25;transform:scale(.7)}
-  40%{opacity:1;transform:scale(1)}
+
+.loadingDots span:nth-child(2){
+  animation-delay:.15s;
 }
+
+.loadingDots span:nth-child(3){
+  animation-delay:.3s;
+}
+
+@keyframes dotPulse{
+  0%,80%,100%{
+    opacity:.25;
+    transform:scale(.7);
+  }
+  40%{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* =========================
+   PHOTOS PAGE
+========================= */
 
 #photosPage{
   display:none;
+  min-height:100vh;
   background:#090909;
   padding-bottom:30px;
 }
 
-.topbar{
+.topBar{
   position:sticky;
   top:0;
-  z-index:50;
+  z-index:100;
   height:58px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 13px;
-  background:rgba(8,8,8,.96);
+  background:rgba(7,7,7,.96);
   border-bottom:1px solid #222;
   backdrop-filter:blur(12px);
 }
+
 .brand{
   font-size:23px;
   font-weight:900;
 }
+
 .brand span{
   color:#ff1744;
 }
+
 .onlineBox{
   display:flex;
   align-items:center;
   gap:7px;
   color:#ddd;
-  font-size:13px;
+  font-size:12px;
 }
+
 .onlineDot{
   width:8px;
   height:8px;
   border-radius:50%;
   background:#20e86a;
-  box-shadow:0 0 9px #20e86a;
-  animation:blinkOnline 1.2s infinite;
+  box-shadow:0 0 8px #20e86a;
+  animation:onlineBlink 1.2s infinite;
 }
-@keyframes blinkOnline{
+
+@keyframes onlineBlink{
   0%,100%{opacity:1}
-  50%{opacity:.25}
+  50%{opacity:.3}
 }
 
 .pageTitle{
-  padding:14px 13px 9px;
-  font-size:17px;
-  font-weight:800;
+  padding:15px 13px 5px;
+  font-size:19px;
+  font-weight:900;
 }
-.pageSub{
+
+.pageSubtitle{
   padding:0 13px 13px;
   color:#888;
-  font-size:12px;
+  font-size:11px;
 }
 
 .photosGrid{
@@ -140,105 +189,117 @@ button{
 
 .photoCard{
   min-width:0;
-  background:#111;
-  border:1px solid #222;
-  border-radius:12px;
   overflow:hidden;
-  box-shadow:0 3px 15px rgba(0,0,0,.35);
+  background:#111;
+  border:1px solid #252525;
+  border-radius:12px;
+  box-shadow:0 4px 15px rgba(0,0,0,.35);
 }
 
 .photoWrap{
   position:relative;
   width:100%;
   aspect-ratio:3/4;
-  background:#181818;
   overflow:hidden;
+  background:#171717;
+  cursor:pointer;
 }
+
 .profileImage{
+  display:block;
   width:100%;
   height:100%;
   object-fit:cover;
-  display:block;
 }
+
 .imageFallback{
+  display:none;
   width:100%;
   height:100%;
-  display:flex;
   align-items:center;
   justify-content:center;
   color:#777;
-  font-size:12px;
-  background:#151515;
-}
-.playIcon{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:rgba(0,0,0,.68);
-  border:2px solid rgba(255,255,255,.9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:18px;
-  padding-left:3px;
-  animation:pulsePlay 1.8s infinite;
-}
-@keyframes pulsePlay{
-  0%,100%{box-shadow:0 0 0 0 rgba(255,23,68,.25)}
-  50%{box-shadow:0 0 0 9px rgba(255,23,68,0)}
+  font-size:10px;
 }
 
 .liveBadge{
   position:absolute;
-  top:7px;
-  left:7px;
-  background:#f0153d;
-  color:white;
-  font-size:9px;
-  font-weight:900;
+  top:6px;
+  left:6px;
+  z-index:5;
   padding:4px 6px;
   border-radius:5px;
-  letter-spacing:.5px;
+  background:#ef1743;
+  color:#fff;
+  font-size:8px;
+  font-weight:900;
 }
+
 .offlineBadge{
-  position:absolute;
-  top:7px;
-  right:7px;
   display:none;
+  position:absolute;
+  top:6px;
+  right:6px;
+  z-index:5;
+  padding:4px 6px;
+  border-radius:5px;
   background:#555;
   color:#eee;
   font-size:8px;
-  font-weight:800;
-  padding:4px 5px;
-  border-radius:5px;
+  font-weight:900;
 }
-.photoCard.isOffline .liveBadge{
+
+.photoCard.offline .liveBadge{
   display:none;
 }
-.photoCard.isOffline .offlineBadge{
+
+.photoCard.offline .offlineBadge{
   display:block;
 }
- <style>
-.profileInfo{
-  padding:8px 7px 5px;
+
+.playIcon{
+  position:absolute;
+  top:50%;
+  left:50%;
+  z-index:4;
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform:translate(-50%,-50%);
+  border:2px solid rgba(255,255,255,.9);
+  border-radius:50%;
+  background:rgba(0,0,0,.65);
+  font-size:16px;
+  padding-left:2px;
+  animation:playPulse 1.8s infinite;
 }
+
+@keyframes playPulse{
+  0%,100%{
+    box-shadow:0 0 0 0 rgba(255,23,68,.3);
+  }
+  50%{
+    box-shadow:0 0 0 8px rgba(255,23,68,0);
+  }
+}
+  <style>
+/* =========================
+   PROFILE INFO
+========================= */
+
+.profileInfo{
+  padding:7px 6px 4px;
+}
+
 .profileName{
   display:flex;
   align-items:center;
-  gap:5px;
+  gap:4px;
   min-width:0;
 }
-.profileNameText{
-  font-size:12px;
-  font-weight:800;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
+
 .nameStatusDot{
   width:7px;
   height:7px;
@@ -248,21 +309,36 @@ button{
   box-shadow:0 0 7px #21e768;
   animation:nameBlink 1.1s infinite;
 }
+
 .nameStatusDot.offline{
   background:#777;
   box-shadow:none;
   animation:none;
 }
+
 @keyframes nameBlink{
   0%,100%{opacity:1}
   50%{opacity:.25}
 }
 
-.profileAge{
-  color:#999;
-  font-size:10px;
-  margin-top:3px;
+.profileNameText{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:11px;
+  font-weight:800;
 }
+
+.profileAge{
+  margin-top:3px;
+  color:#888;
+  font-size:8px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
 
 .socialRow{
   display:grid;
@@ -270,57 +346,69 @@ button{
   gap:3px;
   padding:4px 5px 6px;
 }
+
 .socialBtn{
   min-width:0;
+  padding:6px 1px;
   border:1px solid #292929;
   border-radius:7px;
   background:#181818;
   color:#ddd;
-  padding:6px 2px;
-  font-size:9px;
-  line-height:1.1;
+  font-size:8px;
+  font-weight:700;
   text-align:center;
 }
+
 .socialBtn:active{
-  transform:scale(.96);
+  transform:scale(.95);
 }
+
 .socialBtn.activeLike{
-  color:#ff3157;
-  border-color:#762035;
+  color:#ff4167;
+  border-color:#762238;
 }
+
 .socialBtn.activeLove{
-  color:#ff5d9b;
-  border-color:#76204b;
+  color:#ff69a0;
+  border-color:#76264c;
 }
+
 .socialBtn.activeFollow{
-  color:#4eea86;
-  border-color:#205f39;
+  color:#35e978;
+  border-color:#22683c;
 }
 
 .count{
   display:block;
   margin-top:2px;
-  color:#aaa;
-  font-size:8px;
+  color:#888;
+  font-size:7px;
 }
 
+/* =========================
+   CHAT
+========================= */
+
 .chatTitle{
-  padding:5px 7px 3px;
-  color:#aaa;
-  font-size:9px;
-  font-weight:700;
-  border-top:1px solid #222;
+  padding:5px 6px 3px;
+  border-top:1px solid #252525;
+  color:#999;
+  font-size:8px;
+  font-weight:800;
 }
+
 .commentsBox{
-  height:128px;
+  height:118px;
   overflow-y:auto;
-  padding:3px 6px 6px;
+  padding:2px 5px 5px;
   overscroll-behavior:contain;
   scrollbar-width:thin;
 }
+
 .commentsBox::-webkit-scrollbar{
   width:3px;
 }
+
 .commentsBox::-webkit-scrollbar-thumb{
   background:#444;
   border-radius:10px;
@@ -329,392 +417,596 @@ button{
 .comment{
   margin:4px 0;
   padding:6px 7px;
-  background:#191919;
+  border:1px solid #252525;
   border-radius:9px;
-  border:1px solid #242424;
+  background:#191919;
   animation:commentIn .35s ease;
 }
+
 .comment.compact{
   padding:5px 7px;
 }
+
 .comment.love{
-  border-left:2px solid #e84378;
+  border-left:2px solid #e94279;
 }
+
 .comment.long{
   padding:7px 8px;
 }
+
 @keyframes commentIn{
   from{
     opacity:0;
-    transform:translateY(8px);
+    transform:translateY(7px);
   }
   to{
     opacity:1;
     transform:translateY(0);
   }
 }
+
 .commentTop{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:5px;
+  gap:4px;
 }
+
 .commentUser{
   color:#eee;
-  font-size:8px;
-  font-weight:800;
+  font-size:7px;
+  font-weight:900;
 }
+
 .commentTime{
   color:#666;
-  font-size:7px;
+  font-size:6px;
 }
+
 .commentText{
-  color:#c9c9c9;
-  font-size:9px;
-  line-height:1.3;
   margin-top:3px;
+  color:#c8c8c8;
+  font-size:8px;
+  line-height:1.35;
   word-break:break-word;
 }
 
 .commentForm{
   display:flex;
   gap:4px;
-  padding:5px 6px 7px;
+  padding:4px 5px 6px;
 }
+
 .commentInput{
   min-width:0;
   flex:1;
-  height:30px;
-  padding:0 8px;
+  height:28px;
+  padding:0 7px;
+  border:1px solid #292929;
   border-radius:8px;
-  border:1px solid #2b2b2b;
   outline:none;
-  background:#0e0e0e;
+  background:#0d0d0d;
   color:#fff;
-  font-size:9px;
+  font-size:8px;
 }
+
 .commentInput:focus{
   border-color:#555;
 }
+
 .commentSend{
-  width:36px;
-  height:30px;
+  width:32px;
+  height:28px;
   border:0;
   border-radius:8px;
   background:#ff1744;
   color:#fff;
-  font-weight:900;
   font-size:11px;
+  font-weight:900;
 }
 
-.bottomHint{
-  text-align:center;
-  color:#666;
-  font-size:10px;
-  padding:17px 10px;
-}
+/* =========================
+   INCOMING CALL
+========================= */
 
-/* incoming call */
 #incomingCall{
   display:none;
   position:fixed;
   inset:0;
-  z-index:200;
-  background:#050505;
+  z-index:500;
   align-items:center;
   justify-content:center;
   padding:20px;
+  background:
+    radial-gradient(
+      circle at center,
+      #241018 0%,
+      #070707 55%,
+      #000 100%
+    );
 }
+
 .callBox{
-  width:min(390px,100%);
+  width:min(360px,100%);
+  padding:27px 20px;
+  border:1px solid #292929;
+  border-radius:22px;
+  background:#111;
   text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.8);
 }
+
 .callAvatar{
-  width:150px;
-  height:150px;
+  width:120px;
+  height:120px;
+  margin:0 auto 17px;
+  overflow:hidden;
+  border:3px solid #22c55e;
   border-radius:50%;
-  object-fit:cover;
-  border:3px solid #ff1744;
-  box-shadow:0 0 35px rgba(255,23,68,.25);
+  background:#222;
 }
+
+.callAvatar img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
 .callLive{
   display:inline-block;
-  margin-top:20px;
-  padding:5px 9px;
+  padding:5px 8px;
   border-radius:5px;
   background:#ed1742;
-  color:#fff;
-  font-size:10px;
+  font-size:9px;
   font-weight:900;
 }
+
 .callName{
-  font-size:23px;
+  margin-top:10px;
+  font-size:22px;
   font-weight:900;
-  margin-top:11px;
 }
+
 .callText{
-  color:#999;
-  font-size:13px;
   margin-top:7px;
+  color:#999;
+  font-size:12px;
 }
+
 .callButtons{
   display:flex;
   justify-content:center;
-  gap:35px;
-  margin-top:30px;
+  gap:38px;
+  margin-top:28px;
 }
+
 .callBtn{
   width:65px;
   height:65px;
   border:0;
   border-radius:50%;
-  color:white;
+  color:#fff;
   font-size:25px;
 }
+
 .rejectBtn{
-  background:#ef1742;
+  background:#ef1744;
 }
+
 .answerBtn{
   background:#20b85b;
- }
- <style>
-/* video screen */
+    }
+  <style>
+/* =========================
+   VIDEO SCREEN
+========================= */
+
 #videoScreen{
   display:none;
   position:fixed;
   inset:0;
-  z-index:190;
-  background:#000;
+  z-index:600;
   align-items:center;
   justify-content:center;
+  background:#000;
 }
+
 #sampleVideo{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
   background:#000;
 }
-.videoOverlay{
+
+.videoTop{
   position:absolute;
-  top:14px;
-  left:14px;
-  right:14px;
+  top:13px;
+  left:13px;
+  right:13px;
+  z-index:5;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
   pointer-events:none;
 }
-.videoLiveBadge{
-  background:#f01743;
-  border-radius:5px;
+
+.videoLive{
   padding:6px 8px;
-  font-size:10px;
+  border-radius:5px;
+  background:#ed1742;
+  font-size:9px;
   font-weight:900;
 }
+
 .videoTimer{
-  background:rgba(0,0,0,.6);
-  border-radius:6px;
   padding:6px 8px;
-  font-size:10px;
-  color:#fff;
+  border-radius:6px;
+  background:rgba(0,0,0,.65);
+  font-size:9px;
 }
 
-/* insufficient */
+/* =========================
+   INSUFFICIENT
+========================= */
+
 #insufficientPage{
   display:none;
   position:fixed;
   inset:0;
-  z-index:180;
-  background:
-    radial-gradient(circle at center,#261019 0%,#090609 45%,#000 100%);
+  z-index:550;
   align-items:center;
   justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(
+      circle at center,
+      #271018 0%,
+      #080608 48%,
+      #000 100%
+    );
   text-align:center;
-  padding:25px;
 }
+
 .insufficientBox{
-  width:min(380px,100%);
+  width:min(370px,100%);
+  padding:30px 20px;
+  border:1px solid #292929;
+  border-radius:18px;
+  background:#111;
 }
+
 .warningIcon{
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  margin:0 auto 18px;
+  width:58px;
+  height:58px;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#281017;
-  border:1px solid #6a1b2e;
+  margin:0 auto 15px;
+  border:1px solid #6a1c30;
+  border-radius:50%;
+  background:#251017;
   color:#ff3159;
-  font-size:30px;
-}
-.insufficientTitle{
-  font-size:25px;
+  font-size:27px;
   font-weight:900;
 }
-.insufficientText{
-  color:#999;
-  font-size:13px;
-  line-height:1.5;
-  margin-top:9px;
+
+.insufficientTitle{
+  font-size:24px;
+  font-weight:900;
 }
+
+.insufficientText{
+  margin-top:9px;
+  color:#999;
+  font-size:12px;
+  line-height:1.5;
+}
+
 .insufficientLoader{
-  margin:22px auto 0;
-  width:35px;
-  height:35px;
+  width:32px;
+  height:32px;
+  margin:20px auto 0;
   border:3px solid #292929;
   border-top-color:#ff1744;
   border-radius:50%;
   animation:spin 1s linear infinite;
 }
+
 @keyframes spin{
-  to{transform:rotate(360deg)}
+  to{
+    transform:rotate(360deg);
+  }
 }
 
-/* room closed */
+/* =========================
+   ROOM CLOSED
+========================= */
+
 #roomClosed{
   display:none;
   position:fixed;
   inset:0;
-  z-index:210;
-  background:#080808;
+  z-index:700;
   align-items:center;
   justify-content:center;
+  padding:20px;
+  background:#080808;
   text-align:center;
-  padding:25px;
-}
-.closedBox{
-  width:min(360px,100%);
-}
-.closedIcon{
-  font-size:48px;
-  margin-bottom:15px;
-}
-.closedTitle{
-  font-size:25px;
-  font-weight:900;
-}
-.closedText{
-  color:#888;
-  margin-top:8px;
-  font-size:13px;
 }
 
-/* responsive */
+.closedBox{
+  width:min(350px,100%);
+}
+
+.closedIcon{
+  font-size:45px;
+}
+
+.closedTitle{
+  margin-top:12px;
+  font-size:24px;
+  font-weight:900;
+}
+
+.closedText{
+  margin-top:8px;
+  color:#888;
+  font-size:12px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:390px){
+
   .photosGrid{
     gap:5px;
     padding:0 5px;
   }
-  .profileInfo{
-    padding-left:5px;
-    padding-right:5px;
-  }
+
   .socialRow{
     gap:2px;
     padding-left:4px;
     padding-right:4px;
   }
+
   .commentsBox{
-    height:120px;
+    height:112px;
   }
+
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================
+     WELCOME
+========================= -->
+
 <div id="welcomeScreen" class="screen">
-  <div class="logo">Live<span>X</span></div>
-  <div class="welcomeText">Connecting you to live profiles...</div>
-  <div class="loadingDots">
-    <i></i><i></i><i></i>
+
+  <div class="logo">
+    Live<span>X</span>
   </div>
+
+  <div class="welcomeText">
+    Connecting you to live profiles...
+  </div>
+
+  <div class="loadingDots">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
 </div>
+<!-- =========================
+     PHOTOS
+========================= -->
 
 <div id="photosPage" class="screen">
 
-  <div class="topbar">
-    <div class="brand">Live<span>X</span></div>
+  <div class="topBar">
+
+    <div class="brand">
+      Live<span>X</span>
+    </div>
+
     <div class="onlineBox">
       <span class="onlineDot"></span>
-      <span><b id="onlineNumber">21</b> online</span>
+      <span>
+        <b id="onlineNumber">21</b> online
+      </span>
     </div>
+
   </div>
 
-  <div class="pageTitle">Live profiles</div>
-  <div class="pageSub">Tap a profile to view and connect</div>
-
-  <div id="photosGrid" class="photosGrid"></div>
-
-  <div class="bottomHint">
-    More live profiles are joining...
+  <div class="pageTitle">
+    Live profiles
   </div>
+
+  <div class="pageSubtitle">
+    People live now
+  </div>
+
+  <div
+    id="photosGrid"
+    class="photosGrid"
+  ></div>
+
 </div>
+
+
+<!-- =========================
+     INCOMING CALL
+========================= -->
+
 <div id="incomingCall">
+
   <div class="callBox">
-    <img id="callAvatar" class="callAvatar" src="" alt="">
-    <div class="callLive">● LIVE CALL</div>
-    <div id="callName" class="callName">Incoming call</div>
-    <div class="callText">Someone wants to connect with you</div>
+
+    <div class="callAvatar">
+
+      <img
+        id="callAvatarImage"
+        src=""
+        alt="Caller"
+      >
+
+    </div>
+
+    <div class="callLive">
+      ● LIVE CALL
+    </div>
+
+    <div
+      id="callName"
+      class="callName"
+    >
+      Incoming call
+    </div>
+
+    <div class="callText">
+      Someone wants to start a video call
+    </div>
 
     <div class="callButtons">
-      <button class="callBtn rejectBtn" onclick="rejectCall()">✕</button>
-      <button class="callBtn answerBtn" onclick="answerCall()">☎</button>
+
+      <button
+        id="rejectCallButton"
+        class="callBtn rejectBtn"
+        type="button"
+      >
+        ✕
+      </button>
+
+      <button
+        id="answerCallButton"
+        class="callBtn answerBtn"
+        type="button"
+      >
+        ☎
+      </button>
+
     </div>
+
   </div>
+
 </div>
 
+
+<!-- =========================
+     VIDEO
+========================= -->
+
 <div id="videoScreen">
+
   <video
     id="sampleVideo"
     playsinline
     preload="auto"
-    controlslist="nodownload noplaybackrate"
-  ></video>
+    controls
+  >
+    <source
+      src="./IMG_20261001_011110_570.mp4"
+      type="video/mp4"
+    >
+  </video>
 
-  <div class="videoOverlay">
-    <div class="videoLiveBadge">● LIVE</div>
-    <div id="videoTimer" class="videoTimer">LIVE</div>
+  <div class="videoTop">
+
+    <div class="videoLive">
+      ● LIVE
+    </div>
+
+    <div
+      id="videoTimer"
+      class="videoTimer"
+    >
+      40s
+    </div>
+
   </div>
+
 </div>
 
+
+<!-- =========================
+     INSUFFICIENT
+========================= -->
+
 <div id="insufficientPage">
+
   <div class="insufficientBox">
-    <div class="warningIcon">!</div>
-    <div class="insufficientTitle">Insufficient Minutes</div>
+
+    <div class="warningIcon">
+      !
+    </div>
+
+    <div class="insufficientTitle">
+      Insufficient Minutes
+    </div>
+
     <div class="insufficientText">
       Your free live minutes have ended.<br>
       Get minutes to continue watching and chatting.
     </div>
+
     <div class="insufficientLoader"></div>
+
   </div>
+
 </div>
 
+
+<!-- =========================
+     ROOM CLOSED
+========================= -->
+
 <div id="roomClosed">
+
   <div class="closedBox">
-    <div class="closedIcon">📴</div>
-    <div class="closedTitle">Live room closed</div>
+
+    <div class="closedIcon">
+      📴
+    </div>
+
+    <div class="closedTitle">
+      Live room closed
+    </div>
+
     <div class="closedText">
       This live room is currently unavailable.
     </div>
+
   </div>
+
 </div>
+
 
 <script>
 "use strict";
 
 /* =========================
-   BASIC SETTINGS
+   SETTINGS
 ========================= */
+
+const PAYMENT_PAGE_URL = "payment.html";
 
 const IMAGE_BASE = "./";
 
-const VIDEO_URL = "./IMG_20261001_011110_570.mp4";
+const VIDEO_URL =
+  "./IMG_20261001_011110_570.mp4";
 
-const SAMPLE_STORAGE_KEY = "myReferralSampleWatched";
+const SAMPLE_STORAGE_KEY =
+  "myReferralSampleWatched";
 
 const SAMPLE_DURATION = 40000;
+
 const INSUFFICIENT_DURATION = 2000;
 
 const MAX_VISIBLE_COMMENTS = 7;
@@ -725,122 +1017,369 @@ const MAX_VISIBLE_COMMENTS = 7;
 ========================= */
 
 const PHOTO_NAMES = [
-  {name:"Cute",age:24,flag:"🇰🇪",country:"Kenya",image:"photo1.jpg"},
-  {name:"Becky",age:22,flag:"🇰🇪",country:"Kenya",image:"photo2.jpg"},
-  {name:"Dorry",age:26,flag:"🇰🇪",country:"Kenya",image:"photo4.jpg"},
-  {name:"Sharon",age:23,flag:"🇰🇪",country:"Kenya",image:"photo5.jpg"},
-  {name:"Lilian",age:27,flag:"🇰🇪",country:"Kenya",image:"1785179340825.jpg"},
 
-  {name:"Asha",age:25,flag:"🇹🇿",country:"Tanzania",image:"1785179340825 (1).jpg"},
-  {name:"Neema",age:23,flag:"🇹🇿",country:"Tanzania",image:"1785179362758.jpg"},
-  {name:"Zawadi",age:28,flag:"🇹🇿",country:"Tanzania",image:"1785179915649.jpg"},
-  {name:"Rehema",age:24,flag:"🇹🇿",country:"Tanzania",image:"Screenshot_20260731-045343.png"},
+  {
+    name:"Cute",
+    age:24,
+    flag:"🇰🇪",
+    country:"Kenya",
+    image:"photo1.jpg"
+  },
 
-  {name:"Blessing",age:22,flag:"🇳🇬",country:"Nigeria",image:"photo1.jpg"},
-  {name:"Favour",age:26,flag:"🇳🇬",country:"Nigeria",image:"photo2.jpg"},
-  {name:"Peace",age:25,flag:"🇳🇬",country:"Nigeria",image:"photo4.jpg"},
-  {name:"Joy",age:27,flag:"🇳🇬",country:"Nigeria",image:"photo5.jpg"},
+  {
+    name:"Becky",
+    age:22,
+    flag:"🇰🇪",
+    country:"Kenya",
+    image:"photo2.jpg"
+  },
 
-  {name:"Grace",age:24,flag:"🇨🇩",country:"Congo",image:"1785179340825.jpg"},
-  {name:"Mimi",age:23,flag:"🇨🇩",country:"Congo",image:"1785179340825 (1).jpg"},
-  {name:"Nadia",age:26,flag:"🇨🇩",country:"Congo",image:"1785179362758.jpg"},
-  {name:"Bella",age:25,flag:"🇨🇩",country:"Congo",image:"1785179915649.jpg"},
-  {name:"Princess",age:28,flag:"🇨🇩",country:"Congo",image:"Screenshot_20260731-045343.png"},
+  {
+    name:"Dorry",
+    age:26,
+    flag:"🇰🇪",
+    country:"Kenya",
+    image:"photo4.jpg"
+  },
 
-  {name:"Emily",age:24,flag:"🇨🇦",country:"Canada",image:"photo1.jpg"},
-  {name:"Sophie",age:27,flag:"🇨🇦",country:"Canada",image:"photo2.jpg"},
+  {
+    name:"Sharon",
+    age:23,
+    flag:"🇰🇪",
+    country:"Kenya",
+    image:"photo5.jpg"
+  },
 
-  {name:"Thandi",age:25,flag:"🇿🇦",country:"South Africa",image:"photo4.jpg"},
-  {name:"Lerato",age:29,flag:"🇿🇦",country:"South Africa",image:"photo5.jpg"},
+  {
+    name:"Lilian",
+    age:27,
+    flag:"🇰🇪",
+    country:"Kenya",
+    image:"1785179340825.jpg"
+  },
 
-  {name:"Ashley",age:23,flag:"🇺🇸",country:"USA",image:"1785179340825.jpg"},
-  {name:"Jessica",age:26,flag:"🇺🇸",country:"USA",image:"1785179340825 (1).jpg"}
+  {
+    name:"Asha",
+    age:25,
+    flag:"🇹🇿",
+    country:"Tanzania",
+    image:"1785179340825 (1).jpg"
+  },
+
+  {
+    name:"Neema",
+    age:23,
+    flag:"🇹🇿",
+    country:"Tanzania",
+    image:"1785179362758.jpg"
+  },
+
+  {
+    name:"Zawadi",
+    age:28,
+    flag:"🇹🇿",
+    country:"Tanzania",
+    image:"1785179915649.jpg"
+  },
+
+  {
+    name:"Rehema",
+    age:24,
+    flag:"🇹🇿",
+    country:"Tanzania",
+    image:"Screenshot_20260731-045343.png"
+  },
+
+  {
+    name:"Blessing",
+    age:22,
+    flag:"🇳🇬",
+    country:"Nigeria",
+    image:"photo1.jpg"
+  },
+
+  {
+    name:"Favour",
+    age:26,
+    flag:"🇳🇬",
+    country:"Nigeria",
+    image:"photo2.jpg"
+  },
+
+  {
+    name:"Peace",
+    age:25,
+    flag:"🇳🇬",
+    country:"Nigeria",
+    image:"photo4.jpg"
+  },
+
+  {
+    name:"Joy",
+    age:27,
+    flag:"🇳🇬",
+    country:"Nigeria",
+    image:"photo5.jpg"
+  },
+
+  {
+    name:"Grace",
+    age:24,
+    flag:"🇨🇩",
+    country:"Congo",
+    image:"1785179340825.jpg"
+  },
+
+  {
+    name:"Mimi",
+    age:23,
+    flag:"🇨🇩",
+    country:"Congo",
+    image:"1785179340825 (1).jpg"
+  },
+
+  {
+    name:"Nadia",
+    age:26,
+    flag:"🇨🇩",
+    country:"Congo",
+    image:"1785179362758.jpg"
+  },
+
+  {
+    name:"Bella",
+    age:25,
+    flag:"🇨🇩",
+    country:"Congo",
+    image:"1785179915649.jpg"
+  },
+
+  {
+    name:"Princess",
+    age:28,
+    flag:"🇨🇩",
+    country:"Congo",
+    image:"Screenshot_20260731-045343.png"
+  },
+
+  {
+    name:"Emily",
+    age:24,
+    flag:"🇨🇦",
+    country:"Canada",
+    image:"photo1.jpg"
+  },
+
+  {
+    name:"Sophie",
+    age:27,
+    flag:"🇨🇦",
+    country:"Canada",
+    image:"photo2.jpg"
+  },
+
+  {
+    name:"Thandi",
+    age:25,
+    flag:"🇿🇦",
+    country:"South Africa",
+    image:"photo4.jpg"
+  },
+
+  {
+    name:"Lerato",
+    age:29,
+    flag:"🇿🇦",
+    country:"South Africa",
+    image:"photo5.jpg"
+  },
+
+  {
+    name:"Ashley",
+    age:23,
+    flag:"🇺🇸",
+    country:"USA",
+    image:"1785179340825.jpg"
+  },
+
+  {
+    name:"Jessica",
+    age:26,
+    flag:"🇺🇸",
+    country:"USA",
+    image:"1785179340825 (1).jpg"
+  }
+
 ];
-
-
+  <script>
 /* =========================
-   STORAGE HELPERS
+   STORAGE
 ========================= */
 
-function readStorage(key, fallback){
+const LIKE_KEY =
+  "liveProfileLikes";
+
+const LOVE_KEY =
+  "liveProfileLoves";
+
+const FOLLOW_KEY =
+  "liveProfileFollows";
+
+const COMMENTS_KEY =
+  "liveProfileComments";
+
+
+function readStorage(key,fallback){
+
   try{
-    const value = localStorage.getItem(key);
-    return value ? JSON.parse(value) : fallback;
-  }catch(e){
+
+    const value =
+      localStorage.getItem(key);
+
+    if(!value){
+      return fallback;
+    }
+
+    return JSON.parse(value);
+
+  }catch(error){
+
     return fallback;
+
   }
+
 }
+
 
 function writeStorage(key,value){
-  try{
-    localStorage.setItem(key,JSON.stringify(value));
-  }catch(e){}
-}
 
-const LIKE_KEY = "liveProfileLikes";
-const LOVE_KEY = "liveProfileLoves";
-const FOLLOW_KEY = "liveProfileFollows";
-const COMMENTS_KEY = "liveProfileComments";
+  try{
+
+    localStorage.setItem(
+      key,
+      JSON.stringify(value)
+    );
+
+  }catch(error){}
+
+}
 
 
 function profileId(index){
+
   return "profile_" + index;
+
 }
 
-function formatNumber(number){
-  return Number(number || 0).toLocaleString("en-US");
-}
- <script>
-function getLikes(index){
-  const data = readStorage(LIKE_KEY,{});
-  if(typeof data[profileId(index)] !== "number"){
-    data[profileId(index)] = 5000 + Math.floor(Math.random()*1800);
-    writeStorage(LIKE_KEY,data);
-  }
-  return data[profileId(index)];
+
+function formatNumber(value){
+
+  return Number(value || 0)
+    .toLocaleString("en-US");
+
 }
 
-function getLove(index){
-  const data = readStorage(LOVE_KEY,{});
-  if(typeof data[profileId(index)] !== "number"){
-    data[profileId(index)] = 900 + Math.floor(Math.random()*700);
-    writeStorage(LOVE_KEY,data);
-  }
-  return data[profileId(index)];
-}
 
-function getFollow(index){
-  const data = readStorage(FOLLOW_KEY,{});
-  if(typeof data[profileId(index)] !== "number"){
-    data[profileId(index)] = 700 + Math.floor(Math.random()*600);
-    writeStorage(FOLLOW_KEY,data);
-  }
-  return data[profileId(index)];
-}
+function escapeHtml(value){
 
-function getComments(index){
-  const data = readStorage(COMMENTS_KEY,{});
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
-  if(!Array.isArray(data[profileId(index)])){
-    data[profileId(index)] = buildInitialComments(index);
-    writeStorage(COMMENTS_KEY,data);
-  }
-
-  return data[profileId(index)];
-}
-
-function saveComments(index,comments){
-  const data = readStorage(COMMENTS_KEY,{});
-  data[profileId(index)] = comments;
-  writeStorage(COMMENTS_KEY,data);
 }
 
 
 /* =========================
-   COMMENT CONTENT
+   COUNTERS
+========================= */
+
+function getLikes(index){
+
+  const data =
+    readStorage(LIKE_KEY,{});
+
+  const id =
+    profileId(index);
+
+  if(typeof data[id] !== "number"){
+
+    data[id] =
+      5000 +
+      Math.floor(Math.random()*1800);
+
+    writeStorage(
+      LIKE_KEY,
+      data
+    );
+
+  }
+
+  return data[id];
+
+}
+
+
+function getLove(index){
+
+  const data =
+    readStorage(LOVE_KEY,{});
+
+  const id =
+    profileId(index);
+
+  if(typeof data[id] !== "number"){
+
+    data[id] =
+      900 +
+      Math.floor(Math.random()*700);
+
+    writeStorage(
+      LOVE_KEY,
+      data
+    );
+
+  }
+
+  return data[id];
+
+}
+
+
+function getFollow(index){
+
+  const data =
+    readStorage(FOLLOW_KEY,{});
+
+  const id =
+    profileId(index);
+
+  if(typeof data[id] !== "number"){
+
+    data[id] =
+      700 +
+      Math.floor(Math.random()*600);
+
+    writeStorage(
+      FOLLOW_KEY,
+      data
+    );
+
+  }
+
+  return data[id];
+
+}
+
+
+/* =========================
+   COMMENT USERS
 ========================= */
 
 const COMMENT_USERS = [
+
   "Mike",
   "Kevin",
   "Dan",
@@ -855,275 +1394,502 @@ const COMMENT_USERS = [
   "Peter",
   "Eric",
   "Jay",
-  "Tom"
+  "Tom",
+  "Ben",
+  "James",
+  "Leo"
+
 ];
+
 
 const COMMENT_MESSAGES = [
+
+  "Hello 👋",
+
   "You look amazing ❤️",
-  "That smile is beautiful 😍",
-  "Hello beautiful 👋",
-  "I like your vibe ❤️",
-  "You are really cute 😍",
-  "Wow, looking gorgeous 🔥",
-  "I just joined the room 👀",
-  "Beautiful profile ❤️",
-  "You caught my attention 😍",
-  "Can I say hello? 😊",
-  "This photo is lovely ❤️",
-  "You have such a nice smile 😍",
-  "I keep coming back here ❤️",
-  "Looking good tonight 🔥",
-  "You are shining today ✨",
-  "That smile though 😍",
-  "Hello from here 👋❤️",
-  "So beautiful 😘",
+
+  "Nice smile 😍",
+
+  "I like your vibe 😊",
+
+  "Beautiful photo ❤️",
+
+  "Wow 😍",
+
+  "Where are you watching from?",
+
+  "You look lovely tonight ❤️",
+
   "Nice profile 😊",
-  "You look stunning ❤️",
-  "I love this photo 😍",
-  "Beautiful eyes 👀❤️",
-  "You look sweet 😊",
-  "Wow 😍❤️"
+
+  "Anyone else still online?",
+
+  "That smile though 😍",
+
+  "Hello beautiful 👋",
+
+  "You caught my attention ❤️",
+
+  "This photo is lovely",
+
+  "You look stunning 🔥",
+
+  "I just joined the room",
+
+  "Good vibes here ❤️",
+
+  "How was your day?",
+
+  "Nice to see you 😊",
+
+  "Who is still awake? 👀",
+
+  "You have a beautiful smile",
+
+  "This room is active tonight",
+
+  "I like this profile 😍",
+
+  "Hello again ❤️"
+
 ];
 
-const EMOJI_ENDINGS = [
-  " ❤️",
-  " 😍",
-  " 😊",
-  " 🔥",
-  " 😘",
-  " 👀",
-  " ✨",
-  ""
+
+const COMMENT_STYLES = [
+
+  "",
+  "compact",
+  "love",
+  "long"
+
 ];
+
 
 function randomItem(array){
-  return array[Math.floor(Math.random()*array.length)];
+
+  return array[
+    Math.floor(
+      Math.random()*array.length
+    )
+  ];
+
 }
 
-function randomTimeLabel(){
-  const seconds = 1 + Math.floor(Math.random()*59);
-  return seconds + "s";
+
+function randomTime(){
+
+  return (
+    1 +
+    Math.floor(Math.random()*59)
+  ) + "s";
+
 }
+
 
 function makeComment(index){
-  const profile = PHOTO_NAMES[index];
 
-  const user = randomItem(COMMENT_USERS);
-  const base = randomItem(COMMENT_MESSAGES);
-
-  let message = base;
-
-  if(Math.random() < .35){
-    message += randomItem(EMOJI_ENDINGS);
-  }
-
-  const styles = ["","compact","love","long"];
+  const profile =
+    PHOTO_NAMES[index];
 
   return {
-    user:user,
-    text:message,
-    time:randomTimeLabel(),
-    style:randomItem(styles),
+
+    user:randomItem(
+      COMMENT_USERS
+    ),
+
+    text:randomItem(
+      COMMENT_MESSAGES
+    ),
+
+    time:randomTime(),
+
+    style:randomItem(
+      COMMENT_STYLES
+    ),
+
     profile:profile.name
+
   };
+
 }
 
-function buildInitialComments(index){
-  const result = [];
-  const count = 5 + Math.floor(Math.random()*2);
 
-  for(let i=0;i<count;i++){
-    result.push(makeComment(index));
+function buildInitialComments(index){
+
+  const result = [];
+
+  const amount =
+    5 +
+    Math.floor(Math.random()*2);
+
+  for(
+    let i=0;
+    i<amount;
+    i++
+  ){
+
+    result.push(
+      makeComment(index)
+    );
+
   }
 
   return result;
+
 }
 
 
 /* =========================
-   HTML SAFETY
+   COMMENTS STORAGE
 ========================= */
 
-function escapeHtml(value){
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+function getComments(index){
+
+  const data =
+    readStorage(
+      COMMENTS_KEY,
+      {}
+    );
+
+  const id =
+    profileId(index);
+
+  if(!Array.isArray(data[id])){
+
+    data[id] =
+      buildInitialComments(index);
+
+    writeStorage(
+      COMMENTS_KEY,
+      data
+    );
+
+  }
+
+  return data[id];
+
+}
+
+
+function saveComments(index,comments){
+
+  const data =
+    readStorage(
+      COMMENTS_KEY,
+      {}
+    );
+
+  data[
+    profileId(index)
+  ] = comments;
+
+  writeStorage(
+    COMMENTS_KEY,
+    data
+  );
+
 }
 
 
 /* =========================
-   RENDER COMMENTS
+   COMMENT HTML
 ========================= */
 
 function commentHtml(comment){
-  const style = comment.style || "";
 
   return `
-    <div class="comment ${escapeHtml(style)}">
+    <div class="comment ${escapeHtml(
+      comment.style || ""
+    )}">
+
       <div class="commentTop">
-        <span class="commentUser">${escapeHtml(comment.user || "Visitor")}</span>
-        <span class="commentTime">${escapeHtml(comment.time || "now")}</span>
+
+        <span class="commentUser">
+          ${escapeHtml(
+            comment.user || "Visitor"
+          )}
+        </span>
+
+        <span class="commentTime">
+          ${escapeHtml(
+            comment.time || "now"
+          )}
+        </span>
+
       </div>
-      <div class="commentText">${escapeHtml(comment.text || "")}</div>
+
+      <div class="commentText">
+        ${escapeHtml(
+          comment.text || ""
+        )}
+      </div>
+
     </div>
   `;
+
 }
+
 
 function renderComments(index){
-  const box = document.getElementById("comments_"+index);
+
+  const box =
+    document.getElementById(
+      "comments_"+index
+    );
+
   if(!box) return;
 
-  const comments = getComments(index);
+  const comments =
+    getComments(index);
 
-  box.innerHTML = comments
-    .slice(-MAX_VISIBLE_COMMENTS)
-    .map(commentHtml)
-    .join("");
+  box.innerHTML =
+    comments
+      .slice(-MAX_VISIBLE_COMMENTS)
+      .map(commentHtml)
+      .join("");
 
-  box.scrollTop = box.scrollHeight;
-}
+  box.scrollTop =
+    box.scrollHeight;
 
-
+    }
+  <script>
 /* =========================
-   NATURAL LIVE CHAT
+   NATURAL CHAT FEED
 ========================= */
 
 const CHAT_TIMERS = {};
-const CHAT_CURSORS = {};
 
-function appendLiveComment(index,comment){
-  const box = document.getElementById("comments_"+index);
+function appendLiveComment(
+  index,
+  comment,
+  forceBottom
+){
+
+  const box =
+    document.getElementById(
+      "comments_"+index
+    );
 
   if(!box) return;
 
-  const nearBottom =
-    box.scrollHeight - box.scrollTop - box.clientHeight < 35;
+  const distanceFromBottom =
+    box.scrollHeight -
+    box.scrollTop -
+    box.clientHeight;
 
-  const element = document.createElement("div");
-  element.className = "comment " + (comment.style || "");
+  const wasNearBottom =
+    distanceFromBottom < 30;
+
+  const element =
+    document.createElement("div");
+
+  element.className =
+    "comment " +
+    (comment.style || "");
 
   element.innerHTML = `
+
     <div class="commentTop">
-      <span class="commentUser">${escapeHtml(comment.user)}</span>
-      <span class="commentTime">${escapeHtml(comment.time)}</span>
+
+      <span class="commentUser">
+        ${escapeHtml(comment.user)}
+      </span>
+
+      <span class="commentTime">
+        ${escapeHtml(comment.time)}
+      </span>
+
     </div>
-    <div class="commentText">${escapeHtml(comment.text)}</div>
+
+    <div class="commentText">
+      ${escapeHtml(comment.text)}
+    </div>
+
   `;
 
   box.appendChild(element);
 
-  while(box.children.length > MAX_VISIBLE_COMMENTS){
-    box.removeChild(box.firstElementChild);
+  while(
+    box.children.length >
+    MAX_VISIBLE_COMMENTS
+  ){
+
+    box.removeChild(
+      box.firstElementChild
+    );
+
   }
 
-  const comments = getComments(index);
+  const comments =
+    getComments(index);
+
   comments.push(comment);
 
   if(comments.length > 30){
-    comments.splice(0,comments.length-30);
+
+    comments.splice(
+      0,
+      comments.length-30
+    );
+
   }
 
-  saveComments(index,comments);
+  saveComments(
+    index,
+    comments
+  );
 
   /*
-    Important:
-    We do NOT continuously move the whole chat.
-    Only the newly-added message enters.
+    IMPORTANT:
+    Hakuna continuous auto-scroll.
+    Message moja tu ndiyo inaingia.
   */
-  if(nearBottom){
+
+  if(
+    forceBottom ||
+    wasNearBottom
+  ){
+
     setTimeout(function(){
+
       box.scrollTo({
+
         top:box.scrollHeight,
+
         behavior:"smooth"
+
       });
-    },80);
+
+    },70);
+
   }
+
 }
 
-function scheduleProfileChat(index){
-  const delay = 2600 + Math.floor(Math.random()*5200);
 
-  CHAT_TIMERS[index] = setTimeout(function(){
+function scheduleChat(index){
 
-    /*
-      Offline profiles pause their new activity naturally.
-    */
-    if(!offlineProfiles.has(index)){
-      const cursor = CHAT_CURSORS[index] || 0;
+  const delay =
+    2500 +
+    Math.floor(
+      Math.random()*5500
+    );
 
-      const extra = makeComment(index);
+  CHAT_TIMERS[index] =
+    setTimeout(function(){
 
-      CHAT_CURSORS[index] = cursor + 1;
+      /*
+        Offline profiles do not
+        receive a new simulated
+        message while offline.
+      */
 
-      appendLiveComment(index,extra);
-    }
+      if(
+        !offlineProfiles.has(index)
+      ){
 
-    scheduleProfileChat(index);
+        appendLiveComment(
+          index,
+          makeComment(index),
+          false
+        );
 
-  },delay);
+      }
+
+      scheduleChat(index);
+
+    },delay);
+
 }
 
-function startLiveChatFeed(index){
-  if(CHAT_TIMERS[index]) return;
 
-  CHAT_CURSORS[index] = 0;
+function startChat(index){
+
+  if(CHAT_TIMERS[index]){
+    return;
+  }
 
   const firstDelay =
-    1200 + Math.floor(Math.random()*5000);
+    1500 +
+    Math.floor(
+      Math.random()*4500
+    );
 
   setTimeout(function(){
-    scheduleProfileChat(index);
+
+    scheduleChat(index);
+
   },firstDelay);
+
 }
 
-function startAllLiveChatFeeds(){
-  PHOTO_NAMES.forEach(function(profile,index){
-    startLiveChatFeed(index);
-  });
- }
- <script>
+
+function startAllChats(){
+
+  PHOTO_NAMES.forEach(
+    function(profile,index){
+
+      startChat(index);
+
+    }
+  );
+
+}
+
+
 /* =========================
-   USER COMMENTS
+   USER COMMENT
 ========================= */
 
 function addComment(index){
-  const input = document.getElementById("commentInput_"+index);
-  const box = document.getElementById("comments_"+index);
 
-  if(!input || !box) return;
+  const input =
+    document.getElementById(
+      "commentInput_"+index
+    );
 
-  const text = input.value.trim();
+  if(!input) return;
+
+  const text =
+    input.value.trim();
 
   if(!text) return;
 
-  const comment = {
-    user:"You",
-    text:text,
-    time:"now",
-    style:"love",
-    profile:PHOTO_NAMES[index].name
-  };
+  appendLiveComment(
 
-  appendLiveComment(index,comment);
+    index,
+
+    {
+      user:"You",
+      text:text,
+      time:"now",
+      style:"love",
+      profile:
+        PHOTO_NAMES[index].name
+    },
+
+    true
+
+  );
 
   input.value = "";
 
-  setTimeout(function(){
-    box.scrollTo({
-      top:box.scrollHeight,
-      behavior:"smooth"
-    });
-  },50);
 }
 
-function handleCommentKey(event,index){
+
+function handleCommentKey(
+  event,
+  index
+){
+
   if(event.key === "Enter"){
+
     event.preventDefault();
+
     addComment(index);
+
   }
+
 }
 
 
@@ -1132,210 +1898,350 @@ function handleCommentKey(event,index){
 ========================= */
 
 function toggleLike(index){
-  const data = readStorage(LIKE_KEY,{});
-  const id = profileId(index);
 
-  if(typeof data[id] !== "number"){
-    data[id] = getLikes(index);
+  const data =
+    readStorage(
+      LIKE_KEY,
+      {}
+    );
+
+  const id =
+    profileId(index);
+
+  if(
+    typeof data[id] !==
+    "number"
+  ){
+
+    data[id] =
+      getLikes(index);
+
   }
 
-  const stateKey = "liked_"+id;
-  const active = localStorage.getItem(stateKey) === "1";
+  const key =
+    "liked_"+id;
+
+  const active =
+    localStorage.getItem(key)
+    === "1";
 
   if(active){
-    data[id] = Math.max(0,data[id]-1);
-    localStorage.removeItem(stateKey);
+
+    data[id] =
+      Math.max(
+        0,
+        data[id]-1
+      );
+
+    localStorage.removeItem(key);
+
   }else{
-    data[id] += 1;
-    localStorage.setItem(stateKey,"1");
+
+    data[id]++;
+
+    localStorage.setItem(
+      key,
+      "1"
+    );
+
   }
 
-  writeStorage(LIKE_KEY,data);
+  writeStorage(
+    LIKE_KEY,
+    data
+  );
+
   updateSocialCounts(index);
+
 }
+
 
 function toggleLove(index){
-  const data = readStorage(LOVE_KEY,{});
-  const id = profileId(index);
 
-  if(typeof data[id] !== "number"){
-    data[id] = getLove(index);
+  const data =
+    readStorage(
+      LOVE_KEY,
+      {}
+    );
+
+  const id =
+    profileId(index);
+
+  if(
+    typeof data[id] !==
+    "number"
+  ){
+
+    data[id] =
+      getLove(index);
+
   }
 
-  const stateKey = "loved_"+id;
-  const active = localStorage.getItem(stateKey) === "1";
+  const key =
+    "loved_"+id;
+
+  const active =
+    localStorage.getItem(key)
+    === "1";
 
   if(active){
-    data[id] = Math.max(0,data[id]-1);
-    localStorage.removeItem(stateKey);
+
+    data[id] =
+      Math.max(
+        0,
+        data[id]-1
+      );
+
+    localStorage.removeItem(key);
+
   }else{
-    data[id] += 1;
-    localStorage.setItem(stateKey,"1");
+
+    data[id]++;
+
+    localStorage.setItem(
+      key,
+      "1"
+    );
+
   }
 
-  writeStorage(LOVE_KEY,data);
+  writeStorage(
+    LOVE_KEY,
+    data
+  );
+
   updateSocialCounts(index);
+
 }
+
 
 function toggleFollow(index){
-  const data = readStorage(FOLLOW_KEY,{});
-  const id = profileId(index);
 
-  if(typeof data[id] !== "number"){
-    data[id] = getFollow(index);
+  const data =
+    readStorage(
+      FOLLOW_KEY,
+      {}
+    );
+
+  const id =
+    profileId(index);
+
+  if(
+    typeof data[id] !==
+    "number"
+  ){
+
+    data[id] =
+      getFollow(index);
+
   }
 
-  const stateKey = "followed_"+id;
-  const active = localStorage.getItem(stateKey) === "1";
+  const key =
+    "followed_"+id;
+
+  const active =
+    localStorage.getItem(key)
+    === "1";
 
   if(active){
-    data[id] = Math.max(0,data[id]-1);
-    localStorage.removeItem(stateKey);
+
+    data[id] =
+      Math.max(
+        0,
+        data[id]-1
+      );
+
+    localStorage.removeItem(key);
+
   }else{
-    data[id] += 1;
-    localStorage.setItem(stateKey,"1");
+
+    data[id]++;
+
+    localStorage.setItem(
+      key,
+      "1"
+    );
+
   }
 
-  writeStorage(FOLLOW_KEY,data);
+  writeStorage(
+    FOLLOW_KEY,
+    data
+  );
+
   updateSocialCounts(index);
-}
+
+  }
+  <script>
+/* =========================
+   UPDATE SOCIAL COUNTS
+========================= */
 
 function updateSocialCounts(index){
-  const likes = document.getElementById("likeCount_"+index);
-  const loves = document.getElementById("loveCount_"+index);
-  const follows = document.getElementById("followCount_"+index);
 
-  if(likes){
-    likes.textContent = formatNumber(getLikes(index));
+  const likeCount =
+    document.getElementById(
+      "likeCount_"+index
+    );
+
+  const loveCount =
+    document.getElementById(
+      "loveCount_"+index
+    );
+
+  const followCount =
+    document.getElementById(
+      "followCount_"+index
+    );
+
+  if(likeCount){
+
+    likeCount.textContent =
+      formatNumber(
+        getLikes(index)
+      );
+
   }
 
-  if(loves){
-    loves.textContent = formatNumber(getLove(index));
+  if(loveCount){
+
+    loveCount.textContent =
+      formatNumber(
+        getLove(index)
+      );
+
   }
 
-  if(follows){
-    follows.textContent = formatNumber(getFollow(index));
+  if(followCount){
+
+    followCount.textContent =
+      formatNumber(
+        getFollow(index)
+      );
+
   }
 
-  const likeBtn = document.getElementById("likeBtn_"+index);
-  const loveBtn = document.getElementById("loveBtn_"+index);
-  const followBtn = document.getElementById("followBtn_"+index);
+  const likeButton =
+    document.getElementById(
+      "likeBtn_"+index
+    );
 
-  if(likeBtn){
-    likeBtn.classList.toggle(
+  const loveButton =
+    document.getElementById(
+      "loveBtn_"+index
+    );
+
+  const followButton =
+    document.getElementById(
+      "followBtn_"+index
+    );
+
+  if(likeButton){
+
+    likeButton.classList.toggle(
+
       "activeLike",
-      localStorage.getItem("liked_"+profileId(index)) === "1"
+
+      localStorage.getItem(
+        "liked_"+profileId(index)
+      ) === "1"
+
     );
+
   }
 
-  if(loveBtn){
-    loveBtn.classList.toggle(
+  if(loveButton){
+
+    loveButton.classList.toggle(
+
       "activeLove",
-      localStorage.getItem("loved_"+profileId(index)) === "1"
+
+      localStorage.getItem(
+        "loved_"+profileId(index)
+      ) === "1"
+
     );
+
   }
 
-  if(followBtn){
-    followBtn.classList.toggle(
+  if(followButton){
+
+    const following =
+      localStorage.getItem(
+        "followed_"+profileId(index)
+      ) === "1";
+
+    followButton.classList.toggle(
       "activeFollow",
-      localStorage.getItem("followed_"+profileId(index)) === "1"
+      following
     );
 
-    followBtn.childNodes[0].nodeValue =
-      localStorage.getItem("followed_"+profileId(index)) === "1"
+    followButton.firstChild.nodeValue =
+      following
         ? "Following"
         : "Follow";
-  }
-}
 
-function showReaction(text){
-  /*
-    Small feedback only.
-    It does not open payment.
-  */
-  return;
+  }
+
 }
 
 
 /* =========================
-   PAYMENT LINK
+   CREATE PHOTO CARD
 ========================= */
 
-function openPayment(index){
-  const profile = PHOTO_NAMES[index];
+function createPhotoCard(
+  profile,
+  index
+){
 
-  const params = new URLSearchParams(window.location.search);
+  const card =
+    document.createElement("div");
 
-  const referral =
-    params.get("ref") ||
-    params.get("employee") ||
-    "";
+  card.className =
+    "photoCard";
 
-  const paymentUrl = new URL(
-    "payment.html",
-    window.location.href
-  );
-
-  paymentUrl.searchParams.set(
-    "profile",
-    profile.name
-  );
-
-  paymentUrl.searchParams.set(
-    "age",
-    profile.age
-  );
-
-  paymentUrl.searchParams.set(
-    "country",
-    profile.country
-  );
-
-  if(referral){
-    paymentUrl.searchParams.set(
-      "employee",
-      referral
-    );
-  }
-
-  window.location.href = paymentUrl.toString();
- }
- <script>
-/* =========================
-   PHOTO CARD
-========================= */
-
-function createPhotoCard(profile,index){
-
-  const card = document.createElement("div");
-
-  card.className = "photoCard";
-
-  card.id = "photoCard_"+index;
+  card.id =
+    "photoCard_"+index;
 
   card.innerHTML = `
-    <div class="photoWrap" onclick="openPayment(${index})">
+
+    <div
+      class="photoWrap"
+      onclick="openPayment(${index})"
+    >
 
       <img
-        class="profileImage"
         id="profileImage_${index}"
-        src="${IMAGE_BASE}${escapeHtml(profile.image)}"
-        alt="${escapeHtml(profile.name)}"
+        class="profileImage"
+        src="${IMAGE_BASE}${escapeHtml(
+          profile.image
+        )}"
+        alt="${escapeHtml(
+          profile.name
+        )}"
         loading="lazy"
       >
 
       <div
-        class="imageFallback"
         id="imageFallback_${index}"
-        style="display:none"
+        class="imageFallback"
       >
         Image unavailable
       </div>
 
-      <div class="liveBadge">● LIVE</div>
-      <div class="offlineBadge">OFFLINE</div>
+      <div class="liveBadge">
+        ● LIVE
+      </div>
 
-      <div class="playIcon">▶</div>
+      <div class="offlineBadge">
+        OFFLINE
+      </div>
+
+      <div class="playIcon">
+        ▶
+      </div>
+
     </div>
 
     <div class="profileInfo">
@@ -1349,15 +2255,29 @@ function createPhotoCard(profile,index){
         ></span>
 
         <span class="profileNameText">
-          ${escapeHtml(profile.flag)}
-          ${escapeHtml(profile.name)}
+
+          ${escapeHtml(
+            profile.flag
+          )}
+
+          ${escapeHtml(
+            profile.name
+          )}
+
         </span>
 
       </div>
 
       <div class="profileAge">
-        ${escapeHtml(profile.age)} years ·
-        ${escapeHtml(profile.country)}
+
+        ${escapeHtml(
+          String(profile.age)
+        )}
+        years ·
+        ${escapeHtml(
+          profile.country
+        )}
+
       </div>
 
     </div>
@@ -1367,57 +2287,79 @@ function createPhotoCard(profile,index){
       <button
         id="likeBtn_${index}"
         class="socialBtn"
+        type="button"
         onclick="toggleLike(${index})"
       >
         👍 Like
         <span
           id="likeCount_${index}"
           class="count"
-        >${formatNumber(getLikes(index))}</span>
+        >
+          ${formatNumber(
+            getLikes(index)
+          )}
+        </span>
       </button>
 
       <button
         id="loveBtn_${index}"
         class="socialBtn"
+        type="button"
         onclick="toggleLove(${index})"
       >
         ❤️ Love
         <span
           id="loveCount_${index}"
           class="count"
-        >${formatNumber(getLove(index))}</span>
+        >
+          ${formatNumber(
+            getLove(index)
+          )}
+        </span>
       </button>
 
       <button
         id="followBtn_${index}"
         class="socialBtn"
+        type="button"
         onclick="toggleFollow(${index})"
       >
         Follow
         <span
           id="followCount_${index}"
           class="count"
-        >${formatNumber(getFollow(index))}</span>
+        >
+          ${formatNumber(
+            getFollow(index)
+          )}
+        </span>
       </button>
 
       <button
         class="socialBtn"
-        onclick="document.getElementById('commentInput_${index}').focus()"
+        type="button"
+        onclick="focusComment(${index})"
       >
         💬 Chat
-        <span class="count">Live</span>
+        <span class="count">
+          Live
+        </span>
       </button>
 
     </div>
 
     <div class="chatTitle">
-      💬 Live chat · ${escapeHtml(profile.name)}
+
+      💬 Live chat ·
+      ${escapeHtml(
+        profile.name
+      )}
+
     </div>
 
     <div
       id="comments_${index}"
       class="commentsBox"
-      ontouchstart="markChatTouch(${index})"
     ></div>
 
     <div class="commentForm">
@@ -1428,80 +2370,122 @@ function createPhotoCard(profile,index){
         type="text"
         maxlength="160"
         placeholder="Write a comment..."
-        onkeydown="handleCommentKey(event,${index})"
+        onkeydown="handleCommentKey(
+          event,
+          ${index}
+        )"
       >
 
       <button
         class="commentSend"
+        type="button"
         onclick="addComment(${index})"
-      >➤</button>
+      >
+        ➤
+      </button>
 
     </div>
   `;
 
   return card;
+
 }
 
 
+function focusComment(index){
+
+  const input =
+    document.getElementById(
+      "commentInput_"+index
+    );
+
+  if(input){
+
+    input.focus();
+
+    input.scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+
+  }
+
+}
+  <script>
 /* =========================
-   CREATE ALL PHOTOS
+   CREATE PHOTOS
 ========================= */
 
 function createPhotos(){
 
   const grid =
-    document.getElementById("photosGrid");
+    document.getElementById(
+      "photosGrid"
+    );
 
   if(!grid) return;
 
   grid.innerHTML = "";
 
-  PHOTO_NAMES.forEach(function(profile,index){
+  PHOTO_NAMES.forEach(
+    function(profile,index){
 
-    const card =
-      createPhotoCard(profile,index);
+      const card =
+        createPhotoCard(
+          profile,
+          index
+        );
 
-    grid.appendChild(card);
+      grid.appendChild(card);
 
-    renderComments(index);
+      renderComments(index);
 
-    updateSocialCounts(index);
-  });
+      updateSocialCounts(index);
+
+    }
+  );
+
+  setupImageFallbacks();
+
 }
 
-function safeCreatePhotos(){
-  try{
-    createPhotos();
-  }catch(error){
-    console.error("Photo creation error:",error);
-  }
-}
-
-
-/* =========================
-   IMAGE FALLBACKS
-========================= */
 
 function setupImageFallbacks(){
 
-  PHOTO_NAMES.forEach(function(profile,index){
+  PHOTO_NAMES.forEach(
+    function(profile,index){
 
-    const image =
-      document.getElementById("profileImage_"+index);
+      const image =
+        document.getElementById(
+          "profileImage_"+index
+        );
 
-    const fallback =
-      document.getElementById("imageFallback_"+index);
+      const fallback =
+        document.getElementById(
+          "imageFallback_"+index
+        );
 
-    if(!image || !fallback) return;
+      if(!image || !fallback){
+        return;
+      }
 
-    image.onerror = function(){
+      image.addEventListener(
+        "error",
+        function(){
 
-      image.style.display = "none";
+          image.style.display =
+            "none";
 
-      fallback.style.display = "flex";
-    };
+          fallback.style.display =
+            "flex";
 
-  });
+        },
+        {once:true}
+      );
+
+    }
+  );
+
 }
 
 
@@ -1512,24 +2496,35 @@ function setupImageFallbacks(){
 function showPhotos(){
 
   const welcome =
-    document.getElementById("welcomeScreen");
+    document.getElementById(
+      "welcomeScreen"
+    );
 
   const photos =
-    document.getElementById("photosPage");
+    document.getElementById(
+      "photosPage"
+    );
 
   if(welcome){
-    welcome.style.display = "none";
+
+    welcome.style.display =
+      "none";
+
   }
 
   if(photos){
-    photos.style.display = "block";
+
+    photos.style.display =
+      "block";
+
   }
 
-  setupImageFallbacks();
-
-  startAllLiveChatFeeds();
+  updateOnline();
 
   updateProfileStatuses();
+
+  startAllChats();
+
 }
 
 
@@ -1539,118 +2534,189 @@ function showPhotos(){
 
 function updateOnline(){
 
-  const number =
-    15 + Math.floor(Math.random()*16);
-
   const element =
-    document.getElementById("onlineNumber");
+    document.getElementById(
+      "onlineNumber"
+    );
 
-  if(element){
-    element.textContent = number;
-  }
-                      }
- <script>
+  if(!element) return;
+
+  const number =
+    15 +
+    Math.floor(
+      Math.random()*16
+    );
+
+  element.textContent =
+    number;
+
+}
+
+
 /* =========================
    OFFLINE PROFILES
 ========================= */
 
-let offlineProfiles = new Set();
+let offlineProfiles =
+  new Set();
+
 
 function chooseRandomOfflineProfiles(){
 
-  offlineProfiles = new Set();
+  offlineProfiles =
+    new Set();
 
-  const total = PHOTO_NAMES.length;
+  const amount =
+    Math.min(
+      5,
+      PHOTO_NAMES.length
+    );
 
-  const amount = Math.min(5,total);
-
-  while(offlineProfiles.size < amount){
+  while(
+    offlineProfiles.size <
+    amount
+  ){
 
     offlineProfiles.add(
-      Math.floor(Math.random()*total)
+      Math.floor(
+        Math.random()*
+        PHOTO_NAMES.length
+      )
     );
 
   }
 
   updateProfileStatuses();
+
 }
+
 
 function updateProfileStatuses(){
 
-  PHOTO_NAMES.forEach(function(profile,index){
+  PHOTO_NAMES.forEach(
+    function(profile,index){
 
-    const dot =
-      document.getElementById("statusDot_"+index);
+      const dot =
+        document.getElementById(
+          "statusDot_"+index
+        );
 
-    const card =
-      document.getElementById("photoCard_"+index);
+      const card =
+        document.getElementById(
+          "photoCard_"+index
+        );
 
-    if(!dot || !card) return;
+      if(!dot || !card){
+        return;
+      }
 
-    const offline =
-      offlineProfiles.has(index);
+      const isOffline =
+        offlineProfiles.has(
+          index
+        );
 
-    if(offline){
+      dot.classList.toggle(
+        "offline",
+        isOffline
+      );
 
-      dot.classList.add("offline");
+      card.classList.toggle(
+        "offline",
+        isOffline
+      );
 
-      dot.title = "Offline";
-
-      card.classList.add("isOffline");
-
-    }else{
-
-      dot.classList.remove("offline");
-
-      dot.title = "Online";
-
-      card.classList.remove("isOffline");
+      dot.title =
+        isOffline
+          ? "Offline"
+          : "Online";
 
     }
+  );
 
-  });
 }
+
 
 function startOfflineRotation(){
 
   chooseRandomOfflineProfiles();
 
-  /*
-    Every 5 minutes another random
-    5 profiles become offline.
-  */
+  setInterval(
+    function(){
 
-  setInterval(function(){
+      chooseRandomOfflineProfiles();
 
-    chooseRandomOfflineProfiles();
+    },
+    300000
+  );
 
-  },300000);
 }
-
-
+  <script>
 /* =========================
-   CHAT TOUCH HANDLING
+   PAYMENT
 ========================= */
 
-const CHAT_TOUCH_STATE = {};
+function openPayment(index){
 
-function markChatTouch(index){
+  const profile =
+    PHOTO_NAMES[index];
 
-  CHAT_TOUCH_STATE[index] = Date.now();
+  const currentUrl =
+    new URL(
+      window.location.href
+    );
 
-  setTimeout(function(){
+  const referral =
+    currentUrl.searchParams.get(
+      "ref"
+    ) ||
+    currentUrl.searchParams.get(
+      "employee"
+    ) ||
+    "";
 
-    const box =
-      document.getElementById("comments_"+index);
+  const paymentUrl =
+    new URL(
+      PAYMENT_PAGE_URL,
+      window.location.href
+    );
 
-    if(!box) return;
+  paymentUrl.searchParams.set(
+    "profile",
+    profile.name
+  );
 
-    /*
-      We intentionally don't force the user
-      back to the bottom after manual scrolling.
-    */
+  paymentUrl.searchParams.set(
+    "age",
+    String(profile.age)
+  );
 
-  },2500);
+  paymentUrl.searchParams.set(
+    "country",
+    profile.country
+  );
+
+  paymentUrl.searchParams.set(
+    "image",
+    profile.image
+  );
+
+  if(referral){
+
+    paymentUrl.searchParams.set(
+      "employee",
+      referral
+    );
+
+    paymentUrl.searchParams.set(
+      "ref",
+      referral
+    );
+
+  }
+
+  window.location.href =
+    paymentUrl.toString();
+
 }
 
 
@@ -1659,194 +2725,269 @@ function markChatTouch(index){
 ========================= */
 
 let currentCallIndex = 0;
-let callTimer = null;
 
 function showIncomingCall(){
 
   currentCallIndex =
-    Math.floor(Math.random()*PHOTO_NAMES.length);
+    Math.floor(
+      Math.random()*
+      PHOTO_NAMES.length
+    );
 
   const profile =
-    PHOTO_NAMES[currentCallIndex];
+    PHOTO_NAMES[
+      currentCallIndex
+    ];
 
   const overlay =
-    document.getElementById("incomingCall");
+    document.getElementById(
+      "incomingCall"
+    );
 
-  const avatar =
-    document.getElementById("callAvatar");
+  const image =
+    document.getElementById(
+      "callAvatarImage"
+    );
 
   const name =
-    document.getElementById("callName");
+    document.getElementById(
+      "callName"
+    );
 
-  if(!overlay || !avatar || !name) return;
+  if(!overlay || !image || !name){
+    return;
+  }
 
-  avatar.src =
-    IMAGE_BASE + profile.image;
+  image.src =
+    IMAGE_BASE +
+    profile.image;
 
-  avatar.onerror = function(){
-    avatar.style.background = "#222";
-  };
+  image.onerror =
+    function(){
+
+      image.style.background =
+        "#222";
+
+    };
 
   name.textContent =
-    profile.flag + " " + profile.name;
+    profile.flag +
+    " " +
+    profile.name;
 
-  overlay.style.display = "flex";
+  overlay.style.display =
+    "flex";
 
-  clearTimeout(callTimer);
-
-  /*
-    Leave the incoming call visible.
-    User can answer or reject.
-  */
 }
+
 
 function hideIncomingCall(){
 
   const overlay =
-    document.getElementById("incomingCall");
+    document.getElementById(
+      "incomingCall"
+    );
 
   if(overlay){
-    overlay.style.display = "none";
+
+    overlay.style.display =
+      "none";
+
   }
 
-  clearTimeout(callTimer);
 }
 
 
 /* =========================
-   FIRST VISITOR VIDEO
+   VIDEO
 ========================= */
 
 function playFirstVisitorVideo(){
 
-  const videoScreen =
-    document.getElementById("videoScreen");
+  const screen =
+    document.getElementById(
+      "videoScreen"
+    );
 
   const video =
-    document.getElementById("sampleVideo");
+    document.getElementById(
+      "sampleVideo"
+    );
 
-  if(!videoScreen || !video) return;
+  const timer =
+    document.getElementById(
+      "videoTimer"
+    );
 
-  videoScreen.style.display = "flex";
+  if(!screen || !video){
+    return;
+  }
 
-  video.src = VIDEO_URL;
+  screen.style.display =
+    "flex";
+
+  video.src =
+    VIDEO_URL;
 
   video.currentTime = 0;
 
   /*
-    Keep sound enabled.
-    Browser may still require user interaction
-    before autoplay with sound.
+    Answering the incoming call is
+    already a user interaction, so
+    we can try to start the video
+    with sound.
   */
 
   const playPromise =
     video.play();
 
-  if(playPromise && playPromise.catch){
+  if(
+    playPromise &&
+    typeof playPromise.catch ===
+    "function"
+  ){
 
-    playPromise.catch(function(){
+    playPromise.catch(
+      function(){
 
-      /*
-        If autoplay is blocked, the visitor can
-        use the normal browser video controls.
-      */
+        /*
+          Browser may block autoplay.
+          The video controls remain
+          available so the visitor can
+          press play.
+        */
 
-    });
+      }
+    );
 
   }
 
   let remaining =
-    Math.ceil(SAMPLE_DURATION/1000);
-
-  const timer =
-    document.getElementById("videoTimer");
+    Math.ceil(
+      SAMPLE_DURATION/1000
+    );
 
   if(timer){
+
     timer.textContent =
       remaining + "s";
+
   }
 
   const countdown =
-    setInterval(function(){
+    setInterval(
+      function(){
 
-      remaining--;
+        remaining--;
 
-      if(timer){
-        timer.textContent =
-          Math.max(0,remaining) + "s";
-      }
+        if(timer){
 
-      if(remaining <= 0){
-        clearInterval(countdown);
-      }
+          timer.textContent =
+            Math.max(
+              0,
+              remaining
+            ) + "s";
 
-    },1000);
+        }
 
-  setTimeout(function(){
+      },
+      1000
+    );
 
-    clearInterval(countdown);
+  setTimeout(
+    function(){
 
-    finishVideo();
+      clearInterval(
+        countdown
+      );
 
-  },SAMPLE_DURATION);
+      finishVideo();
+
+    },
+    SAMPLE_DURATION
+  );
+
 }
+
 
 function finishVideo(){
 
   const video =
-    document.getElementById("sampleVideo");
+    document.getElementById(
+      "sampleVideo"
+    );
 
   if(video){
 
     try{
+
       video.pause();
+
       video.currentTime = 0;
-    }catch(e){}
+
+    }catch(error){}
 
   }
 
-  const videoScreen =
-    document.getElementById("videoScreen");
+  const screen =
+    document.getElementById(
+      "videoScreen"
+    );
 
-  if(videoScreen){
-    videoScreen.style.display = "none";
+  if(screen){
+
+    screen.style.display =
+      "none";
+
   }
 
   try{
+
     localStorage.setItem(
       SAMPLE_STORAGE_KEY,
       "1"
     );
-  }catch(e){}
+
+  }catch(error){}
 
   showInsufficient();
+
 }
- <script>
+
+
 /* =========================
-   INSUFFICIENT PAGE
+   INSUFFICIENT
 ========================= */
 
 function showInsufficient(){
 
   const page =
-    document.getElementById("insufficientPage");
+    document.getElementById(
+      "insufficientPage"
+    );
 
   if(!page) return;
 
-  page.style.display = "flex";
+  page.style.display =
+    "flex";
 
-  setTimeout(function(){
+  setTimeout(
+    function(){
 
-    page.style.display = "none";
+      page.style.display =
+        "none";
 
-    showPhotos();
+      showPhotos();
 
-  },INSUFFICIENT_DURATION);
+    },
+    INSUFFICIENT_DURATION
+  );
+
 }
 
 
 /* =========================
-   ANSWER CALL
+   ANSWER
 ========================= */
 
 function answerCall(){
@@ -1856,51 +2997,37 @@ function answerCall(){
   let watched = false;
 
   try{
+
     watched =
       localStorage.getItem(
         SAMPLE_STORAGE_KEY
       ) === "1";
-  }catch(e){}
 
-  /*
-    First visitor:
-    incoming call -> video -> insufficient -> photos
+  }catch(error){}
 
-    Returning visitor:
-    incoming call -> insufficient -> photos
-  */
-
-  if(!watched){
-
-    playFirstVisitorVideo();
-
-  }else{
+  if(watched){
 
     showInsufficient();
 
+  }else{
+
+    playFirstVisitorVideo();
+
   }
+
 }
 
 
 /* =========================
-   REJECT CALL
+   REJECT
 ========================= */
 
 function rejectCall(){
 
   hideIncomingCall();
 
-  /*
-    Returning to the photo grid rather than
-    sending the visitor to payment.
-  */
+  showPhotos();
 
-  const photos =
-    document.getElementById("photosPage");
-
-  if(photos){
-    photos.style.display = "block";
-  }
 }
 
 
@@ -1910,26 +3037,29 @@ function rejectCall(){
 
 function startWelcomeFlow(){
 
-  /*
-    Welcome/loading screen = about 3 seconds.
-  */
+  setTimeout(
+    function(){
 
-  setTimeout(function(){
+      showPhotos();
 
-    showPhotos();
+      /*
+        Give the visitor a moment
+        to see the photo grid.
+      */
 
-    /*
-      Give the photo grid a short moment to
-      appear before showing the incoming call.
-    */
+      setTimeout(
+        function(){
 
-    setTimeout(function(){
+          showIncomingCall();
 
-      showIncomingCall();
+        },
+        1500
+      );
 
-    },1500);
+    },
+    3000
+  );
 
-  },3000);
 }
 
 
@@ -1937,40 +3067,60 @@ function startWelcomeFlow(){
    INITIALISE
 ========================= */
 
-function ensureEveryProfileHasComments(){
-
-  PHOTO_NAMES.forEach(function(profile,index){
-
-    getComments(index);
-
-  });
-}
-
 function initialise(){
 
-  safeCreatePhotos();
-
-  updateOnline();
+  createPhotos();
 
   startOfflineRotation();
 
-  setInterval(function(){
+  updateOnline();
 
-    updateOnline();
+  setInterval(
+    function(){
 
-  },20000);
+      updateOnline();
 
-  ensureEveryProfileHasComments();
+    },
+    20000
+  );
 
   startWelcomeFlow();
+
 }
 
 
 /* =========================
-   PAGE LOAD
+   BUTTONS
 ========================= */
 
-if(document.readyState === "loading"){
+document
+  .getElementById(
+    "answerCallButton"
+  )
+  .addEventListener(
+    "click",
+    answerCall
+  );
+
+
+document
+  .getElementById(
+    "rejectCallButton"
+  )
+  .addEventListener(
+    "click",
+    rejectCall
+  );
+
+
+/* =========================
+   START
+========================= */
+
+if(
+  document.readyState ===
+  "loading"
+){
 
   document.addEventListener(
     "DOMContentLoaded",
@@ -1982,6 +3132,7 @@ if(document.readyState === "loading"){
   initialise();
 
 }
+
 </script>
 </body>
 </html>
