@@ -576,6 +576,7 @@ body{
   <div id="photoGrid"></div>
 
 </div>
+
 <!-- =========================
      INCOMING CALL
 ========================= -->
@@ -690,23 +691,50 @@ body{
 
   </div>
 
-</div>
+  </div>
+  <script>
 
-<script>
-  const IMAGE_BASE = "./";
-const VIDEO_URL = "./IMG_20261001_011110_570.mp4";
-const SAMPLE_KEY = "myReferralSampleWatched";
+/* =====================================================
+   BASIC SETTINGS
+===================================================== */
 
-const welcomeScreen = document.getElementById("welcomeScreen");
-const photosPage = document.getElementById("photosPage");
-const photoGrid = document.getElementById("photoGrid");
+const IMAGE_BASE =
+  "https://raw.githubusercontent.com/agnesweb2026/My-referral-website/main/";
 
-const incomingCall = document.getElementById("incomingCall");
-const callerImage = document.getElementById("callerImage");
-const callerName = document.getElementById("callerName");
+const VIDEO_URL =
+  IMAGE_BASE + "preview_20_seconds.mp4";
 
-const declineButton = document.getElementById("declineButton");
-const answerButton = document.getElementById("answerButton");
+const SAMPLE_KEY =
+  "myReferralSampleWatched";
+
+
+/* =====================================================
+   GET ELEMENTS
+===================================================== */
+
+const welcomeScreen =
+  document.getElementById("welcomeScreen");
+
+const photosPage =
+  document.getElementById("photosPage");
+
+const photoGrid =
+  document.getElementById("photoGrid");
+
+const incomingCall =
+  document.getElementById("incomingCall");
+
+const callerImage =
+  document.getElementById("callerImage");
+
+const callerName =
+  document.getElementById("callerName");
+
+const declineButton =
+  document.getElementById("declineButton");
+
+const answerButton =
+  document.getElementById("answerButton");
 
 const redLiveVideoPage =
   document.getElementById("redLiveVideoPage");
@@ -730,9 +758,9 @@ const onlineNumber =
   document.getElementById("onlineNumber");
 
 
-/* =========================
-   REFERRAL
-========================= */
+/* =====================================================
+   REFERRAL / EMPLOYEE
+===================================================== */
 
 const params =
   new URLSearchParams(window.location.search);
@@ -754,7 +782,9 @@ function openPaymentPage(){
       "?employee=" +
       encodeURIComponent(employee);
 
-  }else if(ref){
+  }
+
+  else if(ref){
 
     url +=
       "?ref=" +
@@ -767,9 +797,9 @@ function openPaymentPage(){
 }
 
 
-/* =========================
-   REAL FILES IN YOUR REPO
-========================= */
+/* =====================================================
+   IMAGE FILES — OLD ONES
+===================================================== */
 
 const imageFiles = [
 
@@ -777,75 +807,213 @@ const imageFiles = [
   "photo2.jpg",
   "photo4.jpg",
   "photo5.jpg",
-
   "1785179340825.jpg",
   "1785179340825 (1).jpg",
   "1785179362758.jpg",
   "1785179915649.jpg",
-
   "Screenshot_20260731-045343.png"
 
 ];
 
 
-/* =========================
+/* =====================================================
    24 PROFILES
-========================= */
+===================================================== */
 
 const profiles = [
 
-  ["Cute",24,"Kenya","🇰🇪"],
-  ["Becky",22,"Kenya","🇰🇪"],
-  ["Dorry",26,"Kenya","🇰🇪"],
-  ["Sharon",23,"Kenya","🇰🇪"],
-  ["Lilian",27,"Kenya","🇰🇪"],
+  {
+    name:"Cute",
+    age:24,
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
 
-  ["Asha",25,"Tanzania","🇹🇿"],
-  ["Neema",23,"Tanzania","🇹🇿"],
-  ["Zawadi",28,"Tanzania","🇹🇿"],
-  ["Rehema",24,"Tanzania","🇹🇿"],
+  {
+    name:"Becky",
+    age:22,
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
 
-  ["Blessing",22,"Nigeria","🇳🇬"],
-  ["Favour",26,"Nigeria","🇳🇬"],
-  ["Peace",25,"Nigeria","🇳🇬"],
-  ["Joy",27,"Nigeria","🇳🇬"],
+  {
+    name:"Dorry",
+    age:26,
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
 
-  ["Grace",24,"Congo","🇨🇩"],
-  ["Mimi",23,"Congo","🇨🇩"],
-  ["Nadia",26,"Congo","🇨🇩"],
-  ["Bella",25,"Congo","🇨🇩"],
-  ["Princess",28,"Congo","🇨🇩"],
+  {
+    name:"Sharon",
+    age:23,
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
 
-  ["Emily",24,"Canada","🇨🇦"],
-  ["Sophie",27,"Canada","🇨🇦"],
+  {
+    name:"Lilian",
+    age:27,
+    country:"Kenya",
+    flag:"🇰🇪"
+  },
 
-  ["Thandi",25,"South Africa","🇿🇦"],
-  ["Lerato",29,"South Africa","🇿🇦"],
+  {
+    name:"Asha",
+    age:25,
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
 
-  ["Ashley",23,"USA","🇺🇸"],
-  ["Jessica",26,"USA","🇺🇸"]
+  {
+    name:"Neema",
+    age:23,
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+  {
+    name:"Zawadi",
+    age:28,
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+  {
+    name:"Rehema",
+    age:24,
+    country:"Tanzania",
+    flag:"🇹🇿"
+  },
+
+  {
+    name:"Blessing",
+    age:22,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Favour",
+    age:26,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Peace",
+    age:25,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Joy",
+    age:27,
+    country:"Nigeria",
+    flag:"🇳🇬"
+  },
+
+  {
+    name:"Grace",
+    age:24,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Mimi",
+    age:23,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Nadia",
+    age:26,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Bella",
+    age:25,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Princess",
+    age:28,
+    country:"Congo",
+    flag:"🇨🇩"
+  },
+
+  {
+    name:"Emily",
+    age:24,
+    country:"Canada",
+    flag:"🇨🇦"
+  },
+
+  {
+    name:"Sophie",
+    age:27,
+    country:"Canada",
+    flag:"🇨🇦"
+  },
+
+  {
+    name:"Thandi",
+    age:25,
+    country:"South Africa",
+    flag:"🇿🇦"
+  },
+
+  {
+    name:"Lerato",
+    age:29,
+    country:"South Africa",
+    flag:"🇿🇦"
+  },
+
+  {
+    name:"Ashley",
+    age:23,
+    country:"USA",
+    flag:"🇺🇸"
+  },
+
+  {
+    name:"Jessica",
+    age:26,
+    country:"USA",
+    flag:"🇺🇸"
+  }
 
 ];
 
 
-/* =========================
-   OFFLINE
-========================= */
+/* =====================================================
+   OFFLINE STATE
+===================================================== */
 
-let offlinePeople =
-  new Set();
+let offlinePeople = new Set();
 
 const OFFLINE_TIME =
   5 * 60 * 1000;
 
 
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
 function shuffle(array){
 
-  const result =
+  const copy =
     [...array];
 
   for(
-    let i = result.length - 1;
+    let i = copy.length - 1;
     i > 0;
     i--
   ){
@@ -856,38 +1024,55 @@ function shuffle(array){
       );
 
     [
-      result[i],
-      result[j]
+      copy[i],
+      copy[j]
     ] =
     [
-      result[j],
-      result[i]
+      copy[j],
+      copy[i]
     ];
 
   }
 
-  return result;
+  return copy;
 
 }
 
+
+/* =====================================================
+   SELECT EXACTLY 5 OFFLINE
+===================================================== */
 
 function chooseFiveOffline(){
 
   offlinePeople =
-    new Set(
-      shuffle(
-        profiles.map(
-          (_,i)=>i
-        )
-      ).slice(0,5)
+    new Set();
+
+  const numbers =
+    shuffle(
+      profiles.map(
+        (_,index)=>index
+      )
     );
 
-  updateStatuses();
+  numbers
+    .slice(0,5)
+    .forEach(index=>{
+
+      offlinePeople.add(index);
+
+    });
+
+  updateProfileStatuses();
 
 }
 
 
-function updateStatuses(){
+/* =====================================================
+   UPDATE LIVE / OFFLINE DISPLAY
+===================================================== */
+
+function updateProfileStatuses(){
 
   profiles.forEach(
     (_,index)=>{
@@ -906,6 +1091,7 @@ function updateStatuses(){
         return;
       }
 
+
       if(
         offlinePeople.has(index)
       ){
@@ -922,7 +1108,9 @@ function updateStatuses(){
         dot.style.animation =
           "none";
 
-      }else{
+      }
+
+      else{
 
         badge.textContent =
           "● LIVE";
@@ -944,9 +1132,9 @@ function updateStatuses(){
 }
 
 
-/* =========================
-   CREATE LIVE PHOTOS
-========================= */
+/* =====================================================
+   CREATE PHOTO CARDS
+===================================================== */
 
 function createPhotos(){
 
@@ -955,28 +1143,18 @@ function createPhotos(){
   profiles.forEach(
     (profile,index)=>{
 
-      const name =
-        profile[0];
-
-      const age =
-        profile[1];
-
-      const country =
-        profile[2];
-
-      const flag =
-        profile[3];
-
-      const file =
-        imageFiles[
-          index % imageFiles.length
-        ];
-
       const card =
         document.createElement("div");
 
       card.className =
         "photoCard";
+
+
+      const imageFile =
+        imageFiles[
+          index %
+          imageFiles.length
+        ];
 
 
       card.innerHTML = `
@@ -985,10 +1163,9 @@ function createPhotos(){
 
           <img
             class="profile-photo"
-            src="${IMAGE_BASE}${encodeURIComponent(file)}"
-            alt="${name}"
-            loading="eager"
-            onerror="this.style.display='none';"
+            src="${IMAGE_BASE}${encodeURIComponent(imageFile)}"
+            alt="${profile.name}"
+            loading="lazy"
           >
 
           <div
@@ -1011,13 +1188,18 @@ function createPhotos(){
             </span>
 
             <span>
-              ${name}
+              ${profile.name}
             </span>
 
           </div>
 
           <div class="photo-meta">
-            ${flag} ${country} • ${age}
+
+            ${profile.flag}
+            ${profile.country}
+            •
+            ${profile.age}
+
           </div>
 
         </div>
@@ -1028,7 +1210,9 @@ function createPhotos(){
       card.addEventListener(
         "click",
         ()=>{
+
           openPaymentPage();
+
         }
       );
 
@@ -1039,50 +1223,69 @@ function createPhotos(){
   );
 
 
-  updateStatuses();
+  updateProfileStatuses();
 
 }
 
 
-/* =========================
+/* =====================================================
    ONLINE NUMBER
-========================= */
+   RANDOM 15–30
+===================================================== */
 
-function changeOnlineNumber(){
+function updateOnlineNumber(){
 
-  onlineNumber.textContent =
+  const number =
     Math.floor(
       Math.random() * 16
     ) + 15;
 
+  onlineNumber.textContent =
+    number;
+
 }
 
 
-changeOnlineNumber();
+function scheduleOnlineNumber(){
+
+  updateOnlineNumber();
+
+  const delay =
+    Math.floor(
+      Math.random() * 25000
+    ) + 15000;
+
+  setTimeout(
+    scheduleOnlineNumber,
+    delay
+  );
+
+}
+
+scheduleOnlineNumber();
 
 
-setInterval(
-  changeOnlineNumber,
-  20000
-);
-
-
-/* =========================
+/* =====================================================
    OFFLINE CYCLE
-========================= */
+===================================================== */
 
-chooseFiveOffline();
+function startOfflineCycle(){
+
+  chooseFiveOffline();
+
+  setTimeout(
+    startOfflineCycle,
+    OFFLINE_TIME
+  );
+
+}
+
+startOfflineCycle();
 
 
-setInterval(
-  chooseFiveOffline,
-  OFFLINE_TIME
-);
-
-
-/* =========================
+/* =====================================================
    SHOW PHOTOS
-========================= */
+===================================================== */
 
 function showPhotos(){
 
@@ -1113,9 +1316,9 @@ function showPhotos(){
 }
 
 
-/* =========================
-   INCOMING CALL
-========================= */
+/* =====================================================
+   SHOW INCOMING CALL
+===================================================== */
 
 function showIncomingCall(){
 
@@ -1128,7 +1331,7 @@ function showIncomingCall(){
   );
 
 
-  const index =
+  const randomIndex =
     Math.floor(
       Math.random() *
       profiles.length
@@ -1136,37 +1339,36 @@ function showIncomingCall(){
 
 
   const profile =
-    profiles[index];
+    profiles[randomIndex];
 
 
   callerName.textContent =
-    profile[0];
+    profile.name;
 
 
-  const file =
+  const imageFile =
     imageFiles[
-      index % imageFiles.length
+      randomIndex %
+      imageFiles.length
     ];
 
 
   callerImage.src =
     IMAGE_BASE +
-    encodeURIComponent(file);
+    encodeURIComponent(imageFile);
 
 }
 
 
-/* =========================
-   START FLOW
-========================= */
-
-createPhotos();
-
+/* =====================================================
+   WELCOME → PHOTOS → CALL
+===================================================== */
 
 setTimeout(
   ()=>{
 
     showPhotos();
+
 
     setTimeout(
       ()=>{
@@ -1182,9 +1384,9 @@ setTimeout(
 );
 
 
-/* =========================
+/* =====================================================
    DECLINE
-========================= */
+===================================================== */
 
 declineButton.addEventListener(
   "click",
@@ -1200,13 +1402,17 @@ declineButton.addEventListener(
 );
 
 
-/* =========================
-   ANSWER
-========================= */
+/* =====================================================
+   CALL STATE
+===================================================== */
 
 let callActive =
   false;
 
+
+/* =====================================================
+   ANSWER
+===================================================== */
 
 answerButton.addEventListener(
   "click",
@@ -1238,7 +1444,9 @@ answerButton.addEventListener(
 
       playRedLive();
 
-    }else{
+    }
+
+    else{
 
       playReturningCall();
 
@@ -1248,10 +1456,11 @@ answerButton.addEventListener(
 );
 
 
-/* =========================
+/* =====================================================
    RED LIVE
-   10s → 17s
-========================= */
+   START AT 10s
+   STOP AT 17s
+===================================================== */
 
 function playRedLive(){
 
@@ -1263,6 +1472,7 @@ function playRedLive(){
   redLiveVideo.src =
     VIDEO_URL;
 
+
   redLiveVideo.muted =
     false;
 
@@ -1270,35 +1480,48 @@ function playRedLive(){
     1;
 
 
-  function start(){
+  const startVideo =
+    ()=>{
 
-    try{
+      try{
 
-      redLiveVideo.currentTime =
-        10;
+        redLiveVideo.currentTime =
+          10;
 
-    }catch(e){}
+      }
+      catch(e){}
 
 
-    redLiveVideo.play()
-      .catch(
-        ()=>{}
-      );
+      const playPromise =
+        redLiveVideo.play();
 
-  }
+
+      if(playPromise){
+
+        playPromise.catch(
+          ()=>{
+
+          }
+        );
+
+      }
+
+    };
 
 
   if(
     redLiveVideo.readyState >= 1
   ){
 
-    start();
+    startVideo();
 
-  }else{
+  }
+
+  else{
 
     redLiveVideo.addEventListener(
       "loadedmetadata",
-      start,
+      startVideo,
       {once:true}
     );
 
@@ -1310,9 +1533,13 @@ function playRedLive(){
 
       redLiveVideo.pause();
 
+      redLiveVideo.currentTime =
+        10;
+
       redLiveVideoPage.classList.add(
         "hidden"
       );
+
 
       playBlackLive();
 
@@ -1323,9 +1550,9 @@ function playRedLive(){
 }
 
 
-/* =========================
-   BLACK LIVE
-========================= */
+/* =====================================================
+   BLACK LIVE WITH SOUND
+===================================================== */
 
 function playBlackLive(){
 
@@ -1337,6 +1564,7 @@ function playBlackLive(){
   blackLiveSoundVideo.src =
     VIDEO_URL;
 
+
   blackLiveSoundVideo.muted =
     false;
 
@@ -1344,10 +1572,50 @@ function playBlackLive(){
     1;
 
 
-  blackLiveSoundVideo.play()
-    .catch(
-      ()=>{}
+  const startBlack =
+    ()=>{
+
+      try{
+
+        blackLiveSoundVideo.currentTime =
+          0;
+
+      }
+      catch(e){}
+
+
+      const playPromise =
+        blackLiveSoundVideo.play();
+
+
+      if(playPromise){
+
+        playPromise.catch(
+          ()=>{}
+        );
+
+      }
+
+    };
+
+
+  if(
+    blackLiveSoundVideo.readyState >= 1
+  ){
+
+    startBlack();
+
+  }
+
+  else{
+
+    blackLiveSoundVideo.addEventListener(
+      "loadedmetadata",
+      startBlack,
+      {once:true}
     );
+
+  }
 
 
   setTimeout(
@@ -1361,7 +1629,6 @@ function playBlackLive(){
 
       blackLiveSoundVideo.load();
 
-
       blackLivePage.classList.add(
         "hidden"
       );
@@ -1374,11 +1641,9 @@ function playBlackLive(){
   );
 
 }
-
-
-/* =========================
+  /* =====================================================
    RETURNING VISITOR
-========================= */
+===================================================== */
 
 function playReturningCall(){
 
@@ -1396,12 +1661,20 @@ function playReturningCall(){
   blackLiveSoundVideo.load();
 
 
+  /*
+    Black screen.
+    No sound.
+    No video.
+    2 seconds.
+  */
+
   setTimeout(
     ()=>{
 
       blackLivePage.classList.add(
         "hidden"
       );
+
 
       showInsufficient();
 
@@ -1412,9 +1685,9 @@ function playReturningCall(){
 }
 
 
-/* =========================
-   INSUFFICIENT
-========================= */
+/* =====================================================
+   INSUFFICIENT MINUTES
+===================================================== */
 
 function showInsufficient(){
 
@@ -1442,12 +1715,15 @@ function showInsufficient(){
 
           clearInterval(timer);
 
+
           insufficientPage.classList.add(
             "hidden"
           );
 
+
           callActive =
             false;
+
 
           showPhotos();
 
@@ -1459,7 +1735,29 @@ function showInsufficient(){
 
 }
 
+
+/* =====================================================
+   CLEAN VIDEO WHEN LEAVING
+===================================================== */
+
+window.addEventListener(
+  "pagehide",
+  ()=>{
+
+    try{
+      redLiveVideo.pause();
+    }
+    catch(e){}
+
+    try{
+      blackLiveSoundVideo.pause();
+    }
+    catch(e){}
+
+  }
+);
+
 </script>
 
 </body>
-</html>
+</html>  
