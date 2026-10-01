@@ -20,7 +20,9 @@ html,body{
   font-family:Arial,Helvetica,sans-serif;
 }
 
-body{overflow-x:hidden;}
+body{
+  overflow-x:hidden;
+}
 
 button{
   font-family:inherit;
@@ -28,7 +30,10 @@ button{
   cursor:pointer;
 }
 
-.hidden{display:none!important;}
+.hidden{
+  display:none!important;
+}
+
 
 /* WELCOME */
 #welcomeScreen{
@@ -54,7 +59,9 @@ button{
   letter-spacing:-2px;
 }
 
-.logo span{color:#ff1744;}
+.logo span{
+  color:#ff1744;
+}
 
 .welcome-title{
   margin-top:18px;
@@ -90,7 +97,8 @@ button{
   to{width:100%}
 }
 
-/* PHOTOS */
+
+/* PHOTOS / LIVE VIDEO */
 #photosPage{
   min-height:100vh;
   background:#080808;
@@ -115,7 +123,9 @@ button{
   font-weight:900;
 }
 
-.brand span{color:#ff1744;}
+.brand span{
+  color:#ff1744;
+}
 
 .online-count{
   color:#ddd;
@@ -192,9 +202,10 @@ button{
   animation:blinkDot 1s infinite;
   z-index:3;
 }
-  .offline-label{
+
+.offline-label{
   position:absolute;
-      top:7px;
+  top:7px;
   right:7px;
   padding:3px 6px;
   border-radius:8px;
@@ -203,7 +214,8 @@ button{
   font-size:9px;
   z-index:3;
 }
-  .play-icon{
+
+.play-icon{
   position:absolute;
   left:50%;
   top:50%;
@@ -219,8 +231,7 @@ button{
   padding-left:3px;
   box-shadow:0 0 20px rgba(255,23,68,.45);
 }
-
-.profile-info{
+  .profile-info{
   padding:8px;
 }
 
@@ -238,6 +249,8 @@ button{
   font-size:10px;
 }
 
+
+/* PHOTO CHAT */
 .photo-chat-box{
   position:absolute;
   left:5px;
@@ -265,12 +278,15 @@ button{
     opacity:0;
     transform:translateY(8px);
   }
+
   to{
     opacity:1;
     transform:translateY(0);
   }
 }
 
+
+/* SOCIAL */
 .social-row{
   display:flex;
   gap:4px;
@@ -291,6 +307,7 @@ button{
   background:#ff1744;
   color:#fff;
 }
+
 
 /* INCOMING CALL */
 #incomingCall{
@@ -355,8 +372,13 @@ button{
   font-weight:800;
 }
 
-.answer-btn{background:#00c853;}
-.reject-btn{background:#e6002d;}
+.answer-btn{
+  background:#00c853;
+}
+
+.reject-btn{
+  background:#e6002d;
+}
   /* VIDEO */
 #videoPage{
   position:fixed;
@@ -382,7 +404,6 @@ button{
   align-items:center;
   z-index:5;
 }
-  }
 
 .live-badge{
   background:#e6002d;
@@ -390,7 +411,7 @@ button{
   border-radius:6px;
   font-size:11px;
   font-weight:900;
-  }
+}
 
 .video-name{
   background:rgba(0,0,0,.55);
@@ -443,6 +464,7 @@ button{
   background:#ff1744;
 }
 
+
 /* INSUFFICIENT */
 #insufficientPage{
   position:fixed;
@@ -475,15 +497,24 @@ button{
   color:#aaa;
   font-size:14px;
 }
+
 </style>
 </head>
 
 <body>
 
 <section id="welcomeScreen">
+
   <div class="welcome-box">
-    <div class="logo">Live<span>X</span></div>
-    <div class="welcome-title">Welcome to LiveX</div>
+
+    <div class="logo">
+      Live<span>X</span>
+    </div>
+
+    <div class="welcome-title">
+      Welcome to LiveX
+    </div>
+
     <div class="welcome-sub">
       Connecting you to live profiles...
     </div>
@@ -491,8 +522,11 @@ button{
     <div class="loading-line">
       <div class="loading-progress"></div>
     </div>
+
   </div>
+
 </section>
+
 
 <section id="photosPage" class="hidden">
 
@@ -503,12 +537,16 @@ button{
     </div>
 
     <div class="online-count">
-      <span id="onlineCount">19</span> online
+      <span id="onlineCount">19</span>
+      online
     </div>
 
     <div class="live-status">
+
       <span class="live-dot"></span>
+
       LIVE
+
     </div>
 
   </div>
@@ -517,7 +555,10 @@ button{
     Live Video
   </div>
 
-  <div id="photosGrid" class="photos-grid"></div>
+  <div
+    id="photosGrid"
+    class="photos-grid">
+  </div>
 
 </section>
 <section id="incomingCall" class="hidden">
@@ -535,7 +576,9 @@ button{
       LIVE VIDEO CALL
     </div>
 
-    <div id="callName" class="call-title">
+    <div
+      id="callName"
+      class="call-title">
       Incoming call
     </div>
 
@@ -574,18 +617,25 @@ button{
   </video>
 
   <div class="video-top">
-        <div class="live-badge">
+
+    <div class="live-badge">
       ● LIVE
     </div>
 
-    <div id="videoName" class="video-name">
+    <div
+      id="videoName"
+      class="video-name">
       Live Video
     </div>
 
   </div>
 
-  <div id="videoChat" class="video-chat"></div>
-    <div class="video-actions">
+  <div
+    id="videoChat"
+    class="video-chat">
+  </div>
+
+  <div class="video-actions">
 
     <button
       id="videoLike"
@@ -604,7 +654,9 @@ button{
 </section>
 
 
-<section id="insufficientPage" class="hidden">
+<section
+  id="insufficientPage"
+  class="hidden">
 
   <div class="insufficient-box">
 
@@ -626,6 +678,7 @@ button{
 
 
 <script>
+
 "use strict";
 
 
@@ -644,40 +697,64 @@ const PAYMENT_PAGE =
 
 
 const welcomeScreen =
-  document.getElementById("welcomeScreen");
+  document.getElementById(
+    "welcomeScreen"
+  );
 
 const photosPage =
-  document.getElementById("photosPage");
+  document.getElementById(
+    "photosPage"
+  );
 
 const photosGrid =
-  document.getElementById("photosGrid");
+  document.getElementById(
+    "photosGrid"
+  );
 
 const incomingCall =
-  document.getElementById("incomingCall");
+  document.getElementById(
+    "incomingCall"
+  );
 
 const callAvatar =
-  document.getElementById("callAvatar");
+  document.getElementById(
+    "callAvatar"
+  );
 
 const callName =
-  document.getElementById("callName");
+  document.getElementById(
+    "callName"
+  );
 
 const videoPage =
-  document.getElementById("videoPage");
+  document.getElementById(
+    "videoPage"
+  );
 
 const liveVideo =
-  document.getElementById("liveVideo");
+  document.getElementById(
+    "liveVideo"
+  );
 
 const videoName =
-  document.getElementById("videoName");
+  document.getElementById(
+    "videoName"
+  );
 
 const videoChat =
-  document.getElementById("videoChat");
+  document.getElementById(
+    "videoChat"
+  );
 
 const insufficientPage =
-  document.getElementById("insufficientPage");
+  document.getElementById(
+    "insufficientPage"
+  );
 
 const onlineCount =
-  document.getElementById("onlineCount");
+  document.getElementById(
+    "onlineCount"
+  );
 
 
 let currentCallProfile = null;
@@ -689,7 +766,7 @@ let photoOfflineTimer = null;
 let callTimer = null;
 
 let cameraStream = null;
-  /* =========================
+ /* =========================
    PROFILE DATA
 ========================= */
 
@@ -764,7 +841,7 @@ const profiles = [
     name:"Asha",
     age:25,
     country:"Tanzania",
-        flag:"🇹🇿",
+    flag:"🇹🇿",
     image:"1785179340825 (1).jpg",
     messages:[
       "Habari ❤️",
@@ -781,7 +858,7 @@ const profiles = [
     image:"1785179362758.jpg",
     messages:[
       "Hi 😊",
-            "Are you watching?",
+      "Are you watching?",
       "Talk to me ❤️"
     ]
   },
@@ -889,7 +966,8 @@ const profiles = [
       "Come and talk ❤️"
     ]
   },
-    {
+
+  {
     name:"Nadia",
     age:26,
     country:"Congo",
@@ -901,8 +979,7 @@ const profiles = [
       "Let's connect 😊"
     ]
   },
-
-  {
+    {
     name:"Bella",
     age:25,
     country:"Congo",
@@ -956,7 +1033,7 @@ const profiles = [
 
   {
     name:"Thandi",
-        age:25,
+    age:25,
     country:"South Africa",
     flag:"🇿🇦",
     image:"photo4.jpg",
@@ -977,7 +1054,7 @@ const profiles = [
       "Hello ❤️",
       "Are you watching?",
       "Let's talk 😊"
-          ]
+    ]
   },
 
   {
@@ -1015,18 +1092,30 @@ const profiles = [
 
 function showOnly(section){
 
-  welcomeScreen.classList.add("hidden");
+  welcomeScreen.classList.add(
+    "hidden"
+  );
 
-  photosPage.classList.add("hidden");
+  photosPage.classList.add(
+    "hidden"
+  );
 
-  incomingCall.classList.add("hidden");
+  incomingCall.classList.add(
+    "hidden"
+  );
 
-  videoPage.classList.add("hidden");
+  videoPage.classList.add(
+    "hidden"
+  );
 
-  insufficientPage.classList.add("hidden");
+  insufficientPage.classList.add(
+    "hidden"
+  );
 
   if(section){
-    section.classList.remove("hidden");
+    section.classList.remove(
+      "hidden"
+    );
   }
 }
 
@@ -1036,11 +1125,20 @@ function getPaymentUrl(profile){
   const params =
     new URLSearchParams();
 
-  params.set("profile",profile.name);
+  params.set(
+    "profile",
+    profile.name
+  );
 
-  params.set("age",profile.age);
+  params.set(
+    "age",
+    profile.age
+  );
 
-  params.set("country",profile.country);
+  params.set(
+    "country",
+    profile.country
+  );
 
   const ref =
     new URLSearchParams(
@@ -1048,7 +1146,10 @@ function getPaymentUrl(profile){
     ).get("ref");
 
   if(ref){
-    params.set("ref",ref);
+    params.set(
+      "ref",
+      ref
+    );
   }
 
   return PAYMENT_PAGE +
@@ -1070,15 +1171,26 @@ function chooseOffline(){
 
   const indexes = [];
 
-  while(indexes.length < 5){
+  while(
+    indexes.length < 5
+  ){
 
     const randomIndex =
       Math.floor(
-        Math.random() * profiles.length
+        Math.random() *
+        profiles.length
       );
 
-    if(!indexes.includes(randomIndex)){
-      indexes.push(randomIndex);
+    if(
+      !indexes.includes(
+        randomIndex
+      )
+    ){
+
+      indexes.push(
+        randomIndex
+      );
+
     }
   }
 
@@ -1089,58 +1201,105 @@ function chooseOffline(){
 let offlineIndexes =
   chooseOffline();
 
+
 /* =========================
    SHUFFLE ARRAY
-   EACH RENDER
 ========================= */
 
 function shuffleArray(array){
 
-  const shuffled = [...array];
+  const shuffled = [
+    ...array
+  ];
 
-  for(let i=shuffled.length-1;i>0;i--){
+  for(
+    let i =
+      shuffled.length - 1;
+    i > 0;
+    i--
+  ){
 
-    const j = Math.floor(Math.random()*(i+1));
+    const j =
+      Math.floor(
+        Math.random() *
+        (i + 1)
+      );
 
-    [shuffled[i],shuffled[j]] =
-      [shuffled[j],shuffled[i]];
+    [
+      shuffled[i],
+      shuffled[j]
+    ] =
+    [
+      shuffled[j],
+      shuffled[i]
+    ];
   }
 
   return shuffled;
 }
 
 
-
 /* =========================
    PHOTO CHAT
+   EACH PHOTO INDEPENDENT
 ========================= */
 
-function startPhotoChat(profile, originalIndex){
+function startPhotoChat(
+  profile,
+  originalIndex
+){
 
   const chatBox =
     document.getElementById(
-      "photoChat-" + originalIndex
+      "photoChat-" +
+      originalIndex
     );
 
   if(!chatBox){
     return;
   }
 
-  let messageIndex = 0;
+
+  let messageIndex =
+    Math.floor(
+      Math.random() *
+      profile.messages.length
+    );
+
+
+  let intervalTimer = null;
+
 
   function showNextMessage(){
 
-    if(!chatBox.isConnected){
+    if(
+      !chatBox.isConnected
+    ){
+
+      if(intervalTimer){
+        clearInterval(
+          intervalTimer
+        );
+
+        intervalTimer = null;
+      }
+
       return;
     }
 
+
     chatBox.innerHTML = "";
 
+
     const message =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     message.className =
       "photo-chat-message";
+
 
     message.textContent =
       profile.messages[
@@ -1148,43 +1307,82 @@ function startPhotoChat(profile, originalIndex){
         profile.messages.length
       ];
 
-    chatBox.appendChild(message);
+
+    chatBox.appendChild(
+      message
+    );
+
 
     messageIndex++;
   }
 
-  showNextMessage();
 
-  const timer =
-    setInterval(
-      showNextMessage,
-      3200
+  /*
+    Each photo starts at
+    a different random time.
+  */
+
+  const firstDelay =
+    500 +
+    Math.floor(
+      Math.random() * 5000
     );
 
-  chatBox.dataset.chatTimer =
-    String(timer);
-}
+
+  setTimeout(()=>{
+
+    if(
+      !chatBox.isConnected
+    ){
+      return;
+    }
 
 
+    showNextMessage();
+
+
+    /*
+      Each photo gets its own
+      random interval.
+    */
+
+    const nextDelay =
+      3500 +
+      Math.floor(
+        Math.random() * 5000
+      );
+
+
+    intervalTimer =
+      setInterval(
+        showNextMessage,
+        nextDelay
+      );
+
+  },firstDelay);
+
+             }
 /* =========================
-   RENDER PHOTOS
+   RENDER ALL PHOTOS
 ========================= */
 
 function renderPhotos(){
 
   photosGrid.innerHTML = "";
-    onlineCount.textContent =
+
+
+  onlineCount.textContent =
     String(
       profiles.length -
       offlineIndexes.length
     );
 
+
   /*
-    IMPORTANT:
-    We only shuffle the order.
-    The online/offline status remains
-    exactly the same until the normal
-    5-minute offline rotation.
+    Every render gets a new
+    random order.
+
+    No 5-second shuffle.
   */
 
   const shuffledProfiles =
@@ -1192,21 +1390,31 @@ function renderPhotos(){
       profiles
     );
 
+
   shuffledProfiles.forEach(
     (profile)=>{
 
       const originalIndex =
-        profiles.indexOf(profile);
+        profiles.indexOf(
+          profile
+        );
+
 
       const offline =
         offlineIndexes.includes(
           originalIndex
         );
-            const card =
-        document.createElement("article");
+
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
 
       card.className =
         "profile-card";
+
 
       card.innerHTML = `
 
@@ -1222,11 +1430,15 @@ function renderPhotos(){
           ${
             offline
             ?
-            `<div class="offline-label">
-              OFFLINE
-            </div>`
+            `
+              <div class="offline-label">
+                OFFLINE
+              </div>
+            `
             :
-            `<div class="online-big-dot"></div>`
+            `
+              <div class="online-big-dot"></div>
+            `
           }
 
           <div class="play-icon">
@@ -1239,6 +1451,7 @@ function renderPhotos(){
           </div>
 
         </div>
+
 
         <div class="profile-info">
 
@@ -1255,21 +1468,26 @@ function renderPhotos(){
 
         </div>
 
+
         <div class="social-row">
 
-          <button class="social-btn like-btn">
+          <button
+            class="social-btn like-btn">
             ❤️ Like
           </button>
 
-          <button class="social-btn love-btn">
+          <button
+            class="social-btn love-btn">
             💕 Love
           </button>
 
-          <button class="social-btn follow-btn">
+          <button
+            class="social-btn follow-btn">
             + Follow
           </button>
 
-          <button class="social-btn chat-btn">
+          <button
+            class="social-btn chat-btn">
             💬 Chat
           </button>
 
@@ -1282,25 +1500,30 @@ function renderPhotos(){
           ".profile-image"
         );
 
+
       const play =
         card.querySelector(
           ".play-icon"
         );
+
 
       const like =
         card.querySelector(
           ".like-btn"
         );
 
+
       const love =
         card.querySelector(
           ".love-btn"
         );
 
+
       const follow =
         card.querySelector(
           ".follow-btn"
         );
+
 
       const chat =
         card.querySelector(
@@ -1311,7 +1534,9 @@ function renderPhotos(){
       image.addEventListener(
         "click",
         ()=>{
-          openPayment(profile);
+          openPayment(
+            profile
+          );
         }
       );
 
@@ -1319,7 +1544,9 @@ function renderPhotos(){
       play.addEventListener(
         "click",
         ()=>{
-          openPayment(profile);
+          openPayment(
+            profile
+          );
         }
       );
 
@@ -1327,7 +1554,9 @@ function renderPhotos(){
       chat.addEventListener(
         "click",
         ()=>{
-          openPayment(profile);
+          openPayment(
+            profile
+          );
         }
       );
 
@@ -1335,10 +1564,13 @@ function renderPhotos(){
       like.addEventListener(
         "click",
         (event)=>{
+
           event.stopPropagation();
+
           like.classList.toggle(
             "active"
           );
+
         }
       );
 
@@ -1346,10 +1578,13 @@ function renderPhotos(){
       love.addEventListener(
         "click",
         (event)=>{
+
           event.stopPropagation();
+
           love.classList.toggle(
             "active"
           );
+
         }
       );
 
@@ -1357,15 +1592,21 @@ function renderPhotos(){
       follow.addEventListener(
         "click",
         (event)=>{
+
           event.stopPropagation();
+
           follow.classList.toggle(
             "active"
           );
+
         }
       );
 
 
-      photosGrid.appendChild(card);
+      photosGrid.appendChild(
+        card
+      );
+
 
       startPhotoChat(
         profile,
@@ -1377,10 +1618,8 @@ function renderPhotos(){
 }
 
 
-
-
 /* =========================
-   CHANGE OFFLINE PEOPLE
+   OFFLINE ROTATION
    EVERY 5 MINUTES
 ========================= */
 
@@ -1393,7 +1632,9 @@ function startOfflineRotation(){
     );
 
   }
-    photoOfflineTimer =
+
+
+  photoOfflineTimer =
     setInterval(()=>{
 
       offlineIndexes =
@@ -1401,11 +1642,10 @@ function startOfflineRotation(){
 
       renderPhotos();
 
-    },5*60*1000);
+    },5 * 60 * 1000);
+
 }
-
-
-/* =========================
+  /* =========================
    INCOMING CALL
 ========================= */
 
@@ -1416,6 +1656,7 @@ function openIncomingCall(){
       FIRST_VIDEO_KEY
     )
   ){
+
     return;
   }
 
@@ -1433,6 +1674,7 @@ function openIncomingCall(){
 
 
   if(!available.length){
+
     return;
   }
 
@@ -1455,7 +1697,9 @@ function openIncomingCall(){
     " is calling you";
 
 
-  showOnly(incomingCall);
+  showOnly(
+    incomingCall
+  );
 
 
   if(callTimer){
@@ -1465,7 +1709,9 @@ function openIncomingCall(){
     );
 
   }
-    callTimer =
+
+
+  callTimer =
     setTimeout(()=>{
 
       if(
@@ -1474,11 +1720,14 @@ function openIncomingCall(){
         )
       ){
 
-        showOnly(photosPage);
+        showOnly(
+          photosPage
+        );
 
       }
 
     },15000);
+
 }
 
 
@@ -1494,24 +1743,26 @@ async function requestCameraPermission(){
   ){
 
     return true;
-
   }
 
 
   try{
 
     cameraStream =
-      await navigator.mediaDevices.getUserMedia({
-        video:true,
-        audio:false
-      });
+      await navigator.mediaDevices
+        .getUserMedia({
+          video:true,
+          audio:false
+        });
 
 
     cameraStream
       .getTracks()
-      .forEach(track=>{
-        track.stop();
-      });
+      .forEach(
+        track=>{
+          track.stop();
+        }
+      );
 
 
     cameraStream = null;
@@ -1551,7 +1802,9 @@ async function answerIncomingCall(){
 
   startLiveVideo();
 }
-  /* =========================
+
+
+/* =========================
    START LIVE VIDEO
 ========================= */
 
@@ -1581,7 +1834,9 @@ function startLiveVideo(){
 
 
   liveVideo.currentTime = 0;
-    liveVideo.muted = false;
+
+
+  liveVideo.muted = false;
 
   liveVideo.volume = 1;
 
@@ -1589,21 +1844,24 @@ function startLiveVideo(){
   videoChat.innerHTML = "";
 
 
-  showOnly(videoPage);
+  showOnly(
+    videoPage
+  );
 
 
   startVideoChat();
 
 
-  liveVideo.play()
-    .catch(error=>{
-
-      console.log(
-        "Video play error:",
-        error
-      );
-
-    });
+  liveVideo
+    .play()
+    .catch(
+      error=>{
+        console.log(
+          "Video play error:",
+          error
+        );
+      }
+    );
 
 
   if(videoTimer){
@@ -1622,6 +1880,7 @@ function startLiveVideo(){
       },
       40000
     );
+
 }
 
 
@@ -1651,9 +1910,9 @@ function startVideoChat(){
 
       const delay =
         1800 +
-        index*5500 +
+        index * 5500 +
         Math.floor(
-          Math.random()*1800
+          Math.random() * 1800
         );
 
 
@@ -1666,7 +1925,6 @@ function startVideoChat(){
         ){
 
           return;
-
         }
 
 
@@ -1703,7 +1961,9 @@ function startVideoChat(){
 
     }
   );
-}
+
+    }
+
   /* =========================
    END VIDEO
 ========================= */
@@ -1738,6 +1998,7 @@ function finishLiveVideo(){
     );
 
   },2000);
+
 }
 
 
@@ -1770,7 +2031,7 @@ document
 
 
 document
-    .getElementById("videoFollow")
+  .getElementById("videoFollow")
   .addEventListener(
     "click",
     function(){
@@ -1821,13 +2082,16 @@ document
 
       }
 
+
       showOnly(
         photosPage
       );
 
     }
   );
-  /* =========================
+
+
+/* =========================
    VIDEO ENDED
 ========================= */
 
@@ -1840,8 +2104,7 @@ liveVideo.addEventListener(
 
 
 /* =========================
-   PROTECTION AGAINST
-   VIDEO LONGER THAN 40 SEC
+   40 SECOND PROTECTION
 ========================= */
 
 liveVideo.addEventListener(
@@ -1861,7 +2124,7 @@ liveVideo.addEventListener(
 
 
 /* =========================
-   STOP VIDEO IF PAGE HIDDEN
+   PAGE VISIBILITY
 ========================= */
 
 document.addEventListener(
@@ -1884,27 +2147,17 @@ document.addEventListener(
 
 
 /* =========================
-   START PHOTO ROTATIONS
+   START OFFLINE ROTATION
 ========================= */
 
-/*
-  Offline people still change
-  every 5 minutes.
-*/
-
 startOfflineRotation();
-  
+
 
 /* =========================
    START WEBSITE
 ========================= */
 
 function startWebsite(){
-
-  /*
-    Existing welcome flow stays
-    exactly the same.
-  */
 
   setTimeout(()=>{
 
@@ -1916,11 +2169,6 @@ function startWebsite(){
     renderPhotos();
 
 
-    /*
-      Existing incoming call
-      timing stays the same.
-    */
-
     setTimeout(()=>{
 
       openIncomingCall();
@@ -1929,6 +2177,7 @@ function startWebsite(){
 
 
   },3000);
+
 }
 
 
