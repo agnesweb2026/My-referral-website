@@ -192,8 +192,7 @@ button{
   animation:blinkDot 1s infinite;
   z-index:3;
 }
-
-.offline-label{
+  .offline-label{
   position:absolute;
   top:7px;
   right:7px;
@@ -383,6 +382,7 @@ button{
   align-items:center;
   z-index:5;
 }
+  }
 
 .live-badge{
   background:#e6002d;
@@ -574,8 +574,7 @@ button{
   </video>
 
   <div class="video-top">
-
-    <div class="live-badge">
+        <div class="live-badge">
       ● LIVE
     </div>
 
@@ -688,8 +687,6 @@ let videoTimer = null;
 
 let photoOfflineTimer = null;
 
-let photoShuffleTimer = null;
-
 let callTimer = null;
 
 let cameraStream = null;
@@ -768,7 +765,7 @@ const profiles = [
     name:"Asha",
     age:25,
     country:"Tanzania",
-    flag:"🇹🇿",
+        flag:"🇹🇿",
     image:"1785179340825 (1).jpg",
     messages:[
       "Habari ❤️",
@@ -960,7 +957,7 @@ const profiles = [
 
   {
     name:"Thandi",
-    age:25,
+        age:25,
     country:"South Africa",
     flag:"🇿🇦",
     image:"photo4.jpg",
@@ -1093,39 +1090,26 @@ function chooseOffline(){
 let offlineIndexes =
   chooseOffline();
 
-
 /* =========================
    SHUFFLE ARRAY
-   NEW
+   EACH RENDER
 ========================= */
 
 function shuffleArray(array){
 
-  const shuffled =
-    [...array];
+  const shuffled = [...array];
 
-  for(
-    let i = shuffled.length - 1;
-    i > 0;
-    i--
-  ){
+  for(let i=shuffled.length-1;i>0;i--){
 
-    const j =
-      Math.floor(
-        Math.random() * (i + 1)
-      );
+    const j = Math.floor(Math.random()*(i+1));
 
-    [
-      shuffled[i],
-      shuffled[j]
-    ] = [
-      shuffled[j],
-      shuffled[i]
-    ];
+    [shuffled[i],shuffled[j]] =
+      [shuffled[j],shuffled[i]];
   }
 
   return shuffled;
 }
+
 
 
 /* =========================
@@ -1165,8 +1149,7 @@ function renderPhotos(){
         offlineIndexes.includes(
           originalIndex
         );
-
-      const card =
+            const card =
         document.createElement("article");
 
       card.className =
@@ -1341,97 +1324,6 @@ function renderPhotos(){
 }
 
 
-/* =========================
-   RANDOM INTERCHANGE
-   EVERY 5 SECONDS
-========================= */
-
-function startPhotoShuffle(){
-
-  if(photoShuffleTimer){
-    clearInterval(
-      photoShuffleTimer
-    );
-  }
-
-  photoShuffleTimer =
-    setInterval(()=>{
-
-      /*
-        Live Photos are rearranged
-        randomly every 5 seconds.
-      */
-
-      if(
-        !photosPage.classList.contains(
-          "hidden"
-        )
-      ){
-
-        renderPhotos();
-
-      }
-
-    },5000);
-  }
-  /* =========================
-   PHOTO CHAT MESSAGES
-========================= */
-
-function startPhotoChat(
-  profile,
-  index
-){
-
-  const box =
-    document.getElementById(
-      "photoChat-" + index
-    );
-
-  if(!box) return;
-
-
-  profile.messages.forEach(
-    (message,messageIndex)=>{
-
-      const delay =
-        1200 +
-        Math.floor(
-          Math.random()*5000
-        ) +
-        messageIndex*3500;
-
-
-      setTimeout(()=>{
-
-        const item =
-          document.createElement(
-            "div"
-          );
-
-        item.className =
-          "photo-chat-message";
-
-        item.textContent =
-          message;
-
-        box.appendChild(item);
-
-        while(
-          box.children.length > 2
-        ){
-
-          box.removeChild(
-            box.firstChild
-          );
-
-        }
-
-      },delay);
-
-    }
-  );
-}
 
 
 /* =========================
@@ -1448,8 +1340,7 @@ function startOfflineRotation(){
     );
 
   }
-
-  photoOfflineTimer =
+    photoOfflineTimer =
     setInterval(()=>{
 
       offlineIndexes =
@@ -1639,9 +1530,7 @@ function startLiveVideo(){
 
 
   liveVideo.currentTime = 0;
-
-
-  liveVideo.muted = false;
+    liveVideo.muted = false;
 
   liveVideo.volume = 1;
 
@@ -1832,7 +1721,7 @@ document
 
 
 document
-  .getElementById("videoFollow")
+    .getElementById("videoFollow")
   .addEventListener(
     "click",
     function(){
@@ -1956,13 +1845,6 @@ document.addEventListener(
 
 startOfflineRotation();
 
-
-/*
-  PHOTO ORDER changes randomly
-  every 5 seconds.
-*/
-
-startPhotoShuffle();
 
 
 /* =========================
