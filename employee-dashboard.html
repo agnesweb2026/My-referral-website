@@ -262,11 +262,13 @@ button{
   align-items:center;
   justify-content:center;
 
-  border-radius:50%;
+  border-radius:15px;
 
   background:#16a34a;
 
-  font-size:22px;
+  color:#fff;
+
+  font-size:23px;
   font-weight:bold;
 }
 
@@ -283,28 +285,6 @@ button{
   margin-top:5px;
 }
 
-.online-status{
-  margin-left:auto;
-
-  display:flex;
-  align-items:center;
-
-  gap:5px;
-
-  color:#36d675;
-
-  font-size:11px;
-}
-
-.online-dot{
-  width:7px;
-  height:7px;
-
-  border-radius:50%;
-
-  background:#36d675;
-}
-
 
 /* =========================
    STATS
@@ -314,7 +294,10 @@ button{
   display:grid;
 
   grid-template-columns:
-    repeat(2,minmax(0,1fr));
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
 
   gap:12px;
 
@@ -327,19 +310,20 @@ button{
   border:1px solid #263341;
   border-radius:15px;
 
-  padding:18px;
+  padding:17px;
 }
 
 .stat-label{
-  color:#8c98a6;
+  color:#8995a3;
 
-  font-size:13px;
+  font-size:12px;
 
   margin-bottom:8px;
 }
 
 .stat-value{
-  font-size:24px;
+  font-size:22px;
+
   font-weight:bold;
 }
 
@@ -348,15 +332,15 @@ button{
 }
 
 #availableBalance{
-  color:#4db5ff;
-}
-
-#commissionRate{
-  color:#f5b942;
+  color:#4db8ff;
 }
 
 #totalWithdrawn{
-  color:#b78cff;
+  color:#f5b942;
+}
+
+#commissionRate{
+  color:#b58cff;
 }
 
 
@@ -368,6 +352,7 @@ button{
   background:#111820;
 
   border:1px solid #263341;
+
   border-radius:15px;
 
   overflow:hidden;
@@ -384,6 +369,8 @@ button{
 
   align-items:center;
   justify-content:space-between;
+
+  gap:10px;
 }
 
 .section-header h2{
@@ -391,43 +378,105 @@ button{
 }
 
 .section-body{
-  padding:15px;
+  padding:16px;
 }
 
 
 /* =========================
-   WITHDRAW
+   REFERRAL
 ========================= */
 
-.balance-box{
+.referral-box{
   background:#0c131b;
 
   border:1px solid #263341;
+
   border-radius:12px;
 
-  padding:16px;
-
-  margin-bottom:15px;
+  padding:14px;
 }
 
-.balance-label{
+.referral-label{
   color:#8995a3;
 
   font-size:12px;
 
-  margin-bottom:5px;
+  margin-bottom:8px;
 }
 
-.balance-value{
-  color:#36d675;
+.referral-link{
+  background:#080c12;
 
-  font-size:25px;
+  border:1px solid #334150;
+
+  border-radius:9px;
+
+  padding:11px;
+
+  color:#dce2e8;
+
+  font-size:12px;
+
+  word-break:break-all;
+
+  line-height:1.5;
+
+  margin-bottom:10px;
+}
+
+.copy-btn{
+  width:100%;
+
+  padding:11px;
+
+  border:none;
+
+  border-radius:9px;
+
+  background:#16a34a;
+
+  color:#fff;
+
+  font-size:13px;
 
   font-weight:bold;
 }
 
+.copy-message{
+  min-height:18px;
+
+  text-align:center;
+
+  color:#36d675;
+
+  font-size:12px;
+
+  margin-top:8px;
+}
+
+
+/* =========================
+   WITHDRAWAL
+========================= */
+
+.withdraw-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
+
+  gap:12px;
+}
+
 .withdraw-field{
   margin-bottom:13px;
+}
+
+.withdraw-field.full{
+  grid-column:1/-1;
 }
 
 .withdraw-field label{
@@ -435,7 +484,7 @@ button{
 
   color:#aeb8c4;
 
-  font-size:13px;
+  font-size:12px;
 
   margin-bottom:7px;
 }
@@ -446,53 +495,101 @@ button{
   padding:13px;
 
   background:#0a1017;
+
   color:#fff;
 
   border:1px solid #334150;
-  border-radius:10px;
+
+  border-radius:9px;
 
   outline:none;
 
-  font-size:15px;
+  font-size:14px;
 }
 
 .withdraw-field input:focus{
   border-color:#16a34a;
 }
 
-.withdraw-btn{
-  width:100%;
+.withdraw-balance{
+  background:#0c131b;
 
-  padding:14px;
+  border:1px solid #263341;
 
-  border:none;
   border-radius:10px;
 
-  background:#16a34a;
-  color:#fff;
+  padding:12px;
 
-  font-size:15px;
-  font-weight:bold;
+  margin-bottom:14px;
 }
 
-.withdraw-note{
-  color:#74808d;
+.withdraw-balance-label{
+  color:#8995a3;
 
   font-size:11px;
 
-  line-height:1.5;
+  margin-bottom:5px;
+}
 
-  margin-top:9px;
+.withdraw-balance-value{
+  color:#36d675;
+
+  font-size:20px;
+
+  font-weight:bold;
+}
+
+.withdraw-btn{
+  width:100%;
+
+  padding:13px;
+
+  border:none;
+
+  border-radius:9px;
+
+  background:#16a34a;
+
+  color:#fff;
+
+  font-size:14px;
+
+  font-weight:bold;
+}
+
+.withdraw-btn:active{
+  transform:scale(.99);
 }
 
 #withdrawMessage{
-  min-height:18px;
+  min-height:20px;
 
   text-align:center;
 
+  font-size:12px;
+
   margin-top:10px;
+}
+
+
+/* =========================
+   NOTICE
+========================= */
+
+.notice{
+  background:#0c131b;
+
+  border:1px solid #263341;
+
+  border-radius:10px;
+
+  padding:13px;
+
+  color:#8995a3;
 
   font-size:12px;
+
+  line-height:1.6;
 }
 
 
@@ -504,10 +601,21 @@ button{
   padding:12px;
 }
 
+.empty-history{
+  padding:35px 15px;
+
+  text-align:center;
+
+  color:#7f8b98;
+
+  font-size:13px;
+}
+
 .history-item{
   background:#0c131b;
 
   border:1px solid #263341;
+
   border-radius:12px;
 
   padding:14px;
@@ -527,7 +635,7 @@ button{
 
   gap:10px;
 
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 
 .history-amount{
@@ -539,7 +647,7 @@ button{
 }
 
 .history-date{
-  color:#7f8b98;
+  color:#778492;
 
   font-size:11px;
 
@@ -552,7 +660,7 @@ button{
   align-items:center;
   justify-content:center;
 
-  padding:5px 9px;
+  padding:6px 9px;
 
   border-radius:20px;
 
@@ -562,17 +670,35 @@ button{
 }
 
 .history-status.pending{
-  background:rgba(245,185,66,.12);
+  background:rgba(
+    245,
+    185,
+    66,
+    .12
+  );
+
   color:#f5b942;
 }
 
 .history-status.approved{
-  background:rgba(54,214,117,.12);
+  background:rgba(
+    54,
+    214,
+    117,
+    .12
+  );
+
   color:#36d675;
 }
 
 .history-status.rejected{
-  background:rgba(255,91,91,.12);
+  background:rgba(
+    255,
+    91,
+    91,
+    .12
+  );
+
   color:#ff6464;
 }
 
@@ -580,9 +706,12 @@ button{
   display:grid;
 
   grid-template-columns:
-    repeat(2,minmax(0,1fr));
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
 
-  gap:8px;
+  gap:9px;
 }
 
 .history-detail{
@@ -594,7 +723,7 @@ button{
 }
 
 .history-detail-label{
-  color:#6f7c89;
+  color:#778492;
 
   font-size:10px;
 
@@ -609,192 +738,56 @@ button{
   word-break:break-word;
 }
 
-.empty-history{
-  padding:35px 15px;
-
-  text-align:center;
-
-  color:#7f8b98;
-
-  font-size:13px;
-}
-
-
-/* =========================
-   REFERRAL
-========================= */
-
-.referral-box{
-  background:#0c131b;
-
-  border:1px solid #263341;
-  border-radius:12px;
-
-  padding:15px;
-}
-
-.referral-label{
-  color:#8995a3;
-
-  font-size:12px;
-
-  margin-bottom:7px;
-}
-
-.referral-link-row{
-  display:flex;
-
-  gap:8px;
-}
-
-.referral-link{
-  flex:1;
-
-  min-width:0;
-
-  background:#080e14;
-
-  border:1px solid #334150;
-
-  border-radius:9px;
-
-  padding:12px;
-
-  color:#dce2e8;
-
-  font-size:12px;
-
-  overflow:hidden;
-
-  white-space:nowrap;
-
-  text-overflow:ellipsis;
-}
-
-.copy-btn{
-  flex-shrink:0;
-
-  border:none;
-
-  border-radius:9px;
-
-  background:#2563eb;
-
-  color:#fff;
-
-  padding:0 14px;
-
-  font-size:12px;
-
-  font-weight:bold;
-}
-
-#copyMessage{
-  color:#36d675;
-
-  font-size:11px;
-
-  margin-top:7px;
-
-  min-height:15px;
-}
-
-
-/* =========================
-   COMMISSION
-========================= */
-
-.commission-box{
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:15px;
-
-  background:#0c131b;
-
-  border:1px solid #263341;
-
-  border-radius:12px;
-
-  padding:15px;
-}
-
-.commission-left h3{
-  font-size:15px;
-
-  margin-bottom:5px;
-}
-
-.commission-left p{
-  color:#7f8b98;
-
-  font-size:11px;
-
-  line-height:1.4;
-}
-
-.commission-number{
-  color:#f5b942;
-
-  font-size:25px;
-
-  font-weight:bold;
-}
-
-
-/* =========================
-   NOTICE
-========================= */
-
-.notice{
-  background:rgba(37,99,235,.08);
-
-  border:1px solid rgba(37,99,235,.25);
-
-  border-radius:12px;
-
-  padding:13px;
-
-  color:#9eb8d8;
-
-  font-size:12px;
-
-  line-height:1.5;
-}
-
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:520px){
+@media(max-width:600px){
 
-  .title-area h1{
-    font-size:18px;
+  .stats{
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
   }
 
-  .stat-card{
-    padding:15px;
+  .withdraw-grid{
+    grid-template-columns:1fr;
   }
 
-  .stat-value{
-    font-size:21px;
-  }
-
-  .profile-top{
-    align-items:flex-start;
-  }
-
-  .online-status{
-    margin-left:0;
+  .withdraw-field.full{
+    grid-column:auto;
   }
 
 }
 
-@media(max-width:360px){
+@media(max-width:420px){
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .stat-card{
+    padding:14px;
+  }
+
+  .stat-value{
+    font-size:18px;
+  }
+
+  .profile-name{
+    font-size:16px;
+  }
+
+  .history-top{
+    flex-direction:column;
+  }
+
+}
+
+@media(max-width:350px){
 
   .stats{
     grid-template-columns:1fr;
@@ -804,24 +797,17 @@ button{
     grid-template-columns:1fr;
   }
 
-  .referral-link-row{
-    flex-direction:column;
-  }
-
-  .copy-btn{
-    padding:12px;
-  }
-
 }
 
 </style>
+
 </head>
 
 <body>
 
 
 <!-- =========================
-     LOGIN
+     LOGIN PAGE
 ========================= -->
 
 <div id="loginPage">
@@ -837,12 +823,15 @@ button{
     </h1>
 
     <p class="subtitle">
-      Access your employee dashboard
+      Access your referral dashboard
     </p>
+
 
     <div class="field">
 
-      <label>
+      <label
+        for="employeeUsername"
+      >
         Username
       </label>
 
@@ -855,9 +844,12 @@ button{
 
     </div>
 
+
     <div class="field">
 
-      <label>
+      <label
+        for="employeePassword"
+      >
         Password
       </label>
 
@@ -870,7 +862,9 @@ button{
 
     </div>
 
+
     <div id="loginError"></div>
+
 
     <button
       class="login-btn"
@@ -885,387 +879,353 @@ button{
 
 
 <!-- =========================
-     DASHBOARD
+     DASHBOARD PAGE
 ========================= -->
 
-<div id="dashboardPage" class="hidden">
+<div
+  id="dashboardPage"
+  class="hidden"
+>
 
-<header class="topbar">
 
-  <div class="topbar-inner">
+  <!-- TOP BAR -->
 
-    <div class="title-area">
+  <header class="topbar">
 
-      <h1>
-        Employee Dashboard
-      </h1>
+    <div class="topbar-inner">
 
-      <p>
-        Manage your earnings and withdrawals
-      </p>
+      <div class="title-area">
 
-    </div>
-
-    <button
-      class="logout-btn"
-      onclick="employeeLogout()"
-    >
-      Logout
-    </button>
-
-  </div>
-
-</header>
-
-
-<main class="container">
-
-<!-- PROFILE -->
-
-<section class="profile-card">
-
-  <div class="profile-top">
-
-    <div
-      class="profile-avatar"
-      id="profileAvatar"
-    >
-      E
-    </div>
-
-    <div>
-
-      <div
-        class="profile-name"
-        id="profileName"
-      >
-        Employee
-      </div>
-
-      <div
-        class="profile-id"
-        id="profileId"
-      >
-        Employee ID
-      </div>
-
-    </div>
-
-    <div class="online-status">
-
-      <span class="online-dot"></span>
-
-      ONLINE
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- STATS -->
-
-<div class="stats">
-
-  <div class="stat-card">
-
-    <div class="stat-label">
-      Total Earnings
-    </div>
-
-    <div
-      class="stat-value"
-      id="totalEarnings"
-    >
-      KSh 0
-    </div>
-
-  </div>
-
-
-  <div class="stat-card">
-
-    <div class="stat-label">
-      Available Balance
-    </div>
-
-    <div
-      class="stat-value"
-      id="availableBalance"
-    >
-      KSh 0
-    </div>
-
-  </div>
-
-
-  <div class="stat-card">
-
-    <div class="stat-label">
-      Commission
-    </div>
-
-    <div
-      class="stat-value"
-      id="commissionRate"
-    >
-      25%
-    </div>
-
-  </div>
-
-
-  <div class="stat-card">
-
-    <div class="stat-label">
-      Total Withdrawn
-    </div>
-
-    <div
-      class="stat-value"
-      id="totalWithdrawn"
-    >
-      KSh 0
-    </div>
-
-  </div>
-
-  </div>
-  <!-- =========================
-     WITHDRAWAL SECTION
-========================= -->
-
-<section class="section">
-
-  <div class="section-header">
-
-    <h2>
-      Withdraw Earnings
-    </h2>
-
-  </div>
-
-  <div class="section-body">
-
-    <div class="balance-box">
-
-      <div class="balance-label">
-        Available to withdraw
-      </div>
-
-      <div
-        class="balance-value"
-        id="withdrawBalance"
-      >
-        KSh 0
-      </div>
-
-    </div>
-
-
-    <div class="withdraw-field">
-
-      <label>
-        M-PESA Number
-      </label>
-
-      <input
-        id="mpesaNumber"
-        type="tel"
-        inputmode="numeric"
-        placeholder="07XXXXXXXX"
-        maxlength="10"
-      >
-
-    </div>
-
-
-    <div class="withdraw-field">
-
-      <label>
-        Withdrawal Amount (KSh)
-      </label>
-
-      <input
-        id="withdrawAmount"
-        type="number"
-        inputmode="decimal"
-        min="1"
-        placeholder="Enter amount"
-      >
-
-    </div>
-
-
-    <button
-      class="withdraw-btn"
-      onclick="requestWithdrawal()"
-    >
-      REQUEST WITHDRAWAL
-    </button>
-
-
-    <div class="withdraw-note">
-      Your withdrawal stays PENDING until
-      the administrator approves it.
-    </div>
-
-
-    <div id="withdrawMessage"></div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     COMMISSION
-========================= -->
-
-<section class="section">
-
-  <div class="section-header">
-
-    <h2>
-      Commission
-    </h2>
-
-  </div>
-
-  <div class="section-body">
-
-    <div class="commission-box">
-
-      <div class="commission-left">
-
-        <h3>
-          Employee Commission
-        </h3>
+        <h1>
+          Employee Dashboard
+        </h1>
 
         <p>
-          Your current commission rate
-          is 25%.
+          Referral & commission management
         </p>
 
       </div>
 
-      <div class="commission-number">
-        25%
-      </div>
+
+      <button
+        class="logout-btn"
+        onclick="employeeLogout()"
+      >
+        Logout
+      </button>
 
     </div>
 
-  </div>
-
-</section>
+  </header>
 
 
-<!-- =========================
-     REFERRAL LINK
-========================= -->
+  <main class="container">
 
-<section class="section">
 
-  <div class="section-header">
+    <!-- PROFILE -->
 
-    <h2>
-      Your Referral Link
-    </h2>
+    <section class="profile-card">
 
-  </div>
-
-  <div class="section-body">
-
-    <div class="referral-box">
-
-      <div class="referral-label">
-        Share this link with your referrals
-      </div>
-
-      <div class="referral-link-row">
+      <div class="profile-top">
 
         <div
-          class="referral-link"
-          id="referralLink"
+          id="profileAvatar"
+          class="profile-avatar"
         >
-          Loading...
+          E
         </div>
 
-        <button
-          class="copy-btn"
-          onclick="copyReferralLink()"
-        >
-          COPY
-        </button>
+        <div>
+
+          <div
+            id="profileName"
+            class="profile-name"
+          >
+            Employee
+          </div>
+
+          <div
+            id="profileId"
+            class="profile-id"
+          >
+            Employee ID
+          </div>
+
+        </div>
 
       </div>
 
-      <div id="copyMessage"></div>
+    </section>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+
+      <div class="stat-card">
+
+        <div class="stat-label">
+          Total Earnings
+        </div>
+
+        <div
+          id="totalEarnings"
+          class="stat-value"
+        >
+          KSh 0
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-label">
+          Available Balance
+        </div>
+
+        <div
+          id="availableBalance"
+          class="stat-value"
+        >
+          KSh 0
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-label">
+          Total Withdrawn
+        </div>
+
+        <div
+          id="totalWithdrawn"
+          class="stat-value"
+        >
+          KSh 0
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-label">
+          Commission Rate
+        </div>
+
+        <div
+          id="commissionRate"
+          class="stat-value"
+        >
+          25%
+        </div>
+
+      </div>
+
 
     </div>
 
-  </div>
 
-</section>
+    <!-- REFERRAL LINK -->
 
+    <section class="section">
 
-<!-- =========================
-     NOTICE
-========================= -->
+      <div class="section-header">
 
-<section class="section">
+        <h2>
+          Your Referral Link
+        </h2>
 
-  <div class="section-body">
-
-    <div class="notice">
-
-      Withdrawal requests are reviewed by
-      the administrator. Once approved,
-      the approved amount is deducted from
-      your available balance.
-
-    </div>
-
-  </div>
-
-</section>
+      </div>
 
 
-<!-- =========================
-     WITHDRAWAL HISTORY
-========================= -->
+      <div class="section-body">
 
-<section class="section">
+        <div class="referral-box">
 
-  <div class="section-header">
+          <div class="referral-label">
+            Share this link with visitors
+          </div>
 
-    <h2>
-      Withdrawal History
-    </h2>
+          <div
+            id="referralLink"
+            class="referral-link"
+          >
+            -
+          </div>
 
-  </div>
+          <button
+            class="copy-btn"
+            onclick="copyReferralLink()"
+          >
+            COPY REFERRAL LINK
+          </button>
 
-  <div
-    id="historyList"
-    class="history-list"
-  >
+          <div
+            id="copyMessage"
+            class="copy-message"
+          ></div>
 
-    <div class="empty-history">
-      No withdrawal requests yet.
-    </div>
+        </div>
 
-  </div>
+      </div>
 
-</section>
+    </section>
 
 
-</main>
+    <!-- WITHDRAW -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <h2>
+          Withdraw Earnings
+        </h2>
+
+      </div>
+
+
+      <div class="section-body">
+
+        <div class="withdraw-balance">
+
+          <div class="withdraw-balance-label">
+            Available to withdraw
+          </div>
+
+          <div
+            id="withdrawBalance"
+            class="withdraw-balance-value"
+          >
+            KSh 0
+          </div>
+
+        </div>
+
+
+        <div class="withdraw-grid">
+
+
+          <div class="withdraw-field">
+
+            <label
+              for="mpesaNumber"
+            >
+              M-PESA Number
+            </label>
+
+            <input
+              id="mpesaNumber"
+              type="tel"
+              inputmode="numeric"
+              maxlength="10"
+              placeholder="07XXXXXXXX"
+            >
+
+          </div>
+
+
+          <div class="withdraw-field">
+
+            <label
+              for="withdrawAmount"
+            >
+              Amount
+            </label>
+
+            <input
+              id="withdrawAmount"
+              type="number"
+              inputmode="decimal"
+              min="1"
+              placeholder="Enter amount"
+            >
+
+          </div>
+
+
+          <div class="withdraw-field full">
+
+            <button
+              class="withdraw-btn"
+              onclick="requestWithdrawal()"
+            >
+              REQUEST WITHDRAWAL
+            </button>
+
+          </div>
+
+
+        </div>
+
+
+        <div
+          id="withdrawMessage"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- NOTICE -->
+
+    <section class="section">
+
+      <div class="section-body">
+
+        <div class="notice">
+
+          Withdrawal requests are reviewed by
+          the administrator. Once approved,
+          the approved amount is deducted from
+          your available balance.
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <h2>
+          Withdrawal History
+        </h2>
+
+      </div>
+
+      <div
+        id="historyList"
+        class="history-list"
+      >
+
+        <div class="empty-history">
+          No withdrawal requests yet.
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
 
 </div>
 
 
 <script>
+  <script>
 
 /* =========================
    STORAGE KEYS
@@ -1274,14 +1234,9 @@ button{
 const EMPLOYEE_KEY =
   "employeeSession";
 
-const WITHDRAWAL_KEY =
-  "withdrawalRequests";
-
 
 /* =========================
    EMPLOYEE ACCOUNTS
-
-   SAME CODES AS employees.html
 ========================= */
 
 const EMPLOYEES = [
@@ -1370,7 +1325,7 @@ const EMPLOYEES = [
 
 
 /* =========================
-   GET EMPLOYEE FROM SESSION
+   GET CURRENT EMPLOYEE
 ========================= */
 
 function getCurrentEmployee(){
@@ -1467,21 +1422,29 @@ function employeeLogin(){
 
   const employeeSession = {
 
-    id:employee.id,
+    id:
+      employee.id,
 
-    employeeId:employee.id,
+    employeeId:
+      employee.id,
 
-    name:employee.name,
+    name:
+      employee.name,
 
-    employeeName:employee.name,
+    employeeName:
+      employee.name,
 
-    username:employee.username,
+    username:
+      employee.username,
 
-    referral:employee.referral,
+    referral:
+      employee.referral,
 
-    earnings:0,
+    earnings:
+      0,
 
-    withdrawn:0
+    withdrawn:
+      0
 
   };
 
@@ -1506,17 +1469,23 @@ function employeeLogout(){
     EMPLOYEE_KEY
   );
 
+
   document
     .getElementById(
       "dashboardPage"
     )
-    .classList.add("hidden");
+    .classList.add(
+      "hidden"
+    );
+
 
   document
     .getElementById(
       "loginPage"
     )
-    .classList.remove("hidden");
+    .classList.remove(
+      "hidden"
+    );
 
 }
 
@@ -1539,14 +1508,18 @@ function showDashboard(){
     .getElementById(
       "loginPage"
     )
-    .classList.add("hidden");
+    .classList.add(
+      "hidden"
+    );
 
 
   document
     .getElementById(
       "dashboardPage"
     )
-    .classList.remove("hidden");
+    .classList.remove(
+      "hidden"
+    );
 
 
   loadEmployeeData();
@@ -1555,7 +1528,7 @@ function showDashboard(){
 
 
 /* =========================
-   FIND EMPLOYEE FROM URL
+   EMPLOYEE FROM URL
 ========================= */
 
 function loadEmployeeFromURL(){
@@ -1565,8 +1538,11 @@ function loadEmployeeFromURL(){
       window.location.search
     );
 
+
   const employeeCode =
-    params.get("employee");
+    params.get(
+      "employee"
+    );
 
 
   if(!employeeCode){
@@ -1594,21 +1570,29 @@ function loadEmployeeFromURL(){
 
   const employeeSession = {
 
-    id:employee.id,
+    id:
+      employee.id,
 
-    employeeId:employee.id,
+    employeeId:
+      employee.id,
 
-    name:employee.name,
+    name:
+      employee.name,
 
-    employeeName:employee.name,
+    employeeName:
+      employee.name,
 
-    username:employee.username,
+    username:
+      employee.username,
 
-    referral:employee.referral,
+    referral:
+      employee.referral,
 
-    earnings:0,
+    earnings:
+      0,
 
-    withdrawn:0
+    withdrawn:
+      0
 
   };
 
@@ -1621,11 +1605,13 @@ function loadEmployeeFromURL(){
   return true;
 
 }
-  /* =========================
+
+
+/* =========================
    LOAD EMPLOYEE DATA
 ========================= */
 
-function loadEmployeeData(){
+async function loadEmployeeData(){
 
   const employee =
     getCurrentEmployee();
@@ -1638,9 +1624,6 @@ function loadEmployeeData(){
 
   /*
    PAYMENT RECORDS
-
-   Example:
-   employeePayments_REF-A7K2
   */
 
   const paymentKey =
@@ -1660,7 +1643,12 @@ function loadEmployeeData(){
         ) || "[]"
       );
 
-    if(!Array.isArray(paymentRecords)){
+
+    if(
+      !Array.isArray(
+        paymentRecords
+      )
+    ){
 
       paymentRecords = [];
 
@@ -1696,11 +1684,11 @@ function loadEmployeeData(){
 
 
   /*
-   WITHDRAWAL RECORDS
+   SHARED WITHDRAWAL RECORDS
   */
 
   const requests =
-    getWithdrawalRequests();
+    await getWithdrawalRequests();
 
 
   const employeeRequests =
@@ -1721,8 +1709,7 @@ function loadEmployeeData(){
 
 
   /*
-   ONLY APPROVED WITHDRAWALS
-   ARE DEDUCTED.
+   APPROVED WITHDRAWALS
   */
 
   const withdrawn =
@@ -1731,7 +1718,7 @@ function loadEmployeeData(){
 
         if(
           String(
-            request.status
+            request.status || ""
           ).toUpperCase() ===
           "APPROVED"
         ){
@@ -1758,10 +1745,6 @@ function loadEmployeeData(){
       earnings - withdrawn
     );
 
-
-  /*
-   SAVE CALCULATED DATA
-  */
 
   employee.earnings =
     earnings;
@@ -1882,40 +1865,56 @@ function loadEmployeeData(){
    HISTORY
   */
 
-  loadWithdrawalHistory();
+  await loadWithdrawalHistory();
 
-}
-
-
-/* =========================
-   GET WITHDRAWAL REQUESTS
+  }
+  /* =========================
+   SHARED WITHDRAWAL API
 ========================= */
 
-function getWithdrawalRequests(){
+async function getWithdrawalRequests(){
 
   try{
 
-    const saved =
-      localStorage.getItem(
-        WITHDRAWAL_KEY
+    const response =
+      await fetch(
+        "/api/withdrawals",
+        {
+          method:"GET",
+          cache:"no-store"
+        }
       );
 
 
-    if(!saved){
+    if(!response.ok){
+
+      console.error(
+        "Withdrawal API GET failed:",
+        response.status
+      );
+
       return [];
+
     }
 
 
-    const requests =
-      JSON.parse(saved);
+    const data =
+      await response.json();
 
 
-    return Array.isArray(requests)
-      ? requests
+    return Array.isArray(
+      data.requests
+    )
+      ? data.requests
       : [];
 
 
   }catch(error){
+
+    console.error(
+      "Could not load withdrawals:",
+      error
+    );
 
     return [];
 
@@ -1925,43 +1924,31 @@ function getWithdrawalRequests(){
 
 
 /* =========================
-   SAVE WITHDRAWAL REQUESTS
-========================= */
-
-function saveWithdrawalRequests(
-  requests
-){
-
-  localStorage.setItem(
-    WITHDRAWAL_KEY,
-    JSON.stringify(requests)
-  );
-
-}
-
-
-/* =========================
    REQUEST WITHDRAWAL
 ========================= */
 
-function requestWithdrawal(){
+async function requestWithdrawal(){
 
   const employee =
     getCurrentEmployee();
 
 
   if(!employee){
-
     return;
-
   }
 
 
-  loadEmployeeData();
+  const message =
+    document.getElementById(
+      "withdrawMessage"
+    );
 
 
-  const refreshedEmployee =
-    getCurrentEmployee();
+  message.textContent = "";
+
+
+  message.style.color =
+    "#ff6464";
 
 
   const phone =
@@ -1983,25 +1970,14 @@ function requestWithdrawal(){
     );
 
 
-  const message =
-    document
-      .getElementById(
-        "withdrawMessage"
-      );
-
-
-  message.textContent = "";
-
-  message.style.color =
-    "#ff6464";
-
-
   /*
-   PHONE
+   PHONE VALIDATION
   */
 
   if(
-    !/^07\d{8}$/.test(phone)
+    !/^07\d{8}$/.test(
+      phone
+    )
   ){
 
     message.textContent =
@@ -2013,11 +1989,13 @@ function requestWithdrawal(){
 
 
   /*
-   AMOUNT
+   AMOUNT VALIDATION
   */
 
   if(
-    !Number.isFinite(amount) ||
+    !Number.isFinite(
+      amount
+    ) ||
     amount <= 0
   ){
 
@@ -2030,19 +2008,111 @@ function requestWithdrawal(){
 
 
   /*
-   CURRENT AVAILABLE BALANCE
+   LATEST SHARED REQUESTS
+  */
+
+  const requests =
+    await getWithdrawalRequests();
+
+
+  /*
+   PAYMENT RECORDS
+  */
+
+  const paymentKey =
+    "employeePayments_" +
+    employee.referral;
+
+
+  let paymentRecords = [];
+
+
+  try{
+
+    paymentRecords =
+      JSON.parse(
+        localStorage.getItem(
+          paymentKey
+        ) || "[]"
+      );
+
+
+    if(
+      !Array.isArray(
+        paymentRecords
+      )
+    ){
+
+      paymentRecords = [];
+
+    }
+
+  }catch(error){
+
+    paymentRecords = [];
+
+  }
+
+
+  /*
+   TOTAL EARNINGS
   */
 
   const earnings =
-    Number(
-      refreshedEmployee.earnings || 0
-    );
+    Math.round(
+      paymentRecords.reduce(
+        function(total,item){
 
+          return (
+            total +
+            Number(
+              item.commission || 0
+            )
+          );
+
+        },
+        0
+      ) * 100
+    ) / 100;
+
+
+  /*
+   TOTAL APPROVED WITHDRAWALS
+  */
 
   const withdrawn =
-    Number(
-      refreshedEmployee.withdrawn || 0
-    );
+    requests
+      .filter(
+        function(request){
+
+          return (
+            String(
+              request.employeeId
+            ) ===
+            String(
+              employee.id
+            ) &&
+            String(
+              request.status || ""
+            ).toUpperCase() ===
+            "APPROVED"
+          );
+
+        }
+      )
+      .reduce(
+        function(total,request){
+
+          return (
+            total +
+            Number(
+              request.amount || 0
+            )
+          );
+
+        },
+        0
+      );
 
 
   const available =
@@ -2052,7 +2122,13 @@ function requestWithdrawal(){
     );
 
 
-  if(amount > available){
+  /*
+   CHECK BALANCE
+  */
+
+  if(
+    amount > available
+  ){
 
     message.textContent =
       "Insufficient available balance.";
@@ -2063,12 +2139,8 @@ function requestWithdrawal(){
 
 
   /*
-   CHECK PENDING REQUEST
+   CHECK PENDING
   */
-
-  const requests =
-    getWithdrawalRequests();
-
 
   const alreadyPending =
     requests.some(
@@ -2079,12 +2151,10 @@ function requestWithdrawal(){
             request.employeeId
           ) ===
           String(
-            refreshedEmployee.id
+            employee.id
           ) &&
-
           String(
-            request.status ||
-            "PENDING"
+            request.status || ""
           ).toUpperCase() ===
           "PENDING"
         );
@@ -2107,75 +2177,95 @@ function requestWithdrawal(){
    CREATE REQUEST
   */
 
-  const request = {
-
-    id:
-      "WD-" +
-      Date.now(),
+  const requestData = {
 
     employeeName:
-      refreshedEmployee.name,
+      employee.name,
 
     employeeId:
-      refreshedEmployee.id,
+      employee.id,
 
     username:
-      refreshedEmployee.username,
+      employee.username,
 
     referral:
-      refreshedEmployee.referral,
+      employee.referral,
 
     amount:
       amount,
 
     phone:
-      phone,
-
-    status:
-      "PENDING",
-
-    createdAt:
-      new Date().toISOString()
+      phone
 
   };
 
 
-  requests.push(
-    request
-  );
+  try{
+
+    const response =
+      await fetch(
+        "/api/withdrawals",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify(
+              requestData
+            )
+        }
+      );
 
 
-  saveWithdrawalRequests(
-    requests
-  );
+    const data =
+      await response.json();
 
 
-  /*
-   IMPORTANT:
+    if(!response.ok){
 
-   PENDING DOES NOT REDUCE
-   THE BALANCE.
+      message.textContent =
+        data.message ||
+        "Withdrawal request failed.";
 
-   ADMIN APPROVAL DOES.
-  */
+      return;
 
-
-  document
-    .getElementById(
-      "withdrawAmount"
-    )
-    .value = "";
+    }
 
 
-  message.style.color =
-    "#36d675";
+    document
+      .getElementById(
+        "withdrawAmount"
+      )
+      .value = "";
 
 
-  message.textContent =
-    "Withdrawal request submitted successfully.";
+    message.style.color =
+      "#36d675";
 
 
-  loadEmployeeData();
+    message.textContent =
+      "Withdrawal request submitted successfully.";
+
+
+    await loadEmployeeData();
+
+
+  }catch(error){
+
+    console.error(
+      "Withdrawal request error:",
+      error
+    );
+
+
+    message.textContent =
+      "Connection error. Please try again.";
+
+  }
 
 }
 
@@ -2184,7 +2274,7 @@ function requestWithdrawal(){
    WITHDRAWAL HISTORY
 ========================= */
 
-function loadWithdrawalHistory(){
+async function loadWithdrawalHistory(){
 
   const employee =
     getCurrentEmployee();
@@ -2196,7 +2286,7 @@ function loadWithdrawalHistory(){
 
 
   const requests =
-    getWithdrawalRequests();
+    await getWithdrawalRequests();
 
 
   const employeeRequests =
@@ -2359,10 +2449,8 @@ function loadWithdrawalHistory(){
       .join("");
 
 }
-
-
-/* =========================
-   COPY REFERRAL
+  /* =========================
+   COPY REFERRAL LINK
 ========================= */
 
 function copyReferralLink(){
@@ -2402,6 +2490,7 @@ function copyReferralLink(){
 
           message.textContent =
             "Referral link copied ✓";
+
 
           setTimeout(
             function(){
@@ -2499,7 +2588,7 @@ function fallbackCopy(text){
 ========================= */
 
 setInterval(
-  function(){
+  async function(){
 
     const employee =
       getCurrentEmployee();
@@ -2507,14 +2596,16 @@ setInterval(
 
     if(employee){
 
-      loadEmployeeData();
+      await loadEmployeeData();
 
     }
 
   },
   3000
 );
-  /* =========================
+
+
+/* =========================
    START DASHBOARD
 ========================= */
 
@@ -2522,25 +2613,9 @@ document.addEventListener(
   "DOMContentLoaded",
   function(){
 
-    /*
-     FIRST:
-
-     If employees.html opened:
-
-     employee-dashboard.html
-     ?employee=REF-A7K2
-
-     select that employee.
-    */
-
     const selected =
       loadEmployeeFromURL();
 
-
-    /*
-     If no URL employee,
-     use existing session.
-    */
 
     const employee =
       getCurrentEmployee();
@@ -2563,10 +2638,6 @@ document.addEventListener(
 
     }
 
-
-    /*
-     Otherwise show login.
-    */
 
     document
       .getElementById(
