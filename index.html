@@ -187,7 +187,7 @@ button{
   object-fit:cover;
   display:block;
 }
-  .online-big-dot{
+    .online-big-dot{
   position:absolute;
   right:7px;
   top:7px;
@@ -338,7 +338,7 @@ button{
   font-size:11px;
   font-weight:900;
 }
-  .call-title{
+    .call-title{
   margin-top:14px;
   font-size:23px;
   font-weight:900;
@@ -659,6 +659,62 @@ button{
 </section>
 
 
+<section id="returnLoading" class="hidden">
+
+  <div class="return-loading-box">
+
+    <div class="return-spinner"></div>
+
+    <div class="return-loading-title">
+      Connecting...
+    </div>
+
+  </div>
+
+</section>
+
+
+<style>
+#returnLoading{
+  position:fixed;
+  inset:0;
+  z-index:9700;
+  background:#070707;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.return-loading-box{
+  width:88%;
+  max-width:400px;
+}
+
+.return-spinner{
+  width:48px;
+  height:48px;
+  margin:auto;
+  border:4px solid #292929;
+  border-top-color:#ff1744;
+  border-radius:50%;
+  animation:returnSpin .7s linear infinite;
+}
+
+.return-loading-title{
+  margin-top:18px;
+  font-size:20px;
+  font-weight:800;
+}
+
+@keyframes returnSpin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+</style>
+
+
 <script>
 
 "use strict";
@@ -671,8 +727,7 @@ const VIDEO_FILE =
 
 const PAYMENT_PAGE =
   "payment.html";
-
-const welcomeScreen =
+  const welcomeScreen =
   document.getElementById("welcomeScreen");
 
 const photosPage =
@@ -705,6 +760,9 @@ const videoChat =
 const insufficientPage =
   document.getElementById("insufficientPage");
 
+const returnLoading =
+  document.getElementById("returnLoading");
+
 const onlineCount =
   document.getElementById("onlineCount");
 
@@ -712,8 +770,11 @@ let currentCallProfile = null;
 let videoTimer = null;
 let photoOfflineTimer = null;
 let callTimer = null;
+let returnLoadingTimer = null;
 let cameraStream = null;
-  /* =========================
+
+
+/* =========================
    9 UNIQUE REAL PHOTOS
 ========================= */
 
@@ -850,6 +911,7 @@ function showOnly(section){
   incomingCall.classList.add("hidden");
   videoPage.classList.add("hidden");
   insufficientPage.classList.add("hidden");
+  returnLoading.classList.add("hidden");
 
   if(section){
     section.classList.remove("hidden");
@@ -897,7 +959,7 @@ function openPayment(profile){
   window.location.href =
     getPaymentUrl(profile);
 
-}
+  }
   /* =========================
    OFFLINE
 ========================= */
@@ -1047,7 +1109,9 @@ function startPhotoChat(
 
   },firstDelay);
 }
-  /* =========================
+
+
+/* =========================
    RENDER ALL 9 PHOTOS
 ========================= */
 
@@ -1130,8 +1194,7 @@ function renderPhotos(){
         </div>
 
       </div>
-
-      <div class="social-row">
+            <div class="social-row">
 
         <button class="social-btn like-btn">
           ❤️ Like
@@ -1239,8 +1302,10 @@ function renderPhotos(){
     );
 
   });
-      }
-  /* =========================
+}
+
+
+/* =========================
    OFFLINE ROTATION
 ========================= */
 
@@ -1270,14 +1335,6 @@ function startOfflineRotation(){
 ========================= */
 
 function openIncomingCall(){
-
-  if(
-    localStorage.getItem(
-      FIRST_VIDEO_KEY
-    )
-  ){
-    return;
-  }
 
   const available =
     profiles.filter(
@@ -1369,9 +1426,7 @@ async function requestCameraPermission(){
     return false;
   }
 }
-
-
-/* =========================
+  /* =========================
    ANSWER
 ========================= */
 
@@ -1379,14 +1434,42 @@ async function answerIncomingCall(){
 
   if(callTimer){
     clearTimeout(callTimer);
+    callTimer = null;
   }
 
   await requestCameraPermission();
 
-  startLiveVideo();
+  /*
+    FIRST VISITOR:
+    Kama hajawahi answer first video call,
+    tunatumia video ya sasa.
+
+    RETURNING VISITOR:
+    Kama FIRST_VIDEO_KEY tayari ipo,
+    hakuna video tena.
+    Tunaonyesha loading kwa second 1,
+    kisha Insufficient Minutes.
+  */
+
+  const firstVideoAlreadyPlayed =
+    localStorage.getItem(
+      FIRST_VIDEO_KEY
+    ) === "1";
+
+  if(firstVideoAlreadyPlayed){
+
+    startReturningCall();
+
+  }else{
+
+    startLiveVideo();
+
+  }
 }
-  /* =========================
-   START LIVE VIDEO
+
+
+/* =========================
+   FIRST VISITOR VIDEO
 ========================= */
 
 function startLiveVideo(){
@@ -1395,6 +1478,11 @@ function startLiveVideo(){
     currentCallProfile = profiles[0];
   }
 
+  /*
+    Mark immediately that this visitor
+    has already received the first video.
+    Calls zinazofuata hazitacheza video.
+  */
   localStorage.setItem(
     FIRST_VIDEO_KEY,
     "1"
@@ -1439,6 +1527,40 @@ function startLiveVideo(){
       },
       40000
     );
+}
+
+
+/* =========================
+   RETURNING VISITOR CALL
+========================= */
+
+function startReturningCall(){
+
+  /*
+    No video on returning calls.
+    Only 1 second loading.
+  */
+
+  showOnly(returnLoading);
+
+  if(returnLoadingTimer){
+    clearTimeout(
+      returnLoadingTimer
+    );
+  }
+
+  returnLoadingTimer =
+    setTimeout(()=>{
+
+      showOnly(insufficientPage);
+
+      setTimeout(()=>{
+
+        showOnly(photosPage);
+
+      },2000);
+
+    },1000);
 }
 
 
@@ -1499,10 +1621,8 @@ function startVideoChat(){
 
     }
   );
-}
-
-
-/* =========================
+  }
+  /* =========================
    FINISH VIDEO
 ========================= */
 
@@ -1565,7 +1685,9 @@ document
 
     }
   );
-  /* =========================
+
+
+/* =========================
    CALL BUTTONS
 ========================= */
 
@@ -1587,6 +1709,7 @@ document
 
       if(callTimer){
         clearTimeout(callTimer);
+        callTimer = null;
       }
 
       showOnly(photosPage);
@@ -1666,13 +1789,23 @@ function startWebsite(){
     showOnly(photosPage);
 
     /*
-      renderPhotos() inachagua
-      order mpya kila page load.
-      Hakuna shuffle ya kila sekunde 5.
+      Photos zinapata order mpya
+      kila page load.
     */
+
     renderPhotos();
 
     setTimeout(()=>{
+
+      /*
+        Hapa call inaonekana kila
+        page visit/reload.
+
+        Lakini answerIncomingCall()
+        ndiyo inaamua:
+        - first visitor = video
+        - returning visitor = 1 sec loading
+      */
 
       openIncomingCall();
 
