@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
 
 <title>Live Profiles</title>
 
@@ -20,7 +21,7 @@ body{
   min-height:100%;
   background:#000;
   color:#fff;
-  font-family:Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
@@ -31,9 +32,8 @@ body{
   display:none !important;
 }
 
-.page{
-  width:100%;
-  min-height:100vh;
+button{
+  font-family:inherit;
 }
 
 
@@ -42,26 +42,59 @@ body{
 ========================= */
 
 #welcomeScreen{
-  min-height:100vh;
+  position:fixed;
+  inset:0;
+  z-index:1000;
+
+  background:#000;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   text-align:center;
-  background:#000;
 }
 
 .welcome-box{
-  padding:25px;
+  width:90%;
+  max-width:380px;
 }
 
-.welcome-box h1{
+.welcome-title{
   font-size:30px;
-  margin-bottom:12px;
+  font-weight:800;
+  margin-bottom:15px;
 }
 
-.welcome-box p{
+.welcome-text{
   color:#aaa;
-  font-size:15px;
+  font-size:14px;
+  margin-bottom:22px;
+}
+
+.loading-wrap{
+  width:100%;
+  height:5px;
+  background:#222;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.loading-bar{
+  width:0%;
+  height:100%;
+  background:#18e66b;
+  border-radius:20px;
+  animation:welcomeLoading 5s linear forwards;
+}
+
+@keyframes welcomeLoading{
+  from{
+    width:0%;
+  }
+  to{
+    width:100%;
+  }
 }
 
 
@@ -75,35 +108,44 @@ body{
 }
 
 .topbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+
   height:58px;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 14px;
+
+  padding:0 13px;
+
   background:#080808;
   border-bottom:1px solid #222;
-  position:sticky;
-  top:0;
-  z-index:20;
 }
 
 .logo{
   font-size:20px;
-  font-weight:bold;
+  font-weight:800;
 }
 
 .online{
   font-size:13px;
-  color:#fff;
+  color:#ddd;
 }
 
 .online-dot{
   display:inline-block;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#19e66b;
+
+  width:9px;
+  height:9px;
+
   margin-right:5px;
+
+  border-radius:50%;
+
+  background:#16e66a;
+
   animation:onlineBlink 1s infinite;
 }
 
@@ -126,81 +168,120 @@ body{
 
 #photoGrid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:4px;
+
   padding:4px;
 }
 
 .photoCard{
   position:relative;
+
   background:#111;
-  border-radius:5px;
+
+  border-radius:6px;
+
   overflow:hidden;
+
   cursor:pointer;
 }
 
 .photo-image-wrap{
   position:relative;
+
   width:100%;
-  aspect-ratio:.78;
+
+  aspect-ratio:.76;
+
+  background:#111;
+
   overflow:hidden;
-  background:#151515;
 }
 
 .profile-photo{
   width:100%;
   height:100%;
+
   object-fit:cover;
+
   display:block;
 }
 
 
 /* =========================
-   LIVE BADGE
+   BIG GREEN LIVE DOT
 ========================= */
 
-.live-badge{
+.green-live-dot{
   position:absolute;
+
   top:7px;
+  right:7px;
+
+  width:16px;
+  height:16px;
+
+  border-radius:50%;
+
+  background:#16f06b;
+
+  border:2px solid #fff;
+
+  box-shadow:
+    0 0 7px #16f06b,
+    0 0 15px #16f06b;
+
+  z-index:10;
+
+  animation:
+    greenDotBlink 1s infinite;
+}
+
+@keyframes greenDotBlink{
+
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+  50%{
+    opacity:.25;
+    transform:scale(.72);
+  }
+
+}
+
+
+/* =========================
+   LIVE LABEL
+========================= */
+
+.live-label{
+  position:absolute;
+
   left:7px;
-  z-index:5;
+  top:7px;
+
+  z-index:10;
+
+  padding:4px 7px;
 
   background:#e00000;
-  color:#fff;
-
-  font-size:10px;
-  font-weight:bold;
-
-  padding:4px 7px;
 
   border-radius:4px;
+
+  color:#fff;
+
+  font-size:9px;
+  font-weight:800;
 }
 
 
 /* =========================
-   OFFLINE BADGE
-========================= */
-
-.offline-badge{
-  position:absolute;
-  top:7px;
-  left:7px;
-  z-index:5;
-
-  background:#555;
-  color:#fff;
-
-  font-size:10px;
-  font-weight:bold;
-
-  padding:4px 7px;
-
-  border-radius:4px;
-}
-
-
-/* =========================
-   VIDEO ICON
+   PLAY ICON
 ========================= */
 
 .photo-play{
@@ -209,14 +290,16 @@ body{
   left:50%;
   top:50%;
 
-  transform:translate(-50%,-50%);
+  transform:
+    translate(-50%,-50%);
 
   width:45px;
   height:45px;
 
   border-radius:50%;
 
-  background:rgba(0,0,0,.72);
+  background:
+    rgba(0,0,0,.72);
 
   border:2px solid #fff;
 
@@ -224,33 +307,34 @@ body{
   align-items:center;
   justify-content:center;
 
-  z-index:6;
+  z-index:8;
 
-  animation:videoZoom 1.4s ease-in-out infinite;
+  animation:
+    playPulse 1.5s infinite;
 }
 
 .photo-play::after{
   content:"▶";
 
+  margin-left:3px;
+
   color:#fff;
 
-  font-size:19px;
-
-  margin-left:3px;
+  font-size:18px;
 }
 
-@keyframes videoZoom{
+@keyframes playPulse{
 
-  0%{
-    transform:translate(-50%,-50%) scale(.82);
+  0%,100%{
+    transform:
+      translate(-50%,-50%)
+      scale(.9);
   }
 
   50%{
-    transform:translate(-50%,-50%) scale(1.16);
-  }
-
-  100%{
-    transform:translate(-50%,-50%) scale(.82);
+    transform:
+      translate(-50%,-50%)
+      scale(1.1);
   }
 
 }
@@ -261,7 +345,8 @@ body{
 ========================= */
 
 .photo-info{
-  padding:7px 7px 9px;
+  padding:7px;
+
   background:#101010;
 }
 
@@ -271,44 +356,158 @@ body{
 
   gap:5px;
 
-  font-size:13px;
-  font-weight:bold;
+  font-size:12px;
+  font-weight:800;
 
   margin-bottom:4px;
 }
 
-.name-dot{
+.name-green-dot{
   width:7px;
   height:7px;
 
-  border-radius:50%;
-
-  background:#19e66b;
-
-  display:inline-block;
-
   flex:none;
 
-  animation:nameBlink 1s infinite;
+  border-radius:50%;
+
+  background:#18ed68;
+
+  animation:
+    nameDotBlink 1s infinite;
 }
 
-@keyframes nameBlink{
+@keyframes nameDotBlink{
 
   0%,100%{
     opacity:1;
-    transform:scale(1);
   }
 
   50%{
     opacity:.2;
-    transform:scale(.75);
   }
 
 }
 
 .photo-meta{
-  font-size:11px;
   color:#aaa;
+  font-size:10px;
+}
+  /* =========================
+   LIVE CHAT AREA
+========================= */
+
+.photo-chat{
+  position:relative;
+
+  min-height:86px;
+
+  padding:6px 6px 5px;
+
+  background:#090909;
+
+  border-top:1px solid #202020;
+
+  overflow:hidden;
+}
+
+.chat-line{
+  display:flex;
+
+  align-items:flex-start;
+
+  gap:4px;
+
+  margin-bottom:4px;
+
+  font-size:9px;
+
+  line-height:1.2;
+
+  opacity:0;
+
+  animation:chatAppear .35s forwards;
+}
+
+@keyframes chatAppear{
+
+  from{
+    opacity:0;
+    transform:
+      translateY(5px);
+  }
+
+  to{
+    opacity:1;
+    transform:
+      translateY(0);
+  }
+
+}
+
+.chat-user{
+  color:#20ef72;
+  font-weight:800;
+}
+
+.chat-message{
+  color:#ddd;
+}
+
+.chat-time{
+  margin-left:auto;
+
+  color:#666;
+
+  font-size:8px;
+}
+
+.chat-actions{
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  margin-top:5px;
+
+  padding-top:5px;
+
+  border-top:1px solid #1c1c1c;
+
+  color:#aaa;
+
+  font-size:9px;
+}
+
+.chat-action{
+  display:flex;
+  align-items:center;
+  gap:2px;
+}
+
+
+/* =========================
+   OFFLINE
+========================= */
+
+.offline-badge{
+  position:absolute;
+
+  left:7px;
+  top:7px;
+
+  z-index:11;
+
+  padding:4px 7px;
+
+  border-radius:4px;
+
+  background:#555;
+
+  color:#fff;
+
+  font-size:9px;
+  font-weight:800;
 }
 
 
@@ -320,11 +519,12 @@ body{
   position:fixed;
   inset:0;
 
-  z-index:1000;
+  z-index:2000;
 
   background:#050505;
 
   display:flex;
+
   flex-direction:column;
 
   align-items:center;
@@ -333,88 +533,194 @@ body{
   text-align:center;
 }
 
-.call-label{
+.incoming-label{
   color:#aaa;
+
   font-size:14px;
 
   margin-bottom:20px;
+
+  animation:
+    callTextBlink 1s infinite;
+}
+
+@keyframes callTextBlink{
+
+  0%,100%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:.45;
+  }
+
 }
 
 #callerImage{
   width:145px;
   height:145px;
 
-  border-radius:50%;
-
   object-fit:cover;
 
-  border:3px solid #e00000;
+  border-radius:50%;
+
+  border:3px solid #16e66a;
+
+  box-shadow:
+    0 0 15px
+    rgba(22,230,106,.5);
 
   margin-bottom:18px;
 }
 
 #callerName{
   font-size:25px;
-  font-weight:bold;
+  font-weight:800;
 
   margin-bottom:8px;
 }
 
-.call-status{
+.caller-status{
   color:#aaa;
   font-size:14px;
 
-  margin-bottom:45px;
+  margin-bottom:42px;
 }
 
 .call-buttons{
   display:flex;
 
-  gap:35px;
+  gap:38px;
 
-  align-items:center;
   justify-content:center;
 }
 
-.call-btn{
-  width:75px;
-  height:75px;
+.call-button{
+  width:76px;
+  height:76px;
 
-  border:none;
+  border:0;
 
   border-radius:50%;
 
   color:#fff;
 
-  font-size:28px;
+  font-size:29px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
   cursor:pointer;
 }
 
-.decline{
+.call-decline{
   background:#e00000;
 }
 
-.answer{
+.call-answer{
   background:#16a34a;
+
+  animation:
+    answerPulse 1.2s infinite;
+}
+
+@keyframes answerPulse{
+
+  0%,100%{
+    box-shadow:
+      0 0 0 0
+      rgba(22,163,74,.5);
+  }
+
+  50%{
+    box-shadow:
+      0 0 0 13px
+      rgba(22,163,74,0);
+  }
+
 }
 
 
 /* =========================
-   LIVE VIDEO PAGES
+   CAMERA PERMISSION MESSAGE
 ========================= */
 
-#redLiveVideoPage,
-#blackLivePage{
+#cameraPermissionScreen{
   position:fixed;
   inset:0;
 
-  z-index:900;
+  z-index:2500;
+
+  background:#000;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+}
+
+.permission-box{
+  width:90%;
+  max-width:380px;
+
+  background:#111;
+
+  border:1px solid #333;
+
+  border-radius:14px;
+
+  padding:25px 20px;
+}
+
+.permission-box h2{
+  font-size:21px;
+  margin-bottom:10px;
+}
+
+.permission-box p{
+  color:#aaa;
+
+  font-size:13px;
+
+  line-height:1.5;
+
+  margin-bottom:18px;
+}
+
+.permission-button{
+  width:100%;
+
+  padding:13px;
+
+  border:0;
+
+  border-radius:8px;
+
+  background:#16a34a;
+
+  color:#fff;
+
+  font-size:15px;
+
+  font-weight:800;
+}
+  /* =========================
+   FIRST VIDEO PAGE
+========================= */
+
+#redLiveVideoPage{
+  position:fixed;
+  inset:0;
+
+  z-index:1800;
 
   background:#000;
 }
 
-.live-video{
+#redLiveVideo{
   width:100%;
   height:100%;
 
@@ -423,36 +729,204 @@ body{
   background:#000;
 }
 
-.red-live-label{
+.video-live-badge{
   position:absolute;
 
-  top:15px;
-  left:15px;
+  left:13px;
+  top:14px;
 
   z-index:20;
+
+  padding:6px 10px;
+
+  border-radius:5px;
 
   background:#e00000;
 
   color:#fff;
 
-  font-size:13px;
-  font-weight:bold;
+  font-size:12px;
 
-  padding:6px 10px;
+  font-weight:900;
 
-  border-radius:4px;
+  animation:
+    liveBadgeBlink 1s infinite;
+}
+
+@keyframes liveBadgeBlink{
+
+  0%,100%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:.65;
+  }
+
 }
 
 
 /* =========================
-   INSUFFICIENT PAGE
+   VIDEO CHAT OVERLAY
+========================= */
+
+.video-chat-panel{
+  position:absolute;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  z-index:30;
+
+  padding:10px;
+
+  max-height:48%;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      transparent,
+      rgba(0,0,0,.86)
+    );
+}
+
+.video-chat-title{
+  font-size:11px;
+
+  font-weight:800;
+
+  margin-bottom:5px;
+}
+
+.video-chat-list{
+  display:flex;
+
+  flex-direction:column;
+
+  gap:4px;
+
+  max-height:120px;
+
+  overflow:hidden;
+}
+
+.video-chat-row{
+  width:max-content;
+  max-width:92%;
+
+  padding:5px 8px;
+
+  border-radius:12px;
+
+  background:
+    rgba(0,0,0,.68);
+
+  font-size:10px;
+
+  animation:
+    videoChatIn .3s ease;
+}
+
+@keyframes videoChatIn{
+
+  from{
+    opacity:0;
+    transform:
+      translateX(-8px);
+  }
+
+  to{
+    opacity:1;
+    transform:
+      translateX(0);
+  }
+
+}
+
+.video-chat-user{
+  color:#22ef72;
+  font-weight:800;
+}
+
+.video-actions{
+  display:flex;
+
+  gap:10px;
+
+  margin-top:8px;
+}
+
+.video-action-button{
+  border:1px solid
+    rgba(255,255,255,.25);
+
+  background:
+    rgba(0,0,0,.65);
+
+  color:#fff;
+
+  padding:6px 10px;
+
+  border-radius:15px;
+
+  font-size:10px;
+}
+
+
+/* =========================
+   BLACK LIVE
+========================= */
+
+#blackLivePage{
+  position:fixed;
+  inset:0;
+
+  z-index:1700;
+
+  background:#000;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+}
+
+.black-live-label{
+  position:absolute;
+
+  top:15px;
+  left:15px;
+
+  background:#e00000;
+
+  color:#fff;
+
+  padding:6px 10px;
+
+  border-radius:4px;
+
+  font-size:12px;
+  font-weight:800;
+}
+
+.black-live-text{
+  color:#777;
+
+  font-size:14px;
+}
+
+
+/* =========================
+   INSUFFICIENT
 ========================= */
 
 #insufficientPage{
   position:fixed;
   inset:0;
 
-  z-index:800;
+  z-index:1900;
 
   background:#000;
 
@@ -466,19 +940,21 @@ body{
 
 .insufficient-box{
   width:90%;
-  max-width:390px;
+  max-width:380px;
 
   background:#111;
 
   border:1px solid #333;
 
-  border-radius:12px;
+  border-radius:14px;
 
   padding:30px 20px;
 }
 
 .insufficient-box h2{
-  color:#ff3333;
+  color:#ff3030;
+
+  font-size:23px;
 
   margin-bottom:12px;
 }
@@ -486,7 +962,9 @@ body{
 .insufficient-box p{
   color:#aaa;
 
-  font-size:14px;
+  font-size:13px;
+
+  line-height:1.5;
 }
 
 #insufficientTimer{
@@ -497,59 +975,31 @@ body{
   font-size:13px;
 }
 
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:600px){
-
-  #photoGrid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .photo-play{
-    width:40px;
-    height:40px;
-  }
-
-  .photo-play::after{
-    font-size:17px;
-  }
-
-  .photo-name{
-    font-size:12px;
-  }
-
-  .photo-meta{
-    font-size:10px;
-  }
-
-  #callerImage{
-    width:130px;
-    height:130px;
-  }
-
-}
-
 </style>
 </head>
 
 <body>
 
+
 <!-- =========================
-     WELCOME SCREEN
+     WELCOME
 ========================= -->
 
-<div id="welcomeScreen" class="page">
+<div id="welcomeScreen">
 
   <div class="welcome-box">
 
-    <h1>Welcome</h1>
+    <div class="welcome-title">
+      Welcome
+    </div>
 
-    <p>
+    <div class="welcome-text">
       Connecting you to live profiles...
-    </p>
+    </div>
+
+    <div class="loading-wrap">
+      <div class="loading-bar"></div>
+    </div>
 
   </div>
 
@@ -557,10 +1007,10 @@ body{
 
 
 <!-- =========================
-     PHOTOS PAGE
+     PHOTOS
 ========================= -->
 
-<div id="photosPage" class="page hidden">
+<div id="photosPage" class="hidden">
 
   <div class="topbar">
 
@@ -585,15 +1035,13 @@ body{
   <div id="photoGrid"></div>
 
 </div>
-
-
 <!-- =========================
      INCOMING CALL
 ========================= -->
 
 <div id="incomingCall" class="hidden">
 
-  <div class="call-label">
+  <div class="incoming-label">
     Incoming video call
   </div>
 
@@ -607,7 +1055,7 @@ body{
     Cute
   </div>
 
-  <div class="call-status">
+  <div class="caller-status">
     is calling you...
   </div>
 
@@ -615,14 +1063,14 @@ body{
 
     <button
       id="declineButton"
-      class="call-btn decline"
+      class="call-button call-decline"
       type="button">
       ✕
     </button>
 
     <button
       id="answerButton"
-      class="call-btn answer"
+      class="call-button call-answer"
       type="button">
       ✓
     </button>
@@ -633,23 +1081,94 @@ body{
 
 
 <!-- =========================
-     RED LIVE VIDEO
+     CAMERA PERMISSION
+========================= -->
+
+<div
+  id="cameraPermissionScreen"
+  class="hidden">
+
+  <div class="permission-box">
+
+    <h2>
+      Camera permission
+    </h2>
+
+    <p>
+      Allow camera access to continue
+      with the live video call.
+    </p>
+
+    <button
+      id="permissionButton"
+      class="permission-button"
+      type="button">
+      Allow Camera
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     FIRST LIVE VIDEO
 ========================= -->
 
 <div
   id="redLiveVideoPage"
   class="hidden">
 
-  <div class="red-live-label">
+  <div class="video-live-badge">
     ● LIVE
   </div>
 
   <video
     id="redLiveVideo"
-    class="live-video"
     playsinline
     preload="auto">
   </video>
+
+  <div class="video-chat-panel">
+
+    <div class="video-chat-title">
+      Live chat
+    </div>
+
+    <div
+      id="videoChatList"
+      class="video-chat-list">
+    </div>
+
+    <div class="video-actions">
+
+      <button
+        class="video-action-button"
+        type="button">
+        👍 Like
+      </button>
+
+      <button
+        class="video-action-button"
+        type="button">
+        👎
+      </button>
+
+      <button
+        class="video-action-button"
+        type="button">
+        💬 Chat
+      </button>
+
+      <button
+        class="video-action-button"
+        type="button">
+        ❤️ Follow
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
 
@@ -662,22 +1181,19 @@ body{
   id="blackLivePage"
   class="hidden">
 
-  <div class="red-live-label">
+  <div class="black-live-label">
     ● LIVE
   </div>
 
-  <video
-    id="blackLiveSoundVideo"
-    class="live-video"
-    playsinline
-    preload="auto">
-  </video>
+  <div class="black-live-text">
+    Live connection...
+  </div>
 
 </div>
 
 
 <!-- =========================
-     INSUFFICIENT MINUTES
+     INSUFFICIENT
 ========================= -->
 
 <div
@@ -707,75 +1223,116 @@ body{
 <script>
 
 /* =====================================================
-   BASIC SETTINGS
+   SETTINGS
 ===================================================== */
 
 const IMAGE_BASE =
   "https://raw.githubusercontent.com/agnesweb2026/My-referral-website/main/";
 
 const VIDEO_URL =
-  IMAGE_BASE + "preview_20_seconds.mp4";
+  IMAGE_BASE +
+  "IMG_20261001_011110_570.mp4";
 
-const SAMPLE_KEY =
-  "myReferralSampleWatched";
+const VISITOR_KEY =
+  "myReferralFirstVideoSeen";
 
 
 /* =====================================================
-   GET ELEMENTS
+   ELEMENTS
 ===================================================== */
 
 const welcomeScreen =
-  document.getElementById("welcomeScreen");
+  document.getElementById(
+    "welcomeScreen"
+  );
 
 const photosPage =
-  document.getElementById("photosPage");
+  document.getElementById(
+    "photosPage"
+  );
 
 const photoGrid =
-  document.getElementById("photoGrid");
+  document.getElementById(
+    "photoGrid"
+  );
 
 const incomingCall =
-  document.getElementById("incomingCall");
+  document.getElementById(
+    "incomingCall"
+  );
 
 const callerImage =
-  document.getElementById("callerImage");
+  document.getElementById(
+    "callerImage"
+  );
 
 const callerName =
-  document.getElementById("callerName");
-
-const declineButton =
-  document.getElementById("declineButton");
+  document.getElementById(
+    "callerName"
+  );
 
 const answerButton =
-  document.getElementById("answerButton");
+  document.getElementById(
+    "answerButton"
+  );
+
+const declineButton =
+  document.getElementById(
+    "declineButton"
+  );
+
+const cameraPermissionScreen =
+  document.getElementById(
+    "cameraPermissionScreen"
+  );
+
+const permissionButton =
+  document.getElementById(
+    "permissionButton"
+  );
 
 const redLiveVideoPage =
-  document.getElementById("redLiveVideoPage");
+  document.getElementById(
+    "redLiveVideoPage"
+  );
 
 const redLiveVideo =
-  document.getElementById("redLiveVideo");
+  document.getElementById(
+    "redLiveVideo"
+  );
 
 const blackLivePage =
-  document.getElementById("blackLivePage");
-
-const blackLiveSoundVideo =
-  document.getElementById("blackLiveSoundVideo");
+  document.getElementById(
+    "blackLivePage"
+  );
 
 const insufficientPage =
-  document.getElementById("insufficientPage");
+  document.getElementById(
+    "insufficientPage"
+  );
 
 const insufficientTimer =
-  document.getElementById("insufficientTimer");
+  document.getElementById(
+    "insufficientTimer"
+  );
 
 const onlineNumber =
-  document.getElementById("onlineNumber");
+  document.getElementById(
+    "onlineNumber"
+  );
 
-
-/* =====================================================
-   REFERRAL / EMPLOYEE
+const videoChatList =
+  document.getElementById(
+    "videoChatList"
+  );
+  /* =====================================================
+   REFERRAL
 ===================================================== */
 
 const params =
-  new URLSearchParams(window.location.search);
+  new URLSearchParams(
+    window.location.search
+  );
 
 const employee =
   params.get("employee");
@@ -786,29 +1343,36 @@ const ref =
 
 function openPaymentPage(){
 
-  let url = "payment.html";
+  let url =
+    "payment.html";
 
   if(employee){
 
     url +=
       "?employee=" +
-      encodeURIComponent(employee);
+      encodeURIComponent(
+        employee
+      );
 
   }
-
   else if(ref){
 
     url +=
       "?ref=" +
-      encodeURIComponent(ref);
+      encodeURIComponent(
+        ref
+      );
 
   }
 
-  window.location.href = url;
+  window.location.href =
+    url;
 
 }
-  /* =====================================================
-   ALL 32 GITHUB IMAGES
+
+
+/* =====================================================
+   ALL 32 IMAGES
 ===================================================== */
 
 const imageFiles = [
@@ -865,296 +1429,131 @@ const imageFiles = [
 
 
 /* =====================================================
-   PROFILE INFORMATION
+   PROFILES
 ===================================================== */
 
 const profiles = [
 
-  {
-    name:"Cute",
-    age:24,
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
+  ["Cute",24,"Kenya","🇰🇪"],
+  ["Becky",22,"Kenya","🇰🇪"],
+  ["Dorry",26,"Kenya","🇰🇪"],
+  ["Sharon",23,"Kenya","🇰🇪"],
+  ["Lilian",27,"Kenya","🇰🇪"],
 
-  {
-    name:"Becky",
-    age:22,
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
+  ["Asha",25,"Tanzania","🇹🇿"],
+  ["Neema",23,"Tanzania","🇹🇿"],
+  ["Zawadi",28,"Tanzania","🇹🇿"],
+  ["Rehema",24,"Tanzania","🇹🇿"],
 
-  {
-    name:"Dorry",
-    age:26,
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
+  ["Blessing",22,"Nigeria","🇳🇬"],
+  ["Favour",26,"Nigeria","🇳🇬"],
+  ["Peace",25,"Nigeria","🇳🇬"],
+  ["Joy",27,"Nigeria","🇳🇬"],
 
-  {
-    name:"Sharon",
-    age:23,
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
+  ["Grace",24,"Congo","🇨🇩"],
+  ["Mimi",23,"Congo","🇨🇩"],
+  ["Nadia",26,"Congo","🇨🇩"],
+  ["Bella",25,"Congo","🇨🇩"],
+  ["Princess",28,"Congo","🇨🇩"],
 
-  {
-    name:"Lilian",
-    age:27,
-    country:"Kenya",
-    flag:"🇰🇪"
-  },
+  ["Emily",24,"Canada","🇨🇦"],
+  ["Sophie",27,"Canada","🇨🇦"],
 
-  {
-    name:"Asha",
-    age:25,
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
+  ["Thandi",25,"South Africa","🇿🇦"],
+  ["Lerato",29,"South Africa","🇿🇦"],
 
-  {
-    name:"Neema",
-    age:23,
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
-
-  {
-    name:"Zawadi",
-    age:28,
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
-
-  {
-    name:"Rehema",
-    age:24,
-    country:"Tanzania",
-    flag:"🇹🇿"
-  },
-
-  {
-    name:"Blessing",
-    age:22,
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-
-  {
-    name:"Favour",
-    age:26,
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-
-  {
-    name:"Peace",
-    age:25,
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-
-  {
-    name:"Joy",
-    age:27,
-    country:"Nigeria",
-    flag:"🇳🇬"
-  },
-
-  {
-    name:"Grace",
-    age:24,
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-
-  {
-    name:"Mimi",
-    age:23,
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-
-  {
-    name:"Nadia",
-    age:26,
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-
-  {
-    name:"Bella",
-    age:25,
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-
-  {
-    name:"Princess",
-    age:28,
-    country:"Congo",
-    flag:"🇨🇩"
-  },
-
-  {
-    name:"Emily",
-    age:24,
-    country:"Canada",
-    flag:"🇨🇦"
-  },
-
-  {
-    name:"Sophie",
-    age:27,
-    country:"Canada",
-    flag:"🇨🇦"
-  },
-
-  {
-    name:"Thandi",
-    age:25,
-    country:"South Africa",
-    flag:"🇿🇦"
-  },
-
-  {
-    name:"Lerato",
-    age:29,
-    country:"South Africa",
-    flag:"🇿🇦"
-  },
-
-  {
-    name:"Ashley",
-    age:23,
-    country:"USA",
-    flag:"🇺🇸"
-  },
-
-  {
-    name:"Jessica",
-    age:26,
-    country:"USA",
-    flag:"🇺🇸"
-  }
+  ["Ashley",23,"USA","🇺🇸"],
+  ["Jessica",26,"USA","🇺🇸"]
 
 ];
 
 
 /* =====================================================
+   CHAT DATA
+===================================================== */
+
+const chatUsers = [
+  "Mia",
+  "Lina",
+  "Sarah",
+  "Grace",
+  "Anna",
+  "Joy",
+  "Lisa",
+  "Nelly",
+  "Kate",
+  "Mary",
+  "Jane",
+  "Lucy"
+];
+
+const chatMessages = [
+  "Hello 👋",
+  "Hi ❤️",
+  "So beautiful",
+  "Anyone here?",
+  "Wow 😍",
+  "Hello dear",
+  "Nice live",
+  "I like this",
+  "Followed ❤️",
+  "Good morning",
+  "Hey there 👋",
+  "Amazing"
+];
+  /* =====================================================
    STATE
 ===================================================== */
 
-let currentCallerIndex = 0;
+let callerIndex = 0;
 
-let callTimer = null;
-
-let offlineTimer = null;
+let offlineIndexes = [];
 
 let onlineTimer = null;
 
+let offlineTimer = null;
+
 let welcomeTimer = null;
 
-let sampleTimer = null;
+let videoTimer = null;
 
-let insufficientTimeout = null;
+let insufficientTimerID = null;
 
-let currentLiveImage = "";
+let videoChatTimer = null;
 
-let firstCallShown = false;
+let firstAnswerLock = false;
+
+let currentPhotoChatTimers = [];
 
 
 /* =====================================================
-   CREATE 32 PHOTO CARDS
+   VISITOR STATUS
 ===================================================== */
 
-function createPhotos(){
+function hasSeenFirstVideo(){
 
-  photoGrid.innerHTML = "";
+  return localStorage.getItem(
+    VISITOR_KEY
+  ) === "yes";
 
-  imageFiles.forEach((imageFile,index)=>{
+}
 
-    const profile =
-      profiles[index % profiles.length];
 
-    const card =
-      document.createElement("div");
+function markFirstVideoSeen(){
 
-    card.className = "photoCard";
-
-    card.dataset.index = index;
-
-    const encodedImage =
-      encodeURIComponent(imageFile);
-
-    card.innerHTML = `
-
-      <div class="photo-image-wrap">
-
-        <img
-          class="profile-photo"
-          src="${IMAGE_BASE}${encodedImage}"
-          alt="${profile.name}"
-          loading="lazy"
-        >
-
-        <div class="live-badge">
-          ● LIVE
-        </div>
-
-        <div class="photo-play"></div>
-
-      </div>
-
-      <div class="photo-info">
-
-        <div class="photo-name">
-
-          <span class="name-dot"></span>
-
-          ${profile.name}
-
-        </div>
-
-        <div class="photo-meta">
-
-          ${profile.flag}
-          ${profile.country}
-          ·
-          ${profile.age}
-
-        </div>
-
-      </div>
-
-    `;
-
-    card.addEventListener(
-      "click",
-      function(){
-
-        openPaymentPage();
-
-      }
-    );
-
-    photoGrid.appendChild(card);
-
-  });
+  localStorage.setItem(
+    VISITOR_KEY,
+    "yes"
+  );
 
 }
 
 
 /* =====================================================
-   MAKE SURE ALL 32 LOAD
+   RANDOM ONLINE NUMBER
 ===================================================== */
 
-createPhotos();
-  /* =====================================================
-   ONLINE NUMBER
-===================================================== */
-
-function updateOnlineNumber(){
+function updateOnline(){
 
   const number =
     Math.floor(
@@ -1167,17 +1566,21 @@ function updateOnlineNumber(){
 }
 
 
-function startOnlineCounter(){
+function startOnline(){
 
-  updateOnlineNumber();
+  updateOnline();
 
   if(onlineTimer){
-    clearInterval(onlineTimer);
+
+    clearInterval(
+      onlineTimer
+    );
+
   }
 
   onlineTimer =
     setInterval(
-      updateOnlineNumber,
+      updateOnline,
       7000
     );
 
@@ -1185,53 +1588,7 @@ function startOnlineCounter(){
 
 
 /* =====================================================
-   SHOW PHOTOS
-===================================================== */
-
-function showPhotos(){
-
-  welcomeScreen.classList.add("hidden");
-
-  incomingCall.classList.add("hidden");
-
-  redLiveVideoPage.classList.add("hidden");
-
-  blackLivePage.classList.add("hidden");
-
-  insufficientPage.classList.add("hidden");
-
-  photosPage.classList.remove("hidden");
-
-  createPhotos();
-
-  startOnlineCounter();
-
-}
-
-
-/* =====================================================
-   HIDE EVERYTHING
-===================================================== */
-
-function hideAllScreens(){
-
-  welcomeScreen.classList.add("hidden");
-
-  photosPage.classList.add("hidden");
-
-  incomingCall.classList.add("hidden");
-
-  redLiveVideoPage.classList.add("hidden");
-
-  blackLivePage.classList.add("hidden");
-
-  insufficientPage.classList.add("hidden");
-
-}
-
-
-/* =====================================================
-   GET PROFILE FOR IMAGE
+   PROFILE
 ===================================================== */
 
 function getProfile(index){
@@ -1244,498 +1601,42 @@ function getProfile(index){
 
 
 /* =====================================================
-   RANDOM CALLER FROM ALL 32 IMAGES
+   CALLER
 ===================================================== */
 
-function chooseRandomCaller(){
+function chooseCaller(){
 
-  currentCallerIndex =
+  callerIndex =
     Math.floor(
       Math.random() *
       imageFiles.length
     );
 
   const profile =
-    getProfile(currentCallerIndex);
-
-  const imageFile =
-    imageFiles[currentCallerIndex];
+    getProfile(callerIndex);
 
   callerName.textContent =
-    profile.name;
+    profile[0];
 
   callerImage.src =
     IMAGE_BASE +
-    encodeURIComponent(imageFile);
-
-  currentLiveImage =
-    imageFile;
-
-}
-
-
-/* =====================================================
-   SHOW INCOMING CALL
-===================================================== */
-
-function showIncomingCall(){
-
-  if(callTimer){
-    clearTimeout(callTimer);
-  }
-
-  chooseRandomCaller();
-
-  welcomeScreen.classList.add("hidden");
-
-  photosPage.classList.add("hidden");
-
-  redLiveVideoPage.classList.add("hidden");
-
-  blackLivePage.classList.add("hidden");
-
-  insufficientPage.classList.add("hidden");
-
-  incomingCall.classList.remove("hidden");
-
-}
-
-
-/* =====================================================
-   DECLINE CALL
-===================================================== */
-
-function declineCall(){
-
-  if(callTimer){
-    clearTimeout(callTimer);
-  }
-
-  incomingCall.classList.add("hidden");
-
-  showPhotos();
-
-}
-
-
-/* =====================================================
-   SAMPLE VIDEO
-===================================================== */
-
-function startSampleVideo(){
-
-  hideAllScreens();
-
-  redLiveVideoPage.classList.remove("hidden");
-
-  redLiveVideo.src =
-    VIDEO_URL;
-
-  redLiveVideo.currentTime =
-    10;
-
-  redLiveVideo.muted =
-    false;
-
-  redLiveVideo.volume =
-    1;
-
-  const playPromise =
-    redLiveVideo.play();
-
-  if(playPromise){
-
-    playPromise.catch(
-      function(){
-        redLiveVideo.muted = false;
-      }
-    );
-
-  }
-
-  if(sampleTimer){
-    clearTimeout(sampleTimer);
-  }
-
-  sampleTimer =
-    setTimeout(
-      function(){
-
-        redLiveVideo.pause();
-
-        redLiveVideo.removeAttribute("src");
-
-        redLiveVideo.load();
-
-        showBlackLive(5000);
-
-      },
-      7000
+    encodeURIComponent(
+      imageFiles[callerIndex]
     );
 
 }
 
 
 /* =====================================================
-   BLACK LIVE
+   OFFLINE
 ===================================================== */
 
-function showBlackLive(duration){
-
-  hideAllScreens();
-
-  blackLivePage.classList.remove("hidden");
-
-  blackLiveSoundVideo.src =
-    VIDEO_URL;
-
-  blackLiveSoundVideo.currentTime =
-    0;
-
-  blackLiveSoundVideo.muted =
-    false;
-
-  blackLiveSoundVideo.volume =
-    1;
-
-  const playPromise =
-    blackLiveSoundVideo.play();
-
-  if(playPromise){
-
-    playPromise.catch(
-      function(){
-        blackLiveSoundVideo.muted = false;
-      }
-    );
-
-  }
-
-  setTimeout(
-    function(){
-
-      blackLiveSoundVideo.pause();
-
-      blackLiveSoundVideo.removeAttribute("src");
-
-      blackLiveSoundVideo.load();
-
-      showInsufficient();
-
-    },
-    duration
-  );
-
-}
-
-
-/* =====================================================
-   INSUFFICIENT MINUTES
-===================================================== */
-
-function showInsufficient(){
-
-  hideAllScreens();
-
-  insufficientPage.classList.remove("hidden");
-
-  let seconds = 2;
-
-  insufficientTimer.textContent =
-    "Continuing in " +
-    seconds +
-    "...";
-
-  if(insufficientTimeout){
-    clearInterval(insufficientTimeout);
-  }
-
-  insufficientTimeout =
-    setInterval(
-      function(){
-
-        seconds--;
-
-        if(seconds <= 0){
-
-          clearInterval(
-            insufficientTimeout
-          );
-
-          insufficientTimer.textContent =
-            "Loading live profiles...";
-
-          setTimeout(
-            showPhotos,
-            200
-          );
-
-          return;
-
-        }
-
-        insufficientTimer.textContent =
-          "Continuing in " +
-          seconds +
-          "...";
-
-      },
-      1000
-    );
-
-                             }
-  /* =====================================================
-   ANSWER CALL
-===================================================== */
-
-function answerCall(){
-
-  if(callTimer){
-    clearTimeout(callTimer);
-  }
-
-  incomingCall.classList.add("hidden");
-
-  const alreadyWatched =
-    localStorage.getItem(
-      SAMPLE_KEY
-    );
-
-  if(!alreadyWatched){
-
-    localStorage.setItem(
-      SAMPLE_KEY,
-      "1"
-    );
-
-    startSampleVideo();
-
-  }
-  else{
-
-    showBlackLive(2000);
-
-  }
-
-}
-
-
-/* =====================================================
-   BUTTON EVENTS
-===================================================== */
-
-declineButton.addEventListener(
-  "click",
-  function(){
-
-    declineCall();
-
-  }
-);
-
-
-answerButton.addEventListener(
-  "click",
-  function(){
-
-    answerCall();
-
-  }
-);
-
-
-/* =====================================================
-   CALL BUTTON TOUCH SUPPORT
-===================================================== */
-
-declineButton.addEventListener(
-  "touchend",
-  function(event){
-
-    event.preventDefault();
-
-    declineCall();
-
-  },
-  {
-    passive:false
-  }
-);
-
-
-answerButton.addEventListener(
-  "touchend",
-  function(event){
-
-    event.preventDefault();
-
-    answerCall();
-
-  },
-  {
-    passive:false
-  }
-);
-
-
-/* =====================================================
-   START FIRST CALL
-===================================================== */
-
-function startFirstCall(){
-
-  if(firstCallShown){
-    return;
-  }
-
-  firstCallShown = true;
-
-  showIncomingCall();
-
-}
-
-
-/* =====================================================
-   WELCOME FLOW
-===================================================== */
-
-function startWelcomeFlow(){
-
-  welcomeScreen.classList.remove("hidden");
-
-  photosPage.classList.add("hidden");
-
-  incomingCall.classList.add("hidden");
-
-  redLiveVideoPage.classList.add("hidden");
-
-  blackLivePage.classList.add("hidden");
-
-  insufficientPage.classList.add("hidden");
-
-  if(welcomeTimer){
-    clearTimeout(welcomeTimer);
-  }
-
-  welcomeTimer =
-    setTimeout(
-      function(){
-
-        startFirstCall();
-
-      },
-      3000
-    );
-
-}
-
-
-/* =====================================================
-   FALLBACK IF VIDEO CANNOT PLAY
-===================================================== */
-
-redLiveVideo.addEventListener(
-  "error",
-  function(){
-
-    if(redLiveVideoPage.classList.contains("hidden")){
-      return;
-    }
-
-    redLiveVideo.pause();
-
-    showBlackLive(3000);
-
-  }
-);
-
-
-blackLiveSoundVideo.addEventListener(
-  "error",
-  function(){
-
-    if(blackLivePage.classList.contains("hidden")){
-      return;
-    }
-
-    blackLiveSoundVideo.pause();
-
-    showInsufficient();
-
-  }
-);
-
-
-/* =====================================================
-   VIDEO ENDED FALLBACK
-===================================================== */
-
-redLiveVideo.addEventListener(
-  "ended",
-  function(){
-
-    if(
-      !redLiveVideoPage.classList.contains(
-        "hidden"
-      )
-    ){
-
-      showBlackLive(5000);
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   STOP VIDEO WHEN PAGE HIDDEN
-===================================================== */
-
-document.addEventListener(
-  "visibilitychange",
-  function(){
-
-    if(document.hidden){
-
-      if(
-        redLiveVideo &&
-        !redLiveVideo.paused
-      ){
-
-        redLiveVideo.pause();
-
-      }
-
-      if(
-        blackLiveSoundVideo &&
-        !blackLiveSoundVideo.paused
-      ){
-
-        blackLiveSoundVideo.pause();
-
-      }
-
-    }
-
-  }
-);
-  /* =====================================================
-   OFFLINE PROFILE SYSTEM
-===================================================== */
-
-const OFFLINE_COUNT = 5;
-
-let offlineIndexes = [];
-
-
-function chooseOfflineProfiles(){
+function chooseOffline(){
 
   offlineIndexes = [];
 
   while(
-    offlineIndexes.length <
-    OFFLINE_COUNT
+    offlineIndexes.length < 5
   ){
 
     const index =
@@ -1758,10 +1659,330 @@ function chooseOfflineProfiles(){
 
 
 /* =====================================================
-   APPLY OFFLINE STATUS
+   CHAT SET
 ===================================================== */
 
-function applyOfflineStatus(){
+function getPhotoChat(index){
+
+  const offset =
+    (index * 3) %
+    chatMessages.length;
+
+  return [
+
+    {
+      user:
+        chatUsers[
+          (index + 0) %
+          chatUsers.length
+        ],
+
+      message:
+        chatMessages[
+          (offset + 0) %
+          chatMessages.length
+        ]
+    },
+
+    {
+      user:
+        chatUsers[
+          (index + 3) %
+          chatUsers.length
+        ],
+
+      message:
+        chatMessages[
+          (offset + 3) %
+          chatMessages.length
+        ]
+    },
+
+    {
+      user:
+        chatUsers[
+          (index + 6) %
+          chatUsers.length
+        ],
+
+      message:
+        chatMessages[
+          (offset + 6) %
+          chatMessages.length
+        ]
+    }
+
+  ];
+
+        }
+  /* =====================================================
+   CREATE PHOTO CARD
+===================================================== */
+
+function createPhotos(){
+
+  currentPhotoChatTimers.forEach(
+    function(timer){
+
+      clearInterval(timer);
+
+    }
+  );
+
+  currentPhotoChatTimers = [];
+
+  photoGrid.innerHTML = "";
+
+  imageFiles.forEach(
+    function(imageFile,index){
+
+      const profile =
+        getProfile(index);
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "photoCard";
+
+      card.dataset.index =
+        index;
+
+      const imageURL =
+        IMAGE_BASE +
+        encodeURIComponent(
+          imageFile
+        );
+
+      card.innerHTML = `
+
+        <div class="photo-image-wrap">
+
+          <img
+            class="profile-photo"
+            src="${imageURL}"
+            alt="${profile[0]}"
+            loading="lazy"
+          >
+
+          <div class="green-live-dot"></div>
+
+          <div class="live-label">
+            ● LIVE
+          </div>
+
+          <div class="photo-play"></div>
+
+        </div>
+
+        <div class="photo-info">
+
+          <div class="photo-name">
+
+            <span
+              class="name-green-dot">
+            </span>
+
+            ${profile[0]}
+
+          </div>
+
+          <div class="photo-meta">
+
+            ${profile[3]}
+            ${profile[2]}
+            ·
+            ${profile[1]}
+
+          </div>
+
+        </div>
+
+        <div class="photo-chat">
+
+          <div class="chat-line chat-one">
+            <span class="chat-user"></span>
+            <span class="chat-message"></span>
+            <span class="chat-time">now</span>
+          </div>
+
+          <div class="chat-line chat-two">
+            <span class="chat-user"></span>
+            <span class="chat-message"></span>
+            <span class="chat-time">now</span>
+          </div>
+
+          <div class="chat-line chat-three">
+            <span class="chat-user"></span>
+            <span class="chat-message"></span>
+            <span class="chat-time">now</span>
+          </div>
+
+          <div class="chat-actions">
+
+            <span class="chat-action">
+              👍 <span class="like-count">0</span>
+            </span>
+
+            <span class="chat-action">
+              👎
+            </span>
+
+            <span class="chat-action">
+              💬 Chat
+            </span>
+
+            <span class="chat-action">
+              ❤️ Follow
+            </span>
+
+          </div>
+
+        </div>
+      `;
+
+      card.addEventListener(
+        "click",
+        function(){
+
+          openPaymentPage();
+
+        }
+      );
+
+      photoGrid.appendChild(card);
+
+      startIndividualChat(
+        card,
+        index
+      );
+
+    }
+  );
+
+  applyOffline();
+
+}
+
+
+/* =====================================================
+   EACH PHOTO HAS ITS OWN CHAT TIMER
+===================================================== */
+
+function startIndividualChat(
+  card,
+  index
+){
+
+  const chats =
+    getPhotoChat(index);
+
+  let position = 0;
+
+  const rows =
+    card.querySelectorAll(
+      ".chat-line"
+    );
+
+  function updateChat(){
+
+    const chat =
+      chats[
+        position %
+        chats.length
+      ];
+
+    const row =
+      rows[
+        position %
+        rows.length
+      ];
+
+    const user =
+      row.querySelector(
+        ".chat-user"
+      );
+
+    const message =
+      row.querySelector(
+        ".chat-message"
+      );
+
+    user.textContent =
+      chat.user + ":";
+
+    message.textContent =
+      " " + chat.message;
+
+    row.style.animation =
+      "none";
+
+    void row.offsetWidth;
+
+    row.style.animation =
+      "chatAppear .35s forwards";
+
+    const count =
+      card.querySelector(
+        ".like-count"
+      );
+
+    if(count){
+
+      const value =
+        Number(
+          count.textContent
+        ) || 0;
+
+      count.textContent =
+        value + 1;
+
+    }
+
+    position++;
+
+  }
+
+  updateChat();
+
+  /*
+    Different start time for
+    every photo.
+  */
+
+  const firstDelay =
+    700 +
+    (index * 230);
+
+  setTimeout(
+    function(){
+
+      updateChat();
+
+      const interval =
+        2800 +
+        ((index % 7) * 430);
+
+      const timer =
+        setInterval(
+          updateChat,
+          interval
+        );
+
+      currentPhotoChatTimers.push(
+        timer
+      );
+
+    },
+    firstDelay
+  );
+
+        }
+  /* =====================================================
+   OFFLINE STATUS
+===================================================== */
+
+function applyOffline(){
 
   const cards =
     document.querySelectorAll(
@@ -1771,35 +1992,41 @@ function applyOfflineStatus(){
   cards.forEach(
     function(card,index){
 
-      const imageWrap =
-        card.querySelector(
-          ".photo-image-wrap"
-        );
-
-      const existing =
+      const old =
         card.querySelector(
           ".offline-badge"
         );
 
-      if(existing){
-        existing.remove();
-      }
+      if(old){
 
-      const liveBadge =
-        card.querySelector(
-          ".live-badge"
-        );
+        old.remove();
+
+      }
 
       if(
         offlineIndexes.includes(index)
       ){
 
-        if(liveBadge){
-          liveBadge.remove();
+        const imageWrap =
+          card.querySelector(
+            ".photo-image-wrap"
+          );
+
+        const liveLabel =
+          imageWrap.querySelector(
+            ".live-label"
+          );
+
+        if(liveLabel){
+
+          liveLabel.remove();
+
         }
 
         const badge =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         badge.className =
           "offline-badge";
@@ -1820,580 +2047,617 @@ function applyOfflineStatus(){
 
 
 /* =====================================================
-   REFRESH OFFLINE PROFILES
+   SHOW PHOTOS
 ===================================================== */
 
-function refreshOfflineProfiles(){
+function showPhotos(){
 
-  chooseOfflineProfiles();
-
-  applyOfflineStatus();
-
-}
-
-
-/* =====================================================
-   START OFFLINE ROTATION
-===================================================== */
-
-function startOfflineRotation(){
-
-  refreshOfflineProfiles();
-
-  if(offlineTimer){
-    clearInterval(offlineTimer);
-  }
-
-  offlineTimer =
-    setInterval(
-      function(){
-
-        refreshOfflineProfiles();
-
-      },
-      5 * 60 * 1000
-    );
-
-}
-
-
-/* =====================================================
-   PHOTO GRID AFTER CREATION
-===================================================== */
-
-const originalCreatePhotos =
-  createPhotos;
-
-function rebuildPhotos(){
-
-  originalCreatePhotos();
-
-  startOfflineRotation();
-
-}
-
-
-/* =====================================================
-   OVERRIDE SHOW PHOTOS
-===================================================== */
-
-function displayPhotos(){
-
-  welcomeScreen.classList.add("hidden");
-
-  incomingCall.classList.add("hidden");
-
-  redLiveVideoPage.classList.add("hidden");
-
-  blackLivePage.classList.add("hidden");
-
-  insufficientPage.classList.add("hidden");
-
-  photosPage.classList.remove("hidden");
-
-  rebuildPhotos();
-
-  startOnlineCounter();
-
-}
-  /* =====================================================
-   REPLACE PHOTO DISPLAY FUNCTION
-===================================================== */
-
-function showLivePhotos(){
-
-  welcomeScreen.classList.add("hidden");
-
-  incomingCall.classList.add("hidden");
-
-  redLiveVideoPage.classList.add("hidden");
-
-  blackLivePage.classList.add("hidden");
-
-  insufficientPage.classList.add("hidden");
-
-  photosPage.classList.remove("hidden");
-
-  createPhotos();
-
-  chooseOfflineProfiles();
-
-  applyOfflineStatus();
-
-  startOnlineCounter();
-
-}
-
-
-/* =====================================================
-   MAKE PHOTO CARDS CLICKABLE AGAIN
-===================================================== */
-
-function refreshPhotoClicks(){
-
-  const cards =
-    document.querySelectorAll(
-      ".photoCard"
-    );
-
-  cards.forEach(
-    function(card){
-
-      card.onclick =
-        function(){
-
-          openPaymentPage();
-
-        };
-
-    }
+  welcomeScreen.classList.add(
+    "hidden"
   );
 
-}
+  incomingCall.classList.add(
+    "hidden"
+  );
 
+  cameraPermissionScreen.classList.add(
+    "hidden"
+  );
 
-/* =====================================================
-   FIX OFFLINE AFTER PHOTO CREATION
-===================================================== */
+  redLiveVideoPage.classList.add(
+    "hidden"
+  );
 
-const oldCreatePhotos =
-  createPhotos;
-
-function createPhotosAndStatus(){
-
-  oldCreatePhotos();
-
-  chooseOfflineProfiles();
-
-  applyOfflineStatus();
-
-  refreshPhotoClicks();
-
-}
-
-
-/* =====================================================
-   FINAL PHOTO FUNCTION
-===================================================== */
-
-function finalShowPhotos(){
-
-  welcomeScreen.classList.add("hidden");
-
-  incomingCall.classList.add("hidden");
-
-  redLiveVideoPage.classList.add("hidden");
-
-  blackLivePage.classList.add("hidden");
-
-  insufficientPage.classList.add("hidden");
-
-  photosPage.classList.remove("hidden");
-
-  oldCreatePhotos();
-
-  chooseOfflineProfiles();
-
-  applyOfflineStatus();
-
-  refreshPhotoClicks();
-
-  startOnlineCounter();
-
-}
-
-
-/* =====================================================
-   UPDATE FUNCTIONS THAT RETURN TO PHOTOS
-===================================================== */
-
-function goToPhotos(){
-
-  finalShowPhotos();
-
-}
-
-
-/* =====================================================
-   FINAL INSUFFICIENT FLOW
-===================================================== */
-
-function finishInsufficient(){
-
-  if(insufficientTimeout){
-
-    clearInterval(
-      insufficientTimeout
-    );
-
-  }
+  blackLivePage.classList.add(
+    "hidden"
+  );
 
   insufficientPage.classList.add(
     "hidden"
   );
 
-  finalShowPhotos();
+  photosPage.classList.remove(
+    "hidden"
+  );
+
+  createPhotos();
+
+  startOnline();
 
 }
 
 
 /* =====================================================
-   SECONDARY CALL TIMER
+   SHOW INCOMING CALL
 ===================================================== */
 
-function scheduleNextCall(){
+function showIncomingCall(){
 
-  if(callTimer){
-    clearTimeout(callTimer);
-  }
+  welcomeScreen.classList.add(
+    "hidden"
+  );
 
-  const delay =
-    25000 +
-    Math.floor(
-      Math.random() * 25000
-    );
+  photosPage.classList.add(
+    "hidden"
+  );
 
-  callTimer =
-    setTimeout(
-      function(){
+  cameraPermissionScreen.classList.add(
+    "hidden"
+  );
 
-        showIncomingCall();
+  redLiveVideoPage.classList.add(
+    "hidden"
+  );
 
-      },
-      delay
-    );
+  blackLivePage.classList.add(
+    "hidden"
+  );
+
+  insufficientPage.classList.add(
+    "hidden"
+  );
+
+  chooseCaller();
+
+  incomingCall.classList.remove(
+    "hidden"
+  );
 
 }
 
 
 /* =====================================================
-   KEEP CALL IMAGE CORRECT
+   CAMERA PERMISSION
 ===================================================== */
 
-function setCaller(index){
+async function requestCameraPermission(){
+
+  /*
+    Camera permission can only be requested
+    by the browser after a user action.
+  */
 
   if(
-    index < 0 ||
-    index >= imageFiles.length
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
   ){
 
-    index = 0;
+    startFirstVideo();
+
+    return;
 
   }
 
-  const profile =
-    getProfile(index);
+  try{
 
-  callerName.textContent =
-    profile.name;
+    const stream =
+      await navigator.mediaDevices
+        .getUserMedia({
+          video:true,
+          audio:false
+        });
 
-  callerImage.src =
-    IMAGE_BASE +
-    encodeURIComponent(
-      imageFiles[index]
-    );
+    /*
+      We only need permission.
+      Stop camera immediately so the
+      camera is not kept running.
+    */
 
-  currentCallerIndex =
-    index;
+    stream
+      .getTracks()
+      .forEach(
+        function(track){
 
-}
-  /* =====================================================
-   IMAGE ERROR HANDLING
-===================================================== */
-
-function addImageErrorHandling(){
-
-  const images =
-    document.querySelectorAll(
-      ".profile-photo"
-    );
-
-  images.forEach(
-    function(img){
-
-      img.addEventListener(
-        "error",
-        function(){
-
-          img.style.background =
-            "#151515";
-
-          img.alt =
-            "Live profile";
+          track.stop();
 
         }
       );
 
-    }
+    cameraPermissionScreen.classList.add(
+      "hidden"
+    );
+
+    startFirstVideo();
+
+  }
+  catch(error){
+
+    /*
+      If permission is denied, we don't
+      fake permission. The visitor can
+      continue by pressing the button.
+    */
+
+    permissionButton.textContent =
+      "Continue";
+
+    permissionButton.onclick =
+      function(){
+
+        cameraPermissionScreen.classList.add(
+          "hidden"
+        );
+
+        startFirstVideo();
+
+      };
+
+  }
+
+          }
+  /* =====================================================
+   ANSWER CALL
+===================================================== */
+
+function answerCall(){
+
+  if(firstAnswerLock){
+
+    return;
+
+  }
+
+  firstAnswerLock = true;
+
+  incomingCall.classList.add(
+    "hidden"
+  );
+
+  if(hasSeenFirstVideo()){
+
+    /*
+      Returning visitor:
+      no video.
+      Immediately show insufficient
+      minutes for 2 seconds.
+    */
+
+    showInsufficient();
+
+    return;
+
+  }
+
+  /*
+    First visit:
+    ask for camera permission first.
+  */
+
+  cameraPermissionScreen.classList.remove(
+    "hidden"
   );
 
 }
 
 
 /* =====================================================
-   CALLER IMAGE ERROR
+   START FIRST VIDEO
 ===================================================== */
 
-callerImage.addEventListener(
-  "error",
+function startFirstVideo(){
+
+  markFirstVideoSeen();
+
+  redLiveVideoPage.classList.remove(
+    "hidden"
+  );
+
+  blackLivePage.classList.add(
+    "hidden"
+  );
+
+  insufficientPage.classList.add(
+    "hidden"
+  );
+
+  photosPage.classList.add(
+    "hidden"
+  );
+
+  videoChatList.innerHTML =
+    "";
+
+  redLiveVideo.src =
+    VIDEO_URL;
+
+  redLiveVideo.currentTime =
+    0;
+
+  redLiveVideo.muted =
+    false;
+
+  redLiveVideo.volume =
+    1;
+
+  startVideoChats();
+
+  const playPromise =
+    redLiveVideo.play();
+
+  if(playPromise){
+
+    playPromise.catch(
+      function(){
+
+        /*
+          If browser blocks autoplay,
+          show the native video controls
+          so the visitor can start it.
+        */
+
+        redLiveVideo.controls =
+          true;
+
+      }
+    );
+
+  }
+
+  if(videoTimer){
+
+    clearTimeout(
+      videoTimer
+    );
+
+  }
+
+  /*
+    EXACTLY 40 SECONDS
+  */
+
+  videoTimer =
+    setTimeout(
+      function(){
+
+        finishFirstVideo();
+
+      },
+      40000
+    );
+
+}
+
+
+/* =====================================================
+   VIDEO END
+===================================================== */
+
+function finishFirstVideo(){
+
+  if(videoTimer){
+
+    clearTimeout(
+      videoTimer
+    );
+
+  }
+
+  if(videoChatTimer){
+
+    clearInterval(
+      videoChatTimer
+    );
+
+  }
+
+  redLiveVideo.pause();
+
+  redLiveVideo.removeAttribute(
+    "src"
+  );
+
+  redLiveVideo.load();
+
+  redLiveVideoPage.classList.add(
+    "hidden"
+  );
+
+  showInsufficient();
+
+}
+
+
+/* =====================================================
+   IF VIDEO FILE ENDS EARLY
+===================================================== */
+
+redLiveVideo.addEventListener(
+  "ended",
   function(){
 
-    callerImage.style.background =
-      "#151515";
+    finishFirstVideo();
 
   }
 );
 
 
 /* =====================================================
-   REFRESH ALL PHOTO UI
+   LIVE VIDEO CHAT
 ===================================================== */
 
-function refreshPhotoUI(){
+const videoChatMessages = [
 
-  oldCreatePhotos();
+  ["Mia","Hello 👋"],
+  ["Sarah","Wow 😍"],
+  ["Lina","Nice live"],
+  ["Grace","Hi ❤️"],
+  ["Anna","Anyone here?"],
+  ["Joy","I followed"],
+  ["Nelly","Amazing"],
+  ["Kate","Hello dear"],
+  ["Mary","👍"],
+  ["Jane","Beautiful live"],
+  ["Lucy","Hey 👋"],
+  ["Lisa","❤️❤️"]
 
-  chooseOfflineProfiles();
+];
 
-  applyOfflineStatus();
+function startVideoChats(){
 
-  refreshPhotoClicks();
+  videoChatList.innerHTML =
+    "";
 
-  addImageErrorHandling();
+  let index = 0;
 
-}
+  function addVideoChat(){
 
+    const item =
+      videoChatMessages[
+        index %
+        videoChatMessages.length
+      ];
 
-/* =====================================================
-   PHOTO CLICK HANDLER
-===================================================== */
-
-photoGrid.addEventListener(
-  "click",
-  function(event){
-
-    const card =
-      event.target.closest(
-        ".photoCard"
+    const row =
+      document.createElement(
+        "div"
       );
 
-    if(!card){
-      return;
-    }
+    row.className =
+      "video-chat-row";
 
-    const index =
-      Number(
-        card.dataset.index
-      );
+    row.innerHTML = `
 
-    if(
-      Number.isInteger(index)
+      <span class="video-chat-user">
+        ${item[0]}:
+      </span>
+
+      ${item[1]}
+
+    `;
+
+    videoChatList.appendChild(
+      row
+    );
+
+    while(
+      videoChatList.children.length >
+      5
     ){
 
-      currentLiveImage =
-        imageFiles[index];
+      videoChatList.removeChild(
+        videoChatList.firstChild
+      );
 
     }
 
-    openPaymentPage();
+    index++;
 
   }
+
+  addVideoChat();
+
+  videoChatTimer =
+    setInterval(
+      addVideoChat,
+      2300
+    );
+
+}
+
+
+/* =====================================================
+   INSUFFICIENT MINUTES
+===================================================== */
+
+function showInsufficient(){
+
+  welcomeScreen.classList.add(
+    "hidden"
+  );
+
+  incomingCall.classList.add(
+    "hidden"
+  );
+
+  cameraPermissionScreen.classList.add(
+    "hidden"
+  );
+
+  redLiveVideoPage.classList.add(
+    "hidden"
+  );
+
+  blackLivePage.classList.add(
+    "hidden"
+  );
+
+  photosPage.classList.add(
+    "hidden"
+  );
+
+  insufficientPage.classList.remove(
+    "hidden"
+  );
+
+  let seconds = 2;
+
+  insufficientTimer.textContent =
+    "Continuing in " +
+    seconds +
+    "...";
+
+  if(insufficientTimerID){
+
+    clearInterval(
+      insufficientTimerID
+    );
+
+  }
+
+  insufficientTimerID =
+    setInterval(
+      function(){
+
+        seconds--;
+
+        if(seconds <= 0){
+
+          clearInterval(
+            insufficientTimerID
+          );
+
+          insufficientPage.classList.add(
+            "hidden"
+          );
+
+          showPhotos();
+
+          firstAnswerLock = false;
+
+          return;
+
+        }
+
+        insufficientTimer.textContent =
+          "Continuing in " +
+          seconds +
+          "...";
+
+      },
+      1000
+    );
+
+  }
+  /* =====================================================
+   DECLINE CALL
+===================================================== */
+
+function declineCall(){
+
+  incomingCall.classList.add(
+    "hidden"
+  );
+
+  firstAnswerLock = false;
+
+  /*
+    If first-time visitor declines,
+    they go directly to photos.
+  */
+
+  showPhotos();
+
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+answerButton.addEventListener(
+  "click",
+  answerCall
+);
+
+declineButton.addEventListener(
+  "click",
+  declineCall
+);
+
+permissionButton.addEventListener(
+  "click",
+  requestCameraPermission
 );
 
 
 /* =====================================================
-   OPEN PAYMENT WITH CURRENT REF
+   MOBILE TOUCH
 ===================================================== */
 
-function openPaymentPage(){
+answerButton.addEventListener(
+  "touchend",
+  function(event){
 
-  let url =
-    "payment.html";
+    event.preventDefault();
 
-  if(employee){
-
-    url +=
-      "?employee=" +
-      encodeURIComponent(
-        employee
-      );
-
-  }
-  else if(ref){
-
-    url +=
-      "?ref=" +
-      encodeURIComponent(
-        ref
-      );
-
-  }
-
-  window.location.href =
-    url;
-
-}
-
-
-/* =====================================================
-   START PAGE
-===================================================== */
-
-function initializePage(){
-
-  refreshPhotoUI();
-
-  startOnlineCounter();
-
-  startOfflineRotation();
-
-  startWelcomeFlow();
-
-}
-
-
-/* =====================================================
-   PAGE READY
-===================================================== */
-
-if(
-  document.readyState ===
-  "loading"
-){
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    initializePage
-  );
-
-}
-else{
-
-  initializePage();
-
-}
-  /* =====================================================
-   EXTRA MOBILE TOUCH BEHAVIOUR
-===================================================== */
-
-let touchStartTime = 0;
-
-
-photoGrid.addEventListener(
-  "touchstart",
-  function(){
-
-    touchStartTime =
-      Date.now();
+    answerCall();
 
   },
   {
-    passive:true
+    passive:false
+  }
+);
+
+declineButton.addEventListener(
+  "touchend",
+  function(event){
+
+    event.preventDefault();
+
+    declineCall();
+
+  },
+  {
+    passive:false
   }
 );
 
 
 /* =====================================================
-   PREVENT ACCIDENTAL DOUBLE ACTION
+   IMAGE ERROR
 ===================================================== */
 
-let lastPaymentOpen = 0;
+document.addEventListener(
+  "error",
+  function(event){
 
+    if(
+      event.target &&
+      event.target.tagName === "IMG"
+    ){
 
-function safeOpenPayment(){
+      event.target.style.background =
+        "#111";
 
-  const now =
-    Date.now();
+    }
 
-  if(
-    now - lastPaymentOpen <
-    800
-  ){
-
-    return;
-
-  }
-
-  lastPaymentOpen =
-    now;
-
-  openPaymentPage();
-
-}
+  },
+  true
+);
 
 
 /* =====================================================
-   CALL BUTTON SAFETY
-===================================================== */
-
-let callActionLocked = false;
-
-
-function lockCallAction(){
-
-  if(callActionLocked){
-    return true;
-  }
-
-  callActionLocked = true;
-
-  setTimeout(
-    function(){
-
-      callActionLocked = false;
-
-    },
-    1200
-  );
-
-  return false;
-
-}
-
-
-/* =====================================================
-   SAFE ANSWER
-===================================================== */
-
-function safeAnswerCall(){
-
-  if(lockCallAction()){
-    return;
-  }
-
-  answerCall();
-
-}
-
-
-/* =====================================================
-   SAFE DECLINE
-===================================================== */
-
-function safeDeclineCall(){
-
-  if(lockCallAction()){
-    return;
-  }
-
-  declineCall();
-
-}
-
-
-/* =====================================================
-   REASSIGN BUTTONS
-===================================================== */
-
-answerButton.onclick =
-  safeAnswerCall;
-
-declineButton.onclick =
-  safeDeclineCall;
-
-
-/* =====================================================
-   DISABLE DRAGGING OF IMAGES
+   PREVENT IMAGE DRAGGING
 ===================================================== */
 
 document.addEventListener(
@@ -2414,381 +2678,22 @@ document.addEventListener(
 
 
 /* =====================================================
-   PREVENT CONTEXT MENU ON PHOTO CARDS
+   INITIAL FLOW
 ===================================================== */
 
-photoGrid.addEventListener(
-  "contextmenu",
-  function(event){
-
-    event.preventDefault();
-
-  }
-);
-
-
-/* =====================================================
-   KEEP SCREEN BLACK WHILE LOADING
-===================================================== */
-
-window.addEventListener(
-  "load",
-  function(){
-
-    document.body.style.background =
-      "#000";
-
-    setTimeout(
-      function(){
-
-        document.body.style.background =
-          "#000";
-
-      },
-      100
-    );
-
-  }
-);
-  /* =====================================================
-   FINAL FLOW CONTROL
-===================================================== */
-
-function returnToLivePhotos(){
-
-  if(
-    insufficientTimeout
-  ){
-
-    clearInterval(
-      insufficientTimeout
-    );
-
-  }
-
-  if(
-    sampleTimer
-  ){
-
-    clearTimeout(
-      sampleTimer
-    );
-
-  }
-
-  if(
-    callTimer
-  ){
-
-    clearTimeout(
-      callTimer
-    );
-
-  }
-
-  if(
-    redLiveVideo
-  ){
-
-    redLiveVideo.pause();
-
-  }
-
-  if(
-    blackLiveSoundVideo
-  ){
-
-    blackLiveSoundVideo.pause();
-
-  }
-
-  finalShowPhotos();
-
-}
-
-
-/* =====================================================
-   WHEN INSUFFICIENT PAGE FINISHES
-===================================================== */
-
-function runInsufficientCountdown(){
-
-  let seconds = 2;
-
-  insufficientTimer.textContent =
-    "Continuing in " +
-    seconds +
-    "...";
-
-  if(insufficientTimeout){
-
-    clearInterval(
-      insufficientTimeout
-    );
-
-  }
-
-  insufficientTimeout =
-    setInterval(
-      function(){
-
-        seconds--;
-
-        if(seconds <= 0){
-
-          clearInterval(
-            insufficientTimeout
-          );
-
-          insufficientTimer.textContent =
-            "Loading...";
-
-          setTimeout(
-            function(){
-
-              returnToLivePhotos();
-
-            },
-            150
-          );
-
-        }
-        else{
-
-          insufficientTimer.textContent =
-            "Continuing in " +
-            seconds +
-            "...";
-
-        }
-
-      },
-      1000
-    );
-
-}
-
-
-/* =====================================================
-   REPLACE INSUFFICIENT FUNCTION
-===================================================== */
-
-function showInsufficient(){
-
-  hideAllScreens();
-
-  insufficientPage.classList.remove(
-    "hidden"
-  );
-
-  runInsufficientCountdown();
-
-}
-
-
-/* =====================================================
-   SAMPLE COMPLETE FLOW
-===================================================== */
-
-function completeSampleFlow(){
-
-  if(
-    redLiveVideo
-  ){
-
-    redLiveVideo.pause();
-
-    redLiveVideo.removeAttribute(
-      "src"
-    );
-
-    redLiveVideo.load();
-
-  }
-
-  showBlackLive(5000);
-
-}
-
-
-/* =====================================================
-   SAMPLE VIDEO START
-===================================================== */
-
-function playSampleFromCall(){
-
-  hideAllScreens();
-
-  redLiveVideoPage.classList.remove(
-    "hidden"
-  );
-
-  redLiveVideo.src =
-    VIDEO_URL;
-
-  redLiveVideo.currentTime =
-    10;
-
-  redLiveVideo.muted =
-    false;
-
-  redLiveVideo.volume =
-    1;
-
-  const promise =
-    redLiveVideo.play();
-
-  if(promise){
-
-    promise.catch(
-      function(){
-
-        redLiveVideo.controls =
-          true;
-
-      }
-    );
-
-  }
-
-  if(sampleTimer){
-
-    clearTimeout(
-      sampleTimer
-    );
-
-  }
-
-  sampleTimer =
-    setTimeout(
-      completeSampleFlow,
-      7000
-    );
-
-}
-
-
-/* =====================================================
-   FINAL ANSWER CALL FLOW
-===================================================== */
-
-function answerCallFinal(){
-
-  if(lockCallAction()){
-
-    return;
-
-  }
-
-  incomingCall.classList.add(
-    "hidden"
-  );
-
-  const watched =
-    localStorage.getItem(
-      SAMPLE_KEY
-    );
-
-  if(!watched){
-
-    localStorage.setItem(
-      SAMPLE_KEY,
-      "1"
-    );
-
-    playSampleFromCall();
-
-  }
-  else{
-
-    showBlackLive(2000);
-
-  }
-
-}
-
-
-/* =====================================================
-   FINAL DECLINE FLOW
-===================================================== */
-
-function declineCallFinal(){
-
-  if(lockCallAction()){
-
-    return;
-
-  }
-
-  incomingCall.classList.add(
-    "hidden"
-  );
-
-  returnToLivePhotos();
-
-}
-
-
-/* =====================================================
-   FINAL BUTTON ASSIGNMENT
-===================================================== */
-
-answerButton.onclick =
-  answerCallFinal;
-
-declineButton.onclick =
-  declineCallFinal;
-  /* =====================================================
-   FINAL CHECK
-===================================================== */
-
-function finalCheck(){
+function startWebsite(){
 
   /*
-    There must be exactly 32 image files.
+    Every new page load:
+    immediately start from welcome
+    for first visit.
+
+    After first visit:
+    incoming call appears after
+    the same 5-second welcome loading.
   */
 
-  if(
-    imageFiles.length !== 32
-  ){
-
-    console.warn(
-      "Expected 32 images but found:",
-      imageFiles.length
-    );
-
-  }
-
-  /*
-    Build all 32 cards.
-  */
-
-  oldCreatePhotos();
-
-  chooseOfflineProfiles();
-
-  applyOfflineStatus();
-
-  refreshPhotoClicks();
-
-  addImageErrorHandling();
-
-}
-
-
-/* =====================================================
-   INITIAL PAGE SETUP
-===================================================== */
-
-function bootWebsite(){
-
-  finalCheck();
-
-  updateOnlineNumber();
-
-  startOnlineCounter();
-
-  startOfflineRotation();
+  firstAnswerLock = false;
 
   welcomeScreen.classList.remove(
     "hidden"
@@ -2799,6 +2704,10 @@ function bootWebsite(){
   );
 
   incomingCall.classList.add(
+    "hidden"
+  );
+
+  cameraPermissionScreen.classList.add(
     "hidden"
   );
 
@@ -2814,36 +2723,29 @@ function bootWebsite(){
     "hidden"
   );
 
-  setTimeout(
-    function(){
+  updateOnline();
 
-      showIncomingCall();
+  /*
+    Welcome loading = 5 seconds.
+  */
 
-    },
-    3000
-  );
+  if(welcomeTimer){
 
-}
-
-
-/* =====================================================
-   SAFETY: DO NOT START TWICE
-===================================================== */
-
-let websiteStarted = false;
-
-
-function startWebsiteOnce(){
-
-  if(websiteStarted){
-
-    return;
+    clearTimeout(
+      welcomeTimer
+    );
 
   }
 
-  websiteStarted = true;
+  welcomeTimer =
+    setTimeout(
+      function(){
 
-  bootWebsite();
+        showIncomingCall();
+
+      },
+      5000
+    );
 
 }
 
@@ -2859,13 +2761,13 @@ if(
 
   document.addEventListener(
     "DOMContentLoaded",
-    startWebsiteOnce
+    startWebsite
   );
 
 }
 else{
 
-  startWebsiteOnce();
+  startWebsite();
 
 }
 
@@ -2878,10 +2780,26 @@ window.addEventListener(
   "beforeunload",
   function(){
 
-    if(callTimer){
+    if(welcomeTimer){
 
       clearTimeout(
-        callTimer
+        welcomeTimer
+      );
+
+    }
+
+    if(videoTimer){
+
+      clearTimeout(
+        videoTimer
+      );
+
+    }
+
+    if(videoChatTimer){
+
+      clearInterval(
+        videoChatTimer
       );
 
     }
@@ -2894,37 +2812,21 @@ window.addEventListener(
 
     }
 
-    if(offlineTimer){
+    if(insufficientTimerID){
 
       clearInterval(
-        offlineTimer
+        insufficientTimerID
       );
 
     }
 
-    if(welcomeTimer){
+    currentPhotoChatTimers.forEach(
+      function(timer){
 
-      clearTimeout(
-        welcomeTimer
-      );
+        clearInterval(timer);
 
-    }
-
-    if(sampleTimer){
-
-      clearTimeout(
-        sampleTimer
-      );
-
-    }
-
-    if(insufficientTimeout){
-
-      clearInterval(
-        insufficientTimeout
-      );
-
-    }
+      }
+    );
 
   }
 );
