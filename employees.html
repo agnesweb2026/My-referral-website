@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Employee Accounts</title>
 
 <style>
-
 *{
 box-sizing:border-box;
 }
@@ -80,6 +79,12 @@ font-weight:bold;
 margin-bottom:12px;
 }
 
+.username{
+color:#aaa;
+font-size:13px;
+margin-bottom:10px;
+}
+
 .linkBox{
 background:#222;
 border:1px solid #444;
@@ -124,6 +129,12 @@ background:#2563eb;
 color:#fff;
 }
 
+.withdrawButton{
+margin-top:8px;
+background:#7c3aed;
+color:#fff;
+}
+
 .status{
 min-height:18px;
 text-align:center;
@@ -147,7 +158,6 @@ font-size:18px;
 }
 
 }
-
 </style>
 </head>
 
@@ -166,11 +176,12 @@ EMPLOYEE LOGIN
 </button>
 
 <div id="employees"></div>
-
 <script>
 
 /*
-WEBSITE
+==================================================
+WEBSITE PAGES
+==================================================
 */
 
 const WEBSITE_URL =
@@ -182,68 +193,85 @@ const DASHBOARD_PAGE =
 const LOGIN_PAGE =
 "employee-login.html";
 
+const WITHDRAWAL_PAGE =
+"request-withdrawal.html";
+
 
 /*
-EMPLOYEE CODES
+==================================================
+EMPLOYEE ACCOUNTS
+==================================================
+
+These IDs MUST match employee-login.html
 */
 
 const employees = [
 
 {
 id:"REF-A7K2",
-name:"Employee 1"
+name:"Employee 1",
+username:"Joshua1"
 },
 
 {
 id:"REF-B4M8",
-name:"Employee 2"
+name:"Employee 2",
+username:"Joshua2"
 },
 
 {
 id:"REF-C9P3",
-name:"Employee 3"
+name:"Employee 3",
+username:"Joshua3"
 },
 
 {
 id:"REF-D2X6",
-name:"Employee 4"
+name:"Employee 4",
+username:"Joshua4"
 },
 
 {
 id:"REF-E5Q1",
-name:"Employee 5"
+name:"Employee 5",
+username:"Joshua5"
 },
 
 {
 id:"REF-F8L4",
-name:"Employee 6"
+name:"Employee 6",
+username:"Joshua6"
 },
 
 {
 id:"REF-G3N7",
-name:"Employee 7"
+name:"Employee 7",
+username:"Joshua7"
 },
 
 {
 id:"REF-H6R2",
-name:"Employee 8"
+name:"Employee 8",
+username:"Joshua8"
 },
 
 {
 id:"REF-J9T5",
-name:"Employee 9"
+name:"Employee 9",
+username:"Joshua9"
 },
 
 {
 id:"REF-K4W8",
-name:"Employee 10"
-}
-
-];
+name:"Employee 10",
+username:"Joshua10"
+}];
 
 
 /*
+==================================================
 MAKE REFERRAL LINK
+==================================================
 */
 
 function makeEmployeeLink(employeeId){
@@ -256,7 +284,124 @@ encodeURIComponent(employeeId);
 
 
 /*
-COPY LINK
+==================================================
+OPEN LOGIN
+==================================================
+*/
+
+function openEmployeeLogin(){
+
+window.location.href =
+LOGIN_PAGE;
+
+}
+
+
+/*
+==================================================
+PREPARE EMPLOYEE SESSION
+==================================================
+
+This connects employees.html
+to employee-dashboard.html.
+
+It also makes the employee identity
+available to request-withdrawal.html.
+*/
+
+function prepareEmployeeSession(employee){
+
+const employeeData = {
+
+id:employee.id,
+
+employeeId:employee.id,
+
+referral:employee.id,
+
+name:employee.name,
+
+employeeName:employee.name,
+
+username:employee.username,
+
+earnings:0,
+
+withdrawn:0
+
+};
+
+
+/*
+Dashboard currently uses employeeSession.
+*/
+
+localStorage.setItem(
+"employeeSession",
+JSON.stringify(employeeData)
+);
+
+
+/*
+Login/session connection.
+*/
+
+sessionStorage.setItem(
+"loggedInEmployee",
+employee.id
+);
+
+
+/*
+Also remember selected employee.
+*/
+
+sessionStorage.setItem(
+"selectedEmployee",
+JSON.stringify(employeeData)
+);
+
+}
+
+
+/*
+==================================================
+OPEN EMPLOYEE DASHBOARD
+==================================================
+*/
+
+function openDashboard(employee){
+
+prepareEmployeeSession(employee);
+
+window.location.href =
+DASHBOARD_PAGE +
+"?employee=" +
+encodeURIComponent(employee.id);
+
+}
+
+
+/*
+==================================================
+OPEN WITHDRAWAL PAGE
+==================================================
+*/
+
+function openWithdrawal(employee){
+
+prepareEmployeeSession(employee);
+
+window.location.href =
+WITHDRAWAL_PAGE +
+"?employee=" +
+encodeURIComponent(employee.id);
+
+}
+  /*
+==================================================
+COPY REFERRAL LINK
+==================================================
 */
 
 async function copyLink(
@@ -316,24 +461,12 @@ status.textContent =
 
 
 /*
-OPEN LOGIN
-*/
-
-function openEmployeeLogin(){
-
-window.location.href =
-LOGIN_PAGE;
-
-}
-
-
-/*
+==================================================
 CREATE EMPLOYEE CARD
+==================================================
 */
 
-function createEmployeeCard(
-employee
-){
+function createEmployeeCard(employee){
 
 const box =
 document.createElement("div");
@@ -341,6 +474,10 @@ document.createElement("div");
 box.className =
 "employee";
 
+
+/*
+NAME
+*/
 
 const name =
 document.createElement("div");
@@ -354,6 +491,10 @@ employee.name;
 box.appendChild(name);
 
 
+/*
+REFERRAL ID
+*/
+
 const id =
 document.createElement("div");
 
@@ -365,6 +506,26 @@ employee.id;
 
 box.appendChild(id);
 
+
+/*
+USERNAME
+*/
+
+const username =
+document.createElement("div");
+
+username.className =
+"username";
+
+username.textContent =
+"Username: " + employee.username;
+
+box.appendChild(username);
+
+
+/*
+REFERRAL LINK
+*/
 
 const link =
 makeEmployeeLink(
@@ -386,6 +547,10 @@ linkBox.title =
 
 box.appendChild(linkBox);
 
+
+/*
+STATUS
+*/
 
 const status =
 document.createElement("div");
@@ -440,7 +605,7 @@ status
 
 
 /*
-OPEN LINK
+OPEN REFERRAL LINK
 */
 
 const openButton =
@@ -450,7 +615,7 @@ openButton.className =
 "button openButton";
 
 openButton.textContent =
-"OPEN LINK";
+"OPEN REFERRAL LINK";
 
 openButton.onclick =
 function(){
@@ -481,17 +646,37 @@ dashboardButton.textContent =
 dashboardButton.onclick =
 function(){
 
-window.location.href =
-DASHBOARD_PAGE +
-"?employee=" +
-encodeURIComponent(
-employee.id
-);
+openDashboard(employee);
 
 };
 
 box.appendChild(
 dashboardButton
+);
+
+
+/*
+OPEN WITHDRAWAL
+*/
+
+const withdrawButton =
+document.createElement("button");
+
+withdrawButton.className =
+"button withdrawButton";
+
+withdrawButton.textContent =
+"REQUEST WITHDRAWAL";
+
+withdrawButton.onclick =
+function(){
+
+openWithdrawal(employee);
+
+};
+
+box.appendChild(
+withdrawButton
 );
 
 
@@ -503,10 +688,10 @@ status
 return box;
 
 }
-
-
-/*
+  /*
+==================================================
 LOAD EMPLOYEES
+==================================================
 */
 
 const container =
@@ -525,7 +710,56 @@ employee
 
 });
 
+
+/*
+==================================================
+CHECK URL EMPLOYEE
+==================================================
+
+If this page is opened with:
+
+?employee=REF-A7K2
+
+the selected employee is prepared
+for the dashboard.
+*/
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const employeeCode =
+params.get("employee");
+
+if(employeeCode){
+
+const selected =
+employees.find(
+function(employee){
+
+return employee.id === employeeCode;
+
+});
+
+if(selected){
+
+prepareEmployeeSession(
+selected
+);
+
+}
+
+}
+
+
+/*
+==================================================
+DONE
+==================================================
+*/
+
 </script>
 
 </body>
-  </html>
+</html>
