@@ -8,29 +8,21 @@
 <style>
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
+  -webkit-tap-highlight-color:transparent;
 }
 
 html,body{
+  margin:0;
+  padding:0;
   width:100%;
   min-height:100%;
+  font-family:Arial,Helvetica,sans-serif;
   background:#050505;
   color:#fff;
-  font-family:Arial,sans-serif;
 }
 
 body{
   overflow-x:hidden;
-}
-
-button,
-input{
-  font-family:inherit;
-}
-
-button{
-  cursor:pointer;
 }
 
 .hidden{
@@ -38,81 +30,100 @@ button{
 }
 
 /* TOP BAR */
-
-.top-bar{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  height:52px;
-  background:rgba(0,0,0,.95);
-  border-bottom:1px solid rgba(255,255,255,.1);
+.topbar{
+  height:58px;
+  width:100%;
   display:flex;
   align-items:center;
-  justify-content:center;
-  z-index:1000;
+  justify-content:space-between;
+  padding:0 16px;
+  background:linear-gradient(135deg,#111,#1b1b1b);
+  border-bottom:1px solid #292929;
+  position:sticky;
+  top:0;
+  z-index:50;
 }
 
-.top-title{
-  font-size:17px;
-  font-weight:900;
+.brand{
+  font-size:18px;
+  font-weight:800;
   letter-spacing:.5px;
 }
 
-/* PACKAGES */
-
-#packagesScreen{
-  min-height:100vh;
-  padding:78px 14px 35px;
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      #35104f 0%,
-      #14091d 32%,
-      #050505 72%
-    );
+.live-status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:13px;
+  color:#bdbdbd;
 }
 
-.payment-heading{
-  text-align:center;
-  font-size:29px;
-  font-weight:900;
-  margin-bottom:8px;
+.live-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#20e070;
+  box-shadow:0 0 10px #20e070;
 }
 
-.payment-subheading{
+/* PACKAGE PAGE */
+.packages-page{
+  min-height:calc(100vh - 58px);
+  padding:25px 14px 40px;
+  display:flex;
+  justify-content:center;
+}
+
+.packages-wrap{
+  width:100%;
+  max-width:520px;
+}
+
+.hero{
   text-align:center;
-  color:#c8c8c8;
-  font-size:14px;
   margin-bottom:22px;
 }
 
-.package-grid{
-  width:100%;
-  max-width:760px;
-  margin:auto;
+.hero h1{
+  margin:5px 0 8px;
+  font-size:29px;
+  font-weight:900;
+}
+
+.hero p{
+  margin:0;
+  color:#aaa;
+  font-size:14px;
+}
+
+.secure{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:12px;
+  padding:7px 12px;
+  border:1px solid #292929;
+  border-radius:20px;
+  background:#111;
+  color:#bbb;
+  font-size:12px;
+}
+
+.packages{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:13px;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
 
 .package{
   position:relative;
-  min-height:150px;
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:20px;
-  padding:20px 12px;
-  color:#fff;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(70,20,90,.95),
-      rgba(17,17,25,.98)
-    );
-  box-shadow:
-    0 10px 28px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.08);
+  border:1px solid #292929;
+  border-radius:18px;
+  padding:18px 13px;
+  background:linear-gradient(145deg,#151515,#0d0d0d);
+  cursor:pointer;
   transition:.2s ease;
+  overflow:hidden;
 }
 
 .package:active{
@@ -120,991 +131,881 @@ button{
 }
 
 .package.selected{
-  border:2px solid #00e676;
-  box-shadow:
-    0 0 0 2px rgba(0,230,118,.12),
-    0 12px 35px rgba(0,230,118,.16);
+  border:2px solid #fff;
+  background:linear-gradient(145deg,#202020,#101010);
+  box-shadow:0 0 20px rgba(255,255,255,.10);
 }
 
-.package-icon{
-  font-size:28px;
-  margin-bottom:7px;
+.package .badge{
+  position:absolute;
+  top:9px;
+  right:9px;
+  font-size:9px;
+  font-weight:800;
+  padding:4px 7px;
+  border-radius:10px;
+  background:#fff;
+  color:#000;
 }
 
-.package-minutes{
-  font-size:25px;
+.package .minutes{
+  font-size:24px;
   font-weight:900;
+  margin-top:3px;
 }
 
-.package-label{
-  color:#cfcfcf;
-  font-size:13px;
+.package .label{
+  color:#aaa;
+  font-size:12px;
   margin-top:2px;
 }
 
-.package-price{
-  margin-top:11px;
+.package .price{
+  margin-top:14px;
   font-size:21px;
   font-weight:900;
 }
 
-.package-action{
-  margin-top:7px;
-  color:#00e676;
-  font-size:12px;
-  font-weight:800;
+.package .currency{
+  color:#aaa;
+  font-size:11px;
+  font-weight:500;
 }
 
-.hot-badge,
-.popular-badge{
-  position:absolute;
-  top:9px;
-  right:9px;
-  padding:5px 8px;
-  border-radius:20px;
-  font-size:9px;
-  font-weight:900;
+.package .select-text{
+  margin-top:10px;
+  color:#888;
+  font-size:11px;
 }
 
-.hot-badge{
-  background:#ff1744;
+.package.selected .select-text{
   color:#fff;
 }
 
-.popular-badge{
-  background:#ffd600;
-  color:#111;
-}
-
-.package-note{
-  width:100%;
-  max-width:760px;
-  margin:17px auto;
-  padding:14px;
-  text-align:center;
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:14px;
-  background:rgba(255,255,255,.04);
-  color:#bbb;
-  font-size:12px;
-  line-height:1.6;
-}
-
-.payment-box{
-  width:100%;
-  max-width:760px;
-  margin:15px auto 0;
+.selected-box{
+  margin-top:18px;
   padding:16px;
-  border-radius:20px;
-  background:rgba(20,20,25,.96);
-  border:1px solid rgba(255,255,255,.1);
+  border-radius:17px;
+  background:#101010;
+  border:1px solid #292929;
+  text-align:center;
 }
 
-.selected-summary{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,255,255,.045);
-  margin-bottom:12px;
-}
-
-.summary-label{
+.selected-title{
   color:#999;
-  font-size:11px;
-  margin-bottom:4px;
+  font-size:12px;
 }
 
-.summary-value{
-  font-size:18px;
+.selected-value{
+  margin-top:5px;
+  font-size:22px;
   font-weight:900;
 }
 
-.pay-btn{
+.pay-button{
   width:100%;
-  min-height:54px;
+  margin-top:13px;
   border:0;
   border-radius:15px;
-  background:linear-gradient(
-    135deg,
-    #00e676,
-    #00b85a
-  );
-  color:#001b0c;
+  padding:17px 15px;
+  background:#fff;
+  color:#000;
   font-size:16px;
   font-weight:900;
-  box-shadow:
-    0 10px 25px rgba(0,230,118,.18);
+  cursor:pointer;
+  box-shadow:0 8px 25px rgba(255,255,255,.08);
 }
 
-.pay-btn:active{
+.pay-button:active{
   transform:scale(.98);
 }
 
-.status-message{
+.note{
   text-align:center;
-  min-height:20px;
-  margin-top:10px;
-  color:#aaa;
-  font-size:12px;
-}
-
-/* MOBILE */
-
-@media(max-width:420px){
-
-  .payment-heading{
-    font-size:25px;
-  }
-
-  .package{
-    min-height:140px;
-    padding:17px 10px;
-  }
-
-  .package-minutes{
-    font-size:22px;
-  }
-
-  .package-price{
-    font-size:18px;
-  }
+  margin-top:12px;
+  color:#777;
+  font-size:11px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="top-bar">
-  <div class="top-title">
-    LIVE ACCESS
+<div class="topbar">
+  <div class="brand">LIVE ACCESS</div>
+
+  <div class="live-status">
+    <span class="live-dot"></span>
+    LIVE
   </div>
 </div>
 
-<section id="packagesScreen">
+<section id="packagesPage" class="packages-page">
+  <div class="packages-wrap">
 
-  <div class="payment-heading">
-    Choose Your Access
-  </div>
+    <div class="hero">
+      <h1>Choose Your Access</h1>
+      <p>Select a package to continue to live access.</p>
 
-  <div class="payment-subheading">
-    Select your preferred package to continue
-  </div>
-
-  <div class="package-grid">
-
-    <button
-      class="package selected"
-      data-minutes="30"
-      data-price="95"
-      onclick="selectPackage(this)"
-    >
-      <div class="package-icon">⚡</div>
-      <div class="package-minutes">30</div>
-      <div class="package-label">minutes</div>
-      <div class="package-price">KSh 95</div>
-      <div class="package-action">
-        GET ACCESS
+      <div class="secure">
+        🔒 Secure M-PESA payment
       </div>
-    </button>
+    </div>
 
-    <button
-      class="package"
-      data-minutes="55"
-      data-price="138"
-      onclick="selectPackage(this)"
-    >
-      <div class="package-icon">🔥</div>
-      <div class="package-minutes">55</div>
-      <div class="package-label">minutes</div>
-      <div class="package-price">KSh 138</div>
-      <div class="package-action">
-        GET ACCESS
-      </div>
-    </button>
+    <div class="packages">
 
-    <button
-      class="package"
-      data-minutes="73"
-      data-price="207"
-      onclick="selectPackage(this)"
-    >
-      <span class="popular-badge">
-        POPULAR
-      </span>
-
-      <div class="package-icon">💎</div>
-      <div class="package-minutes">73</div>
-      <div class="package-label">minutes</div>
-      <div class="package-price">KSh 207</div>
-      <div class="package-action">
-        GET ACCESS
-      </div>
-    </button>
-
-    <button
-      class="package"
-      data-minutes="95"
-      data-price="253"
-      onclick="selectPackage(this)"
-    >
-      <div class="package-icon">🚀</div>
-      <div class="package-minutes">95</div>
-      <div class="package-label">minutes</div>
-      <div class="package-price">KSh 253</div>
-      <div class="package-action">
-        GET ACCESS
-      </div>
-    </button>
-
-    <button
-      class="package"
-      data-minutes="105"
-      data-price="299"
-      onclick="selectPackage(this)"
-    >
-      <div class="package-icon">👑</div>
-      <div class="package-minutes">105</div>
-      <div class="package-label">minutes</div>
-      <div class="package-price">KSh 299</div>
-      <div class="package-action">
-        GET ACCESS
-      </div>
-    </button>
-
-    <button
-      class="package"
-      data-minutes="166"
-      data-price="393"
-      onclick="selectPackage(this)"
-    >
-      <span class="hot-badge">
-        HOT
-      </span>
-
-      <div class="package-icon">🔥</div>
-      <div class="package-minutes">166</div>
-      <div class="package-label">minutes</div>
-      <div class="package-price">KSh 393</div>
-      <div class="package-action">
-        GET ACCESS
-      </div>
-    </button>
-
-  </div>
-
-  <div class="package-note">
-    🔒 <b>Secure M-PESA payment</b><br>
-    Choose a package above, then continue to payment.
-  </div>
-
-  <div class="payment-box">
-
-    <div class="selected-summary">
-
-      <div>
-        <div class="summary-label">
-          Selected package
-        </div>
-
-        <div
-          id="selectedPackageText"
-          class="summary-value"
-        >
-          30 minutes
-        </div>
+      <div class="package selected"
+           data-minutes="30"
+           data-price="95"
+           onclick="selectPackage(this)">
+        <div class="minutes">30</div>
+        <div class="label">MINUTES</div>
+        <div class="price">KSh 95</div>
+        <div class="select-text">Tap to select</div>
       </div>
 
-      <div
-        id="selectedPriceText"
-        class="summary-value"
-      >
-        KSh 95
+      <div class="package"
+           data-minutes="55"
+           data-price="138"
+           onclick="selectPackage(this)">
+        <div class="minutes">55</div>
+        <div class="label">MINUTES</div>
+        <div class="price">KSh 138</div>
+        <div class="select-text">Tap to select</div>
+      </div>
+
+      <div class="package"
+           data-minutes="73"
+           data-price="207"
+           onclick="selectPackage(this)">
+        <div class="badge">POPULAR</div>
+        <div class="minutes">73</div>
+        <div class="label">MINUTES</div>
+        <div class="price">KSh 207</div>
+        <div class="select-text">Tap to select</div>
+      </div>
+
+      <div class="package"
+           data-minutes="95"
+           data-price="253"
+           onclick="selectPackage(this)">
+        <div class="minutes">95</div>
+        <div class="label">MINUTES</div>
+        <div class="price">KSh 253</div>
+        <div class="select-text">Tap to select</div>
+      </div>
+
+      <div class="package"
+           data-minutes="105"
+           data-price="299"
+           onclick="selectPackage(this)">
+        <div class="minutes">105</div>
+        <div class="label">MINUTES</div>
+        <div class="price">KSh 299</div>
+        <div class="select-text">Tap to select</div>
+      </div>
+
+      <div class="package"
+           data-minutes="166"
+           data-price="393"
+           onclick="selectPackage(this)">
+        <div class="badge">HOT</div>
+        <div class="minutes">166</div>
+        <div class="label">MINUTES</div>
+        <div class="price">KSh 393</div>
+        <div class="select-text">Tap to select</div>
       </div>
 
     </div>
 
-    <button
-      class="pay-btn"
-      onclick="openMpesaPage()"
-    >
-      💳 PAY WITH M-PESA
-    </button>
+    <div class="selected-box">
+      <div class="selected-title">SELECTED PACKAGE</div>
 
-    <div
-      id="paymentStatus"
-      class="status-message"
-    ></div>
+      <div id="selectedValue" class="selected-value">
+        30 Minutes — KSh 95
+      </div>
+
+      <!-- NO SEND MONEY NUMBER HERE -->
+      <button class="pay-button" onclick="openMpesaPage()">
+        💳 PAY WITH M-PESA
+      </button>
+
+      <div class="note">
+        Continue securely with M-PESA
+      </div>
+    </div>
 
   </div>
-
 </section>
+<!-- LIVE SCREEN -->
 <section id="liveScreen" class="hidden">
+
+  <div class="live-header">
+    <div class="live-title">
+      <span class="red-live-dot"></span>
+      LIVE
+    </div>
+
+    <div class="viewer-count">
+      ● Live now
+    </div>
+  </div>
 
   <div class="live-layout">
 
-    <aside class="chat-side left">
+    <!-- LEFT CHAT -->
+    <div class="chat-panel left-chat">
+      <div class="chat-title">Live chat</div>
+      <div id="leftChatMessages"></div>
+    </div>
 
-      <div class="chat-title">
-        LIVE CHAT
-      </div>
-
-      <div
-        id="leftChatMessages"
-        class="chat-messages"
-      ></div>
-
-    </aside>
-
-
-    <div class="live-video-area">
+    <!-- CENTER VIDEO -->
+    <div class="video-area">
 
       <video
         id="liveVideo"
         playsinline
-        preload="auto"
-        muted
-      ></video>
+        webkit-playsinline
+        preload="auto">
+      </video>
 
+      <!-- Used only to request permission -->
       <video
         id="permissionVideo"
-        class="hidden"
+        class="permission-video"
         autoplay
-        playsinline
         muted
-      ></video>
+        playsinline>
+      </video>
 
-      <div class="live-badge">
-        <span class="live-badge-dot"></span>
-        LIVE
+      <div class="video-live-badge">
+        <span></span> LIVE
       </div>
 
-      <div
-        id="videoOverlay"
-        class="video-overlay hidden"
-      >
+      <div id="videoOverlay" class="video-overlay">
 
-        <div
-          id="videoOverlayTitle"
-          class="video-overlay-title"
-        >
-          Camera permission required
+        <div class="permission-card">
+
+          <div class="permission-icon">📹</div>
+
+          <div id="permissionTitle">
+            Camera permission required
+          </div>
+
+          <p id="permissionText">
+            Allow camera and microphone access to continue.
+          </p>
+
+          <button
+            id="permissionButton"
+            onclick="requestCameraPermission()">
+            CONTINUE
+          </button>
+
         </div>
 
-        <div
-          id="videoOverlaySub"
-          class="video-overlay-sub"
-        >
-          Allow camera and microphone access to continue.
-        </div>
+      </div>
 
-        <button
-          id="reloadLiveBtn"
-          class="reload-live-btn hidden"
-          onclick="reloadLiveVideo()"
-        >
-          Continue
+      <div id="videoError" class="video-error hidden">
+        <div>Video unavailable</div>
+
+        <button onclick="startLiveVideo()">
+          TRY AGAIN
         </button>
-
       </div>
 
     </div>
 
+    <!-- RIGHT CHAT -->
+    <div class="chat-panel right-chat">
+      <div class="chat-title">Live chat</div>
+      <div id="rightChatMessages"></div>
+    </div>
 
-    <aside class="chat-side right">
+  </div>
 
-      <div class="chat-title">
-        LIVE CHAT
-      </div>
-
-      <div
-        id="rightChatMessages"
-        class="chat-messages"
-      ></div>
-
-    </aside>
-
+  <div class="bottom-live-bar">
 
     <div class="center-chat">
+      <input
+        id="centerChatInput"
+        type="text"
+        placeholder="Say something..."
+        autocomplete="off">
 
-      <div class="center-chat-header">
-        LIVE CHAT
-      </div>
-
-      <div
-        id="centerChatMessages"
-        class="center-chat-messages"
-      ></div>
-
-      <div class="center-chat-actions">
-
-        <button onclick="reactLive('❤️')">
-          ❤️
-        </button>
-
-        <button onclick="reactLive('💕')">
-          💕
-        </button>
-
-        <button onclick="reactLive('👍')">
-          👍
-        </button>
-
-        <button onclick="reactLive('👎')">
-          👎
-        </button>
-
-        <button
-          id="followBtn"
-          class="follow-btn"
-          onclick="toggleFollow()"
-        >
-          Follow
-        </button>
-
-      </div>
-
-      <div class="center-message-box">
-
-        <input
-          id="centerMessageInput"
-          type="text"
-          maxlength="120"
-          placeholder="Send message..."
-        >
-
-        <button onclick="sendCenterMessage()">
-          Send
-        </button>
-
-      </div>
-
+      <button onclick="sendCenterMessage()">
+        SEND
+      </button>
     </div>
 
   </div>
 
 </section>
 
+<!-- FAILED PAYMENT -->
+<section id="failedScreen" class="hidden failed-screen">
 
-<section id="failedScreen" class="hidden">
+  <div class="failed-card">
 
-  <div class="failed-title">
-    Payment Not Completed
-  </div>
+    <div class="failed-icon">!</div>
 
-  <div class="failed-sub">
-    Returning to packages...
+    <h2>No payment is done</h2>
+
+    <p>
+      We could not confirm your M-PESA payment.
+    </p>
+
+    <button onclick="returnToPackages()">
+      TRY AGAIN
+    </button>
+
   </div>
 
 </section>
 <style>
 
-/* LIVE AREA */
+/* LIVE SCREEN */
 
 #liveScreen{
   min-height:100vh;
   background:#000;
-  padding-top:52px;
+  color:#fff;
+}
+
+.live-header{
+  height:55px;
+  padding:0 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#090909;
+  border-bottom:1px solid #202020;
+}
+
+.live-title{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:16px;
+  font-weight:900;
+}
+
+.red-live-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#ff2020;
+  box-shadow:0 0 12px #ff2020;
+}
+
+.viewer-count{
+  color:#aaa;
+  font-size:12px;
 }
 
 .live-layout{
-  min-height:calc(100vh - 52px);
+  width:100%;
+  min-height:calc(100vh - 115px);
   display:grid;
-  grid-template-columns:13% 74% 13%;
-  grid-template-rows:1fr auto;
-  position:relative;
+  grid-template-columns:150px minmax(0,1fr) 150px;
+  gap:5px;
+  padding:5px;
 }
 
-.live-video-area{
+.chat-panel{
+  background:#0c0c0c;
+  border:1px solid #1d1d1d;
+  border-radius:8px;
+  overflow:hidden;
+  min-height:400px;
+}
+
+.chat-title{
+  padding:9px;
+  border-bottom:1px solid #1d1d1d;
+  color:#999;
+  font-size:11px;
+  font-weight:700;
+}
+
+.chat-message{
+  padding:6px 8px;
+  font-size:10px;
+  line-height:1.25;
+  border-bottom:1px solid #141414;
+}
+
+.chat-name{
+  font-weight:800;
+  color:#fff;
+  margin-right:3px;
+}
+
+.chat-text{
+  color:#aaa;
+}
+
+.video-area{
   position:relative;
-  min-height:65vh;
+  min-width:0;
+  min-height:500px;
   background:#000;
+  border-radius:8px;
   overflow:hidden;
 }
 
 #liveVideo{
   width:100%;
   height:100%;
-  min-height:65vh;
-  display:block;
+  min-height:500px;
   object-fit:cover;
+  display:block;
   background:#000;
 }
 
-.chat-side{
-  background:#080808;
-  border-left:1px solid #151515;
-  border-right:1px solid #151515;
-  overflow:hidden;
+.permission-video{
+  position:absolute;
+  width:1px;
+  height:1px;
+  opacity:0;
+  pointer-events:none;
 }
 
-.chat-title{
-  height:42px;
+.video-live-badge{
+  position:absolute;
+  top:12px;
+  left:12px;
+  z-index:10;
   display:flex;
   align-items:center;
-  justify-content:center;
-  font-size:10px;
-  font-weight:900;
-  color:#aaa;
-  border-bottom:1px solid #171717;
-}
-
-.chat-messages{
-  padding:10px 6px;
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-
-.chat-message{
-  font-size:10px;
-  color:#ddd;
-  line-height:1.3;
-  word-break:break-word;
-}
-
-.live-badge{
-  position:absolute;
-  top:14px;
-  left:14px;
-  padding:7px 11px;
-  border-radius:8px;
-  background:#e60023;
+  gap:6px;
+  background:#e60000;
   color:#fff;
-  font-size:12px;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:11px;
   font-weight:900;
-  z-index:5;
-  box-shadow:0 4px 15px rgba(0,0,0,.4);
+  box-shadow:0 3px 12px rgba(0,0,0,.4);
 }
 
-.live-badge-dot{
-  display:inline-block;
-  width:7px;
-  height:7px;
-  border-radius:50%;
+.video-live-badge span{
+  width:6px;
+  height:6px;
   background:#fff;
-  margin-right:5px;
+  border-radius:50%;
   animation:livePulse 1s infinite;
 }
 
 @keyframes livePulse{
-
   0%,100%{
     opacity:1;
+    transform:scale(1);
   }
-
   50%{
-    opacity:.3;
+    opacity:.4;
+    transform:scale(.7);
   }
 }
 
 .video-overlay{
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,.78);
+  z-index:20;
   display:flex;
-  flex-direction:column;
-  justify-content:center;
   align-items:center;
-  text-align:center;
+  justify-content:center;
+  background:rgba(0,0,0,.72);
   padding:20px;
-  z-index:10;
 }
 
-.video-overlay-title{
-  font-size:20px;
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.video-overlay-sub{
-  color:#bbb;
-  font-size:13px;
+.permission-card{
+  width:100%;
   max-width:330px;
-  line-height:1.5;
-}
-
-.reload-live-btn{
-  margin-top:18px;
-  padding:12px 25px;
-  border:0;
-  border-radius:12px;
-  background:#00e676;
-  color:#001b0c;
-  font-weight:900;
-}
-
-.center-chat{
-  grid-column:2;
-  background:#090909;
-  border-top:1px solid #171717;
-  padding:10px;
-}
-
-.center-chat-header{
+  padding:25px 20px;
+  border-radius:20px;
+  background:#151515;
+  border:1px solid #303030;
   text-align:center;
-  font-size:11px;
-  color:#aaa;
-  font-weight:900;
-  margin-bottom:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,.7);
 }
 
-.center-chat-messages{
-  min-height:42px;
-  max-height:85px;
-  overflow:hidden;
+.permission-icon{
+  font-size:43px;
+  margin-bottom:13px;
+}
+
+.permission-card #permissionTitle{
+  font-size:19px;
+  font-weight:900;
+}
+
+.permission-card p{
+  color:#999;
+  font-size:13px;
+  line-height:1.5;
+  margin:10px 0 18px;
+}
+
+.permission-card button{
+  width:100%;
+  border:0;
+  border-radius:13px;
+  padding:14px;
+  background:#fff;
+  color:#000;
+  font-weight:900;
+  font-size:14px;
+}
+
+.video-error{
+  position:absolute;
+  inset:0;
+  z-index:30;
+  background:rgba(0,0,0,.9);
   display:flex;
   flex-direction:column;
-  justify-content:flex-end;
-  gap:4px;
-}
-
-.center-chat-message{
-  font-size:11px;
-  color:#ddd;
-}
-
-.center-chat-actions{
-  display:flex;
-  justify-content:center;
   align-items:center;
-  gap:7px;
-  margin:8px 0;
+  justify-content:center;
+  gap:15px;
 }
 
-.center-chat-actions button{
-  min-width:36px;
-  height:34px;
-  border:1px solid #292929;
-  border-radius:9px;
-  background:#141414;
-  color:#fff;
-}
-
-.center-chat-actions .follow-btn{
-  padding:0 14px;
-  background:#e60023;
-  border-color:#e60023;
+.video-error button{
+  border:0;
+  padding:12px 20px;
+  border-radius:10px;
+  background:#fff;
+  color:#000;
   font-weight:800;
 }
 
-.center-message-box{
-  display:flex;
-  gap:6px;
+.bottom-live-bar{
+  height:60px;
+  padding:8px;
+  background:#090909;
+  border-top:1px solid #202020;
 }
 
-.center-message-box input{
+.center-chat{
+  width:100%;
+  max-width:700px;
+  margin:auto;
+  display:flex;
+  gap:7px;
+}
+
+.center-chat input{
   flex:1;
   min-width:0;
-  height:40px;
-  padding:0 11px;
-  border:1px solid #252525;
-  border-radius:10px;
-  outline:none;
-  background:#141414;
+  border:1px solid #292929;
+  background:#151515;
   color:#fff;
+  border-radius:12px;
+  padding:12px;
+  outline:none;
 }
 
-.center-message-box button{
-  padding:0 13px;
+.center-chat button{
   border:0;
-  border-radius:10px;
-  background:#00e676;
-  color:#001b0c;
-  font-weight:900;
+  border-radius:12px;
+  padding:0 16px;
+  background:#fff;
+  color:#000;
+  font-weight:800;
 }
 
-#failedScreen{
+/* FAILED */
+
+.failed-screen{
   min-height:100vh;
-  background:#080808;
   display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
-  text-align:center;
+  padding:20px;
+  background:#050505;
 }
 
-.failed-title{
+.failed-card{
+  width:100%;
+  max-width:380px;
+  text-align:center;
+  background:#111;
+  border:1px solid #292929;
+  border-radius:20px;
+  padding:30px 22px;
+}
+
+.failed-icon{
+  width:50px;
+  height:50px;
+  margin:0 auto 15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#351010;
+  color:#ff3838;
   font-size:25px;
   font-weight:900;
 }
 
-.failed-sub{
+.failed-card h2{
+  margin:0;
+  font-size:22px;
+}
+
+.failed-card p{
   color:#999;
-  margin-top:8px;
   font-size:13px;
+  margin:10px 0 22px;
+}
+
+.failed-card button{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:14px;
+  background:#fff;
+  color:#000;
+  font-weight:900;
 }
 
 @media(max-width:700px){
 
   .live-layout{
     grid-template-columns:1fr;
-    grid-template-rows:auto auto;
   }
 
-  .chat-side{
+  .chat-panel{
     display:none;
   }
 
-  .live-video-area{
-    min-height:65vh;
+  .video-area{
+    min-height:calc(100vh - 115px);
   }
 
   #liveVideo{
-    min-height:65vh;
+    min-height:calc(100vh - 115px);
   }
 
-  .center-chat{
-    grid-column:1;
-  }
 }
 
   </style>
   <script>
 
-const LIVE_VIDEO_URL =
-  "IMG_20261001_112122_071.mp4";
+/* ==============================
+   PAYMENT + LIVE SETTINGS
+   ============================== */
+
+const LIVE_VIDEO_URL = "IMG_20261001_112122_071.mp4";
 
 let selectedMinutes = 30;
 let selectedPrice = 95;
 
 let liveStarted = false;
 let chatTimer = null;
+let permissionStream = null;
 
 
-/* ELEMENTS */
+/* ==============================
+   ELEMENTS
+   ============================== */
 
-const packagesScreen =
-  document.getElementById(
-    "packagesScreen"
-  );
+const packagesPage =
+  document.getElementById("packagesPage");
 
 const liveScreen =
-  document.getElementById(
-    "liveScreen"
-  );
+  document.getElementById("liveScreen");
 
 const failedScreen =
-  document.getElementById(
-    "failedScreen"
-  );
+  document.getElementById("failedScreen");
 
-const selectedPackageText =
-  document.getElementById(
-    "selectedPackageText"
-  );
-
-const selectedPriceText =
-  document.getElementById(
-    "selectedPriceText"
-  );
-
-const paymentStatus =
-  document.getElementById(
-    "paymentStatus"
-  );
+const selectedValue =
+  document.getElementById("selectedValue");
 
 const liveVideo =
-  document.getElementById(
-    "liveVideo"
-  );
+  document.getElementById("liveVideo");
 
 const permissionVideo =
-  document.getElementById(
-    "permissionVideo"
-  );
+  document.getElementById("permissionVideo");
 
 const videoOverlay =
-  document.getElementById(
-    "videoOverlay"
-  );
+  document.getElementById("videoOverlay");
 
-const videoOverlayTitle =
-  document.getElementById(
-    "videoOverlayTitle"
-  );
+const permissionTitle =
+  document.getElementById("permissionTitle");
 
-const videoOverlaySub =
-  document.getElementById(
-    "videoOverlaySub"
-  );
+const permissionText =
+  document.getElementById("permissionText");
 
-const reloadLiveBtn =
-  document.getElementById(
-    "reloadLiveBtn"
-  );
+const permissionButton =
+  document.getElementById("permissionButton");
+
+const videoError =
+  document.getElementById("videoError");
 
 
-/* PACKAGE SELECTION */
+/* ==============================
+   PACKAGE SELECTION
+   ============================== */
 
-function selectPackage(button){
+function selectPackage(element){
 
-  document
-    .querySelectorAll(".package")
+  document.querySelectorAll(".package")
     .forEach(function(item){
-
-      item.classList.remove(
-        "selected"
-      );
-
+      item.classList.remove("selected");
     });
 
-  button.classList.add(
-    "selected"
-  );
+  element.classList.add("selected");
 
   selectedMinutes =
-    Number(
-      button.dataset.minutes
-    );
+    Number(element.dataset.minutes);
 
   selectedPrice =
-    Number(
-      button.dataset.price
-    );
+    Number(element.dataset.price);
 
-  selectedPackageText.textContent =
-    selectedMinutes + " minutes";
-
-  selectedPriceText.textContent =
-    "KSh " + selectedPrice;
-
-  paymentStatus.textContent = "";
+  selectedValue.textContent =
+    selectedMinutes +
+    " Minutes — KSh " +
+    selectedPrice;
 }
 
 
-/* EXISTING M-PESA FLOW */
+/* ==============================
+   M-PESA PAGE
+   ============================== */
+
+/*
+   IMPORTANT:
+
+   We are NOT creating a new mpesa.html.
+
+   This opens YOUR EXISTING mpesa.html.
+
+   Your existing M-PESA API remains untouched.
+*/
 
 function openMpesaPage(){
 
   const url =
     "mpesa.html" +
     "?minutes=" +
-    encodeURIComponent(
-      selectedMinutes
-    ) +
+    encodeURIComponent(selectedMinutes) +
     "&price=" +
-    encodeURIComponent(
-      selectedPrice
-    );
+    encodeURIComponent(selectedPrice);
 
   window.location.href = url;
 }
 
 
-/* RETURN AFTER PAYMENT */
+/* ==============================
+   RETURN AFTER PAYMENT
+   ============================== */
 
 function checkPaymentReturn(){
 
   const params =
-    new URLSearchParams(
-      window.location.search
-    );
+    new URLSearchParams(window.location.search);
 
   const paid =
     params.get("paid");
 
-  if(paid !== "1"){
-    return;
+  if(paid === "1"){
+
+    const returnedMinutes =
+      params.get("minutes");
+
+    const returnedPrice =
+      params.get("price");
+
+    if(returnedMinutes){
+      selectedMinutes =
+        Number(returnedMinutes);
+    }
+
+    if(returnedPrice){
+      selectedPrice =
+        Number(returnedPrice);
+    }
+
+    openLiveVideoAfterPayment();
   }
-
-  selectedMinutes =
-    Number(
-      params.get("minutes")
-    ) || 30;
-
-  selectedPrice =
-    Number(
-      params.get("price")
-    ) || 95;
-
-  openLiveVideoAfterPayment();
 }
 
 
-/* OPEN LIVE AFTER PAYMENT */
+/* ==============================
+   OPEN LIVE AFTER SUCCESS
+   ============================== */
 
-async function openLiveVideoAfterPayment(){
+function openLiveVideoAfterPayment(){
 
-  if(liveStarted){
-    return;
-  }
+  packagesPage.classList.add("hidden");
+  failedScreen.classList.add("hidden");
+  liveScreen.classList.remove("hidden");
 
   liveStarted = true;
 
-  packagesScreen.classList.add(
-    "hidden"
+  showVideoOverlay(
+    "Camera permission required",
+    "Allow camera and microphone access to continue."
   );
 
-  failedScreen.classList.add(
-    "hidden"
-  );
-
-  liveScreen.classList.remove(
-    "hidden"
-  );
-
-  await requestCameraPermission();
+  requestCameraPermission();
 }
-
-
-/* CAMERA PERMISSION */
+    /* ==============================
+   CAMERA + MICROPHONE PERMISSION
+   ============================== */
 
 async function requestCameraPermission(){
 
-  if(
-    !navigator.mediaDevices ||
-    !navigator.mediaDevices.getUserMedia
-  ){
+  if(!navigator.mediaDevices ||
+     !navigator.mediaDevices.getUserMedia){
 
     showVideoOverlay(
-      "Camera permission unavailable",
-      "Your browser does not support camera permission.",
-      true
+      "Permission unavailable",
+      "Your browser does not support camera permission."
     );
+
+    permissionButton.textContent = "TRY AGAIN";
 
     return;
   }
 
-  showVideoOverlay(
-    "Allow camera & microphone",
-    "Please allow permission to continue.",
-    false
-  );
+  permissionButton.disabled = true;
+  permissionButton.textContent = "ALLOWING...";
 
   try{
 
-    const stream =
+    permissionStream =
       await navigator.mediaDevices.getUserMedia({
         video:true,
         audio:true
       });
 
+    /*
+      Camera permission has now been granted.
+
+      We do NOT show the visitor's camera.
+
+      We immediately stop the camera and microphone,
+      then open the existing live MP4.
+    */
+
     permissionVideo.srcObject =
-      stream;
+      permissionStream;
 
     try{
-
       await permissionVideo.play();
+    }catch(e){}
 
-    }catch(error){
-
-      /* Permission already granted. */
-
-    }
-
-    stream
+    permissionStream
       .getTracks()
       .forEach(function(track){
-
         track.stop();
-
       });
 
-    permissionVideo.srcObject =
-      null;
+    permissionStream = null;
+
+    permissionVideo.srcObject = null;
 
     hideVideoOverlay();
 
@@ -1114,121 +1015,112 @@ async function requestCameraPermission(){
 
   }catch(error){
 
+    console.log(
+      "Camera permission error:",
+      error
+    );
+
+    permissionButton.disabled = false;
+    permissionButton.textContent = "ALLOW CAMERA";
+
     showVideoOverlay(
-      "Permission required",
-      "Allow camera and microphone access, then tap Continue.",
-      true
+      "Camera permission required",
+      "Please allow camera and microphone access in your browser to continue."
     );
   }
 }
 
-  </script>
-  <script>
 
-function showVideoOverlay(
-  title,
-  subtitle,
-  showButton
-){
+/* ==============================
+   OVERLAY
+   ============================== */
 
-  videoOverlayTitle.textContent =
+function showVideoOverlay(title,text){
+
+  videoOverlay.classList.remove("hidden");
+
+  permissionTitle.textContent =
     title;
 
-  videoOverlaySub.textContent =
-    subtitle;
+  permissionText.textContent =
+    text;
 
-  videoOverlay.classList.remove(
-    "hidden"
-  );
+  permissionButton.disabled = false;
 
-  if(showButton){
-
-    reloadLiveBtn.classList.remove(
-      "hidden"
-    );
-
-  }else{
-
-    reloadLiveBtn.classList.add(
-      "hidden"
-    );
-  }
+  permissionButton.textContent =
+    "CONTINUE";
 }
 
 
 function hideVideoOverlay(){
 
-  videoOverlay.classList.add(
-    "hidden"
-  );
-
-  reloadLiveBtn.classList.add(
-    "hidden"
-  );
+  videoOverlay.classList.add("hidden");
 }
 
 
-function reloadLiveVideo(){
-
-  requestCameraPermission();
-}
-
-
-/* LIVE VIDEO */
+/* ==============================
+   START VIDEO
+   ============================== */
 
 function startLiveVideo(){
+
+  videoError.classList.add("hidden");
 
   liveVideo.src =
     LIVE_VIDEO_URL;
 
+  liveVideo.controls = false;
+  liveVideo.muted = false;
+  liveVideo.playsInline = true;
+
   liveVideo.load();
 
-  const playVideo =
-    async function(){
+  const playPromise =
+    liveVideo.play();
 
-      try{
+  if(playPromise &&
+     typeof playPromise.catch === "function"){
 
-        await liveVideo.play();
+    playPromise.catch(function(){
 
-      }catch(error){
+      /*
+        If the browser blocks autoplay,
+        show the permission/continue screen.
+      */
 
-        showVideoOverlay(
-          "Tap Continue",
-          "The live video could not start automatically.",
-          true
-        );
-      }
-    };
+      showVideoOverlay(
+        "Tap to continue",
+        "Tap CONTINUE to start the live video."
+      );
 
-  liveVideo.addEventListener(
-    "loadeddata",
-    playVideo,
-    {
-      once:true
-    }
-  );
+      permissionButton.disabled = false;
+      permissionButton.textContent =
+        "CONTINUE";
 
-  playVideo();
+      permissionButton.onclick =
+        function(){
+
+          hideVideoOverlay();
+
+          const attempt =
+            liveVideo.play();
+
+          if(attempt &&
+             attempt.catch){
+
+            attempt.catch(function(){
+              videoError.classList.remove("hidden");
+            });
+          }
+        };
+    });
+  }
 }
 
 
-/* VIDEO ERROR */
-
-liveVideo.addEventListener(
-  "error",
-  function(){
-
-    showVideoOverlay(
-      "Video unavailable",
-      "Please try again.",
-      true
-    );
-
-  }
-);
-
-
-/* LOOP VIDEO */
+/* ==============================
+   VIDEO LOOP
+   ============================== */
 
 liveVideo.addEventListener(
   "ended",
@@ -1236,77 +1128,93 @@ liveVideo.addEventListener(
 
     liveVideo.currentTime = 0;
 
-    liveVideo
-      .play()
-      .catch(function(){});
+    const p =
+      liveVideo.play();
 
+    if(p && p.catch){
+      p.catch(function(){});
+    }
   }
 );
 
 
-/* RETURN TO PACKAGES */
+/* ==============================
+   VIDEO ERROR
+   ============================== */
+
+liveVideo.addEventListener(
+  "error",
+  function(){
+
+    if(liveStarted){
+      videoError.classList.remove("hidden");
+    }
+  }
+);
+    /* ==============================
+   RETURN TO PACKAGES
+   ============================== */
 
 function returnToPackages(){
 
   liveStarted = false;
 
-  liveScreen.classList.add(
-    "hidden"
-  );
-
-  failedScreen.classList.add(
-    "hidden"
-  );
-
-  packagesScreen.classList.remove(
-    "hidden"
-  );
-
   if(chatTimer){
-
-    clearInterval(
-      chatTimer
-    );
-
+    clearInterval(chatTimer);
     chatTimer = null;
   }
 
-  liveVideo.pause();
+  try{
+    liveVideo.pause();
+  }catch(e){}
 
-  liveVideo.removeAttribute(
-    "src"
-  );
-
+  liveVideo.removeAttribute("src");
   liveVideo.load();
+
+  liveScreen.classList.add("hidden");
+  failedScreen.classList.add("hidden");
+  packagesPage.classList.remove("hidden");
+
+  window.history.replaceState(
+    {},
+    document.title,
+    window.location.pathname
+  );
 }
 
-  </script>
-  <script>
+
+/* ==============================
+   LIVE CHAT DATA
+   ============================== */
 
 const chatNames = [
-  "Brian",
-  "Kevin",
-  "Mary",
+  "Sarah",
   "Linda",
-  "James",
-  "Daniel",
-  "Alex",
-  "Chris",
-  "Peter",
-  "Ann"
+  "Aisha",
+  "Mercy",
+  "Becky",
+  "Dorry",
+  "Jane",
+  "Grace",
+  "Ann",
+  "Lucy",
+  "Nelly",
+  "Maya"
 ];
 
 const chatMessages = [
-  "Hello 👋",
-  "Hi there ❤️",
-  "Nice live!",
-  "Amazing 🔥",
+  "Hi ❤️",
   "Hello everyone",
+  "So nice here 😍",
+  "Hi there",
+  "You look amazing",
+  "Hello 👋",
+  "Anyone online?",
+  "This is live 🔥",
+  "Hey ❤️",
+  "Nice to meet you",
   "Wow 😍",
-  "Nice to see you",
-  "Great live ❤️",
-  "Hey 👋",
-  "Beautiful live"
+  "Hello beautiful"
 ];
 
 
@@ -1314,12 +1222,15 @@ function randomItem(array){
 
   return array[
     Math.floor(
-      Math.random() *
-      array.length
+      Math.random() * array.length
     )
   ];
 }
 
+
+/* ==============================
+   CREATE CHAT MESSAGE
+   ============================== */
 
 function createChatMessage(){
 
@@ -1329,288 +1240,231 @@ function createChatMessage(){
   const message =
     randomItem(chatMessages);
 
-  return name +
-    ": " +
-    message;
+  const div =
+    document.createElement("div");
+
+  div.className =
+    "chat-message";
+
+  div.innerHTML =
+    '<span class="chat-name">' +
+    name +
+    ':</span> ' +
+    '<span class="chat-text">' +
+    message +
+    '</span>';
+
+  return div;
 }
 
 
+/* ==============================
+   ADD CHAT
+   ============================== */
+
 function addChatMessage(){
 
-  const text =
-    createChatMessage();
-
-
   const left =
-    document.createElement(
-      "div"
-    );
-
-  left.className =
-    "chat-message";
-
-  left.textContent =
-    text;
-
-
-  const right =
-    document.createElement(
-      "div"
-    );
-
-  right.className =
-    "chat-message";
-
-  right.textContent =
-    text;
-
-
-  const center =
-    document.createElement(
-      "div"
-    );
-
-  center.className =
-    "center-chat-message";
-
-  center.textContent =
-    text;
-
-
-  const leftBox =
     document.getElementById(
       "leftChatMessages"
     );
 
-  const rightBox =
+  const right =
     document.getElementById(
       "rightChatMessages"
     );
 
-  const centerBox =
-    document.getElementById(
-      "centerChatMessages"
-    );
-
-
-  if(leftBox){
-
-    leftBox.appendChild(
-      left
-    );
-
-    while(
-      leftBox.children.length > 12
-    ){
-
-      leftBox.removeChild(
-        leftBox.firstChild
-      );
-    }
+  if(!left || !right){
+    return;
   }
 
+  const leftMessage =
+    createChatMessage();
 
-  if(rightBox){
+  const rightMessage =
+    createChatMessage();
 
-    rightBox.appendChild(
-      right
-    );
+  left.appendChild(leftMessage);
+  right.appendChild(rightMessage);
 
-    while(
-      rightBox.children.length > 12
-    ){
-
-      rightBox.removeChild(
-        rightBox.firstChild
-      );
-    }
+  while(left.children.length > 12){
+    left.removeChild(left.firstChild);
   }
 
-
-  if(centerBox){
-
-    centerBox.appendChild(
-      center
-    );
-
-    while(
-      centerBox.children.length > 8
-    ){
-
-      centerBox.removeChild(
-        centerBox.firstChild
-      );
-    }
+  while(right.children.length > 12){
+    right.removeChild(right.firstChild);
   }
+
+  left.scrollTop =
+    left.scrollHeight;
+
+  right.scrollTop =
+    right.scrollHeight;
 }
 
+
+/* ==============================
+   START CHAT
+   ============================== */
 
 function startLiveChat(){
 
   if(chatTimer){
-
-    clearInterval(
-      chatTimer
-    );
+    clearInterval(chatTimer);
   }
 
   addChatMessage();
 
   chatTimer =
-    setInterval(
-      addChatMessage,
-      2800
-    );
-}
+    setInterval(function(){
 
-  </script>
-  <script>
+      if(liveStarted){
+        addChatMessage();
+      }
 
-function reactLive(emoji){
-
-  const centerBox =
-    document.getElementById(
-      "centerChatMessages"
-    );
-
-  if(!centerBox){
-    return;
-  }
-
-
-  const message =
-    document.createElement(
-      "div"
-    );
-
-  message.className =
-    "center-chat-message";
-
-  message.textContent =
-    "You: " + emoji;
-
-  centerBox.appendChild(
-    message
-  );
-
-
-  while(
-    centerBox.children.length > 8
-  ){
-
-    centerBox.removeChild(
-      centerBox.firstChild
-    );
-  }
-}
-
-
-function toggleFollow(){
-
-  const followBtn =
-    document.getElementById(
-      "followBtn"
-    );
-
-  if(!followBtn){
-    return;
-  }
-
-
-  if(
-    followBtn.textContent ===
-    "Follow"
-  ){
-
-    followBtn.textContent =
-      "Following";
-
-    followBtn.style.background =
-      "#00e676";
-
-    followBtn.style.color =
-      "#001b0c";
-
-  }else{
-
-    followBtn.textContent =
-      "Follow";
-
-    followBtn.style.background =
-      "#e60023";
-
-    followBtn.style.color =
-      "#fff";
-  }
-}
-
+    },2800);
+    }
+    /* ==============================
+   CENTER CHAT
+   ============================== */
 
 function sendCenterMessage(){
 
   const input =
     document.getElementById(
-      "centerMessageInput"
+      "centerChatInput"
     );
 
-  const centerBox =
-    document.getElementById(
-      "centerChatMessages"
-    );
-
-
-  if(
-    !input ||
-    !centerBox
-  ){
+  if(!input){
     return;
   }
 
-
   const text =
     input.value.trim();
-
 
   if(!text){
     return;
   }
 
-
-  const message =
-    document.createElement(
-      "div"
+  const left =
+    document.getElementById(
+      "leftChatMessages"
     );
 
-  message.className =
-    "center-chat-message";
+  const div =
+    document.createElement("div");
 
-  message.textContent =
-    "You: " + text;
+  div.className =
+    "chat-message";
 
+  div.innerHTML =
+    '<span class="chat-name">You:</span> ' +
+    '<span class="chat-text">' +
+    escapeHTML(text) +
+    '</span>';
 
-  centerBox.appendChild(
-    message
-  );
+  left.appendChild(div);
 
+  while(left.children.length > 12){
+    left.removeChild(left.firstChild);
+  }
+
+  left.scrollTop =
+    left.scrollHeight;
 
   input.value = "";
-
-
-  while(
-    centerBox.children.length > 8
-  ){
-
-    centerBox.removeChild(
-      centerBox.firstChild
-    );
-  }
 }
 
-  </script>
-  <script>
+
+/* ==============================
+   SAFE TEXT
+   ============================== */
+
+function escapeHTML(text){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text;
+
+  return div.innerHTML;
+}
+
+
+/* ==============================
+   ENTER TO SEND
+   ============================== */
+
+const centerInput =
+  document.getElementById(
+    "centerChatInput"
+  );
+
+if(centerInput){
+
+  centerInput.addEventListener(
+    "keydown",
+    function(event){
+
+      if(event.key === "Enter"){
+
+        event.preventDefault();
+
+        sendCenterMessage();
+      }
+
+    }
+  );
+}
+
+
+/* ==============================
+   PAGE VISIBILITY
+   ============================== */
+
+document.addEventListener(
+  "visibilitychange",
+  function(){
+
+    if(document.hidden){
+
+      if(liveVideo &&
+         !liveVideo.paused){
+
+        liveVideo.pause();
+      }
+
+    }else{
+
+      if(liveStarted &&
+         liveVideo &&
+         liveVideo.src){
+
+        const p =
+          liveVideo.play();
+
+        if(p && p.catch){
+          p.catch(function(){});
+        }
+      }
+
+    }
+
+  }
+);
+    /* ==============================
+   INITIALIZE PAGE
+   ============================== */
 
 document.addEventListener(
   "DOMContentLoaded",
   function(){
+
+    /*
+      Make sure the first package
+      is selected.
+    */
 
     const firstPackage =
       document.querySelector(
@@ -1624,68 +1478,22 @@ document.addEventListener(
       );
     }
 
+
+    /*
+      Check whether the visitor
+      has returned from the existing
+      M-PESA payment page.
+    */
+
     checkPaymentReturn();
 
   }
 );
 
 
-/* ENTER TO SEND MESSAGE */
-
-const centerInput =
-  document.getElementById(
-    "centerMessageInput"
-  );
-
-if(centerInput){
-
-  centerInput.addEventListener(
-    "keydown",
-    function(event){
-
-      if(
-        event.key ===
-        "Enter"
-      ){
-
-        event.preventDefault();
-
-        sendCenterMessage();
-      }
-
-    }
-  );
-}
-
-  </script>
-  <script>
-
-/*
-  IMPORTANT:
-
-  This page does NOT replace
-  your existing M-PESA API.
-
-  The existing payment page
-  continues to return here with:
-
-  ?paid=1
-  &minutes=...
-  &price=...
-
-  After payment confirmation:
-
-  1. Packages disappear
-  2. Live screen opens
-  3. Camera permission is requested
-  4. Permission is granted
-  5. Camera tracks are stopped
-  6. Existing live MP4 starts automatically
-
-  No visible countdown.
-  No visible video seconds counter.
-*/
-
+/* ==============================
+   CLEANUP
+   ============================== */
 
 window.addEventListener(
   "beforeunload",
@@ -1693,37 +1501,25 @@ window.addEventListener(
 
     if(chatTimer){
 
-      clearInterval(
-        chatTimer
-      );
+      clearInterval(chatTimer);
 
       chatTimer = null;
     }
 
+    if(permissionStream){
 
-    if(
-      permissionVideo &&
-      permissionVideo.srcObject
-    ){
-
-      permissionVideo
-        .srcObject
+      permissionStream
         .getTracks()
-        .forEach(
-          function(track){
+        .forEach(function(track){
+          track.stop();
+        });
 
-            track.stop();
-
-          }
-        );
-
-      permissionVideo.srcObject =
-        null;
+      permissionStream = null;
     }
 
   }
 );
 
-  </script>
+</script>
   </body>
 </html>
