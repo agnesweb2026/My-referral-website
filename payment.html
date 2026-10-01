@@ -3,126 +3,92 @@
 <head>
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>M-PESA PAYMENT</title>
 
 <style>
-
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background: #000;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
+html,body{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+  background:#000;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  overflow:hidden;
 }
 
-body {
-  min-height: 100vh;
+body{min-height:100vh}
+
+button,input{font-family:inherit}
+button{cursor:pointer}
+
+.hidden{display:none!important}
+
+/* TOP BAR */
+.top-bar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 12px;
+  background:#101010;
+  border-bottom:1px solid #292929;
+  z-index:1000;
 }
 
-button,
-input {
-  font-family: inherit;
+.top-title{
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:.5px;
 }
 
-button {
-  cursor: pointer;
+.online-count{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  color:#ddd;
 }
 
-.hidden {
-  display: none !important;
+.online-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#00e676;
+  box-shadow:0 0 8px #00e676;
 }
 
-/* =========================
-   TOP BAR
-========================= */
-
-.top-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  height: 52px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 12px;
-
-  background: #101010;
-  border-bottom: 1px solid #292929;
-
-  z-index: 1000;
-}
-
-.top-title {
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: .5px;
-}
-
-.online-count {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
-  font-size: 12px;
-  color: #ddd;
-}
-
-.online-dot {
-  width: 9px;
-  height: 9px;
-
-  border-radius: 50%;
-
-  background: #00e676;
-  box-shadow: 0 0 8px #00e676;
+.page{
+  position:fixed;
+  top:52px;
+  left:0;
+  right:0;
+  bottom:0;
+  overflow:hidden;
 }
 
 /* =========================
-   MAIN
+   PACKAGES — ORIGINAL DESIGN
 ========================= */
 
-.page {
-  position: fixed;
-
-  top: 52px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  overflow: hidden;
-}
-
-/* =========================
-   PACKAGES
-========================= */
-
-#packagesScreen {
-  width: 100%;
-  height: 100%;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  padding: 18px 12px 30px;
-
+#packagesScreen{
+  width:100%;
+  height:100%;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:18px 12px 30px;
   background:
     radial-gradient(
       circle at top,
@@ -132,228 +98,695 @@ button {
     );
 }
 
-.payment-heading {
-  text-align: center;
-
-  font-size: 23px;
-  font-weight: 900;
-
-  margin: 5px 0 7px;
+.payment-heading{
+  text-align:center;
+  font-size:23px;
+  font-weight:900;
+  margin:5px 0 7px;
 }
 
-.payment-subheading {
-  text-align: center;
-
-  color: #aaa;
-  font-size: 12px;
-
-  margin-bottom: 15px;
+.payment-subheading{
+  text-align:center;
+  color:#aaa;
+  font-size:12px;
+  margin-bottom:15px;
 }
 
-.package-grid {
-  width: 100%;
-  max-width: 720px;
-
-  margin: 0 auto;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 10px;
+.package-grid{
+  width:100%;
+  max-width:720px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
 }
 
-.package {
-  position: relative;
-
-  min-height: 125px;
-
-  padding: 14px 10px;
-
-  border: 1px solid #333;
-  border-radius: 15px;
-
+.package{
+  position:relative;
+  min-height:125px;
+  padding:14px 10px;
+  border:1px solid #333;
+  border-radius:15px;
   background:
     linear-gradient(
       145deg,
       #1b1b1b,
       #090909
     );
-
-  color: #fff;
-
-  text-align: center;
-
-  transition: transform .15s ease,
+  color:#fff;
+  text-align:center;
+  transition:transform .15s ease,
               border-color .15s ease;
 }
 
-.package:active {
-  transform: scale(.97);
+.package:active{
+  transform:scale(.97);
 }
 
-.package.selected {
-  border-color: #00e676;
-
+.package.selected{
+  border-color:#00e676;
   box-shadow:
     0 0 0 1px #00e676,
     0 0 20px rgba(0,230,118,.15);
 }
 
-.package .minutes {
-  font-size: 22px;
-  font-weight: 900;
+.package .minutes{
+  font-size:22px;
+  font-weight:900;
 }
 
-.package .price {
-  margin-top: 8px;
-
-  font-size: 18px;
-  font-weight: 800;
-
-  color: #00e676;
+.package .price{
+  margin-top:8px;
+  font-size:18px;
+  font-weight:800;
+  color:#00e676;
 }
 
-.package .currency {
-  color: #aaa;
-  font-size: 11px;
+.package .currency{
+  color:#aaa;
+  font-size:11px;
 }
 
-.package .access-label {
-  margin-top: 7px;
-
-  font-size: 11px;
-  color: #aaa;
+.package .access-label{
+  margin-top:7px;
+  font-size:11px;
+  color:#aaa;
 }
 
-.hot-badge {
-  position: absolute;
+.hot-badge{
+  position:absolute;
+  top:-7px;
+  right:8px;
+  padding:4px 8px;
+  border-radius:10px;
+  background:#ff1744;
+  color:#fff;
+  font-size:9px;
+  font-weight:900;
+}
+  /* =========================
+   PAYMENT BOX — ORIGINAL
+========================= */
 
-  top: -7px;
-  right: 8px;
+.payment-box{
+  width:100%;
+  max-width:520px;
+  margin:15px auto 0;
+  padding:14px;
+  border:1px solid #303030;
+  border-radius:15px;
+  background:#101010;
+}
 
-  padding: 4px 8px;
+.payment-recipient{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:11px;
+  border-radius:10px;
+  background:#1a1a1a;
+  margin-bottom:10px;
+}
 
-  border-radius: 10px;
+.recipient-value{
+  font-size:15px;
+  font-weight:800;
+}
 
-  background: #ff1744;
-  color: #fff;
+.copy-btn{
+  border:0;
+  border-radius:8px;
+  padding:7px 10px;
+  background:#333;
+  color:#fff;
+  font-size:11px;
+}
 
-  font-size: 9px;
-  font-weight: 900;
+.phone-input{
+  width:100%;
+  padding:13px;
+  border:1px solid #3a3a3a;
+  border-radius:10px;
+  outline:none;
+  background:#080808;
+  color:#fff;
+  font-size:14px;
+}
+
+.phone-input:focus{
+  border-color:#00e676;
+}
+
+.pay-btn{
+  width:100%;
+  margin-top:10px;
+  padding:14px;
+  border:0;
+  border-radius:11px;
+  background:#00c853;
+  color:#fff;
+  font-size:15px;
+  font-weight:900;
+}
+
+.pay-btn:active{
+  transform:scale(.98);
+}
+
+.status-message{
+  min-height:20px;
+  margin-top:10px;
+  text-align:center;
+  font-size:12px;
+  color:#aaa;
 }
 
 /* =========================
-   PAYMENT BOX
+   LIVE SCREEN
 ========================= */
 
-.payment-box {
-  width: 100%;
-  max-width: 520px;
-
-  margin: 15px auto 0;
-
-  padding: 14px;
-
-  border: 1px solid #303030;
-  border-radius: 15px;
-
-  background: #101010;
+#liveScreen{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  overflow:hidden;
 }
 
-.payment-recipient {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/*
+   LEFT CHAT | VIDEO | RIGHT CHAT
+                    |
+               CENTER CHAT
+*/
 
-  gap: 8px;
+.live-layout{
+  position:absolute;
+  inset:0;
 
-  padding: 11px;
+  display:grid;
 
-  border-radius: 10px;
+  grid-template-columns:
+    15% minmax(0,70%) 15%;
 
-  background: #1a1a1a;
+  grid-template-rows:
+    minmax(0,1fr) auto;
 
-  margin-bottom: 10px;
+  width:100%;
+  height:100%;
+
+  background:#000;
+  overflow:hidden;
 }
 
-.recipient-value {
-  font-size: 15px;
-  font-weight: 800;
+/* SIDE CHAT */
+
+.chat-side{
+  min-width:0;
+  min-height:0;
+  background:#090909;
+  overflow:hidden;
+
+  display:flex;
+  flex-direction:column;
 }
 
-.copy-btn {
-  border: 0;
-  border-radius: 8px;
-
-  padding: 7px 10px;
-
-  background: #333;
-  color: #fff;
-
-  font-size: 11px;
+.chat-side.left{
+  grid-column:1;
+  grid-row:1 / 3;
+  border-right:1px solid #292929;
 }
 
-.phone-input {
-  width: 100%;
-
-  padding: 13px;
-
-  border: 1px solid #3a3a3a;
-  border-radius: 10px;
-
-  outline: none;
-
-  background: #080808;
-  color: #fff;
-
-  font-size: 14px;
+.chat-side.right{
+  grid-column:3;
+  grid-row:1 / 3;
+  border-left:1px solid #292929;
 }
 
-.phone-input:focus {
-  border-color: #00e676;
+.chat-title{
+  flex:0 0 30px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#111;
+  color:#ddd;
+
+  font-size:9px;
+  font-weight:900;
+
+  border-bottom:1px solid #222;
+  }
+  .chat-messages{
+  flex:1;
+  min-height:0;
+
+  padding:5px;
+
+  overflow:hidden;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:5px;
 }
 
-.pay-btn {
-  width: 100%;
+.side-message{
+  width:100%;
+  padding:6px 7px;
 
-  margin-top: 10px;
+  border-radius:10px;
 
-  padding: 14px;
+  background:#181818;
+  color:#eee;
 
-  border: 0;
-  border-radius: 11px;
+  font-size:9px;
+  line-height:1.25;
 
-  background: #00c853;
-  color: #fff;
-
-  font-size: 15px;
-  font-weight: 900;
+  animation:messageIn .35s ease;
 }
 
-.pay-btn:active {
-  transform: scale(.98);
+.side-message b{
+  color:#00e676;
 }
 
-.status-message {
-  min-height: 20px;
+@keyframes messageIn{
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
 
-  margin-top: 10px;
-
-  text-align: center;
-
-  font-size: 12px;
-  color: #aaa;
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
+/* =========================
+   BIG VIDEO
+========================= */
+
+.live-video-area{
+  grid-column:2;
+  grid-row:1;
+
+  position:relative;
+
+  width:100%;
+  height:100%;
+
+  min-width:0;
+  min-height:0;
+
+  background:#000;
+  overflow:hidden;
+}
+
+#liveVideo{
+  display:block;
+
+  width:100%;
+  height:100%;
+
+  object-fit:contain;
+
+  background:#000;
+}
+
+/* LIVE BADGE */
+
+.live-badge{
+  position:absolute;
+
+  top:10px;
+  left:10px;
+
+  z-index:20;
+
+  display:flex;
+  align-items:center;
+  gap:5px;
+
+  padding:5px 9px;
+
+  border-radius:7px;
+
+  background:#f00;
+  color:#fff;
+
+  font-size:10px;
+  font-weight:900;
+
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+
+.live-badge-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#fff;
+}
+
+/* VIDEO OVERLAY */
+
+.video-overlay{
+  position:absolute;
+  inset:0;
+
+  z-index:50;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+
+  gap:13px;
+
+  background:rgba(0,0,0,.78);
+
+  text-align:center;
+}
+
+.video-overlay-title{
+  font-size:20px;
+  font-weight:900;
+}
+
+.video-overlay-sub{
+  color:#bbb;
+  font-size:12px;
+}
+
+.reload-live-btn{
+  padding:12px 18px;
+
+  border:0;
+  border-radius:10px;
+
+  background:#e91e63;
+  color:#fff;
+
+  font-size:13px;
+  font-weight:900;
+  }
+  /* =========================
+   CENTER CHAT UNDER VIDEO
+========================= */
+
+.center-chat{
+  grid-column:2;
+  grid-row:2;
+
+  width:100%;
+  min-width:0;
+  height:116px;
+
+  display:flex;
+  flex-direction:column;
+
+  background:#080808;
+
+  border-top:1px solid #292929;
+
+  overflow:hidden;
+}
+
+.center-chat-header{
+  height:25px;
+  flex-shrink:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#111;
+  color:#ddd;
+
+  font-size:10px;
+  font-weight:900;
+
+  border-bottom:1px solid #222;
+}
+
+.center-chat-messages{
+  flex:1;
+  min-height:0;
+
+  display:flex;
+  align-items:center;
+  gap:7px;
+
+  padding:5px 8px;
+
+  overflow:hidden;
+  white-space:nowrap;
+
+  background:#090909;
+}
+
+.center-chat-messages .side-message{
+  flex:0 0 auto;
+
+  width:auto;
+  max-width:180px;
+
+  padding:6px 9px;
+
+  border-radius:15px;
+
+  background:#1c1c1c;
+  color:#fff;
+
+  font-size:10px;
+
+  animation:centerMessageMove .4s ease;
+}
+
+@keyframes centerMessageMove{
+  from{
+    opacity:0;
+    transform:translateX(30px) scale(.92);
+  }
+
+  to{
+    opacity:1;
+    transform:translateX(0) scale(1);
+  }
+}
+
+/* CENTER BUTTONS */
+
+.center-chat-actions{
+  height:34px;
+  flex-shrink:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:5px;
+  padding:3px 5px;
+
+  background:#101010;
+  border-top:1px solid #222;
+}
+
+.center-chat-actions button{
+  border:0;
+  border-radius:18px;
+
+  padding:5px 8px;
+
+  background:#222;
+  color:#fff;
+
+  font-size:14px;
+  line-height:1;
+}
+
+.center-chat-actions button:active{
+  transform:scale(.88);
+}
+
+.center-chat-actions .follow-btn{
+  background:#e91e63;
+
+  font-size:10px;
+  font-weight:900;
+
+  padding:6px 11px;
+}
+
+/* MESSAGE BOX */
+
+.center-message-box{
+  height:38px;
+  flex-shrink:0;
+
+  display:flex;
+  align-items:center;
+
+  gap:5px;
+  padding:4px 6px;
+
+  background:#070707;
+}
+
+.center-message-box input{
+  flex:1;
+  min-width:0;
+
+  height:29px;
+
+  border:1px solid #3b3b3b;
+  border-radius:16px;
+
+  padding:0 11px;
+
+  outline:none;
+
+  background:#181818;
+  color:#fff;
+
+  font-size:11px;
+}
+
+.center-message-box input::placeholder{
+  color:#888;
+}
+
+.center-message-box input:focus{
+  border-color:#00e676;
+}
+  .center-message-box button{
+  height:29px;
+
+  border:0;
+  border-radius:16px;
+
+  padding:0 11px;
+
+  background:#00c853;
+  color:#fff;
+
+  font-size:10px;
+  font-weight:900;
+}
+
+/* REACTIONS */
+
+.center-reaction{
+  position:absolute;
+
+  bottom:85px;
+  left:50%;
+
+  z-index:80;
+
+  font-size:25px;
+
+  pointer-events:none;
+
+  animation:reactionFloat 1.8s ease forwards;
+}
+
+@keyframes reactionFloat{
+  0%{
+    opacity:0;
+    transform:
+      translate(-50%,20px)
+      scale(.6);
+  }
+
+  15%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:0;
+    transform:
+      translate(-50%,-100px)
+      scale(1.3);
+  }
+}
+
+.center-user-message{
+  position:absolute;
+
+  left:50%;
+  bottom:82px;
+
+  transform:translateX(-50%);
+
+  z-index:75;
+
+  max-width:70%;
+
+  padding:7px 11px;
+
+  border-radius:14px;
+
+  background:#222;
+  color:#fff;
+
+  font-size:11px;
+
+  animation:userMessageShow .3s ease;
+}
+
+.center-user-message b{
+  color:#00e676;
+}
+
+@keyframes userMessageShow{
+  from{
+    opacity:0;
+    transform:translate(-50%,10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translate(-50%,0);
+  }
+}
+
+/* FAILED */
+
+#failedScreen{
+  position:absolute;
+  inset:0;
+  z-index:500;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+
+  gap:10px;
+
+  background:#050505;
+
+  text-align:center;
+}
+
+.failed-title{
+  color:#ff1744;
+  font-size:28px;
+  font-weight:900;
+}
+
+.failed-sub{
+  color:#aaa;
+  font-size:12px;
+}
 </style>
 </head>
 
 <body>
 
 <header class="top-bar">
-
   <div class="top-title">
     M-PESA PAYMENT
   </div>
@@ -362,12 +795,10 @@ button {
     <span class="online-dot"></span>
     <span>21 online</span>
   </div>
-
 </header>
 
 <main class="page">
-
-<section id="packagesScreen">
+  <section id="packagesScreen">
 
   <div class="payment-heading">
     Choose Minutes
@@ -379,74 +810,61 @@ button {
 
   <div class="package-grid">
 
-    <button
-      class="package"
+    <button class="package"
       data-minutes="30"
       data-price="95"
-      onclick="selectPackage(this)"
-    >
+      onclick="selectPackage(this)">
       <div class="minutes">30 min</div>
       <div class="price">KSh 95</div>
       <div class="currency">KSh</div>
       <div class="access-label">GET ACCESS</div>
     </button>
 
-    <button
-      class="package"
+    <button class="package"
       data-minutes="55"
       data-price="138"
-      onclick="selectPackage(this)"
-    >
+      onclick="selectPackage(this)">
       <div class="minutes">55 min</div>
       <div class="price">KSh 138</div>
       <div class="currency">KSh</div>
       <div class="access-label">GET ACCESS</div>
     </button>
 
-    <button
-      class="package"
+    <button class="package"
       data-minutes="73"
       data-price="207"
-      onclick="selectPackage(this)"
-    >
+      onclick="selectPackage(this)">
       <div class="minutes">73 min</div>
       <div class="price">KSh 207</div>
       <div class="currency">KSh</div>
       <div class="access-label">GET ACCESS</div>
     </button>
 
-    <button
-      class="package"
+    <button class="package"
       data-minutes="95"
       data-price="253"
-      onclick="selectPackage(this)"
-    >
+      onclick="selectPackage(this)">
       <div class="minutes">95 min</div>
       <div class="price">KSh 253</div>
       <div class="currency">KSh</div>
       <div class="access-label">GET ACCESS</div>
     </button>
 
-    <button
-      class="package"
+    <button class="package"
       data-minutes="105"
       data-price="299"
-      onclick="selectPackage(this)"
-    >
+      onclick="selectPackage(this)">
       <div class="minutes">105 min</div>
       <div class="price">KSh 299</div>
       <div class="currency">KSh</div>
       <div class="access-label">GET ACCESS</div>
     </button>
 
-    <button
-      class="package"
+    <button class="package"
       data-minutes="166"
       data-price="393"
-      onclick="selectPackage(this)"
-    >
+      onclick="selectPackage(this)">
       <span class="hot-badge">HOT</span>
-
       <div class="minutes">166 min</div>
       <div class="price">KSh 393</div>
       <div class="currency">KSh</div>
@@ -458,18 +876,14 @@ button {
   <div class="payment-box">
 
     <div class="payment-recipient">
-
       <span class="recipient-value">
         M-PESA
       </span>
 
-      <button
-        class="copy-btn"
-        onclick="copyRecipient()"
-      >
+      <button class="copy-btn"
+        onclick="copyRecipient()">
         COPY
       </button>
-
     </div>
 
     <input
@@ -483,707 +897,34 @@ button {
 
     <button
       class="pay-btn"
-      onclick="startPayment()"
-    >
+      onclick="startPayment()">
       PAY WITH M-PESA
     </button>
 
     <div
       id="paymentStatus"
-      class="status-message"
-    ></div>
+      class="status-message">
+    </div>
 
   </div>
-
 </section>
-<style>
 
-/* =========================
-   LIVE SCREEN
-========================= */
-
-#liveScreen {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background: #000;
-
-  overflow: hidden;
-}
-
-/*
-   LEFT CHAT | BIG VIDEO | RIGHT CHAT
-   CENTER CHAT is underneath VIDEO
-*/
-
-.live-layout {
-
-  position: absolute;
-
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  display: grid;
-
-  grid-template-columns:
-    15% minmax(0, 70%) 15%;
-
-  grid-template-rows:
-    minmax(0, 1fr) auto;
-
-  width: 100%;
-  height: 100%;
-
-  background: #000;
-
-  overflow: hidden;
-}
-
-/* =========================
-   SIDE CHATS
-========================= */
-
-.chat-side {
-
-  min-width: 0;
-  min-height: 0;
-
-  background: #090909;
-
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: column;
-
-  border-color: #222;
-}
-
-.chat-side.left {
-
-  grid-column: 1;
-  grid-row: 1 / 3;
-
-  border-right: 1px solid #292929;
-}
-
-.chat-side.right {
-
-  grid-column: 3;
-  grid-row: 1 / 3;
-
-  border-left: 1px solid #292929;
-}
-
-.chat-title {
-
-  flex: 0 0 30px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #111;
-
-  color: #ddd;
-
-  font-size: 9px;
-  font-weight: 900;
-
-  border-bottom: 1px solid #222;
-}
-
-.chat-messages {
-
-  flex: 1;
-
-  min-height: 0;
-
-  padding: 5px;
-
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: column;
-
-  justify-content: flex-end;
-
-  gap: 5px;
-}
-
-.side-message {
-
-  width: 100%;
-
-  padding: 6px 7px;
-
-  border-radius: 10px;
-
-  background: #181818;
-
-  color: #eee;
-
-  font-size: 9px;
-
-  line-height: 1.25;
-
-  animation:
-    messageIn .35s ease;
-}
-
-.side-message b {
-
-  color: #00e676;
-}
-
-@keyframes messageIn {
-
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-}
-
-/* =========================
-   BIG VIDEO AREA
-========================= */
-
-.live-video-area {
-
-  grid-column: 2;
-  grid-row: 1;
-
-  position: relative;
-
-  width: 100%;
-  height: 100%;
-
-  min-width: 0;
-  min-height: 0;
-
-  background: #000;
-
-  overflow: hidden;
-}
-
-#liveVideo {
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  background: #000;
-}
-
-/* =========================
-   LIVE BADGE
-========================= */
-
-.live-badge {
-
-  position: absolute;
-
-  top: 10px;
-  left: 10px;
-
-  z-index: 20;
-
-  display: flex;
-  align-items: center;
-
-  gap: 5px;
-
-  padding: 5px 9px;
-
-  border-radius: 7px;
-
-  background: #f00;
-  color: #fff;
-
-  font-size: 10px;
-  font-weight: 900;
-
-  box-shadow:
-    0 2px 8px rgba(0,0,0,.4);
-}
-
-.live-badge-dot {
-
-  width: 6px;
-  height: 6px;
-
-  border-radius: 50%;
-
-  background: #fff;
-}
-
-/* =========================
-   VIDEO RECONNECT OVERLAY
-========================= */
-
-.video-overlay {
-
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 50;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  flex-direction: column;
-
-  gap: 13px;
-
-  background:
-    rgba(0,0,0,.78);
-
-  text-align: center;
-}
-
-.video-overlay-title {
-
-  font-size: 20px;
-  font-weight: 900;
-}
-
-.video-overlay-sub {
-
-  color: #bbb;
-
-  font-size: 12px;
-}
-
-.reload-live-btn {
-
-  padding: 12px 18px;
-
-  border: 0;
-  border-radius: 10px;
-
-  background: #e91e63;
-  color: #fff;
-
-  font-size: 13px;
-  font-weight: 900;
-}
-
-</style>
-<style>
-
-/* =========================
-   CENTER CHAT
-========================= */
-
-.center-chat {
-
-  grid-column: 2;
-  grid-row: 2;
-
-  width: 100%;
-
-  min-width: 0;
-
-  height: 116px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  background: #080808;
-
-  border-top: 1px solid #292929;
-
-  overflow: hidden;
-}
-
-.center-chat-header {
-
-  height: 25px;
-
-  flex-shrink: 0;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  background: #111;
-
-  color: #ddd;
-
-  font-size: 10px;
-
-  font-weight: 900;
-
-  border-bottom: 1px solid #222;
-}
-
-.center-chat-messages {
-
-  flex: 1;
-
-  min-height: 0;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 7px;
-
-  padding: 5px 8px;
-
-  overflow: hidden;
-
-  white-space: nowrap;
-
-  background: #090909;
-}
-
-.center-chat-messages .side-message {
-
-  flex: 0 0 auto;
-
-  width: auto;
-
-  max-width: 180px;
-
-  padding: 6px 9px;
-
-  border-radius: 15px;
-
-  background: #1c1c1c;
-
-  color: #fff;
-
-  font-size: 10px;
-
-  animation:
-    centerMessageMove .4s ease;
-}
-
-.center-chat-messages .side-message b {
-
-  color: #00e676;
-}
-
-@keyframes centerMessageMove {
-
-  from {
-
-    opacity: 0;
-
-    transform:
-      translateX(30px)
-      scale(.92);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform:
-      translateX(0)
-      scale(1);
-
-  }
-
-}
-
-/* =========================
-   CENTER ACTIONS
-========================= */
-
-.center-chat-actions {
-
-  height: 34px;
-
-  flex-shrink: 0;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 5px;
-
-  padding: 3px 5px;
-
-  background: #101010;
-
-  border-top: 1px solid #222;
-}
-
-.center-chat-actions button {
-
-  border: 0;
-
-  border-radius: 18px;
-
-  padding: 5px 8px;
-
-  background: #222;
-
-  color: #fff;
-
-  font-size: 14px;
-
-  line-height: 1;
-
-}
-
-.center-chat-actions button:active {
-
-  transform: scale(.88);
-
-}
-
-.center-chat-actions .follow-btn {
-
-  background: #e91e63;
-
-  font-size: 10px;
-
-  font-weight: 900;
-
-  padding: 6px 11px;
-}
-
-/* =========================
-   MESSAGE INPUT
-========================= */
-
-.center-message-box {
-
-  height: 38px;
-
-  flex-shrink: 0;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 5px;
-
-  padding: 4px 6px;
-
-  background: #070707;
-}
-
-.center-message-box input {
-
-  flex: 1;
-
-  min-width: 0;
-
-  height: 29px;
-
-  border: 1px solid #3b3b3b;
-
-  border-radius: 16px;
-
-  padding: 0 11px;
-
-  outline: none;
-
-  background: #181818;
-
-  color: #fff;
-
-  font-size: 11px;
-}
-
-.center-message-box input::placeholder {
-
-  color: #888;
-}
-
-.center-message-box input:focus {
-
-  border-color: #00e676;
-}
-
-.center-message-box button {
-
-  height: 29px;
-
-  border: 0;
-
-  border-radius: 16px;
-
-  padding: 0 11px;
-
-  background: #00c853;
-
-  color: #fff;
-
-  font-size: 10px;
-
-  font-weight: 900;
-}
-
-/* =========================
-   REACTIONS
-========================= */
-
-.center-reaction {
-
-  position: absolute;
-
-  bottom: 85px;
-
-  left: 50%;
-
-  z-index: 80;
-
-  font-size: 25px;
-
-  pointer-events: none;
-
-  animation:
-    reactionFloat 1.8s ease forwards;
-}
-
-@keyframes reactionFloat {
-
-  0% {
-
-    opacity: 0;
-
-    transform:
-      translate(-50%, 20px)
-      scale(.6);
-
-  }
-
-  15% {
-
-    opacity: 1;
-
-  }
-
-  100% {
-
-    opacity: 0;
-
-    transform:
-      translate(-50%, -100px)
-      scale(1.3);
-
-  }
-
-}
-
-/* =========================
-   USER MESSAGE
-========================= */
-
-.center-user-message {
-
-  position: absolute;
-
-  left: 50%;
-
-  bottom: 82px;
-
-  transform: translateX(-50%);
-
-  z-index: 75;
-
-  max-width: 70%;
-
-  padding: 7px 11px;
-
-  border-radius: 14px;
-
-  background: #222;
-
-  color: #fff;
-
-  font-size: 11px;
-
-  animation:
-    userMessageShow .3s ease;
-}
-
-.center-user-message b {
-
-  color: #00e676;
-}
-
-@keyframes userMessageShow {
-
-  from {
-
-    opacity: 0;
-
-    transform:
-      translate(-50%, 10px);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform:
-      translate(-50%, 0);
-
-  }
-
-}
-
-</style>
-<!-- =========================
-     LIVE SCREEN
-========================= -->
+<!-- LIVE SCREEN -->
 
 <section id="liveScreen" class="hidden">
 
   <div class="live-layout">
 
-    <!-- =====================
-         LEFT CHAT
-    ====================== -->
-
     <aside class="chat-side left">
-
       <div class="chat-title">
         LIVE CHAT
       </div>
 
       <div
         id="leftChatMessages"
-        class="chat-messages"
-      ></div>
-
+        class="chat-messages">
+      </div>
     </aside>
-
-
-    <!-- =====================
-         BIG CENTER VIDEO
-    ====================== -->
 
     <div class="live-video-area">
 
@@ -1191,8 +932,8 @@ button {
         id="liveVideo"
         playsinline
         preload="auto"
-        controls="false"
-      ></video>
+        controls="false">
+      </video>
 
       <div class="live-badge">
         <span class="live-badge-dot"></span>
@@ -1201,28 +942,24 @@ button {
 
       <div
         id="videoOverlay"
-        class="video-overlay hidden"
-      >
+        class="video-overlay hidden">
 
         <div
           id="videoOverlayTitle"
-          class="video-overlay-title"
-        >
+          class="video-overlay-title">
           Reconnecting...
         </div>
 
         <div
           id="videoOverlaySub"
-          class="video-overlay-sub"
-        >
+          class="video-overlay-sub">
           Please wait
         </div>
 
         <button
           id="reloadLiveBtn"
           class="reload-live-btn hidden"
-          onclick="reloadLiveVideo()"
-        >
+          onclick="reloadLiveVideo()">
           Reload live video
         </button>
 
@@ -1230,28 +967,17 @@ button {
 
     </div>
 
-
-    <!-- =====================
-         RIGHT CHAT
-    ====================== -->
-
     <aside class="chat-side right">
-
       <div class="chat-title">
         LIVE CHAT
       </div>
 
       <div
         id="rightChatMessages"
-        class="chat-messages"
-      ></div>
-
+        class="chat-messages">
+      </div>
     </aside>
-
-
-    <!-- =====================
-         CENTER CHAT
-    ====================== -->
+        <!-- CHAT UNDER VIDEO ONLY -->
 
     <div class="center-chat">
 
@@ -1261,8 +987,8 @@ button {
 
       <div
         id="centerChatMessages"
-        class="center-chat-messages"
-      ></div>
+        class="center-chat-messages">
+      </div>
 
       <div class="center-chat-actions">
 
@@ -1285,8 +1011,7 @@ button {
         <button
           id="followBtn"
           class="follow-btn"
-          onclick="toggleFollow()"
-        >
+          onclick="toggleFollow()">
           Follow
         </button>
 
@@ -1298,8 +1023,7 @@ button {
           id="centerMessageInput"
           type="text"
           maxlength="120"
-          placeholder="Send message..."
-        >
+          placeholder="Send message...">
 
         <button onclick="sendCenterMessage()">
           Send
@@ -1310,53 +1034,24 @@ button {
     </div>
 
   </div>
-
 </section>
-
-
-<!-- =========================
-     FAILED SCREEN
-========================= -->
 
 <section
   id="failedScreen"
-  class="hidden"
-  style="
-    position:absolute;
-    inset:0;
-    z-index:500;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    gap:10px;
-    background:#050505;
-    text-align:center;
-  "
->
+  class="hidden">
 
-  <div
-    style="
-      color:#ff1744;
-      font-size:28px;
-      font-weight:900;
-    "
-  >
+  <div class="failed-title">
     Failed
   </div>
 
-  <div
-    style="
-      color:#aaa;
-      font-size:12px;
-    "
-  >
+  <div class="failed-sub">
     Returning to packages...
   </div>
 
 </section>
 
 </main>
+
 <script>
 
 /* =========================
@@ -1372,7 +1067,6 @@ const STK_PUSH_URL =
 const PAYMENT_STATUS_URL =
   "/api/payment-status";
 
-
 /* =========================
    STATE
 ========================= */
@@ -1381,23 +1075,15 @@ let selectedMinutes = 30;
 let selectedPrice = 95;
 
 let paymentBusy = false;
-
 let paymentPollTimer = null;
 
 let chatTimer = null;
-
 let liveTimer = null;
 
-let reconnectTimer = null;
-
 let liveStarted = false;
-
 let videoReconnectUsed = false;
 
-
-/* =========================
-   ELEMENTS
-========================= */
+/* ELEMENTS */
 
 const packagesScreen =
   document.getElementById("packagesScreen");
@@ -1410,6 +1096,18 @@ const failedScreen =
 
 const liveVideo =
   document.getElementById("liveVideo");
+
+const videoOverlay =
+  document.getElementById("videoOverlay");
+
+const videoOverlayTitle =
+  document.getElementById("videoOverlayTitle");
+
+const videoOverlaySub =
+  document.getElementById("videoOverlaySub");
+
+const reloadLiveBtn =
+  document.getElementById("reloadLiveBtn");
 
 const paymentStatus =
   document.getElementById("paymentStatus");
@@ -1425,32 +1123,16 @@ const rightChatMessages =
 
 const centerChatMessages =
   document.getElementById("centerChatMessages");
-
-const videoOverlay =
-  document.getElementById("videoOverlay");
-
-const videoOverlayTitle =
-  document.getElementById("videoOverlayTitle");
-
-const videoOverlaySub =
-  document.getElementById("videoOverlaySub");
-
-const reloadLiveBtn =
-  document.getElementById("reloadLiveBtn");
-
-
-/* =========================
-   PACKAGE SELECT
+  /* =========================
+   PACKAGE SELECTION
 ========================= */
 
-function selectPackage(button) {
+function selectPackage(button){
 
   document
     .querySelectorAll(".package")
-    .forEach(function(item) {
-
+    .forEach(function(item){
       item.classList.remove("selected");
-
     });
 
   button.classList.add("selected");
@@ -1462,194 +1144,102 @@ function selectPackage(button) {
     Number(button.dataset.price);
 
   paymentStatus.textContent =
-    selectedMinutes +
-    " minutes selected — KSh " +
-    selectedPrice;
+    "";
 }
-
-
-/* =========================
-   DEFAULT PACKAGE
-========================= */
-
-(function selectDefaultPackage() {
-
-  const firstPackage =
-    document.querySelector(".package");
-
-  if (firstPackage) {
-
-    selectPackage(firstPackage);
-
-  }
-
-})();
-  <script>
 
 /* =========================
    COPY
 ========================= */
 
-function copyRecipient() {
+function copyRecipient(){
 
-  const value = "M-PESA";
+  navigator.clipboard
+    .writeText("M-PESA")
+    .then(function(){
 
-  if (
-    navigator.clipboard &&
-    navigator.clipboard.writeText
-  ) {
+      paymentStatus.textContent =
+        "Copied";
 
-    navigator.clipboard
-      .writeText(value)
-      .then(function() {
+      setTimeout(function(){
+        paymentStatus.textContent = "";
+      },1500);
 
-        paymentStatus.textContent =
-          "Copied";
+    })
+    .catch(function(){
 
-      })
-      .catch(function() {
+      paymentStatus.textContent =
+        "M-PESA";
 
-        paymentStatus.textContent =
-          "Copy failed";
-
-      });
-
-  } else {
-
-    paymentStatus.textContent =
-      "Copy not supported";
-
-  }
-
+    });
 }
 
-
 /* =========================
-   PHONE NORMALIZATION
+   PAYMENT
 ========================= */
 
-function normalizePhone(phone) {
+async function startPayment(){
 
-  phone =
-    String(phone || "")
-      .replace(/\s+/g, "")
-      .replace(/-/g, "");
-
-  if (phone.startsWith("+254")) {
-
-    return phone;
-
-  }
-
-  if (phone.startsWith("254")) {
-
-    return "+" + phone;
-
-  }
-
-  if (phone.startsWith("07")) {
-
-    return "+254" + phone.substring(1);
-
-  }
-
-  if (phone.startsWith("01")) {
-
-    return "+254" + phone.substring(1);
-
-  }
-
-  return phone;
-
-}
-
-
-/* =========================
-   START PAYMENT
-========================= */
-
-async function startPayment() {
-
-  if (paymentBusy) {
+  if(paymentBusy){
     return;
   }
-
-  const rawPhone =
-    phoneInput.value.trim();
 
   const phone =
-    normalizePhone(rawPhone);
+    phoneInput.value.trim();
 
-  if (!phone) {
-
-    paymentStatus.textContent =
-      "Enter your M-PESA phone number";
-
-    phoneInput.focus();
-
-    return;
-
-  }
-
-  if (
-    !/^\+254\d{9}$/.test(phone)
-  ) {
+  if(!phone){
 
     paymentStatus.textContent =
-      "Enter a valid Kenyan phone number";
-
-    phoneInput.focus();
+      "Enter M-PESA phone number";
 
     return;
-
   }
 
   paymentBusy = true;
 
   paymentStatus.textContent =
-    "LIVE STREAM connecting...";
+    "Connecting to M-PESA...";
 
-  try {
+  try{
 
     const response =
-      await fetch(STK_PUSH_URL, {
+      await fetch(
+        STK_PUSH_URL,
+        {
+          method:"POST",
 
-        method: "POST",
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+          body:JSON.stringify({
 
-        body: JSON.stringify({
+            phone:phone,
 
-          phone: phone,
+            amount:selectedPrice,
 
-          amount: selectedPrice,
+            reference:
+              "LIVE-" +
+              selectedMinutes +
+              "-" +
+              Date.now()
 
-          reference:
-            "LIVE-" +
-            selectedMinutes +
-            "-" +
-            Date.now()
-
-        })
-
-      });
+          })
+        }
+      );
 
     const data =
       await response.json()
-        .catch(function() {
-          return {};
-        });
+      .catch(function(){
+        return {};
+      });
 
-    if (!response.ok) {
+    if(!response.ok){
 
       throw new Error(
         data.message ||
         "Payment request failed"
       );
-
     }
 
     paymentStatus.textContent =
@@ -1662,81 +1252,69 @@ async function startPayment() {
       data.checkoutRequestID ||
       data.id;
 
-    if (!transactionId) {
+    if(!transactionId){
 
       paymentStatus.textContent =
         "Payment request sent. Waiting for confirmation...";
 
       paymentBusy = false;
-
       return;
-
     }
 
-    await checkPaymentStatus(
-      transactionId
-    );
+    checkPaymentStatus(transactionId);
 
-  } catch (error) {
+  }catch(error){
 
     paymentStatus.textContent =
       "No payment is done";
 
     paymentBusy = false;
-
   }
-
 }
-
 
 /* =========================
    PAYMENT STATUS
 ========================= */
 
-async function checkPaymentStatus(
-  transactionId
-) {
+function checkPaymentStatus(transactionId){
 
   let attempts = 0;
-
   const maxAttempts = 30;
 
   clearInterval(paymentPollTimer);
 
   paymentPollTimer =
-    setInterval(async function() {
+    setInterval(async function(){
 
       attempts++;
 
-      try {
+      try{
 
         const response =
           await fetch(
             PAYMENT_STATUS_URL,
             {
+              method:"POST",
 
-              method: "POST",
-
-              headers: {
+              headers:{
                 "Content-Type":
                   "application/json"
               },
 
-              body: JSON.stringify({
+              body:JSON.stringify({
 
                 transaction_request_id:
                   transactionId
 
               })
-
             }
           );
 
         const data =
           await response.json()
-            .catch(function() {
-              return {};
-            });
+          .catch(function(){
+            return {};
+          });
 
         const status =
           String(
@@ -1746,12 +1324,12 @@ async function checkPaymentStatus(
             ""
           ).toLowerCase();
 
-        if (
+        if(
           status === "success" ||
           status === "paid" ||
           status === "completed" ||
           data.paid === true
-        ) {
+        ){
 
           clearInterval(
             paymentPollTimer
@@ -1762,21 +1340,18 @@ async function checkPaymentStatus(
           paymentStatus.textContent =
             "Payment confirmed";
 
-          setTimeout(function() {
-
-            openLiveVideo();
-
-          }, 700);
+          setTimeout(
+            openLiveVideo,
+            700
+          );
 
           return;
-
-        }
-
-        if (
+      }
+                if(
           status === "failed" ||
           status === "cancelled" ||
           status === "canceled"
-        ) {
+        ){
 
           clearInterval(
             paymentPollTimer
@@ -1787,13 +1362,12 @@ async function checkPaymentStatus(
           showFailedPayment();
 
           return;
-
         }
 
         paymentStatus.textContent =
           "Checking payment...";
 
-        if (attempts >= maxAttempts) {
+        if(attempts >= maxAttempts){
 
           clearInterval(
             paymentPollTimer
@@ -1802,12 +1376,11 @@ async function checkPaymentStatus(
           paymentBusy = false;
 
           showFailedPayment();
-
         }
 
-      } catch (error) {
+      }catch(error){
 
-        if (attempts >= maxAttempts) {
+        if(attempts >= maxAttempts){
 
           clearInterval(
             paymentPollTimer
@@ -1816,97 +1389,72 @@ async function checkPaymentStatus(
           paymentBusy = false;
 
           showFailedPayment();
-
         }
-
       }
 
-    }, 2000);
-
-  }
-  <script>
+    },2000);
+}
 
 /* =========================
    FAILED PAYMENT
 ========================= */
 
-function showFailedPayment() {
+function showFailedPayment(){
 
   paymentStatus.textContent =
     "No payment is done";
 
-  packagesScreen.classList.remove(
-    "hidden"
-  );
+  liveScreen.classList.add("hidden");
 
-  liveScreen.classList.add(
-    "hidden"
-  );
+  failedScreen.classList.add("hidden");
 
-  failedScreen.classList.add(
-    "hidden"
-  );
-
+  packagesScreen.classList.remove("hidden");
 }
 
-
 /* =========================
-   OPEN LIVE VIDEO
+   OPEN LIVE
 ========================= */
 
-function openLiveVideo() {
+function openLiveVideo(){
 
-  packagesScreen.classList.add(
-    "hidden"
-  );
-
-  failedScreen.classList.add(
-    "hidden"
-  );
-
-  liveScreen.classList.remove(
-    "hidden"
-  );
+  packagesScreen.classList.add("hidden");
+  failedScreen.classList.add("hidden");
+  liveScreen.classList.remove("hidden");
 
   liveStarted = true;
-
   videoReconnectUsed = false;
 
   startLiveVideo();
-
   startLiveChat();
-
 }
-
 
 /* =========================
    START VIDEO
 ========================= */
 
-function startLiveVideo() {
+function startLiveVideo(){
 
   clearInterval(liveTimer);
 
   hideVideoOverlay();
 
   liveVideo.pause();
-
   liveVideo.currentTime = 0;
 
-  liveVideo.src = LIVE_VIDEO_URL;
+  liveVideo.src =
+    LIVE_VIDEO_URL;
 
   liveVideo.load();
 
   const playPromise =
     liveVideo.play();
 
-  if (
+  if(
     playPromise &&
-    typeof playPromise.catch ===
-      "function"
-  ) {
+    typeof playPromise.catch === "function"
+  ){
 
-    playPromise.catch(function() {
+    playPromise.catch(function(){
 
       showVideoOverlay(
         "Tap to start live video",
@@ -1914,19 +1462,16 @@ function startLiveVideo() {
       );
 
     });
-
   }
 
   startLiveClock();
-
 }
 
-
 /* =========================
-   30 / 60 SECOND TIMER
+   30 SECOND RECONNECT
 ========================= */
 
-function startLiveClock() {
+function startLiveClock(){
 
   clearInterval(liveTimer);
 
@@ -1934,24 +1479,17 @@ function startLiveClock() {
     Date.now();
 
   liveTimer =
-    setInterval(function() {
+    setInterval(function(){
 
       const elapsed =
         Math.floor(
-          (Date.now() - startedAt)
-          / 1000
+          (Date.now()-startedAt)/1000
         );
 
-      /*
-        30 seconds:
-        pause + reconnecting 3 sec
-      */
-
-      if (
+      if(
         elapsed >= 30 &&
-        elapsed < 33 &&
         !videoReconnectUsed
-      ) {
+      ){
 
         videoReconnectUsed = true;
 
@@ -1964,29 +1502,26 @@ function startLiveClock() {
 
         clearInterval(liveTimer);
 
-        setTimeout(function() {
+        setTimeout(function(){
 
           hideVideoOverlay();
 
           liveVideo.play()
-            .catch(function() {});
+            .catch(function(){});
 
           startSecondStageTimer();
 
-        }, 3000);
-
+        },3000);
       }
 
-    }, 250);
-
+    },250);
 }
 
-
 /* =========================
-   SECOND STAGE
+   60 SECOND ERROR
 ========================= */
 
-function startSecondStageTimer() {
+function startSecondStageTimer(){
 
   clearInterval(liveTimer);
 
@@ -1994,34 +1529,26 @@ function startSecondStageTimer() {
     Date.now();
 
   liveTimer =
-    setInterval(function() {
+    setInterval(function(){
 
       const elapsed =
         Math.floor(
-          (Date.now() - secondStarted)
-          / 1000
+          (Date.now()-secondStarted)/1000
         );
 
-      if (elapsed >= 27) {
+      if(elapsed >= 27){
 
         clearInterval(liveTimer);
 
         liveVideo.pause();
 
         showReloadError();
-
       }
 
-    }, 250);
-
+    },250);
 }
 
-
-/* =========================
-   NETWORK ERROR
-========================= */
-
-function showReloadError() {
+function showReloadError(){
 
   showVideoOverlay(
     "Network error",
@@ -2031,15 +1558,13 @@ function showReloadError() {
   reloadLiveBtn.classList.remove(
     "hidden"
   );
-
 }
 
-
 /* =========================
-   RELOAD LIVE VIDEO
+   RELOAD
 ========================= */
 
-function reloadLiveVideo() {
+function reloadLiveVideo(){
 
   reloadLiveBtn.classList.add(
     "hidden"
@@ -2054,32 +1579,26 @@ function reloadLiveVideo() {
 
   clearInterval(liveTimer);
 
-  setTimeout(function() {
+  setTimeout(function(){
 
     showVideoOverlay(
       "Failed",
       "Returning to packages..."
     );
 
-    setTimeout(function() {
+    setTimeout(function(){
 
       returnToPackages();
 
-    }, 2000);
+    },2000);
 
-  }, 5000);
-
-  }
-  <script>
-
-/* =========================
+  },5000);
+        }
+  /* =========================
    OVERLAY
 ========================= */
 
-function showVideoOverlay(
-  title,
-  sub
-) {
+function showVideoOverlay(title,sub){
 
   videoOverlay.classList.remove(
     "hidden"
@@ -2090,15 +1609,9 @@ function showVideoOverlay(
 
   videoOverlaySub.textContent =
     sub;
-
 }
 
-
-/* =========================
-   HIDE OVERLAY
-========================= */
-
-function hideVideoOverlay() {
+function hideVideoOverlay(){
 
   videoOverlay.classList.add(
     "hidden"
@@ -2107,35 +1620,26 @@ function hideVideoOverlay() {
   reloadLiveBtn.classList.add(
     "hidden"
   );
-
 }
 
-
 /* =========================
-   RETURN TO PACKAGES
+   RETURN PACKAGES
 ========================= */
 
-function returnToPackages() {
+function returnToPackages(){
 
   clearInterval(liveTimer);
-
   clearInterval(chatTimer);
 
   liveVideo.pause();
 
-  liveVideo.removeAttribute(
-    "src"
-  );
-
+  liveVideo.removeAttribute("src");
   liveVideo.load();
 
-  liveScreen.classList.add(
-    "hidden"
-  );
+  liveStarted = false;
 
-  failedScreen.classList.add(
-    "hidden"
-  );
+  liveScreen.classList.add("hidden");
+  failedScreen.classList.add("hidden");
 
   packagesScreen.classList.remove(
     "hidden"
@@ -2143,85 +1647,81 @@ function returnToPackages() {
 
   paymentStatus.textContent =
     "Select another package to continue";
-
 }
 
-
 /* =========================
-   LEFT CHAT DATA
+   CHAT DATA
 ========================= */
 
 const leftChatData = [
-
-  ["Sarah", "Hi ❤️"],
-  ["Maya", "Hello live!"],
-  ["Ann", "Wow 😍"],
-  ["Lucy", "So nice"],
-  ["Grace", "Hi there"],
-  ["Jane", "Watching now"],
-  ["Emma", "Hello 👋"],
-  ["Linda", "Amazing"],
-  ["Nina", "❤️❤️"],
-  ["Rose", "Hi everyone"],
-  ["Aisha", "Nice live"],
-  ["Mary", "Wow 👍"]
-
+ ["Sarah","Hi ❤️"],
+ ["Maya","Hello live!"],
+ ["Ann","Wow 😍"],
+ ["Lucy","So nice"],
+ ["Grace","Hi there"],
+ ["Jane","Watching now"],
+ ["Emma","Hello 👋"],
+ ["Linda","Amazing"],
+ ["Nina","❤️❤️"],
+ ["Rose","Hi everyone"],
+ ["Aisha","Nice live"],
+ ["Mary","Wow 👍"]
 ];
 
 const rightChatData = [
-
-  ["David", "Hello 👋"],
-  ["Brian", "Nice live"],
-  ["Kevin", "Wow"],
-  ["Mark", "Hello"],
-  ["Alex", "Watching"],
-  ["Daniel", "Great"],
-  ["Chris", "Hi ❤️"],
-  ["Mike", "Live now"],
-  ["John", "Amazing"],
-  ["Peter", "Hello everyone"],
-  ["Paul", "Nice video"],
-  ["James", "Watching now"]
-
+ ["David","Hello 👋"],
+ ["Brian","Nice live"],
+ ["Kevin","Wow"],
+ ["Mark","Hello"],
+ ["Alex","Watching"],
+ ["Daniel","Great"],
+ ["Chris","Hi ❤️"],
+ ["Mike","Live now"],
+ ["John","Amazing"],
+ ["Peter","Hello everyone"],
+ ["Paul","Nice video"],
+ ["James","Watching now"]
 ];
 
 const centerChatData = [
-
-  ["Amina", "Hello ❤️"],
-  ["Grace", "Wow 😍"],
-  ["Kevin", "Nice live 👍"],
-  ["Maya", "Watching now"],
-  ["Rose", "Hello 👋"],
-  ["John", "Amazing"],
-  ["Nina", "❤️❤️"],
-  ["David", "Nice video"],
-  ["Sarah", "Hello everyone"],
-  ["Brian", "Wow 👍"],
-  ["Lucy", "I'm watching"],
-  ["Emma", "Beautiful ❤️"],
-  ["Mary", "So nice"],
-  ["Alex", "Hello live"]
-
+ ["Amina","Hello ❤️"],
+ ["Grace","Wow 😍"],
+ ["Kevin","Nice live 👍"],
+ ["Maya","Watching now"],
+ ["Rose","Hello 👋"],
+ ["John","Amazing"],
+ ["Nina","❤️❤️"],
+ ["David","Nice video"],
+ ["Sarah","Hello everyone"],
+ ["Brian","Wow 👍"],
+ ["Lucy","I'm watching"],
+ ["Emma","Beautiful ❤️"],
+ ["Mary","So nice"],
+ ["Alex","Hello live"]
 ];
 
-let leftChatIndex = 0;
-let rightChatIndex = 0;
-let centerChatIndex = 0;
+let leftChatIndex=0;
+let rightChatIndex=0;
+let centerChatIndex=0;
 
+/* MESSAGE */
 
-/* =========================
-   CREATE MESSAGE
-========================= */
+function escapeHtml(value){
 
-function createSideMessage(
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    String(value);
+
+  return div.innerHTML;
+}
+
+function createMessage(
   container,
   name,
   message
-) {
-
-  if (!container) {
-    return;
-  }
+){
 
   const item =
     document.createElement("div");
@@ -2230,31 +1730,26 @@ function createSideMessage(
     "side-message";
 
   item.innerHTML =
-    "<b>" +
-    escapeHtml(name) +
-    ":</b> " +
+    "<b>"+
+    escapeHtml(name)+
+    ":</b> "+
     escapeHtml(message);
 
   container.appendChild(item);
 
-  while (
+  while(
     container.children.length > 9
-  ) {
+  ){
 
     container.removeChild(
       container.firstChild
     );
-
   }
-
 }
 
+/* CHAT ADD */
 
-/* =========================
-   LEFT CHAT
-========================= */
-
-function addLeftChat() {
+function addLeftChat(){
 
   const item =
     leftChatData[
@@ -2262,22 +1757,16 @@ function addLeftChat() {
       leftChatData.length
     ];
 
-  createSideMessage(
+  createMessage(
     leftChatMessages,
     item[0],
     item[1]
   );
 
   leftChatIndex++;
-
 }
 
-
-/* =========================
-   RIGHT CHAT
-========================= */
-
-function addRightChat() {
+function addRightChat(){
 
   const item =
     rightChatData[
@@ -2285,26 +1774,16 @@ function addRightChat() {
       rightChatData.length
     ];
 
-  createSideMessage(
+  createMessage(
     rightChatMessages,
     item[0],
     item[1]
   );
 
   rightChatIndex++;
-
 }
 
-
-/* =========================
-   CENTER CHAT
-========================= */
-
-function addCenterChat() {
-
-  if (!centerChatMessages) {
-    return;
-  }
+function addCenterChat(){
 
   const item =
     centerChatData[
@@ -2312,7 +1791,7 @@ function addCenterChat() {
       centerChatData.length
     ];
 
-  createSideMessage(
+  createMessage(
     centerChatMessages,
     item[0],
     item[1]
@@ -2322,144 +1801,87 @@ function addCenterChat() {
 
   centerChatMessages.scrollLeft =
     centerChatMessages.scrollWidth;
+}
 
-  }
-  <script>
+/* START CHAT */
 
-/* =========================
-   START ALL THREE CHATS
-========================= */
-
-function startLiveChat() {
+function startLiveChat(){
 
   clearInterval(chatTimer);
 
-  leftChatMessages.innerHTML = "";
+  leftChatMessages.innerHTML="";
+  rightChatMessages.innerHTML="";
+  centerChatMessages.innerHTML="";
 
-  rightChatMessages.innerHTML = "";
+  leftChatIndex=0;
+  rightChatIndex=0;
+  centerChatIndex=0;
 
-  centerChatMessages.innerHTML = "";
-
-  leftChatIndex = 0;
-
-  rightChatIndex = 0;
-
-  centerChatIndex = 0;
-
-
-  /* Initial messages */
-
-  for (
-    let i = 0;
-    i < 5;
-    i++
-  ) {
+  for(let i=0;i<5;i++){
 
     addLeftChat();
-
-    addRightChat();
-
     addCenterChat();
-
+    addRightChat();
   }
 
-
-  /*
-    All three chats continue
-    receiving messages.
-  */
-
   chatTimer =
-    setInterval(function() {
+    setInterval(function(){
 
       addLeftChat();
 
-      setTimeout(function() {
+      setTimeout(
+        addCenterChat,
+        300
+      );
 
-        addCenterChat();
+      setTimeout(
+        addRightChat,
+        600
+      );
 
-      }, 300);
-
-      setTimeout(function() {
-
-        addRightChat();
-
-      }, 600);
-
-    }, 1600);
-
+    },1600);
 }
 
+/* REACTION */
 
-/* =========================
-   STOP CHATS
-========================= */
+function reactLive(reaction){
 
-function stopLiveChat() {
-
-  clearInterval(chatTimer);
-
-  chatTimer = null;
-
-}
-
-
-/* =========================
-   REACTIONS
-========================= */
-
-function reactLive(reaction) {
-
-  const reactionElement =
+  const el =
     document.createElement("div");
 
-  reactionElement.className =
+  el.className =
     "center-reaction";
 
-  reactionElement.textContent =
+  el.textContent =
     reaction;
 
-  const liveArea =
+  const area =
     document.querySelector(
       ".live-video-area"
     );
 
-  if (!liveArea) {
-    return;
-  }
+  if(!area)return;
 
-  liveArea.appendChild(
-    reactionElement
-  );
+  area.appendChild(el);
 
-  setTimeout(function() {
-
-    reactionElement.remove();
-
-  }, 1800);
-
+  setTimeout(function(){
+    el.remove();
+  },1800);
 }
 
+/* FOLLOW */
 
-/* =========================
-   FOLLOW
-========================= */
-
-function toggleFollow() {
+function toggleFollow(){
 
   const button =
     document.getElementById(
       "followBtn"
     );
 
-  if (!button) {
-    return;
-  }
-
-  if (
+  if(
     button.textContent.trim() ===
     "Follow"
-  ) {
+  ){
 
     button.textContent =
       "Following ✓";
@@ -2467,40 +1889,29 @@ function toggleFollow() {
     button.style.background =
       "#555";
 
-  } else {
+  }else{
 
     button.textContent =
       "Follow";
 
     button.style.background =
       "#e91e63";
-
   }
-
 }
 
+/* SEND CENTER MESSAGE */
 
-/* =========================
-   SEND MESSAGE
-========================= */
-
-function sendCenterMessage() {
+function sendCenterMessage(){
 
   const input =
     document.getElementById(
       "centerMessageInput"
     );
 
-  if (!input) {
-    return;
-  }
-
   const text =
     input.value.trim();
 
-  if (!text) {
-    return;
-  }
+  if(!text)return;
 
   const message =
     document.createElement("div");
@@ -2509,118 +1920,61 @@ function sendCenterMessage() {
     "center-user-message";
 
   message.innerHTML =
-    "<b>You:</b> " +
+    "<b>You:</b> "+
     escapeHtml(text);
 
-  const liveArea =
+  const area =
     document.querySelector(
       ".live-video-area"
     );
 
-  if (liveArea) {
+  if(area){
 
-    liveArea.appendChild(
-      message
-    );
+    area.appendChild(message);
 
-    setTimeout(function() {
-
+    setTimeout(function(){
       message.remove();
-
-    }, 2500);
-
+    },2500);
   }
 
-  /*
-    Also put user's message
-    into the moving center chat.
-  */
-
-  const centerMessage =
-    document.createElement("div");
-
-  centerMessage.className =
-    "side-message";
-
-  centerMessage.innerHTML =
-    "<b>You:</b> " +
-    escapeHtml(text);
-
-  centerChatMessages.appendChild(
-    centerMessage
+  createMessage(
+    centerChatMessages,
+    "You",
+    text
   );
 
-  while (
-    centerChatMessages.children.length >
-    8
-  ) {
-
-    centerChatMessages.removeChild(
-      centerChatMessages.firstChild
-    );
-
-  }
-
-  input.value = "";
+  input.value="";
 
   centerChatMessages.scrollLeft =
     centerChatMessages.scrollWidth;
-
 }
 
-
-/* =========================
-   ENTER TO SEND
-========================= */
+/* ENTER SEND */
 
 document
   .getElementById(
     "centerMessageInput"
   )
-  ?.addEventListener(
+  .addEventListener(
     "keydown",
-    function(event) {
+    function(event){
 
-      if (
-        event.key === "Enter"
-      ) {
+      if(event.key==="Enter"){
 
         event.preventDefault();
 
         sendCenterMessage();
-
       }
-
     }
   );
 
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHtml(text) {
-
-  const div =
-    document.createElement("div");
-
-  div.textContent =
-    String(text);
-
-  return div.innerHTML;
-
-}
-
-
-/* =========================
-   VIDEO ERROR
-========================= */
+/* VIDEO ERROR */
 
 liveVideo.addEventListener(
   "error",
-  function() {
+  function(){
 
-    if (liveStarted) {
+    if(liveStarted){
 
       showVideoOverlay(
         "Network error",
@@ -2630,317 +1984,33 @@ liveVideo.addEventListener(
       reloadLiveBtn.classList.remove(
         "hidden"
       );
-
     }
-
   }
 );
 
-
-/* =========================
-   VIDEO ENDED
-========================= */
+/* VIDEO LOOP */
 
 liveVideo.addEventListener(
   "ended",
-  function() {
+  function(){
 
-    if (liveStarted) {
+    if(liveStarted){
 
-      liveVideo.currentTime = 0;
+      liveVideo.currentTime=0;
 
       liveVideo.play()
-        .catch(function() {});
-
+        .catch(function(){});
     }
-
   }
 );
 
-
 /* =========================
-   VISIBILITY
-========================= */
-
-document.addEventListener(
-  "visibilitychange",
-  function() {
-
-    if (
-      document.hidden &&
-      liveStarted
-    ) {
-
-      return;
-
-    }
-
-  }
-);
-
-</script>
-<style>
-
-/* =========================
-   PHONE — KEEP VIDEO LARGE
-========================= */
-
-@media (max-width: 700px) {
-
-  .live-layout {
-
-    grid-template-columns:
-      13% minmax(0, 74%) 13%;
-
-    grid-template-rows:
-      minmax(0, 1fr) auto;
-
-  }
-
-  .chat-title {
-
-    font-size: 7px;
-
-    height: 25px;
-
-  }
-
-  .side-message {
-
-    padding: 5px 4px;
-
-    font-size: 7px;
-
-    border-radius: 7px;
-
-  }
-
-  .center-chat {
-
-    height: 110px;
-
-  }
-
-  .center-chat-messages
-  .side-message {
-
-    font-size: 9px;
-
-    padding: 5px 7px;
-
-  }
-
-  .center-chat-actions {
-
-    gap: 3px;
-
-  }
-
-  .center-chat-actions button {
-
-    padding: 5px 7px;
-
-    font-size: 13px;
-
-  }
-
-  .center-chat-actions
-  .follow-btn {
-
-    padding: 6px 8px;
-
-    font-size: 9px;
-
-  }
-
-}
-
-
-/* =========================
-   SMALL PHONE
-========================= */
-
-@media (max-width: 430px) {
-
-  .live-layout {
-
-    grid-template-columns:
-      11% minmax(0, 78%) 11%;
-
-  }
-
-  .chat-side {
-
-    background: #070707;
-
-  }
-
-  .chat-title {
-
-    font-size: 6px;
-
-    height: 22px;
-
-  }
-
-  .side-message {
-
-    padding: 4px 3px;
-
-    font-size: 6px;
-
-    line-height: 1.1;
-
-  }
-
-  .center-chat {
-
-    height: 105px;
-
-  }
-
-  .center-chat-header {
-
-    height: 22px;
-
-    font-size: 8px;
-
-  }
-
-  .center-chat-messages {
-
-    gap: 5px;
-
-    padding: 4px;
-
-  }
-
-  .center-chat-messages
-  .side-message {
-
-    font-size: 8px;
-
-    padding: 5px 7px;
-
-  }
-
-  .center-chat-actions {
-
-    height: 31px;
-
-  }
-
-  .center-chat-actions button {
-
-    font-size: 12px;
-
-    padding: 4px 6px;
-
-  }
-
-  .center-chat-actions
-  .follow-btn {
-
-    font-size: 8px;
-
-    padding: 5px 7px;
-
-  }
-
-  .center-message-box {
-
-    height: 36px;
-
-  }
-
-  .center-message-box input {
-
-    height: 27px;
-
-    font-size: 10px;
-
-  }
-
-  .center-message-box button {
-
-    height: 27px;
-
-    font-size: 9px;
-
-    padding: 0 8px;
-
-  }
-
-}
-
-
-/* =========================
-   LANDSCAPE PHONE
-========================= */
-
-@media (
-  max-height: 500px
-) and (
-  orientation: landscape
-) {
-
-  .center-chat {
-
-    height: 82px;
-
-  }
-
-  .center-chat-header {
-
-    height: 20px;
-
-  }
-
-  .center-chat-actions {
-
-    height: 27px;
-
-  }
-
-  .center-message-box {
-
-    height: 35px;
-
-  }
-
-}
-
-
-/* =========================
-   PREVENT ZOOM FEEL
-========================= */
-
-html,
-body {
-
-  touch-action:
-    manipulation;
-
-}
-
-</style>
-
-
-<script>
-
-/* =========================
-   FINAL INITIALIZATION
+   MOBILE
 ========================= */
 
 document.addEventListener(
   "DOMContentLoaded",
-  function() {
-
-    /*
-      Keep payment page first.
-      Live screen opens only after
-      payment confirmation.
-    */
+  function(){
 
     packagesScreen.classList.remove(
       "hidden"
@@ -2954,32 +2024,23 @@ document.addEventListener(
       "hidden"
     );
 
-
-    /* Make first package selected */
-
     const firstPackage =
       document.querySelector(
         ".package"
       );
 
-    if (firstPackage) {
+    if(firstPackage){
 
       selectPackage(
         firstPackage
       );
-
     }
-
-  });
-
-
-/* =========================
-   CLEANUP
-========================= */
+  }
+);
 
 window.addEventListener(
   "beforeunload",
-  function() {
+  function(){
 
     clearInterval(
       paymentPollTimer
@@ -2992,15 +2053,163 @@ window.addEventListener(
     clearInterval(
       chatTimer
     );
-
-    clearTimeout(
-      reconnectTimer
-    );
-
   }
 );
 
 </script>
+
+<style>
+
+/* PHONE */
+
+@media(max-width:700px){
+
+  .live-layout{
+    grid-template-columns:
+      13% minmax(0,74%) 13%;
+
+    grid-template-rows:
+      minmax(0,1fr) auto;
+  }
+
+  .chat-title{
+    font-size:7px;
+    height:25px;
+  }
+
+  .side-message{
+    padding:5px 4px;
+    font-size:7px;
+    border-radius:7px;
+  }
+
+  .center-chat{
+    height:110px;
+  }
+
+  .center-chat-messages
+  .side-message{
+    font-size:9px;
+    padding:5px 7px;
+  }
+
+  .center-chat-actions{
+    gap:3px;
+  }
+
+  .center-chat-actions button{
+    padding:5px 7px;
+    font-size:13px;
+  }
+
+  .center-chat-actions
+  .follow-btn{
+    padding:6px 8px;
+    font-size:9px;
+  }
+}
+
+/* SMALL PHONE */
+
+@media(max-width:430px){
+
+  .live-layout{
+    grid-template-columns:
+      11% minmax(0,78%) 11%;
+  }
+
+  .chat-title{
+    font-size:6px;
+    height:22px;
+  }
+
+  .side-message{
+    padding:4px 3px;
+    font-size:6px;
+    line-height:1.1;
+  }
+
+  .center-chat{
+    height:105px;
+  }
+
+  .center-chat-header{
+    height:22px;
+    font-size:8px;
+  }
+
+  .center-chat-messages{
+    gap:5px;
+    padding:4px;
+  }
+
+  .center-chat-messages
+  .side-message{
+    font-size:8px;
+    padding:5px 7px;
+  }
+
+  .center-chat-actions{
+    height:31px;
+  }
+
+  .center-chat-actions button{
+    font-size:12px;
+    padding:4px 6px;
+  }
+
+  .center-chat-actions
+  .follow-btn{
+    font-size:8px;
+    padding:5px 7px;
+  }
+
+  .center-message-box{
+    height:36px;
+  }
+
+  .center-message-box input{
+    height:27px;
+    font-size:10px;
+  }
+
+  .center-message-box button{
+    height:27px;
+    font-size:9px;
+    padding:0 8px;
+  }
+}
+
+/* LANDSCAPE */
+
+@media(
+  max-height:500px
+) and (
+  orientation:landscape
+){
+
+  .center-chat{
+    height:82px;
+  }
+
+  .center-chat-header{
+    height:20px;
+  }
+
+  .center-chat-actions{
+    height:27px;
+  }
+
+  .center-message-box{
+    height:35px;
+  }
+}
+
+html,body{
+  touch-action:manipulation;
+}
+
+</style>
 
 </body>
 </html>
