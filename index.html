@@ -194,7 +194,7 @@ button{
 }
   .offline-label{
   position:absolute;
-  top:7px;
+      top:7px;
   right:7px;
   padding:3px 6px;
   border-radius:8px;
@@ -390,7 +390,7 @@ button{
   border-radius:6px;
   font-size:11px;
   font-weight:900;
-}
+  }
 
 .video-name{
   background:rgba(0,0,0,.55);
@@ -514,7 +514,7 @@ button{
   </div>
 
   <div class="photos-title">
-    Live Photos
+    Live Video
   </div>
 
   <div id="photosGrid" class="photos-grid"></div>
@@ -585,8 +585,7 @@ button{
   </div>
 
   <div id="videoChat" class="video-chat"></div>
-
-  <div class="video-actions">
+    <div class="video-actions">
 
     <button
       id="videoLike"
@@ -782,7 +781,7 @@ const profiles = [
     image:"1785179362758.jpg",
     messages:[
       "Hi 😊",
-      "Are you watching?",
+            "Are you watching?",
       "Talk to me ❤️"
     ]
   },
@@ -978,7 +977,7 @@ const profiles = [
       "Hello ❤️",
       "Are you watching?",
       "Let's talk 😊"
-    ]
+          ]
   },
 
   {
@@ -1113,14 +1112,68 @@ function shuffleArray(array){
 
 
 /* =========================
+   PHOTO CHAT
+========================= */
+
+function startPhotoChat(profile, originalIndex){
+
+  const chatBox =
+    document.getElementById(
+      "photoChat-" + originalIndex
+    );
+
+  if(!chatBox){
+    return;
+  }
+
+  let messageIndex = 0;
+
+  function showNextMessage(){
+
+    if(!chatBox.isConnected){
+      return;
+    }
+
+    chatBox.innerHTML = "";
+
+    const message =
+      document.createElement("div");
+
+    message.className =
+      "photo-chat-message";
+
+    message.textContent =
+      profile.messages[
+        messageIndex %
+        profile.messages.length
+      ];
+
+    chatBox.appendChild(message);
+
+    messageIndex++;
+  }
+
+  showNextMessage();
+
+  const timer =
+    setInterval(
+      showNextMessage,
+      3200
+    );
+
+  chatBox.dataset.chatTimer =
+    String(timer);
+}
+
+
+/* =========================
    RENDER PHOTOS
 ========================= */
 
 function renderPhotos(){
 
   photosGrid.innerHTML = "";
-
-  onlineCount.textContent =
+    onlineCount.textContent =
     String(
       profiles.length -
       offlineIndexes.length
@@ -1412,9 +1465,7 @@ function openIncomingCall(){
     );
 
   }
-
-
-  callTimer =
+    callTimer =
     setTimeout(()=>{
 
       if(
@@ -1653,9 +1704,7 @@ function startVideoChat(){
     }
   );
 }
-
-
-/* =========================
+  /* =========================
    END VIDEO
 ========================= */
 
@@ -1844,8 +1893,7 @@ document.addEventListener(
 */
 
 startOfflineRotation();
-
-
+  
 
 /* =========================
    START WEBSITE
