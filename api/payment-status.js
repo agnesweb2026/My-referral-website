@@ -13,47 +13,61 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { transaction_request_id } = req.body || {};
+    const { transaction_request_id, transaction_id } = req.body || {};
 
-    if (!transaction_request_id) {
+    const transactionId = String(
+      transaction_id ||
+      transaction_request_id ||
+      ""
+    ).trim();
+
+    if (!transactionId) {
       return json(res, 400, {
         success: false,
-        message: "Missing transaction request ID."
+        paid: false,
+        message: "Missing transaction ID."
       });
     }
 
-    const consumerKey = String(
-      process.env.UNIFIEDPAY_CONSUMER_KEY || ""
+    const secretKey = String(
+      process.env.LIPARO_SECRET_KEY || ""
     ).trim();
 
-    const consumerSecret = String(
-      process.env.UNIFIEDPAY_CONSUMER_SECRET || ""
+    const passkey = String(
+      process.env.LIPARO_PASSKEY || ""
     ).trim();
 
-    if (!consumerKey || !consumerSecret) {
+    const shortcode = String(
+      process.env.LIPARO_SHORTCODE || ""
+    ).trim();
+
+    if (!secretKey || !passkey || !shortcode) {
       return json(res, 500, {
         success: false,
+        paid: false,
         message:
-          "UnifiedPay credentials are not configured."
+          "Liparo payment settings are not configured on the server."
       });
     }
 
-    const url =
-      "https://unifiedpay.co.ke/auth/cred/" +
-      encodeURIComponent(consumerKey) +
-      "/" +
-      encodeURIComponent(consumerSecret) +
-      "/sendstatus";
+    const response = await fetch(
+      "https://api.liparo.co.ke/v1/checktransaction",
+      {
+        method: "POST",
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        transaction_request_id
-      })
-    });
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+
+        body: JSON.stringify({
+          secret_key: secretKey,
+          passkey: passkey,
+          shortcode: shortcode,
+          transaction_id: transactionId
+        })
+      }
+    );
 
     const responseText = await response.text();
 
@@ -66,46 +80,60 @@ module.exports = async (req, res) => {
         success: false,
         message:
           responseText ||
-          "UnifiedPay returned an invalid response."
+          "Liparo returned an invalid response."
       };
     }
 
+    const status = String(
+      data.status || ""
+    ).toLowerCase();
+
+    const paid =
+      data.success === true &&
+      status === "completed";
+
     console.log(
-      "UNIFIEDPAY_STATUS_RESULT",
+      "LIPARO_PAYMENT_STATUS",
       JSON.stringify({
         httpStatus: response.status,
-        transaction_request_id,
-        status: data.TransactionStatus || null
+        transaction_id: transactionId,
+        status: data.status || null,
+        paid: paid
       })
     );
 
-    if (
-      response.ok &&
-      data.TransactionStatus === "Completed"
-    ) {
+    if (paid) {
       return json(res, 200, {
         success: true,
         paid: true,
         status: "Completed",
-        receipt:
-          data.TransactionReceipt || null,
-        amount:
-          data.TransactionAmount || null,
-        phone:
-          data.Msisdn || null,
-        reference:
-          data.TransactionReference || null
+        transaction_id: transactionId,
+        amount: data.amount || null,
+        phone: data.phone || null,
+        reference: data.reference || null,
+        mpesa_receipt: data.mpesa_receipt || null,
+        message:
+          data.result_desc ||
+          data.message ||
+          "Payment completed successfully."
       });
     }
 
     if (
-      response.ok &&
-      data.TransactionStatus === "Pending"
+      status === "failed" ||
+      status === "cancelled" ||
+      status === "rejected"
     ) {
       return json(res, 200, {
         success: true,
         paid: false,
-        status: "Pending"
+        status:
+          data.status || "Failed",
+        transaction_id: transactionId,
+        message:
+          data.result_desc ||
+          data.message ||
+          "Payment was not completed."
       });
     }
 
@@ -113,19 +141,18 @@ module.exports = async (req, res) => {
       success: true,
       paid: false,
       status:
-        data.TransactionStatus ||
-        "Unknown",
-      resultCode:
-        data.ResultCode || null,
+        data.status ||
+        "Pending",
+      transaction_id: transactionId,
       message:
-        data.ResultDesc ||
-        data.errorMessage ||
-        "Payment not completed."
+        data.result_desc ||
+        data.message ||
+        "Payment is still pending."
     });
 
   } catch (error) {
     console.error(
-      "UNIFIEDPAY_STATUS_ERROR",
+      "LIPARO_STATUS_ERROR",
       error
     );
 
@@ -133,9 +160,7 @@ module.exports = async (req, res) => {
       success: false,
       paid: false,
       message:
-        "Unable to check payment status.",
-      error:
-        String(error.message || error)
+        "Unable to check the M-PESA payment status."
     });
   }
 };
