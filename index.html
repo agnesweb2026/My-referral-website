@@ -96,7 +96,7 @@ button{
   to{width:100%}
 }
 
-/* LIVE VIDEO PAGE */
+/* PHOTOS */
 #photosPage{
   min-height:100vh;
   background:#080808;
@@ -247,8 +247,7 @@ button{
   color:#aaa;
   font-size:10px;
 }
-
-/* PHOTO CHAT */
+  /* PHOTO CHAT */
 .photo-chat-box{
   position:absolute;
   left:5px;
@@ -303,12 +302,14 @@ button{
   background:#ff1744;
   color:#fff;
 }
-  /* INCOMING CALL */
+
+/* INCOMING CALL */
 #incomingCall{
   position:fixed;
   inset:0;
   z-index:9000;
-  background:rgba(0,0,0,.94);
+  background:
+    radial-gradient(circle at center,#220811 0%,#050505 55%,#000 100%);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -321,32 +322,45 @@ button{
 }
 
 .call-avatar{
-  width:120px;
-  height:120px;
+  width:130px;
+  height:130px;
   border-radius:50%;
   object-fit:cover;
-  border:3px solid #ff1744;
-  box-shadow:0 0 30px rgba(255,23,68,.35);
+  border:4px solid #ff1744;
+  box-shadow:
+    0 0 0 8px rgba(255,23,68,.08),
+    0 0 40px rgba(255,23,68,.45);
+  animation:callPulse 1.2s infinite;
+}
+
+@keyframes callPulse{
+  0%,100%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.06);
+  }
 }
 
 .call-live{
-  margin-top:16px;
+  margin-top:18px;
   display:inline-block;
-  padding:5px 10px;
-  border-radius:6px;
+  padding:6px 12px;
+  border-radius:7px;
   background:#e6002d;
   font-size:11px;
   font-weight:900;
+  letter-spacing:.4px;
 }
 
 .call-title{
-  margin-top:14px;
-  font-size:23px;
+  margin-top:15px;
+  font-size:24px;
   font-weight:900;
 }
 
 .call-sub{
-  margin-top:7px;
+  margin-top:8px;
   color:#aaa;
   font-size:13px;
 }
@@ -354,12 +368,12 @@ button{
 .call-actions{
   display:flex;
   gap:12px;
-  margin-top:28px;
+  margin-top:30px;
 }
 
 .call-btn{
   flex:1;
-  height:52px;
+  height:54px;
   border-radius:28px;
   color:#fff;
   font-size:16px;
@@ -368,13 +382,15 @@ button{
 
 .answer-btn{
   background:#00c853;
+  box-shadow:0 8px 25px rgba(0,200,83,.25);
 }
 
 .reject-btn{
   background:#e6002d;
+  box-shadow:0 8px 25px rgba(230,0,45,.25);
 }
 
-/* RETURNING VISITOR LOADING */
+/* RETURNING LOADING */
 #returnLoading{
   position:fixed;
   inset:0;
@@ -392,8 +408,8 @@ button{
 }
 
 .return-spinner{
-  width:48px;
-  height:48px;
+  width:52px;
+  height:52px;
   margin:auto;
   border:4px solid #292929;
   border-top-color:#ff1744;
@@ -403,17 +419,22 @@ button{
 
 .return-loading-title{
   margin-top:18px;
-  font-size:20px;
+  font-size:21px;
   font-weight:800;
+}
+
+.return-loading-sub{
+  margin-top:8px;
+  color:#888;
+  font-size:13px;
 }
 
 @keyframes returnSpin{
   to{
     transform:rotate(360deg);
   }
-}
-
-/* VIDEO */
+  }
+  /* VIDEO */
 #videoPage{
   position:fixed;
   inset:0;
@@ -531,14 +552,42 @@ button{
   font-size:14px;
 }
 
+/* SMALL PHONES */
+@media(max-width:360px){
+  .logo{
+    font-size:36px;
+  }
+
+  .welcome-title{
+    font-size:21px;
+  }
+
+  .call-avatar{
+    width:112px;
+    height:112px;
+  }
+
+  .call-title{
+    font-size:21px;
+  }
+
+  .call-btn{
+    height:49px;
+    font-size:14px;
+  }
+}
 </style>
 </head>
 
 <body>
 
+<!-- WELCOME -->
 <section id="welcomeScreen">
   <div class="welcome-box">
-    <div class="logo">Live<span>X</span></div>
+
+    <div class="logo">
+      Live<span>X</span>
+    </div>
 
     <div class="welcome-title">
       Welcome to LiveX
@@ -551,8 +600,10 @@ button{
     <div class="loading-line">
       <div class="loading-progress"></div>
     </div>
+
   </div>
 </section>
+<!-- LIVE PHOTOS -->
 <section id="photosPage" class="hidden">
 
   <div class="topbar">
@@ -585,8 +636,7 @@ button{
 </section>
 
 
-<!-- RETURNING VISITOR INCOMING CALL -->
-
+<!-- INCOMING CALL -->
 <section id="incomingCall" class="hidden">
 
   <div class="call-box">
@@ -605,7 +655,7 @@ button{
     <div
       id="callName"
       class="call-title">
-      Incoming call
+      Incoming Video Call
     </div>
 
     <div class="call-sub">
@@ -634,7 +684,6 @@ button{
 
 
 <!-- FIRST VISITOR VIDEO -->
-
 <section id="videoPage" class="hidden">
 
   <video
@@ -680,10 +729,7 @@ button{
   </div>
 
 </section>
-
-
 <!-- INSUFFICIENT MINUTES -->
-
 <section id="insufficientPage" class="hidden">
 
   <div class="insufficient-box">
@@ -705,8 +751,7 @@ button{
 </section>
 
 
-<!-- RETURNING VISITOR 2 SECOND LOADING -->
-
+<!-- RETURNING VISITOR LOADING -->
 <section id="returnLoading" class="hidden">
 
   <div class="return-loading-box">
@@ -715,6 +760,10 @@ button{
 
     <div class="return-loading-title">
       Connecting...
+    </div>
+
+    <div class="return-loading-sub">
+      Please wait
     </div>
 
   </div>
@@ -726,6 +775,11 @@ button{
 
 "use strict";
 
+
+/* =========================
+   SETTINGS
+========================= */
+
 const FIRST_VIDEO_KEY =
   "livex_first_video_played_v1";
 
@@ -735,6 +789,10 @@ const VIDEO_FILE =
 const PAYMENT_PAGE =
   "payment.html";
 
+
+/* =========================
+   ELEMENTS
+========================= */
 
 const welcomeScreen =
   document.getElementById("welcomeScreen");
@@ -753,6 +811,12 @@ const callAvatar =
 
 const callName =
   document.getElementById("callName");
+
+const answerCall =
+  document.getElementById("answerCall");
+
+const rejectCall =
+  document.getElementById("rejectCall");
 
 const videoPage =
   document.getElementById("videoPage");
@@ -776,16 +840,20 @@ const onlineCount =
   document.getElementById("onlineCount");
 
 
-let currentCallProfile = null;
-let videoTimer = null;
-let photoOfflineTimer = null;
-let callTimer = null;
-let returnLoadingTimer = null;
-let insufficientTimer = null;
-
-
 /* =========================
-   9 UNIQUE PHOTOS
+   TIMERS
+========================= */
+
+let videoTimer = null;
+let callTimer = null;
+let loadingTimer = null;
+let insufficientTimer = null;
+let photoRotationTimer = null;
+
+let currentCallProfile = null;
+let videoFinished = false;
+  /* =========================
+   PROFILES
 ========================= */
 
 const profiles = [
@@ -908,8 +976,76 @@ const profiles = [
   }
 
 ];
-  /* =========================
-   SHOW ONLY ONE SCREEN
+
+
+/* =========================
+   OFFLINE
+========================= */
+
+let offlineIndexes = [];
+
+
+function chooseOffline(){
+
+  const result = [];
+
+  while(
+    result.length < 3 &&
+    result.length < profiles.length
+  ){
+
+    const index =
+      Math.floor(
+        Math.random() * profiles.length
+      );
+
+    if(!result.includes(index)){
+      result.push(index);
+    }
+  }
+
+  return result;
+}
+
+
+offlineIndexes =
+  chooseOffline();
+
+
+/* =========================
+   SHUFFLE
+========================= */
+
+function shuffleArray(array){
+
+  const result = [...array];
+
+  for(
+    let i=result.length-1;
+    i>0;
+    i--
+  ){
+
+    const j =
+      Math.floor(
+        Math.random() * (i+1)
+      );
+
+    [
+      result[i],
+      result[j]
+    ] = [
+      result[j],
+      result[i]
+    ];
+  }
+
+  return result;
+}
+
+
+/* =========================
+   SHOW ONE SCREEN
 ========================= */
 
 function showOnly(section){
@@ -924,11 +1060,9 @@ function showOnly(section){
   if(section){
     section.classList.remove("hidden");
   }
-}
-
-
-/* =========================
-   PAYMENT
+      }
+  /* =========================
+   PAYMENT LINK
 ========================= */
 
 function getPaymentUrl(profile){
@@ -960,9 +1094,11 @@ function getPaymentUrl(profile){
     params.set("ref",ref);
   }
 
-  return PAYMENT_PAGE +
+  return (
+    PAYMENT_PAGE +
     "?" +
-    params.toString();
+    params.toString()
+  );
 }
 
 
@@ -971,70 +1107,6 @@ function openPayment(profile){
   window.location.href =
     getPaymentUrl(profile);
 
-}
-
-
-/* =========================
-   OFFLINE PROFILES
-========================= */
-
-function chooseOffline(){
-
-  const indexes = [];
-
-  const amount =
-    Math.min(3,profiles.length);
-
-  while(indexes.length < amount){
-
-    const randomIndex =
-      Math.floor(
-        Math.random() * profiles.length
-      );
-
-    if(!indexes.includes(randomIndex)){
-      indexes.push(randomIndex);
-    }
-  }
-
-  return indexes;
-}
-
-
-let offlineIndexes =
-  chooseOffline();
-
-
-/* =========================
-   SHUFFLE
-========================= */
-
-function shuffleArray(array){
-
-  const shuffled = [...array];
-
-  for(
-    let i=shuffled.length-1;
-    i>0;
-    i--
-  ){
-
-    const j =
-      Math.floor(
-        Math.random() * (i+1)
-      );
-
-    [
-      shuffled[i],
-      shuffled[j]
-    ] =
-    [
-      shuffled[j],
-      shuffled[i]
-    ];
-  }
-
-  return shuffled;
 }
 
 
@@ -1062,17 +1134,9 @@ function startPhotoChat(
       profile.messages.length
     );
 
-  let intervalTimer = null;
-
-  function showNextMessage(){
+  function showMessage(){
 
     if(!chatBox.isConnected){
-
-      if(intervalTimer){
-        clearInterval(intervalTimer);
-        intervalTimer = null;
-      }
-
       return;
     }
 
@@ -1095,11 +1159,13 @@ function startPhotoChat(
     messageIndex++;
   }
 
+
   const firstDelay =
-    500 +
+    700 +
     Math.floor(
-      Math.random() * 5000
+      Math.random() * 3000
     );
+
 
   setTimeout(()=>{
 
@@ -1107,23 +1173,18 @@ function startPhotoChat(
       return;
     }
 
-    showNextMessage();
+    showMessage();
 
-    const nextDelay =
-      3500 +
-      Math.floor(
-        Math.random() * 5000
-      );
-
-    intervalTimer =
-      setInterval(
-        showNextMessage,
-        nextDelay
-      );
+    setInterval(
+      showMessage,
+      5000
+    );
 
   },firstDelay);
-      }
-  /* =========================
+}
+
+
+/* =========================
    RENDER PHOTOS
 ========================= */
 
@@ -1137,10 +1198,11 @@ function renderPhotos(){
       offlineIndexes.length
     );
 
-  const shuffledProfiles =
+  const shuffled =
     shuffleArray(profiles);
 
-  shuffledProfiles.forEach(profile=>{
+
+  shuffled.forEach(profile=>{
 
     const originalIndex =
       profiles.indexOf(profile);
@@ -1150,11 +1212,13 @@ function renderPhotos(){
         originalIndex
       );
 
+
     const card =
       document.createElement("article");
 
     card.className =
       "profile-card";
+
 
     card.innerHTML = `
 
@@ -1192,6 +1256,7 @@ function renderPhotos(){
 
       </div>
 
+
       <div class="profile-info">
 
         <div class="profile-name">
@@ -1206,6 +1271,7 @@ function renderPhotos(){
         </div>
 
       </div>
+
 
       <div class="social-row">
 
@@ -1230,82 +1296,80 @@ function renderPhotos(){
 
 
     const image =
-      card.querySelector(".profile-image");
+      card.querySelector(
+        ".profile-image"
+      );
 
     const play =
-      card.querySelector(".play-icon");
+      card.querySelector(
+        ".play-icon"
+      );
 
     const like =
-      card.querySelector(".like-btn");
+      card.querySelector(
+        ".like-btn"
+      );
 
     const love =
-      card.querySelector(".love-btn");
+      card.querySelector(
+        ".love-btn"
+      );
 
     const follow =
-      card.querySelector(".follow-btn");
+      card.querySelector(
+        ".follow-btn"
+      );
 
     const chat =
-      card.querySelector(".chat-btn");
+      card.querySelector(
+        ".chat-btn"
+      );
 
 
-    image.addEventListener(
-      "click",
-      ()=>{
-        openPayment(profile);
-      }
-    );
+    image.onclick =
+      ()=>openPayment(profile);
+
+    play.onclick =
+      ()=>openPayment(profile);
+
+    chat.onclick =
+      ()=>openPayment(profile);
 
 
-    play.addEventListener(
-      "click",
-      ()=>{
-        openPayment(profile);
-      }
-    );
-
-
-    chat.addEventListener(
-      "click",
-      ()=>{
-        openPayment(profile);
-      }
-    );
-
-
-    like.addEventListener(
-      "click",
+    like.onclick =
       event=>{
 
         event.stopPropagation();
 
-        like.classList.toggle("active");
+        like.classList.toggle(
+          "active"
+        );
 
-      }
-    );
+      };
 
 
-    love.addEventListener(
-      "click",
+    love.onclick =
       event=>{
 
         event.stopPropagation();
 
-        love.classList.toggle("active");
+        love.classList.toggle(
+          "active"
+        );
 
-      }
-    );
+      };
 
 
-    follow.addEventListener(
-      "click",
+    follow.onclick =
       event=>{
 
         event.stopPropagation();
 
-        follow.classList.toggle("active");
+        follow.classList.toggle(
+          "active"
+        );
 
-      }
-    );
+      };
 
 
     photosGrid.appendChild(card);
@@ -1316,37 +1380,52 @@ function renderPhotos(){
     );
 
   });
-}
 
-
-/* =========================
+      }
+  /* =========================
    OFFLINE ROTATION
 ========================= */
 
 function startOfflineRotation(){
 
-  if(photoOfflineTimer){
-
+  if(photoRotationTimer){
     clearInterval(
-      photoOfflineTimer
+      photoRotationTimer
     );
   }
 
-  photoOfflineTimer =
+  photoRotationTimer =
     setInterval(()=>{
 
       offlineIndexes =
         chooseOffline();
 
-      renderPhotos();
+      if(
+        !photosPage.classList.contains(
+          "hidden"
+        )
+      ){
+        renderPhotos();
+      }
 
     },5 * 60 * 1000);
 }
-  /* =========================
-   RETURNING VISITOR CALL
+
+
+/* =========================
+   INCOMING VIDEO CALL
 ========================= */
 
 function openIncomingCall(){
+
+  /*
+    IMPORTANT:
+    Always choose a profile.
+
+    If all profiles happen to be
+    offline, use the first profile
+    instead of cancelling the call.
+  */
 
   const available =
     profiles.filter(
@@ -1354,17 +1433,24 @@ function openIncomingCall(){
         !offlineIndexes.includes(index)
     );
 
-  if(!available.length){
-    return;
+
+  if(available.length > 0){
+
+    currentCallProfile =
+      available[
+        Math.floor(
+          Math.random() *
+          available.length
+        )
+      ];
+
+  }else{
+
+    currentCallProfile =
+      profiles[0];
+
   }
 
-  currentCallProfile =
-    available[
-      Math.floor(
-        Math.random() *
-        available.length
-      )
-    ];
 
   callAvatar.src =
     currentCallProfile.image;
@@ -1373,16 +1459,18 @@ function openIncomingCall(){
     currentCallProfile.name +
     " is calling you";
 
+
   showOnly(incomingCall);
+
 
   if(callTimer){
     clearTimeout(callTimer);
   }
 
+
   /*
-    Call screen stays for 15 seconds.
-    If visitor does not answer or reject,
-    it returns to Live Videos.
+    Incoming call remains visible
+    for 15 seconds.
   */
 
   callTimer =
@@ -1396,78 +1484,113 @@ function openIncomingCall(){
 
         showOnly(photosPage);
 
+        renderPhotos();
+
       }
 
     },15000);
+
 }
 
 
 /* =========================
-   RETURNING VISITOR
-   ANSWER
+   REJECT CALL
 ========================= */
 
-function answerIncomingCall(){
+function rejectIncomingCall(){
 
   if(callTimer){
 
-    clearTimeout(callTimer);
+    clearTimeout(
+      callTimer
+    );
 
     callTimer = null;
   }
 
-  /*
-    IMPORTANT:
-    Returning visitor does NOT play
-    the video again.
+  showOnly(photosPage);
 
-    Answer ->
-    2 seconds Connecting ->
-    Insufficient Minutes ->
-    Live Videos
+  renderPhotos();
+
+}
+
+
+/* =========================
+   ANSWER RETURNING CALL
+========================= */
+
+function answerReturningCall(){
+
+  if(callTimer){
+
+    clearTimeout(
+      callTimer
+    );
+
+    callTimer = null;
+  }
+
+
+  /*
+    RETURNING VISITOR:
+
+    Answer
+      ↓
+    Connecting 2 seconds
+      ↓
+    Insufficient Minutes 2 seconds
+      ↓
+    Live Photos
+
+    NO VIDEO PLAYS HERE.
   */
 
   showOnly(returnLoading);
 
-  if(returnLoadingTimer){
 
+  if(loadingTimer){
     clearTimeout(
-      returnLoadingTimer
+      loadingTimer
     );
   }
 
-  returnLoadingTimer =
+
+  loadingTimer =
     setTimeout(()=>{
 
-      showOnly(insufficientPage);
+      showOnly(
+        insufficientPage
+      );
+
 
       if(insufficientTimer){
-
         clearTimeout(
           insufficientTimer
         );
       }
+
 
       insufficientTimer =
         setTimeout(()=>{
 
           showOnly(photosPage);
 
+          renderPhotos();
+
         },2000);
 
     },2000);
+
 }
-
-
-/* =========================
+  /* =========================
    FIRST VISITOR VIDEO
 ========================= */
 
 function startLiveVideo(profile){
 
   /*
-    If no profile was supplied,
-    choose an available profile.
+    Choose a profile if one
+    was not supplied.
   */
 
   if(!profile){
@@ -1477,6 +1600,7 @@ function startLiveVideo(profile){
         (item,index)=>
           !offlineIndexes.includes(index)
       );
+
 
     if(available.length){
 
@@ -1490,21 +1614,22 @@ function startLiveVideo(profile){
 
     }else{
 
-      profile = profiles[0];
+      profile =
+        profiles[0];
 
     }
+
   }
 
 
   /*
     Mark visitor immediately.
 
-    This means:
-    first visit = automatic video.
+    FIRST VISIT:
+    automatic video.
 
-    After this:
-    reload/returning visit =
-    incoming call.
+    NEXT RELOAD:
+    incoming video call.
   */
 
   localStorage.setItem(
@@ -1516,17 +1641,19 @@ function startLiveVideo(profile){
   currentCallProfile =
     profile;
 
+  videoFinished = false;
+
 
   videoName.textContent =
-    currentCallProfile.name +
+    profile.name +
     " • LIVE";
+
+
+  videoChat.innerHTML = "";
 
 
   liveVideo.src =
     VIDEO_FILE;
-
-
-  videoChat.innerHTML = "";
 
 
   showOnly(videoPage);
@@ -1536,9 +1663,9 @@ function startLiveVideo(profile){
 
 
   /*
-    Mobile browsers may block autoplay
-    with sound. We try normal playback
-    first.
+    Try sound first.
+    If mobile browser blocks sound,
+    retry muted.
   */
 
   liveVideo.muted = false;
@@ -1548,31 +1675,14 @@ function startLiveVideo(profile){
   const playPromise =
     liveVideo.play();
 
+
   if(playPromise){
 
-    playPromise.catch(error=>{
-
-      console.log(
-        "Video play error:",
-        error
-      );
-
-      /*
-        If browser blocks sound autoplay,
-        retry muted so the video can still
-        start automatically.
-      */
+    playPromise.catch(()=>{
 
       liveVideo.muted = true;
 
-      liveVideo.play().catch(
-        retryError=>{
-          console.log(
-            "Muted video play error:",
-            retryError
-          );
-        }
-      );
+      liveVideo.play().catch(()=>{});
 
     });
 
@@ -1580,20 +1690,21 @@ function startLiveVideo(profile){
 
 
   if(videoTimer){
-
     clearTimeout(videoTimer);
   }
 
 
   videoTimer =
-    setTimeout(
-      ()=>{
-        finishLiveVideo();
-      },
-      40000
-    );
-        }
-  /* =========================
+    setTimeout(()=>{
+
+      finishLiveVideo();
+
+    },40000);
+
+}
+
+
+/* =========================
    VIDEO CHAT
 ========================= */
 
@@ -1602,13 +1713,9 @@ function startVideoChat(){
   const messages = [
 
     "Hi ❤️",
-
     "Can you see me?",
-
     "I am happy you are here 😊",
-
     "Let's talk ❤️",
-
     "You are cute 😘"
 
   ];
@@ -1619,10 +1726,7 @@ function startVideoChat(){
 
       const delay =
         1800 +
-        index * 5500 +
-        Math.floor(
-          Math.random() * 1800
-        );
+        index * 5500;
 
 
       setTimeout(()=>{
@@ -1637,16 +1741,15 @@ function startVideoChat(){
 
 
         const item =
-          document.createElement("div");
-
+          document.createElement(
+            "div"
+          );
 
         item.className =
           "video-chat-msg";
 
-
         item.textContent =
           message;
-
 
         videoChat.appendChild(item);
 
@@ -1665,18 +1768,28 @@ function startVideoChat(){
 
     }
   );
+
 }
 
 
 /* =========================
-   FINISH FIRST VIDEO
+   FINISH VIDEO
 ========================= */
 
 function finishLiveVideo(){
 
+  if(videoFinished){
+    return;
+  }
+
+  videoFinished = true;
+
+
   if(videoTimer){
 
-    clearTimeout(videoTimer);
+    clearTimeout(
+      videoTimer
+    );
 
     videoTimer = null;
   }
@@ -1685,17 +1798,13 @@ function finishLiveVideo(){
   liveVideo.pause();
 
   try{
-
     liveVideo.currentTime = 0;
-
-  }catch(error){
-
-    console.log(error);
-
-  }
+  }catch(error){}
 
 
-  showOnly(insufficientPage);
+  showOnly(
+    insufficientPage
+  );
 
 
   if(insufficientTimer){
@@ -1711,12 +1820,65 @@ function finishLiveVideo(){
 
       showOnly(photosPage);
 
+      renderPhotos();
+
     },2000);
+
 }
 
 
 /* =========================
-   VIDEO LIKE
+   VIDEO END
+========================= */
+
+liveVideo.addEventListener(
+  "ended",
+  ()=>{
+    finishLiveVideo();
+  }
+);
+
+
+/* =========================
+   VIDEO 40 SECOND LIMIT
+========================= */
+
+liveVideo.addEventListener(
+  "timeupdate",
+  ()=>{
+
+    if(
+      liveVideo.currentTime >= 40
+    ){
+
+      finishLiveVideo();
+
+    }
+
+  }
+);
+  /* =========================
+   BUTTONS
+========================= */
+
+answerCall.addEventListener(
+  "click",
+  ()=>{
+    answerReturningCall();
+  }
+);
+
+
+rejectCall.addEventListener(
+  "click",
+  ()=>{
+    rejectIncomingCall();
+  }
+);
+
+
+/* =========================
+   LIKE VIDEO
 ========================= */
 
 document
@@ -1741,7 +1903,7 @@ document
 
 
 /* =========================
-   VIDEO FOLLOW
+   FOLLOW VIDEO
 ========================= */
 
 document
@@ -1766,74 +1928,97 @@ document
 
 
 /* =========================
-   ANSWER BUTTON
+   VISITOR TYPE
 ========================= */
 
-document
-  .getElementById("answerCall")
-  .addEventListener(
-    "click",
-    ()=>{
-      answerIncomingCall();
-    }
+function isReturningVisitor(){
+
+  return (
+    localStorage.getItem(
+      FIRST_VIDEO_KEY
+    ) === "1"
   );
+
+}
 
 
 /* =========================
-   REJECT BUTTON
+   START FLOW
 ========================= */
 
-document
-  .getElementById("rejectCall")
-  .addEventListener(
-    "click",
-    ()=>{
+function startVisitorFlow(){
 
-      if(callTimer){
+  const returning =
+    isReturningVisitor();
 
-        clearTimeout(
-          callTimer
-        );
 
-        callTimer = null;
+  /*
+    Welcome = 3 seconds
+  */
+
+  setTimeout(()=>{
+
+    showOnly(
+      photosPage
+    );
+
+    renderPhotos();
+
+
+    /*
+      Live Photos remain visible
+      for 3.5 seconds.
+    */
+
+    setTimeout(()=>{
+
+      if(returning){
+
+        /*
+          RETURNING:
+
+          Welcome
+          ↓
+          Live Photos
+          ↓
+          Incoming Video Call
+          ↓
+          Answer
+          ↓
+          Connecting 2s
+          ↓
+          Insufficient 2s
+          ↓
+          Live Photos
+        */
+
+        openIncomingCall();
+
+      }else{
+
+        /*
+          NEW:
+
+          Welcome
+          ↓
+          Live Photos
+          ↓
+          Automatic Video
+          ↓
+          Insufficient 2s
+          ↓
+          Live Photos
+        */
+
+        startLiveVideo();
+
       }
 
-      showOnly(photosPage);
+    },3500);
 
-    }
-  );
-  /* =========================
-   VIDEO ENDED
-========================= */
+  },3000);
 
-liveVideo.addEventListener(
-  "ended",
-  ()=>{
-
-    finishLiveVideo();
-
-  }
-);
-
-
-/* =========================
-   40 SECOND PROTECTION
-========================= */
-
-liveVideo.addEventListener(
-  "timeupdate",
-  ()=>{
-
-    if(
-      liveVideo.currentTime >= 40
-    ){
-
-      finishLiveVideo();
-
-    }
-
-  }
-);
+}
 
 
 /* =========================
@@ -1860,151 +2045,19 @@ document.addEventListener(
 
 
 /* =========================
-   CLEAR OLD TIMERS
-========================= */
-
-function clearAllTimers(){
-
-  if(videoTimer){
-
-    clearTimeout(
-      videoTimer
-    );
-
-    videoTimer = null;
-  }
-
-
-  if(callTimer){
-
-    clearTimeout(
-      callTimer
-    );
-
-    callTimer = null;
-  }
-
-
-  if(returnLoadingTimer){
-
-    clearTimeout(
-      returnLoadingTimer
-    );
-
-    returnLoadingTimer = null;
-  }
-
-
-  if(insufficientTimer){
-
-    clearTimeout(
-      insufficientTimer
-    );
-
-    insufficientTimer = null;
-  }
-
-}
-
-
-/* =========================
-   START OFFLINE ROTATION
+   OFFLINE ROTATION
 ========================= */
 
 startOfflineRotation();
 
 
 /* =========================
-   DETERMINE VISITOR TYPE
-========================= */
-
-function isReturningVisitor(){
-
-  return (
-    localStorage.getItem(
-      FIRST_VIDEO_KEY
-    ) === "1"
-  );
-
-}
-
-
-/* =========================
-   START VISITOR FLOW
-========================= */
-
-function startVisitorFlow(){
-
-  const returning =
-    isReturningVisitor();
-
-
-  /*
-    Every visit starts with
-    Welcome for 3 seconds.
-  */
-
-  setTimeout(()=>{
-
-    showOnly(photosPage);
-
-    renderPhotos();
-
-
-    /*
-      Give Live Photos time to appear.
-    */
-
-    setTimeout(()=>{
-
-      if(returning){
-
-        /*
-          RETURNING VISITOR:
-
-          Live Photos
-          ↓
-          Incoming Video Call
-          ↓
-          Answer
-          ↓
-          2 sec Loading
-          ↓
-          Insufficient Minutes
-          ↓
-          Live Photos
-        */
-
-        openIncomingCall();
-
-      }else{
-
-        /*
-          NEW VISITOR:
-
-          Live Photos
-          ↓
-          Automatic Live Video
-          ↓
-          Insufficient Minutes
-          ↓
-          Live Photos
-        */
-
-        startLiveVideo();
-
-      }
-
-    },3500);
-
-  },3000);
-
-}
-  /* =========================
    INITIAL SCREEN
 ========================= */
 
-showOnly(welcomeScreen);
+showOnly(
+  welcomeScreen
+);
 
 
 /* =========================
@@ -2015,234 +2068,11 @@ startVisitorFlow();
 
 
 /* =========================
-   EXTRA SAFETY
+   DEBUG INFORMATION
 ========================= */
-
-/*
-  If the browser reloads while the video
-  is playing, the localStorage flag is
-  already "1".
-
-  Therefore the next page load is treated
-  as a returning visitor.
-*/
-
-
-window.addEventListener(
-  "beforeunload",
-  ()=>{
-
-    if(videoTimer){
-
-      clearTimeout(
-        videoTimer
-      );
-
-      videoTimer = null;
-    }
-
-    if(callTimer){
-
-      clearTimeout(
-        callTimer
-      );
-
-      callTimer = null;
-    }
-
-  }
-);
-
-
-/* =========================
-   PREVENT DOUBLE VIDEO FINISH
-========================= */
-
-let videoFinished = false;
-
-
-function safeStartVideo(profile){
-
-  videoFinished = false;
-
-  startLiveVideo(profile);
-
-}
-
-
-/* =========================
-   REDEFINE VIDEO FINISH SAFELY
-========================= */
-
-function finaliseVideoOnce(){
-
-  if(videoFinished){
-
-    return;
-  }
-
-  videoFinished = true;
-
-  finishLiveVideo();
-
-}
-
-
-/* =========================
-   VIDEO END SAFETY
-========================= */
-
-liveVideo.addEventListener(
-  "ended",
-  ()=>{
-
-    finaliseVideoOnce();
-
-  }
-);
-
-
-/* =========================
-   VIDEO TIME SAFETY
-========================= */
-
-liveVideo.addEventListener(
-  "timeupdate",
-  ()=>{
-
-    if(
-      liveVideo.currentTime >= 40
-    ){
-
-      finaliseVideoOnce();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   RESET FINISH FLAG
-   WHEN NEW VIDEO STARTS
-========================= */
-
-const originalStartLiveVideo =
-  startLiveVideo;
-
-
-/*
-  The existing startLiveVideo function
-  remains the actual video starter.
-
-  This listener resets the protection
-  whenever a new video element begins.
-*/
-
-liveVideo.addEventListener(
-  "play",
-  ()=>{
-
-    videoFinished = false;
-
-  }
-);
-
-
-/* =========================
-   FINAL RETURNING FLOW
-========================= */
-
-function returningVisitorAnswer(){
-
-  clearAllTimers();
-
-  showOnly(returnLoading);
-
-
-  returnLoadingTimer =
-    setTimeout(()=>{
-
-      showOnly(insufficientPage);
-
-
-      insufficientTimer =
-        setTimeout(()=>{
-
-          showOnly(photosPage);
-
-          renderPhotos();
-
-        },2000);
-
-    },2000);
-
-}
-
-
-/*
-  Keep the main Answer button connected
-  to the exact returning-visitor flow.
-*/
-
-document
-  .getElementById("answerCall")
-  .onclick = function(){
-
-    returningVisitorAnswer();
-
-  };
-
-
-/* =========================
-   FINAL REJECT FLOW
-========================= */
-
-document
-  .getElementById("rejectCall")
-  .onclick = function(){
-
-    clearAllTimers();
-
-    showOnly(photosPage);
-
-    renderPhotos();
-
-  };
-  /* =========================
-   FINAL PAGE START
-========================= */
-
-/*
-  IMPORTANT:
-
-  New visitor:
-  localStorage key is absent.
-
-  Therefore:
-  Welcome
-  -> Live Photos
-  -> Automatic Video
-  -> Insufficient Minutes
-  -> Live Photos
-
-
-  Returning visitor / reload:
-  localStorage key is already "1".
-
-  Therefore:
-  Welcome
-  -> Live Photos
-  -> Incoming Video Call
-  -> Answer
-  -> 2 seconds Connecting
-  -> Insufficient Minutes
-  -> Live Photos
-*/
-
 
 console.log(
-  "LiveX visitor type:",
+  "LiveX:",
   isReturningVisitor()
     ? "RETURNING VISITOR"
     : "NEW VISITOR"
