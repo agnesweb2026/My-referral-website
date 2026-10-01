@@ -2,1174 +2,915 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Live Profiles</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>LiveX</title>
 
 <style>
-
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
+  -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
+  margin:0;
+  padding:0;
   width:100%;
   min-height:100%;
-  background:#000;
+  background:#050505;
   color:#fff;
-  font-family:Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
   overflow-x:hidden;
 }
 
-button,
-input{
-  font-family:Arial,sans-serif;
+.hidden{
+  display:none!important;
+}
+
+button,input{
+  font:inherit;
 }
 
 button{
-  -webkit-tap-highlight-color:transparent;
+  cursor:pointer;
 }
-
-.hidden{
-  display:none !important;
-}
-
-.page{
-  width:100%;
-  min-height:100vh;
-}
-
-
-/* =========================
-   WELCOME
-========================= */
 
 #welcomeScreen{
-  min-height:100vh;
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:
+    radial-gradient(circle at 50% 35%,#2b0010 0,#090006 35%,#000 75%);
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  background:#000;
 }
 
-.welcome-box{
-  padding:25px;
-}
-
-.welcome-box h1{
-  font-size:30px;
-  margin-bottom:12px;
-}
-
-.welcome-box p{
-  color:#aaa;
-  font-size:15px;
-}
-
-
-/* =========================
-   PHOTOS PAGE
-========================= */
-
-#photosPage{
-  min-height:100vh;
-  background:#000;
-}
-
-.topbar{
-  height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 14px;
-  background:#080808;
-  border-bottom:1px solid #222;
-  position:sticky;
-  top:0;
-  z-index:20;
+.welcome-content{
+  width:90%;
+  max-width:420px;
 }
 
 .logo{
-  font-size:20px;
-  font-weight:bold;
+  font-size:44px;
+  font-weight:900;
+  letter-spacing:-2px;
+  color:#ff1744;
+  text-shadow:0 0 25px rgba(255,23,68,.45);
 }
 
-.online{
+.welcome-title{
+  margin-top:18px;
+  font-size:24px;
+  font-weight:800;
+}
+
+.welcome-text{
+  margin-top:10px;
+  color:#aaa;
+  font-size:14px;
+}
+
+.loading-line{
+  width:220px;
+  height:4px;
+  margin:28px auto 0;
+  background:#222;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.loading-line span{
+  display:block;
+  width:35%;
+  height:100%;
+  background:#ff1744;
+  animation:loading 1.4s infinite ease-in-out;
+}
+
+@keyframes loading{
+  0%{transform:translateX(-120%)}
+  100%{transform:translateX(400%)}
+}
+
+#photosPage{
+  min-height:100vh;
+  padding-bottom:30px;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  min-height:62px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 13px;
+  background:rgba(0,0,0,.94);
+  border-bottom:1px solid #242424;
+  backdrop-filter:blur(12px);
+}
+
+.brand{
+  color:#ff1744;
+  font-size:24px;
+  font-weight:900;
+}
+
+.online-box{
+  display:flex;
+  align-items:center;
+  gap:7px;
   font-size:13px;
-  color:#fff;
+  color:#ddd;
 }
 
 .online-dot{
-  display:inline-block;
-  width:8px;
-  height:8px;
+  width:9px;
+  height:9px;
   border-radius:50%;
-  background:#19e66b;
-  margin-right:5px;
-  animation:onlineBlink 1s infinite;
+  background:#22e56b;
+  box-shadow:0 0 9px rgba(34,229,107,.8);
 }
 
-@keyframes onlineBlink{
-
-  0%,100%{
-    opacity:1;
-  }
-
-  50%{
-    opacity:.25;
-  }
-
+.live-pill{
+  padding:6px 9px;
+  border-radius:8px;
+  background:#ff1744;
+  color:white;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.5px;
 }
 
+.page-title{
+  padding:18px 14px 7px;
+  font-size:21px;
+  font-weight:900;
+}
 
-/* =========================
-   PHOTO GRID
-========================= */
+.page-subtitle{
+  padding:0 14px 15px;
+  color:#888;
+  font-size:13px;
+}
 
-#photoGrid{
+.photos-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:4px;
-  padding:4px;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  padding:0 8px;
 }
 
-.photoCard{
-  position:relative;
-  background:#111;
-  border-radius:7px;
-  overflow:hidden;
-  cursor:pointer;
+.photo-card{
   min-width:0;
+  background:#101010;
+  border:1px solid #222;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 5px 18px rgba(0,0,0,.35);
 }
 
 .photo-image-wrap{
   position:relative;
   width:100%;
-  aspect-ratio:.78;
-  overflow:hidden;
+  aspect-ratio:3/4;
   background:#151515;
+  overflow:hidden;
 }
 
-.profile-photo{
+.photo-image{
   width:100%;
   height:100%;
-  object-fit:cover;
   display:block;
+  object-fit:cover;
 }
 
-
-/* =========================
-   LIVE BADGE
-========================= */
-
-.live-badge{
+.status-dot{
   position:absolute;
   top:7px;
-  left:7px;
-  z-index:5;
-
-  background:#e00000;
-  color:#fff;
-
-  font-size:10px;
-  font-weight:bold;
-
-  padding:4px 7px;
-
-  border-radius:4px;
+  right:7px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#22e56b;
+  border:2px solid rgba(0,0,0,.8);
+  box-shadow:0 0 9px rgba(34,229,107,.9);
 }
 
-.offline-badge{
+.status-dot.offline{
+  background:#777;
+  box-shadow:none;
+}
+
+.photo-live{
   position:absolute;
+  left:7px;
   top:7px;
-  left:7px;
-  z-index:5;
-
-  background:#555;
-  color:#fff;
-
-  font-size:10px;
-  font-weight:bold;
-
-  padding:4px 7px;
-
-  border-radius:4px;
+  padding:4px 6px;
+  border-radius:5px;
+  background:#ff1744;
+  font-size:9px;
+  font-weight:900;
 }
 
-
-/* =========================
-   VIDEO ICON
-========================= */
-
-.photo-play{
+.video-icon{
   position:absolute;
-
   left:50%;
   top:50%;
-
   transform:translate(-50%,-50%);
-
-  width:45px;
-  height:45px;
-
+  width:43px;
+  height:43px;
   border-radius:50%;
-
-  background:rgba(0,0,0,.72);
-
-  border:2px solid #fff;
-
+  background:rgba(0,0,0,.65);
+  border:2px solid rgba(255,255,255,.9);
   display:flex;
   align-items:center;
   justify-content:center;
-
-  z-index:6;
-
-  animation:videoZoom 1.4s ease-in-out infinite;
+  font-size:17px;
+  animation:pulse 1.8s infinite;
 }
 
-.photo-play::after{
-  content:"▶";
-
-  color:#fff;
-
-  font-size:19px;
-
-  margin-left:3px;
+@keyframes pulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.08)}
 }
-
-@keyframes videoZoom{
-
-  0%{
-    transform:translate(-50%,-50%) scale(.82);
-  }
-
-  50%{
-    transform:translate(-50%,-50%) scale(1.16);
-  }
-
-  100%{
-    transform:translate(-50%,-50%) scale(.82);
-  }
-
-}
-
-
-/* =========================
-   PHOTO INFO
-========================= */
 
 .photo-info{
-  padding:7px 7px 8px;
-  background:#101010;
+  padding:9px 8px 7px;
 }
 
 .photo-name{
-  display:flex;
-  align-items:center;
-  gap:5px;
-
   font-size:13px;
-  font-weight:bold;
-
-  margin-bottom:4px;
-}
-
-.name-dot{
-  width:7px;
-  height:7px;
-
-  border-radius:50%;
-
-  background:#19e66b;
-
-  display:inline-block;
-  flex:none;
-
-  animation:nameBlink 1s infinite;
-}
-
-@keyframes nameBlink{
-
-  0%,100%{
-    opacity:1;
-    transform:scale(1);
-  }
-
-  50%{
-    opacity:.2;
-    transform:scale(.75);
-  }
-
+  font-weight:800;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .photo-meta{
-  font-size:11px;
+  margin-top:4px;
   color:#aaa;
+  font-size:11px;
 }
 
+.country{
+  margin-right:3px;
+}
 
-/* =========================
-   SOCIAL BUTTONS
-========================= */
-
-.social-actions{
+.social-row{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:3px;
-  margin-top:7px;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+  padding:0 7px 7px;
 }
 
 .social-btn{
   min-width:0;
-  border:1px solid #292929;
-  background:#181818;
+  padding:7px 2px;
+  border:1px solid #2a2a2a;
+  border-radius:8px;
+  background:#191919;
   color:#ddd;
-  border-radius:5px;
-  padding:6px 2px;
-
   font-size:10px;
-  line-height:1.15;
-
-  cursor:pointer;
-  transition:.15s;
+  font-weight:700;
 }
 
 .social-btn:active{
-  transform:scale(.94);
+  transform:scale(.96);
 }
 
-.social-btn.like.active{
-  color:#ff4d67;
-  border-color:#ff4d67;
-  background:#211116;
+.social-btn.active{
+  border-color:#ff1744;
+  color:#ff496b;
+  background:#21070d;
 }
-
-.social-btn.love.active{
-  color:#ff4fd8;
-  border-color:#ff4fd8;
-  background:#211326;
-}
-
-.social-btn.follow.active{
-  color:#19e66b;
-  border-color:#19e66b;
-  background:#102015;
-}
-
-.social-btn.chat.active{
-  color:#5bb8ff;
-  border-color:#5bb8ff;
-  background:#101d28;
-}
-
-.social-count{
-  display:block;
-  font-size:9px;
-  color:#aaa;
-  margin-top:2px;
-}
-  /* =========================
-   CHAT SECTION
-========================= */
 
 .chat-section{
-  display:none;
-  margin-top:7px;
-  padding:7px;
-
-  background:#080808;
-  border:1px solid #292929;
-  border-radius:7px;
-}
-
-.chat-section.open{
-  display:block;
+  margin:0 7px 8px;
+  border-top:1px solid #252525;
+  padding-top:7px;
 }
 
 .chat-title{
   display:flex;
   align-items:center;
   justify-content:space-between;
-
-  font-size:11px;
-  font-weight:bold;
-
-  margin-bottom:6px;
-}
-
-.chat-live{
-  color:#19e66b;
-  font-size:9px;
+  color:#aaa;
+  font-size:10px;
+  margin-bottom:5px;
 }
 
 .chat-comments{
-  height:110px;
+  height:105px;
   overflow-y:auto;
-  overflow-x:hidden;
-
-  padding:5px;
-
-  background:#050505;
-  border-radius:5px;
-
-  border:1px solid #1f1f1f;
-
-  scroll-behavior:smooth;
+  overscroll-behavior:contain;
+  padding:4px 2px;
+  scrollbar-width:thin;
 }
 
-.chat-comments::-webkit-scrollbar{
-  width:4px;
-}
-
-.chat-comments::-webkit-scrollbar-track{
-  background:#090909;
-}
-
-.chat-comments::-webkit-scrollbar-thumb{
-  background:#444;
-  border-radius:10px;
-}
-
-.chat-comment{
-  padding:5px 6px;
-  margin-bottom:4px;
-
-  background:#151515;
-  border-radius:5px;
-
+.comment{
+  margin-bottom:6px;
+  padding:6px 7px;
+  border-radius:8px;
+  background:#181818;
   font-size:10px;
-  line-height:1.3;
-
-  word-break:break-word;
+  line-height:1.35;
+  color:#ddd;
 }
 
-.chat-comment:last-child{
-  margin-bottom:0;
-}
-
-.chat-comment-user{
-  color:#6dbbff;
-  font-weight:bold;
+.comment-name{
+  color:#ff6680;
+  font-weight:800;
   margin-right:4px;
 }
 
-.chat-empty{
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  text-align:center;
-
-  color:#777;
+.empty-comments{
+  color:#666;
   font-size:10px;
-  padding:10px;
+  text-align:center;
+  padding:20px 5px;
 }
 
-.chat-form{
+.comment-form{
   display:flex;
-  gap:4px;
+  gap:5px;
   margin-top:5px;
 }
 
-.chat-input{
-  flex:1;
+.comment-input{
   min-width:0;
-
-  background:#151515;
-  color:#fff;
-
-  border:1px solid #333;
-  border-radius:5px;
-
-  padding:8px;
-
+  flex:1;
+  height:32px;
+  padding:0 8px;
+  border:1px solid #303030;
+  border-radius:8px;
   outline:none;
-
-  font-size:10px;
-}
-
-.chat-input:focus{
-  border-color:#777;
-}
-
-.chat-send{
-  border:none;
-  border-radius:5px;
-
-  background:#1683ff;
+  background:#0d0d0d;
   color:#fff;
-
-  padding:0 9px;
-
   font-size:10px;
-  font-weight:bold;
-
-  cursor:pointer;
 }
 
-.chat-send:active{
-  transform:scale(.94);
+.comment-input:focus{
+  border-color:#ff1744;
 }
 
-
-/* =========================
-   REACTION ANIMATION
-========================= */
-
-.reaction-pop{
-  position:fixed;
-  z-index:2000;
-
-  pointer-events:none;
-
-  font-size:25px;
-
-  animation:reactionFloat 900ms ease-out forwards;
+.comment-send{
+  width:42px;
+  height:32px;
+  border:0;
+  border-radius:8px;
+  background:#ff1744;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
 }
-
-@keyframes reactionFloat{
-
-  0%{
-    opacity:1;
-    transform:translateY(0) scale(.7);
-  }
-
-  100%{
-    opacity:0;
-    transform:translateY(-80px) scale(1.35);
-  }
-
-}
-
-
-/* =========================
-   INCOMING CALL
-========================= */
 
 #incomingCall{
   position:fixed;
   inset:0;
-
-  z-index:1000;
-
-  background:#050505;
-
+  z-index:2000;
+  background:#030303;
   display:flex;
-  flex-direction:column;
-
   align-items:center;
   justify-content:center;
+}
 
+.call-box{
+  width:90%;
+  max-width:390px;
   text-align:center;
 }
 
-.call-label{
-  color:#aaa;
-  font-size:14px;
-  margin-bottom:20px;
-}
-
-#callerImage{
-  width:145px;
-  height:145px;
-
-  border-radius:50%;
-
+.call-photo{
+  width:130px;
+  height:130px;
   object-fit:cover;
-
-  border:3px solid #e00000;
-
-  margin-bottom:18px;
+  border-radius:50%;
+  border:4px solid #ff1744;
+  box-shadow:0 0 35px rgba(255,23,68,.45);
 }
 
-#callerName{
-  font-size:25px;
-  font-weight:bold;
-  margin-bottom:8px;
+.call-live{
+  display:inline-block;
+  margin-top:18px;
+  padding:6px 10px;
+  border-radius:6px;
+  background:#ff1744;
+  font-size:11px;
+  font-weight:900;
 }
 
-.call-status{
-  color:#aaa;
-  font-size:14px;
-  margin-bottom:45px;
+.call-title{
+  margin-top:14px;
+  font-size:23px;
+  font-weight:900;
 }
 
-.call-buttons{
+.call-name{
+  margin-top:7px;
+  color:#bbb;
+}
+
+.call-actions{
   display:flex;
-
-  gap:35px;
-
-  align-items:center;
   justify-content:center;
+  gap:20px;
+  margin-top:28px;
 }
 
 .call-btn{
-  width:75px;
-  height:75px;
-
-  border:none;
-
+  width:62px;
+  height:62px;
+  border:0;
   border-radius:50%;
-
-  color:#fff;
-
-  font-size:28px;
-
-  cursor:pointer;
+  color:white;
+  font-size:25px;
 }
 
-.decline{
-  background:#e00000;
+.answer-btn{
+  background:#20c96b;
 }
 
-.answer{
-  background:#16a34a;
+.reject-btn{
+  background:#ed1743;
 }
 
-
-/* =========================
-   LIVE VIDEO
-========================= */
-
-#redLiveVideoPage{
+#firstVideoPage{
   position:fixed;
   inset:0;
-
-  z-index:900;
-
+  z-index:2100;
   background:#000;
 }
 
-.live-video{
+#firstVideo{
   width:100%;
   height:100%;
-
-  object-fit:cover;
-
+  object-fit:contain;
   background:#000;
 }
 
-.red-live-label{
+.video-live-label{
   position:absolute;
-
-  top:15px;
-  left:15px;
-
-  z-index:20;
-
-  background:#e00000;
-
-  color:#fff;
-
-  font-size:13px;
-  font-weight:bold;
-
-  padding:6px 10px;
-
-  border-radius:4px;
+  top:18px;
+  left:18px;
+  z-index:5;
+  padding:6px 9px;
+  border-radius:6px;
+  background:#ff1744;
+  font-size:11px;
+  font-weight:900;
 }
-
-
-/* =========================
-   INSUFFICIENT PAGE
-========================= */
 
 #insufficientPage{
   position:fixed;
   inset:0;
-
-  z-index:800;
-
-  background:#000;
-
+  z-index:2200;
+  background:
+    radial-gradient(circle at 50% 30%,#27000c 0,#090000 42%,#000 80%);
   display:flex;
-
   align-items:center;
   justify-content:center;
-
   text-align:center;
 }
 
 .insufficient-box{
   width:90%;
-  max-width:390px;
-
-  background:#111;
-
-  border:1px solid #333;
-
-  border-radius:12px;
-
-  padding:30px 20px;
+  max-width:380px;
 }
 
-.insufficient-box h2{
-  color:#ff3333;
-  margin-bottom:12px;
+.warning-icon{
+  font-size:50px;
 }
 
-.insufficient-box p{
+.insufficient-title{
+  margin-top:15px;
+  font-size:26px;
+  font-weight:900;
+}
+
+.insufficient-text{
+  margin-top:9px;
   color:#aaa;
   font-size:14px;
 }
 
-#insufficientTimer{
-  margin-top:18px;
-  color:#fff;
-  font-size:13px;
+@media(max-width:380px){
+  .photos-grid{
+    gap:5px;
+    padding:0 5px;
+  }
+
+  .photo-info{
+    padding-left:6px;
+    padding-right:6px;
+  }
+
+  .social-row{
+    padding-left:5px;
+    padding-right:5px;
+  }
+
+  .chat-section{
+    margin-left:5px;
+    margin-right:5px;
+  }
 }
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:600px){
-
-  #photoGrid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .photo-play{
-    width:40px;
-    height:40px;
-  }
-
-  .photo-play::after{
-    font-size:17px;
-  }
-
-  .photo-name{
-    font-size:12px;
-  }
-
-  .photo-meta{
-    font-size:10px;
-  }
-
-  .social-btn{
-    font-size:9px;
-    padding:6px 1px;
-  }
-
-  .social-count{
-    font-size:8px;
-  }
-
-  #callerImage{
-    width:130px;
-    height:130px;
-  }
-
-}
-
 </style>
 </head>
 
 <body>
 
-
-<!-- =========================
-     WELCOME
-========================= -->
-
-<div id="welcomeScreen" class="page">
-
-  <div class="welcome-box">
-
-    <h1>Welcome</h1>
-
-    <p>
-      Connecting you to live profiles...
-    </p>
-
+<div id="welcomeScreen">
+  <div class="welcome-content">
+    <div class="logo">LiveX</div>
+    <div class="welcome-title">Live people are waiting</div>
+    <div class="welcome-text">Connecting you to live profiles...</div>
+    <div class="loading-line"><span></span></div>
   </div>
-
 </div>
 
-
-<!-- =========================
-     PHOTOS
-========================= -->
-
-<div id="photosPage" class="page hidden">
-
+<div id="photosPage" class="hidden">
   <div class="topbar">
+    <div class="brand">LiveX</div>
 
-    <div class="logo">
-      LIVE
-    </div>
-
-    <div class="online">
-
+    <div class="online-box">
       <span class="online-dot"></span>
-
-      <span id="onlineNumber">
-        21
-      </span>
-
-      online
-
+      <span id="onlineNumber">21 online</span>
     </div>
 
+    <div class="live-pill">● LIVE</div>
   </div>
 
-  <div id="photoGrid"></div>
+  <div class="page-title">Live Photos</div>
+  <div class="page-subtitle">
+    Tap a profile to join. Like, follow or leave a comment.
+  </div>
 
+  <div id="photosGrid" class="photos-grid"></div>
 </div>
-
-
-<!-- =========================
-     INCOMING CALL
-========================= -->
 
 <div id="incomingCall" class="hidden">
+  <div class="call-box">
+    <img id="callPhoto" class="call-photo" src="" alt="Caller">
 
-  <div class="call-label">
-    Incoming video call
-  </div>
+    <div class="call-live">● LIVE CALL</div>
 
-  <img
-    id="callerImage"
-    src="photo1.jpg"
-    alt="Caller"
-  >
+    <div class="call-title">Incoming call</div>
 
-  <div id="callerName">
-    Cute
-  </div>
+    <div id="callName" class="call-name">Someone is calling you...</div>
 
-  <div class="call-status">
-    is calling you...
-  </div>
-
-  <div class="call-buttons">
-
-    <button
-      id="declineButton"
-      class="call-btn decline"
-      type="button">
-      ✕
-    </button>
-
-    <button
-      id="answerButton"
-      class="call-btn answer"
-      type="button">
-      ✓
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     FIRST VIDEO
-========================= -->
-
-<div
-  id="redLiveVideoPage"
-  class="hidden">
-
-  <div class="red-live-label">
-    ● LIVE
-  </div>
-
-  <video
-    id="redLiveVideo"
-    class="live-video"
-    playsinline
-    preload="auto">
-  </video>
-
-</div>
-
-
-<!-- =========================
-     INSUFFICIENT
-========================= -->
-
-<div
-  id="insufficientPage"
-  class="hidden">
-
-  <div class="insufficient-box">
-
-    <h2>
-      Insufficient Minutes
-    </h2>
-
-    <p>
-      You don't have enough minutes
-      to continue this live call.
-    </p>
-
-    <div id="insufficientTimer">
-      Continuing...
+    <div class="call-actions">
+      <button id="answerCall" class="call-btn answer-btn" type="button">☎</button>
+      <button id="rejectCall" class="call-btn reject-btn" type="button">✕</button>
     </div>
-
   </div>
-
 </div>
 
+<div id="firstVideoPage" class="hidden">
+  <div class="video-live-label">● LIVE</div>
+  <video id="firstVideo" playsinline></video>
+</div>
+
+<div id="insufficientPage" class="hidden">
+  <div class="insufficient-box">
+    <div class="warning-icon">⏱️</div>
+    <div class="insufficient-title">Insufficient Minutes</div>
+    <div class="insufficient-text">
+      You need more minutes to continue this live call.
+    </div>
+  </div>
+</div>
 
 <script>
-
-
-/* =========================
-   SETTINGS
+  /* =========================
+   CONFIGURATION
 ========================= */
+
+const PAYMENT_PAGE_URL = "payment.html";
+
+const SAMPLE_STORAGE_KEY = "myReferralSampleWatched";
+
+const MAX_PHOTOS = 24;
+
+const FIRST_VIDEO_DURATION = 40000;
+
+const WELCOME_DURATION = 3000;
+
+const INSUFFICIENT_DURATION = 2000;
+
+const CALL_RING_DURATION = 7000;
 
 const IMAGE_BASE = "./";
 
-const VIDEO_URL =
-  "./IMG_20261001_011110_570.mp4";
-
-const SAMPLE_KEY =
-  "myReferralSampleWatched";
-
-const FIRST_CALL_DURATION =
-  40000;
+const VIDEO_URL = "./IMG_20261001_011110_570.mp4";
 
 
 /* =========================
-   ELEMENTS
-========================= */
-
-const welcomeScreen =
-  document.getElementById(
-    "welcomeScreen"
-  );
-
-const photosPage =
-  document.getElementById(
-    "photosPage"
-  );
-
-const photoGrid =
-  document.getElementById(
-    "photoGrid"
-  );
-
-const incomingCall =
-  document.getElementById(
-    "incomingCall"
-  );
-
-const callerImage =
-  document.getElementById(
-    "callerImage"
-  );
-
-const callerName =
-  document.getElementById(
-    "callerName"
-  );
-
-const declineButton =
-  document.getElementById(
-    "declineButton"
-  );
-
-const answerButton =
-  document.getElementById(
-    "answerButton"
-  );
-
-const redLiveVideoPage =
-  document.getElementById(
-    "redLiveVideoPage"
-  );
-
-const redLiveVideo =
-  document.getElementById(
-    "redLiveVideo"
-  );
-
-const insufficientPage =
-  document.getElementById(
-    "insufficientPage"
-  );
-
-const insufficientTimer =
-  document.getElementById(
-    "insufficientTimer"
-  );
-
-const onlineNumber =
-  document.getElementById(
-    "onlineNumber"
-  );
-
-
-/* =========================
-   REFERRAL
-========================= */
-
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
-
-const employee =
-  params.get("employee");
-
-const ref =
-  params.get("ref");
-
-
-function openPaymentPage(){
-
-  let url =
-    "payment.html";
-
-  if(employee){
-
-    url +=
-      "?employee=" +
-      encodeURIComponent(
-        employee
-      );
-
-  }else if(ref){
-
-    url +=
-      "?ref=" +
-      encodeURIComponent(
-        ref
-      );
-
-  }
-
-  window.location.href =
-    url;
-
-}
-
-
-/* =========================
-   IMAGE FILES
-========================= */
-
-const imageFiles = [
-
-  "photo1.jpg",
-  "photo2.jpg",
-  "photo4.jpg",
-  "photo5.jpg",
-
-  "1785179340825.jpg",
-  "1785179340825 (1).jpg",
-  "1785179362758.jpg",
-  "1785179915649.jpg",
-
-  "Screenshot_20260731-045343.png"
-
-];
-  /* =========================
-   PROFILES
+   PROFILE DATA
 ========================= */
 
 const profiles = [
 
-  ["Cute",24,"Kenya","🇰🇪"],
-  ["Becky",22,"Kenya","🇰🇪"],
-  ["Dorry",26,"Kenya","🇰🇪"],
-  ["Sharon",23,"Kenya","🇰🇪"],
-  ["Lilian",27,"Kenya","🇰🇪"],
+  {
+    name:"Cute",
+    age:24,
+    country:"Kenya",
+    flag:"🇰🇪",
+    image:"photo1.jpg"
+  },
 
-  ["Asha",25,"Tanzania","🇹🇿"],
-  ["Neema",23,"Tanzania","🇹🇿"],
-  ["Zawadi",28,"Tanzania","🇹🇿"],
-  ["Rehema",24,"Tanzania","🇹🇿"],
+  {
+    name:"Becky",
+    age:22,
+    country:"Kenya",
+    flag:"🇰🇪",
+    image:"photo2.jpg"
+  },
 
-  ["Blessing",22,"Nigeria","🇳🇬"],
-  ["Favour",26,"Nigeria","🇳🇬"],
-  ["Peace",25,"Nigeria","🇳🇬"],
-  ["Joy",27,"Nigeria","🇳🇬"],
+  {
+    name:"Dorry",
+    age:26,
+    country:"Kenya",
+    flag:"🇰🇪",
+    image:"photo4.jpg"
+  },
 
-  ["Grace",24,"Congo","🇨🇩"],
-  ["Mimi",23,"Congo","🇨🇩"],
-  ["Nadia",26,"Congo","🇨🇩"],
-  ["Bella",25,"Congo","🇨🇩"],
-  ["Princess",28,"Congo","🇨🇩"],
+  {
+    name:"Sharon",
+    age:23,
+    country:"Kenya",
+    flag:"🇰🇪",
+    image:"photo5.jpg"
+  },
 
-  ["Emily",24,"Canada","🇨🇦"],
-  ["Sophie",27,"Canada","🇨🇦"],
+  {
+    name:"Lilian",
+    age:27,
+    country:"Kenya",
+    flag:"🇰🇪",
+    image:"1785179340825.jpg"
+  },
 
-  ["Thandi",25,"South Africa","🇿🇦"],
-  ["Lerato",29,"South Africa","🇿🇦"],
 
-  ["Ashley",23,"USA","🇺🇸"],
-  ["Jessica",26,"USA","🇺🇸"]
+  {
+    name:"Asha",
+    age:25,
+    country:"Tanzania",
+    flag:"🇹🇿",
+    image:"1785179340825 (1).jpg"
+  },
+
+  {
+    name:"Neema",
+    age:23,
+    country:"Tanzania",
+    flag:"🇹🇿",
+    image:"1785179362758.jpg"
+  },
+
+  {
+    name:"Zawadi",
+    age:28,
+    country:"Tanzania",
+    flag:"🇹🇿",
+    image:"1785179915649.jpg"
+  },
+
+  {
+    name:"Rehema",
+    age:24,
+    country:"Tanzania",
+    flag:"🇹🇿",
+    image:"Screenshot_20260731-045343.png"
+  },
+
+
+  {
+    name:"Blessing",
+    age:22,
+    country:"Nigeria",
+    flag:"🇳🇬",
+    image:"photo1.jpg"
+  },
+
+  {
+    name:"Favour",
+    age:26,
+    country:"Nigeria",
+    flag:"🇳🇬",
+    image:"photo2.jpg"
+  },
+
+  {
+    name:"Peace",
+    age:25,
+    country:"Nigeria",
+    flag:"🇳🇬",
+    image:"photo4.jpg"
+  },
+
+  {
+    name:"Joy",
+    age:27,
+    country:"Nigeria",
+    flag:"🇳🇬",
+    image:"photo5.jpg"
+  },
+
+
+  {
+    name:"Grace",
+    age:24,
+    country:"Congo",
+    flag:"🇨🇩",
+    image:"1785179340825.jpg"
+  },
+
+  {
+    name:"Mimi",
+    age:23,
+    country:"Congo",
+    flag:"🇨🇩",
+    image:"1785179340825 (1).jpg"
+  },
+
+  {
+    name:"Nadia",
+    age:26,
+    country:"Congo",
+    flag:"🇨🇩",
+    image:"1785179362758.jpg"
+  },
+
+  {
+    name:"Bella",
+    age:25,
+    country:"Congo",
+    flag:"🇨🇩",
+    image:"1785179915649.jpg"
+  },
+
+  {
+    name:"Princess",
+    age:28,
+    country:"Congo",
+    flag:"🇨🇩",
+    image:"Screenshot_20260731-045343.png"
+  },
+
+
+  {
+    name:"Emily",
+    age:24,
+    country:"Canada",
+    flag:"🇨🇦",
+    image:"photo1.jpg"
+  },
+
+  {
+    name:"Sophie",
+    age:27,
+    country:"Canada",
+    flag:"🇨🇦",
+    image:"photo2.jpg"
+  },
+
+
+  {
+    name:"Thandi",
+    age:25,
+    country:"South Africa",
+    flag:"🇿🇦",
+    image:"photo4.jpg"
+  },
+
+  {
+    name:"Lerato",
+    age:29,
+    country:"South Africa",
+    flag:"🇿🇦",
+    image:"photo5.jpg"
+  },
+
+
+  {
+    name:"Ashley",
+    age:23,
+    country:"USA",
+    flag:"🇺🇸",
+    image:"1785179340825.jpg"
+  },
+
+  {
+    name:"Jessica",
+    age:26,
+    country:"USA",
+    flag:"🇺🇸",
+    image:"1785179340825 (1).jpg"
+  }
 
 ];
 
 
 /* =========================
-   LOCAL STORAGE
+   STORAGE KEYS
 ========================= */
 
-const LIKE_KEY =
-  "liveProfileLikes";
+const LIKE_KEY = "liveProfileLikes";
 
-const LOVE_KEY =
-  "liveProfileLoves";
+const LOVE_KEY = "liveProfileLoves";
 
-const FOLLOW_KEY =
-  "liveProfileFollows";
+const FOLLOW_KEY = "liveProfileFollows";
 
-const COMMENT_KEY =
-  "liveProfileComments";
+const COMMENT_KEY = "liveProfileComments";
 
 
-function readStorage(key){
+/* =========================
+   DOM HELPERS
+========================= */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+
+function show(id){
+  const element = $(id);
+
+  if(element){
+    element.classList.remove("hidden");
+  }
+}
+
+
+function hide(id){
+  const element = $(id);
+
+  if(element){
+    element.classList.add("hidden");
+  }
+}
+
+
+function readStorage(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+
+    if(!raw){
+      return fallback;
+    }
+
+    const parsed = JSON.parse(raw);
+
+    return parsed;
+
+  }catch(error){
+
+    return fallback;
+
+  }
+}
+
+
+function writeStorage(key,value){
 
   try{
 
-    return JSON.parse(
-      localStorage.getItem(key) || "{}"
+    localStorage.setItem(
+      key,
+      JSON.stringify(value)
     );
 
   }catch(error){
 
-    return {};
+    console.warn(
+      "Storage error:",
+      error
+    );
 
   }
-
 }
 
 
-function writeStorage(key,data){
+/* =========================
+   SECURITY / TEXT
+========================= */
 
-  localStorage.setItem(
-    key,
-    JSON.stringify(data)
-  );
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
-
-
-let likeData =
-  readStorage(LIKE_KEY);
-
-let loveData =
-  readStorage(LOVE_KEY);
-
-let followData =
-  readStorage(FOLLOW_KEY);
-
-let commentData =
-  readStorage(COMMENT_KEY);
 
 
 /* =========================
@@ -1184,50 +925,116 @@ function profileId(index){
 
 
 /* =========================
-   SAFE HTML
+   REFERRAL
 ========================= */
 
-function escapeHtml(value){
+function getReferral(){
 
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const ref =
+    params.get("ref");
+
+  const employee =
+    params.get("employee");
+
+  return {
+    ref: ref || "",
+    employee: employee || ""
+  };
+
+}
+
+
+function buildPaymentUrl(index){
+
+  const referral =
+    getReferral();
+
+  const params =
+    new URLSearchParams();
+
+  params.set(
+    "profile",
+    profiles[index].name
+  );
+
+  params.set(
+    "employee",
+    referral.employee ||
+    referral.ref ||
+    ""
+  );
+
+  return PAYMENT_PAGE_URL +
+    "?" +
+    params.toString();
 
 }
 
 
 /* =========================
+   OPEN PAYMENT
+========================= */
+
+function openPayment(index){
+
+  const url =
+    buildPaymentUrl(index);
+
+  window.location.href = url;
+
+  }
+  /* =========================
    COMMENTS
 ========================= */
 
 function getComments(index){
+
+  const allComments =
+    readStorage(
+      COMMENT_KEY,
+      {}
+    );
 
   const id =
     profileId(index);
 
   if(
     !Array.isArray(
-      commentData[id]
+      allComments[id]
     )
   ){
 
-    commentData[id] = [];
+    allComments[id] = [];
 
   }
 
-  return commentData[id];
+  return allComments[id];
 
 }
 
 
-function saveComments(){
+function saveComments(index,comments){
+
+  const allComments =
+    readStorage(
+      COMMENT_KEY,
+      {}
+    );
+
+  const id =
+    profileId(index);
+
+  allComments[id] =
+    comments;
 
   writeStorage(
     COMMENT_KEY,
-    commentData
+    allComments
   );
 
 }
@@ -1235,176 +1042,120 @@ function saveComments(){
 
 function renderComments(index){
 
-  const list =
+  const box =
     document.getElementById(
       "comments-" + index
     );
 
-  if(!list){
+  if(!box){
     return;
   }
-
 
   const comments =
     getComments(index);
 
+  if(!comments.length){
 
-  list.innerHTML =
-    "";
-
-
-  if(comments.length === 0){
-
-    const empty =
-      document.createElement(
-        "div"
-      );
-
-    empty.className =
-      "chat-empty";
-
-    empty.textContent =
-      "No comments yet. Start the conversation.";
-
-    list.appendChild(
-      empty
-    );
+    box.innerHTML =
+      '<div class="empty-comments">No comments yet. Be the first 💬</div>';
 
     return;
 
   }
 
+  box.innerHTML =
+    comments.map(
+      comment => {
 
-  comments.forEach(
-    comment=>{
+        return `
+          <div class="comment">
+            <span class="comment-name">
+              ${escapeHtml(comment.name)}
+            </span>
+            ${escapeHtml(comment.text)}
+          </div>
+        `;
 
-      const item =
-        document.createElement(
-          "div"
-        );
+      }
+    ).join("");
 
-      item.className =
-        "chat-comment";
-
-
-      const user =
-        document.createElement(
-          "span"
-        );
-
-      user.className =
-        "chat-comment-user";
-
-      user.textContent =
-        "You:";
+}
 
 
-      const message =
-        document.createElement(
-          "span"
-        );
+function addComment(index,input){
 
-      message.textContent =
-        comment;
+  if(!input){
+    return;
+  }
 
+  const text =
+    input.value.trim();
 
-      item.appendChild(
-        user
-      );
+  if(!text){
+    return;
+  }
 
-      item.appendChild(
-        message
-      );
+  const comments =
+    getComments(index);
 
+  comments.push({
 
-      list.appendChild(
-        item
-      );
+    name:"You",
 
-    }
+    text:text,
+
+    time:Date.now()
+
+  });
+
+  saveComments(
+    index,
+    comments
   );
 
+  input.value = "";
 
-  list.scrollTop =
-    list.scrollHeight;
+  renderComments(index);
+
+  scrollChatToBottom(index);
 
 }
 
 
 /* =========================
-   ADD COMMENT
+   NUMBER HELPERS
 ========================= */
 
-function addComment(index,input){
-
-  const value =
-    input.value.trim();
-
-
-  if(!value){
-    return;
-  }
-
-
-  const comments =
-    getComments(index);
-
-
-  comments.push(
-    value
-  );
-
-
-  saveComments();
-
-
-  input.value =
-    "";
-
-
-  renderComments(index);
-
-
-  const list =
-    document.getElementById(
-      "comments-" + index
-    );
-
-
-  if(list){
-
-    list.scrollTop =
-      list.scrollHeight;
-
-  }
-
-      }
-  /* =========================
-   LIKE
-========================= */
-
-function getNumber(data,index,base){
-
-  const id =
-    profileId(index);
-
+function getNumber(data,id,base){
 
   if(
-    typeof data[id] !== "number"
+    typeof data[id] !==
+    "number"
   ){
 
-    data[id] =
-      base;
+    data[id] = base;
 
   }
-
 
   return data[id];
 
 }
 
 
+/* =========================
+   LIKE
+========================= */
+
 function updateLikeButton(index){
+
+  const data =
+    readStorage(
+      LIKE_KEY,
+      {}
+    );
+
+  const id =
+    profileId(index);
 
   const button =
     document.getElementById(
@@ -1412,41 +1163,30 @@ function updateLikeButton(index){
     );
 
   const count =
-    document.getElementById(
-      "like-count-" + index
-    );
-
-
-  if(!button || !count){
-    return;
-  }
-
-
-  const id =
-    profileId(index);
-
-
-  const active =
-    !!likeData[
-      id + "_active"
-    ];
-
-
-  const number =
     getNumber(
-      likeData,
+      data,
       id,
       0
     );
 
+  const liked =
+    data[id + "_me"] === true;
 
-  count.textContent =
-    number;
+  if(button){
 
+    button.innerHTML =
+      "👍 " + count;
 
-  button.classList.toggle(
-    "active",
-    active
+    button.classList.toggle(
+      "active",
+      liked
+    );
+
+  }
+
+  writeStorage(
+    LIKE_KEY,
+    data
   );
 
 }
@@ -1454,65 +1194,63 @@ function updateLikeButton(index){
 
 function toggleLike(index,event){
 
-  event.stopPropagation();
+  if(event){
 
+    event.preventDefault();
+    event.stopPropagation();
+
+  }
+
+  const data =
+    readStorage(
+      LIKE_KEY,
+      {}
+    );
 
   const id =
     profileId(index);
 
+  const count =
+    getNumber(
+      data,
+      id,
+      0
+    );
 
-  const active =
-    !!likeData[
-      id + "_active"
-    ];
+  const liked =
+    data[id + "_me"] === true;
 
+  if(liked){
 
-  if(active){
-
-    likeData[
-      id + "_active"
-    ] = false;
-
-    likeData[id] =
+    data[id] =
       Math.max(
         0,
-        getNumber(
-          likeData,
-          id,
-          0
-        ) - 1
+        count - 1
       );
+
+    data[id + "_me"] =
+      false;
 
   }else{
 
-    likeData[
-      id + "_active"
-    ] = true;
+    data[id] =
+      count + 1;
 
-    likeData[id] =
-      getNumber(
-        likeData,
-        id,
-        0
-      ) + 1;
-
-
-    showReaction(
-      event,
-      "❤️"
-    );
+    data[id + "_me"] =
+      true;
 
   }
 
-
   writeStorage(
     LIKE_KEY,
-    likeData
+    data
   );
 
+  updateLikeButton(index);
 
-  updateLikeButton(
-    index
+  showReaction(
+    index,
+    liked ? "Like removed" : "Liked ❤️"
   );
 
 }
@@ -1524,47 +1262,45 @@ function toggleLike(index,event){
 
 function updateLoveButton(index){
 
+  const data =
+    readStorage(
+      LOVE_KEY,
+      {}
+    );
+
+  const id =
+    profileId(index);
+
   const button =
     document.getElementById(
       "love-" + index
     );
 
   const count =
-    document.getElementById(
-      "love-count-" + index
-    );
-
-
-  if(!button || !count){
-    return;
-  }
-
-
-  const id =
-    profileId(index);
-
-
-  const active =
-    !!loveData[
-      id + "_active"
-    ];
-
-
-  const number =
     getNumber(
-      loveData,
+      data,
       id,
       0
     );
 
+  const loved =
+    data[id + "_me"] === true;
 
-  count.textContent =
-    number;
+  if(button){
 
+    button.innerHTML =
+      "❤️ " + count;
 
-  button.classList.toggle(
-    "active",
-    active
+    button.classList.toggle(
+      "active",
+      loved
+    );
+
+  }
+
+  writeStorage(
+    LOVE_KEY,
+    data
   );
 
 }
@@ -1572,395 +1308,289 @@ function updateLoveButton(index){
 
 function toggleLove(index,event){
 
-  event.stopPropagation();
+  if(event){
 
+    event.preventDefault();
+    event.stopPropagation();
+
+  }
+
+  const data =
+    readStorage(
+      LOVE_KEY,
+      {}
+    );
 
   const id =
     profileId(index);
 
+  const count =
+    getNumber(
+      data,
+      id,
+      0
+    );
 
-  const active =
-    !!loveData[
-      id + "_active"
-    ];
+  const loved =
+    data[id + "_me"] === true;
 
+  if(loved){
 
-  if(active){
-
-    loveData[
-      id + "_active"
-    ] = false;
-
-    loveData[id] =
+    data[id] =
       Math.max(
         0,
-        getNumber(
-          loveData,
-          id,
-          0
-        ) - 1
+        count - 1
       );
+
+    data[id + "_me"] =
+      false;
 
   }else{
 
-    loveData[
-      id + "_active"
-    ] = true;
+    data[id] =
+      count + 1;
 
-    loveData[id] =
-      getNumber(
-        loveData,
-        id,
-        0
-      ) + 1;
-
-
-    showReaction(
-      event,
-      "💕"
-    );
+    data[id + "_me"] =
+      true;
 
   }
 
-
   writeStorage(
     LOVE_KEY,
-    loveData
+    data
   );
 
+  updateLoveButton(index);
 
-  updateLoveButton(
-    index
+  showReaction(
+    index,
+    loved ? "Love removed" : "Loved ❤️"
   );
 
-}
-
-
-/* =========================
+      }
+  /* =========================
    FOLLOW
 ========================= */
 
 function updateFollowButton(index){
+
+  const data =
+    readStorage(
+      FOLLOW_KEY,
+      {}
+    );
+
+  const id =
+    profileId(index);
 
   const button =
     document.getElementById(
       "follow-" + index
     );
 
+  const followed =
+    data[id] === true;
 
-  if(!button){
-    return;
+  if(button){
+
+    button.innerHTML =
+      followed
+        ? "✓ Following"
+        : "＋ Follow";
+
+    button.classList.toggle(
+      "active",
+      followed
+    );
+
   }
-
-
-  const id =
-    profileId(index);
-
-
-  const active =
-    !!followData[id];
-
-
-  button.classList.toggle(
-    "active",
-    active
-  );
-
-
-  button.innerHTML =
-    active
-      ? "✓ Following"
-      : "＋ Follow";
 
 }
 
 
 function toggleFollow(index,event){
 
-  event.stopPropagation();
+  if(event){
 
+    event.preventDefault();
+    event.stopPropagation();
+
+  }
+
+  const data =
+    readStorage(
+      FOLLOW_KEY,
+      {}
+    );
 
   const id =
     profileId(index);
 
+  const followed =
+    data[id] === true;
 
-  followData[id] =
-    !followData[id];
-
+  data[id] =
+    !followed;
 
   writeStorage(
     FOLLOW_KEY,
-    followData
+    data
   );
 
+  updateFollowButton(index);
 
-  updateFollowButton(
-    index
+  showReaction(
+    index,
+    followed
+      ? "Unfollowed"
+      : "Following " +
+        profiles[index].name
   );
 
 }
 
 
 /* =========================
-   CHAT OPEN/CLOSE
+   CHAT
 ========================= */
 
 function toggleChat(index,event){
 
-  event.stopPropagation();
+  if(event){
 
+    event.preventDefault();
+    event.stopPropagation();
+
+  }
 
   const section =
     document.getElementById(
-      "chat-" + index
+      "chat-section-" + index
     );
-
 
   if(!section){
     return;
   }
 
-
-  section.classList.toggle(
-    "open"
-  );
-
-
-  const button =
-    document.getElementById(
-      "chat-button-" + index
+  const hidden =
+    section.classList.contains(
+      "hidden"
     );
 
+  if(hidden){
 
-  if(button){
+    section.classList.remove(
+      "hidden"
+    );
 
-    button.classList.toggle(
-      "active",
-      section.classList.contains(
-        "open"
-      )
+    setTimeout(
+      () => {
+
+        const input =
+          document.getElementById(
+            "input-" + index
+          );
+
+        if(input){
+
+          input.focus();
+
+        }
+
+      },
+      50
+    );
+
+  }else{
+
+    section.classList.add(
+      "hidden"
     );
 
   }
 
+}
 
-  if(
-    section.classList.contains(
-      "open"
-    )
-  ){
 
-    renderComments(
-      index
+function scrollChatToBottom(index){
+
+  const box =
+    document.getElementById(
+      "comments-" + index
     );
 
+  if(!box){
+    return;
+  }
 
-    const input =
-      document.getElementById(
-        "input-" + index
-      );
+  requestAnimationFrame(
+    () => {
 
-
-    if(input){
-
-      setTimeout(
-        ()=>{
-          input.focus();
-        },
-        50
-      );
+      box.scrollTop =
+        box.scrollHeight;
 
     }
-
-  }
+  );
 
 }
 
 
 /* =========================
-   REACTION POPUP
+   REACTION MESSAGE
 ========================= */
 
-function showReaction(event,emoji){
+function showReaction(index,message){
 
-  const pop =
-    document.createElement(
-      "div"
+  const button =
+    document.getElementById(
+      "chat-" + index
     );
 
-
-  pop.className =
-    "reaction-pop";
-
-
-  pop.textContent =
-    emoji;
-
-
-  let x =
-    window.innerWidth / 2;
-
-  let y =
-    window.innerHeight / 2;
-
-
-  if(event){
-
-    x =
-      event.clientX ||
-      x;
-
-    y =
-      event.clientY ||
-      y;
-
+  if(!button){
+    return;
   }
 
+  const old =
+    button.innerHTML;
 
-  pop.style.left =
-    (x - 12) + "px";
-
-
-  pop.style.top =
-    (y - 15) + "px";
-
-
-  document.body.appendChild(
-    pop
-  );
-
+  button.innerHTML =
+    "💬 " +
+    escapeHtml(message);
 
   setTimeout(
-    ()=>{
-      pop.remove();
-    },
-    1000
-  );
-
-  }
-  /* =========================
-   OFFLINE SYSTEM
-========================= */
-
-let offlinePeople =
-  new Set();
-
-const OFFLINE_TIME =
-  5 * 60 * 1000;
-
-
-function shuffle(array){
-
-  const result =
-    [...array];
-
-
-  for(
-    let i = result.length - 1;
-    i > 0;
-    i--
-  ){
-
-    const j =
-      Math.floor(
-        Math.random() * (i + 1)
-      );
-
-
-    [
-      result[i],
-      result[j]
-    ] =
-    [
-      result[j],
-      result[i]
-    ];
-
-  }
-
-
-  return result;
-
-}
-
-
-function chooseFiveOffline(){
-
-  offlinePeople =
-    new Set(
-      shuffle(
-        profiles.map(
-          (_,i)=>i
-        )
-      ).slice(
-        0,
-        5
-      )
-    );
-
-
-  updateStatuses();
-
-}
-
-
-function updateStatuses(){
-
-  profiles.forEach(
-    (_,index)=>{
-
-      const badge =
-        document.getElementById(
-          "badge-" + index
-        );
-
-      const dot =
-        document.getElementById(
-          "dot-" + index
-        );
-
-
-      if(!badge || !dot){
-        return;
-      }
-
+    () => {
 
       if(
-        offlinePeople.has(
-          index
+        document.body.contains(
+          button
         )
       ){
 
-        badge.textContent =
-          "OFFLINE";
-
-        badge.className =
-          "offline-badge";
-
-        dot.style.background =
-          "#777";
-
-        dot.style.animation =
-          "none";
-
-      }else{
-
-        badge.textContent =
-          "● LIVE";
-
-        badge.className =
-          "live-badge";
-
-        dot.style.background =
-          "#19e66b";
-
-        dot.style.animation =
-          "nameBlink 1s infinite";
+        button.innerHTML =
+          old;
 
       }
 
-    }
+    },
+    1200
   );
+
+}
+
+
+/* =========================
+   SOCIAL REFRESH
+========================= */
+
+function refreshProfileSocial(index){
+
+  updateLikeButton(index);
+
+  updateLoveButton(index);
+
+  updateFollowButton(index);
+
+  renderComments(index);
 
 }
 
@@ -1969,303 +1599,358 @@ function updateStatuses(){
    CREATE PHOTO CARD
 ========================= */
 
-function createPhotoCard(
-  profile,
-  index
-){
-
-  const name =
-    profile[0];
-
-  const age =
-    profile[1];
-
-  const country =
-    profile[2];
-
-  const flag =
-    profile[3];
-
-
-  const file =
-    imageFiles[
-      index %
-      imageFiles.length
-    ];
-
+function createPhotoCard(profile,index){
 
   const card =
     document.createElement(
       "div"
     );
 
-
   card.className =
-    "photoCard";
+    "photo-card";
 
-
-  card.innerHTML = `
-
-    <div class="photo-image-wrap">
-
-      <img
-        class="profile-photo"
-        src="${IMAGE_BASE}${encodeURIComponent(file)}"
-        alt="${escapeHtml(name)}"
-        loading="eager"
-        onerror="this.style.display='none';"
-      >
-
-      <div
-        id="badge-${index}"
-        class="live-badge">
-        ● LIVE
-      </div>
-
-      <div class="photo-play"></div>
-
-    </div>
-
-
-    <div class="photo-info">
-
-      <div class="photo-name">
-
-        <span
-          id="dot-${index}"
-          class="name-dot">
-        </span>
-
-        <span>
-          ${escapeHtml(name)}
-        </span>
-
-      </div>
-
-
-      <div class="photo-meta">
-
-        ${flag}
-        ${escapeHtml(country)}
-        •
-        ${age}
-
-      </div>
-
-
-      <div class="social-actions">
-
-        <button
-          id="like-${index}"
-          class="social-btn like"
-          type="button">
-          ❤️ Like
-          <span
-            id="like-count-${index}"
-            class="social-count">
-            0
-          </span>
-        </button>
-
-
-        <button
-          id="love-${index}"
-          class="social-btn love"
-          type="button">
-          💕 Love
-          <span
-            id="love-count-${index}"
-            class="social-count">
-            0
-          </span>
-        </button>
-
-
-        <button
-          id="follow-${index}"
-          class="social-btn follow"
-          type="button">
-          ＋ Follow
-        </button>
-
-
-        <button
-          id="chat-button-${index}"
-          class="social-btn chat"
-          type="button">
-          💬 Chat
-        </button>
-
-      </div>
-
-
-      <div
-        id="chat-${index}"
-        class="chat-section">
-
-        <div class="chat-title">
-
-          <span>
-            💬 Live Chat
-          </span>
-
-          <span class="chat-live">
-            ● LIVE
-          </span>
-
-        </div>
-
-
-        <div
-          id="comments-${index}"
-          class="chat-comments">
-        </div>
-
-
-        <form
-          id="chat-form-${index}"
-          class="chat-form">
-
-          <input
-            id="input-${index}"
-            class="chat-input"
-            type="text"
-            maxlength="300"
-            autocomplete="off"
-            placeholder="Write a comment..."
-          >
-
-          <button
-            class="chat-send"
-            type="submit">
-            Send
-          </button>
-
-        </form>
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  /* =====================
-     PHOTO CLICK ONLY
-  ===================== */
 
   const imageWrap =
-    card.querySelector(
-      ".photo-image-wrap"
+    document.createElement(
+      "div"
     );
+
+  imageWrap.className =
+    "photo-image-wrap";
 
 
   imageWrap.addEventListener(
     "click",
-    ()=>{
-      openPaymentPage();
+    function(){
+
+      openPayment(index);
+
     }
   );
 
 
-  /* =====================
-     LIKE
-  ===================== */
+  const image =
+    document.createElement(
+      "img"
+    );
 
-  card
-    .querySelector(
-      "#like-" + index
-    )
-    .addEventListener(
-      "click",
-      event=>{
-        toggleLike(
-          index,
-          event
-        );
-      }
+  image.className =
+    "photo-image";
+
+  image.src =
+    IMAGE_BASE +
+    profile.image;
+
+  image.alt =
+    profile.name;
+
+  image.loading =
+    "lazy";
+
+
+  image.onerror =
+    function(){
+
+      this.style.opacity =
+        "0.2";
+
+    };
+
+
+  const live =
+    document.createElement(
+      "div"
+    );
+
+  live.className =
+    "photo-live";
+
+  live.textContent =
+    "● LIVE";
+
+
+  const dot =
+    document.createElement(
+      "div"
+    );
+
+  dot.className =
+    "status-dot";
+
+
+  const video =
+    document.createElement(
+      "div"
+    );
+
+  video.className =
+    "video-icon";
+
+  video.innerHTML =
+    "▶";
+
+
+  imageWrap.appendChild(
+    image
+  );
+
+  imageWrap.appendChild(
+    live
+  );
+
+  imageWrap.appendChild(
+    dot
+  );
+
+  imageWrap.appendChild(
+    video
+  );
+
+
+  const info =
+    document.createElement(
+      "div"
+    );
+
+  info.className =
+    "photo-info";
+
+
+  const name =
+    document.createElement(
+      "div"
+    );
+
+  name.className =
+    "photo-name";
+
+  name.textContent =
+    profile.name;
+
+
+  const meta =
+    document.createElement(
+      "div"
+    );
+
+  meta.className =
+    "photo-meta";
+
+  meta.innerHTML =
+    '<span class="country">' +
+    profile.flag +
+    '</span>' +
+    profile.age +
+    ' • ' +
+    escapeHtml(
+      profile.country
     );
 
 
-  /* =====================
-     LOVE
-  ===================== */
+  info.appendChild(
+    name
+  );
 
-  card
-    .querySelector(
-      "#love-" + index
-    )
-    .addEventListener(
-      "click",
-      event=>{
-        toggleLove(
-          index,
-          event
-        );
-      }
+  info.appendChild(
+    meta
+  );
+
+
+  const social =
+    document.createElement(
+      "div"
     );
 
+  social.className =
+    "social-row";
 
-  /* =====================
-     FOLLOW
-  ===================== */
 
-  card
-    .querySelector(
-      "#follow-" + index
-    )
-    .addEventListener(
-      "click",
-      event=>{
-        toggleFollow(
-          index,
-          event
-        );
-      }
+  const like =
+    document.createElement(
+      "button"
     );
 
+  like.type =
+    "button";
 
-  /* =====================
-     CHAT BUTTON
-  ===================== */
+  like.id =
+    "like-" + index;
 
-  card
-    .querySelector(
-      "#chat-button-" + index
-    )
-    .addEventListener(
-      "click",
-      event=>{
-        toggleChat(
-          index,
-          event
-        );
-      }
+  like.className =
+    "social-btn";
+
+  like.addEventListener(
+    "click",
+    event =>
+      toggleLike(
+        index,
+        event
+      )
+  );
+
+
+  const love =
+    document.createElement(
+      "button"
     );
-    /* =====================
-     COMMENT FORM
-  ===================== */
+
+  love.type =
+    "button";
+
+  love.id =
+    "love-" + index;
+
+  love.className =
+    "social-btn";
+
+  love.addEventListener(
+    "click",
+    event =>
+      toggleLove(
+        index,
+        event
+      )
+  );
+
+
+  const follow =
+    document.createElement(
+      "button"
+    );
+
+  follow.type =
+    "button";
+
+  follow.id =
+    "follow-" + index;
+
+  follow.className =
+    "social-btn";
+
+  follow.addEventListener(
+    "click",
+    event =>
+      toggleFollow(
+        index,
+        event
+      )
+  );
+
+
+  social.appendChild(
+    like
+  );
+
+  social.appendChild(
+    love
+  );
+
+  social.appendChild(
+    follow
+  );
+
+
+  const chatSection =
+    document.createElement(
+      "div"
+    );
+
+  chatSection.className =
+    "chat-section hidden";
+
+  chatSection.id =
+    "chat-section-" +
+    index;
+
+
+  const chatTitle =
+    document.createElement(
+      "div"
+    );
+
+  chatTitle.className =
+    "chat-title";
+
+  chatTitle.innerHTML =
+    "<span>💬 Live comments</span>" +
+    "<span>" +
+    profile.name +
+    "</span>";
+
+
+  const comments =
+    document.createElement(
+      "div"
+    );
+
+  comments.className =
+    "chat-comments";
+
+  comments.id =
+    "comments-" + index;
+
 
   const form =
-    card.querySelector(
-      "#chat-form-" + index
+    document.createElement(
+      "form"
     );
+
+  form.className =
+    "comment-form";
 
 
   const input =
-    card.querySelector(
-      "#input-" + index
+    document.createElement(
+      "input"
     );
+
+  input.type =
+    "text";
+
+  input.className =
+    "comment-input";
+
+  input.id =
+    "input-" + index;
+
+  input.maxLength =
+    180;
+
+  input.placeholder =
+    "Write a comment...";
+
+
+  const send =
+    document.createElement(
+      "button"
+    );
+
+  send.type =
+    "submit";
+
+  send.className =
+    "comment-send";
+
+  send.textContent =
+    "➤";
+
+
+  form.appendChild(
+    input
+  );
+
+  form.appendChild(
+    send
+  );
 
 
   form.addEventListener(
     "submit",
-    event=>{
+    function(event){
 
       event.preventDefault();
 
       event.stopPropagation();
-
 
       addComment(
         index,
@@ -2276,42 +1961,112 @@ function createPhotoCard(
   );
 
 
-  /* =====================
-     PREVENT CARD PAYMENT
-     FROM SOCIAL AREA
-  ===================== */
+  input.addEventListener(
+    "keydown",
+    function(event){
 
-  const info =
-    card.querySelector(
-      ".photo-info"
+      if(
+        event.key === "Enter"
+      ){
+
+        event.preventDefault();
+
+        addComment(
+          index,
+          input
+        );
+
+      }
+
+    }
+  );
+    chatSection.appendChild(
+    chatTitle
+  );
+
+  chatSection.appendChild(
+    comments
+  );
+
+  chatSection.appendChild(
+    form
+  );
+
+
+  card.appendChild(
+    imageWrap
+  );
+
+  card.appendChild(
+    info
+  );
+
+  card.appendChild(
+    social
+  );
+
+  card.appendChild(
+    chatSection
+  );
+
+
+  /* =========================
+     CHAT BUTTON
+  ========================= */
+
+  const chatButton =
+    document.createElement(
+      "button"
     );
 
+  chatButton.type =
+    "button";
 
-  info.addEventListener(
+  chatButton.id =
+    "chat-" + index;
+
+  chatButton.className =
+    "social-btn";
+
+  chatButton.textContent =
+    "💬 Chat";
+
+  chatButton.addEventListener(
     "click",
-    event=>{
-      event.stopPropagation();
+    function(event){
+
+      toggleChat(
+        index,
+        event
+      );
+
     }
   );
 
 
-  /* =====================
-     INITIAL STATE
-  ===================== */
+  /*
+     Replace the third social
+     button with Chat while
+     keeping Follow available
+     through the profile area.
+  */
 
-  updateLikeButton(
-    index
+  social.appendChild(
+    chatButton
   );
 
-  updateLoveButton(
-    index
-  );
 
-  updateFollowButton(
-    index
-  );
+  /*
+     The social row now has
+     four controls. Make them
+     fit evenly.
+  */
 
-  renderComments(
+  social.style.gridTemplateColumns =
+    "repeat(4,1fr)";
+
+
+  refreshProfileSocial(
     index
   );
 
@@ -2327,12 +2082,24 @@ function createPhotoCard(
 
 function createPhotos(){
 
-  photoGrid.innerHTML =
-    "";
+  const grid =
+    $("photosGrid");
+
+  if(!grid){
+    return;
+  }
+
+  grid.innerHTML = "";
+
+  const limitedProfiles =
+    profiles.slice(
+      0,
+      MAX_PHOTOS
+    );
 
 
-  profiles.forEach(
-    (profile,index)=>{
+  limitedProfiles.forEach(
+    (profile,index) => {
 
       const card =
         createPhotoCard(
@@ -2340,54 +2107,14 @@ function createPhotos(){
           index
         );
 
-
-      photoGrid.appendChild(
+      grid.appendChild(
         card
       );
 
     }
   );
 
-
-  updateStatuses();
-
 }
-
-
-/* =========================
-   ONLINE NUMBER
-========================= */
-
-function changeOnlineNumber(){
-
-  onlineNumber.textContent =
-    Math.floor(
-      Math.random() * 16
-    ) + 15;
-
-}
-
-
-changeOnlineNumber();
-
-
-setInterval(
-  changeOnlineNumber,
-  20000
-);
-
-
-/* =========================
-   OFFLINE CYCLE
-========================= */
-
-chooseFiveOffline();
-
-
-setInterval(
-  chooseFiveOffline,
-  OFFLINE_TIME
-);
 
 
 /* =========================
@@ -2396,651 +2123,1256 @@ setInterval(
 
 function showPhotos(){
 
-  welcomeScreen.classList.add(
-    "hidden"
-  );
+  hide("welcomeScreen");
 
-  incomingCall.classList.add(
-    "hidden"
-  );
+  hide("incomingCall");
 
-  redLiveVideoPage.classList.add(
-    "hidden"
-  );
+  hide("firstVideoPage");
 
-  insufficientPage.classList.add(
-    "hidden"
-  );
+  hide("insufficientPage");
 
-  photosPage.classList.remove(
-    "hidden"
-  );
+  show("photosPage");
+
+  createPhotos();
+
+  updateOnlineNumber();
 
 }
-  /* =========================
-   INCOMING CALL
+
+
+/* =========================
+   ONLINE NUMBER
 ========================= */
 
-function showIncomingCall(){
+function randomOnlineNumber(){
 
-  photosPage.classList.add(
-    "hidden"
-  );
+  return Math.floor(
+    Math.random() * 16
+  ) + 15;
 
-  incomingCall.classList.remove(
-    "hidden"
-  );
+}
 
 
-  const index =
-    Math.floor(
-      Math.random() *
-      profiles.length
+function updateOnlineNumber(){
+
+  const number =
+    randomOnlineNumber();
+
+  const element =
+    $("onlineNumber");
+
+  if(element){
+
+    element.textContent =
+      number +
+      " online";
+
+  }
+
+}
+
+
+/* =========================
+   OFFLINE PROFILES
+========================= */
+
+let offlineProfiles =
+  new Set();
+
+
+function refreshOfflineProfiles(){
+
+  offlineProfiles =
+    new Set();
+
+
+  const total =
+    profiles.length;
+
+  const offlineCount =
+    Math.min(
+      5,
+      Math.max(
+        0,
+        total - 1
+      )
     );
 
 
+  const indexes =
+    profiles.map(
+      (_,index) =>
+        index
+    );
+
+
+  while(
+    offlineProfiles.size <
+    offlineCount
+  ){
+
+    const randomIndex =
+      Math.floor(
+        Math.random() *
+        indexes.length
+      );
+
+    offlineProfiles.add(
+      indexes[randomIndex]
+    );
+
+  }
+
+
+  profiles.forEach(
+    (_,index) => {
+
+      const dot =
+        document.querySelector(
+          "#photosGrid .photo-card:nth-child(" +
+          (index + 1) +
+          ") .status-dot"
+        );
+
+      const live =
+        document.querySelector(
+          "#photosGrid .photo-card:nth-child(" +
+          (index + 1) +
+          ") .photo-live"
+        );
+
+
+      if(
+        offlineProfiles.has(
+          index
+        )
+      ){
+
+        if(dot){
+
+          dot.classList.add(
+            "offline"
+          );
+
+        }
+
+        if(live){
+
+          live.textContent =
+            "OFFLINE";
+
+          live.style.background =
+            "#555";
+
+        }
+
+      }
+
+    }
+  );
+
+  }
+ /* =========================
+   CALL SYSTEM
+========================= */
+
+let currentCallerIndex = 0;
+
+let callTimer = null;
+
+
+function chooseCaller(){
+
+  const available =
+    profiles
+      .map(
+        (_,index) =>
+          index
+      )
+      .filter(
+        index =>
+          !offlineProfiles.has(
+            index
+          )
+      );
+
+
+  if(!available.length){
+
+    return 0;
+
+  }
+
+
+  return available[
+    Math.floor(
+      Math.random() *
+      available.length
+    )
+  ];
+
+}
+
+
+function showIncomingCall(){
+
+  clearTimeout(
+    callTimer
+  );
+
+
+  currentCallerIndex =
+    chooseCaller();
+
+
   const profile =
-    profiles[index];
-
-
-  callerName.textContent =
-    profile[0];
-
-
-  const file =
-    imageFiles[
-      index %
-      imageFiles.length
+    profiles[
+      currentCallerIndex
     ];
 
 
-  callerImage.src =
-    IMAGE_BASE +
-    encodeURIComponent(
-      file
+  const photo =
+    $("callPhoto");
+
+  const name =
+    $("callName");
+
+
+  if(photo){
+
+    photo.src =
+      IMAGE_BASE +
+      profile.image;
+
+    photo.alt =
+      profile.name;
+
+  }
+
+
+  if(name){
+
+    name.textContent =
+      profile.name +
+      " is calling you...";
+
+  }
+
+
+  hide("photosPage");
+
+  hide("firstVideoPage");
+
+  hide("insufficientPage");
+
+  show("incomingCall");
+
+
+  callTimer =
+    setTimeout(
+      function(){
+
+        rejectIncomingCall();
+
+      },
+      CALL_RING_DURATION
     );
 
 }
 
 
 /* =========================
-   START FLOW
+   REJECT CALL
+========================= */
+
+function rejectIncomingCall(){
+
+  clearTimeout(
+    callTimer
+  );
+
+  hide("incomingCall");
+
+  showPhotos();
+
+}
+
+
+/* =========================
+   ANSWER CALL
+========================= */
+
+function answerIncomingCall(){
+
+  clearTimeout(
+    callTimer
+  );
+
+  hide("incomingCall");
+
+  playFirstVisitorVideo();
+
+}
+
+
+/* =========================
+   FIRST VISITOR CHECK
+========================= */
+
+function hasWatchedSample(){
+
+  try{
+
+    return (
+      localStorage.getItem(
+        SAMPLE_STORAGE_KEY
+      ) === "true"
+    );
+
+  }catch(error){
+
+    return false;
+
+  }
+
+}
+
+
+function markSampleWatched(){
+
+  try{
+
+    localStorage.setItem(
+      SAMPLE_STORAGE_KEY,
+      "true"
+    );
+
+  }catch(error){}
+
+}
+
+
+/* =========================
+   FIRST VIDEO
+========================= */
+
+function playFirstVisitorVideo(){
+
+  if(hasWatchedSample()){
+
+    showInsufficient();
+
+    return;
+
+  }
+
+
+  markSampleWatched();
+
+
+  const page =
+    $("firstVideoPage");
+
+  const video =
+    $("firstVideo");
+
+
+  if(!page || !video){
+
+    showInsufficient();
+
+    return;
+
+  }
+
+
+  video.src =
+    VIDEO_URL;
+
+  video.currentTime =
+    0;
+
+  video.muted =
+    false;
+
+
+  hide("photosPage");
+
+  hide("incomingCall");
+
+  hide("insufficientPage");
+
+  show("firstVideoPage");
+
+
+  let finished =
+    false;
+
+
+  function finish(){
+
+    if(finished){
+      return;
+    }
+
+    finished = true;
+
+    clearTimeout(
+      timer
+    );
+
+
+    try{
+
+      video.pause();
+
+    }catch(error){}
+
+
+    video.removeEventListener(
+      "ended",
+      finish
+    );
+
+
+    hide("firstVideoPage");
+
+    showInsufficient();
+
+  }
+
+
+  video.addEventListener(
+    "ended",
+    finish
+  );
+
+
+  const timer =
+    setTimeout(
+      finish,
+      FIRST_VIDEO_DURATION
+    );
+
+
+  const playPromise =
+    video.play();
+
+
+  if(
+    playPromise &&
+    typeof playPromise.catch ===
+    "function"
+  ){
+
+    playPromise.catch(
+      function(){
+
+        /*
+          If browser blocks
+          autoplay with sound,
+          show the video page.
+          User can press the
+          browser video play control.
+        */
+
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================
+   INSUFFICIENT
+========================= */
+
+function showInsufficient(){
+
+  hide("welcomeScreen");
+
+  hide("photosPage");
+
+  hide("incomingCall");
+
+  hide("firstVideoPage");
+
+  show("insufficientPage");
+
+
+  setTimeout(
+    function(){
+
+      showPhotos();
+
+    },
+    INSUFFICIENT_DURATION
+  );
+
+}
+
+
+/* =========================
+   PAYMENT FLOW
+========================= */
+
+function openProfileChat(index){
+
+  toggleChat(
+    index
+  );
+
+}
+
+
+function refreshAllSocialData(){
+
+  profiles.forEach(
+    (_,index) => {
+
+      refreshProfileSocial(
+        index
+      );
+
+    }
+  );
+
+  }
+  /* =========================
+   REFERRAL SESSION
+========================= */
+
+function saveReferralSession(){
+
+  const referral =
+    getReferral();
+
+
+  try{
+
+    if(
+      referral.ref
+    ){
+
+      sessionStorage.setItem(
+        "paymentRef",
+        referral.ref
+      );
+
+    }
+
+
+    if(
+      referral.employee
+    ){
+
+      sessionStorage.setItem(
+        "paymentEmployee",
+        referral.employee
+      );
+
+    }
+
+  }catch(error){}
+
+}
+
+
+/* =========================
+   PHOTO CLICK PROTECTION
+========================= */
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    const socialButton =
+      event.target.closest(
+        ".social-btn"
+      );
+
+
+    if(socialButton){
+
+      event.stopPropagation();
+
+      return;
+
+    }
+
+
+    const chatSection =
+      event.target.closest(
+        ".chat-section"
+      );
+
+
+    if(chatSection){
+
+      event.stopPropagation();
+
+    }
+
+  },
+  true
+);
+
+
+/* =========================
+   TOUCH PROTECTION
+========================= */
+
+document.addEventListener(
+  "touchstart",
+  function(event){
+
+    const socialButton =
+      event.target.closest(
+        ".social-btn"
+      );
+
+
+    if(socialButton){
+
+      event.stopPropagation();
+
+      return;
+
+    }
+
+
+    const chatSection =
+      event.target.closest(
+        ".chat-section"
+      );
+
+
+    if(chatSection){
+
+      event.stopPropagation();
+
+    }
+
+  },
+  {
+    passive:true,
+    capture:true
+  }
+);
+
+
+/* =========================
+   CALL BUTTONS
+========================= */
+
+const answerButton =
+  $("answerCall");
+
+
+if(answerButton){
+
+  answerButton.addEventListener(
+    "click",
+    function(event){
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+      answerIncomingCall();
+
+    }
+  );
+
+}
+
+
+const rejectButton =
+  $("rejectCall");
+
+
+if(rejectButton){
+
+  rejectButton.addEventListener(
+    "click",
+    function(event){
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+      rejectIncomingCall();
+
+    }
+  );
+
+}
+
+
+/* =========================
+   INITIAL PHOTO SETUP
+========================= */
+
+saveReferralSession();
+
+
+/* =========================
+   WELCOME FLOW
+========================= */
+
+function startWelcomeFlow(){
+
+  hide("photosPage");
+
+  hide("incomingCall");
+
+  hide("firstVideoPage");
+
+  hide("insufficientPage");
+
+  show("welcomeScreen");
+
+
+  setTimeout(
+    function(){
+
+      showPhotos();
+
+      /*
+        Incoming call appears
+        after the photo page has
+        been displayed briefly.
+      */
+
+      setTimeout(
+        function(){
+
+          showIncomingCall();
+
+        },
+        1500
+      );
+
+    },
+    WELCOME_DURATION
+  );
+
+}
+
+
+/* =========================
+   ONLINE REFRESH
+========================= */
+
+setInterval(
+  function(){
+
+    updateOnlineNumber();
+
+  },
+  20000
+);
+
+
+/* =========================
+   OFFLINE REFRESH
+========================= */
+
+setInterval(
+  function(){
+
+    if(
+      !$("photosPage")
+        .classList
+        .contains("hidden")
+    ){
+
+      refreshOfflineProfiles();
+
+    }
+
+  },
+  300000
+);
+
+
+/* =========================
+   REFRESH AFTER PAGE LOAD
+========================= */
+
+window.addEventListener(
+  "load",
+  function(){
+
+    refreshAllSocialData();
+
+  }
+);
+  /* =========================
+   IMAGE FALLBACK
+========================= */
+
+function attachImageFallbacks(){
+
+  const images =
+    document.querySelectorAll(
+      ".photo-image"
+    );
+
+
+  images.forEach(
+    function(image){
+
+      image.addEventListener(
+        "error",
+        function(){
+
+          image.style.opacity =
+            "0.25";
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   CHAT SCROLL
+========================= */
+
+function scrollAllChats(){
+
+  profiles.forEach(
+    (_,index) => {
+
+      scrollChatToBottom(
+        index
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   KEEP SOCIAL COUNTS
+========================= */
+
+function restoreSocialState(){
+
+  profiles.forEach(
+    (_,index) => {
+
+      updateLikeButton(
+        index
+      );
+
+      updateLoveButton(
+        index
+      );
+
+      updateFollowButton(
+        index
+      );
+
+      renderComments(
+        index
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   SAFE REBUILD
+========================= */
+
+function rebuildPhotos(){
+
+  createPhotos();
+
+  refreshOfflineProfiles();
+
+  attachImageFallbacks();
+
+  restoreSocialState();
+
+}
+
+
+/* =========================
+   PAGE VISIBILITY
+========================= */
+
+document.addEventListener(
+  "visibilitychange",
+  function(){
+
+    if(
+      !document.hidden
+    ){
+
+      restoreSocialState();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+window.addEventListener(
+  "pageshow",
+  function(){
+
+    /*
+      When returning from
+      payment.html, rebuild
+      the live photo page.
+    */
+
+    if(
+      window.location.pathname
+        .toLowerCase()
+        .endsWith(
+          "index.html"
+        )
+      ||
+      window.location.pathname ===
+        "/"
+    ){
+
+      if(
+        !$("photosPage")
+          .classList
+          .contains("hidden")
+      ){
+
+        rebuildPhotos();
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =========================
+   PREVENT EMPTY PROFILE DATA
+========================= */
+
+function normalizeProfiles(){
+
+  profiles.forEach(
+    function(profile){
+
+      if(
+        !profile.name
+      ){
+
+        profile.name =
+          "Live profile";
+
+      }
+
+      if(
+        !profile.country
+      ){
+
+        profile.country =
+          "Unknown";
+
+      }
+
+      if(
+        !profile.flag
+      ){
+
+        profile.flag =
+          "🌍";
+
+      }
+
+      if(
+        !profile.image
+      ){
+
+        profile.image =
+          "";
+
+      }
+
+    }
+  );
+
+}
+
+
+normalizeProfiles();
+
+
+/* =========================
+   BUILD PHOTO GRID
 ========================= */
 
 createPhotos();
 
 
-/*
-  Welcome:
-  3 seconds
-*/
+/* =========================
+   SOCIAL DATA
+========================= */
+
+restoreSocialState();
+
+
+/* =========================
+   START APPLICATION
+========================= */
+
+startWelcomeFlow();
+  /* =========================
+   FINAL INTERACTION SAFETY
+========================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    /*
+      Prevent accidental
+      form submission from
+      causing page navigation.
+    */
+
+    if(
+      event.key === "Enter"
+    ){
+
+      const active =
+        document.activeElement;
+
+
+      if(
+        active &&
+        active.classList &&
+        active.classList.contains(
+          "comment-input"
+        )
+      ){
+
+        event.preventDefault();
+
+        const match =
+          active.id.match(
+            /^input-(\d+)$/
+          );
+
+
+        if(match){
+
+          const index =
+            Number(
+              match[1]
+            );
+
+          addComment(
+            index,
+            active
+          );
+
+        }
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =========================
+   SOCIAL BUTTON TOUCH
+========================= */
+
+document.querySelectorAll(
+  ".social-btn"
+).forEach(
+  function(button){
+
+    button.addEventListener(
+      "touchend",
+      function(event){
+
+        event.stopPropagation();
+
+      },
+      {
+        passive:true
+      }
+    );
+
+  }
+);
+
+
+/* =========================
+   COMMENTS UPDATE
+========================= */
+
+function updateAllComments(){
+
+  profiles.forEach(
+    (_,index) => {
+
+      renderComments(
+        index
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   LOCAL STORAGE SAFETY
+========================= */
+
+function initializeStorage(){
+
+  const likeData =
+    readStorage(
+      LIKE_KEY,
+      {}
+    );
+
+  const loveData =
+    readStorage(
+      LOVE_KEY,
+      {}
+    );
+
+  const followData =
+    readStorage(
+      FOLLOW_KEY,
+      {}
+    );
+
+  const commentData =
+    readStorage(
+      COMMENT_KEY,
+      {}
+    );
+
+
+  writeStorage(
+    LIKE_KEY,
+    likeData
+  );
+
+  writeStorage(
+    LOVE_KEY,
+    loveData
+  );
+
+  writeStorage(
+    FOLLOW_KEY,
+    followData
+  );
+
+  writeStorage(
+    COMMENT_KEY,
+    commentData
+  );
+
+}
+
+
+initializeStorage();
+
+
+/* =========================
+   REFRESH CURRENT PAGE
+========================= */
 
 setTimeout(
-  ()=>{
+  function(){
 
-    showPhotos();
+    if(
+      !$("photosPage")
+        .classList
+        .contains("hidden")
+    ){
 
+      rebuildPhotos();
 
-    /*
-      Photos:
-      2 seconds
-    */
-
-    setTimeout(
-      ()=>{
-
-        showIncomingCall();
-
-      },
-      2000
-    );
+    }
 
   },
-  3000
+  100
 );
 
 
 /* =========================
-   DECLINE
-========================= */
-
-declineButton.addEventListener(
-  "click",
-  ()=>{
-
-    incomingCall.classList.add(
-      "hidden"
-    );
-
-    showPhotos();
-
-  }
-);
-
-
-/* =========================
-   ANSWER
-========================= */
-
-let callActive =
-  false;
-
-
-answerButton.addEventListener(
-  "click",
-  ()=>{
-
-    if(callActive){
-      return;
-    }
-
-
-    callActive =
-      true;
-
-
-    incomingCall.classList.add(
-      "hidden"
-    );
-
-
-    /*
-      FIRST VISITOR
-    */
-
-    if(
-      !localStorage.getItem(
-        SAMPLE_KEY
-      )
-    ){
-
-      localStorage.setItem(
-        SAMPLE_KEY,
-        "true"
-      );
-
-
-      playFirstVisitorVideo();
-
-
-    }else{
-
-      /*
-        Returning visitor
-      */
-
-      showInsufficient();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   FIRST VISITOR VIDEO
-========================= */
-
-function playFirstVisitorVideo(){
-
-  redLiveVideoPage.classList.remove(
-    "hidden"
-  );
-
-
-  redLiveVideo.src =
-    VIDEO_URL;
-
-
-  try{
-
-    redLiveVideo.currentTime =
-      0;
-
-  }catch(error){}
-
-
-  redLiveVideo.muted =
-    false;
-
-  redLiveVideo.volume =
-    1;
-
-
-  function startVideo(){
-
-    try{
-
-      redLiveVideo.currentTime =
-        0;
-
-    }catch(error){}
-
-
-    redLiveVideo
-      .play()
-      .catch(
-        ()=>{
-          /*
-            Some mobile browsers
-            block autoplay with sound.
-          */
-        }
-      );
-
-  }
-
-
-  if(
-    redLiveVideo.readyState >= 1
-  ){
-
-    startVideo();
-
-  }else{
-
-    redLiveVideo.addEventListener(
-      "loadedmetadata",
-      startVideo,
-      {once:true}
-    );
-
-  }
-
-
-  /*
-    40 seconds
-  */
-
-  setTimeout(
-    ()=>{
-
-      redLiveVideo.pause();
-
-
-      redLiveVideo.removeAttribute(
-        "src"
-      );
-
-
-      redLiveVideo.load();
-
-
-      redLiveVideoPage.classList.add(
-        "hidden"
-      );
-
-
-      showInsufficient();
-
-    },
-    FIRST_CALL_DURATION
-  );
-
-}
-
-
-/* =========================
-   INSUFFICIENT MINUTES
-========================= */
-
-function showInsufficient(){
-
-  insufficientPage.classList.remove(
-    "hidden"
-  );
-
-
-  let seconds =
-    2;
-
-
-  insufficientTimer.textContent =
-    "Continuing...";
-
-
-  const timer =
-    setInterval(
-      ()=>{
-
-        seconds--;
-
-
-        if(seconds <= 0){
-
-          clearInterval(
-            timer
-          );
-
-
-          insufficientPage.classList.add(
-            "hidden"
-          );
-
-
-          callActive =
-            false;
-
-
-          showPhotos();
-
-        }
-
-      },
-      1000
-    );
-
-}
-  /* =========================
-   KEEP COMMENTS SEPARATE
-========================= */
-
-/*
-  Every profile has its own ID:
-
-  profile_0
-  profile_1
-  profile_2
-  ...
-
-  Therefore comments for Cute
-  do not appear under Becky,
-  and comments for Becky do not
-  appear under Dorry.
-
-  Example:
-
-  Cute:
-  profile_0 comments
-
-  Becky:
-  profile_1 comments
-
-  Dorry:
-  profile_2 comments
-*/
-
-
-/* =========================
-   OPEN CHAT FROM SCRIPT
-========================= */
-
-function openProfileChat(index){
-
-  const section =
-    document.getElementById(
-      "chat-" + index
-    );
-
-
-  const button =
-    document.getElementById(
-      "chat-button-" + index
-    );
-
-
-  if(!section){
-    return;
-  }
-
-
-  section.classList.add(
-    "open"
-  );
-
-
-  if(button){
-
-    button.classList.add(
-      "active"
-    );
-
-  }
-
-
-  renderComments(
-    index
-  );
-
-
-  const input =
-    document.getElementById(
-      "input-" + index
-    );
-
-
-  if(input){
-
-    setTimeout(
-      ()=>{
-        input.focus();
-      },
-      50
-    );
-
-  }
-
-}
-
-
-/* =========================
-   COMMENT SCROLL
-========================= */
-
-function scrollChatToBottom(index){
-
-  const list =
-    document.getElementById(
-      "comments-" + index
-    );
-
-
-  if(!list){
-    return;
-  }
-
-
-  list.scrollTop =
-    list.scrollHeight;
-
-}
-
-
-/* =========================
-   UPDATE ONE PROFILE
-========================= */
-
-function refreshProfileSocial(index){
-
-  updateLikeButton(
-    index
-  );
-
-  updateLoveButton(
-    index
-  );
-
-  updateFollowButton(
-    index
-  );
-
-  renderComments(
-    index
-  );
-
-}
-
-
-/* =========================
-   REBUILD COMMENTS IF NEEDED
-========================= */
-
-profiles.forEach(
-  (_,index)=>{
-
-    if(
-      !Array.isArray(
-        commentData[
-          profileId(index)
-        ]
-      )
-    ){
-
-      commentData[
-        profileId(index)
-      ] = [];
-
-    }
-
-  }
-);
-
-
-saveComments();
-
-
-/* =========================
-   AUTO KEEP CHAT AT BOTTOM
+   PERIODIC SOCIAL REFRESH
 ========================= */
 
 setInterval(
-  ()=>{
+  function(){
 
-    profiles.forEach(
-      (_,index)=>{
+    if(
+      !$("photosPage")
+        .classList
+        .contains("hidden")
+    ){
 
-        const section =
-          document.getElementById(
-            "chat-" + index
-          );
+      restoreSocialState();
 
-
-        if(
-          section &&
-          section.classList.contains(
-            "open"
-          )
-        ){
-
-          const list =
-            document.getElementById(
-              "comments-" + index
-            );
-
-
-          if(list){
-
-            /*
-              Only keep the list
-              at bottom when user
-              is already near bottom.
-            */
-
-            const distance =
-              list.scrollHeight -
-              list.scrollTop -
-              list.clientHeight;
-
-
-            if(distance < 40){
-
-              list.scrollTop =
-                list.scrollHeight;
-
-            }
-
-          }
-
-        }
-
-      }
-    );
+    }
 
   },
-  3000
+  5000
 );
+/* =========================
+   FINAL INITIALIZATION
+========================= */
+
+(function(){
+
+  try{
+
+    updateOnlineNumber();
+
+    initializeStorage();
+
+  }catch(error){
+
+    console.warn(
+      "Initialization warning:",
+      error
+    );
+
+  }
+
+})();
 
 
 /* =========================
-   FINISH INITIAL SETUP
+   END OF APPLICATION
 ========================= */
 
-profiles.forEach(
-  (_,index)=>{
-
-    refreshProfileSocial(
-      index
-    );
-
-  }
-);
-  <script>
-profiles.forEach((_, index) => {
-  const input = document.getElementById("input-" + index);
-
-  if (!input) return;
-
-  input.addEventListener("keydown", function(event) {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-
-      const text = input.value.trim();
-
-      if (text) {
-        addComment(index, text);
-      }
-    }
-  });
-});
-
-document.addEventListener("click", function(event) {
-  const socialButton = event.target.closest(".social-btn");
-
-  if (socialButton) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
-  const chatSection = event.target.closest(".chat-section");
-
-  if (chatSection) {
-    event.stopPropagation();
-  }
-});
-
-document.addEventListener("touchstart", function(event) {
-  const socialButton = event.target.closest(".social-btn");
-
-  if (socialButton) {
-    event.stopPropagation();
-  }
-
-  const chatSection = event.target.closest(".chat-section");
-
-  if (chatSection) {
-    event.stopPropagation();
-  }
-}, { passive: true });
-
-function refreshAllSocialData() {
-  profiles.forEach((_, index) => {
-    refreshProfileSocial(index);
-  });
-}
-
-refreshAllSocialData();
-window.addEventListener("load", function() {
-  refreshAllSocialData();
-
-  profiles.forEach((_, index) => {
-    const commentsBox = document.getElementById("comments-" + index);
-
-    if (commentsBox) {
-      commentsBox.scrollTop = commentsBox.scrollHeight;
-    }
-  });
-});
 </script>
 
 </body>
-</html>
+</html>  
