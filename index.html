@@ -1,897 +1,762 @@
+<!-- 1/10 -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-               maximum-scale=1.0,user-scalable=no">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-<title>LiveX</title>
+<title>My Referral Website</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+
+/* ==========================================
+   BASIC
+========================================== */
+
+* {
+  box-sizing: border-box;
 }
 
-html,body{
-  margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
-  background:#050505;
-  color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
 }
 
-body{
-  overflow-x:hidden;
+body {
+  padding: 15px;
 }
 
-button,
-input{
-  font:inherit;
+.card {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
 }
 
-button{
-  cursor:pointer;
+
+/* ==========================================
+   SAMPLE PAGE
+========================================== */
+
+#samplePage {
+  display: none;
+  width: 100%;
+  min-height: calc(100vh - 30px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.screen{
-  width:100%;
-  min-height:100vh;
+.sample-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
-/* =========================
-   WELCOME
-========================= */
-
-#welcomeScreen{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  min-height:100vh;
-  background:
-    radial-gradient(
-      circle at center,
-      #2a101d 0%,
-      #0b0609 48%,
-      #000 100%
-    );
-  text-align:center;
+.sample-subtitle {
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom: 15px;
 }
 
-.logo{
-  font-size:44px;
-  font-weight:900;
-  letter-spacing:-2px;
+
+/*
+   FIX:
+   The old CSS had .sample-timer
+   incorrectly inside #sampleVideo.
+*/
+
+#sampleVideo {
+  width: 100%;
+  max-width: 450px;
+  max-height: 70vh;
+  display: block;
+  background: #111;
+  border-radius: 14px;
+  object-fit: contain;
 }
 
-.logo span{
-  color:#ff1744;
+
+/*
+   Keep timer hidden, as requested
+   in the existing design.
+*/
+
+.sample-timer {
+  display: none !important;
 }
 
-.welcomeText{
-  margin-top:12px;
-  color:#aaa;
-  font-size:14px;
+
+/* ==========================================
+   INSUFFICIENT PAGE
+========================================== */
+
+#insufficientPage {
+  display: none;
+  width: 100%;
+  min-height: calc(100vh - 30px);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.loadingDots{
-  display:flex;
-  gap:7px;
-  margin-top:24px;
+.insufficient-box {
+  width: 100%;
+  background: #111;
+  border: 1px solid #292929;
+  border-radius: 14px;
+  padding: 30px 20px;
 }
 
-.loadingDots span{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#ff1744;
-  animation:dotPulse 1s infinite;
+.insufficient-title {
+  font-size: 25px;
+  font-weight: bold;
+  color: #ff5252;
+  margin-bottom: 10px;
 }
 
-.loadingDots span:nth-child(2){
-  animation-delay:.15s;
+.insufficient-text {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-.loadingDots span:nth-child(3){
-  animation-delay:.3s;
-}
 
-@keyframes dotPulse{
-  0%,80%,100%{
-    opacity:.25;
-    transform:scale(.7);
-  }
-  40%{
-    opacity:1;
-    transform:scale(1);
-  }
-}
-
-/* =========================
+/* ==========================================
    PHOTOS PAGE
-========================= */
+========================================== */
 
-#photosPage{
-  display:none;
-  min-height:100vh;
-  background:#090909;
-  padding-bottom:30px;
+#photosPage {
+  display: none;
+  width: 100%;
 }
 
-.topBar{
-  position:sticky;
-  top:0;
-  z-index:100;
-  height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 13px;
-  background:rgba(7,7,7,.96);
-  border-bottom:1px solid #222;
-  backdrop-filter:blur(12px);
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.brand{
-  font-size:23px;
-  font-weight:900;
+.online-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #111;
+  border: 1px solid #292929;
+  color: #fff;
+  padding: 7px 11px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
-.brand span{
-  color:#ff1744;
+.online-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: onlineBlink 1.2s infinite;
 }
 
-.onlineBox{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  color:#ddd;
-  font-size:12px;
-}
-
-.onlineDot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#20e86a;
-  box-shadow:0 0 8px #20e86a;
-  animation:onlineBlink 1.2s infinite;
-}
-
-@keyframes onlineBlink{
-  0%,100%{opacity:1}
-  50%{opacity:.3}
-}
-
-.pageTitle{
-  padding:15px 13px 5px;
-  font-size:19px;
-  font-weight:900;
-}
-
-.pageSubtitle{
-  padding:0 13px 13px;
-  color:#888;
-  font-size:11px;
-}
-
-.photosGrid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:7px;
-  padding:0 7px;
-}
-
-.photoCard{
-  min-width:0;
-  overflow:hidden;
-  background:#111;
-  border:1px solid #252525;
-  border-radius:12px;
-  box-shadow:0 4px 15px rgba(0,0,0,.35);
-}
-
-.photoWrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:3/4;
-  overflow:hidden;
-  background:#171717;
-  cursor:pointer;
-}
-
-.profileImage{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.imageFallback{
-  display:none;
-  width:100%;
-  height:100%;
-  align-items:center;
-  justify-content:center;
-  color:#777;
-  font-size:10px;
-}
-
-.liveBadge{
-  position:absolute;
-  top:6px;
-  left:6px;
-  z-index:5;
-  padding:4px 6px;
-  border-radius:5px;
-  background:#ef1743;
-  color:#fff;
-  font-size:8px;
-  font-weight:900;
-}
-
-.offlineBadge{
-  display:none;
-  position:absolute;
-  top:6px;
-  right:6px;
-  z-index:5;
-  padding:4px 6px;
-  border-radius:5px;
-  background:#555;
-  color:#eee;
-  font-size:8px;
-  font-weight:900;
-}
-
-.photoCard.offline .liveBadge{
-  display:none;
-}
-
-.photoCard.offline .offlineBadge{
-  display:block;
-}
-
-.playIcon{
-  position:absolute;
-  top:50%;
-  left:50%;
-  z-index:4;
-  width:40px;
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transform:translate(-50%,-50%);
-  border:2px solid rgba(255,255,255,.9);
-  border-radius:50%;
-  background:rgba(0,0,0,.65);
-  font-size:16px;
-  padding-left:2px;
-  animation:playPulse 1.8s infinite;
-}
-
-@keyframes playPulse{
-  0%,100%{
-    box-shadow:0 0 0 0 rgba(255,23,68,.3);
-  }
-  50%{
-    box-shadow:0 0 0 8px rgba(255,23,68,0);
-  }
-}
-  <style>
-/* =========================
-   PROFILE INFO
-========================= */
-
-.profileInfo{
-  padding:7px 6px 4px;
-}
-
-.profileName{
-  display:flex;
-  align-items:center;
-  gap:4px;
-  min-width:0;
-}
-
-.nameStatusDot{
-  width:7px;
-  height:7px;
-  min-width:7px;
-  border-radius:50%;
-  background:#21e768;
-  box-shadow:0 0 7px #21e768;
-  animation:nameBlink 1.1s infinite;
-}
-
-.nameStatusDot.offline{
-  background:#777;
-  box-shadow:none;
-  animation:none;
-}
-
-@keyframes nameBlink{
-  0%,100%{opacity:1}
-  50%{opacity:.25}
-}
-
-.profileNameText{
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  font-size:11px;
-  font-weight:800;
-}
-
-.profileAge{
-  margin-top:3px;
-  color:#888;
-  font-size:8px;
-}
-
-/* =========================
-   ACTIONS
-========================= */
-
-.socialRow{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:3px;
-  padding:4px 5px 6px;
-}
-
-.socialBtn{
-  min-width:0;
-  padding:6px 1px;
-  border:1px solid #292929;
-  border-radius:7px;
-  background:#181818;
-  color:#ddd;
-  font-size:8px;
-  font-weight:700;
-  text-align:center;
-}
-
-.socialBtn:active{
-  transform:scale(.95);
-}
-
-.socialBtn.activeLike{
-  color:#ff4167;
-  border-color:#762238;
-}
-
-.socialBtn.activeLove{
-  color:#ff69a0;
-  border-color:#76264c;
-}
-
-.socialBtn.activeFollow{
-  color:#35e978;
-  border-color:#22683c;
-}
-
-.count{
-  display:block;
-  margin-top:2px;
-  color:#888;
-  font-size:7px;
-}
-
-/* =========================
-   CHAT
-========================= */
-
-.chatTitle{
-  padding:5px 6px 3px;
-  border-top:1px solid #252525;
-  color:#999;
-  font-size:8px;
-  font-weight:800;
-}
-
-.commentsBox{
-  height:118px;
-  overflow-y:auto;
-  padding:2px 5px 5px;
-  overscroll-behavior:contain;
-  scrollbar-width:thin;
-}
-
-.commentsBox::-webkit-scrollbar{
-  width:3px;
-}
-
-.commentsBox::-webkit-scrollbar-thumb{
-  background:#444;
-  border-radius:10px;
-}
-
-.comment{
-  margin:4px 0;
-  padding:6px 7px;
-  border:1px solid #252525;
-  border-radius:9px;
-  background:#191919;
-  animation:commentIn .35s ease;
-}
-
-.comment.compact{
-  padding:5px 7px;
-}
-
-.comment.love{
-  border-left:2px solid #e94279;
-}
-
-.comment.long{
-  padding:7px 8px;
-}
-
-@keyframes commentIn{
-  from{
-    opacity:0;
-    transform:translateY(7px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
+@keyframes onlineBlink {
+  50% {
+    opacity: .35;
   }
 }
 
-.commentTop{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:4px;
+h1 {
+  margin: 8px 0 5px;
+  font-size: 25px;
 }
 
-.commentUser{
-  color:#eee;
-  font-size:7px;
-  font-weight:900;
+.subtitle {
+  color: #aaa;
+  margin: 0 0 15px;
+  font-size: 14px;
 }
 
-.commentTime{
-  color:#666;
-  font-size:6px;
+#livePhotos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 15px;
 }
 
-.commentText{
-  margin-top:3px;
-  color:#c8c8c8;
-  font-size:8px;
-  line-height:1.35;
-  word-break:break-word;
+.live-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #111;
+  cursor: pointer;
+  min-height: 250px;
+  padding-bottom: 0;
+  border: 1px solid #1e1e1e;
+  transition: transform .15s ease;
 }
 
-.commentForm{
-  display:flex;
-  gap:4px;
-  padding:4px 5px 6px;
+.live-photo:active {
+  transform: scale(.98);
 }
 
-.commentInput{
-  min-width:0;
-  flex:1;
-  height:28px;
-  padding:0 7px;
-  border:1px solid #292929;
-  border-radius:8px;
-  outline:none;
-  background:#0d0d0d;
-  color:#fff;
-  font-size:8px;
+.live-photo img {
+  display: block;
+  width: 100%;
+  height: 205px;
+  object-fit: cover;
+  background: #111;
 }
 
-.commentInput:focus{
-  border-color:#555;
+.photo-name {
+  position: static;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: left;
 }
 
-.commentSend{
-  width:32px;
-  height:28px;
-  border:0;
-  border-radius:8px;
-  background:#ff1744;
-  color:#fff;
-  font-size:11px;
-  font-weight:900;
+.live-badge {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  z-index: 5;
+  background: #f0184c;
+  color: #fff;
+  padding: 6px 9px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: bold;
 }
 
-/* =========================
+.live-badge::before {
+  content: "●";
+  margin-right: 4px;
+}
+
+.live-status {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0,0,0,.82);
+  padding: 5px 7px;
+  border-radius: 7px;
+  font-size: 10px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: liveBlink 1s infinite;
+}
+
+@keyframes liveBlink {
+  50% {
+    opacity: .35;
+  }
+}
+
+.loading {
+  grid-column: 1 / -1;
+  padding: 45px 20px;
+  color: #aaa;
+  text-align: center;
+}
+
+.error {
+  grid-column: 1 / -1;
+  padding: 35px 15px;
+  color: #ff6b6b;
+  text-align: center;
+  line-height: 1.5;
+}
+
+
+/* ==========================================
    INCOMING CALL
-========================= */
+========================================== */
 
-#incomingCall{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:500;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+#incomingCall {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
   background:
     radial-gradient(
       circle at center,
-      #241018 0%,
-      #070707 55%,
+      #202020 0%,
+      #080808 55%,
       #000 100%
     );
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
 }
 
-.callBox{
-  width:min(360px,100%);
-  padding:27px 20px;
-  border:1px solid #292929;
-  border-radius:22px;
-  background:#111;
-  text-align:center;
-  box-shadow:0 20px 60px rgba(0,0,0,.8);
+.call-box {
+  width: 100%;
+  max-width: 360px;
+  background: #111;
+  border: 1px solid #292929;
+  border-radius: 22px;
+  padding: 28px 20px 25px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.8);
 }
 
-.callAvatar{
-  width:120px;
-  height:120px;
-  margin:0 auto 17px;
-  overflow:hidden;
-  border:3px solid #22c55e;
-  border-radius:50%;
-  background:#222;
+.call-avatar {
+  width: 115px;
+  height: 115px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #222;
+  border: 3px solid #22c55e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.callAvatar img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
+.call-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.callLive{
-  display:inline-block;
-  padding:5px 8px;
-  border-radius:5px;
-  background:#ed1742;
-  font-size:9px;
-  font-weight:900;
+.call-incoming {
+  color: #22c55e;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
-.callName{
-  margin-top:10px;
-  font-size:22px;
-  font-weight:900;
+.call-name {
+  font-size: 23px;
+  font-weight: bold;
+  margin-bottom: 7px;
 }
 
-.callText{
-  margin-top:7px;
-  color:#999;
-  font-size:12px;
+.call-type {
+  color: #aaa;
+  font-size: 13px;
+  margin-bottom: 25px;
 }
 
-.callButtons{
-  display:flex;
-  justify-content:center;
-  gap:38px;
-  margin-top:28px;
+.call-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
 }
 
-.callBtn{
-  width:65px;
-  height:65px;
-  border:0;
-  border-radius:50%;
-  color:#fff;
-  font-size:25px;
+.call-action {
+  border: none;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 27px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.rejectBtn{
-  background:#ef1744;
+.call-answer {
+  background: #22c55e;
 }
 
-.answerBtn{
-  background:#20b85b;
-    }
-  <style>
-/* =========================
-   VIDEO SCREEN
-========================= */
-
-#videoScreen{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:600;
-  align-items:center;
-  justify-content:center;
-  background:#000;
+.call-end {
+  background: #ef4444;
+  transform: rotate(135deg);
 }
 
-#sampleVideo{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  background:#000;
+
+/* ==========================================
+   LIVE PHOTO ACTIONS + CHAT
+========================================== */
+
+.live-photo {
+  padding-bottom: 0;
+  min-height: 0;
 }
 
-.videoTop{
-  position:absolute;
-  top:13px;
-  left:13px;
-  right:13px;
-  z-index:5;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  pointer-events:none;
+.photo-info {
+  padding: 9px 8px 6px;
+  background: #111;
 }
 
-.videoLive{
-  padding:6px 8px;
-  border-radius:5px;
-  background:#ed1742;
-  font-size:9px;
-  font-weight:900;
+.photo-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
 }
 
-.videoTimer{
-  padding:6px 8px;
-  border-radius:6px;
-  background:rgba(0,0,0,.65);
-  font-size:9px;
+.photo-name-row .photo-name {
+  flex: 1;
 }
 
-/* =========================
-   INSUFFICIENT
-========================= */
-
-#insufficientPage{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:550;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:
-    radial-gradient(
-      circle at center,
-      #271018 0%,
-      #080608 48%,
-      #000 100%
-    );
-  text-align:center;
+.country-age {
+  font-size: 10px;
+  color: #aaa;
+  white-space: nowrap;
 }
 
-.insufficientBox{
-  width:min(370px,100%);
-  padding:30px 20px;
-  border:1px solid #292929;
-  border-radius:18px;
-  background:#111;
+.chat-preview {
+  margin-top: 7px;
+  min-height: 34px;
+  padding: 7px 8px;
+  border-radius: 9px;
+  background: #191919;
+  color: #ddd;
+  font-size: 10px;
+  line-height: 1.25;
+  text-align: left;
 }
 
-.warningIcon{
-  width:58px;
-  height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 15px;
-  border:1px solid #6a1c30;
-  border-radius:50%;
-  background:#251017;
-  color:#ff3159;
-  font-size:27px;
-  font-weight:900;
+.chat-label {
+  color: #22c55e;
+  font-weight: bold;
+  margin-right: 4px;
 }
 
-.insufficientTitle{
-  font-size:24px;
-  font-weight:900;
+.photo-actions {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 5px;
+  margin-top: 7px;
 }
 
-.insufficientText{
-  margin-top:9px;
-  color:#999;
-  font-size:12px;
-  line-height:1.5;
+.photo-action {
+  border: 1px solid #292929;
+  background: #171717;
+  color: #fff;
+  border-radius: 8px;
+  padding: 7px 2px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.insufficientLoader{
-  width:32px;
-  height:32px;
-  margin:20px auto 0;
-  border:3px solid #292929;
-  border-top-color:#ff1744;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
+.photo-action:active {
+  transform: scale(.96);
 }
 
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
+.photo-action.liked {
+  color: #ff4d7d;
+  border-color: #ff4d7d;
 }
 
-/* =========================
-   ROOM CLOSED
-========================= */
-
-#roomClosed{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:700;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:#080808;
-  text-align:center;
+.photo-action.following {
+  color: #22c55e;
+  border-color: #22c55e;
 }
 
-.closedBox{
-  width:min(350px,100%);
+.play-icon {
+  position: absolute;
+  left: 50%;
+  top: 102px;
+  transform: translate(-50%,-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.62);
+  border: 2px solid rgba(255,255,255,.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  z-index: 4;
+  pointer-events: none;
 }
 
-.closedIcon{
-  font-size:45px;
+#chatModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: rgba(0,0,0,.78);
+  padding: 18px;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.closedTitle{
-  margin-top:12px;
-  font-size:24px;
-  font-weight:900;
+.chat-modal-box {
+  width: 100%;
+  max-width: 450px;
+  max-height: 82vh;
+  background: #111;
+  border: 1px solid #292929;
+  border-radius: 20px 20px 12px 12px;
+  padding: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.8);
 }
 
-.closedText{
-  margin-top:8px;
-  color:#888;
-  font-size:12px;
+.chat-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
-/* =========================
+.chat-modal-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.chat-modal-sub {
+  font-size: 11px;
+  color: #22c55e;
+  margin-top: 3px;
+}
+
+.chat-close {
+  border: 0;
+  background: #292929;
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.chat-list {
+  max-height: 48vh;
+  overflow: auto;
+  padding: 4px 0;
+}
+
+.chat-bubble {
+  background: #1b1b1b;
+  border-radius: 12px;
+  padding: 9px 10px;
+  margin: 7px 0;
+  color: #eee;
+  font-size: 12px;
+  text-align: left;
+}
+
+.chat-note {
+  font-size: 10px;
+  color: #777;
+  text-align: center;
+  margin-top: 10px;
+}
+
+
+/* ==========================================
    MOBILE
-========================= */
+========================================== */
 
-@media(max-width:390px){
+@media (max-width: 380px) {
 
-  .photosGrid{
-    gap:5px;
-    padding:0 5px;
+  body {
+    padding: 12px;
   }
 
-  .socialRow{
-    gap:2px;
-    padding-left:4px;
-    padding-right:4px;
+  #livePhotos {
+    gap: 10px;
   }
 
-  .commentsBox{
-    height:112px;
+  .live-photo img {
+    height: 170px;
+  }
+
+  .photo-action {
+    font-size: 9px;
+    padding: 6px 1px;
+  }
+
+  .play-icon {
+    top: 85px;
   }
 
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     WELCOME
-========================= -->
+<div class="card">
 
-<div id="welcomeScreen" class="screen">
+  <!-- ================================
+       SAMPLE
+  ================================= -->
 
-  <div class="logo">
-    Live<span>X</span>
+  <div id="samplePage">
+
+    <div class="sample-title">
+      ❤️🥰🥰😍😍😍😍😍😍😍😍😍😍🫦🫦🫦💖🔥🔥🔥
+    </div>
+
+    <div class="sample-subtitle">
+      welcome 🤗 💦💦💦💦❤️‍🔥❤️‍🔥
+    </div>
+
+    <!-- FIX:
+         removed invalid "sound" attribute.
+         Sound will be controlled by JavaScript.
+    -->
+
+    <video
+      id="sampleVideo"
+      playsinline
+      preload="auto"
+      controls
+    >
+
+      <source
+        src="preview_20_seconds.mp4"
+        type="video/mp4"
+      >
+
+      Your browser does not support video.
+
+    </video>
+
+    <div
+      id="sampleTimer"
+      class="sample-timer"
+    ></div>
+
   </div>
 
-  <div class="welcomeText">
-    Connecting you to live profiles...
+
+  <!-- ================================
+       INSUFFICIENT
+  ================================= -->
+
+  <div id="insufficientPage">
+
+    <div class="insufficient-box">
+
+      <div class="insufficient-title">
+        Insufficient minutes
+      </div>
+
+      <div class="insufficient-text">
+        Buy more minutes!
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="loadingDots">
-    <span></span>
-    <span></span>
-    <span></span>
+
+  <!-- ================================
+       PHOTOS
+  ================================= -->
+
+  <div id="photosPage">
+
+    <div class="top-bar">
+
+      <div class="online-box">
+
+        <span class="online-dot"></span>
+
+        <span>
+          21 online
+        </span>
+
+      </div>
+
+    </div>
+
+    <h1>
+      Welcome
+    </h1>
+
+    <p class="subtitle">
+      People live now
+    </p>
+
+    <div id="livePhotos"></div>
+
   </div>
 
 </div>
-<!-- =========================
-     PHOTOS
-========================= -->
-
-<div id="photosPage" class="screen">
-
-  <div class="topBar">
-
-    <div class="brand">
-      Live<span>X</span>
-    </div>
-
-    <div class="onlineBox">
-      <span class="onlineDot"></span>
-      <span>
-        <b id="onlineNumber">21</b> online
-      </span>
-    </div>
-
-  </div>
-
-  <div class="pageTitle">
-    Live profiles
-  </div>
-
-  <div class="pageSubtitle">
-    People live now
-  </div>
-
-  <div
-    id="photosGrid"
-    class="photosGrid"
-  ></div>
-
-</div>
 
 
-<!-- =========================
+<!-- ================================
      INCOMING CALL
-========================= -->
+================================= -->
 
 <div id="incomingCall">
 
-  <div class="callBox">
+  <div class="call-box">
 
-    <div class="callAvatar">
+    <div class="call-avatar">
 
       <img
-        id="callAvatarImage"
+        id="callPhoto"
         src=""
-        alt="Caller"
+        alt="Profile"
       >
 
     </div>
 
-    <div class="callLive">
-      ● LIVE CALL
+    <div class="call-incoming">
+      INCOMING VIDEO CALL
     </div>
 
     <div
+      class="call-name"
       id="callName"
-      class="callName"
     >
-      Incoming call
+      Live Video
     </div>
 
-    <div class="callText">
+    <div class="call-type">
       Someone wants to start a video call
     </div>
 
-    <div class="callButtons">
+    <div class="call-buttons">
 
       <button
-        id="rejectCallButton"
-        class="callBtn rejectBtn"
-        type="button"
-      >
-        ✕
-      </button>
-
-      <button
-        id="answerCallButton"
-        class="callBtn answerBtn"
+        class="call-action call-end"
+        id="rejectCall"
         type="button"
       >
         ☎
       </button>
 
+      <button
+        class="call-action call-answer"
+        id="answerCall"
+        type="button"
+      >
+        📞
+      </button>
+
     </div>
 
   </div>
@@ -899,35 +764,51 @@ button{
 </div>
 
 
-<!-- =========================
-     VIDEO
-========================= -->
+<!-- ================================
+     CHAT MODAL
+================================= -->
 
-<div id="videoScreen">
+<div id="chatModal">
 
-  <video
-    id="sampleVideo"
-    playsinline
-    preload="auto"
-    controls
-  >
-    <source
-      src="./IMG_20261001_011110_570.mp4"
-      type="video/mp4"
-    >
-  </video>
+  <div class="chat-modal-box">
 
-  <div class="videoTop">
+    <div class="chat-modal-head">
 
-    <div class="videoLive">
-      ● LIVE
+      <div>
+
+        <div
+          id="chatModalTitle"
+          class="chat-modal-title"
+        >
+          Live Chat
+        </div>
+
+        <div
+          id="chatModalSub"
+          class="chat-modal-sub"
+        >
+          Community chat
+        </div>
+
+      </div>
+
+      <button
+        id="chatClose"
+        class="chat-close"
+        type="button"
+      >
+        ×
+      </button>
+
     </div>
 
     <div
-      id="videoTimer"
-      class="videoTimer"
-    >
-      40s
+      id="chatList"
+      class="chat-list"
+    ></div>
+
+    <div class="chat-note">
+      Community/demo chat — messages are generated for the page.
     </div>
 
   </div>
@@ -935,314 +816,408 @@ button{
 </div>
 
 
-<!-- =========================
-     INSUFFICIENT
-========================= -->
-
-<div id="insufficientPage">
-
-  <div class="insufficientBox">
-
-    <div class="warningIcon">
-      !
-    </div>
-
-    <div class="insufficientTitle">
-      Insufficient Minutes
-    </div>
-
-    <div class="insufficientText">
-      Your free live minutes have ended.<br>
-      Get minutes to continue watching and chatting.
-    </div>
-
-    <div class="insufficientLoader"></div>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     ROOM CLOSED
-========================= -->
-
-<div id="roomClosed">
-
-  <div class="closedBox">
-
-    <div class="closedIcon">
-      📴
-    </div>
-
-    <div class="closedTitle">
-      Live room closed
-    </div>
-
-    <div class="closedText">
-      This live room is currently unavailable.
-    </div>
-
-  </div>
-
-</div>
-
+<!-- 2/10 -->
 
 <script>
 "use strict";
 
-/* =========================
-   SETTINGS
-========================= */
+/* ==========================================
+   CONFIGURATION
+========================================== */
 
 const PAYMENT_PAGE_URL = "payment.html";
 
-const IMAGE_BASE = "./";
+const GITHUB_OWNER = "agnesweb2026";
+const GITHUB_REPO = "My-referral-website";
+const GITHUB_BRANCH = "main";
 
-const VIDEO_URL =
-  "./IMG_20261001_011110_570.mp4";
+const GITHUB_API_URL =
+  "https://api.github.com/repos/" +
+  GITHUB_OWNER +
+  "/" +
+  GITHUB_REPO +
+  "/contents/";
 
-const SAMPLE_STORAGE_KEY =
-  "myReferralSampleWatched";
+const GITHUB_RAW_BASE =
+  "https://raw.githubusercontent.com/" +
+  GITHUB_OWNER +
+  "/" +
+  GITHUB_REPO +
+  "/" +
+  GITHUB_BRANCH +
+  "/";
 
-const SAMPLE_DURATION = 40000;
+const SAMPLE_VIDEO_URL =
+  "./preview_20_seconds.mp4";
 
+const SAMPLE_DURATION = 20;
 const INSUFFICIENT_DURATION = 2000;
+const PHOTO_WAIT_DURATION = 10000;
 
-const MAX_VISIBLE_COMMENTS = 7;
+const FLOW_STORAGE_KEY =
+  "myReferralFlowStarted";
 
-
-/* =========================
-   PROFILES
-========================= */
-
-const PHOTO_NAMES = [
-
-  {
-    name:"Cute",
-    age:24,
-    flag:"🇰🇪",
-    country:"Kenya",
-    image:"photo1.jpg"
-  },
-
-  {
-    name:"Becky",
-    age:22,
-    flag:"🇰🇪",
-    country:"Kenya",
-    image:"photo2.jpg"
-  },
-
-  {
-    name:"Dorry",
-    age:26,
-    flag:"🇰🇪",
-    country:"Kenya",
-    image:"photo4.jpg"
-  },
-
-  {
-    name:"Sharon",
-    age:23,
-    flag:"🇰🇪",
-    country:"Kenya",
-    image:"photo5.jpg"
-  },
-
-  {
-    name:"Lilian",
-    age:27,
-    flag:"🇰🇪",
-    country:"Kenya",
-    image:"1785179340825.jpg"
-  },
-
-  {
-    name:"Asha",
-    age:25,
-    flag:"🇹🇿",
-    country:"Tanzania",
-    image:"1785179340825 (1).jpg"
-  },
-
-  {
-    name:"Neema",
-    age:23,
-    flag:"🇹🇿",
-    country:"Tanzania",
-    image:"1785179362758.jpg"
-  },
-
-  {
-    name:"Zawadi",
-    age:28,
-    flag:"🇹🇿",
-    country:"Tanzania",
-    image:"1785179915649.jpg"
-  },
-
-  {
-    name:"Rehema",
-    age:24,
-    flag:"🇹🇿",
-    country:"Tanzania",
-    image:"Screenshot_20260731-045343.png"
-  },
-
-  {
-    name:"Blessing",
-    age:22,
-    flag:"🇳🇬",
-    country:"Nigeria",
-    image:"photo1.jpg"
-  },
-
-  {
-    name:"Favour",
-    age:26,
-    flag:"🇳🇬",
-    country:"Nigeria",
-    image:"photo2.jpg"
-  },
-
-  {
-    name:"Peace",
-    age:25,
-    flag:"🇳🇬",
-    country:"Nigeria",
-    image:"photo4.jpg"
-  },
-
-  {
-    name:"Joy",
-    age:27,
-    flag:"🇳🇬",
-    country:"Nigeria",
-    image:"photo5.jpg"
-  },
-
-  {
-    name:"Grace",
-    age:24,
-    flag:"🇨🇩",
-    country:"Congo",
-    image:"1785179340825.jpg"
-  },
-
-  {
-    name:"Mimi",
-    age:23,
-    flag:"🇨🇩",
-    country:"Congo",
-    image:"1785179340825 (1).jpg"
-  },
-
-  {
-    name:"Nadia",
-    age:26,
-    flag:"🇨🇩",
-    country:"Congo",
-    image:"1785179362758.jpg"
-  },
-
-  {
-    name:"Bella",
-    age:25,
-    flag:"🇨🇩",
-    country:"Congo",
-    image:"1785179915649.jpg"
-  },
-
-  {
-    name:"Princess",
-    age:28,
-    flag:"🇨🇩",
-    country:"Congo",
-    image:"Screenshot_20260731-045343.png"
-  },
-
-  {
-    name:"Emily",
-    age:24,
-    flag:"🇨🇦",
-    country:"Canada",
-    image:"photo1.jpg"
-  },
-
-  {
-    name:"Sophie",
-    age:27,
-    flag:"🇨🇦",
-    country:"Canada",
-    image:"photo2.jpg"
-  },
-
-  {
-    name:"Thandi",
-    age:25,
-    flag:"🇿🇦",
-    country:"South Africa",
-    image:"photo4.jpg"
-  },
-
-  {
-    name:"Lerato",
-    age:29,
-    flag:"🇿🇦",
-    country:"South Africa",
-    image:"photo5.jpg"
-  },
-
-  {
-    name:"Ashley",
-    age:23,
-    flag:"🇺🇸",
-    country:"USA",
-    image:"1785179340825.jpg"
-  },
-
-  {
-    name:"Jessica",
-    age:26,
-    flag:"🇺🇸",
-    country:"USA",
-    image:"1785179340825 (1).jpg"
-  }
-
-];
-  <script>
-/* =========================
-   STORAGE
-========================= */
-
-const LIKE_KEY =
+const LIKE_STORAGE_KEY =
   "liveProfileLikes";
 
-const LOVE_KEY =
+const LOVE_STORAGE_KEY =
   "liveProfileLoves";
 
-const FOLLOW_KEY =
+const FOLLOW_STORAGE_KEY =
   "liveProfileFollows";
 
-const COMMENTS_KEY =
+const COMMENT_STORAGE_KEY =
   "liveProfileComments";
 
 
-function readStorage(key,fallback){
+/* ==========================================
+   PROFILE DATA
+========================================== */
 
-  try{
+const PROFILE_DATA = [
+
+  {
+    name: "Cute",
+    age: 24,
+    country: "Kenya",
+    flag: "🇰🇪"
+  },
+
+  {
+    name: "Becky",
+    age: 22,
+    country: "Kenya",
+    flag: "🇰🇪"
+  },
+
+  {
+    name: "Dorry",
+    age: 26,
+    country: "Kenya",
+    flag: "🇰🇪"
+  },
+
+  {
+    name: "Sharon",
+    age: 23,
+    country: "Kenya",
+    flag: "🇰🇪"
+  },
+
+  {
+    name: "Lilian",
+    age: 27,
+    country: "Kenya",
+    flag: "🇰🇪"
+  },
+
+  {
+    name: "Asha",
+    age: 25,
+    country: "Tanzania",
+    flag: "🇹🇿"
+  },
+
+  {
+    name: "Neema",
+    age: 23,
+    country: "Tanzania",
+    flag: "🇹🇿"
+  },
+
+  {
+    name: "Zawadi",
+    age: 28,
+    country: "Tanzania",
+    flag: "🇹🇿"
+  },
+
+  {
+    name: "Rehema",
+    age: 24,
+    country: "Tanzania",
+    flag: "🇹🇿"
+  },
+
+  {
+    name: "Blessing",
+    age: 22,
+    country: "Nigeria",
+    flag: "🇳🇬"
+  },
+
+  {
+    name: "Favour",
+    age: 26,
+    country: "Nigeria",
+    flag: "🇳🇬"
+  },
+
+  {
+    name: "Peace",
+    age: 25,
+    country: "Nigeria",
+    flag: "🇳🇬"
+  },
+
+  {
+    name: "Joy",
+    age: 27,
+    country: "Nigeria",
+    flag: "🇳🇬"
+  },
+
+  {
+    name: "Grace",
+    age: 24,
+    country: "Congo",
+    flag: "🇨🇩"
+  },
+
+  {
+    name: "Mimi",
+    age: 23,
+    country: "Congo",
+    flag: "🇨🇩"
+  },
+
+  {
+    name: "Nadia",
+    age: 26,
+    country: "Congo",
+    flag: "🇨🇩"
+  },
+
+  {
+    name: "Bella",
+    age: 25,
+    country: "Congo",
+    flag: "🇨🇩"
+  },
+
+  {
+    name: "Princess",
+    age: 28,
+    country: "Congo",
+    flag: "🇨🇩"
+  },
+
+  {
+    name: "Emily",
+    age: 24,
+    country: "Canada",
+    flag: "🇨🇦"
+  },
+
+  {
+    name: "Sophie",
+    age: 27,
+    country: "Canada",
+    flag: "🇨🇦"
+  },
+
+  {
+    name: "Thandi",
+    age: 25,
+    country: "South Africa",
+    flag: "🇿🇦"
+  },
+
+  {
+    name: "Lerato",
+    age: 29,
+    country: "South Africa",
+    flag: "🇿🇦"
+  },
+
+  {
+    name: "Ashley",
+    age: 23,
+    country: "USA",
+    flag: "🇺🇸"
+  },
+
+  {
+    name: "Jessica",
+    age: 26,
+    country: "USA",
+    flag: "🇺🇸"
+  }
+
+];
+
+
+/* ==========================================
+   FALLBACK LOCAL IMAGE NAMES
+========================================== */
+
+const LOCAL_IMAGE_NAMES = [
+
+  "photo1.jpg",
+  "photo2.jpg",
+  "photo4.jpg",
+  "photo5.jpg",
+  "1785179340825.jpg",
+  "1785179340825 (1).jpg",
+  "1785179362758.jpg",
+  "1785179915649.jpg",
+  "Screenshot_20260731-045343.png"
+
+];
+
+
+/* ==========================================
+   DEMO COMMENT DATA
+========================================== */
+
+const COMMENT_MESSAGES = [
+
+  "Hey ❤️",
+  "You look amazing 😍",
+  "Hello beautiful",
+  "Nice profile 😊",
+  "I like your vibe ❤️",
+  "Hi there 👋",
+  "You are cute 😍",
+  "Can we chat?",
+  "Where are you from?",
+  "Hello 👋❤️",
+  "Nice photo",
+  "You look lovely",
+  "Hey there 😊",
+  "I just joined",
+  "Good evening ❤️",
+  "You caught my attention 😍"
+
+];
+
+const COMMENT_USERS = [
+
+  "Mike",
+  "John",
+  "Daniel",
+  "Kevin",
+  "Brian",
+  "Alex",
+  "Chris",
+  "Sam",
+  "David",
+  "Peter"
+
+];
+
+
+/* ==========================================
+   DOM REFERENCES
+========================================== */
+
+const samplePage =
+  document.getElementById("samplePage");
+
+const insufficientPage =
+  document.getElementById("insufficientPage");
+
+const photosPage =
+  document.getElementById("photosPage");
+
+const incomingCall =
+  document.getElementById("incomingCall");
+
+const sampleVideo =
+  document.getElementById("sampleVideo");
+
+const sampleTimer =
+  document.getElementById("sampleTimer");
+
+const livePhotos =
+  document.getElementById("livePhotos");
+
+const answerCall =
+  document.getElementById("answerCall");
+
+const rejectCall =
+  document.getElementById("rejectCall");
+
+const callPhoto =
+  document.getElementById("callPhoto");
+
+const callName =
+  document.getElementById("callName");
+
+const chatModal =
+  document.getElementById("chatModal");
+
+const chatModalTitle =
+  document.getElementById("chatModalTitle");
+
+const chatModalSub =
+  document.getElementById("chatModalSub");
+
+const chatList =
+  document.getElementById("chatList");
+
+const chatClose =
+  document.getElementById("chatClose");
+
+
+/* ==========================================
+   STATE
+========================================== */
+
+let currentFlow = "START";
+
+let sampleRunning = false;
+
+let secondsLeft =
+  SAMPLE_DURATION;
+
+let sampleTimerInterval = null;
+
+let insufficientTimer = null;
+
+let photoWaitTimer = null;
+
+let incomingPhotoIndex = 0;
+
+let availablePhotos = [];
+
+let photosLoaded = false;
+
+let photosReady = false;
+
+let currentChatProfileIndex = null;
+
+let commentTimers = [];
+
+let offlineIndexes = [];
+
+let offlineTimer = null;
+
+
+/* ==========================================
+   SAFE STORAGE
+========================================== */
+
+function readStorage(key, fallback) {
+
+  try {
 
     const value =
       localStorage.getItem(key);
 
-    if(!value){
+    if (!value) {
       return fallback;
     }
 
     return JSON.parse(value);
 
-  }catch(error){
+  } catch (error) {
+
+    console.warn(
+      "Storage read failed:",
+      key,
+      error
+    );
 
     return fallback;
 
@@ -1251,286 +1226,68 @@ function readStorage(key,fallback){
 }
 
 
-function writeStorage(key,value){
+function writeStorage(key, value) {
 
-  try{
+  try {
 
     localStorage.setItem(
       key,
       JSON.stringify(value)
     );
 
-  }catch(error){}
+  } catch (error) {
 
-}
-
-
-function profileId(index){
-
-  return "profile_" + index;
-
-}
-
-
-function formatNumber(value){
-
-  return Number(value || 0)
-    .toLocaleString("en-US");
-
-}
-
-
-function escapeHtml(value){
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-/* =========================
-   COUNTERS
-========================= */
-
-function getLikes(index){
-
-  const data =
-    readStorage(LIKE_KEY,{});
-
-  const id =
-    profileId(index);
-
-  if(typeof data[id] !== "number"){
-
-    data[id] =
-      5000 +
-      Math.floor(Math.random()*1800);
-
-    writeStorage(
-      LIKE_KEY,
-      data
+    console.warn(
+      "Storage write failed:",
+      key,
+      error
     );
 
   }
 
-  return data[id];
+}
+
+
+/* ==========================================
+   RANDOM NUMBER
+========================================== */
+
+function randomNumber(min, max) {
+
+  return Math.floor(
+    Math.random() * (max - min + 1)
+  ) + min;
 
 }
 
 
-function getLove(index){
-
-  const data =
-    readStorage(LOVE_KEY,{});
-
-  const id =
-    profileId(index);
-
-  if(typeof data[id] !== "number"){
-
-    data[id] =
-      900 +
-      Math.floor(Math.random()*700);
-
-    writeStorage(
-      LOVE_KEY,
-      data
-    );
-
-  }
-
-  return data[id];
-
-}
-
-
-function getFollow(index){
-
-  const data =
-    readStorage(FOLLOW_KEY,{});
-
-  const id =
-    profileId(index);
-
-  if(typeof data[id] !== "number"){
-
-    data[id] =
-      700 +
-      Math.floor(Math.random()*600);
-
-    writeStorage(
-      FOLLOW_KEY,
-      data
-    );
-
-  }
-
-  return data[id];
-
-}
-
-
-/* =========================
-   COMMENT USERS
-========================= */
-
-const COMMENT_USERS = [
-
-  "Mike",
-  "Kevin",
-  "Dan",
-  "Brian",
-  "Chris",
-  "Sam",
-  "David",
-  "Alex",
-  "John",
-  "Mark",
-  "Ryan",
-  "Peter",
-  "Eric",
-  "Jay",
-  "Tom",
-  "Ben",
-  "James",
-  "Leo"
-
-];
-
-
-const COMMENT_MESSAGES = [
-
-  "Hello 👋",
-
-  "You look amazing ❤️",
-
-  "Nice smile 😍",
-
-  "I like your vibe 😊",
-
-  "Beautiful photo ❤️",
-
-  "Wow 😍",
-
-  "Where are you watching from?",
-
-  "You look lovely tonight ❤️",
-
-  "Nice profile 😊",
-
-  "Anyone else still online?",
-
-  "That smile though 😍",
-
-  "Hello beautiful 👋",
-
-  "You caught my attention ❤️",
-
-  "This photo is lovely",
-
-  "You look stunning 🔥",
-
-  "I just joined the room",
-
-  "Good vibes here ❤️",
-
-  "How was your day?",
-
-  "Nice to see you 😊",
-
-  "Who is still awake? 👀",
-
-  "You have a beautiful smile",
-
-  "This room is active tonight",
-
-  "I like this profile 😍",
-
-  "Hello again ❤️"
-
-];
-
-
-const COMMENT_STYLES = [
-
-  "",
-  "compact",
-  "love",
-  "long"
-
-];
-
-
-function randomItem(array){
-
-  return array[
-    Math.floor(
-      Math.random()*array.length
-    )
-  ];
-
-}
-
-
-function randomTime(){
-
-  return (
-    1 +
-    Math.floor(Math.random()*59)
-  ) + "s";
-
-}
-
-
-function makeComment(index){
-
-  const profile =
-    PHOTO_NAMES[index];
-
-  return {
-
-    user:randomItem(
-      COMMENT_USERS
-    ),
-
-    text:randomItem(
-      COMMENT_MESSAGES
-    ),
-
-    time:randomTime(),
-
-    style:randomItem(
-      COMMENT_STYLES
-    ),
-
-    profile:profile.name
-
-  };
-
-}
-
-
-function buildInitialComments(index){
-
-  const result = [];
-
-  const amount =
-    5 +
-    Math.floor(Math.random()*2);
-
-  for(
-    let i=0;
-    i<amount;
-    i++
-  ){
-
-    result.push(
-      makeComment(index)
-    );
+/* ==========================================
+   SHUFFLE
+========================================== */
+
+function shuffle(array) {
+
+  const result =
+    array.slice();
+
+  for (
+    let i = result.length - 1;
+    i > 0;
+    i--
+  ) {
+
+    const j =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+
+    [
+      result[i],
+      result[j]
+    ] = [
+      result[j],
+      result[i]
+    ];
 
   }
 
@@ -1539,1258 +1296,197 @@ function buildInitialComments(index){
 }
 
 
-/* =========================
-   COMMENTS STORAGE
-========================= */
+/* ==========================================
+   IMAGE URL
+========================================== */
 
-function getComments(index){
+function getImageUrl(name) {
 
-  const data =
-    readStorage(
-      COMMENTS_KEY,
-      {}
-    );
-
-  const id =
-    profileId(index);
-
-  if(!Array.isArray(data[id])){
-
-    data[id] =
-      buildInitialComments(index);
-
-    writeStorage(
-      COMMENTS_KEY,
-      data
-    );
-
-  }
-
-  return data[id];
-
-}
-
-
-function saveComments(index,comments){
-
-  const data =
-    readStorage(
-      COMMENTS_KEY,
-      {}
-    );
-
-  data[
-    profileId(index)
-  ] = comments;
-
-  writeStorage(
-    COMMENTS_KEY,
-    data
+  return (
+    GITHUB_RAW_BASE +
+    encodeURIComponent(name)
   );
 
 }
+      <!-- 3/10 -->
 
+/* ==========================================
+   CLEAR TIMERS
+========================================== */
 
-/* =========================
-   COMMENT HTML
-========================= */
+function clearAllTimers() {
 
-function commentHtml(comment){
+  if (sampleTimerInterval) {
 
-  return `
-    <div class="comment ${escapeHtml(
-      comment.style || ""
-    )}">
-
-      <div class="commentTop">
-
-        <span class="commentUser">
-          ${escapeHtml(
-            comment.user || "Visitor"
-          )}
-        </span>
-
-        <span class="commentTime">
-          ${escapeHtml(
-            comment.time || "now"
-          )}
-        </span>
-
-      </div>
-
-      <div class="commentText">
-        ${escapeHtml(
-          comment.text || ""
-        )}
-      </div>
-
-    </div>
-  `;
-
-}
-
-
-function renderComments(index){
-
-  const box =
-    document.getElementById(
-      "comments_"+index
+    clearInterval(
+      sampleTimerInterval
     );
 
-  if(!box) return;
-
-  const comments =
-    getComments(index);
-
-  box.innerHTML =
-    comments
-      .slice(-MAX_VISIBLE_COMMENTS)
-      .map(commentHtml)
-      .join("");
-
-  box.scrollTop =
-    box.scrollHeight;
-
-    }
-  <script>
-/* =========================
-   NATURAL CHAT FEED
-========================= */
-
-const CHAT_TIMERS = {};
-
-function appendLiveComment(
-  index,
-  comment,
-  forceBottom
-){
-
-  const box =
-    document.getElementById(
-      "comments_"+index
-    );
-
-  if(!box) return;
-
-  const distanceFromBottom =
-    box.scrollHeight -
-    box.scrollTop -
-    box.clientHeight;
-
-  const wasNearBottom =
-    distanceFromBottom < 30;
-
-  const element =
-    document.createElement("div");
-
-  element.className =
-    "comment " +
-    (comment.style || "");
-
-  element.innerHTML = `
-
-    <div class="commentTop">
-
-      <span class="commentUser">
-        ${escapeHtml(comment.user)}
-      </span>
-
-      <span class="commentTime">
-        ${escapeHtml(comment.time)}
-      </span>
-
-    </div>
-
-    <div class="commentText">
-      ${escapeHtml(comment.text)}
-    </div>
-
-  `;
-
-  box.appendChild(element);
-
-  while(
-    box.children.length >
-    MAX_VISIBLE_COMMENTS
-  ){
-
-    box.removeChild(
-      box.firstElementChild
-    );
+    sampleTimerInterval = null;
 
   }
 
-  const comments =
-    getComments(index);
+  if (insufficientTimer) {
 
-  comments.push(comment);
-
-  if(comments.length > 30){
-
-    comments.splice(
-      0,
-      comments.length-30
+    clearTimeout(
+      insufficientTimer
     );
+
+    insufficientTimer = null;
 
   }
 
-  saveComments(
-    index,
-    comments
-  );
+  if (photoWaitTimer) {
 
-  /*
-    IMPORTANT:
-    Hakuna continuous auto-scroll.
-    Message moja tu ndiyo inaingia.
-  */
+    clearTimeout(
+      photoWaitTimer
+    );
 
-  if(
-    forceBottom ||
-    wasNearBottom
-  ){
-
-    setTimeout(function(){
-
-      box.scrollTo({
-
-        top:box.scrollHeight,
-
-        behavior:"smooth"
-
-      });
-
-    },70);
+    photoWaitTimer = null;
 
   }
 
 }
 
 
-function scheduleChat(index){
+/* ==========================================
+   HIDE ALL PAGES
+========================================== */
 
-  const delay =
-    2500 +
-    Math.floor(
-      Math.random()*5500
-    );
+function hideAllPages() {
 
-  CHAT_TIMERS[index] =
-    setTimeout(function(){
+  if (samplePage) {
 
-      /*
-        Offline profiles do not
-        receive a new simulated
-        message while offline.
-      */
-
-      if(
-        !offlineProfiles.has(index)
-      ){
-
-        appendLiveComment(
-          index,
-          makeComment(index),
-          false
-        );
-
-      }
-
-      scheduleChat(index);
-
-    },delay);
-
-}
-
-
-function startChat(index){
-
-  if(CHAT_TIMERS[index]){
-    return;
-  }
-
-  const firstDelay =
-    1500 +
-    Math.floor(
-      Math.random()*4500
-    );
-
-  setTimeout(function(){
-
-    scheduleChat(index);
-
-  },firstDelay);
-
-}
-
-
-function startAllChats(){
-
-  PHOTO_NAMES.forEach(
-    function(profile,index){
-
-      startChat(index);
-
-    }
-  );
-
-}
-
-
-/* =========================
-   USER COMMENT
-========================= */
-
-function addComment(index){
-
-  const input =
-    document.getElementById(
-      "commentInput_"+index
-    );
-
-  if(!input) return;
-
-  const text =
-    input.value.trim();
-
-  if(!text) return;
-
-  appendLiveComment(
-
-    index,
-
-    {
-      user:"You",
-      text:text,
-      time:"now",
-      style:"love",
-      profile:
-        PHOTO_NAMES[index].name
-    },
-
-    true
-
-  );
-
-  input.value = "";
-
-}
-
-
-function handleCommentKey(
-  event,
-  index
-){
-
-  if(event.key === "Enter"){
-
-    event.preventDefault();
-
-    addComment(index);
-
-  }
-
-}
-
-
-/* =========================
-   SOCIAL ACTIONS
-========================= */
-
-function toggleLike(index){
-
-  const data =
-    readStorage(
-      LIKE_KEY,
-      {}
-    );
-
-  const id =
-    profileId(index);
-
-  if(
-    typeof data[id] !==
-    "number"
-  ){
-
-    data[id] =
-      getLikes(index);
-
-  }
-
-  const key =
-    "liked_"+id;
-
-  const active =
-    localStorage.getItem(key)
-    === "1";
-
-  if(active){
-
-    data[id] =
-      Math.max(
-        0,
-        data[id]-1
-      );
-
-    localStorage.removeItem(key);
-
-  }else{
-
-    data[id]++;
-
-    localStorage.setItem(
-      key,
-      "1"
-    );
-
-  }
-
-  writeStorage(
-    LIKE_KEY,
-    data
-  );
-
-  updateSocialCounts(index);
-
-}
-
-
-function toggleLove(index){
-
-  const data =
-    readStorage(
-      LOVE_KEY,
-      {}
-    );
-
-  const id =
-    profileId(index);
-
-  if(
-    typeof data[id] !==
-    "number"
-  ){
-
-    data[id] =
-      getLove(index);
-
-  }
-
-  const key =
-    "loved_"+id;
-
-  const active =
-    localStorage.getItem(key)
-    === "1";
-
-  if(active){
-
-    data[id] =
-      Math.max(
-        0,
-        data[id]-1
-      );
-
-    localStorage.removeItem(key);
-
-  }else{
-
-    data[id]++;
-
-    localStorage.setItem(
-      key,
-      "1"
-    );
-
-  }
-
-  writeStorage(
-    LOVE_KEY,
-    data
-  );
-
-  updateSocialCounts(index);
-
-}
-
-
-function toggleFollow(index){
-
-  const data =
-    readStorage(
-      FOLLOW_KEY,
-      {}
-    );
-
-  const id =
-    profileId(index);
-
-  if(
-    typeof data[id] !==
-    "number"
-  ){
-
-    data[id] =
-      getFollow(index);
-
-  }
-
-  const key =
-    "followed_"+id;
-
-  const active =
-    localStorage.getItem(key)
-    === "1";
-
-  if(active){
-
-    data[id] =
-      Math.max(
-        0,
-        data[id]-1
-      );
-
-    localStorage.removeItem(key);
-
-  }else{
-
-    data[id]++;
-
-    localStorage.setItem(
-      key,
-      "1"
-    );
-
-  }
-
-  writeStorage(
-    FOLLOW_KEY,
-    data
-  );
-
-  updateSocialCounts(index);
-
-  }
-  <script>
-/* =========================
-   UPDATE SOCIAL COUNTS
-========================= */
-
-function updateSocialCounts(index){
-
-  const likeCount =
-    document.getElementById(
-      "likeCount_"+index
-    );
-
-  const loveCount =
-    document.getElementById(
-      "loveCount_"+index
-    );
-
-  const followCount =
-    document.getElementById(
-      "followCount_"+index
-    );
-
-  if(likeCount){
-
-    likeCount.textContent =
-      formatNumber(
-        getLikes(index)
-      );
-
-  }
-
-  if(loveCount){
-
-    loveCount.textContent =
-      formatNumber(
-        getLove(index)
-      );
-
-  }
-
-  if(followCount){
-
-    followCount.textContent =
-      formatNumber(
-        getFollow(index)
-      );
-
-  }
-
-  const likeButton =
-    document.getElementById(
-      "likeBtn_"+index
-    );
-
-  const loveButton =
-    document.getElementById(
-      "loveBtn_"+index
-    );
-
-  const followButton =
-    document.getElementById(
-      "followBtn_"+index
-    );
-
-  if(likeButton){
-
-    likeButton.classList.toggle(
-
-      "activeLike",
-
-      localStorage.getItem(
-        "liked_"+profileId(index)
-      ) === "1"
-
-    );
-
-  }
-
-  if(loveButton){
-
-    loveButton.classList.toggle(
-
-      "activeLove",
-
-      localStorage.getItem(
-        "loved_"+profileId(index)
-      ) === "1"
-
-    );
-
-  }
-
-  if(followButton){
-
-    const following =
-      localStorage.getItem(
-        "followed_"+profileId(index)
-      ) === "1";
-
-    followButton.classList.toggle(
-      "activeFollow",
-      following
-    );
-
-    followButton.firstChild.nodeValue =
-      following
-        ? "Following"
-        : "Follow";
-
-  }
-
-}
-
-
-/* =========================
-   CREATE PHOTO CARD
-========================= */
-
-function createPhotoCard(
-  profile,
-  index
-){
-
-  const card =
-    document.createElement("div");
-
-  card.className =
-    "photoCard";
-
-  card.id =
-    "photoCard_"+index;
-
-  card.innerHTML = `
-
-    <div
-      class="photoWrap"
-      onclick="openPayment(${index})"
-    >
-
-      <img
-        id="profileImage_${index}"
-        class="profileImage"
-        src="${IMAGE_BASE}${escapeHtml(
-          profile.image
-        )}"
-        alt="${escapeHtml(
-          profile.name
-        )}"
-        loading="lazy"
-      >
-
-      <div
-        id="imageFallback_${index}"
-        class="imageFallback"
-      >
-        Image unavailable
-      </div>
-
-      <div class="liveBadge">
-        ● LIVE
-      </div>
-
-      <div class="offlineBadge">
-        OFFLINE
-      </div>
-
-      <div class="playIcon">
-        ▶
-      </div>
-
-    </div>
-
-    <div class="profileInfo">
-
-      <div class="profileName">
-
-        <span
-          id="statusDot_${index}"
-          class="nameStatusDot"
-          title="Online"
-        ></span>
-
-        <span class="profileNameText">
-
-          ${escapeHtml(
-            profile.flag
-          )}
-
-          ${escapeHtml(
-            profile.name
-          )}
-
-        </span>
-
-      </div>
-
-      <div class="profileAge">
-
-        ${escapeHtml(
-          String(profile.age)
-        )}
-        years ·
-        ${escapeHtml(
-          profile.country
-        )}
-
-      </div>
-
-    </div>
-
-    <div class="socialRow">
-
-      <button
-        id="likeBtn_${index}"
-        class="socialBtn"
-        type="button"
-        onclick="toggleLike(${index})"
-      >
-        👍 Like
-        <span
-          id="likeCount_${index}"
-          class="count"
-        >
-          ${formatNumber(
-            getLikes(index)
-          )}
-        </span>
-      </button>
-
-      <button
-        id="loveBtn_${index}"
-        class="socialBtn"
-        type="button"
-        onclick="toggleLove(${index})"
-      >
-        ❤️ Love
-        <span
-          id="loveCount_${index}"
-          class="count"
-        >
-          ${formatNumber(
-            getLove(index)
-          )}
-        </span>
-      </button>
-
-      <button
-        id="followBtn_${index}"
-        class="socialBtn"
-        type="button"
-        onclick="toggleFollow(${index})"
-      >
-        Follow
-        <span
-          id="followCount_${index}"
-          class="count"
-        >
-          ${formatNumber(
-            getFollow(index)
-          )}
-        </span>
-      </button>
-
-      <button
-        class="socialBtn"
-        type="button"
-        onclick="focusComment(${index})"
-      >
-        💬 Chat
-        <span class="count">
-          Live
-        </span>
-      </button>
-
-    </div>
-
-    <div class="chatTitle">
-
-      💬 Live chat ·
-      ${escapeHtml(
-        profile.name
-      )}
-
-    </div>
-
-    <div
-      id="comments_${index}"
-      class="commentsBox"
-    ></div>
-
-    <div class="commentForm">
-
-      <input
-        id="commentInput_${index}"
-        class="commentInput"
-        type="text"
-        maxlength="160"
-        placeholder="Write a comment..."
-        onkeydown="handleCommentKey(
-          event,
-          ${index}
-        )"
-      >
-
-      <button
-        class="commentSend"
-        type="button"
-        onclick="addComment(${index})"
-      >
-        ➤
-      </button>
-
-    </div>
-  `;
-
-  return card;
-
-}
-
-
-function focusComment(index){
-
-  const input =
-    document.getElementById(
-      "commentInput_"+index
-    );
-
-  if(input){
-
-    input.focus();
-
-    input.scrollIntoView({
-      behavior:"smooth",
-      block:"center"
-    });
-
-  }
-
-}
-  <script>
-/* =========================
-   CREATE PHOTOS
-========================= */
-
-function createPhotos(){
-
-  const grid =
-    document.getElementById(
-      "photosGrid"
-    );
-
-  if(!grid) return;
-
-  grid.innerHTML = "";
-
-  PHOTO_NAMES.forEach(
-    function(profile,index){
-
-      const card =
-        createPhotoCard(
-          profile,
-          index
-        );
-
-      grid.appendChild(card);
-
-      renderComments(index);
-
-      updateSocialCounts(index);
-
-    }
-  );
-
-  setupImageFallbacks();
-
-}
-
-
-function setupImageFallbacks(){
-
-  PHOTO_NAMES.forEach(
-    function(profile,index){
-
-      const image =
-        document.getElementById(
-          "profileImage_"+index
-        );
-
-      const fallback =
-        document.getElementById(
-          "imageFallback_"+index
-        );
-
-      if(!image || !fallback){
-        return;
-      }
-
-      image.addEventListener(
-        "error",
-        function(){
-
-          image.style.display =
-            "none";
-
-          fallback.style.display =
-            "flex";
-
-        },
-        {once:true}
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================
-   SHOW PHOTOS
-========================= */
-
-function showPhotos(){
-
-  const welcome =
-    document.getElementById(
-      "welcomeScreen"
-    );
-
-  const photos =
-    document.getElementById(
-      "photosPage"
-    );
-
-  if(welcome){
-
-    welcome.style.display =
+    samplePage.style.display =
       "none";
 
   }
 
-  if(photos){
+  if (insufficientPage) {
 
-    photos.style.display =
+    insufficientPage.style.display =
+      "none";
+
+  }
+
+  if (photosPage) {
+
+    photosPage.style.display =
+      "none";
+
+  }
+
+  hideIncomingCall();
+
+}
+
+
+/* ==========================================
+   SHOW SAMPLE
+========================================== */
+
+function showSamplePage() {
+
+  hideAllPages();
+
+  currentFlow =
+    "SAMPLE";
+
+  samplePage.style.display =
+    "flex";
+
+}
+
+
+/* ==========================================
+   SHOW PHOTOS
+========================================== */
+
+function showPhotosPage() {
+
+  if (samplePage) {
+
+    samplePage.style.display =
+      "none";
+
+  }
+
+  if (insufficientPage) {
+
+    insufficientPage.style.display =
+      "none";
+
+  }
+
+  if (incomingCall) {
+
+    incomingCall.style.display =
+      "none";
+
+  }
+
+  if (photosPage) {
+
+    photosPage.style.display =
       "block";
 
   }
 
-  updateOnline();
-
-  updateProfileStatuses();
-
-  startAllChats();
+  currentFlow =
+    "PHOTOS";
 
 }
 
 
-/* =========================
-   ONLINE NUMBER
-========================= */
+/* ==========================================
+   SHOW INSUFFICIENT
+========================================== */
 
-function updateOnline(){
+function showInsufficientPage() {
 
-  const element =
-    document.getElementById(
-      "onlineNumber"
-    );
+  if (samplePage) {
 
-  if(!element) return;
-
-  const number =
-    15 +
-    Math.floor(
-      Math.random()*16
-    );
-
-  element.textContent =
-    number;
-
-}
-
-
-/* =========================
-   OFFLINE PROFILES
-========================= */
-
-let offlineProfiles =
-  new Set();
-
-
-function chooseRandomOfflineProfiles(){
-
-  offlineProfiles =
-    new Set();
-
-  const amount =
-    Math.min(
-      5,
-      PHOTO_NAMES.length
-    );
-
-  while(
-    offlineProfiles.size <
-    amount
-  ){
-
-    offlineProfiles.add(
-      Math.floor(
-        Math.random()*
-        PHOTO_NAMES.length
-      )
-    );
+    samplePage.style.display =
+      "none";
 
   }
 
-  updateProfileStatuses();
+  if (photosPage) {
 
-}
-
-
-function updateProfileStatuses(){
-
-  PHOTO_NAMES.forEach(
-    function(profile,index){
-
-      const dot =
-        document.getElementById(
-          "statusDot_"+index
-        );
-
-      const card =
-        document.getElementById(
-          "photoCard_"+index
-        );
-
-      if(!dot || !card){
-        return;
-      }
-
-      const isOffline =
-        offlineProfiles.has(
-          index
-        );
-
-      dot.classList.toggle(
-        "offline",
-        isOffline
-      );
-
-      card.classList.toggle(
-        "offline",
-        isOffline
-      );
-
-      dot.title =
-        isOffline
-          ? "Offline"
-          : "Online";
-
-    }
-  );
-
-}
-
-
-function startOfflineRotation(){
-
-  chooseRandomOfflineProfiles();
-
-  setInterval(
-    function(){
-
-      chooseRandomOfflineProfiles();
-
-    },
-    300000
-  );
-
-}
-  <script>
-/* =========================
-   PAYMENT
-========================= */
-
-function openPayment(index){
-
-  const profile =
-    PHOTO_NAMES[index];
-
-  const currentUrl =
-    new URL(
-      window.location.href
-    );
-
-  const referral =
-    currentUrl.searchParams.get(
-      "ref"
-    ) ||
-    currentUrl.searchParams.get(
-      "employee"
-    ) ||
-    "";
-
-  const paymentUrl =
-    new URL(
-      PAYMENT_PAGE_URL,
-      window.location.href
-    );
-
-  paymentUrl.searchParams.set(
-    "profile",
-    profile.name
-  );
-
-  paymentUrl.searchParams.set(
-    "age",
-    String(profile.age)
-  );
-
-  paymentUrl.searchParams.set(
-    "country",
-    profile.country
-  );
-
-  paymentUrl.searchParams.set(
-    "image",
-    profile.image
-  );
-
-  if(referral){
-
-    paymentUrl.searchParams.set(
-      "employee",
-      referral
-    );
-
-    paymentUrl.searchParams.set(
-      "ref",
-      referral
-    );
+    photosPage.style.display =
+      "none";
 
   }
 
-  window.location.href =
-    paymentUrl.toString();
+  if (incomingCall) {
 
-}
+    incomingCall.style.display =
+      "none";
 
-
-/* =========================
-   INCOMING CALL
-========================= */
-
-let currentCallIndex = 0;
-
-function showIncomingCall(){
-
-  currentCallIndex =
-    Math.floor(
-      Math.random()*
-      PHOTO_NAMES.length
-    );
-
-  const profile =
-    PHOTO_NAMES[
-      currentCallIndex
-    ];
-
-  const overlay =
-    document.getElementById(
-      "incomingCall"
-    );
-
-  const image =
-    document.getElementById(
-      "callAvatarImage"
-    );
-
-  const name =
-    document.getElementById(
-      "callName"
-    );
-
-  if(!overlay || !image || !name){
-    return;
   }
 
-  image.src =
-    IMAGE_BASE +
-    profile.image;
+  if (insufficientPage) {
 
-  image.onerror =
-    function(){
+    insufficientPage.style.display =
+      "flex";
 
-      image.style.background =
-        "#222";
+  }
 
-    };
-
-  name.textContent =
-    profile.flag +
-    " " +
-    profile.name;
-
-  overlay.style.display =
-    "flex";
+  currentFlow =
+    "INSUFFICIENT";
 
 }
 
 
-function hideIncomingCall(){
+/* ==========================================
+   HIDE INCOMING CALL
+========================================== */
 
-  const overlay =
-    document.getElementById(
-      "incomingCall"
-    );
+function hideIncomingCall() {
 
-  if(overlay){
+  if (incomingCall) {
 
-    overlay.style.display =
+    incomingCall.style.display =
       "none";
 
   }
@@ -2798,95 +1494,193 @@ function hideIncomingCall(){
 }
 
 
-/* =========================
-   VIDEO
-========================= */
+/* ==========================================
+   STOP VIDEO
+========================================== */
 
-function playFirstVisitorVideo(){
+function stopSampleVideo() {
 
-  const screen =
-    document.getElementById(
-      "videoScreen"
-    );
-
-  const video =
-    document.getElementById(
-      "sampleVideo"
-    );
-
-  const timer =
-    document.getElementById(
-      "videoTimer"
-    );
-
-  if(!screen || !video){
+  if (!sampleVideo) {
     return;
   }
 
-  screen.style.display =
-    "flex";
+  try {
 
-  video.src =
-    VIDEO_URL;
+    sampleVideo.pause();
 
-  video.currentTime = 0;
+    sampleVideo.currentTime = 0;
+
+    sampleVideo.muted = true;
+
+  } catch (error) {
+
+    console.warn(
+      "Could not reset video:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   RESET VIDEO
+========================================== */
+
+function resetSampleVideo() {
+
+  if (!sampleVideo) {
+    return;
+  }
+
+  try {
+
+    sampleVideo.pause();
+
+    sampleVideo.currentTime = 0;
+
+    sampleVideo.src =
+      SAMPLE_VIDEO_URL;
+
+    sampleVideo.load();
+
+    /*
+      Do not use the invalid HTML
+      "sound" attribute.
+    */
+
+    sampleVideo.muted = false;
+
+    sampleVideo.volume = 1;
+
+  } catch (error) {
+
+    console.warn(
+      "Video reset error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   UPDATE SAMPLE TIMER
+========================================== */
+
+function updateSampleTimer() {
+
+  if (!sampleTimer) {
+    return;
+  }
 
   /*
-    Answering the incoming call is
-    already a user interaction, so
-    we can try to start the video
-    with sound.
+    Timer remains hidden visually.
+    We still update it internally.
   */
 
-  const playPromise =
-    video.play();
+  sampleTimer.textContent =
+    "Sample: " +
+    secondsLeft +
+    " seconds";
 
-  if(
+}
+
+
+/* ==========================================
+   START SAMPLE
+========================================== */
+
+function startSample() {
+
+  if (sampleRunning) {
+    return;
+  }
+
+  clearAllTimers();
+
+  sampleRunning = true;
+
+  secondsLeft =
+    SAMPLE_DURATION;
+
+  updateSampleTimer();
+
+  showSamplePage();
+
+  resetSampleVideo();
+
+  /*
+    The video starts after the user has
+    pressed Answer, so sound is allowed
+    by most mobile browsers.
+  */
+
+  sampleVideo.muted = false;
+
+  sampleVideo.volume = 1;
+
+  const playPromise =
+    sampleVideo.play();
+
+  if (
     playPromise &&
     typeof playPromise.catch ===
-    "function"
-  ){
+      "function"
+  ) {
 
     playPromise.catch(
-      function(){
+      function(error) {
+
+        console.warn(
+          "Video autoplay/play error:",
+          error
+        );
 
         /*
-          Browser may block autoplay.
-          The video controls remain
-          available so the visitor can
-          press play.
+          If playback is blocked or the
+          video file cannot be played,
+          don't leave the visitor stuck.
         */
+
+        setTimeout(
+          function() {
+
+            if (sampleRunning) {
+
+              finishSample();
+
+            }
+
+          },
+          1000
+        );
 
       }
     );
 
   }
 
-  let remaining =
-    Math.ceil(
-      SAMPLE_DURATION/1000
-    );
 
-  if(timer){
-
-    timer.textContent =
-      remaining + "s";
-
-  }
-
-  const countdown =
+  sampleTimerInterval =
     setInterval(
-      function(){
+      function() {
 
-        remaining--;
+        if (!sampleRunning) {
+          return;
+        }
 
-        if(timer){
+        secondsLeft--;
 
-          timer.textContent =
-            Math.max(
-              0,
-              remaining
-            ) + "s";
+        updateSampleTimer();
+
+        if (
+          secondsLeft <= 0
+        ) {
+
+          finishSample();
 
         }
 
@@ -2894,245 +1688,3274 @@ function playFirstVisitorVideo(){
       1000
     );
 
-  setTimeout(
-    function(){
-
-      clearInterval(
-        countdown
-      );
-
-      finishVideo();
-
-    },
-    SAMPLE_DURATION
-  );
-
 }
 
 
-function finishVideo(){
+/* ==========================================
+   FINISH SAMPLE
+========================================== */
 
-  const video =
-    document.getElementById(
-      "sampleVideo"
+function finishSample() {
+
+  if (!sampleRunning) {
+    return;
+  }
+
+  sampleRunning = false;
+
+  if (sampleTimerInterval) {
+
+    clearInterval(
+      sampleTimerInterval
     );
 
-  if(video){
-
-    try{
-
-      video.pause();
-
-      video.currentTime = 0;
-
-    }catch(error){}
+    sampleTimerInterval = null;
 
   }
 
-  const screen =
-    document.getElementById(
-      "videoScreen"
-    );
+  stopSampleVideo();
 
-  if(screen){
+  /*
+    Remember that the visitor has
+    completed the sample.
+  */
 
-    screen.style.display =
-      "none";
-
-  }
-
-  try{
+  try {
 
     localStorage.setItem(
-      SAMPLE_STORAGE_KEY,
-      "1"
+      FLOW_STORAGE_KEY,
+      "sample-completed"
     );
 
-  }catch(error){}
+  } catch (error) {
 
-  showInsufficient();
-
-}
-
-
-/* =========================
-   INSUFFICIENT
-========================= */
-
-function showInsufficient(){
-
-  const page =
-    document.getElementById(
-      "insufficientPage"
+    console.warn(
+      "Could not save sample state:",
+      error
     );
 
-  if(!page) return;
+  }
 
-  page.style.display =
-    "flex";
+  /*
+    Insufficient page first.
+  */
 
-  setTimeout(
-    function(){
+  insufficientThen(
+    function() {
 
-      page.style.display =
-        "none";
+      /*
+        Then show the next call.
+      */
 
-      showPhotos();
+      showSecondIncomingCall();
 
-    },
-    INSUFFICIENT_DURATION
+    }
   );
 
 }
 
 
-/* =========================
-   ANSWER
-========================= */
+/* ==========================================
+   INSUFFICIENT THEN CALLBACK
+========================================== */
 
-function answerCall(){
+function insufficientThen(callback) {
+
+  clearTimeout(
+    insufficientTimer
+  );
+
+  showInsufficientPage();
+
+  insufficientTimer =
+    setTimeout(
+      function() {
+
+        insufficientTimer =
+          null;
+
+        if (
+          typeof callback ===
+          "function"
+        ) {
+
+          callback();
+
+        }
+
+      },
+      INSUFFICIENT_DURATION
+    );
+
+}
+
+
+/* ==========================================
+   PHOTO WAIT TIMER
+========================================== */
+
+function restartPhotoWaiting() {
+
+  clearTimeout(
+    photoWaitTimer
+  );
+
+  photoWaitTimer =
+    setTimeout(
+      function() {
+
+        showLaterIncomingCall();
+
+      },
+      PHOTO_WAIT_DURATION
+    );
+
+}
+
+
+/* ==========================================
+   ENTER PHOTOS PAGE
+========================================== */
+
+function enterPhotosPage() {
+
+  clearTimeout(
+    photoWaitTimer
+  );
 
   hideIncomingCall();
 
-  let watched = false;
+  showPhotosPage();
 
-  try{
+  if (!photosLoaded) {
 
-    watched =
-      localStorage.getItem(
-        SAMPLE_STORAGE_KEY
-      ) === "1";
+    loadPhotos();
 
-  }catch(error){}
+  } else {
 
-  if(watched){
+    refreshPhotoClicks();
 
-    showInsufficient();
+  }
 
-  }else{
+  restartPhotoWaiting();
 
-    playFirstVisitorVideo();
+      }
+      <!-- 4/10 -->
+
+/* ==========================================
+   LOAD PHOTOS FROM GITHUB
+========================================== */
+
+async function loadPhotos() {
+
+  if (photosLoaded) {
+
+    refreshPhotoClicks();
+
+    return availablePhotos;
+
+  }
+
+  /*
+    Show loading state without blocking
+    the rest of the website flow.
+  */
+
+  livePhotos.innerHTML =
+    '<div class="loading">Loading live profiles...</div>';
+
+  let githubFiles = [];
+
+  try {
+
+    const controller =
+      new AbortController();
+
+    const timeout =
+      setTimeout(
+        function() {
+
+          controller.abort();
+
+        },
+        7000
+      );
+
+    const response =
+      await fetch(
+        GITHUB_API_URL,
+        {
+          method: "GET",
+          cache: "no-store",
+          signal: controller.signal,
+          headers: {
+            "Accept":
+              "application/vnd.github+json"
+          }
+        }
+      );
+
+    clearTimeout(timeout);
+
+    if (!response.ok) {
+
+      throw new Error(
+        "GitHub returned HTTP " +
+        response.status
+      );
+
+    }
+
+    const data =
+      await response.json();
+
+    if (!Array.isArray(data)) {
+
+      throw new Error(
+        "Invalid GitHub response"
+      );
+
+    }
+
+    githubFiles =
+      data.filter(
+        function(file) {
+
+          if (
+            !file ||
+            file.type !== "file"
+          ) {
+
+            return false;
+
+          }
+
+          const lower =
+            String(
+              file.name || ""
+            ).toLowerCase();
+
+          return (
+            lower.endsWith(".jpg") ||
+            lower.endsWith(".jpeg") ||
+            lower.endsWith(".png") ||
+            lower.endsWith(".webp")
+          );
+
+        }
+      );
+
+  } catch (error) {
+
+    console.warn(
+      "GitHub image loading failed:",
+      error
+    );
+
+  }
+
+
+  /*
+    If GitHub API is unavailable,
+    use known local/raw image names.
+    This prevents the page from getting
+    stuck on the first screen.
+  */
+
+  if (
+    githubFiles.length === 0
+  ) {
+
+    githubFiles =
+      LOCAL_IMAGE_NAMES.map(
+        function(name) {
+
+          return {
+            name: name,
+            download_url:
+              getImageUrl(name)
+          };
+
+        }
+      );
+
+  }
+
+
+  availablePhotos =
+    githubFiles.slice(
+      0,
+      Math.max(
+        PROFILE_DATA.length,
+        1
+      )
+    );
+
+
+  photosLoaded =
+    true;
+
+
+  renderPhotos();
+
+  photosReady =
+    true;
+
+  preloadPhotos();
+
+  refreshPhotoClicks();
+
+  return availablePhotos;
+
+}
+
+
+/* ==========================================
+   RENDER PHOTOS
+========================================== */
+
+function renderPhotos() {
+
+  if (!livePhotos) {
+    return;
+  }
+
+  livePhotos.innerHTML = "";
+
+  if (
+    availablePhotos.length === 0
+  ) {
+
+    livePhotos.innerHTML =
+      '<div class="error">' +
+      'No photos available right now.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  /*
+    Use all profile names.
+    If there are fewer image files,
+    images are safely reused.
+  */
+
+  PROFILE_DATA.forEach(
+    function(profile, index) {
+
+      const photo =
+        availablePhotos[
+          index %
+          availablePhotos.length
+        ];
+
+      createPhotoCard(
+        profile,
+        photo,
+        index
+      );
+
+    }
+  );
+
+
+  /*
+    Select exactly five random
+    offline profiles.
+  */
+
+  updateOfflineProfiles();
+
+  startProfileChatRotation();
+
+}
+
+
+/* ==========================================
+   CREATE PHOTO CARD
+========================================== */
+
+function createPhotoCard(
+  profile,
+  photo,
+  index
+) {
+
+  const card =
+    document.createElement(
+      "article"
+    );
+
+  card.className =
+    "live-photo";
+
+  card.dataset.index =
+    String(index);
+
+
+  const imageUrl =
+    photo.download_url ||
+    getImageUrl(photo.name);
+
+
+  const likes =
+    getLikeCount(index);
+
+  const loves =
+    getLoveCount(index);
+
+  const following =
+    getFollowState(index);
+
+  const offline =
+    offlineIndexes.includes(index);
+
+
+  card.innerHTML = `
+
+    <div style="position:relative;">
+
+      <img
+        src="${escapeHtml(imageUrl)}"
+        alt="${escapeHtml(profile.name)}"
+        loading="lazy"
+        onerror="this.style.opacity='0.25';"
+      >
+
+      <div class="live-badge">
+        LIVE
+      </div>
+
+      <div class="live-status">
+
+        <span
+          class="live-dot ${
+            offline ? "offline" : ""
+          }"
+        ></span>
+
+        <span>
+          ${
+            offline
+              ? "Offline"
+              : "Live now"
+          }
+        </span>
+
+      </div>
+
+      <div class="play-icon">
+        ▶
+      </div>
+
+    </div>
+
+    <div class="photo-info">
+
+      <div class="photo-name-row">
+
+        <div class="photo-name">
+
+          ${
+            profile.flag
+          }
+          ${
+            escapeHtml(
+              profile.name
+            )
+          }
+
+        </div>
+
+        <div class="country-age">
+
+          ${
+            profile.age
+          } · ${
+            escapeHtml(
+              profile.country
+            )
+          }
+
+        </div>
+
+      </div>
+
+      <div
+        class="chat-preview"
+        data-preview-index="${index}"
+      >
+        <span class="chat-label">
+          Chat:
+        </span>
+        <span class="preview-text">
+          ${escapeHtml(
+            getInitialComment(index)
+          )}
+        </span>
+      </div>
+
+      <div class="photo-actions">
+
+        <button
+          type="button"
+          class="photo-action like-btn ${
+            getLikedState(index)
+              ? "liked"
+              : ""
+          }"
+          data-action="like"
+          data-index="${index}"
+        >
+          ❤️
+          <span class="action-count">
+            ${formatCount(likes)}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="photo-action love-btn"
+          data-action="love"
+          data-index="${index}"
+        >
+          💗
+          <span class="action-count">
+            ${formatCount(loves)}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="photo-action follow-btn ${
+            following
+              ? "following"
+              : ""
+          }"
+          data-action="follow"
+          data-index="${index}"
+        >
+          ${
+            following
+              ? "✓"
+              : "+"
+          }
+          Follow
+        </button>
+
+        <button
+          type="button"
+          class="photo-action chat-btn"
+          data-action="chat"
+          data-index="${index}"
+        >
+          💬
+          Chat
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  livePhotos.appendChild(
+    card
+  );
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+          }
+      <!-- 5/10 -->
+
+/* ==========================================
+   LIKE DATA
+========================================== */
+
+function getLikeData() {
+
+  return readStorage(
+    LIKE_STORAGE_KEY,
+    {}
+  );
+
+}
+
+
+function getLikeCount(index) {
+
+  const data =
+    getLikeData();
+
+  if (
+    typeof data[index] !==
+    "number"
+  ) {
+
+    data[index] =
+      randomNumber(
+        5000,
+        9000
+      );
+
+    writeStorage(
+      LIKE_STORAGE_KEY,
+      data
+    );
+
+  }
+
+  return data[index];
+
+}
+
+
+function getLikedState(index) {
+
+  const data =
+    readStorage(
+      LIKE_STORAGE_KEY + "_state",
+      {}
+    );
+
+  return data[index] === true;
+
+}
+
+
+function toggleLike(index) {
+
+  const counts =
+    getLikeData();
+
+  const states =
+    readStorage(
+      LIKE_STORAGE_KEY + "_state",
+      {}
+    );
+
+  if (
+    states[index]
+  ) {
+
+    states[index] =
+      false;
+
+    counts[index] =
+      Math.max(
+        0,
+        getLikeCount(index) - 1
+      );
+
+  } else {
+
+    states[index] =
+      true;
+
+    counts[index] =
+      getLikeCount(index) + 1;
+
+  }
+
+  writeStorage(
+    LIKE_STORAGE_KEY,
+    counts
+  );
+
+  writeStorage(
+    LIKE_STORAGE_KEY + "_state",
+    states
+  );
+
+}
+
+
+/* ==========================================
+   LOVE DATA
+========================================== */
+
+function getLoveData() {
+
+  return readStorage(
+    LOVE_STORAGE_KEY,
+    {}
+  );
+
+}
+
+
+function getLoveCount(index) {
+
+  const data =
+    getLoveData();
+
+  if (
+    typeof data[index] !==
+    "number"
+  ) {
+
+    data[index] =
+      randomNumber(
+        1200,
+        6000
+      );
+
+    writeStorage(
+      LOVE_STORAGE_KEY,
+      data
+    );
+
+  }
+
+  return data[index];
+
+}
+
+
+function toggleLove(index) {
+
+  const data =
+    getLoveData();
+
+  data[index] =
+    getLoveCount(index) + 1;
+
+  writeStorage(
+    LOVE_STORAGE_KEY,
+    data
+  );
+
+}
+
+
+/* ==========================================
+   FOLLOW
+========================================== */
+
+function getFollowData() {
+
+  return readStorage(
+    FOLLOW_STORAGE_KEY,
+    {}
+  );
+
+}
+
+
+function getFollowState(index) {
+
+  const data =
+    getFollowData();
+
+  return data[index] === true;
+
+}
+
+
+function toggleFollow(index) {
+
+  const data =
+    getFollowData();
+
+  data[index] =
+    !getFollowState(index);
+
+  writeStorage(
+    FOLLOW_STORAGE_KEY,
+    data
+  );
+
+}
+
+
+/* ==========================================
+   FORMAT COUNTS
+========================================== */
+
+function formatCount(number) {
+
+  const value =
+    Number(number) || 0;
+
+  if (
+    value >= 1000000
+  ) {
+
+    return (
+      (value / 1000000)
+        .toFixed(1)
+        .replace(
+          ".0",
+          ""
+        ) +
+      "M"
+    );
+
+  }
+
+  if (
+    value >= 1000
+  ) {
+
+    return (
+      (value / 1000)
+        .toFixed(1)
+        .replace(
+          ".0",
+          ""
+        ) +
+      "K"
+    );
+
+  }
+
+  return String(value);
+
+}
+
+
+/* ==========================================
+   INITIAL COMMENT
+========================================== */
+
+function getInitialComment(index) {
+
+  const profile =
+    PROFILE_DATA[index];
+
+  const message =
+    COMMENT_MESSAGES[
+      index %
+      COMMENT_MESSAGES.length
+    ];
+
+  return (
+    message +
+    " — " +
+    profile.name
+  );
+
+}
+
+
+/* ==========================================
+   REFRESH CARD ACTIONS
+========================================== */
+
+function refreshPhotoClicks() {
+
+  const cards =
+    document.querySelectorAll(
+      ".live-photo"
+    );
+
+  cards.forEach(
+    function(card) {
+
+      const index =
+        Number(
+          card.dataset.index
+        );
+
+      const likeButton =
+        card.querySelector(
+          '[data-action="like"]'
+        );
+
+      const loveButton =
+        card.querySelector(
+          '[data-action="love"]'
+        );
+
+      const followButton =
+        card.querySelector(
+          '[data-action="follow"]'
+        );
+
+
+      if (likeButton) {
+
+        likeButton.classList.toggle(
+          "liked",
+          getLikedState(index)
+        );
+
+        const count =
+          likeButton.querySelector(
+            ".action-count"
+          );
+
+        if (count) {
+
+          count.textContent =
+            formatCount(
+              getLikeCount(index)
+            );
+
+        }
+
+      }
+
+
+      if (loveButton) {
+
+        const count =
+          loveButton.querySelector(
+            ".action-count"
+          );
+
+        if (count) {
+
+          count.textContent =
+            formatCount(
+              getLoveCount(index)
+            );
+
+        }
+
+      }
+
+
+      if (followButton) {
+
+        const following =
+          getFollowState(index);
+
+        followButton.classList.toggle(
+          "following",
+          following
+        );
+
+        followButton.innerHTML =
+          following
+            ? "✓ Follow"
+            : "+ Follow";
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   PHOTO CLICK EVENTS
+========================================== */
+
+function attachPhotoClickEvents() {
+
+  const cards =
+    document.querySelectorAll(
+      ".live-photo"
+    );
+
+  cards.forEach(
+    function(card) {
+
+      if (
+        card.dataset.eventsAttached ===
+        "true"
+      ) {
+
+        return;
+
+      }
+
+      card.dataset.eventsAttached =
+        "true";
+
+
+      card.addEventListener(
+        "click",
+        function(event) {
+
+          const action =
+            event.target.closest(
+              "[data-action]"
+            );
+
+          /*
+            Social buttons NEVER open payment.
+          */
+
+          if (action) {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            handleSocialAction(
+              action
+            );
+
+            return;
+
+          }
+
+
+          /*
+            Only the profile itself
+            opens payment.
+          */
+
+          const index =
+            Number(
+              card.dataset.index
+            );
+
+          handlePhotoClick(
+            index
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   SOCIAL ACTION HANDLER
+========================================== */
+
+function handleSocialAction(
+  button
+) {
+
+  const action =
+    button.dataset.action;
+
+  const index =
+    Number(
+      button.dataset.index
+    );
+
+
+  if (
+    !Number.isInteger(index)
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    action === "like"
+  ) {
+
+    toggleLike(index);
+
+  }
+
+
+  if (
+    action === "love"
+  ) {
+
+    toggleLove(index);
+
+  }
+
+
+  if (
+    action === "follow"
+  ) {
+
+    toggleFollow(index);
+
+  }
+
+
+  if (
+    action === "chat"
+  ) {
+
+    openChat(index);
+
+    return;
+
+  }
+
+
+  refreshPhotoClicks();
+
+}
+
+
+/* ==========================================
+   PHOTO CLICK
+========================================== */
+
+function handlePhotoClick(index) {
+
+  openPaymentPageSafely(
+    index
+  );
+
+}
+      <!-- 6/10 -->
+
+/* ==========================================
+   PAYMENT LINK
+========================================== */
+
+function openPaymentPageSafely(
+  profileIndex
+) {
+
+  try {
+
+    const url =
+      new URL(
+        PAYMENT_PAGE_URL,
+        window.location.href
+      );
+
+
+    const currentParams =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const referral =
+      currentParams.get("employee") ||
+      currentParams.get("ref") ||
+      "";
+
+
+    if (referral) {
+
+      url.searchParams.set(
+        "ref",
+        referral
+      );
+
+      url.searchParams.set(
+        "employee",
+        referral
+      );
+
+    }
+
+
+    if (
+      Number.isInteger(
+        profileIndex
+      ) &&
+      PROFILE_DATA[profileIndex]
+    ) {
+
+      const profile =
+        PROFILE_DATA[
+          profileIndex
+        ];
+
+      const photo =
+        availablePhotos[
+          profileIndex %
+          Math.max(
+            availablePhotos.length,
+            1
+          )
+        ];
+
+
+      url.searchParams.set(
+        "profile",
+        profile.name
+      );
+
+      url.searchParams.set(
+        "age",
+        String(profile.age)
+      );
+
+      url.searchParams.set(
+        "country",
+        profile.country
+      );
+
+
+      if (photo) {
+
+        url.searchParams.set(
+          "image",
+          photo.name || ""
+        );
+
+      }
+
+    }
+
+
+    window.location.href =
+      url.toString();
+
+  } catch (error) {
+
+    console.error(
+      "Payment navigation error:",
+      error
+    );
+
+    /*
+      Absolute fallback.
+      Payment remains a separate page.
+    */
+
+    window.location.href =
+      PAYMENT_PAGE_URL;
 
   }
 
 }
 
 
-/* =========================
-   REJECT
-========================= */
+/* ==========================================
+   CHAT DATA
+========================================== */
 
-function rejectCall(){
+function getCommentsData() {
 
-  hideIncomingCall();
-
-  showPhotos();
+  return readStorage(
+    COMMENT_STORAGE_KEY,
+    {}
+  );
 
 }
 
 
-/* =========================
-   WELCOME FLOW
-========================= */
+function saveCommentsData(
+  data
+) {
 
-function startWelcomeFlow(){
+  writeStorage(
+    COMMENT_STORAGE_KEY,
+    data
+  );
 
-  setTimeout(
-    function(){
+}
 
-      showPhotos();
+
+function getProfileComments(
+  index
+) {
+
+  const data =
+    getCommentsData();
+
+  if (
+    !Array.isArray(
+      data[index]
+    )
+  ) {
+
+    data[index] = [];
+
+    for (
+      let i = 0;
+      i < 3;
+      i++
+    ) {
+
+      data[index].push({
+        user:
+          COMMENT_USERS[
+            (
+              index + i
+            ) %
+            COMMENT_USERS.length
+          ],
+        text:
+          COMMENT_MESSAGES[
+            (
+              index + i
+            ) %
+            COMMENT_MESSAGES.length
+          ],
+        time:
+          Date.now()
+      });
+
+    }
+
+    saveCommentsData(
+      data
+    );
+
+  }
+
+  return data[index];
+
+}
+
+
+/* ==========================================
+   ADD COMMENT
+========================================== */
+
+function addComment(
+  index,
+  text
+) {
+
+  const clean =
+    String(
+      text || ""
+    ).trim();
+
+  if (!clean) {
+    return;
+  }
+
+  const data =
+    getCommentsData();
+
+  if (
+    !Array.isArray(
+      data[index]
+    )
+  ) {
+
+    data[index] = [];
+
+  }
+
+  data[index].push({
+
+    user: "You",
+
+    text: clean,
+
+    time: Date.now()
+
+  });
+
+
+  /*
+    Keep local storage small.
+  */
+
+  if (
+    data[index].length > 30
+  ) {
+
+    data[index] =
+      data[index].slice(-30);
+
+  }
+
+
+  saveCommentsData(
+    data
+  );
+
+}
+
+
+/* ==========================================
+   OPEN CHAT
+========================================== */
+
+function openChat(index) {
+
+  if (
+    !PROFILE_DATA[index]
+  ) {
+
+    return;
+
+  }
+
+  currentChatProfileIndex =
+    index;
+
+
+  const profile =
+    PROFILE_DATA[index];
+
+
+  chatModalTitle.textContent =
+    profile.flag +
+    " " +
+    profile.name +
+    " · " +
+    profile.age;
+
+
+  chatModalSub.textContent =
+    "Live chat · " +
+    profile.country;
+
+
+  renderChatMessages(
+    index
+  );
+
+
+  chatModal.style.display =
+    "flex";
+
+}
+
+
+/* ==========================================
+   CLOSE CHAT
+========================================== */
+
+function closeChat() {
+
+  currentChatProfileIndex =
+    null;
+
+  chatModal.style.display =
+    "none";
+
+}
+
+
+if (chatClose) {
+
+  chatClose.addEventListener(
+    "click",
+    function(event) {
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+      closeChat();
+
+    }
+  );
+
+}
+
+
+if (chatModal) {
+
+  chatModal.addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target ===
+        chatModal
+      ) {
+
+        closeChat();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   RENDER CHAT
+========================================== */
+
+function renderChatMessages(
+  index
+) {
+
+  if (!chatList) {
+    return;
+  }
+
+  const comments =
+    getProfileComments(
+      index
+    );
+
+
+  chatList.innerHTML =
+    "";
+
+
+  comments
+    .slice(-15)
+    .forEach(
+      function(comment) {
+
+        const bubble =
+          document.createElement(
+            "div"
+          );
+
+        bubble.className =
+          "chat-bubble";
+
+        bubble.innerHTML =
+          "<strong>" +
+          escapeHtml(
+            comment.user
+          ) +
+          "</strong><br>" +
+          escapeHtml(
+            comment.text
+          );
+
+        chatList.appendChild(
+          bubble
+        );
+
+      }
+    );
+
+
+  chatList.scrollTop =
+    chatList.scrollHeight;
+
+}
+
+
+/* ==========================================
+   INDIVIDUAL COMMENT ROTATION
+========================================== */
+
+function stopProfileChatRotation() {
+
+  commentTimers.forEach(
+    function(timer) {
+
+      clearTimeout(
+        timer
+      );
+
+    }
+  );
+
+  commentTimers = [];
+
+}
+
+
+function startProfileChatRotation() {
+
+  stopProfileChatRotation();
+
+
+  PROFILE_DATA.forEach(
+    function(profile, index) {
+
+      scheduleNextComment(
+        index
+      );
+
+    }
+  );
+
+}
+
+
+function scheduleNextComment(
+  index
+) {
+
+  const delay =
+    randomNumber(
+      2500,
+      8500
+    );
+
+
+  const timer =
+    setTimeout(
+      function() {
+
+        addGeneratedComment(
+          index
+        );
+
+        scheduleNextComment(
+          index
+        );
+
+      },
+      delay
+    );
+
+
+  commentTimers.push(
+    timer
+  );
+
+}
+
+
+/* ==========================================
+   GENERATED COMMENT
+========================================== */
+
+function addGeneratedComment(
+  index
+) {
+
+  const user =
+    COMMENT_USERS[
+      randomNumber(
+        0,
+        COMMENT_USERS.length - 1
+      )
+    ];
+
+
+  const text =
+    COMMENT_MESSAGES[
+      randomNumber(
+        0,
+        COMMENT_MESSAGES.length - 1
+      )
+    ];
+
+
+  const data =
+    getCommentsData();
+
+
+  if (
+    !Array.isArray(
+      data[index]
+    )
+  ) {
+
+    data[index] = [];
+
+  }
+
+
+  data[index].push({
+
+    user: user,
+
+    text: text,
+
+    time: Date.now()
+
+  });
+
+
+  if (
+    data[index].length > 30
+  ) {
+
+    data[index] =
+      data[index].slice(-30);
+
+  }
+
+
+  saveCommentsData(
+    data
+  );
+
+
+  /*
+    Update only this profile's
+    preview. Other profiles do
+    not move together.
+  */
+
+  updateCommentPreview(
+    index
+  );
+
+
+  /*
+    If this profile's chat is
+    currently open, update it too.
+  */
+
+  if (
+    currentChatProfileIndex ===
+    index
+  ) {
+
+    renderChatMessages(
+      index
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   COMMENT PREVIEW
+========================================== */
+
+function updateCommentPreview(
+  index
+) {
+
+  const preview =
+    document.querySelector(
+      '[data-preview-index="' +
+      index +
+      '"]'
+    );
+
+
+  if (!preview) {
+    return;
+  }
+
+
+  const comments =
+    getProfileComments(
+      index
+    );
+
+
+  const last =
+    comments[
+      comments.length - 1
+    ];
+
+
+  if (!last) {
+    return;
+  }
+
+
+  const text =
+    preview.querySelector(
+      ".preview-text"
+    );
+
+
+  if (text) {
+
+    text.textContent =
+      last.text;
+
+  }
+
+      }
+      
+      <!-- 7/10 -->
+
+/* ==========================================
+   OFFLINE PROFILES
+========================================== */
+
+function updateOfflineProfiles() {
+
+  const indexes =
+    PROFILE_DATA.map(
+      function(_, index) {
+        return index;
+      }
+    );
+
+
+  offlineIndexes =
+    shuffle(
+      indexes
+    ).slice(
+      0,
+      Math.min(
+        5,
+        PROFILE_DATA.length
+      )
+    );
+
+
+  updateProfileStatuses();
+
+}
+
+
+function updateProfileStatuses() {
+
+  const cards =
+    document.querySelectorAll(
+      ".live-photo"
+    );
+
+
+  cards.forEach(
+    function(card) {
+
+      const index =
+        Number(
+          card.dataset.index
+        );
+
+      const offline =
+        offlineIndexes.includes(
+          index
+        );
+
+
+      const status =
+        card.querySelector(
+          ".live-status"
+        );
+
+      const dot =
+        card.querySelector(
+          ".live-dot"
+        );
+
+
+      if (status) {
+
+        const text =
+          status.querySelector(
+            "span:last-child"
+          );
+
+        if (text) {
+
+          text.textContent =
+            offline
+              ? "Offline"
+              : "Live now";
+
+        }
+
+      }
+
+
+      if (dot) {
+
+        dot.classList.toggle(
+          "offline",
+          offline
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   START OFFLINE ROTATION
+========================================== */
+
+function startOfflineRotation() {
+
+  clearInterval(
+    offlineTimer
+  );
+
+
+  /*
+    Exactly five random profiles
+    are selected initially.
+  */
+
+  updateOfflineProfiles();
+
+
+  /*
+    Change them every five minutes.
+  */
+
+  offlineTimer =
+    setInterval(
+      function() {
+
+        updateOfflineProfiles();
+
+      },
+      300000
+    );
+
+}
+
+
+/* ==========================================
+   NEXT INCOMING PHOTO
+========================================== */
+
+function getNextIncomingPhoto() {
+
+  if (
+    availablePhotos.length === 0
+  ) {
+
+    return null;
+
+  }
+
+
+  const photo =
+    availablePhotos[
+      incomingPhotoIndex %
+      availablePhotos.length
+    ];
+
+
+  incomingPhotoIndex++;
+
+
+  return photo;
+
+}
+
+
+/* ==========================================
+   UPDATE CALL PHOTO
+========================================== */
+
+function updateIncomingCallPhoto() {
+
+  const photo =
+    getNextIncomingPhoto();
+
+
+  if (!photo) {
+
+    callPhoto.removeAttribute(
+      "src"
+    );
+
+    callName.textContent =
+      "Live Video";
+
+    return;
+
+  }
+
+
+  const imageUrl =
+    photo.download_url ||
+    getImageUrl(
+      photo.name
+    );
+
+
+  callPhoto.src =
+    imageUrl;
+
+
+  const photoIndex =
+    (
+      incomingPhotoIndex - 1
+    ) %
+    PROFILE_DATA.length;
+
+
+  const profile =
+    PROFILE_DATA[
+      photoIndex
+    ];
+
+
+  if (profile) {
+
+    callName.textContent =
+      profile.flag +
+      " " +
+      profile.name;
+
+  } else {
+
+    callName.textContent =
+      "Live Video";
+
+  }
+
+}
+
+
+/* ==========================================
+   SHOW INCOMING CALL
+========================================== */
+
+function showNewIncomingCall(
+  flow
+) {
+
+  clearTimeout(
+    photoWaitTimer
+  );
+
+
+  hideAllPages();
+
+
+  updateIncomingCallPhoto();
+
+
+  currentFlow =
+    flow;
+
+
+  incomingCall.style.display =
+    "flex";
+
+}
+
+
+/* ==========================================
+   FIRST CALL
+========================================== */
+
+function showFirstIncomingCall() {
+
+  showNewIncomingCall(
+    "FIRST_CALL"
+  );
+
+}
+
+
+/* ==========================================
+   SECOND CALL
+========================================== */
+
+function showSecondIncomingCall() {
+
+  showNewIncomingCall(
+    "SECOND_CALL"
+  );
+
+}
+
+
+/* ==========================================
+   LATER CALL
+========================================== */
+
+function showLaterIncomingCall() {
+
+  showNewIncomingCall(
+    "LATER_CALL"
+  );
+
+}
+
+
+/* ==========================================
+   ANSWER CALL
+========================================== */
+
+answerCall.onclick =
+  function(event) {
+
+    event.preventDefault();
+
+    event.stopPropagation();
+
+
+    clearTimeout(
+      photoWaitTimer
+    );
+
+
+    hideIncomingCall();
+
+
+    /*
+      FIRST CALL
+    */
+
+    if (
+      currentFlow ===
+      "FIRST_CALL"
+    ) {
 
       /*
-        Give the visitor a moment
-        to see the photo grid.
+        If sample was already completed
+        previously, don't play it again.
+      */
+
+      let sampleCompleted =
+        false;
+
+
+      try {
+
+        sampleCompleted =
+          localStorage.getItem(
+            FLOW_STORAGE_KEY
+          ) ===
+          "sample-completed";
+
+      } catch (error) {
+
+        sampleCompleted =
+          false;
+
+      }
+
+
+      if (sampleCompleted) {
+
+        currentFlow =
+          "FIRST_CALL_ANSWERED";
+
+
+        insufficientThen(
+          function() {
+
+            enterPhotosPage();
+
+          }
+        );
+
+      } else {
+
+        currentFlow =
+          "SAMPLE";
+
+        startSample();
+
+      }
+
+
+      return;
+
+    }
+
+
+    /*
+      SECOND CALL
+    */
+
+    if (
+      currentFlow ===
+      "SECOND_CALL"
+    ) {
+
+      currentFlow =
+        "SECOND_CALL_ANSWERED";
+
+
+      insufficientThen(
+        function() {
+
+          enterPhotosPage();
+
+        }
+      );
+
+
+      return;
+
+    }
+
+
+    /*
+      LATER CALL
+    */
+
+    if (
+      currentFlow ===
+      "LATER_CALL"
+    ) {
+
+      currentFlow =
+        "LATER_CALL_ANSWERED";
+
+
+      insufficientThen(
+        function() {
+
+          enterPhotosPage();
+
+        }
+      );
+
+
+      return;
+
+    }
+
+  };
+
+
+/* ==========================================
+   REJECT CALL
+========================================== */
+
+rejectCall.onclick =
+  function(event) {
+
+    event.preventDefault();
+
+    event.stopPropagation();
+
+
+    clearTimeout(
+      photoWaitTimer
+    );
+
+
+    hideIncomingCall();
+
+
+    /*
+      If rejected from photos,
+      return to photos.
+    */
+
+    if (
+      currentFlow ===
+      "LATER_CALL"
+    ) {
+
+      enterPhotosPage();
+
+      return;
+
+    }
+
+
+    /*
+      For the first or second call,
+      show the same call again after
+      a short pause.
+    */
+
+    if (
+      currentFlow ===
+      "FIRST_CALL"
+    ) {
+
+      setTimeout(
+        function() {
+
+          showFirstIncomingCall();
+
+        },
+        500
+      );
+
+      return;
+
+    }
+
+
+    if (
+      currentFlow ===
+      "SECOND_CALL"
+    ) {
+
+      setTimeout(
+        function() {
+
+          showSecondIncomingCall();
+
+        },
+        500
+      );
+
+      return;
+
+    }
+
+  };
+
+
+/* ==========================================
+   SAMPLE VIDEO EVENTS
+========================================== */
+
+sampleVideo.addEventListener(
+  "ended",
+  function() {
+
+    if (
+      sampleRunning
+    ) {
+
+      finishSample();
+
+    }
+
+  }
+);
+
+
+sampleVideo.addEventListener(
+  "error",
+  function() {
+
+    console.warn(
+      "Sample video could not be loaded."
+    );
+
+
+    if (
+      sampleRunning
+    ) {
+
+      /*
+        Never leave the visitor
+        stuck on the sample page.
       */
 
       setTimeout(
-        function(){
+        function() {
 
-          showIncomingCall();
+          if (
+            sampleRunning
+          ) {
+
+            finishSample();
+
+          }
 
         },
-        1500
+        700
       );
 
-    },
-    3000
+    }
+
+  }
+);
+
+
+sampleVideo.addEventListener(
+  "timeupdate",
+  function() {
+
+    if (
+      sampleRunning &&
+      sampleVideo.currentTime >=
+      SAMPLE_DURATION
+    ) {
+
+      finishSample();
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   VISIBILITY SAFETY
+========================================== */
+
+document.addEventListener(
+  "visibilitychange",
+  function() {
+
+    if (
+      document.hidden &&
+      sampleRunning
+    ) {
+
+      /*
+        Pause while the browser tab
+        is hidden instead of losing
+        the flow.
+      */
+
+      try {
+
+        sampleVideo.pause();
+
+      } catch (error) {
+
+        console.warn(
+          "Could not pause sample:",
+          error
+        );
+
+      }
+
+    }
+
+  }
+);
+    <!-- 8/10 -->
+
+/* ==========================================
+   PHOTO PAGE TIMER
+========================================== */
+
+function startPhotoPageTimer() {
+
+  clearTimeout(
+    photoWaitTimer
+  );
+
+
+  photoWaitTimer =
+    setTimeout(
+      function() {
+
+        if (
+          currentFlow ===
+          "PHOTOS"
+        ) {
+
+          showLaterIncomingCall();
+
+        }
+
+      },
+      PHOTO_WAIT_DURATION
+    );
+
+}
+
+
+/* ==========================================
+   OPEN PHOTOS PAGE
+========================================== */
+
+function openPhotosPage() {
+
+  hideIncomingCall();
+
+  showPhotosPage();
+
+
+  if (
+    !photosLoaded
+  ) {
+
+    loadPhotos();
+
+  } else {
+
+    refreshPhotoClicks();
+
+  }
+
+
+  startPhotoPageTimer();
+
+}
+
+
+/* ==========================================
+   RETURN TO PHOTOS
+========================================== */
+
+function returnToPhotosAfterCall() {
+
+  clearTimeout(
+    photoWaitTimer
+  );
+
+  enterPhotosPage();
+
+}
+
+
+/* ==========================================
+   PRELOAD PHOTOS
+========================================== */
+
+function preloadPhotos() {
+
+  if (
+    !availablePhotos ||
+    availablePhotos.length === 0
+  ) {
+
+    return;
+
+  }
+
+
+  availablePhotos.forEach(
+    function(photo) {
+
+      const url =
+        photo.download_url ||
+        getImageUrl(
+          photo.name
+        );
+
+
+      if (!url) {
+        return;
+      }
+
+
+      const image =
+        new Image();
+
+      image.src =
+        url;
+
+    }
   );
 
 }
 
 
-/* =========================
-   INITIALISE
-========================= */
+/* ==========================================
+   REFRESH ONLINE COUNT
+========================================== */
 
-function initialise(){
+function updateOnlineCount() {
 
-  createPhotos();
+  const number =
+    randomNumber(
+      15,
+      30
+    );
 
-  startOfflineRotation();
 
-  updateOnline();
+  const online =
+    document.querySelector(
+      ".online-box span:last-child"
+    );
 
-  setInterval(
-    function(){
 
-      updateOnline();
+  if (online) {
 
-    },
-    20000
-  );
+    online.textContent =
+      number +
+      " online";
 
-  startWelcomeFlow();
+  }
 
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
+setInterval(
+  function() {
 
-document
-  .getElementById(
-    "answerCallButton"
-  )
-  .addEventListener(
-    "click",
-    answerCall
+    updateOnlineCount();
+
+  },
+  20000
+);
+
+
+/* ==========================================
+   CHAT PREVIEW START
+========================================== */
+
+function initializeChatPreviews() {
+
+  PROFILE_DATA.forEach(
+    function(_, index) {
+
+      updateCommentPreview(
+        index
+      );
+
+    }
   );
 
+}
 
-document
-  .getElementById(
-    "rejectCallButton"
-  )
-  .addEventListener(
-    "click",
-    rejectCall
+
+/* ==========================================
+   SAFE VIDEO FALLBACK
+========================================== */
+
+function forceFinishSample() {
+
+  if (
+    sampleRunning
+  ) {
+
+    finishSample();
+
+  }
+
+}
+
+
+setInterval(
+  function() {
+
+    if (
+      sampleRunning &&
+      sampleVideo &&
+      Number.isFinite(
+        sampleVideo.currentTime
+      ) &&
+      sampleVideo.currentTime >=
+        SAMPLE_DURATION
+    ) {
+
+      finishSample();
+
+    }
+
+  },
+  250
+);
+
+
+/* ==========================================
+   START WEBSITE FLOW
+========================================== */
+
+function startWebsiteFlow() {
+
+  clearAllTimers();
+
+  hideAllPages();
+
+
+  sampleRunning =
+    false;
+
+  secondsLeft =
+    SAMPLE_DURATION;
+
+  incomingPhotoIndex =
+    0;
+
+
+  /*
+    IMPORTANT FIX:
+    Do not wait for GitHub before
+    displaying the website.
+
+    The old code waited for
+    loadPhotos().then(...).
+    If GitHub failed/hung, the flow
+    could remain on the first page.
+
+    We now display the photos/call
+    flow independently.
+  */
+
+  currentFlow =
+    "FIRST_CALL";
+
+
+  /*
+    Load photos in the background.
+  */
+
+  loadPhotos()
+    .catch(
+      function(error) {
+
+        console.warn(
+          "Background photo load failed:",
+          error
+        );
+
+      }
+    );
+
+
+  /*
+    Start first call immediately
+    after a very short delay.
+  */
+
+  setTimeout(
+    function() {
+
+      showFirstIncomingCall();
+
+    },
+    500
   );
 
+}
 
-/* =========================
-   START
-========================= */
 
-if(
+/* ==========================================
+   SAFE INITIALIZATION
+========================================== */
+
+let websiteStarted =
+  false;
+
+
+function initializeWebsite() {
+
+  if (websiteStarted) {
+
+    return;
+
+  }
+
+
+  websiteStarted =
+    true;
+
+
+  try {
+
+    startOfflineRotation();
+
+  } catch (error) {
+
+    console.warn(
+      "Offline rotation failed:",
+      error
+    );
+
+  }
+
+
+  try {
+
+    initializeChatPreviews();
+
+  } catch (error) {
+
+    console.warn(
+      "Chat initialization failed:",
+      error
+    );
+
+  }
+
+
+  try {
+
+    startWebsiteFlow();
+
+  } catch (error) {
+
+    console.error(
+      "Website startup failed:",
+      error
+    );
+
+
+    /*
+      Emergency fallback:
+      show the call instead of
+      leaving the visitor stuck.
+    */
+
+    setTimeout(
+      function() {
+
+        try {
+
+          showFirstIncomingCall();
+
+        } catch (secondError) {
+
+          console.error(
+            "Emergency flow failed:",
+            secondError
+          );
+
+        }
+
+      },
+      500
+    );
+
+  }
+
+                  }
+      <!-- 9/10 -->
+
+/* ==========================================
+   DOM READY
+========================================== */
+
+if (
   document.readyState ===
   "loading"
-){
+) {
 
   document.addEventListener(
     "DOMContentLoaded",
-    initialise
+    function() {
+
+      setTimeout(
+        function() {
+
+          initializeWebsite();
+
+        },
+        300
+      );
+
+    },
+    {
+      once: true
+    }
   );
 
-}else{
+} else {
 
-  initialise();
+  setTimeout(
+    function() {
+
+      initializeWebsite();
+
+    },
+    300
+  );
 
 }
 
+
+/* ==========================================
+   PAGE SHOW
+========================================== */
+
+window.addEventListener(
+  "pageshow",
+  function(event) {
+
+    /*
+      Do not restart the complete flow
+      when browser restores the page.
+    */
+
+    if (
+      websiteStarted
+    ) {
+
+      if (
+        currentFlow ===
+        "PHOTOS"
+      ) {
+
+        showPhotosPage();
+
+        refreshPhotoClicks();
+
+      }
+
+      return;
+
+    }
+
+
+    initializeWebsite();
+
+  }
+);
+
+
+/* ==========================================
+   ONLINE EVENT
+========================================== */
+
+window.addEventListener(
+  "online",
+  function() {
+
+    console.log(
+      "Internet connection restored."
+    );
+
+
+    if (
+      !photosLoaded
+    ) {
+
+      loadPhotos()
+        .catch(
+          function(error) {
+
+            console.warn(
+              "Retry photo loading failed:",
+              error
+            );
+
+          }
+        );
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   OFFLINE EVENT
+========================================== */
+
+window.addEventListener(
+  "offline",
+  function() {
+
+    console.log(
+      "Internet connection temporarily unavailable."
+    );
+
+  }
+);
+
+
+/* ==========================================
+   GLOBAL ERROR PROTECTION
+========================================== */
+
+window.addEventListener(
+  "error",
+  function(event) {
+
+    console.error(
+      "Website error:",
+      event.error ||
+      event.message
+    );
+
+
+    /*
+      If an unexpected error happens
+      while the website is starting,
+      don't leave a blank page.
+    */
+
+    if (
+      !websiteStarted
+    ) {
+
+      setTimeout(
+        function() {
+
+          initializeWebsite();
+
+        },
+        300
+      );
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   PROMISE ERROR PROTECTION
+========================================== */
+
+window.addEventListener(
+  "unhandledrejection",
+  function(event) {
+
+    console.error(
+      "Unhandled promise error:",
+      event.reason
+    );
+
+  }
+);
+
+
+/* ==========================================
+   FORM PROTECTION
+========================================== */
+
+document.addEventListener(
+  "submit",
+  function(event) {
+
+    event.preventDefault();
+
+  }
+);
+
+
+/* ==========================================
+   ESCAPE KEY CLOSE CHAT
+========================================== */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key ===
+      "Escape"
+    ) {
+
+      if (
+        chatModal &&
+        chatModal.style.display ===
+        "flex"
+      ) {
+
+        closeChat();
+
+      }
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   DOCUMENT CLICK SAFETY
+========================================== */
+
+document.addEventListener(
+  "click",
+  function(event) {
+
+    /*
+      Social buttons are handled
+      by their own card listener.
+      Never send them to payment.
+    */
+
+    const socialButton =
+      event.target.closest(
+        "[data-action]"
+      );
+
+
+    if (socialButton) {
+
+      return;
+
+    }
+
+
+    /*
+      Chat modal is not a profile.
+    */
+
+    if (
+      event.target.closest(
+        "#chatModal"
+      )
+    ) {
+
+      return;
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   FINAL PHOTO REFRESH
+========================================== */
+
+setInterval(
+  function() {
+
+    if (
+      photosLoaded &&
+      photosPage &&
+      photosPage.style.display ===
+      "block"
+    ) {
+
+      refreshPhotoClicks();
+
+    }
+
+  },
+  3000
+);
+
+
+/* ==========================================
+   SAMPLE WATCHDOG
+========================================== */
+
+setInterval(
+  function() {
+
+    if (
+      !sampleRunning
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      !sampleVideo
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      sampleVideo.ended
+    ) {
+
+      finishSample();
+
+      return;
+
+    }
+
+
+    if (
+      sampleVideo.currentTime >=
+      SAMPLE_DURATION
+    ) {
+
+      finishSample();
+
+    }
+
+  },
+  1000
+);
+
+
+/* ==========================================
+   DEBUG INFORMATION
+========================================== */
+
+console.log(
+  "LiveX website loaded."
+);
+
+console.log(
+  "Flow:",
+  "Incoming Call → Answer → Sample → " +
+  "Insufficient → Incoming Call → " +
+  "Photos → Later Call"
+);
+
+console.log(
+  "Payment:",
+  PAYMENT_PAGE_URL
+);
+      <!-- 10/10 -->
+
+/* ==========================================
+   FINAL SAFETY CHECK
+========================================== */
+
+(function finalSafetyCheck() {
+
+  /*
+    Check the important elements.
+  */
+
+  const requiredElements = [
+
+    samplePage,
+    insufficientPage,
+    photosPage,
+    incomingCall,
+    sampleVideo,
+    livePhotos,
+    answerCall,
+    rejectCall
+
+  ];
+
+
+  const missing =
+    requiredElements.filter(
+      function(element) {
+
+        return !element;
+
+      }
+    );
+
+
+  if (
+    missing.length > 0
+  ) {
+
+    console.error(
+      "Important website elements are missing:",
+      missing.length
+    );
+
+  }
+
+
+  /*
+    Make sure the sample video has
+    the correct source.
+  */
+
+  if (
+    sampleVideo
+  ) {
+
+    if (
+      sampleVideo.src === "" ||
+      !sampleVideo.querySelector(
+        "source"
+      )
+    ) {
+
+      sampleVideo.src =
+        SAMPLE_VIDEO_URL;
+
+    }
+
+  }
+
+
+  /*
+    Do NOT use the invalid "sound"
+    HTML attribute.
+  */
+
+  if (
+    sampleVideo
+  ) {
+
+    sampleVideo.removeAttribute(
+      "sound"
+    );
+
+  }
+
+})();
+
+
+/* ==========================================
+   END OF JAVASCRIPT
+========================================== */
+
 </script>
+
 </body>
 </html>
+
+<!-- 10/10 END -->
