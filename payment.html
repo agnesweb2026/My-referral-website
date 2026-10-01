@@ -32,7 +32,6 @@ button{cursor:pointer}
 
 .hidden{display:none!important}
 
-/* TOP BAR */
 .top-bar{
   position:fixed;
   top:0;
@@ -79,9 +78,7 @@ button{cursor:pointer}
   overflow:hidden;
 }
 
-/* =========================
-   PACKAGES — ORIGINAL DESIGN
-========================= */
+/* PACKAGES - ORIGINAL DESIGN */
 
 #packagesScreen{
   width:100%;
@@ -184,9 +181,7 @@ button{cursor:pointer}
   font-size:9px;
   font-weight:900;
 }
-  /* =========================
-   PAYMENT BOX — ORIGINAL
-========================= */
+  /* PAYMENT BOX - ORIGINAL */
 
 .payment-box{
   width:100%;
@@ -262,9 +257,7 @@ button{cursor:pointer}
   color:#aaa;
 }
 
-/* =========================
-   LIVE SCREEN
-========================= */
+/* LIVE */
 
 #liveScreen{
   position:absolute;
@@ -274,12 +267,6 @@ button{cursor:pointer}
   background:#000;
   overflow:hidden;
 }
-
-/*
-   LEFT CHAT | VIDEO | RIGHT CHAT
-                    |
-               CENTER CHAT
-*/
 
 .live-layout{
   position:absolute;
@@ -299,8 +286,6 @@ button{cursor:pointer}
   background:#000;
   overflow:hidden;
 }
-
-/* SIDE CHAT */
 
 .chat-side{
   min-width:0;
@@ -326,27 +311,21 @@ button{cursor:pointer}
 
 .chat-title{
   flex:0 0 30px;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   background:#111;
   color:#ddd;
-
   font-size:9px;
   font-weight:900;
-
   border-bottom:1px solid #222;
-  }
-  .chat-messages{
+}
+
+.chat-messages{
   flex:1;
   min-height:0;
-
   padding:5px;
-
   overflow:hidden;
-
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
@@ -356,15 +335,11 @@ button{cursor:pointer}
 .side-message{
   width:100%;
   padding:6px 7px;
-
   border-radius:10px;
-
   background:#181818;
   color:#eee;
-
   font-size:9px;
   line-height:1.25;
-
   animation:messageIn .35s ease;
 }
 
@@ -377,16 +352,12 @@ button{cursor:pointer}
     opacity:0;
     transform:translateY(12px);
   }
-
   to{
     opacity:1;
     transform:translateY(0);
   }
 }
-
-/* =========================
-   BIG VIDEO
-========================= */
+ /* BIG VIDEO */
 
 .live-video-area{
   grid-column:2;
@@ -406,23 +377,16 @@ button{cursor:pointer}
 
 #liveVideo{
   display:block;
-
   width:100%;
   height:100%;
-
   object-fit:contain;
-
   background:#000;
 }
 
-/* LIVE BADGE */
-
 .live-badge{
   position:absolute;
-
   top:10px;
   left:10px;
-
   z-index:20;
 
   display:flex;
@@ -430,7 +394,6 @@ button{cursor:pointer}
   gap:5px;
 
   padding:5px 9px;
-
   border-radius:7px;
 
   background:#f00;
@@ -438,7 +401,6 @@ button{cursor:pointer}
 
   font-size:10px;
   font-weight:900;
-
   box-shadow:0 2px 8px rgba(0,0,0,.4);
 }
 
@@ -449,12 +411,9 @@ button{cursor:pointer}
   background:#fff;
 }
 
-/* VIDEO OVERLAY */
-
 .video-overlay{
   position:absolute;
   inset:0;
-
   z-index:50;
 
   display:flex;
@@ -465,7 +424,6 @@ button{cursor:pointer}
   gap:13px;
 
   background:rgba(0,0,0,.78);
-
   text-align:center;
 }
 
@@ -481,7 +439,6 @@ button{cursor:pointer}
 
 .reload-live-btn{
   padding:12px 18px;
-
   border:0;
   border-radius:10px;
 
@@ -490,10 +447,9 @@ button{cursor:pointer}
 
   font-size:13px;
   font-weight:900;
-  }
-  /* =========================
-   CENTER CHAT UNDER VIDEO
-========================= */
+}
+
+/* CENTER CHAT */
 
 .center-chat{
   grid-column:2;
@@ -507,7 +463,6 @@ button{cursor:pointer}
   flex-direction:column;
 
   background:#080808;
-
   border-top:1px solid #292929;
 
   overflow:hidden;
@@ -548,12 +503,10 @@ button{cursor:pointer}
 
 .center-chat-messages .side-message{
   flex:0 0 auto;
-
   width:auto;
   max-width:180px;
 
   padding:6px 9px;
-
   border-radius:15px;
 
   background:#1c1c1c;
@@ -569,16 +522,12 @@ button{cursor:pointer}
     opacity:0;
     transform:translateX(30px) scale(.92);
   }
-
   to{
     opacity:1;
     transform:translateX(0) scale(1);
   }
 }
-
-/* CENTER BUTTONS */
-
-.center-chat-actions{
+ .center-chat-actions{
   height:34px;
   flex-shrink:0;
 
@@ -612,14 +561,10 @@ button{cursor:pointer}
 
 .center-chat-actions .follow-btn{
   background:#e91e63;
-
   font-size:10px;
   font-weight:900;
-
   padding:6px 11px;
 }
-
-/* MESSAGE BOX */
 
 .center-message-box{
   height:38px;
@@ -660,7 +605,8 @@ button{cursor:pointer}
 .center-message-box input:focus{
   border-color:#00e676;
 }
-  .center-message-box button{
+
+.center-message-box button{
   height:29px;
 
   border:0;
@@ -674,8 +620,6 @@ button{cursor:pointer}
   font-size:10px;
   font-weight:900;
 }
-
-/* REACTIONS */
 
 .center-reaction{
   position:absolute;
@@ -695,9 +639,7 @@ button{cursor:pointer}
 @keyframes reactionFloat{
   0%{
     opacity:0;
-    transform:
-      translate(-50%,20px)
-      scale(.6);
+    transform:translate(-50%,20px) scale(.6);
   }
 
   15%{
@@ -706,9 +648,7 @@ button{cursor:pointer}
 
   100%{
     opacity:0;
-    transform:
-      translate(-50%,-100px)
-      scale(1.3);
+    transform:translate(-50%,-100px) scale(1.3);
   }
 }
 
@@ -751,10 +691,7 @@ button{cursor:pointer}
     transform:translate(-50%,0);
   }
 }
-
-/* FAILED */
-
-#failedScreen{
+  #failedScreen{
   position:absolute;
   inset:0;
   z-index:500;
@@ -787,6 +724,7 @@ button{cursor:pointer}
 <body>
 
 <header class="top-bar">
+
   <div class="top-title">
     M-PESA PAYMENT
   </div>
@@ -795,10 +733,12 @@ button{cursor:pointer}
     <span class="online-dot"></span>
     <span>21 online</span>
   </div>
+
 </header>
 
 <main class="page">
-  <section id="packagesScreen">
+
+<section id="packagesScreen">
 
   <div class="payment-heading">
     Choose Minutes
@@ -872,18 +812,20 @@ button{cursor:pointer}
     </button>
 
   </div>
-
-  <div class="payment-box">
+    <div class="payment-box">
 
     <div class="payment-recipient">
+
       <span class="recipient-value">
         M-PESA
       </span>
 
-      <button class="copy-btn"
+      <button
+        class="copy-btn"
         onclick="copyRecipient()">
         COPY
       </button>
+
     </div>
 
     <input
@@ -892,8 +834,7 @@ button{cursor:pointer}
       type="tel"
       inputmode="numeric"
       placeholder="Enter M-PESA phone number"
-      autocomplete="tel"
-    >
+      autocomplete="tel">
 
     <button
       class="pay-btn"
@@ -907,15 +848,17 @@ button{cursor:pointer}
     </div>
 
   </div>
+
 </section>
 
-<!-- LIVE SCREEN -->
-
-<section id="liveScreen" class="hidden">
+<section
+  id="liveScreen"
+  class="hidden">
 
   <div class="live-layout">
 
     <aside class="chat-side left">
+
       <div class="chat-title">
         LIVE CHAT
       </div>
@@ -924,6 +867,7 @@ button{cursor:pointer}
         id="leftChatMessages"
         class="chat-messages">
       </div>
+
     </aside>
 
     <div class="live-video-area">
@@ -936,8 +880,11 @@ button{cursor:pointer}
       </video>
 
       <div class="live-badge">
+
         <span class="live-badge-dot"></span>
+
         LIVE
+
       </div>
 
       <div
@@ -968,6 +915,7 @@ button{cursor:pointer}
     </div>
 
     <aside class="chat-side right">
+
       <div class="chat-title">
         LIVE CHAT
       </div>
@@ -976,10 +924,9 @@ button{cursor:pointer}
         id="rightChatMessages"
         class="chat-messages">
       </div>
-    </aside>
-        <!-- CHAT UNDER VIDEO ONLY -->
 
-    <div class="center-chat">
+    </aside>
+      <div class="center-chat">
 
       <div class="center-chat-header">
         LIVE CHAT
@@ -1034,6 +981,7 @@ button{cursor:pointer}
     </div>
 
   </div>
+
 </section>
 
 <section
@@ -1054,10 +1002,6 @@ button{cursor:pointer}
 
 <script>
 
-/* =========================
-   SETTINGS
-========================= */
-
 const LIVE_VIDEO_URL =
   "IMG_20261001_112122_071.mp4";
 
@@ -1066,10 +1010,6 @@ const STK_PUSH_URL =
 
 const PAYMENT_STATUS_URL =
   "/api/payment-status";
-
-/* =========================
-   STATE
-========================= */
 
 let selectedMinutes = 30;
 let selectedPrice = 95;
@@ -1082,8 +1022,6 @@ let liveTimer = null;
 
 let liveStarted = false;
 let videoReconnectUsed = false;
-
-/* ELEMENTS */
 
 const packagesScreen =
   document.getElementById("packagesScreen");
@@ -1123,9 +1061,6 @@ const rightChatMessages =
 
 const centerChatMessages =
   document.getElementById("centerChatMessages");
-  /* =========================
-   PACKAGE SELECTION
-========================= */
 
 function selectPackage(button){
 
@@ -1143,15 +1078,9 @@ function selectPackage(button){
   selectedPrice =
     Number(button.dataset.price);
 
-  paymentStatus.textContent =
-    "";
+  paymentStatus.textContent = "";
 }
-
-/* =========================
-   COPY
-========================= */
-
-function copyRecipient(){
+ function copyRecipient(){
 
   navigator.clipboard
     .writeText("M-PESA")
@@ -1172,10 +1101,6 @@ function copyRecipient(){
 
     });
 }
-
-/* =========================
-   PAYMENT
-========================= */
 
 async function startPayment(){
 
@@ -1272,10 +1197,6 @@ async function startPayment(){
   }
 }
 
-/* =========================
-   PAYMENT STATUS
-========================= */
-
 function checkPaymentStatus(transactionId){
 
   let attempts = 0;
@@ -1331,9 +1252,7 @@ function checkPaymentStatus(transactionId){
           data.paid === true
         ){
 
-          clearInterval(
-            paymentPollTimer
-          );
+          clearInterval(paymentPollTimer);
 
           paymentBusy = false;
 
@@ -1346,16 +1265,15 @@ function checkPaymentStatus(transactionId){
           );
 
           return;
-      }
-                if(
+        }
+
+        if(
           status === "failed" ||
           status === "cancelled" ||
           status === "canceled"
         ){
 
-          clearInterval(
-            paymentPollTimer
-          );
+          clearInterval(paymentPollTimer);
 
           paymentBusy = false;
 
@@ -1369,9 +1287,7 @@ function checkPaymentStatus(transactionId){
 
         if(attempts >= maxAttempts){
 
-          clearInterval(
-            paymentPollTimer
-          );
+          clearInterval(paymentPollTimer);
 
           paymentBusy = false;
 
@@ -1382,9 +1298,7 @@ function checkPaymentStatus(transactionId){
 
         if(attempts >= maxAttempts){
 
-          clearInterval(
-            paymentPollTimer
-          );
+          clearInterval(paymentPollTimer);
 
           paymentBusy = false;
 
@@ -1393,12 +1307,7 @@ function checkPaymentStatus(transactionId){
       }
 
     },2000);
-}
-
-/* =========================
-   FAILED PAYMENT
-========================= */
-
+  }
 function showFailedPayment(){
 
   paymentStatus.textContent =
@@ -1411,9 +1320,7 @@ function showFailedPayment(){
   packagesScreen.classList.remove("hidden");
 }
 
-/* =========================
-   OPEN LIVE
-========================= */
+/* PAYMENT CONFIRMED -> VIDEO */
 
 function openLiveVideo(){
 
@@ -1428,9 +1335,7 @@ function openLiveVideo(){
   startLiveChat();
 }
 
-/* =========================
-   START VIDEO
-========================= */
+/* VIDEO START */
 
 function startLiveVideo(){
 
@@ -1467,9 +1372,12 @@ function startLiveVideo(){
   startLiveClock();
 }
 
-/* =========================
-   30 SECOND RECONNECT
-========================= */
+/*
+30 SECONDS:
+VIDEO PAUSES
+RECONNECTING FOR 3 SECONDS
+THEN VIDEO CONTINUES
+*/
 
 function startLiveClock(){
 
@@ -1483,7 +1391,7 @@ function startLiveClock(){
 
       const elapsed =
         Math.floor(
-          (Date.now()-startedAt)/1000
+          (Date.now() - startedAt) / 1000
         );
 
       if(
@@ -1517,9 +1425,11 @@ function startLiveClock(){
     },250);
 }
 
-/* =========================
-   60 SECOND ERROR
-========================= */
+/*
+AFTER RECONNECT:
+27 SECONDS LATER
+= 60 SECONDS TOTAL
+*/
 
 function startSecondStageTimer(){
 
@@ -1533,7 +1443,7 @@ function startSecondStageTimer(){
 
       const elapsed =
         Math.floor(
-          (Date.now()-secondStarted)/1000
+          (Date.now() - secondStarted) / 1000
         );
 
       if(elapsed >= 27){
@@ -1560,9 +1470,12 @@ function showReloadError(){
   );
 }
 
-/* =========================
-   RELOAD
-========================= */
+/*
+BUTTON:
+RECONNECTING 5 SECONDS
+THEN FAILED 2 SECONDS
+THEN PACKAGES
+*/
 
 function reloadLiveVideo(){
 
@@ -1593,10 +1506,7 @@ function reloadLiveVideo(){
     },2000);
 
   },5000);
-        }
-  /* =========================
-   OVERLAY
-========================= */
+}
 
 function showVideoOverlay(title,sub){
 
@@ -1622,10 +1532,6 @@ function hideVideoOverlay(){
   );
 }
 
-/* =========================
-   RETURN PACKAGES
-========================= */
-
 function returnToPackages(){
 
   clearInterval(liveTimer);
@@ -1647,13 +1553,8 @@ function returnToPackages(){
 
   paymentStatus.textContent =
     "Select another package to continue";
-}
-
-/* =========================
-   CHAT DATA
-========================= */
-
-const leftChatData = [
+  }
+  const leftChatData = [
  ["Sarah","Hi ❤️"],
  ["Maya","Hello live!"],
  ["Ann","Wow 😍"],
@@ -1663,9 +1564,7 @@ const leftChatData = [
  ["Emma","Hello 👋"],
  ["Linda","Amazing"],
  ["Nina","❤️❤️"],
- ["Rose","Hi everyone"],
- ["Aisha","Nice live"],
- ["Mary","Wow 👍"]
+ ["Rose","Hi everyone"]
 ];
 
 const rightChatData = [
@@ -1678,9 +1577,7 @@ const rightChatData = [
  ["Chris","Hi ❤️"],
  ["Mike","Live now"],
  ["John","Amazing"],
- ["Peter","Hello everyone"],
- ["Paul","Nice video"],
- ["James","Watching now"]
+ ["Peter","Hello everyone"]
 ];
 
 const centerChatData = [
@@ -1693,18 +1590,12 @@ const centerChatData = [
  ["Nina","❤️❤️"],
  ["David","Nice video"],
  ["Sarah","Hello everyone"],
- ["Brian","Wow 👍"],
- ["Lucy","I'm watching"],
- ["Emma","Beautiful ❤️"],
- ["Mary","So nice"],
- ["Alex","Hello live"]
+ ["Brian","Wow 👍"]
 ];
 
-let leftChatIndex=0;
-let rightChatIndex=0;
-let centerChatIndex=0;
-
-/* MESSAGE */
+let leftChatIndex = 0;
+let rightChatIndex = 0;
+let centerChatIndex = 0;
 
 function escapeHtml(value){
 
@@ -1730,24 +1621,20 @@ function createMessage(
     "side-message";
 
   item.innerHTML =
-    "<b>"+
-    escapeHtml(name)+
-    ":</b> "+
+    "<b>" +
+    escapeHtml(name) +
+    ":</b> " +
     escapeHtml(message);
 
   container.appendChild(item);
 
-  while(
-    container.children.length > 9
-  ){
+  while(container.children.length > 9){
 
     container.removeChild(
       container.firstChild
     );
   }
 }
-
-/* CHAT ADD */
 
 function addLeftChat(){
 
@@ -1803,19 +1690,17 @@ function addCenterChat(){
     centerChatMessages.scrollWidth;
 }
 
-/* START CHAT */
-
 function startLiveChat(){
 
   clearInterval(chatTimer);
 
-  leftChatMessages.innerHTML="";
-  rightChatMessages.innerHTML="";
-  centerChatMessages.innerHTML="";
+  leftChatMessages.innerHTML = "";
+  rightChatMessages.innerHTML = "";
+  centerChatMessages.innerHTML = "";
 
-  leftChatIndex=0;
-  rightChatIndex=0;
-  centerChatIndex=0;
+  leftChatIndex = 0;
+  rightChatIndex = 0;
+  centerChatIndex = 0;
 
   for(let i=0;i<5;i++){
 
@@ -1842,8 +1727,6 @@ function startLiveChat(){
     },1600);
 }
 
-/* REACTION */
-
 function reactLive(reaction){
 
   const el =
@@ -1869,8 +1752,6 @@ function reactLive(reaction){
   },1800);
 }
 
-/* FOLLOW */
-
 function toggleFollow(){
 
   const button =
@@ -1878,10 +1759,7 @@ function toggleFollow(){
       "followBtn"
     );
 
-  if(
-    button.textContent.trim() ===
-    "Follow"
-  ){
+  if(button.textContent.trim() === "Follow"){
 
     button.textContent =
       "Following ✓";
@@ -1898,8 +1776,6 @@ function toggleFollow(){
       "#e91e63";
   }
 }
-
-/* SEND CENTER MESSAGE */
 
 function sendCenterMessage(){
 
@@ -1920,7 +1796,7 @@ function sendCenterMessage(){
     "center-user-message";
 
   message.innerHTML =
-    "<b>You:</b> "+
+    "<b>You:</b> " +
     escapeHtml(text);
 
   const area =
@@ -1943,23 +1819,19 @@ function sendCenterMessage(){
     text
   );
 
-  input.value="";
+  input.value = "";
 
   centerChatMessages.scrollLeft =
     centerChatMessages.scrollWidth;
 }
 
-/* ENTER SEND */
-
 document
-  .getElementById(
-    "centerMessageInput"
-  )
+  .getElementById("centerMessageInput")
   .addEventListener(
     "keydown",
     function(event){
 
-      if(event.key==="Enter"){
+      if(event.key === "Enter"){
 
         event.preventDefault();
 
@@ -1967,8 +1839,6 @@ document
       }
     }
   );
-
-/* VIDEO ERROR */
 
 liveVideo.addEventListener(
   "error",
@@ -1988,25 +1858,19 @@ liveVideo.addEventListener(
   }
 );
 
-/* VIDEO LOOP */
-
 liveVideo.addEventListener(
   "ended",
   function(){
 
     if(liveStarted){
 
-      liveVideo.currentTime=0;
+      liveVideo.currentTime = 0;
 
       liveVideo.play()
         .catch(function(){});
     }
   }
 );
-
-/* =========================
-   MOBILE
-========================= */
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -2025,9 +1889,7 @@ document.addEventListener(
     );
 
     const firstPackage =
-      document.querySelector(
-        ".package"
-      );
+      document.querySelector(".package");
 
     if(firstPackage){
 
@@ -2042,25 +1904,16 @@ window.addEventListener(
   "beforeunload",
   function(){
 
-    clearInterval(
-      paymentPollTimer
-    );
+    clearInterval(paymentPollTimer);
+    clearInterval(liveTimer);
+    clearInterval(chatTimer);
 
-    clearInterval(
-      liveTimer
-    );
-
-    clearInterval(
-      chatTimer
-    );
   }
 );
 
 </script>
 
 <style>
-
-/* PHONE */
 
 @media(max-width:700px){
 
@@ -2108,8 +1961,6 @@ window.addEventListener(
     font-size:9px;
   }
 }
-
-/* SMALL PHONE */
 
 @media(max-width:430px){
 
@@ -2179,8 +2030,6 @@ window.addEventListener(
     padding:0 8px;
   }
 }
-
-/* LANDSCAPE */
 
 @media(
   max-height:500px
