@@ -2,591 +2,195 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>LiveX</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+*{box-sizing:border-box}
+html,body{
+ margin:0;padding:0;width:100%;min-height:100%;
+ background:#050505;color:#fff;font-family:Arial,sans-serif;
 }
-
-html,
-body{
-  margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
-  background:#050505;
-  color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-  overflow-x:hidden;
-}
-
-.hidden{
-  display:none !important;
-}
-
-/* =========================
-   WELCOME PAGE
-========================= */
+body{overflow-x:hidden}
 
 #welcomeScreen{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  background:
-    radial-gradient(
-      circle at center,
-      #3b071d 0%,
-      #10030a 45%,
-      #000 100%
-    );
-  text-align:center;
+ position:fixed;inset:0;z-index:99999;
+ display:flex;align-items:center;justify-content:center;
+ flex-direction:column;
+ background:radial-gradient(circle at 50% 35%,#36102d 0,#100810 35%,#030303 75%);
 }
-
-.logo{
-  font-size:48px;
-  font-weight:900;
-  letter-spacing:-2px;
-  margin-bottom:10px;
-}
-
-.logo span{
-  color:#ff1744;
-}
-
-.welcome-live{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  background:#e6002d;
-  padding:7px 13px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:bold;
-  margin-bottom:18px;
-}
-
-.welcome-live i{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#fff;
-  display:block;
-  animation:pulse 1s infinite;
-}
-
-.welcome-title{
-  font-size:24px;
-  font-weight:800;
-  margin:0 20px 8px;
-}
-
-.welcome-text{
-  color:#aaa;
-  font-size:14px;
-  margin:0 20px;
-}
-
+.logo{font-size:38px;font-weight:900;letter-spacing:2px}
+.logo span{color:#ff1744}
+.welcomeText{margin-top:12px;color:#ccc;font-size:15px;text-align:center}
 .loader{
-  width:48px;
-  height:48px;
-  border:4px solid rgba(255,255,255,.15);
-  border-top-color:#ff1744;
-  border-radius:50%;
-  margin-top:28px;
-  animation:spin .8s linear infinite;
+ width:45px;height:45px;margin-top:25px;
+ border:4px solid #333;border-top-color:#ff1744;
+ border-radius:50%;animation:spin .8s linear infinite;
 }
+@keyframes spin{to{transform:rotate(360deg)}}
 
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-@keyframes pulse{
-  50%{
-    transform:scale(.6);
-    opacity:.5;
-  }
-}
-
-/* =========================
-   TOP BAR
-========================= */
-
-#photosPage{
-  min-height:100vh;
-  background:#080808;
-  padding-bottom:30px;
-}
+#photosPage{display:none;min-height:100vh;padding-bottom:30px}
 
 .topbar{
-  position:sticky;
-  top:0;
-  z-index:100;
-  height:62px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 13px;
-  background:rgba(5,5,5,.96);
-  border-bottom:1px solid #222;
-  backdrop-filter:blur(10px);
+ position:sticky;top:0;z-index:500;height:58px;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:0 13px;background:rgba(5,5,5,.97);
+ border-bottom:1px solid #252525;
+}
+.brand{font-size:22px;font-weight:900}
+.brand span{color:#ff1744}
+.online{font-size:13px;color:#ddd}
+.liveDot{
+ display:inline-block;width:8px;height:8px;margin-right:5px;
+ background:#00e676;border-radius:50%;
+ box-shadow:0 0 8px #00e676;
+ animation:onlineBlink 1s infinite;
+}
+@keyframes onlineBlink{0%,100%{opacity:1}50%{opacity:.25}}
+
+.photoGrid{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:6px;padding:7px;
+}
+.photoCard{
+ position:relative;min-width:0;background:#111;
+ border-radius:10px;overflow:hidden;border:1px solid #222;
 }
 
-.brand{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:-1px;
+.photoWrap{
+ position:relative;width:100%;aspect-ratio:3/4;
+ overflow:hidden;cursor:pointer;background:#151515;
+}
+.photoWrap img{
+ width:100%;height:100%;object-fit:cover;display:block;
+ transition:transform .25s ease;
+}
+.photoWrap:active img{transform:scale(.98)}
+
+.liveBadge{
+ position:absolute;top:7px;left:7px;padding:4px 7px;
+ border-radius:5px;background:#e6002d;color:white;
+ font-size:9px;font-weight:900;z-index:5;
 }
 
-.brand span{
-  color:#ff1744;
+.playIcon{
+ position:absolute;left:50%;top:50%;
+ transform:translate(-50%,-50%);
+ width:42px;height:42px;border-radius:50%;
+ background:rgba(0,0,0,.62);
+ display:flex;align-items:center;justify-content:center;
+ font-size:19px;box-shadow:0 0 0 2px rgba(255,255,255,.35);
+ animation:pulsePlay 1.5s infinite;pointer-events:none;
+}
+@keyframes pulsePlay{
+ 0%,100%{transform:translate(-50%,-50%) scale(1)}
+ 50%{transform:translate(-50%,-50%) scale(1.08)}
 }
 
-.online{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  color:#ddd;
-  font-size:13px;
-  font-weight:bold;
+.profileInfo{padding:7px 7px 3px}
+.profileName{
+ display:flex;align-items:center;min-width:0;
+ font-size:13px;font-weight:800;
 }
-
-.online-dot{
-  width:9px;
-  height:9px;
-  background:#21e66d;
-  border-radius:50%;
-  box-shadow:0 0 10px #21e66d;
+.profileNameText{
+ min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
+.profileAge{font-size:11px;color:#aaa;margin-top:3px}
+.flag{margin-right:3px}
 
-/* =========================
-   PHOTO HEADER
-========================= */
-
-.photos-title{
-  padding:15px 12px 10px;
-  font-size:18px;
-  font-weight:800;
+.nameStatusDot{
+ display:inline-block;flex:none;width:7px;height:7px;
+ margin-right:5px;border-radius:50%;
+ background:#00e676;box-shadow:0 0 7px #00e676;
+ animation:statusBlink 1s infinite;
 }
-
-.photos-title small{
-  display:block;
-  color:#888;
-  font-size:12px;
-  font-weight:normal;
-  margin-top:4px;
+.nameStatusDot.offline{
+ background:#666;box-shadow:none;animation:none;
 }
-
-/* =========================
-   PHOTO GRID
-========================= */
-
-#photosContainer{
-  display:grid;
-  grid-template-columns:
-    repeat(3,1fr);
-  gap:7px;
-  padding:0 7px;
+@keyframes statusBlink{
+ 0%,100%{opacity:1}
+ 50%{opacity:.2}
 }
-
-.photo-card{
-  background:#111;
-  border-radius:10px;
-  overflow:hidden;
-  border:1px solid #202020;
-  min-width:0;
+  .socialRow{
+ display:grid;grid-template-columns:repeat(4,1fr);
+ gap:3px;padding:5px;
 }
-
-.photo-wrapper{
-  position:relative;
-  width:100%;
-  aspect-ratio:.78;
-  overflow:hidden;
-  cursor:pointer;
-  background:#151515;
+.socialBtn{
+ border:0;border-radius:7px;background:#1b1b1b;color:#ddd;
+ min-height:36px;font-size:9px;font-weight:700;
+ cursor:pointer;-webkit-tap-highlight-color:transparent;
 }
+.socialBtn:active{transform:scale(.95)}
+.socialBtn.liked{color:#ff335f;background:#281019}
+.socialBtn.loved{color:#ff1744;background:#281019}
+.socialBtn.followed{color:#00e676;background:#092117}
 
-.photo-wrapper img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
+.chatBox{
+ margin:2px 5px 7px;background:#0b0b0b;
+ border:1px solid #252525;border-radius:8px;overflow:hidden;
 }
-
-.photo-overlay{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0,0,0,.08),
-      transparent 50%,
-      rgba(0,0,0,.72)
-    );
-  pointer-events:none;
-}
-
-.live-label{
-  position:absolute;
-  left:6px;
-  top:6px;
-  background:#e90035;
-  color:#fff;
-  font-size:9px;
-  font-weight:900;
-  padding:4px 6px;
-  border-radius:5px;
-  z-index:2;
-}
-
-.offline-label{
-  position:absolute;
-  left:6px;
-  top:6px;
-  background:#555;
-  color:#fff;
-  font-size:9px;
-  font-weight:900;
-  padding:4px 6px;
-  border-radius:5px;
-  z-index:2;
-}
-
-.play-icon{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:
-    translate(-50%,-50%);
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  background:rgba(0,0,0,.55);
-  border:2px solid
-    rgba(255,255,255,.9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:3;
-  animation:
-    playPulse 1.7s infinite;
-}
-
-.play-icon:after{
-  content:"";
-  margin-left:4px;
-  width:0;
-  height:0;
-  border-top:9px solid transparent;
-  border-bottom:9px solid transparent;
-  border-left:14px solid #fff;
-}
-
-@keyframes playPulse{
-
-  50%{
-    transform:
-      translate(-50%,-50%)
-      scale(1.08);
-  }
-
-}
-
-.photo-info{
-  position:absolute;
-  left:7px;
-  right:7px;
-  bottom:7px;
-  z-index:4;
-}
-
-.photo-name{
-  font-weight:900;
-  font-size:13px;
-  text-shadow:0 1px 4px #000;
-}
-
-.photo-age{
-  font-size:10px;
-  color:#ddd;
-  margin-top:2px;
-}
-
-/* =========================
-   SOCIAL BAR
-========================= */
-
-.social-bar{
-  display:grid;
-  grid-template-columns:
-    repeat(4,1fr);
-  border-top:1px solid #222;
-  background:#0d0d0d;
-}
-
-.social-btn{
-  border:0;
-  border-right:1px solid #222;
-  background:#0d0d0d;
-  color:#aaa;
-  min-height:45px;
-  padding:4px 2px;
-  cursor:pointer;
-  font-size:9px;
-  font-weight:bold;
-}
-
-.social-btn:last-child{
-  border-right:0;
-}
-
-.social-btn .icon{
-  display:block;
-  font-size:18px;
-  line-height:18px;
-  margin-bottom:2px;
-}
-
-.social-btn.active{
-  color:#ff1744;
-}
-
-.social-btn.follow-active{
-  color:#28e778;
-}
-
-.count{
-  font-size:9px;
-  color:#777;
-}
-
-/* =========================
-   CHAT
-========================= */
-
-.chat-section{
-  background:#090909;
-  border-top:1px solid #1d1d1d;
-  padding:8px;
-}
-
-.chat-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:#ddd;
-  font-size:10px;
-  font-weight:800;
-  margin-bottom:6px;
-}
-
-.chat-title span{
-  color:#777;
-  font-weight:normal;
+.chatTitle{
+ padding:6px 8px;font-size:10px;font-weight:800;
+ color:#bbb;border-bottom:1px solid #202020;
 }
 
 .chat-comments{
-  height:132px;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-  padding-right:3px;
-  scroll-behavior:smooth;
+ height:132px;overflow-y:auto;overflow-x:hidden;
+ padding:5px 6px;scroll-behavior:auto;
+ -webkit-overflow-scrolling:touch;
 }
-
-.chat-comments::-webkit-scrollbar{
-  width:3px;
-}
-
+.chat-comments::-webkit-scrollbar{width:3px}
 .chat-comments::-webkit-scrollbar-thumb{
-  background:#444;
-  border-radius:5px;
+ background:#555;border-radius:5px;
 }
 
 .comment{
-  display:flex;
-  gap:6px;
-  margin-bottom:7px;
+ padding:5px 6px;margin-bottom:4px;
+ background:#151515;border-radius:7px;
+ font-size:10px;line-height:1.35;
+}
+.comment strong{color:#ff6685;margin-right:3px}
+.comment small{
+ display:block;color:#777;font-size:8px;margin-top:2px;
 }
 
-.comment-avatar{
-  flex:0 0 25px;
-  width:25px;
-  height:25px;
-  border-radius:50%;
-  background:
-    linear-gradient(
-      135deg,
-      #ff1744,
-      #7b1530
-    );
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:10px;
-  font-weight:bold;
+.commentForm{
+ display:flex;gap:4px;padding:5px;border-top:1px solid #222;
+}
+.commentInput{
+ min-width:0;flex:1;border:1px solid #333;
+ background:#171717;color:white;border-radius:7px;
+ padding:8px;outline:none;font-size:10px;
+}
+.commentInput::placeholder{color:#777}
+.commentInput:focus{border-color:#ff1744}
+.commentSend{
+ width:45px;border:0;border-radius:7px;
+ background:#ff1744;color:#fff;font-weight:900;
+ font-size:10px;cursor:pointer;
 }
 
-.comment-body{
-  min-width:0;
-  background:#151515;
-  border-radius:9px;
-  padding:5px 7px;
-  flex:1;
+.reactionPopup{
+ position:fixed;left:50%;bottom:25%;
+ transform:translateX(-50%);z-index:5000;
+ background:rgba(255,23,68,.95);
+ padding:10px 18px;border-radius:25px;
+ font-weight:900;display:none;
+ box-shadow:0 5px 25px rgba(0,0,0,.5);
 }
 
-.comment-user{
-  font-size:9px;
-  color:#ff7791;
-  font-weight:800;
+@media(max-width:420px){
+ .photoGrid{gap:4px;padding:5px}
+ .socialBtn{font-size:8px}
+ .profileName{font-size:12px}
+ .profileAge{font-size:10px}
+ .chat-comments{height:125px}
 }
-
-.comment-text{
-  font-size:10px;
-  line-height:14px;
-  color:#ddd;
-  word-break:break-word;
-}
-
-.comment-time{
-  color:#666;
-  font-size:8px;
-  margin-top:2px;
-}
-
-.chat-form{
-  display:flex;
-  gap:5px;
-  margin-top:7px;
-}
-
-.chat-input{
-  min-width:0;
-  flex:1;
-  height:34px;
-  border-radius:17px;
-  border:1px solid #292929;
-  outline:none;
-  background:#151515;
-  color:#fff;
-  padding:0 12px;
-  font-size:11px;
-}
-
-.chat-input:focus{
-  border-color:#ff1744;
-}
-
-.chat-send{
-  width:38px;
-  height:34px;
-  border:0;
-  border-radius:17px;
-  background:#ff1744;
-  color:#fff;
-  font-size:15px;
-  cursor:pointer;
-}
-
-/* =========================
-   CALL OVERLAY
-========================= */
-
-#incomingCall{
-  position:fixed;
-  inset:0;
-  z-index:5000;
-  background:rgba(0,0,0,.96);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.call-box{
-  width:min(360px,92vw);
-  text-align:center;
-}
-
-.call-photo{
-  width:125px;
-  height:125px;
-  border-radius:50%;
-  object-fit:cover;
-  border:4px solid #ff1744;
-  box-shadow:
-    0 0 35px
-    rgba(255,23,68,.45);
-  animation:ringPulse 1.4s infinite;
-}
-
-@keyframes ringPulse{
-
-  50%{
-    box-shadow:
-      0 0 0 14px
-      rgba(255,23,68,.08),
-      0 0 40px
-      rgba(255,23,68,.5);
-  }
-
-}
-
-.call-live{
-  margin:20px auto 10px;
-  display:table;
-  background:#e6002d;
-  padding:5px 10px;
-  border-radius:5px;
-  font-size:11px;
-  font-weight:900;
-}
-
-.call-name{
-  font-size:24px;
-  font-weight:900;
-  margin-bottom:5px;
-}
-
-.call-text{
-  color:#999;
-  font-size:13px;
-  margin-bottom:25px;
-}
-
-.call-buttons{
-  display:flex;
-  justify-content:center;
-  gap:35px;
-}
-
-.call-btn{
-  width:65px;
-  height:65px;
-  border:0;
-  border-radius:50%;
-  color:#fff;
-  font-size:26px;
-  cursor:pointer;
-}
-
-.answer{
-  background:#18c968;
-}
-
-.reject{
-  background:#e51b3e;
+@media(min-width:700px){
+ .photoGrid{
+  grid-template-columns:repeat(4,1fr);
+  max-width:1000px;margin:auto;
+ }
 }
 
 </style>
@@ -594,2379 +198,1264 @@ body{
 
 <body>
 
-<!-- WELCOME PAGE -->
+<div id="welcomeScreen">
+ <div class="logo">Live<span>X</span></div>
+ <div class="welcomeText">Connecting you to live profiles...</div>
+ <div class="loader"></div>
+</div>
 
-<section id="welcomeScreen">
+<div id="photosPage">
 
-  <div class="welcome-live">
-    <i></i>
-    LIVE NOW
+ <div class="topbar">
+  <div class="brand">Live<span>X</span></div>
+  <div class="online">
+   <span class="liveDot"></span>
+   <span id="onlineNumber">21</span> online
   </div>
+ </div>
 
-  <div class="logo">
-    Live<span>X</span>
-  </div>
+ <div id="photoGrid" class="photoGrid"></div>
 
-  <h1 class="welcome-title">
-    Welcome to LiveX
-  </h1>
+</div>
 
-  <p class="welcome-text">
-    Connecting you with live profiles...
-  </p>
-
-  <div class="loader"></div>
-
-</section>
-
-<!-- PHOTOS PAGE -->
-
-<section id="photosPage" class="hidden">
-
-  <div class="topbar">
-
-    <div class="brand">
-      Live<span>X</span>
-    </div>
-
-    <div class="online">
-
-      <span class="online-dot"></span>
-
-      <span id="onlineNumber">
-        21 online
-      </span>
-
-    </div>
-
-  </div>
-
-  <div class="photos-title">
-
-    Live profiles
-
-    <small>
-      Tap a profile to connect
-    </small>
-
-  </div>
-
-  <div id="photosContainer"></div>
-
-</section>
-
-<!-- INCOMING CALL -->
-
-<section id="incomingCall" class="hidden">
-
-  <div class="call-box">
-
-    <img
-      id="callPhoto"
-      class="call-photo"
-      src="./photo1.jpg"
-      alt="Incoming call"
-    >
-
-    <div class="call-live">
-      🔴 LIVE CALL
-    </div>
-
-    <div id="callName" class="call-name">
-      Cute
-    </div>
-
-    <div class="call-text">
-      Incoming live call...
-    </div>
-
-    <div class="call-buttons">
-
-      <button
-        id="rejectCall"
-        class="call-btn reject"
-        type="button"
-      >
-        ✕
-      </button>
-
-      <button
-        id="answerCall"
-        class="call-btn answer"
-        type="button"
-      >
-        ✓
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- PART 1 INAISHIA HAPA KWA STYLE + HTML YA MWANZO -->
-  <style>
-
-/* =========================
-   VIDEO PAGE
-========================= */
-
-#videoPage{
-  position:fixed;
-  inset:0;
-  z-index:4500;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-#liveVideo{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.video-live{
-  position:absolute;
-  top:18px;
-  left:18px;
-  z-index:5;
-  background:#e6002d;
-  padding:7px 10px;
-  border-radius:6px;
-  font-size:11px;
-  font-weight:900;
-}
-
-/* =========================
-   INSUFFICIENT PAGE
-========================= */
-
-#insufficientPage{
-  position:fixed;
-  inset:0;
-  z-index:4200;
-  background:#070707;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-
-.insufficient-box{
-  width:min(360px,90vw);
-  padding:28px;
-  border:1px solid #292929;
-  border-radius:18px;
-  background:#111;
-}
-
-.warning{
-  font-size:42px;
-  margin-bottom:12px;
-}
-
-.insufficient-box h2{
-  margin:0 0 8px;
-  font-size:23px;
-}
-
-.insufficient-box p{
-  margin:0;
-  color:#999;
-  font-size:13px;
-}
-
-/* =========================
-   ROOM CLOSED
-========================= */
-
-#roomClosed{
-  position:fixed;
-  inset:0;
-  z-index:4100;
-  background:#050505;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-
-.closed-box{
-  padding:25px;
-}
-
-.closed-box h2{
-  color:#ff3154;
-}
-
-/* =========================
-   SMALL PHONES
-========================= */
-
-@media(max-width:360px){
-
-  #photosContainer{
-    gap:5px;
-    padding:0 5px;
-  }
-
-  .photo-name{
-    font-size:11px;
-  }
-
-  .social-btn{
-    font-size:8px;
-  }
-
-  .social-btn .icon{
-    font-size:16px;
-  }
-
-  .chat-comments{
-    height:120px;
-  }
-
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- VIDEO -->
-
-<section id="videoPage" class="hidden">
-
-  <div class="video-live">
-    🔴 LIVE
-  </div>
-
-  <video
-    id="liveVideo"
-    playsinline
-    preload="auto"
-  >
-
-    <source
-      src="./IMG_20261001_011110_570.mp4"
-      type="video/mp4"
-    >
-
-  </video>
-
-</section>
-
-<!-- INSUFFICIENT -->
-
-<section
-  id="insufficientPage"
-  class="hidden"
->
-
-  <div class="insufficient-box">
-
-    <div class="warning">
-      ⏱️
-    </div>
-
-    <h2>
-      Insufficient Minutes
-    </h2>
-
-    <p>
-      You need minutes to continue
-      the live conversation.
-    </p>
-
-  </div>
-
-</section>
-
-<!-- ROOM CLOSED -->
-
-<section
-  id="roomClosed"
-  class="hidden"
->
-
-  <div class="closed-box">
-
-    <div style="font-size:45px;">
-      🔴
-    </div>
-
-    <h2>
-      Live room closed
-    </h2>
-
-    <p style="color:#888;">
-      This profile is currently offline.
-    </p>
-
-  </div>
-
-</section>
+<div id="reactionPopup" class="reactionPopup"></div>
 
 <script>
-
 "use strict";
 
-/* =========================
-   PROFILE DATA
-========================= */
+const IMAGE_BASE="./";
 
-const profiles = [
+const PHOTO_NAMES=[
+ {name:"Cute",age:24,country:"Kenya",flag:"🇰🇪",image:"photo1.jpg"},
+ {name:"Becky",age:22,country:"Kenya",flag:"🇰🇪",image:"photo2.jpg"},
+ {name:"Dorry",age:26,country:"Kenya",flag:"🇰🇪",image:"photo4.jpg"},
+ {name:"Sharon",age:23,country:"Kenya",flag:"🇰🇪",image:"photo5.jpg"},
+ {name:"Lilian",age:27,country:"Kenya",flag:"🇰🇪",image:"1785179340825.jpg"},
 
-  {
-    name:"Cute",
-    age:24,
-    country:"🇰🇪",
-    image:"photo1.jpg",
-    likes:5842
-  },
+ {name:"Asha",age:25,country:"Tanzania",flag:"🇹🇿",image:"1785179340825 (1).jpg"},
+ {name:"Neema",age:23,country:"Tanzania",flag:"🇹🇿",image:"1785179362758.jpg"},
+ {name:"Zawadi",age:28,country:"Tanzania",flag:"🇹🇿",image:"1785179915649.jpg"},
+ {name:"Rehema",age:24,country:"Tanzania",flag:"🇹🇿",image:"Screenshot_20260731-045343.png"},
 
-  {
-    name:"Becky",
-    age:22,
-    country:"🇰🇪",
-    image:"photo2.jpg",
-    likes:6317
-  },
+ {name:"Blessing",age:22,country:"Nigeria",flag:"🇳🇬",image:"photo1.jpg"},
+ {name:"Favour",age:26,country:"Nigeria",flag:"🇳🇬",image:"photo2.jpg"},
+ {name:"Peace",age:25,country:"Nigeria",flag:"🇳🇬",image:"photo4.jpg"},
+ {name:"Joy",age:27,country:"Nigeria",flag:"🇳🇬",image:"photo5.jpg"},
 
-  {
-    name:"Dorry",
-    age:26,
-    country:"🇰🇪",
-    image:"photo4.jpg",
-    likes:5276
-  },
+ {name:"Grace",age:24,country:"Congo",flag:"🇨🇩",image:"1785179340825.jpg"},
+ {name:"Mimi",age:23,country:"Congo",flag:"🇨🇩",image:"1785179340825 (1).jpg"},
+ {name:"Nadia",age:26,country:"Congo",flag:"🇨🇩",image:"1785179362758.jpg"},
+ {name:"Bella",age:25,country:"Congo",flag:"🇨🇩",image:"1785179915649.jpg"},
+ {name:"Princess",age:28,country:"Congo",flag:"🇨🇩",image:"Screenshot_20260731-045343.png"},
 
-  {
-    name:"Sharon",
-    age:23,
-    country:"🇰🇪",
-    image:"photo5.jpg",
-    likes:7128
-  },
+ {name:"Emily",age:24,country:"Canada",flag:"🇨🇦",image:"photo1.jpg"},
+ {name:"Sophie",age:27,country:"Canada",flag:"🇨🇦",image:"photo2.jpg"},
 
-  {
-    name:"Lilian",
-    age:27,
-    country:"🇰🇪",
-    image:"1785179340825.jpg",
-    likes:5934
-  },
+ {name:"Thandi",age:25,country:"South Africa",flag:"🇿🇦",image:"photo4.jpg"},
+ {name:"Lerato",age:29,country:"South Africa",flag:"🇿🇦",image:"photo5.jpg"},
 
-  {
-    name:"Asha",
-    age:25,
-    country:"🇹🇿",
-    image:"1785179340825 (1).jpg",
-    likes:6842
-  },
-
-  {
-    name:"Neema",
-    age:23,
-    country:"🇹🇿",
-    image:"1785179362758.jpg",
-    likes:7561
-  },
-
-  {
-    name:"Zawadi",
-    age:28,
-    country:"🇹🇿",
-    image:"1785179915649.jpg",
-    likes:6219
-  },
-
-  {
-    name:"Rehema",
-    age:24,
-    country:"🇹🇿",
-    image:"Screenshot_20260731-045343.png",
-    likes:5488
-  },
-
-  {
-    name:"Blessing",
-    age:22,
-    country:"🇳🇬",
-    image:"photo1.jpg",
-    likes:8234
-  },
-
-  {
-    name:"Favour",
-    age:26,
-    country:"🇳🇬",
-    image:"photo2.jpg",
-    likes:6917
-  },
-
-  {
-    name:"Peace",
-    age:25,
-    country:"🇳🇬",
-    image:"photo4.jpg",
-    likes:5743
-  },
-
-  {
-    name:"Joy",
-    age:27,
-    country:"🇳🇬",
-    image:"photo5.jpg",
-    likes:6388
-  },
-
-  {
-    name:"Grace",
-    age:24,
-    country:"🇨🇩",
-    image:"1785179340825.jpg",
-    likes:9075
-  },
-
-  {
-    name:"Mimi",
-    age:23,
-    country:"🇨🇩",
-    image:"1785179340825 (1).jpg",
-    likes:6247
-  },
-
-  {
-    name:"Nadia",
-    age:26,
-    country:"🇨🇩",
-    image:"1785179362758.jpg",
-    likes:7384
-  },
-
-  {
-    name:"Bella",
-    age:25,
-    country:"🇨🇩",
-    image:"1785179915649.jpg",
-    likes:5812
-  },
-
-  {
-    name:"Princess",
-    age:28,
-    country:"🇨🇩",
-    image:"Screenshot_20260731-045343.png",
-    likes:8651
-  },
-
-  {
-    name:"Emily",
-    age:24,
-    country:"🇨🇦",
-    image:"photo1.jpg",
-    likes:5937
-  },
-
-  {
-    name:"Sophie",
-    age:27,
-    country:"🇨🇦",
-    image:"photo2.jpg",
-    likes:6742
-  },
-
-  {
-    name:"Thandi",
-    age:25,
-    country:"🇿🇦",
-    image:"photo4.jpg",
-    likes:7148
-  },
-
-  {
-    name:"Lerato",
-    age:29,
-    country:"🇿🇦",
-    image:"photo5.jpg",
-    likes:5426
-  },
-
-  {
-    name:"Ashley",
-    age:23,
-    country:"🇺🇸",
-    image:"1785179340825.jpg",
-    likes:7984
-  },
-
-  {
-    name:"Jessica",
-    age:26,
-    country:"🇺🇸",
-    image:"1785179362758.jpg",
-    likes:6623
-  }
-
+ {name:"Ashley",age:23,country:"USA",flag:"🇺🇸",image:"1785179340825.jpg"},
+ {name:"Jessica",age:26,country:"USA",flag:"🇺🇸",image:"1785179362758.jpg"}
 ];
-  /* =========================
-   STORAGE KEYS
-========================= */
 
-const LIKE_KEY =
-  "liveProfileLikes";
+const STORAGE_LIKES="liveProfileLikes";
+const STORAGE_LOVES="liveProfileLoves";
+const STORAGE_FOLLOWS="liveProfileFollows";
+const STORAGE_COMMENTS="liveProfileComments";
 
-const LOVE_KEY =
-  "liveProfileLoves";
-
-const FOLLOW_KEY =
-  "liveProfileFollows";
-
-const COMMENTS_KEY =
-  "liveProfileComments";
-
-const SAMPLE_WATCHED_KEY =
-  "myReferralSampleWatched";
-
-
-/* =========================
-   STORAGE HELPERS
-========================= */
-
-function readStorage(key){
-
-  try{
-
-    const value =
-      localStorage.getItem(key);
-
-    if(!value){
-      return {};
-    }
-
-    return JSON.parse(value);
-
-  }catch(error){
-
-    return {};
-
-  }
-
+const SAMPLE_COMMENTS=[
+ [
+  ["Mia","You look beautiful tonight ❤️"],
+  ["Kevin","That smile is amazing 😍"],
+  ["Rose","Hello gorgeous 💕"],
+  ["Daniel","I could stay here all night 😘"],
+  ["Lina","You have such a sweet vibe ❤️"],
+  ["Mark","Beautiful eyes 😍"],
+  ["Anna","Sending you love 💕"],
+  ["Chris","You look so cute tonight ❤️"]
+ ],
+ [
+  ["James","Your smile made my night ❤️"],
+  ["Linda","So beautiful 😍"],
+  ["Brian","Hello beautiful 💕"],
+  ["Faith","You are glowing tonight ✨"],
+  ["Mike","Those eyes 😍❤️"],
+  ["Sarah","Very lovely ❤️"],
+  ["Alex","Wish I could say hello 😘"],
+  ["Grace","You are adorable 💕"]
+ ],
+ [
+  ["David","You are looking amazing ❤️"],
+  ["Lucy","Beautiful smile 😍"],
+  ["Tom","Hello lovely 💕"],
+  ["Nora","So sweet tonight ❤️"],
+  ["Ryan","You caught my attention 😘"],
+  ["Emma","Absolutely gorgeous ✨"],
+  ["John","Sending a little love ❤️"],
+  ["Mary","You look wonderful 💕"]
+ ]
+];
+  function readStorage(key,fallback){
+ try{
+  const value=localStorage.getItem(key);
+  return value?JSON.parse(value):fallback;
+ }catch(e){
+  return fallback;
+ }
 }
-
 
 function writeStorage(key,value){
-
-  try{
-
-    localStorage.setItem(
-      key,
-      JSON.stringify(value)
-    );
-
-  }catch(error){
-
-  }
-
+ try{
+  localStorage.setItem(key,JSON.stringify(value));
+ }catch(e){}
 }
-
-
-/* =========================
-   PROFILE ID
-========================= */
 
 function profileId(index){
-
-  return "profile_" + index;
-
+ return "profile_"+index;
 }
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
 
 function escapeHtml(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
+ return String(value)
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 }
-
-
-/* =========================
-   NUMBER
-========================= */
 
 function formatNumber(number){
-
-  return Number(
-    number || 0
-  ).toLocaleString();
-
+ return Number(number||0).toLocaleString();
 }
-
-
-/* =========================
-   LIKES
-========================= */
 
 function getLikes(index){
+ const data=readStorage(STORAGE_LIKES,{});
+ const id=profileId(index);
 
-  const data =
-    readStorage(LIKE_KEY);
+ if(data[id]==null){
+  data[id]=5000+(index*137)+Math.floor(Math.random()*300);
+  writeStorage(STORAGE_LIKES,data);
+ }
 
-  const id =
-    profileId(index);
-
-  if(
-    data[id] === undefined ||
-    Number(data[id]) <
-    profiles[index].likes
-  ){
-
-    data[id] =
-      profiles[index].likes;
-
-    writeStorage(
-      LIKE_KEY,
-      data
-    );
-
-  }
-
-  return Number(data[id]);
-
+ return data[id];
 }
-
-
-/* =========================
-   LOVE
-========================= */
 
 function getLove(index){
+ const data=readStorage(STORAGE_LOVES,{});
+ const id=profileId(index);
 
-  const data =
-    readStorage(LOVE_KEY);
+ if(data[id]==null){
+  data[id]=800+(index*31);
+  writeStorage(STORAGE_LOVES,data);
+ }
 
-  return !!data[
-    profileId(index)
-  ];
-
+ return data[id];
 }
-
-
-/* =========================
-   FOLLOW
-========================= */
 
 function getFollow(index){
+ const data=readStorage(STORAGE_FOLLOWS,{});
+ const id=profileId(index);
 
-  const data =
-    readStorage(FOLLOW_KEY);
+ if(data[id]==null){
+  data[id]=300+(index*17);
+  writeStorage(STORAGE_FOLLOWS,data);
+ }
 
-  return !!data[
-    profileId(index)
-  ];
-
+ return data[id];
 }
-
-
-/* =========================
-   ROMANTIC COMMENTS
-========================= */
-
-const romanticComments = [
-
-  [
-    ["Milly",
-     "You look so beautiful tonight ❤️",
-     "2m"],
-
-    ["Kevin",
-     "That smile is dangerous 😍",
-     "3m"],
-
-    ["Rose",
-     "I could watch you all night 💕",
-     "5m"],
-
-    ["Daniel",
-     "You are absolutely gorgeous 🔥",
-     "6m"],
-
-    ["Ann",
-     "Your eyes are beautiful ❤️",
-     "8m"],
-
-    ["Mark",
-     "Hello beautiful 😍",
-     "10m"],
-
-    ["Lucy",
-     "Such a lovely smile 🥰",
-     "12m"],
-
-    ["Brian",
-     "You make this room special ❤️",
-     "15m"],
-
-    ["Faith",
-     "So pretty tonight 💕",
-     "18m"],
-
-    ["Chris",
-     "You caught my attention 😍",
-     "21m"]
-  ],
-
-  [
-    ["Mike",
-     "Becky you are stunning ❤️",
-     "1m"],
-
-    ["Jane",
-     "That smile 😍😍",
-     "3m"],
-
-    ["Alex",
-     "You look amazing tonight 💕",
-     "4m"],
-
-    ["Mary",
-     "So beautiful ❤️",
-     "7m"],
-
-    ["John",
-     "I can't stop looking at you 😍",
-     "9m"],
-
-    ["Lydia",
-     "You have such a sweet smile 🥰",
-     "11m"],
-
-    ["Sam",
-     "Beautiful as always ❤️",
-     "14m"],
-
-    ["Linda",
-     "You made my evening better 💕",
-     "17m"],
-
-    ["Peter",
-     "Hello gorgeous 😍",
-     "20m"],
-
-    ["Nora",
-     "You are lovely ❤️",
-     "25m"]
-  ],
-
-  [
-    ["David",
-     "You are gorgeous ❤️",
-     "2m"],
-
-    ["Mercy",
-     "Your smile is everything 😍",
-     "4m"],
-
-    ["James",
-     "So beautiful tonight 💕",
-     "6m"],
-
-    ["Ivy",
-     "You have amazing eyes ❤️",
-     "8m"],
-
-    ["Eric",
-     "Hello beautiful 😍",
-     "11m"],
-
-    ["Sarah",
-     "This smile is amazing 🔥",
-     "13m"],
-
-    ["Tom",
-     "You look incredible ❤️",
-     "16m"],
-
-    ["Grace",
-     "Very lovely 🥰",
-     "19m"],
-
-    ["Paul",
-     "I really like your vibe 💕",
-     "22m"],
-
-    ["Maya",
-     "Beautiful girl ❤️",
-     "27m"]
-  ],
-
-  [
-    ["Kevin",
-     "You are shining tonight ❤️",
-     "2m"],
-
-    ["Bella",
-     "Beautiful smile 😍",
-     "4m"],
-
-    ["Leo",
-     "You look so cute 💕",
-     "5m"],
-
-    ["Ruth",
-     "Your eyes are amazing ❤️",
-     "8m"],
-
-    ["Adam",
-     "Hello beautiful 😍",
-     "10m"],
-
-    ["Emma",
-     "I love your energy 🥰",
-     "12m"],
-
-    ["Noah",
-     "You are gorgeous ❤️",
-     "15m"],
-
-    ["Amy",
-     "Such a sweet smile 💕",
-     "18m"],
-
-    ["Jack",
-     "You caught my attention 😍",
-     "21m"],
-
-    ["Lena",
-     "So beautiful tonight ❤️",
-     "24m"]
-  ]
-
-];
-
-
-/* =========================
-   GET COMMENTS
-========================= */
 
 function getComments(index){
+ const data=readStorage(STORAGE_COMMENTS,{});
+ const id=profileId(index);
 
-  const data =
-    readStorage(COMMENTS_KEY);
+ if(!Array.isArray(data[id])){
+  const source=SAMPLE_COMMENTS[index%SAMPLE_COMMENTS.length];
 
-  const id =
-    profileId(index);
-
-  if(
-    Array.isArray(data[id]) &&
-    data[id].length > 0
-  ){
-
-    return data[id];
-
-  }
-
-  const seed =
-    romanticComments[
-      index %
-      romanticComments.length
-    ];
-
-  return seed.map(
-    function(item){
-
-      return {
-        user:item[0],
-        text:item[1],
-        time:item[2]
-      };
-
-    }
-  );
-
-}
-
-
-/* =========================
-   SAVE COMMENTS
-========================= */
-
-function saveComments(
-  index,
-  comments
-){
-
-  const data =
-    readStorage(COMMENTS_KEY);
-
-  data[
-    profileId(index)
-  ] = comments;
-
-  writeStorage(
-    COMMENTS_KEY,
-    data
-  );
-
-  }
-  /* =========================
-   RENDER COMMENTS
-========================= */
-
-function renderComments(index){
-
-  const box =
-    document.getElementById(
-      "comments-" + index
-    );
-
-  if(!box){
-    return;
-  }
-
-  const comments =
-    getComments(index);
-
-  box.innerHTML = "";
-
-  comments.forEach(
-    function(comment){
-
-      const row =
-        document.createElement(
-          "div"
-        );
-
-      row.className =
-        "comment";
-
-      const avatar =
-        document.createElement(
-          "div"
-        );
-
-      avatar.className =
-        "comment-avatar";
-
-      avatar.textContent =
-        String(
-          comment.user || "?"
-        )
-        .charAt(0)
-        .toUpperCase();
-
-      const body =
-        document.createElement(
-          "div"
-        );
-
-      body.className =
-        "comment-body";
-
-      body.innerHTML =
-
-        '<div class="comment-user">' +
-        escapeHtml(
-          comment.user
-        ) +
-        '</div>' +
-
-        '<div class="comment-text">' +
-        escapeHtml(
-          comment.text
-        ) +
-        '</div>' +
-
-        '<div class="comment-time">' +
-        escapeHtml(
-          comment.time || "now"
-        ) +
-        '</div>';
-
-      row.appendChild(
-        avatar
-      );
-
-      row.appendChild(
-        body
-      );
-
-      box.appendChild(
-        row
-      );
-
-    }
-  );
-
-  requestAnimationFrame(
-    function(){
-
-      box.scrollTop =
-        box.scrollHeight;
-
-    }
-  );
-
-}
-
-
-/* =========================
-   ADD COMMENT
-========================= */
-
-function addComment(
-  index,
-  input
-){
-
-  if(!input){
-    return;
-  }
-
-  const text =
-    input.value.trim();
-
-  if(!text){
-    return;
-  }
-
-  const comments =
-    getComments(index);
-
-  comments.push({
-
-    user:"You",
-
-    text:text,
-
+  data[id]=source.map(function(item){
+   return{
+    name:item[0],
+    text:item[1],
     time:"now"
-
+   };
   });
 
-  saveComments(
-    index,
-    comments
-  );
+  writeStorage(STORAGE_COMMENTS,data);
+ }
 
-  input.value = "";
-
-  renderComments(
-    index
-  );
-
+ return data[id];
 }
 
-
-/* =========================
-   LIKE
-========================= */
-
-function toggleLike(
-  index,
-  button
-){
-
-  const data =
-    readStorage(LIKE_KEY);
-
-  const id =
-    profileId(index);
-
-  let count =
-    Number(
-      data[id] ||
-      profiles[index].likes
-    );
-
-  const liked =
-    button.dataset.liked ===
-    "true";
-
-  if(liked){
-
-    count--;
-
-    button.dataset.liked =
-      "false";
-
-    button.classList.remove(
-      "active"
-    );
-
-  }else{
-
-    count++;
-
-    button.dataset.liked =
-      "true";
-
-    button.classList.add(
-      "active"
-    );
-
-  }
-
-  data[id] =
-    count;
-
-  writeStorage(
-    LIKE_KEY,
-    data
-  );
-
-  const countElement =
-    button.querySelector(
-      ".count"
-    );
-
-  if(countElement){
-
-    countElement.textContent =
-      formatNumber(count);
-
-  }
-
+function saveComments(index,comments){
+ const data=readStorage(STORAGE_COMMENTS,{});
+ data[profileId(index)]=comments;
+ writeStorage(STORAGE_COMMENTS,data);
 }
 
+function renderComments(index){
+ const box=document.getElementById("comments_"+index);
 
-/* =========================
-   LOVE
-========================= */
+ if(!box)return;
 
-function toggleLove(
-  index,
-  button
-){
+ const comments=getComments(index);
 
-  const data =
-    readStorage(LOVE_KEY);
+ if(!comments.length){
+  box.innerHTML=
+   '<div class="comment">No comments yet.</div>';
+  return;
+ }
 
-  const id =
-    profileId(index);
+ box.innerHTML=comments.map(function(comment){
 
-  const active =
-    !!data[id];
+  return `
+   <div class="comment">
+    <strong>${escapeHtml(comment.name)}</strong>
+    ${escapeHtml(comment.text)}
+    <small>${escapeHtml(comment.time||"now")}</small>
+   </div>
+  `;
 
-  if(active){
-
-    delete data[id];
-
-    button.classList.remove(
-      "active"
-    );
-
-  }else{
-
-    data[id] = true;
-
-    button.classList.add(
-      "active"
-    );
-
-    showReaction("❤️");
-
-  }
-
-  writeStorage(
-    LOVE_KEY,
-    data
-  );
-
+ }).join("");
 }
 
+function addComment(index,input){
+ if(!input)return;
 
-/* =========================
-   FOLLOW
-========================= */
+ const text=input.value.trim();
 
-function toggleFollow(
-  index,
-  button
-){
+ if(!text)return;
 
-  const data =
-    readStorage(FOLLOW_KEY);
+ const comments=getComments(index);
 
-  const id =
-    profileId(index);
+ comments.push({
+  name:"You",
+  text:text,
+  time:"just now"
+ });
 
-  const active =
-    !!data[id];
+ saveComments(index,comments);
 
-  if(active){
+ input.value="";
 
-    delete data[id];
+ renderComments(index);
 
-    button.classList.remove(
-      "follow-active"
-    );
+ const box=document.getElementById("comments_"+index);
 
-    button.innerHTML =
-      '<span class="icon">＋</span>Follow';
+ if(box){
+  box.scrollTop=box.scrollHeight;
+ }
+}
+  function toggleLike(index,button){
+ const data=readStorage(STORAGE_LIKES,{});
+ const id=profileId(index);
 
-  }else{
+ data[id]=(data[id]||getLikes(index))+1;
 
-    data[id] = true;
+ writeStorage(STORAGE_LIKES,data);
 
-    button.classList.add(
-      "follow-active"
-    );
+ const count=button.querySelector(".count");
 
-    button.innerHTML =
-      '<span class="icon">✓</span>Following';
+ if(count){
+  count.textContent=formatNumber(data[id]);
+ }
 
-    showReaction("💚");
+ button.classList.add("liked");
 
-  }
-
-  writeStorage(
-    FOLLOW_KEY,
-    data
-  );
-
+ showReaction("❤️ Liked");
 }
 
+function toggleLove(index,button){
+ const data=readStorage(STORAGE_LOVES,{});
+ const id=profileId(index);
 
-/* =========================
-   REACTION
-========================= */
+ data[id]=(data[id]||getLove(index))+1;
 
-function showReaction(
-  symbol
-){
+ writeStorage(STORAGE_LOVES,data);
 
-  const reaction =
-    document.createElement(
-      "div"
-    );
+ const count=button.querySelector(".count");
 
-  reaction.textContent =
-    symbol;
+ if(count){
+  count.textContent=formatNumber(data[id]);
+ }
 
-  reaction.style.position =
-    "fixed";
+ button.classList.add("loved");
 
-  reaction.style.left =
-    "50%";
+ showReaction("💕 Love");
+}
 
-  reaction.style.top =
-    "50%";
+function toggleFollow(index,button){
+ const data=readStorage(STORAGE_FOLLOWS,{});
+ const id=profileId(index);
 
-  reaction.style.transform =
-    "translate(-50%,-50%)";
+ data[id]=(data[id]||getFollow(index))+1;
 
-  reaction.style.zIndex =
-    "10000";
+ writeStorage(STORAGE_FOLLOWS,data);
 
-  reaction.style.fontSize =
-    "60px";
+ const count=button.querySelector(".count");
 
-  reaction.style.pointerEvents =
-    "none";
+ if(count){
+  count.textContent=formatNumber(data[id]);
+ }
 
-  reaction.style.transition =
-    "all .8s ease";
+ button.classList.add("followed");
 
-  document.body.appendChild(
-    reaction
-  );
+ button.innerHTML="✓ Followed";
 
-  requestAnimationFrame(
-    function(){
+ showReaction("✓ Following");
+}
 
-      reaction.style.transform =
-        "translate(-50%,-90%) scale(1.35)";
+function showReaction(message){
+ const popup=document.getElementById("reactionPopup");
 
-      reaction.style.opacity =
-        "0";
+ if(!popup)return;
 
-    }
-  );
+ popup.textContent=message;
+ popup.style.display="block";
 
-  setTimeout(
-    function(){
+ clearTimeout(window.reactionTimer);
 
-      reaction.remove();
-
-    },
-    900
-  );
-
-        }
-  /* =========================
-   OPEN PAYMENT
-========================= */
+ window.reactionTimer=setTimeout(function(){
+  popup.style.display="none";
+ },1200);
+}
 
 function openPayment(index){
+ const profile=PHOTO_NAMES[index];
 
-  const profile =
-    profiles[index];
+ const params=new URLSearchParams();
 
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
+ params.set("employee",profile.name);
+ params.set("profile",profile.name);
+ params.set("age",profile.age);
+ params.set("country",profile.country);
 
-  const employee =
-    params.get("employee");
+ const currentRef=
+  new URLSearchParams(location.search).get("ref");
 
-  const ref =
-    params.get("ref");
+ if(currentRef){
+  params.set("ref",currentRef);
+ }
 
-  const paymentParams =
-    new URLSearchParams();
-
-  paymentParams.set(
-    "profile",
-    profile.name
-  );
-
-  if(employee){
-
-    paymentParams.set(
-      "employee",
-      employee
-    );
-
-  }else if(ref){
-
-    paymentParams.set(
-      "ref",
-      ref
-    );
-
-  }
-
-  window.location.href =
-    "payment.html?" +
-    paymentParams.toString();
-
+ window.location.href=
+  "payment.html?"+params.toString();
 }
 
+function createPhotoCard(profile,index){
 
-/* =========================
-   CREATE PHOTO CARD
-========================= */
+ const likes=getLikes(index);
+ const loves=getLove(index);
+ const follows=getFollow(index);
 
-function createPhotoCard(index){
+ const card=document.createElement("div");
 
-  const profile =
-    profiles[index];
+ card.className="photoCard";
 
-  const card =
-    document.createElement(
-      "article"
-    );
+ card.innerHTML=`
 
-  card.className =
-    "photo-card";
+  <div class="photoWrap" id="photo_${index}">
+
+   <img
+    src="${IMAGE_BASE}${encodeURIComponent(profile.image)}"
+    alt="${escapeHtml(profile.name)}"
+    loading="lazy"
+   >
 
-  const likes =
-    getLikes(index);
+   <div class="liveBadge">
+    ● LIVE
+   </div>
 
-  const loved =
-    getLove(index);
+   <div class="playIcon">
+    ▶
+   </div>
 
-  const followed =
-    getFollow(index);
+  </div>
+
+  <div class="profileInfo">
 
+   <div class="profileName">
+
+    <span
+     id="statusDot_${index}"
+     class="nameStatusDot"
+     title="Online"
+    ></span>
+
+    <span class="profileNameText">
+     ${profile.flag}
+     ${escapeHtml(profile.name)}
+    </span>
+
+   </div>
+
+   <div class="profileAge">
+    ${profile.age} years · ${escapeHtml(profile.country)}
+   </div>
+
+  </div>
+
+  <div class="socialRow">
+
+   <button class="socialBtn likeBtn" type="button">
+    ❤️ Like<br>
+    <span class="count">
+     ${formatNumber(likes)}
+    </span>
+   </button>
+
+   <button class="socialBtn loveBtn" type="button">
+    💕 Love<br>
+    <span class="count">
+     ${formatNumber(loves)}
+    </span>
+   </button>
+
+   <button class="socialBtn followBtn" type="button">
+    ➕ Follow<br>
+    <span class="count">
+     ${formatNumber(follows)}
+    </span>
+   </button>
 
-  card.innerHTML =
+   <button class="socialBtn chatBtn" type="button">
+    💬 Chat
+   </button>
 
-    '<div class="photo-wrapper">' +
+  </div>
 
-      '<img src="' +
-      escapeHtml(
-        profile.image
-      ) +
-      '" alt="' +
-      escapeHtml(
-        profile.name
-      ) +
-      '" loading="lazy">' +
+  <div class="chatBox">
 
-      '<div class="photo-overlay"></div>' +
+   <div class="chatTitle">
+    💬 Live chat · ${escapeHtml(profile.name)}
+   </div>
 
-      '<div class="live-label">' +
-      'LIVE' +
-      '</div>' +
+   <div
+    class="chat-comments"
+    id="comments_${index}"
+    data-index="${index}"
+   ></div>
 
-      '<div class="play-icon"></div>' +
+   <form
+    class="commentForm"
+    id="commentForm_${index}"
+   >
 
-      '<div class="photo-info">' +
-
-        '<div class="photo-name">' +
-        escapeHtml(
-          profile.country
-        ) +
-        ' ' +
-        escapeHtml(
-          profile.name
-        ) +
-        '</div>' +
-
-        '<div class="photo-age">' +
-        profile.age +
-        ' years old' +
-        '</div>' +
-
-      '</div>' +
-
-    '</div>' +
-
-
-    '<div class="social-bar">' +
-
-      '<button ' +
-      'type="button" ' +
-      'class="social-btn like-btn">' +
-
-        '<span class="icon">👍</span>' +
-
-        'Like ' +
-
-        '<span class="count">' +
-        formatNumber(likes) +
-        '</span>' +
-
-      '</button>' +
-
-
-      '<button ' +
-      'type="button" ' +
-      'class="social-btn love-btn ' +
-      (
-        loved
-        ? "active"
-        : ""
-      ) +
-      '">' +
-
-        '<span class="icon">❤️</span>' +
-
-        'Love' +
-
-      '</button>' +
-
-
-      '<button ' +
-      'type="button" ' +
-      'class="social-btn follow-btn ' +
-      (
-        followed
-        ? "follow-active"
-        : ""
-      ) +
-      '">' +
-
-        '<span class="icon">' +
-
-        (
-          followed
-          ? "✓"
-          : "＋"
-        ) +
-
-        '</span>' +
-
-        (
-          followed
-          ? "Following"
-          : "Follow"
-        ) +
-
-      '</button>' +
-
-
-      '<button ' +
-      'type="button" ' +
-      'class="social-btn chat-btn">' +
-
-        '<span class="icon">💬</span>' +
-
-        'Chat' +
-
-      '</button>' +
-
-    '</div>' +
-
-
-    '<div class="chat-section">' +
-
-      '<div class="chat-title">' +
-
-        '<span>💬 Live chat</span>' +
-
-        '<span>Sample activity</span>' +
-
-      '</div>' +
-
-      '<div ' +
-      'class="chat-comments" ' +
-      'id="comments-' +
-      index +
-      '">' +
-
-      '</div>' +
-
-      '<form class="chat-form">' +
-
-        '<input ' +
-        'class="chat-input" ' +
-        'type="text" ' +
-        'placeholder="Write a message..." ' +
-        'autocomplete="off">' +
-
-        '<button ' +
-        'class="chat-send" ' +
-        'type="submit">' +
-
-        '➤' +
-
-        '</button>' +
-
-      '</form>' +
-
-    '</div>';
-  /* =========================
-   PHOTO CLICK
-========================= */
-
-  const imageWrapper =
-    card.querySelector(
-      ".photo-wrapper"
-    );
-
-  imageWrapper.addEventListener(
-    "click",
-    function(){
-
-      openPayment(index);
-
-    }
+    <input
+     class="commentInput"
+     type="text"
+     maxlength="180"
+     autocomplete="off"
+     placeholder="Write a message..."
+    >
+
+    <button
+     class="commentSend"
+     type="submit"
+    >
+     Send
+    </button>
+
+   </form>
+
+  </div>
+ `;
+
+ const photo=card.querySelector(".photoWrap");
+ const likeBtn=card.querySelector(".likeBtn");
+ const loveBtn=card.querySelector(".loveBtn");
+ const followBtn=card.querySelector(".followBtn");
+ const chatBtn=card.querySelector(".chatBtn");
+ const form=card.querySelector(".commentForm");
+ const input=card.querySelector(".commentInput");
+
+ photo.addEventListener("click",function(){
+  openPayment(index);
+ });
+
+ likeBtn.addEventListener("click",function(event){
+  event.stopPropagation();
+  toggleLike(index,likeBtn);
+ });
+
+ loveBtn.addEventListener("click",function(event){
+  event.stopPropagation();
+  toggleLove(index,loveBtn);
+ });
+
+ followBtn.addEventListener("click",function(event){
+  event.stopPropagation();
+  toggleFollow(index,followBtn);
+ });
+
+ chatBtn.addEventListener("click",function(event){
+  event.stopPropagation();
+  input.focus();
+ });
+
+ form.addEventListener("submit",function(event){
+  event.preventDefault();
+  event.stopPropagation();
+  addComment(index,input);
+ });
+
+ input.addEventListener("click",function(event){
+  event.stopPropagation();
+ });
+
+ input.addEventListener("keydown",function(event){
+  event.stopPropagation();
+ });
+
+ renderComments(index);
+
+ return card;
+  }
+  function createPhotos(){
+
+ const grid=document.getElementById("photoGrid");
+
+ if(!grid)return;
+
+ grid.innerHTML="";
+
+ PHOTO_NAMES.forEach(function(profile,index){
+
+  grid.appendChild(
+   createPhotoCard(profile,index)
   );
 
+ });
 
-/* =========================
-   LIKE BUTTON
-========================= */
+ startAllChatAutoScroll();
 
-  const likeButton =
-    card.querySelector(
-      ".like-btn"
-    );
-
-  likeButton.addEventListener(
-    "click",
-    function(event){
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
-      toggleLike(
-        index,
-        likeButton
-      );
-
-    }
-  );
-
-
-/* =========================
-   LOVE BUTTON
-========================= */
-
-  const loveButton =
-    card.querySelector(
-      ".love-btn"
-    );
-
-  loveButton.addEventListener(
-    "click",
-    function(event){
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
-      toggleLove(
-        index,
-        loveButton
-      );
-
-    }
-  );
-
-
-/* =========================
-   FOLLOW BUTTON
-========================= */
-
-  const followButton =
-    card.querySelector(
-      ".follow-btn"
-    );
-
-  followButton.addEventListener(
-    "click",
-    function(event){
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
-      toggleFollow(
-        index,
-        followButton
-      );
-
-    }
-  );
-
-
-/* =========================
-   CHAT BUTTON
-========================= */
-
-  const chatButton =
-    card.querySelector(
-      ".chat-btn"
-    );
-
-  chatButton.addEventListener(
-    "click",
-    function(event){
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
-      const section =
-        card.querySelector(
-          ".chat-section"
-        );
-
-      if(section){
-
-        section.scrollIntoView({
-          behavior:"smooth",
-          block:"center"
-        });
-
-      }
-
-    }
-  );
-
-
-/* =========================
-   COMMENT FORM
-========================= */
-
-  const form =
-    card.querySelector(
-      ".chat-form"
-    );
-
-  const input =
-    card.querySelector(
-      ".chat-input"
-    );
-
-  form.addEventListener(
-    "submit",
-    function(event){
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
-      addComment(
-        index,
-        input
-      );
-
-    }
-  );
-
-
-/* =========================
-   ENTER TO SEND
-========================= */
-
-  input.addEventListener(
-    "keydown",
-    function(event){
-
-      if(
-        event.key === "Enter" &&
-        !event.shiftKey
-      ){
-
-        event.preventDefault();
-
-        addComment(
-          index,
-          input
-        );
-
-      }
-
-    }
-  );
-
-
-/* =========================
-   SOCIAL BAR STOP
-========================= */
-
-  card.querySelector(
-    ".social-bar"
-  ).addEventListener(
-    "click",
-    function(event){
-
-      event.stopPropagation();
-
-    }
-  );
-
-
-/* =========================
-   CHAT STOP
-========================= */
-
-  card.querySelector(
-    ".chat-section"
-  ).addEventListener(
-    "click",
-    function(event){
-
-      event.stopPropagation();
-
-    }
-  );
-
-
-/* =========================
-   RENDER COMMENTS
-========================= */
-
-  setTimeout(
-    function(){
-
-      renderComments(index);
-
-    },
-    0
-  );
-
-
-  return card;
+ setTimeout(function(){
+  updateProfileStatuses();
+ },100);
 
 }
-
-
-/* =========================
-   CREATE ALL PHOTOS
-========================= */
-
-function createPhotos(){
-
-  const container =
-    document.getElementById(
-      "photosContainer"
-    );
-
-  if(!container){
-    return;
-  }
-
-  container.innerHTML = "";
-
-  profiles.forEach(
-    function(profile,index){
-
-      const card =
-        createPhotoCard(index);
-
-      container.appendChild(
-        card
-      );
-
-    }
-  );
-
-  }
-  /* =========================
-   SHOW PHOTOS
-========================= */
 
 function showPhotos(){
 
-  const welcome =
-    document.getElementById(
-      "welcomeScreen"
-    );
+ const welcome=
+  document.getElementById("welcomeScreen");
 
-  const photos =
-    document.getElementById(
-      "photosPage"
-    );
+ const photos=
+  document.getElementById("photosPage");
 
-  if(welcome){
+ if(welcome){
+  welcome.style.display="none";
+ }
 
-    welcome.classList.add(
-      "hidden"
-    );
+ if(photos){
+  photos.style.display="block";
+ }
 
-  }
-
-  if(photos){
-
-    photos.classList.remove(
-      "hidden"
-    );
-
-  }
-
+ window.scrollTo(0,0);
 }
-
-
-/* =========================
-   ONLINE NUMBER
-========================= */
 
 function updateOnline(){
 
-  const element =
-    document.getElementById(
-      "onlineNumber"
-    );
+ const number=
+  document.getElementById("onlineNumber");
 
-  if(!element){
-    return;
-  }
+ if(!number)return;
 
-  const number =
-    Math.floor(
-      Math.random() * 16
-    ) + 15;
+ const value=
+  15+Math.floor(Math.random()*16);
 
-  element.textContent =
-    number + " online";
-
+ number.textContent=value;
 }
 
-
 /* =========================
-   SHOW INCOMING CALL
+   RANDOM OFFLINE SYSTEM
 ========================= */
 
-function showIncomingCall(){
+let offlineProfiles=new Set();
 
-  const call =
-    document.getElementById(
-      "incomingCall"
-    );
+function chooseRandomOfflineProfiles(){
 
-  const photo =
-    document.getElementById(
-      "callPhoto"
-    );
+ offlineProfiles=new Set();
 
-  const name =
-    document.getElementById(
-      "callName"
-    );
+ const total=PHOTO_NAMES.length;
 
-  const randomIndex =
-    Math.floor(
-      Math.random() *
-      profiles.length
-    );
+ const amount=Math.min(5,total);
 
-  const profile =
-    profiles[randomIndex];
+ while(offlineProfiles.size<amount){
 
-  if(photo){
+  const index=
+   Math.floor(Math.random()*total);
 
-    photo.src =
-      profile.image;
+  offlineProfiles.add(index);
+ }
 
-  }
-
-  if(name){
-
-    name.textContent =
-      profile.name;
-
-  }
-
-  if(call){
-
-    call.classList.remove(
-      "hidden"
-    );
-
-  }
-
+ updateProfileStatuses();
 }
 
+function updateProfileStatuses(){
 
-/* =========================
-   HIDE CALL
-========================= */
+ PHOTO_NAMES.forEach(function(profile,index){
 
-function hideIncomingCall(){
+  const dot=
+   document.getElementById("statusDot_"+index);
 
-  const call =
-    document.getElementById(
-      "incomingCall"
-    );
+  if(!dot)return;
 
-  if(call){
+  if(offlineProfiles.has(index)){
 
-    call.classList.add(
-      "hidden"
-    );
-
-  }
-
-}
-
-
-/* =========================
-   VIDEO
-========================= */
-
-function playFirstVisitorVideo(){
-
-  hideIncomingCall();
-
-  const videoPage =
-    document.getElementById(
-      "videoPage"
-    );
-
-  const video =
-    document.getElementById(
-      "liveVideo"
-    );
-
-  if(!videoPage){
-
-    showInsufficient();
-
-    return;
-
-  }
-
-  videoPage.classList.remove(
-    "hidden"
-  );
-
-
-  if(video){
-
-    video.currentTime = 0;
-
-    const playPromise =
-      video.play();
-
-    if(
-      playPromise &&
-      typeof playPromise.catch ===
-      "function"
-    ){
-
-      playPromise.catch(
-        function(){
-
-          /* Browser may block autoplay */
-
-        }
-      );
-
-    }
-
-    setTimeout(
-      function(){
-
-        finishVideo();
-
-      },
-      40000
-    );
+   dot.classList.add("offline");
+   dot.title="Offline";
 
   }else{
 
-    setTimeout(
-      showInsufficient,
-      40000
-    );
+   dot.classList.remove("offline");
+   dot.title="Online";
 
   }
+
+ });
 
 }
 
+/*
+ Every 5 minutes a new random group
+ of exactly 5 profiles becomes offline.
+*/
 
-/* =========================
-   FINISH VIDEO
-========================= */
+function startOfflineRotation(){
 
-function finishVideo(){
+ chooseRandomOfflineProfiles();
 
-  const video =
-    document.getElementById(
-      "liveVideo"
-    );
+ setInterval(function(){
 
-  if(video){
+  chooseRandomOfflineProfiles();
 
-    video.pause();
-
-  }
-
-  const page =
-    document.getElementById(
-      "videoPage"
-    );
-
-  if(page){
-
-    page.classList.add(
-      "hidden"
-    );
-
-  }
-
-  showInsufficient();
+ },300000);
 
 }
 
-
 /* =========================
-   INSUFFICIENT
-========================= */
-
-function showInsufficient(){
-
-  const page =
-    document.getElementById(
-      "insufficientPage"
-    );
-
-  if(page){
-
-    page.classList.remove(
-      "hidden"
-    );
-
-  }
-
-  setTimeout(
-    function(){
-
-      if(page){
-
-        page.classList.add(
-          "hidden"
-        );
-
-      }
-
-      showPhotos();
-
-    },
-    2000
-  );
-
-    }
-  /* =========================
-   ANSWER CALL
-========================= */
-
-function answerCall(){
-
-  hideIncomingCall();
-
-  let watched = false;
-
-  try{
-
-    watched =
-      localStorage.getItem(
-        SAMPLE_WATCHED_KEY
-      ) === "true";
-
-  }catch(error){
-
-    watched = false;
-
-  }
-
-
-  /*
-    Returning visitor:
-    skip sample video.
-  */
-
-  if(watched){
-
-    showInsufficient();
-
-    return;
-
-  }
-
-
-  /*
-    First visitor:
-    mark sample as watched.
-  */
-
-  try{
-
-    localStorage.setItem(
-      SAMPLE_WATCHED_KEY,
-      "true"
-    );
-
-  }catch(error){
-
-  }
-
-  playFirstVisitorVideo();
-
-}
-
-
-/* =========================
-   REJECT CALL
-========================= */
-
-function rejectCall(){
-
-  hideIncomingCall();
-
-  showPhotos();
-
-}
-
-
-/* =========================
-   START FLOW
-========================= */
-
-function startWelcomeFlow(){
-
-  /*
-    Welcome lasts 3 seconds.
-    Then photos appear.
-    Then incoming call appears.
-  */
-
-  setTimeout(
-    function(){
-
-      showPhotos();
-
-      setTimeout(
-        function(){
-
-          showIncomingCall();
-
-        },
-        1500
-      );
-
-    },
-    3000
-  );
-
-}
-
-
-/* =========================
-   DOM READY
-========================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
-
-    /*
-      Build all photo cards first.
-    */
-
-    createPhotos();
-
-
-    /*
-      Online counter.
-    */
-
-    updateOnline();
-
-    setInterval(
-      updateOnline,
-      20000
-    );
-
-
-    /*
-      Answer button.
-    */
-
-    const answer =
-      document.getElementById(
-        "answerCall"
-      );
-
-    if(answer){
-
-      answer.addEventListener(
-        "click",
-        answerCall
-      );
-
-    }
-
-
-    /*
-      Reject button.
-    */
-
-    const reject =
-      document.getElementById(
-        "rejectCall"
-      );
-
-    if(reject){
-
-      reject.addEventListener(
-        "click",
-        rejectCall
-      );
-
-    }
-
-
-    /*
-      IMPORTANT:
-      Start timer here.
-      This fixes the page-one
-      stuck problem.
-    */
-
-    startWelcomeFlow();
-
-  }
-);
-  /* =========================
    AUTO CHAT SCROLL
 ========================= */
 
-setInterval(
+function startChatAutoScroll(index){
+
+ const box=
+  document.getElementById("comments_"+index);
+
+ if(!box)return;
+
+ if(box.dataset.autoScrollStarted==="1"){
+  return;
+ }
+
+ box.dataset.autoScrollStarted="1";
+
+ let direction=1;
+
+ function move(){
+
+  if(!box||
+     !document.body.contains(box)){
+   return;
+  }
+
+  const max=
+   box.scrollHeight-box.clientHeight;
+
+  if(max<=0)return;
+
+  if(direction===1){
+
+   box.scrollTop+=1;
+
+   if(box.scrollTop>=max-1){
+    direction=-1;
+   }
+
+  }else{
+
+   box.scrollTop-=1;
+
+   if(box.scrollTop<=1){
+    direction=1;
+   }
+
+  }
+
+ }
+
+ const timer=setInterval(move,80);
+
+ box.dataset.scrollTimer=
+  String(timer);
+
+ box.addEventListener(
+  "touchstart",
+  function(){
+   direction=0;
+  },
+  {passive:true}
+ );
+
+ box.addEventListener(
+  "touchend",
   function(){
 
-    profiles.forEach(
-      function(profile,index){
-
-        const box =
-          document.getElementById(
-            "comments-" + index
-          );
-
-        if(!box){
-          return;
-        }
-
-        /*
-          Keep newest messages visible
-          when user is already near bottom.
-        */
-
-        const distance =
-          box.scrollHeight -
-          box.scrollTop -
-          box.clientHeight;
-
-        if(distance < 40){
-
-          box.scrollTop =
-            box.scrollHeight;
-
-        }
-
-      }
-    );
+   setTimeout(function(){
+    direction=1;
+   },700);
 
   },
-  7000
+  {passive:true}
+ );
+
+ box.addEventListener(
+  "wheel",
+  function(){
+
+   direction=0;
+
+   clearTimeout(box._wheelTimer);
+
+   box._wheelTimer=setTimeout(function(){
+    direction=1;
+   },700);
+
+  },
+  {passive:true}
+ );
+}
+
+function startAllChatAutoScroll(){
+
+ PHOTO_NAMES.forEach(function(profile,index){
+
+  setTimeout(function(){
+
+   startChatAutoScroll(index);
+
+  },500+(index*80));
+
+ });
+
+}
+  function refreshChatAutoScroll(index){
+
+ const box=
+  document.getElementById("comments_"+index);
+
+ if(!box)return;
+
+ const timer=box.dataset.scrollTimer;
+
+ if(timer){
+
+  clearInterval(Number(timer));
+
+  box.dataset.autoScrollStarted="0";
+
+  box.dataset.scrollTimer="";
+
+ }
+
+ startChatAutoScroll(index);
+}
+
+function restartAllAutoChats(){
+
+ PHOTO_NAMES.forEach(function(profile,index){
+
+  refreshChatAutoScroll(index);
+
+ });
+
+}
+
+function setupImageFallbacks(){
+
+ document.querySelectorAll(".photoWrap img")
+ .forEach(function(img){
+
+  img.addEventListener("error",function(){
+
+   img.style.opacity=".35";
+
+   img.parentElement.style.background=
+    "linear-gradient(135deg,#29101a,#111,#251018)";
+
+  });
+
+ });
+
+}
+
+function setupChatObservers(){
+
+ const observer=
+  new MutationObserver(function(){
+
+   PHOTO_NAMES.forEach(function(profile,index){
+
+    const box=
+     document.getElementById("comments_"+index);
+
+    if(
+     box &&
+     box.dataset.autoScrollStarted!=="1"
+    ){
+
+     startChatAutoScroll(index);
+
+    }
+
+   });
+
+  });
+
+ observer.observe(
+  document.body,
+  {
+   childList:true,
+   subtree:true
+  }
+ );
+
+}
+
+function ensureEveryProfileHasComments(){
+
+ PHOTO_NAMES.forEach(function(profile,index){
+
+  const comments=
+   getComments(index);
+
+  if(!Array.isArray(comments)){
+
+   saveComments(index,[]);
+
+  }
+
+  renderComments(index);
+
+ });
+
+}
+
+function safeCreatePhotos(){
+
+ try{
+
+  createPhotos();
+
+ }catch(error){
+
+  console.error(
+   "Photo loading error:",
+   error
+  );
+
+  const grid=
+   document.getElementById("photoGrid");
+
+  if(grid){
+
+   grid.innerHTML=`
+    <div style="
+      grid-column:1/-1;
+      padding:30px;
+      text-align:center;
+      color:#aaa;
+    ">
+      Loading live profiles...
+    </div>
+   `;
+
+   setTimeout(function(){
+
+    try{
+
+     createPhotos();
+
+    }catch(e){
+
+     console.error(e);
+
+    }
+
+   },500);
+
+  }
+
+ }
+
+}
+
+function startWelcomeFlow(){
+
+ setTimeout(function(){
+
+  showPhotos();
+
+  setTimeout(function(){
+
+   setupImageFallbacks();
+   startAllChatAutoScroll();
+   updateProfileStatuses();
+
+  },700);
+
+ },3000);
+
+}
+  function initialise(){
+
+ safeCreatePhotos();
+
+ updateOnline();
+
+ startOfflineRotation();
+
+ setInterval(function(){
+
+  updateOnline();
+
+ },20000);
+
+ setupChatObservers();
+
+ ensureEveryProfileHasComments();
+
+ startWelcomeFlow();
+
+}
+
+/* =========================
+   PAGE VISIBILITY
+========================= */
+
+document.addEventListener(
+ "visibilitychange",
+ function(){
+
+  if(
+   document.visibilityState==="visible"
+  ){
+
+   setTimeout(function(){
+
+    restartAllAutoChats();
+    updateProfileStatuses();
+
+   },300);
+
+  }
+
+ }
 );
 
+/* =========================
+   RESIZE
+========================= */
+
+window.addEventListener(
+ "resize",
+ function(){
+
+  clearTimeout(
+   window.resizeChatTimer
+  );
+
+  window.resizeChatTimer=
+   setTimeout(function(){
+
+    restartAllAutoChats();
+
+   },400);
+
+ }
+);
+
+/* =========================
+   PREVENT CHAT FROM OPENING
+   PAYMENT
+========================= */
+
+document.addEventListener(
+ "click",
+ function(event){
+
+  const interactive=
+   event.target.closest(
+    ".socialBtn,.chatBox,.commentForm,.commentInput,.commentSend"
+   );
+
+  if(interactive){
+
+   event.stopPropagation();
+
+  }
+
+ },
+ true
+);
+
+/* =========================
+   START APP
+========================= */
+
+if(
+ document.readyState==="loading"
+){
+
+ document.addEventListener(
+  "DOMContentLoaded",
+  initialise
+ );
+
+}else{
+
+ initialise();
+
+  }
+  /* =========================
+   OPTIONAL INCOMING CALL
+========================= */
+
+function createIncomingCall(){
+
+ if(
+  document.getElementById("incomingCall")
+ ){
+  return;
+ }
+
+ const call=
+  document.createElement("div");
+
+ call.id="incomingCall";
+
+ call.innerHTML=`
+
+  <div style="
+   position:fixed;
+   inset:0;
+   z-index:10000;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   background:rgba(0,0,0,.94);
+   padding:20px;
+  ">
+
+   <div style="
+    width:min(360px,100%);
+    background:#151515;
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    border:1px solid #333;
+   ">
+
+    <div style="
+     width:85px;
+     height:85px;
+     margin:0 auto 15px;
+     border-radius:50%;
+     background:linear-gradient(135deg,#ff1744,#68152c);
+     display:flex;
+     align-items:center;
+     justify-content:center;
+     font-size:38px;
+    ">
+     📞
+    </div>
+
+    <div style="
+     color:#ff1744;
+     font-size:12px;
+     font-weight:900;
+     margin-bottom:7px;
+    ">
+     ● LIVE CALL
+    </div>
+
+    <div style="
+     font-size:22px;
+     font-weight:900;
+     margin-bottom:5px;
+    ">
+     Incoming call
+    </div>
+
+    <div style="
+     color:#aaa;
+     font-size:13px;
+     margin-bottom:25px;
+    ">
+     Someone wants to talk with you
+    </div>
+
+    <div style="
+     display:flex;
+     gap:10px;
+    ">
+
+     <button
+      id="rejectCallBtn"
+      style="
+       flex:1;
+       padding:14px;
+       border:0;
+       border-radius:10px;
+       background:#d50032;
+       color:white;
+       font-weight:900;
+      "
+     >
+      Reject
+     </button>
+
+     <button
+      id="answerCallBtn"
+      style="
+       flex:1;
+       padding:14px;
+       border:0;
+       border-radius:10px;
+       background:#00a83b;
+       color:white;
+       font-weight:900;
+      "
+     >
+      Answer
+     </button>
+
+    </div>
+
+   </div>
+
+  </div>
+ `;
+
+ document.body.appendChild(call);
+
+ const reject=
+  document.getElementById("rejectCallBtn");
+
+ const answer=
+  document.getElementById("answerCallBtn");
+
+ if(reject){
+
+  reject.addEventListener(
+   "click",
+   function(){
+
+    call.remove();
+
+   }
+  );
+
+ }
+
+ if(answer){
+
+  answer.addEventListener(
+   "click",
+   function(){
+
+    call.remove();
+
+    showReaction(
+     "📞 Connecting..."
+    );
+
+   }
+  );
+
+ }
+
+}
+
+/*
+ To enable the optional incoming call,
+ use:
+
+ setTimeout(createIncomingCall,5000);
+
+ It is intentionally disabled here so
+ the existing website flow is not changed.
+ */
+  /* =========================
+   FINAL CHAT REFRESH
+========================= */
+
+setTimeout(function(){
+
+ ensureEveryProfileHasComments();
+
+ startAllChatAutoScroll();
+
+ updateProfileStatuses();
+
+},1200);
+
+setTimeout(function(){
+
+ startAllChatAutoScroll();
+
+ updateProfileStatuses();
+
+},3500);
+
+/* =========================
+   KEEP STATUS UPDATED
+========================= */
+
+setInterval(function(){
+
+ updateProfileStatuses();
+
+},30000);
 
 /* =========================
    SAFETY CHECK
 ========================= */
 
 window.addEventListener(
-  "load",
-  function(){
+ "load",
+ function(){
 
-    /*
-      Make sure photos exist.
-    */
+  setTimeout(function(){
 
-    const container =
-      document.getElementById(
-        "photosContainer"
-      );
-
-    if(
-      container &&
-      container.children.length === 0
-    ){
-
-      createPhotos();
-
-    }
-
-    /*
-      Refresh comments.
-    */
-
-    profiles.forEach(
-      function(profile,index){
-
-        renderComments(index);
-
-      }
+   const welcome=
+    document.getElementById(
+     "welcomeScreen"
     );
 
-  }
+   const photos=
+    document.getElementById(
+     "photosPage"
+    );
+
+   if(
+    welcome &&
+    photos &&
+    getComputedStyle(photos).display==="none"
+   ){
+
+    welcome.style.display="none";
+
+    photos.style.display="block";
+
+   }
+
+   startAllChatAutoScroll();
+
+   updateProfileStatuses();
+
+  },3500);
+
+ }
 );
-
-
-/* =========================
-   END JAVASCRIPT
-========================= */
-
-</script>
+  </script>
 
 </body>
 </html>
