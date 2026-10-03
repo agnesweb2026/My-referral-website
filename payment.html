@@ -303,7 +303,8 @@ button{
     transform:rotate(360deg);
   }
 }
-  .failed-card{
+
+.failed-card{
   margin-top:15px;
   padding:24px 20px;
   border-radius:19px;
@@ -348,8 +349,7 @@ button{
   color:#000;
   font-weight:900;
 }
-
-#liveScreen{
+  #liveScreen{
   min-height:100vh;
   background:#000;
   color:#fff;
@@ -475,7 +475,6 @@ button{
     opacity:1;
     transform:scale(1);
   }
-
   50%{
     opacity:.4;
     transform:scale(.7);
@@ -516,8 +515,7 @@ button{
   color:#000;
   font-weight:800;
 }
-
-.video-overlay{
+  .video-overlay{
   position:absolute;
   inset:0;
   z-index:20;
@@ -589,9 +587,9 @@ button{
   background:#fff;
   color:#000;
   font-weight:800;
-  }
-  @media(max-width:700px){
+}
 
+@media(max-width:700px){
   .live-layout{
     grid-template-columns:1fr;
   }
@@ -610,7 +608,6 @@ button{
 }
 
 @media(max-width:500px){
-
   .packages{
     gap:9px;
   }
@@ -633,15 +630,11 @@ button{
 <body>
 
 <section id="paymentPage" class="page">
-
   <div class="wrap">
 
     <div class="header">
       <h1>M-PESA PAYMENT</h1>
-
-      <p>
-        Choose your minutes and pay securely.
-      </p>
+      <p>Choose your minutes and pay securely.</p>
 
       <div class="secure">
         🔒 Secure M-PESA payment
@@ -650,110 +643,77 @@ button{
 
     <div class="packages">
 
-      <div
-        class="package selected"
+      <div class="package selected"
         data-minutes="30"
         data-price="95"
-        onclick="selectPackage(this)"
-      >
+        onclick="selectPackage(this)">
         <div class="minutes">30</div>
         <div class="label">MINUTES</div>
         <div class="price">KSh 95</div>
-        <div class="select-text">
-          Tap to select
-        </div>
+        <div class="select-text">Tap to select</div>
       </div>
 
-      <div
-        class="package"
+      <div class="package"
         data-minutes="55"
         data-price="138"
-        onclick="selectPackage(this)"
-      >
+        onclick="selectPackage(this)">
         <div class="minutes">55</div>
         <div class="label">MINUTES</div>
         <div class="price">KSh 138</div>
-        <div class="select-text">
-          Tap to select
-        </div>
+        <div class="select-text">Tap to select</div>
       </div>
 
-      <div
-        class="package"
+      <div class="package"
         data-minutes="73"
         data-price="207"
-        onclick="selectPackage(this)"
-      >
+        onclick="selectPackage(this)">
         <div class="badge">POPULAR</div>
         <div class="minutes">73</div>
         <div class="label">MINUTES</div>
         <div class="price">KSh 207</div>
-        <div class="select-text">
-          Tap to select
-        </div>
+        <div class="select-text">Tap to select</div>
       </div>
 
-      <div
-        class="package"
+      <div class="package"
         data-minutes="95"
         data-price="253"
-        onclick="selectPackage(this)"
-      >
+        onclick="selectPackage(this)">
         <div class="minutes">95</div>
         <div class="label">MINUTES</div>
         <div class="price">KSh 253</div>
-        <div class="select-text">
-          Tap to select
-        </div>
+        <div class="select-text">Tap to select</div>
       </div>
 
-      <div
-        class="package"
+      <div class="package"
         data-minutes="105"
         data-price="299"
-        onclick="selectPackage(this)"
-      >
+        onclick="selectPackage(this)">
         <div class="minutes">105</div>
         <div class="label">MINUTES</div>
         <div class="price">KSh 299</div>
-        <div class="select-text">
-          Tap to select
-        </div>
+        <div class="select-text">Tap to select</div>
       </div>
 
-      <div
-        class="package"
+      <div class="package"
         data-minutes="166"
         data-price="393"
-        onclick="selectPackage(this)"
-      >
+        onclick="selectPackage(this)">
         <div class="badge">HOT</div>
         <div class="minutes">166</div>
         <div class="label">MINUTES</div>
         <div class="price">KSh 393</div>
-        <div class="select-text">
-          Tap to select
-        </div>
+        <div class="select-text">Tap to select</div>
       </div>
 
     </div>
 
     <div class="selected-box">
-
-      <div class="selected-title">
-        SELECTED PACKAGE
-      </div>
-
-      <div
-        id="selectedValue"
-        class="selected-value"
-      >
+      <div class="selected-title">SELECTED PACKAGE</div>
+      <div id="selectedValue" class="selected-value">
         30 Minutes — KSh 95
       </div>
-
     </div>
-
-    <div class="payment-card">
+        <div class="payment-card">
 
       <div class="payment-title">
         Pay with M-PESA
@@ -764,10 +724,7 @@ button{
         send an M-PESA payment prompt to your phone.
       </div>
 
-      <label
-        class="phone-label"
-        for="phoneInput"
-      >
+      <label class="phone-label" for="phoneInput">
         Safaricom M-PESA Number
       </label>
 
@@ -795,57 +752,34 @@ button{
 
     </div>
 
-    <div
-      id="statusCard"
-      class="status-card hidden"
-    >
+    <div id="statusCard" class="status-card hidden">
 
-      <div
-        id="statusSpinner"
-        class="spinner"
-      ></div>
+      <div id="statusSpinner" class="spinner"></div>
 
-      <div
-        id="statusIcon"
-        class="status-icon hidden"
-      >
+      <div id="statusIcon" class="status-icon hidden">
         ✓
       </div>
 
-      <div
-        id="statusTitle"
-        class="status-title"
-      >
+      <div id="statusTitle" class="status-title">
         Check your phone
       </div>
 
-      <div
-        id="statusText"
-        class="status-text"
-      >
+      <div id="statusText" class="status-text">
         Enter your M-PESA PIN on the prompt
         sent to your phone.
       </div>
 
     </div>
 
-    <div
-      id="failedCard"
-      class="failed-card hidden"
-    >
+    <div id="failedCard" class="failed-card hidden">
 
-      <div class="failed-icon">
-        !
-      </div>
+      <div class="failed-icon">!</div>
 
       <div class="failed-title">
         No payment is done
       </div>
 
-      <div
-        id="failedText"
-        class="failed-text"
-      >
+      <div id="failedText" class="failed-text">
         We could not confirm your M-PESA payment.
       </div>
 
@@ -859,13 +793,9 @@ button{
     </div>
 
   </div>
-
 </section>
 
-<section
-  id="liveScreen"
-  class="hidden"
->
+<section id="liveScreen" class="hidden">
 
   <div class="live-header">
 
@@ -883,13 +813,8 @@ button{
   <div class="live-layout">
 
     <div class="chat-panel">
-
-      <div class="chat-title">
-        Live chat
-      </div>
-
+      <div class="chat-title">Live chat</div>
       <div id="leftChatMessages"></div>
-
     </div>
 
     <div class="video-area">
@@ -906,10 +831,7 @@ button{
         LIVE
       </div>
 
-      <div
-        id="videoOverlay"
-        class="video-overlay"
-      >
+      <div id="videoOverlay" class="video-overlay">
 
         <div class="permission-card">
 
@@ -917,17 +839,11 @@ button{
             📹
           </div>
 
-          <div
-            id="permissionTitle"
-            class="permission-title"
-          >
+          <div id="permissionTitle" class="permission-title">
             Camera permission required
           </div>
 
-          <div
-            id="permissionText"
-            class="permission-text"
-          >
+          <div id="permissionText" class="permission-text">
             Allow camera and microphone access
             to continue.
           </div>
@@ -944,21 +860,13 @@ button{
 
       </div>
 
-      <div
-        id="videoError"
-        class="video-error hidden"
-      ></div>
+      <div id="videoError" class="video-error hidden"></div>
 
     </div>
 
     <div class="chat-panel">
-
-      <div class="chat-title">
-        Live chat
-      </div>
-
+      <div class="chat-title">Live chat</div>
       <div id="rightChatMessages"></div>
-
     </div>
 
   </div>
@@ -974,9 +882,7 @@ button{
         autocomplete="off"
       >
 
-      <button
-        onclick="sendCenterMessage()"
-      >
+      <button onclick="sendCenterMessage()">
         SEND
       </button>
 
@@ -1002,9 +908,7 @@ let permissionStream = null;
 let videoEndedTimer = null;
 
 const urlParams =
-  new URLSearchParams(
-    window.location.search
-  );
+  new URLSearchParams(window.location.search);
 
 const employee =
   urlParams.get("employee") || "";
@@ -1013,131 +917,80 @@ const ref =
   urlParams.get("ref") || "";
 
 const paymentPage =
-  document.getElementById(
-    "paymentPage"
-  );
+  document.getElementById("paymentPage");
 
 const liveScreen =
-  document.getElementById(
-    "liveScreen"
-  );
+  document.getElementById("liveScreen");
 
 const selectedValue =
-  document.getElementById(
-    "selectedValue"
-  );
+  document.getElementById("selectedValue");
 
 const phoneInput =
-  document.getElementById(
-    "phoneInput"
-  );
+  document.getElementById("phoneInput");
 
 const promptButton =
-  document.getElementById(
-    "promptButton"
-  );
+  document.getElementById("promptButton");
 
 const statusCard =
-  document.getElementById(
-    "statusCard"
-  );
+  document.getElementById("statusCard");
 
 const statusSpinner =
-  document.getElementById(
-    "statusSpinner"
-  );
+  document.getElementById("statusSpinner");
 
 const statusIcon =
-  document.getElementById(
-    "statusIcon"
-  );
+  document.getElementById("statusIcon");
 
 const statusTitle =
-  document.getElementById(
-    "statusTitle"
-  );
+  document.getElementById("statusTitle");
 
 const statusText =
-  document.getElementById(
-    "statusText"
-  );
+  document.getElementById("statusText");
 
 const failedCard =
-  document.getElementById(
-    "failedCard"
-  );
+  document.getElementById("failedCard");
 
 const failedText =
-  document.getElementById(
-    "failedText"
-  );
+  document.getElementById("failedText");
 
 const liveVideo =
-  document.getElementById(
-    "liveVideo"
-  );
+  document.getElementById("liveVideo");
 
 const videoOverlay =
-  document.getElementById(
-    "videoOverlay"
-  );
+  document.getElementById("videoOverlay");
 
 const permissionTitle =
-  document.getElementById(
-    "permissionTitle"
-  );
+  document.getElementById("permissionTitle");
 
 const permissionText =
-  document.getElementById(
-    "permissionText"
-  );
+  document.getElementById("permissionText");
 
 const permissionButton =
-  document.getElementById(
-    "permissionButton"
-  );
+  document.getElementById("permissionButton");
 
 const videoError =
-  document.getElementById(
-    "videoError"
-  );
+  document.getElementById("videoError");
   function selectPackage(element){
 
-  if(
-    !statusCard.classList.contains("hidden")
-  ){
+  if(!statusCard.classList.contains("hidden")){
     return;
   }
 
-  if(
-    !failedCard.classList.contains("hidden")
-  ){
+  if(!failedCard.classList.contains("hidden")){
     return;
   }
 
-  document
-    .querySelectorAll(".package")
+  document.querySelectorAll(".package")
     .forEach(function(item){
-
-      item.classList.remove(
-        "selected"
-      );
-
+      item.classList.remove("selected");
     });
 
-  element.classList.add(
-    "selected"
-  );
+  element.classList.add("selected");
 
   selectedMinutes =
-    Number(
-      element.dataset.minutes
-    );
+    Number(element.dataset.minutes);
 
   selectedPrice =
-    Number(
-      element.dataset.price
-    );
+    Number(element.dataset.price);
 
   selectedValue.textContent =
     selectedMinutes +
@@ -1146,7 +999,6 @@ const videoError =
 }
 
 function cleanPhone(value){
-
   return String(value || "")
     .replace(/\D/g,"")
     .trim();
@@ -1154,26 +1006,18 @@ function cleanPhone(value){
 
 function normalizePhone(value){
 
-  const raw =
-    cleanPhone(value);
+  const raw = cleanPhone(value);
 
   if(/^07\d{8}$/.test(raw)){
-
-    return "254" +
-      raw.substring(1);
-
+    return "254" + raw.substring(1);
   }
 
   if(/^2547\d{8}$/.test(raw)){
-
     return raw;
-
   }
 
   if(/^7\d{8}$/.test(raw)){
-
     return "254" + raw;
-
   }
 
   return "";
@@ -1188,10 +1032,7 @@ function createReference(){
 
   const cleanPrefix =
     String(prefix)
-      .replace(
-        /[^A-Za-z0-9]/g,
-        ""
-      )
+      .replace(/[^A-Za-z0-9]/g,"")
       .slice(0,8);
 
   const randomPart =
@@ -1203,12 +1044,8 @@ function createReference(){
   return (
     "LIVE" +
     cleanPrefix +
-    Date.now()
-      .toString()
-      .slice(-6) +
-    randomPart
-      .toString()
-      .slice(-4)
+    Date.now().toString().slice(-6) +
+    randomPart.toString().slice(-4)
   ).slice(0,20);
 }
 
@@ -1219,9 +1056,7 @@ async function sendMpesaPrompt(){
   }
 
   const phone =
-    normalizePhone(
-      phoneInput.value
-    );
+    normalizePhone(phoneInput.value);
 
   if(!phone){
 
@@ -1242,21 +1077,13 @@ async function sendMpesaPrompt(){
   promptButton.textContent =
     "SENDING PROMPT...";
 
-  failedCard.classList.add(
-    "hidden"
-  );
+  failedCard.classList.add("hidden");
 
-  statusCard.classList.remove(
-    "hidden"
-  );
+  statusCard.classList.remove("hidden");
 
-  statusSpinner.classList.remove(
-    "hidden"
-  );
+  statusSpinner.classList.remove("hidden");
 
-  statusIcon.classList.add(
-    "hidden"
-  );
+  statusIcon.classList.add("hidden");
 
   statusTitle.textContent =
     "Sending M-PESA prompt";
@@ -1267,35 +1094,22 @@ async function sendMpesaPrompt(){
   try{
 
     const response =
-      await fetch(
-        "/api/stk-push",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-
-            phone:phone,
-
-            amount:selectedPrice,
-
-            reference:reference
-
-          })
-
-        }
-      );
+      await fetch("/api/stk-push",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          phone:phone,
+          amount:selectedPrice,
+          reference:reference
+        })
+      });
 
     const data =
       await response.json()
         .catch(function(){
-
           return {};
-
         });
 
     if(
@@ -1335,10 +1149,7 @@ async function sendMpesaPrompt(){
 
   }catch(error){
 
-    console.error(
-      "STK ERROR",
-      error
-    );
+    console.error("STK ERROR",error);
 
     showFailed(
       "Unable to start the M-PESA payment. Please try again."
@@ -1365,9 +1176,7 @@ function stopStatusCheck(){
 
   if(statusTimer){
 
-    clearInterval(
-      statusTimer
-    );
+    clearInterval(statusTimer);
 
     statusTimer = null;
   }
@@ -1395,34 +1204,21 @@ async function checkPaymentStatus(){
   try{
 
     const response =
-      await fetch(
-        "/api/payment-status",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-
-            transaction_id:
-              transactionId,
-
-            transaction_request_id:
-              transactionId
-
-          })
-        }
-      );
+      await fetch("/api/payment-status",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          transaction_id:transactionId,
+          transaction_request_id:transactionId
+        })
+      });
 
     const data =
       await response.json()
         .catch(function(){
-
           return {};
-
         });
 
     if(
@@ -1438,9 +1234,7 @@ async function checkPaymentStatus(){
     }
 
     const currentStatus =
-      String(
-        data.status || ""
-      ).toLowerCase();
+      String(data.status || "").toLowerCase();
 
     if(
       currentStatus === "failed" ||
@@ -1474,24 +1268,16 @@ async function checkPaymentStatus(){
     statusText.textContent =
       "Still checking your M-PESA payment...";
   }
-}
+  }
+  function paymentConfirmed(){
 
-function paymentConfirmed(){
+  statusCard.classList.remove("hidden");
 
-  statusCard.classList.remove(
-    "hidden"
-  );
+  statusSpinner.classList.add("hidden");
 
-  statusSpinner.classList.add(
-    "hidden"
-  );
+  statusIcon.classList.remove("hidden");
 
-  statusIcon.classList.remove(
-    "hidden"
-  );
-
-  statusIcon.textContent =
-    "✓";
+  statusIcon.textContent = "✓";
 
   statusTitle.textContent =
     "Payment confirmed";
@@ -1501,27 +1287,20 @@ function paymentConfirmed(){
 
   promptButton.disabled = true;
 
-  setTimeout(
-    function(){
+  setTimeout(function(){
 
-      openLiveAfterPayment();
+    openLiveAfterPayment();
 
-    },
-    1200
-  );
+  },1200);
 }
 
 function showFailed(message){
 
   stopStatusCheck();
 
-  statusCard.classList.add(
-    "hidden"
-  );
+  statusCard.classList.add("hidden");
 
-  failedCard.classList.remove(
-    "hidden"
-  );
+  failedCard.classList.remove("hidden");
 
   failedText.textContent =
     message ||
@@ -1541,13 +1320,9 @@ function resetPayment(){
 
   statusAttempts = 0;
 
-  statusCard.classList.add(
-    "hidden"
-  );
+  statusCard.classList.add("hidden");
 
-  failedCard.classList.add(
-    "hidden"
-  );
+  failedCard.classList.add("hidden");
 
   promptButton.disabled = false;
 
@@ -1561,21 +1336,13 @@ function resetPayment(){
 
 function openLiveAfterPayment(){
 
-  paymentPage.classList.add(
-    "hidden"
-  );
+  paymentPage.classList.add("hidden");
 
-  failedCard.classList.add(
-    "hidden"
-  );
+  failedCard.classList.add("hidden");
 
-  statusCard.classList.add(
-    "hidden"
-  );
+  statusCard.classList.add("hidden");
 
-  liveScreen.classList.remove(
-    "hidden"
-  );
+  liveScreen.classList.remove("hidden");
 
   liveStarted = true;
 
@@ -1597,8 +1364,7 @@ async function requestCameraPermission(){
     !navigator.mediaDevices.getUserMedia
   ){
 
-    permissionButton.disabled =
-      false;
+    permissionButton.disabled = false;
 
     permissionButton.textContent =
       "CONTINUE";
@@ -1615,19 +1381,15 @@ async function requestCameraPermission(){
   try{
 
     permissionStream =
-      await navigator.mediaDevices.getUserMedia(
-        {
-          video:true,
-          audio:true
-        }
-      );
+      await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:true
+      });
 
     permissionStream
       .getTracks()
       .forEach(function(track){
-
         track.stop();
-
       });
 
     permissionStream = null;
@@ -1645,8 +1407,7 @@ async function requestCameraPermission(){
       error
     );
 
-    permissionButton.disabled =
-      false;
+    permissionButton.disabled = false;
 
     permissionButton.textContent =
       "CONTINUE";
@@ -1662,25 +1423,19 @@ async function requestCameraPermission(){
         startLiveVideo();
 
         startLiveChat();
-
       };
   }
 }
 
 function showVideoOverlay(title,text){
 
-  videoOverlay.classList.remove(
-    "hidden"
-  );
+  videoOverlay.classList.remove("hidden");
 
-  permissionTitle.textContent =
-    title;
+  permissionTitle.textContent = title;
 
-  permissionText.textContent =
-    text;
+  permissionText.textContent = text;
 
-  permissionButton.disabled =
-    false;
+  permissionButton.disabled = false;
 
   permissionButton.textContent =
     "CONTINUE";
@@ -1691,37 +1446,27 @@ function showVideoOverlay(title,text){
 
 function hideVideoOverlay(){
 
-  videoOverlay.classList.add(
-    "hidden"
-  );
+  videoOverlay.classList.add("hidden");
 }
 
 function startLiveVideo(){
 
-  videoError.classList.add(
-    "hidden"
-  );
+  videoError.classList.add("hidden");
 
   if(videoEndedTimer){
 
-    clearTimeout(
-      videoEndedTimer
-    );
+    clearTimeout(videoEndedTimer);
 
     videoEndedTimer = null;
   }
 
-  liveVideo.src =
-    LIVE_VIDEO_URL;
+  liveVideo.src = LIVE_VIDEO_URL;
 
-  liveVideo.controls =
-    false;
+  liveVideo.controls = false;
 
-  liveVideo.muted =
-    false;
+  liveVideo.muted = false;
 
-  liveVideo.playsInline =
-    true;
+  liveVideo.playsInline = true;
 
   liveVideo.load();
 
@@ -1730,54 +1475,40 @@ function startLiveVideo(){
 
   if(
     playPromise &&
-    typeof playPromise.catch ===
-      "function"
+    typeof playPromise.catch === "function"
   ){
 
-    playPromise.catch(
-      function(){
+    playPromise.catch(function(){
 
-        showVideoOverlay(
-          "Tap to continue",
-          "Tap CONTINUE to start the live video."
-        );
+      showVideoOverlay(
+        "Tap to continue",
+        "Tap CONTINUE to start the live video."
+      );
 
-        permissionButton.onclick =
-          function(){
+      permissionButton.onclick =
+        function(){
 
-            hideVideoOverlay();
+          hideVideoOverlay();
 
-            const attempt =
-              liveVideo.play();
+          const attempt =
+            liveVideo.play();
 
-            if(
-              attempt &&
-              attempt.catch
-            ){
+          if(
+            attempt &&
+            attempt.catch
+          ){
 
-              attempt.catch(
-                function(){
+            attempt.catch(function(){
 
-                  showNetworkError();
+              showNetworkError();
 
-                }
-              );
-            }
-          };
-      }
-    );
+            });
+          }
+        };
+    });
   }
 }
 
-/*
-  IMPORTANT:
-  Video DOES NOT repeat.
-
-  When the video reaches the end:
-  1. It remains on the final frame.
-  2. Waits 5 seconds.
-  3. Shows Network Error at the bottom.
-*/
 liveVideo.addEventListener(
   "ended",
   function(){
@@ -1786,20 +1517,15 @@ liveVideo.addEventListener(
 
     if(videoEndedTimer){
 
-      clearTimeout(
-        videoEndedTimer
-      );
+      clearTimeout(videoEndedTimer);
     }
 
     videoEndedTimer =
-      setTimeout(
-        function(){
+      setTimeout(function(){
 
-          showNetworkError();
+        showNetworkError();
 
-        },
-        5000
-      );
+      },5000);
   }
 );
 
@@ -1808,18 +1534,13 @@ liveVideo.addEventListener(
   function(){
 
     if(liveStarted){
-
       showNetworkError();
-
     }
   }
 );
+  function showNetworkError(){
 
-function showNetworkError(){
-
-  videoError.classList.remove(
-    "hidden"
-  );
+  videoError.classList.remove("hidden");
 
   videoError.innerHTML = `
     <div style="
@@ -1843,9 +1564,7 @@ function showNetworkError(){
         The live video connection was interrupted.
       </div>
 
-      <button
-        onclick="reloadLivePage()"
-      >
+      <button onclick="reloadLivePage()">
         RELOAD PAGE
       </button>
 
@@ -1889,59 +1608,46 @@ function reloadLivePage(){
     </div>
   `;
 
-  /*
-    Stay in loading state for 10 seconds.
-  */
-  setTimeout(
-    function(){
+  setTimeout(function(){
 
-      videoError.innerHTML = `
+    videoError.innerHTML = `
+      <div style="
+        width:100%;
+        text-align:center;
+      ">
+
         <div style="
-          width:100%;
-          text-align:center;
+          font-size:20px;
+          font-weight:900;
         ">
-
-          <div style="
-            font-size:20px;
-            font-weight:900;
-          ">
-            ❌ Error
-          </div>
-
-          <div style="
-            color:#999;
-            font-size:12px;
-            margin-top:7px;
-          ">
-            Unable to reload the live video.
-          </div>
-
+          ❌ Error
         </div>
-      `;
 
-      /*
-        After Error, return to packages.
-      */
-      setTimeout(
-        function(){
+        <div style="
+          color:#999;
+          font-size:12px;
+          margin-top:7px;
+        ">
+          Unable to reload the live video.
+        </div>
 
-          returnToPackages();
+      </div>
+    `;
 
-        },
-        1200
-      );
+    setTimeout(function(){
 
-    },
-    10000
-  );
-  }
-  function returnToPackages(){
+      returnToPackages();
+
+    },1200);
+
+  },10000);
+}
+
+function returnToPackages(){
 
   if(videoEndedTimer){
 
-    clearTimeout(
-      videoEndedTimer
-    );
+    clearTimeout(videoEndedTimer);
 
     videoEndedTimer = null;
   }
@@ -1950,9 +1656,7 @@ function reloadLivePage(){
 
     liveVideo.pause();
 
-    liveVideo.removeAttribute(
-      "src"
-    );
+    liveVideo.removeAttribute("src");
 
     liveVideo.load();
 
@@ -1960,34 +1664,22 @@ function reloadLivePage(){
 
   if(chatTimer){
 
-    clearInterval(
-      chatTimer
-    );
+    clearInterval(chatTimer);
 
     chatTimer = null;
   }
 
   liveStarted = false;
 
-  liveScreen.classList.add(
-    "hidden"
-  );
+  liveScreen.classList.add("hidden");
 
-  paymentPage.classList.remove(
-    "hidden"
-  );
+  paymentPage.classList.remove("hidden");
 
-  statusCard.classList.add(
-    "hidden"
-  );
+  statusCard.classList.add("hidden");
 
-  failedCard.classList.add(
-    "hidden"
-  );
+  failedCard.classList.add("hidden");
 
-  videoError.classList.add(
-    "hidden"
-  );
+  videoError.classList.add("hidden");
 
   transactionId = "";
 
@@ -2043,8 +1735,7 @@ function randomItem(array){
 
   return array[
     Math.floor(
-      Math.random() *
-      array.length
+      Math.random() * array.length
     )
   ];
 }
@@ -2052,12 +1743,9 @@ function randomItem(array){
 function escapeHTML(text){
 
   const div =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
-  div.textContent =
-    text;
+  div.textContent = text;
 
   return div.innerHTML;
 }
@@ -2065,22 +1753,15 @@ function escapeHTML(text){
 function createChatMessage(){
 
   const name =
-    randomItem(
-      chatNames
-    );
+    randomItem(chatNames);
 
   const message =
-    randomItem(
-      chatMessages
-    );
+    randomItem(chatMessages);
 
   const div =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
-  div.className =
-    "chat-message";
+  div.className = "chat-message";
 
   div.innerHTML =
     '<span class="chat-name">' +
@@ -2117,18 +1798,14 @@ function addChatMessage(){
     createChatMessage()
   );
 
-  while(
-    left.children.length > 12
-  ){
+  while(left.children.length > 12){
 
     left.removeChild(
       left.firstChild
     );
   }
 
-  while(
-    right.children.length > 12
-  ){
+  while(right.children.length > 12){
 
     right.removeChild(
       right.firstChild
@@ -2140,29 +1817,23 @@ function startLiveChat(){
 
   if(chatTimer){
 
-    clearInterval(
-      chatTimer
-    );
+    clearInterval(chatTimer);
   }
 
   addChatMessage();
 
   chatTimer =
-    setInterval(
-      function(){
+    setInterval(function(){
 
-        if(liveStarted){
+      if(liveStarted){
 
-          addChatMessage();
+        addChatMessage();
 
-        }
+      }
 
-      },
-      2800
-    );
-}
-
-function sendCenterMessage(){
+    },2800);
+             }
+  function sendCenterMessage(){
 
   const input =
     document.getElementById(
@@ -2190,9 +1861,7 @@ function sendCenterMessage(){
   }
 
   const div =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
   div.className =
     "chat-message";
@@ -2205,9 +1874,7 @@ function sendCenterMessage(){
 
   left.appendChild(div);
 
-  while(
-    left.children.length > 12
-  ){
+  while(left.children.length > 12){
 
     left.removeChild(
       left.firstChild
@@ -2261,8 +1928,7 @@ phoneInput.addEventListener(
         );
     }
 
-    this.value =
-      value;
+    this.value = value;
   }
 );
 
@@ -2274,18 +1940,14 @@ window.addEventListener(
 
     if(chatTimer){
 
-      clearInterval(
-        chatTimer
-      );
+      clearInterval(chatTimer);
 
       chatTimer = null;
     }
 
     if(videoEndedTimer){
 
-      clearTimeout(
-        videoEndedTimer
-      );
+      clearTimeout(videoEndedTimer);
 
       videoEndedTimer = null;
     }
@@ -2331,20 +1993,12 @@ document.addEventListener(
 
     }else{
 
-      /*
-        Do NOT restart a finished video.
-        It must remain finished until
-        Network Error is shown.
-      */
-
       if(
         liveStarted &&
         liveVideo &&
         liveVideo.src &&
         !liveVideo.ended &&
-        videoError.classList.contains(
-          "hidden"
-        )
+        videoError.classList.contains("hidden")
       ){
 
         const promise =
