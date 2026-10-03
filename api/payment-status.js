@@ -25,6 +25,9 @@ module.exports = async (req, res) => {
       ""
     ).trim();
 
+    // ==========================================
+    // VALIDATE TRANSACTION ID
+    // ==========================================
     if (!transactionId) {
       return json(res, 400, {
         success: false,
@@ -33,9 +36,17 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================
+    if (transactionId.length > 100) {
+      return json(res, 400, {
+        success: false,
+        paid: false,
+        message: "Invalid transaction ID."
+      });
+    }
+
+    // ==========================================
     // UNIFIEDPAY CREDENTIALS
-    // =========================
+    // ==========================================
     const consumerKey = String(
       process.env.UNIFIEDPAY_CONSUMER_KEY || ""
     ).trim();
@@ -56,9 +67,9 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================
-    // UNIFIEDPAY STATUS URL
-    // =========================
+    // ==========================================
+    // UNIFIEDPAY STATUS ENDPOINT
+    // ==========================================
     const url =
       "https://unifiedpay.co.ke/auth/cred/" +
       encodeURIComponent(consumerKey) +
@@ -66,9 +77,9 @@ module.exports = async (req, res) => {
       encodeURIComponent(consumerSecret) +
       "/sendstatus";
 
-    // =========================
-    // CHECK PAYMENT
-    // =========================
+    // ==========================================
+    // CHECK TRANSACTION
+    // ==========================================
     const response = await fetch(url, {
       method: "POST",
 
@@ -89,7 +100,9 @@ module.exports = async (req, res) => {
     let data;
 
     try {
-      data = JSON.parse(responseText);
+      data = JSON.parse(
+        responseText
+      );
     } catch {
       data = {
         success: false,
@@ -99,39 +112,48 @@ module.exports = async (req, res) => {
       };
     }
 
-    console.log(
-      "UNIFIEDPAY_PAYMENT_STATUS",
-      JSON.stringify({
-        httpStatus: response.status,
-        transaction_request_id:
-          transactionId,
-        ResponseCode:
-          data.ResponseCode || null,
-        TransactionStatus:
-          data.TransactionStatus || null
-      })
-    );
-
-    // =========================
+    // ==========================================
     // NORMALIZE STATUS
-    // =========================
-    const paymentStatus = String(
+    // ==========================================
+    const status = String(
       data.TransactionStatus ||
       data.transaction_status ||
       data.status ||
       ""
-    ).toLowerCase().trim();
+    ).trim().toLowerCase();
 
-    // =========================
-    // COMPLETED
-    // =========================
+    const responseCode = String(
+      data.ResponseCode ?? ""
+    ).trim();
+
+    const resultCode = String(
+      data.ResultCode ?? ""
+    ).trim();
+
+    // ==========================================
+    // SUCCESS CONDITIONS
+    // ==========================================
+    const completed =
+      status === "completed" ||
+      status === "complete" ||
+      status === "successful" ||
+      status === "success" ||
+      status === "paid";
+
+    const successfulCode =
+      responseCode === "0" ||
+      resultCode === "0";
+
     const paid =
-      paymentStatus === "completed" ||
-      paymentStatus === "complete" ||
-      paymentStatus === "success" ||
-      paymentStatus === "successful" ||
-      paymentStatus === "paid";
+      completed &&
+      (
+        successfulCode ||
+        data.success === true
+      );
 
+    // ==========================================
+    // PAID
+    // ==========================================
     if (paid) {
       return json(res, 200, {
         success: true,
@@ -146,25 +168,25 @@ module.exports = async (req, res) => {
           transactionId,
 
         amount:
-          data.TransactionAmount ||
-          data.amount ||
+          data.TransactionAmount ??
+          data.amount ??
           null,
 
         phone:
-          data.Msisdn ||
-          data.msisdn ||
-          data.phone ||
+          data.Msisdn ??
+          data.msisdn ??
+          data.phone ??
           null,
 
         reference:
-          data.TransactionReference ||
-          data.reference ||
+          data.TransactionReference ??
+          data.reference ??
           null,
 
         mpesa_receipt:
-          data.TransactionReceipt ||
-          data.mpesa_receipt ||
-          data.receipt ||
+          data.TransactionReceipt ??
+          data.mpesa_receipt ??
+          data.receipt ??
           null,
 
         message:
@@ -174,47 +196,61 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================
-    // FAILED / CANCELLED
-    // =========================
-    const failed =
-      paymentStatus === "failed" ||
-      paymentStatus === "failure" ||
-      paymentStatus === "cancelled" ||
-      paymentStatus === "canceled" ||
-      paymentStatus === "rejected";
-
-    if (failed) {
+    // ==========================================
+    // FAILED
+    // ==========================================
+    if (
+      status === "failed" ||
+      status === "failure" ||
+      status === "rejected"
+    ) {
       return json(res, 200, {
         success: true,
         paid: false,
-
-        status:
-          data.TransactionStatus ||
-          "Failed",
-
+        status: "Failed",
         transaction_id:
           transactionId,
-
         transaction_request_id:
           transactionId,
-
         message:
           data.ResultDesc ||
           data.message ||
-          "Payment was not completed."
+          "Payment failed."
       });
     }
 
-    // =========================
-    // STILL PENDING
-    // =========================
+    // ==========================================
+    // CANCELLED
+    // ==========================================
+    if (
+      status === "cancelled" ||
+      status === "canceled"
+    ) {
+      return json(res, 200, {
+        success: true,
+        paid: false,
+        status: "Cancelled",
+        transaction_id:
+          transactionId,
+        transaction_request_id:
+          transactionId,
+        message:
+          data.ResultDesc ||
+          data.message ||
+          "Payment was cancelled."
+      });
+    }
+
+    // ==========================================
+    // PENDING
+    // ==========================================
     return json(res, 200, {
       success: true,
       paid: false,
 
       status:
         data.TransactionStatus ||
+        data.transaction_status ||
         data.status ||
         "Pending",
 
@@ -240,7 +276,6 @@ module.exports = async (req, res) => {
     return json(res, 500, {
       success: false,
       paid: false,
-
       message:
         "Unable to check the M-PESA payment status."
     });
