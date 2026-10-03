@@ -6,7 +6,10 @@ function json(res, status, data) {
   return res.end(JSON.stringify(data));
 }
 
+// Prevent the same browser request from repeatedly
+// sending STK prompts within a short period.
 const recentRequests = new Map();
+
 const COOLDOWN_MS = 30 * 1000;
 
 module.exports = async (req, res) => {
@@ -17,29 +20,28 @@ module.exports = async (req, res) => {
     });
   }
 
+  let cleanReference = "";
+  let requestKey = "";
+
   try {
-    // =========================
-    // DATABASE
-    // =========================
     await ensurePaymentTable();
 
-    const {
-      phone,
-      amount,
-      reference
-    } = req.body || {};
+    const body = req.body || {};
+
+    const phone = body.phone;
+    const amount = body.amount;
+    const reference = body.reference;
 
     // =========================
     // PHONE
     // =========================
-    const rawPhone = String(phone || "")
-      .replace(/\D/g, "");
+
+    const rawPhone = String(phone || "").replace(/\D/g, "");
 
     let mpesaPhone = rawPhone;
 
     if (/^07\d{8}$/.test(rawPhone)) {
-      mpesaPhone =
-        "254" + rawPhone.substring(1);
+      mpesaPhone = "254" + rawPhone.substring(1);
     }
 
     if (/^2547\d{8}$/.test(rawPhone)) {
@@ -49,8 +51,7 @@ module.exports = async (req, res) => {
     if (!/^2547\d{8}$/.test(mpesaPhone)) {
       return json(res, 400, {
         success: false,
-        message:
-          "Enter a valid Safaricom M-PESA number.",
+        message: "Enter a valid Safaricom M-PESA number.",
         validation: "phone"
       });
     }
@@ -58,6 +59,7 @@ module.exports = async (req, res) => {
     // =========================
     // AMOUNT
     // =========================
+
     const cleanAmount = Number(amount);
 
     if (
@@ -75,9 +77,8 @@ module.exports = async (req, res) => {
     // =========================
     // REFERENCE
     // =========================
-    const cleanReference = String(
-      reference || ""
-    )
+
+    cleanReference = String(reference || "")
       .trim()
       .replace(/[^A-Za-z0-9_-]/g, "")
       .slice(0, 12);
@@ -90,15 +91,16 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================
-    // DUPLICATE PROTECTION
-    // =========================
-    const requestKey =
+    requestKey =
       mpesaPhone +
       "|" +
       cleanAmount +
       "|" +
       cleanReference;
+
+    // =========================
+    // DUPLICATE PROTECTION
+    // =========================
 
     const now = Date.now();
 
@@ -116,7 +118,8 @@ module.exports = async (req, res) => {
         retry_after_seconds:
           Math.ceil(
             (COOLDOWN_MS -
-              (now - previousRequest)) / 1000
+              (now - previousRequest)) /
+              1000
           )
       });
     }
@@ -126,14 +129,9 @@ module.exports = async (req, res) => {
       now
     );
 
-    // =========================
-    // MEMORY CLEANUP
-    // =========================
+    // Cleanup old entries
     if (recentRequests.size > 5000) {
-      for (const [
-        key,
-        timestamp
-      ] of recentRequests) {
+      for (const [key, timestamp] of recentRequests) {
         if (
           now - timestamp >
           COOLDOWN_MS
@@ -146,6 +144,7 @@ module.exports = async (req, res) => {
     // =========================
     // CHECK DATABASE
     // =========================
+
     const existingPayment =
       await query(
         `
@@ -162,14 +161,12 @@ module.exports = async (req, res) => {
         [cleanReference]
       );
 
-    if (
-      existingPayment.rows.length > 0
-    ) {
+    if (existingPayment.rows.length > 0) {
       const existing =
         existingPayment.rows[0];
 
-      // Same reference cannot use
-      // a different amount.
+      // Same reference cannot be used
+      // with another amount.
       if (
         Number(existing.amount) !==
         cleanAmount
@@ -185,11 +182,15 @@ module.exports = async (req, res) => {
         });
       }
 
-      // Do not send another prompt
-      // while one is still pending.
+      const existingStatus =
+        String(existing.status || "")
+          .toLowerCase();
+
+      // Do not send another STK while
+      // the previous one is still pending.
       if (
-        String(existing.status).toLowerCase() ===
-        "pending"
+        existingStatus === "pending" &&
+        existing.transaction_request_id
       ) {
         recentRequests.delete(
           requestKey
@@ -197,13 +198,21 @@ module.exports = async (req, res) => {
 
         return json(res, 409, {
           success: false,
+
           message:
             "This payment request is already pending. Please check your M-PESA phone.",
+
           paymentId:
-            existing.transaction_request_id || null,
+            existing.transaction_request_id,
+
           transaction_request_id:
-            existing.transaction_request_id || null,
+            existing.transaction_request_id,
+
+          transaction_id:
+            existing.transaction_request_id,
+
           status: "Pending",
+
           reference:
             cleanReference
         });
@@ -213,13 +222,18 @@ module.exports = async (req, res) => {
     // =========================
     // UNIFIEDPAY CREDENTIALS
     // =========================
-    const consumerKey = String(
-      process.env.UNIFIEDPAY_CONSUMER_KEY || ""
-    ).trim();
 
-    const consumerSecret = String(
-      process.env.UNIFIEDPAY_CONSUMER_SECRET || ""
-    ).trim();
+    const consumerKey =
+      String(
+        process.env.UNIFIEDPAY_CONSUMER_KEY ||
+          ""
+      ).trim();
+
+    const consumerSecret =
+      String(
+        process.env.UNIFIEDPAY_CONSUMER_SECRET ||
+          ""
+      ).trim();
 
     if (
       !consumerKey ||
@@ -236,212 +250,373 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Part 2 continues...
-  // =========================
-// UNIFIEDPAY STK URL
-// =========================
-const url =
-  "https://unifiedpay.co.ke/auth/cred/" +
-  encodeURIComponent(consumerKey) +
-  "/" +
-  encodeURIComponent(consumerSecret) +
-  "/sendstk";
+    // =========================
+    // SAVE PAYMENT AS PENDING
+    // =========================
 
-// =========================
-// CREATE / UPDATE PAYMENT
-// =========================
-if (
-  existingPayment.rows.length === 0
-) {
-  await query(
-    `
-    INSERT INTO payments
-    (
-      reference,
-      amount,
-      phone,
-      status
-    )
-    VALUES
-    ($1, $2, $3, 'pending')
-    `,
-    [
-      cleanReference,
-      cleanAmount,
-      mpesaPhone
-    ]
-  );
-} else {
-  await query(
-    `
-    UPDATE payments
-    SET
-      phone = $2,
-      amount = $3,
-      status = 'pending',
-      updated_at = NOW()
-    WHERE reference = $1
-    `,
-    [
-      cleanReference,
-      mpesaPhone,
-      cleanAmount
-    ]
-  );
-}
+    if (
+      existingPayment.rows.length === 0
+    ) {
+      await query(
+        `
+        INSERT INTO payments
+        (
+          reference,
+          amount,
+          phone,
+          status
+        )
+        VALUES
+        ($1, $2, $3, 'pending')
+        `,
+        [
+          cleanReference,
+          cleanAmount,
+          mpesaPhone
+        ]
+      );
+    } else {
+      await query(
+        `
+        UPDATE payments
+        SET
+          phone = $2,
+          amount = $3,
+          status = 'pending',
+          transaction_request_id = NULL,
+          transaction_id = NULL,
+          transaction_code = NULL,
+          updated_at = NOW()
+        WHERE reference = $1
+        `,
+        [
+          cleanReference,
+          mpesaPhone,
+          cleanAmount
+        ]
+      );
+    }
 
-// =========================
-// SEND STK PROMPT
-// =========================
-const response = await fetch(url, {
-  method: "POST",
+    // =========================
+    // UNIFIEDPAY STK URL
+    // =========================
 
-  headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json"
-  },
+    const url =
+      "https://unifiedpay.co.ke/auth/cred/" +
+      encodeURIComponent(
+        consumerKey
+      ) +
+      "/" +
+      encodeURIComponent(
+        consumerSecret
+      ) +
+      "/sendstk";
 
-  body: JSON.stringify({
-    amount: cleanAmount,
-    msisdn: mpesaPhone,
-    reference: cleanReference
-  })
-});
+    // =========================
+    // SEND STK PROMPT
+    // =========================
 
-const responseText =
-  await response.text();
+    let response;
 
-let data;
+    try {
+      response = await fetch(
+        url,
+        {
+          method: "POST",
 
-try {
-  data = JSON.parse(
-    responseText
-  );
-} catch {
-  data = {
-    success: false,
-    errorMessage:
-      responseText ||
-      "UnifiedPay returned an invalid response."
-  };
-}
+          headers: {
+            "Content-Type":
+              "application/json",
+            "Accept":
+              "application/json"
+          },
 
-// =========================
-// SUCCESS
-// =========================
-if (
-  response.ok &&
-  String(data.ResponseCode) === "0" &&
-  data.transaction_request_id
-) {
-  const transactionRequestId =
-    String(
-      data.transaction_request_id
+          body: JSON.stringify({
+            amount:
+              cleanAmount,
+
+            msisdn:
+              mpesaPhone,
+
+            reference:
+              cleanReference
+          })
+        }
+      );
+    } catch (networkError) {
+      console.error(
+        "UNIFIEDPAY_NETWORK_ERROR",
+        networkError
+      );
+
+      await query(
+        `
+        UPDATE payments
+        SET
+          status = 'failed',
+          updated_at = NOW()
+        WHERE reference = $1
+        `,
+        [cleanReference]
+      );
+
+      recentRequests.delete(
+        requestKey
+      );
+
+      return json(res, 502, {
+        success: false,
+
+        message:
+          "Unable to connect to the M-PESA payment service. Please try again shortly.",
+
+        code:
+          "UNIFIEDPAY_CONNECTION_ERROR"
+      });
+    }
+
+    // =========================
+    // READ RESPONSE
+    // =========================
+
+    const responseText =
+      await response.text();
+
+    let data = {};
+
+    try {
+      data = responseText
+        ? JSON.parse(responseText)
+        : {};
+    } catch {
+      data = {
+        rawResponse:
+          responseText
+      };
+    }
+
+    console.log(
+      "UNIFIEDPAY_STK_RESULT",
+      JSON.stringify({
+        httpStatus:
+          response.status,
+
+        amount:
+          cleanAmount,
+
+        phone:
+          mpesaPhone,
+
+        reference:
+          cleanReference,
+
+        ResponseCode:
+          data.ResponseCode ||
+          null,
+
+        success:
+          data.success === true,
+
+        transaction_request_id:
+          data.transaction_request_id ||
+          null
+      })
     );
 
-  await query(
-    `
-    UPDATE payments
-    SET
-      status = 'pending',
-      transaction_request_id = $2,
-      transaction_id = $2,
-      updated_at = NOW()
-    WHERE reference = $1
-    `,
-    [
-      cleanReference,
-      transactionRequestId
-    ]
-  );
+    // =========================
+    // SUCCESS
+    // =========================
 
-  console.log(
-    "UNIFIEDPAY_STK_SUCCESS",
-    JSON.stringify({
-      amount: cleanAmount,
-      reference: cleanReference,
-      transaction_request_id:
-        transactionRequestId
-    })
-  );
+    if (
+      response.ok &&
+      String(data.ResponseCode) ===
+        "0" &&
+      data.transaction_request_id
+    ) {
+      const transactionRequestId =
+        String(
+          data.transaction_request_id
+        );
 
-  return json(res, 200, {
-    success: true,
+      await query(
+        `
+        UPDATE payments
+        SET
+          status = 'pending',
+          transaction_request_id = $2,
+          transaction_id = $2,
+          updated_at = NOW()
+        WHERE reference = $1
+        `,
+        [
+          cleanReference,
+          transactionRequestId
+        ]
+      );
 
-    message:
-      data.message ||
-      "M-PESA prompt sent successfully.",
+      return json(res, 200, {
+        success: true,
 
-    paymentId:
-      transactionRequestId,
+        message:
+          data.message ||
+          "M-PESA prompt sent successfully.",
 
-    transaction_request_id:
-      transactionRequestId,
+        paymentId:
+          transactionRequestId,
 
-    transaction_id:
-      transactionRequestId,
+        transaction_request_id:
+          transactionRequestId,
 
-    status: "Pending",
+        transaction_id:
+          transactionRequestId,
 
-    reference:
-      cleanReference
-  });
-}
+        status:
+          "Pending",
 
-// =========================
-// REJECTED
-// =========================
-console.error(
-  "UNIFIEDPAY_STK_REJECTED",
-  JSON.stringify({
-    httpStatus:
-      response.status,
-    ResponseCode:
-      data.ResponseCode || null,
-    errorMessage:
-      data.errorMessage || null
-  })
-);
+        reference:
+          cleanReference
+      });
+    }
 
-await query(
-  `
-  UPDATE payments
-  SET
-    status = 'failed',
-    updated_at = NOW()
-  WHERE reference = $1
-  `,
-  [cleanReference]
-);
+    // =========================
+    // UNIFIEDPAY TEMPORARY ERROR
+    // =========================
 
-recentRequests.delete(
-  requestKey
-);
+    if (
+      response.status === 502 ||
+      response.status === 503 ||
+      response.status === 504
+    ) {
+      console.error(
+        "UNIFIEDPAY_GATEWAY_ERROR",
+        JSON.stringify({
+          httpStatus:
+            response.status,
 
-return json(
-  res,
-  response.status || 500,
-  {
-    success: false,
+          reference:
+            cleanReference,
 
-    message:
-      data.errorMessage ||
-      data.message ||
-      "UnifiedPay rejected the payment request.",
+          response:
+            data
+        })
+      );
 
-    code:
-      data.ResultCode ||
-      data.ResponseCode ||
-      null
-  }
-);
+      await query(
+        `
+        UPDATE payments
+        SET
+          status = 'failed',
+          updated_at = NOW()
+        WHERE reference = $1
+        `,
+        [cleanReference]
+      );
+
+      recentRequests.delete(
+        requestKey
+      );
+
+      return json(res, 502, {
+        success: false,
+
+        message:
+          "M-PESA service is temporarily unavailable. Please try again in a few seconds.",
+
+        code:
+          "UNIFIEDPAY_TEMPORARY_ERROR"
+      });
+    }
+
+    // =========================
+    // REJECTED
+    // =========================
+
+    console.error(
+      "UNIFIEDPAY_STK_REJECTED",
+      JSON.stringify({
+        httpStatus:
+          response.status,
+
+        ResponseCode:
+          data.ResponseCode ||
+          null,
+
+        errorMessage:
+          data.errorMessage ||
+          data.message ||
+          null,
+
+        reference:
+          cleanReference
+      })
+    );
+
+    await query(
+      `
+      UPDATE payments
+      SET
+        status = 'failed',
+        updated_at = NOW()
+      WHERE reference = $1
+      `,
+      [cleanReference]
+    );
+
+    recentRequests.delete(
+      requestKey
+    );
+
+    return json(
+      res,
+      response.status >= 400
+        ? response.status
+        : 500,
+      {
+        success: false,
+
+        message:
+          data.errorMessage ||
+          data.message ||
+          "UnifiedPay rejected the payment request.",
+
+        code:
+          data.ResultCode ||
+          data.ResponseCode ||
+          null
+      }
+    );
 
   } catch (error) {
-
     console.error(
       "UNIFIEDPAY_STK_ERROR",
       error
     );
+
+    if (requestKey) {
+      recentRequests.delete(
+        requestKey
+      );
+    }
+
+    if (cleanReference) {
+      try {
+        await query(
+          `
+          UPDATE payments
+          SET
+            status = 'failed',
+            updated_at = NOW()
+          WHERE reference = $1
+          `,
+          [cleanReference]
+        );
+      } catch (dbError) {
+        console.error(
+          "PAYMENT_DB_UPDATE_ERROR",
+          dbError
+        );
+      }
+    }
 
     return json(res, 500, {
       success: false,
