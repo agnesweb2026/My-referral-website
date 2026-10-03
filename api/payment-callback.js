@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const { query, ensurePaymentTable } = require("./db");
 
 function json(res, status, data) {
   res.status(status);
@@ -7,7 +8,6 @@ function json(res, status, data) {
 }
 
 module.exports = async (req, res) => {
-  // UnifiedPay sends POST requests
   if (req.method !== "POST") {
     return json(res, 405, {
       success: false,
@@ -16,71 +16,43 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // ==========================================
-    // GET UNIFIEDPAY SECRET
-    // ==========================================
     const consumerSecret = String(
       process.env.UNIFIEDPAY_CONSUMER_SECRET || ""
     ).trim();
 
     if (!consumerSecret) {
-      console.error(
-        "UNIFIEDPAY_CALLBACK: Missing consumer secret"
-      );
-
       return json(res, 500, {
         success: false,
         message: "Callback secret is not configured."
       });
     }
 
-    // ==========================================
-    // GET RAW REQUEST BODY
-    // ==========================================
     let rawBody = "";
 
     if (typeof req.body === "string") {
       rawBody = req.body;
     } else if (req.body) {
       rawBody = JSON.stringify(req.body);
-    } else {
-      rawBody = "";
     }
 
-    // ==========================================
-    // GET SIGNATURE
-    // ==========================================
     const receivedSignature = String(
       req.headers["x-unifiedpay-signature"] || ""
     ).trim();
 
     if (!receivedSignature) {
-      console.error(
-        "UNIFIEDPAY_CALLBACK: Missing signature"
-      );
-
       return json(res, 401, {
         success: false,
         message: "Missing callback signature."
       });
     }
 
-    // ==========================================
-    // CREATE EXPECTED HMAC SIGNATURE
-    // ==========================================
     const expectedSignature =
       "sha256=" +
       crypto
-        .createHmac(
-          "sha256",
-          consumerSecret
-        )
+        .createHmac("sha256", consumerSecret)
         .update(rawBody)
         .digest("hex");
 
-    // ==========================================
-    // TIMING-SAFE SIGNATURE CHECK
-    // ==========================================
     const receivedBuffer =
       Buffer.from(receivedSignature);
 
@@ -89,38 +61,18 @@ module.exports = async (req, res) => {
 
     if (
       receivedBuffer.length !==
-      expectedBuffer.length
-    ) {
-      console.error(
-        "UNIFIEDPAY_CALLBACK: Invalid signature"
-      );
-
-      return json(res, 401, {
-        success: false,
-        message: "Invalid callback signature."
-      });
-    }
-
-    const signatureValid =
-      crypto.timingSafeEqual(
+        expectedBuffer.length ||
+      !crypto.timingSafeEqual(
         receivedBuffer,
         expectedBuffer
-      );
-
-    if (!signatureValid) {
-      console.error(
-        "UNIFIEDPAY_CALLBACK: Invalid signature"
-      );
-
+      )
+    ) {
       return json(res, 401, {
         success: false,
         message: "Invalid callback signature."
       });
     }
 
-    // ==========================================
-    // PARSE CALLBACK
-    // ==========================================
     let data;
 
     try {
@@ -132,9 +84,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    // ==========================================
-    // READ EVENT
-    // ==========================================
     const event = String(
       data.event ||
       req.headers["x-unifiedpay-event"] ||
@@ -142,28 +91,21 @@ module.exports = async (req, res) => {
     ).trim();
 
     const transactionId = String(
-      data.transaction_request_id ||
-      ""
+      data.transaction_request_id || ""
     ).trim();
 
     const transactionStatus = String(
-      data.TransactionStatus ||
-      ""
+      data.TransactionStatus || ""
     ).trim();
 
     const transactionCode = String(
-      data.TransactionCode ||
-      ""
+      data.TransactionCode || ""
     ).trim();
 
     const reference = String(
-      data.TransactionReference ||
-      ""
+      data.TransactionReference || ""
     ).trim();
 
-    // ==========================================
-    // LOG SAFE INFORMATION
-    // ==========================================
     console.log(
       "UNIFIEDPAY_CALLBACK",
       JSON.stringify({
@@ -178,9 +120,6 @@ module.exports = async (req, res) => {
       })
     );
 
-    // ==========================================
-    // CHECK TRANSACTION ID
-    // ==========================================
     if (!transactionId) {
       return json(res, 400, {
         success: false,
@@ -189,14 +128,41 @@ module.exports = async (req, res) => {
       });
     }
 
-    // ==========================================
-    // COMPLETED PAYMENT
-    // ==========================================
+    await ensurePaymentTable();
+
+    /*
+    ==========================================
+    PAYMENT COMPLETED
+    ==========================================
+    */
+
     if (
       event === "transaction.completed" &&
-      transactionStatus === "Completed" &&
+      transactionStatus.toLowerCase() ===
+        "completed" &&
       transactionCode === "0"
     ) {
+
+      await query(
+        `
+        UPDATE payments
+        SET
+          status = 'completed',
+          transaction_request_id = $1,
+          transaction_id = $1,
+          transaction_code = $2,
+          updated_at = NOW()
+        WHERE
+          transaction_request_id = $1
+          OR reference = $3
+        `,
+        [
+          transactionId,
+          transactionCode,
+          reference
+        ]
+      );
+
       console.log(
         "UNIFIEDPAY_PAYMENT_COMPLETED",
         JSON.stringify({
@@ -204,54 +170,60 @@ module.exports = async (req, res) => {
             transactionId,
           reference,
           amount:
-            data.TransactionAmount || null,
+            data.TransactionAmount ||
+            null,
           receipt:
-            data.TransactionReceipt || null
+            data.TransactionReceipt ||
+            null
         })
       );
-
-      /*
-       * IMPORTANT:
-       *
-       * Later we can connect this section
-       * to your order/payment database.
-       *
-       * Do NOT give access based only on
-       * the callback arriving.
-       *
-       * We will verify:
-       * - transaction ID
-       * - reference
-       * - amount
-       * - payment status
-       *
-       * before marking an order as PAID.
-       */
 
       return json(res, 200, {
         success: true,
         received: true,
         paid: true,
+        status: "Completed",
         transaction_request_id:
           transactionId
       });
     }
 
-    // ==========================================
-    // FAILED PAYMENT
-    // ==========================================
+    /*
+    ==========================================
+    PAYMENT FAILED
+    ==========================================
+    */
+
     if (
       event === "transaction.failed"
     ) {
-      console.log(
-        "UNIFIEDPAY_PAYMENT_FAILED",
-        JSON.stringify({
-          transaction_request_id:
-            transactionId,
-          reference,
-          code:
-            transactionCode
-        })
+
+      await query(
+        `
+        UPDATE payments
+        SET
+          status = 'failed',
+          transaction_request_id =
+            COALESCE(
+              transaction_request_id,
+              $1
+            ),
+          transaction_id =
+            COALESCE(
+              transaction_id,
+              $1
+            ),
+          transaction_code = $2,
+          updated_at = NOW()
+        WHERE
+          transaction_request_id = $1
+          OR reference = $3
+        `,
+        [
+          transactionId,
+          transactionCode,
+          reference
+        ]
       );
 
       return json(res, 200, {
@@ -264,19 +236,42 @@ module.exports = async (req, res) => {
       });
     }
 
-    // ==========================================
-    // CANCELLED PAYMENT
-    // ==========================================
+    /*
+    ==========================================
+    PAYMENT CANCELLED
+    ==========================================
+    */
+
     if (
       event === "transaction.cancelled"
     ) {
-      console.log(
-        "UNIFIEDPAY_PAYMENT_CANCELLED",
-        JSON.stringify({
-          transaction_request_id:
-            transactionId,
+
+      await query(
+        `
+        UPDATE payments
+        SET
+          status = 'cancelled',
+          transaction_request_id =
+            COALESCE(
+              transaction_request_id,
+              $1
+            ),
+          transaction_id =
+            COALESCE(
+              transaction_id,
+              $1
+            ),
+          transaction_code = $2,
+          updated_at = NOW()
+        WHERE
+          transaction_request_id = $1
+          OR reference = $3
+        `,
+        [
+          transactionId,
+          transactionCode,
           reference
-        })
+        ]
       );
 
       return json(res, 200, {
@@ -289,10 +284,14 @@ module.exports = async (req, res) => {
       });
     }
 
-    // ==========================================
-    // TEST CALLBACK
-    // ==========================================
+    /*
+    ==========================================
+    UNIFIEDPAY TEST CALLBACK
+    ==========================================
+    */
+
     if (event === "test") {
+
       console.log(
         "UNIFIEDPAY_TEST_CALLBACK_RECEIVED"
       );
@@ -304,9 +303,12 @@ module.exports = async (req, res) => {
       });
     }
 
-    // ==========================================
-    // UNKNOWN / OTHER EVENT
-    // ==========================================
+    /*
+    ==========================================
+    OTHER EVENTS
+    ==========================================
+    */
+
     return json(res, 200, {
       success: true,
       received: true,
