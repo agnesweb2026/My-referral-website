@@ -13,16 +13,27 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { phone, amount, reference } = req.body || {};
+    const {
+      phone,
+      amount,
+      reference
+    } = req.body || {};
 
-    const rawPhone = String(phone || "").replace(/\D/g, "");
+    // =========================
+    // CLEAN PHONE NUMBER
+    // =========================
+    const rawPhone = String(phone || "")
+      .replace(/\D/g, "");
 
     let mpesaPhone = rawPhone;
 
+    // 0712345678 -> 254712345678
     if (/^07\d{8}$/.test(rawPhone)) {
-      mpesaPhone = "254" + rawPhone.substring(1);
+      mpesaPhone =
+        "254" + rawPhone.substring(1);
     }
 
+    // 254712345678
     if (/^2547\d{8}$/.test(rawPhone)) {
       mpesaPhone = rawPhone;
     }
@@ -30,14 +41,21 @@ module.exports = async (req, res) => {
     if (!/^2547\d{8}$/.test(mpesaPhone)) {
       return json(res, 400, {
         success: false,
-        message: "Enter a valid Safaricom M-PESA number.",
+        message:
+          "Enter a valid Safaricom M-PESA number.",
         validation: "phone"
       });
     }
 
+    // =========================
+    // CHECK AMOUNT
+    // =========================
     const cleanAmount = Number(amount);
 
-    if (!Number.isInteger(cleanAmount) || cleanAmount < 1) {
+    if (
+      !Number.isInteger(cleanAmount) ||
+      cleanAmount < 1
+    ) {
       return json(res, 400, {
         success: false,
         message: "Invalid payment amount.",
@@ -45,10 +63,15 @@ module.exports = async (req, res) => {
       });
     }
 
-    const cleanReference = String(reference || "")
+    // =========================
+    // PAYMENT REFERENCE
+    // =========================
+    const cleanReference = String(
+      reference || ""
+    )
       .trim()
       .replace(/[^A-Za-z0-9_-]/g, "")
-      .slice(0, 20);
+      .slice(0, 12);
 
     if (!cleanReference) {
       return json(res, 400, {
@@ -58,47 +81,58 @@ module.exports = async (req, res) => {
       });
     }
 
-    const secretKey = String(
-      process.env.LIPARO_SECRET_KEY || ""
+    // =========================
+    // UNIFIEDPAY CREDENTIALS
+    // =========================
+    const consumerKey = String(
+      process.env.UNIFIEDPAY_CONSUMER_KEY || ""
     ).trim();
 
-    const passkey = String(
-      process.env.LIPARO_PASSKEY || ""
+    const consumerSecret = String(
+      process.env.UNIFIEDPAY_CONSUMER_SECRET || ""
     ).trim();
 
-    const shortcode = String(
-      process.env.LIPARO_SHORTCODE || ""
-    ).trim();
-
-    if (!secretKey || !passkey || !shortcode) {
+    if (
+      !consumerKey ||
+      !consumerSecret
+    ) {
       return json(res, 500, {
         success: false,
-        message: "Liparo payment settings are not configured on the server."
+        message:
+          "UnifiedPay credentials are not configured on the server."
       });
     }
 
-    const response = await fetch(
-      "https://api.liparo.co.ke/v1/initiatestk",
-      {
-        method: "POST",
+    // =========================
+    // UNIFIEDPAY STK ENDPOINT
+    // =========================
+    const url =
+      "https://unifiedpay.co.ke/auth/cred/" +
+      encodeURIComponent(consumerKey) +
+      "/" +
+      encodeURIComponent(consumerSecret) +
+      "/sendstk";
 
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
+    // =========================
+    // SEND STK PUSH
+    // =========================
+    const response = await fetch(url, {
+      method: "POST",
 
-        body: JSON.stringify({
-          secret_key: secretKey,
-          passkey: passkey,
-          shortcode: shortcode,
-          amount: cleanAmount,
-          phone: mpesaPhone,
-          reference: cleanReference
-        })
-      }
-    );
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
 
-    const responseText = await response.text();
+      body: JSON.stringify({
+        amount: cleanAmount,
+        msisdn: mpesaPhone,
+        reference: cleanReference
+      })
+    });
+
+    const responseText =
+      await response.text();
 
     let data;
 
@@ -107,27 +141,38 @@ module.exports = async (req, res) => {
     } catch {
       data = {
         success: false,
-        message:
+        errorMessage:
           responseText ||
-          "Liparo returned an invalid response."
+          "UnifiedPay returned an invalid response."
       };
     }
 
     console.log(
-      "LIPARO_STK_RESULT",
+      "UNIFIEDPAY_STK_RESULT",
       JSON.stringify({
         httpStatus: response.status,
         amount: cleanAmount,
+        phone: mpesaPhone,
         reference: cleanReference,
-        success: data.success === true,
-        transaction_id: data.transaction_id || null
+        ResponseCode:
+          data.ResponseCode || null,
+        success:
+          data.success === true,
+        transaction_request_id:
+          data.transaction_request_id || null
       })
     );
 
+    // =========================
+    // SUCCESS
+    // =========================
     if (
       response.ok &&
-      data.success === true &&
-      data.transaction_id
+      (
+        data.success === true ||
+        String(data.ResponseCode) === "0"
+      ) &&
+      data.transaction_request_id
     ) {
       return json(res, 200, {
         success: true,
@@ -136,13 +181,14 @@ module.exports = async (req, res) => {
           data.message ||
           "M-PESA prompt sent successfully.",
 
-        paymentId: data.transaction_id,
+        paymentId:
+          data.transaction_request_id,
 
         transaction_request_id:
-          data.transaction_id,
+          data.transaction_request_id,
 
         transaction_id:
-          data.transaction_id,
+          data.transaction_request_id,
 
         status: "pending",
 
@@ -150,24 +196,33 @@ module.exports = async (req, res) => {
       });
     }
 
-    return json(res, response.status || 500, {
-      success: false,
+    // =========================
+    // ERROR
+    // =========================
+    return json(
+      res,
+      response.status || 500,
+      {
+        success: false,
 
-      message:
-        data.message ||
-        "Liparo rejected the payment request.",
+        message:
+          data.errorMessage ||
+          data.message ||
+          "UnifiedPay rejected the payment request.",
 
-      code:
-        data.error_code ||
-        null,
+        code:
+          data.ResultCode ||
+          data.ResponseCode ||
+          null,
 
-      details: data
-    });
+        details: data
+      }
+    );
 
   } catch (error) {
 
     console.error(
-      "LIPARO_STK_ERROR",
+      "UNIFIEDPAY_STK_ERROR",
       error
     );
 
@@ -178,7 +233,9 @@ module.exports = async (req, res) => {
         "Unable to start the M-PESA prompt.",
 
       error:
-        String(error.message || error)
+        String(
+          error.message || error
+        )
     });
   }
 };
