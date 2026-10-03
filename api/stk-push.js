@@ -1,11 +1,13 @@
+const { query, ensurePaymentTable } = require("./db");
+
 function json(res, status, data) {
   res.status(status);
   res.setHeader("Content-Type", "application/json");
   return res.end(JSON.stringify(data));
 }
 
-// Simple in-memory protection.
-// Helps stop rapid duplicate requests on the same Vercel instance.
+// In-memory protection.
+// Hii ni protection ya ziada; database ndiyo source ya payment records.
 const recentRequests = new Map();
 
 const COOLDOWN_MS = 30 * 1000;
@@ -19,6 +21,11 @@ module.exports = async (req, res) => {
   }
 
   try {
+    // =========================
+    // DATABASE SETUP
+    // =========================
+    await ensurePaymentTable();
+
     const {
       phone,
       amount,
@@ -122,7 +129,7 @@ module.exports = async (req, res) => {
       now
     );
 
-    // Prevent memory from growing forever.
+    // Clean old memory entries.
     if (recentRequests.size > 5000) {
       for (const [
         key,
@@ -138,169 +145,56 @@ module.exports = async (req, res) => {
     }
 
     // =========================
-    // UNIFIEDPAY CREDENTIALS
+    // CHECK EXISTING DATABASE PAYMENT
     // =========================
-    const consumerKey = String(
-      process.env.UNIFIEDPAY_CONSUMER_KEY || ""
-    ).trim();
-
-    const consumerSecret = String(
-      process.env.UNIFIEDPAY_CONSUMER_SECRET || ""
-    ).trim();
+    const existingPayment =
+      await query(
+        `
+        SELECT
+          id,
+          amount,
+          phone,
+          status,
+          transaction_request_id
+        FROM payments
+        WHERE reference = $1
+        LIMIT 1
+        `,
+        [cleanReference]
+      );
 
     if (
-      !consumerKey ||
-      !consumerSecret
+      existingPayment.rows.length > 0
     ) {
-      recentRequests.delete(
-        requestKey
-      );
+      const existing =
+        existingPayment.rows[0];
 
-      return json(res, 500, {
-        success: false,
-        message:
-          "UnifiedPay credentials are not configured on the server."
-      });
-    }
+      // Never allow the same reference
+      // to be reused for a different amount.
+      if (
+        Number(existing.amount) !==
+        cleanAmount
+      ) {
+        recentRequests.delete(
+          requestKey
+        );
 
-    // =========================
-    // UNIFIEDPAY STK URL
-    // =========================
-    const url =
-      "https://unifiedpay.co.ke/auth/cred/" +
-      encodeURIComponent(consumerKey) +
-      "/" +
-      encodeURIComponent(consumerSecret) +
-      "/sendstk";
-
-    // =========================
-    // SEND STK
-    // =========================
-    const response = await fetch(url, {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-
-      body: JSON.stringify({
-        amount: cleanAmount,
-        msisdn: mpesaPhone,
-        reference: cleanReference
-      })
-    });
-
-    const responseText =
-      await response.text();
-
-    let data;
-
-    try {
-      data = JSON.parse(
-        responseText
-      );
-    } catch {
-      data = {
-        success: false,
-        errorMessage:
-          responseText ||
-          "UnifiedPay returned an invalid response."
-      };
-    }
-
-    // =========================
-    // UNIFIEDPAY SUCCESS
-    // =========================
-    if (
-      response.ok &&
-      String(data.ResponseCode) === "0" &&
-      data.transaction_request_id
-    ) {
-      console.log(
-        "UNIFIEDPAY_STK_SUCCESS",
-        JSON.stringify({
-          amount: cleanAmount,
-          reference: cleanReference,
-          transaction_request_id:
-            data.transaction_request_id
-        })
-      );
-
-      return json(res, 200, {
-        success: true,
-
-        message:
-          data.message ||
-          "M-PESA prompt sent successfully.",
-
-        paymentId:
-          data.transaction_request_id,
-
-        transaction_request_id:
-          data.transaction_request_id,
-
-        transaction_id:
-          data.transaction_request_id,
-
-        status: "Pending",
-
-        reference:
-          cleanReference
-      });
-    }
-
-    // =========================
-    // UNIFIEDPAY REJECTED
-    // =========================
-    console.error(
-      "UNIFIEDPAY_STK_REJECTED",
-      JSON.stringify({
-        httpStatus:
-          response.status,
-        ResponseCode:
-          data.ResponseCode || null,
-        errorMessage:
-          data.errorMessage || null
-      })
-    );
-
-    // If UnifiedPay rejected the request,
-    // allow a legitimate retry later.
-    recentRequests.delete(
-      requestKey
-    );
-
-    return json(
-      res,
-      response.status || 500,
-      {
-        success: false,
-
-        message:
-          data.errorMessage ||
-          data.message ||
-          "UnifiedPay rejected the payment request.",
-
-        code:
-          data.ResultCode ||
-          data.ResponseCode ||
-          null
+        return json(res, 409, {
+          success: false,
+          message:
+            "This payment reference is already linked to another amount."
+        });
       }
-    );
 
-  } catch (error) {
+      // If a previous request is still pending,
+      // don't send another STK request.
+      if (
+        String(existing.status).toLowerCase() ===
+        "pending"
+      ) {
+        recentRequests.delete(
+          requestKey
+        );
 
-    console.error(
-      "UNIFIEDPAY_STK_ERROR",
-      error
-    );
-
-    return json(res, 500, {
-      success: false,
-
-      message:
-        "Unable to start the M-PESA prompt."
-    });
-  }
-};
+        return json(res, 409, {
+          success
