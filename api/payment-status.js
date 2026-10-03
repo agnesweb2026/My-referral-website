@@ -1,3 +1,5 @@
+const { query, ensurePaymentTable } = require("./db");
+
 function json(res, status, data) {
   res.status(status);
   res.setHeader("Content-Type", "application/json");
@@ -25,9 +27,6 @@ module.exports = async (req, res) => {
       ""
     ).trim();
 
-    // ==========================================
-    // VALIDATE TRANSACTION ID
-    // ==========================================
     if (!transactionId) {
       return json(res, 400, {
         success: false,
@@ -36,7 +35,7 @@ module.exports = async (req, res) => {
       });
     }
 
-    if (transactionId.length > 100) {
+    if (transactionId.length > 150) {
       return json(res, 400, {
         success: false,
         paid: false,
@@ -44,9 +43,148 @@ module.exports = async (req, res) => {
       });
     }
 
-    // ==========================================
-    // UNIFIEDPAY CREDENTIALS
-    // ==========================================
+    await ensurePaymentTable();
+
+    /*
+    ==========================================
+    STEP 1
+    CHECK OUR DATABASE FIRST
+    ==========================================
+    */
+
+    const saved = await query(
+      `
+      SELECT
+        reference,
+        amount,
+        phone,
+        status,
+        transaction_request_id,
+        transaction_id,
+        transaction_code
+      FROM payments
+      WHERE
+        transaction_request_id = $1
+        OR transaction_id = $1
+      ORDER BY updated_at DESC
+      LIMIT 1
+      `,
+      [transactionId]
+    );
+
+    if (saved.rows.length > 0) {
+      const payment = saved.rows[0];
+
+      const savedStatus = String(
+        payment.status || ""
+      ).trim().toLowerCase();
+
+      /*
+      ========================================
+      PAYMENT ALREADY CONFIRMED
+      ========================================
+      */
+
+      if (
+        savedStatus === "completed" ||
+        savedStatus === "complete" ||
+        savedStatus === "paid" ||
+        savedStatus === "successful" ||
+        savedStatus === "success"
+      ) {
+        return json(res, 200, {
+          success: true,
+          paid: true,
+          status: "Completed",
+
+          transaction_id:
+            payment.transaction_id ||
+            transactionId,
+
+          transaction_request_id:
+            payment.transaction_request_id ||
+            transactionId,
+
+          amount:
+            payment.amount ?? null,
+
+          phone:
+            payment.phone ?? null,
+
+          reference:
+            payment.reference ?? null,
+
+          message:
+            "Payment completed successfully."
+        });
+      }
+
+      /*
+      ========================================
+      PAYMENT FAILED
+      ========================================
+      */
+
+      if (
+        savedStatus === "failed" ||
+        savedStatus === "failure" ||
+        savedStatus === "rejected"
+      ) {
+        return json(res, 200, {
+          success: true,
+          paid: false,
+          status: "Failed",
+
+          transaction_id:
+            payment.transaction_id ||
+            transactionId,
+
+          transaction_request_id:
+            payment.transaction_request_id ||
+            transactionId,
+
+          message:
+            "Payment failed."
+        });
+      }
+
+      /*
+      ========================================
+      PAYMENT CANCELLED
+      ========================================
+      */
+
+      if (
+        savedStatus === "cancelled" ||
+        savedStatus === "canceled"
+      ) {
+        return json(res, 200, {
+          success: true,
+          paid: false,
+          status: "Cancelled",
+
+          transaction_id:
+            payment.transaction_id ||
+            transactionId,
+
+          transaction_request_id:
+            payment.transaction_request_id ||
+            transactionId,
+
+          message:
+            "Payment was cancelled."
+        });
+      }
+    }
+
+    /*
+    ==========================================
+    STEP 2
+    DATABASE IS STILL PENDING
+    CHECK UNIFIEDPAY
+    ==========================================
+    */
+
     const consumerKey = String(
       process.env.UNIFIEDPAY_CONSUMER_KEY || ""
     ).trim();
@@ -55,10 +193,7 @@ module.exports = async (req, res) => {
       process.env.UNIFIEDPAY_CONSUMER_SECRET || ""
     ).trim();
 
-    if (
-      !consumerKey ||
-      !consumerSecret
-    ) {
+    if (!consumerKey || !consumerSecret) {
       return json(res, 500, {
         success: false,
         paid: false,
@@ -67,9 +202,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    // ==========================================
-    // UNIFIEDPAY STATUS ENDPOINT
-    // ==========================================
     const url =
       "https://unifiedpay.co.ke/auth/cred/" +
       encodeURIComponent(consumerKey) +
@@ -77,9 +209,6 @@ module.exports = async (req, res) => {
       encodeURIComponent(consumerSecret) +
       "/sendstatus";
 
-    // ==========================================
-    // CHECK TRANSACTION
-    // ==========================================
     const response = await fetch(url, {
       method: "POST",
 
@@ -100,9 +229,7 @@ module.exports = async (req, res) => {
     let data;
 
     try {
-      data = JSON.parse(
-        responseText
-      );
+      data = JSON.parse(responseText);
     } catch {
       data = {
         success: false,
@@ -112,9 +239,25 @@ module.exports = async (req, res) => {
       };
     }
 
-    // ==========================================
-    // NORMALIZE STATUS
-    // ==========================================
+    console.log(
+      "UNIFIEDPAY_STATUS_RESULT",
+      JSON.stringify({
+        transaction_request_id:
+          transactionId,
+        httpStatus:
+          response.status,
+        status:
+          data.TransactionStatus ||
+          data.transaction_status ||
+          data.status ||
+          null,
+        responseCode:
+          data.ResponseCode ?? null,
+        resultCode:
+          data.ResultCode ?? null
+      })
+    );
+
     const status = String(
       data.TransactionStatus ||
       data.transaction_status ||
@@ -130,9 +273,6 @@ module.exports = async (req, res) => {
       data.ResultCode ?? ""
     ).trim();
 
-    // ==========================================
-    // SUCCESS CONDITIONS
-    // ==========================================
     const completed =
       status === "completed" ||
       status === "complete" ||
@@ -151,14 +291,51 @@ module.exports = async (req, res) => {
         data.success === true
       );
 
-    // ==========================================
-    // PAID
-    // ==========================================
+    /*
+    ==========================================
+    UNIFIEDPAY CONFIRMED PAYMENT
+    SAVE IT TO DATABASE
+    ==========================================
+    */
+
     if (paid) {
+
+      await query(
+        `
+        UPDATE payments
+        SET
+          status = 'completed',
+          transaction_request_id =
+            COALESCE(
+              transaction_request_id,
+              $1
+            ),
+          transaction_id =
+            COALESCE(
+              transaction_id,
+              $1
+            ),
+          transaction_code =
+            COALESCE(
+              transaction_code,
+              $2
+            ),
+          updated_at = NOW()
+        WHERE
+          transaction_request_id = $1
+          OR transaction_id = $1
+        `,
+        [
+          transactionId,
+          data.TransactionCode ||
+            data.transaction_code ||
+            "0"
+        ]
+      );
+
       return json(res, 200, {
         success: true,
         paid: true,
-
         status: "Completed",
 
         transaction_id:
@@ -196,22 +373,42 @@ module.exports = async (req, res) => {
       });
     }
 
-    // ==========================================
-    // FAILED
-    // ==========================================
+    /*
+    ==========================================
+    FAILED
+    ==========================================
+    */
+
     if (
       status === "failed" ||
       status === "failure" ||
       status === "rejected"
     ) {
+
+      await query(
+        `
+        UPDATE payments
+        SET
+          status = 'failed',
+          updated_at = NOW()
+        WHERE
+          transaction_request_id = $1
+          OR transaction_id = $1
+        `,
+        [transactionId]
+      );
+
       return json(res, 200, {
         success: true,
         paid: false,
         status: "Failed",
+
         transaction_id:
           transactionId,
+
         transaction_request_id:
           transactionId,
+
         message:
           data.ResultDesc ||
           data.message ||
@@ -219,21 +416,41 @@ module.exports = async (req, res) => {
       });
     }
 
-    // ==========================================
-    // CANCELLED
-    // ==========================================
+    /*
+    ==========================================
+    CANCELLED
+    ==========================================
+    */
+
     if (
       status === "cancelled" ||
       status === "canceled"
     ) {
+
+      await query(
+        `
+        UPDATE payments
+        SET
+          status = 'cancelled',
+          updated_at = NOW()
+        WHERE
+          transaction_request_id = $1
+          OR transaction_id = $1
+        `,
+        [transactionId]
+      );
+
       return json(res, 200, {
         success: true,
         paid: false,
         status: "Cancelled",
+
         transaction_id:
           transactionId,
+
         transaction_request_id:
           transactionId,
+
         message:
           data.ResultDesc ||
           data.message ||
@@ -241,9 +458,12 @@ module.exports = async (req, res) => {
       });
     }
 
-    // ==========================================
-    // PENDING
-    // ==========================================
+    /*
+    ==========================================
+    STILL PENDING
+    ==========================================
+    */
+
     return json(res, 200, {
       success: true,
       paid: false,
