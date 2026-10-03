@@ -4,6 +4,12 @@ function json(res, status, data) {
   return res.end(JSON.stringify(data));
 }
 
+// Simple in-memory protection.
+// Helps stop rapid duplicate requests on the same Vercel instance.
+const recentRequests = new Map();
+
+const COOLDOWN_MS = 30 * 1000;
+
 module.exports = async (req, res) => {
   if (req.method !== "POST") {
     return json(res, 405, {
@@ -20,20 +26,18 @@ module.exports = async (req, res) => {
     } = req.body || {};
 
     // =========================
-    // CLEAN PHONE NUMBER
+    // PHONE
     // =========================
     const rawPhone = String(phone || "")
       .replace(/\D/g, "");
 
     let mpesaPhone = rawPhone;
 
-    // 0712345678 -> 254712345678
     if (/^07\d{8}$/.test(rawPhone)) {
       mpesaPhone =
         "254" + rawPhone.substring(1);
     }
 
-    // 254712345678
     if (/^2547\d{8}$/.test(rawPhone)) {
       mpesaPhone = rawPhone;
     }
@@ -48,13 +52,14 @@ module.exports = async (req, res) => {
     }
 
     // =========================
-    // CHECK AMOUNT
+    // AMOUNT
     // =========================
     const cleanAmount = Number(amount);
 
     if (
       !Number.isInteger(cleanAmount) ||
-      cleanAmount < 1
+      cleanAmount < 1 ||
+      cleanAmount > 150000
     ) {
       return json(res, 400, {
         success: false,
@@ -64,7 +69,7 @@ module.exports = async (req, res) => {
     }
 
     // =========================
-    // PAYMENT REFERENCE
+    // REFERENCE
     // =========================
     const cleanReference = String(
       reference || ""
@@ -82,6 +87,57 @@ module.exports = async (req, res) => {
     }
 
     // =========================
+    // DUPLICATE REQUEST PROTECTION
+    // =========================
+    const requestKey =
+      mpesaPhone +
+      "|" +
+      cleanAmount +
+      "|" +
+      cleanReference;
+
+    const now = Date.now();
+
+    const previousRequest =
+      recentRequests.get(requestKey);
+
+    if (
+      previousRequest &&
+      now - previousRequest < COOLDOWN_MS
+    ) {
+      return json(res, 429, {
+        success: false,
+        message:
+          "A payment request was already sent. Please wait before trying again.",
+        retry_after_seconds:
+          Math.ceil(
+            (COOLDOWN_MS -
+              (now - previousRequest)) / 1000
+          )
+      });
+    }
+
+    recentRequests.set(
+      requestKey,
+      now
+    );
+
+    // Prevent memory from growing forever.
+    if (recentRequests.size > 5000) {
+      for (const [
+        key,
+        timestamp
+      ] of recentRequests) {
+        if (
+          now - timestamp >
+          COOLDOWN_MS
+        ) {
+          recentRequests.delete(key);
+        }
+      }
+    }
+
+    // =========================
     // UNIFIEDPAY CREDENTIALS
     // =========================
     const consumerKey = String(
@@ -96,6 +152,10 @@ module.exports = async (req, res) => {
       !consumerKey ||
       !consumerSecret
     ) {
+      recentRequests.delete(
+        requestKey
+      );
+
       return json(res, 500, {
         success: false,
         message:
@@ -104,7 +164,7 @@ module.exports = async (req, res) => {
     }
 
     // =========================
-    // UNIFIEDPAY STK ENDPOINT
+    // UNIFIEDPAY STK URL
     // =========================
     const url =
       "https://unifiedpay.co.ke/auth/cred/" +
@@ -114,7 +174,7 @@ module.exports = async (req, res) => {
       "/sendstk";
 
     // =========================
-    // SEND STK PUSH
+    // SEND STK
     // =========================
     const response = await fetch(url, {
       method: "POST",
@@ -137,7 +197,9 @@ module.exports = async (req, res) => {
     let data;
 
     try {
-      data = JSON.parse(responseText);
+      data = JSON.parse(
+        responseText
+      );
     } catch {
       data = {
         success: false,
@@ -147,33 +209,24 @@ module.exports = async (req, res) => {
       };
     }
 
-    console.log(
-      "UNIFIEDPAY_STK_RESULT",
-      JSON.stringify({
-        httpStatus: response.status,
-        amount: cleanAmount,
-        phone: mpesaPhone,
-        reference: cleanReference,
-        ResponseCode:
-          data.ResponseCode || null,
-        success:
-          data.success === true,
-        transaction_request_id:
-          data.transaction_request_id || null
-      })
-    );
-
     // =========================
-    // SUCCESS
+    // UNIFIEDPAY SUCCESS
     // =========================
     if (
       response.ok &&
-      (
-        data.success === true ||
-        String(data.ResponseCode) === "0"
-      ) &&
+      String(data.ResponseCode) === "0" &&
       data.transaction_request_id
     ) {
+      console.log(
+        "UNIFIEDPAY_STK_SUCCESS",
+        JSON.stringify({
+          amount: cleanAmount,
+          reference: cleanReference,
+          transaction_request_id:
+            data.transaction_request_id
+        })
+      );
+
       return json(res, 200, {
         success: true,
 
@@ -190,15 +243,34 @@ module.exports = async (req, res) => {
         transaction_id:
           data.transaction_request_id,
 
-        status: "pending",
+        status: "Pending",
 
-        reference: cleanReference
+        reference:
+          cleanReference
       });
     }
 
     // =========================
-    // ERROR
+    // UNIFIEDPAY REJECTED
     // =========================
+    console.error(
+      "UNIFIEDPAY_STK_REJECTED",
+      JSON.stringify({
+        httpStatus:
+          response.status,
+        ResponseCode:
+          data.ResponseCode || null,
+        errorMessage:
+          data.errorMessage || null
+      })
+    );
+
+    // If UnifiedPay rejected the request,
+    // allow a legitimate retry later.
+    recentRequests.delete(
+      requestKey
+    );
+
     return json(
       res,
       response.status || 500,
@@ -213,9 +285,7 @@ module.exports = async (req, res) => {
         code:
           data.ResultCode ||
           data.ResponseCode ||
-          null,
-
-        details: data
+          null
       }
     );
 
@@ -230,12 +300,7 @@ module.exports = async (req, res) => {
       success: false,
 
       message:
-        "Unable to start the M-PESA prompt.",
-
-      error:
-        String(
-          error.message || error
-        )
+        "Unable to start the M-PESA prompt."
     });
   }
 };
