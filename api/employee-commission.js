@@ -1,65 +1,25 @@
-const { Pool } = require("pg");
-
-const connectionString =
-  process.env.NEON_DATABASE_URL ||
-  process.env.DATABASE_URL ||
-  process.env.NEON_POSTGRES_URL;
-
-if (!connectionString) {
-  throw new Error("Neon database connection is not configured.");
-}
-
-const pool = new Pool({
-  connectionString,
-  ssl: connectionString.includes("sslmode=require")
-    ? undefined
-    : {
-        rejectUnauthorized: false
-      }
-});
+const { pool } = require("./employee-db");
 
 const COMMISSION_RATE = 0.40;
 
-/*
-=========================================
-VALID EMPLOYEE REFERRALS
-=========================================
-*/
-
-const EMPLOYEES = {
-  "REF-A7K2": "Joshua1",
-  "REF-B4M8": "Joshua2",
-  "REF-C9P3": "Joshua3",
-  "REF-D2X6": "Joshua4",
-  "REF-E5Q1": "Joshua5",
-  "REF-F8L4": "Joshua6",
-  "REF-G3N7": "Joshua7",
-  "REF-H6R2": "Joshua8",
-  "REF-J9T5": "Joshua9",
-  "REF-K4W8": "Joshua10"
-};
-
-
-/*
-=========================================
-CREATE COMMISSION TABLE
-=========================================
-*/
+function sendJson(res, status, data) {
+  res.status(status).json(data);
+}
 
 async function ensureCommissionTable() {
-
   await pool.query(`
     CREATE TABLE IF NOT EXISTS employee_commissions (
-
       id BIGSERIAL PRIMARY KEY,
 
-      transaction_id VARCHAR(150) NOT NULL UNIQUE,
+      transaction_id VARCHAR(150) UNIQUE NOT NULL,
 
       reference VARCHAR(100),
 
       employee_id VARCHAR(100) NOT NULL,
 
-      username VARCHAR(100) NOT NULL,
+      username VARCHAR(100),
+
+      referral VARCHAR(100) NOT NULL,
 
       payment_amount NUMERIC(12,2) NOT NULL,
 
@@ -68,198 +28,126 @@ async function ensureCommissionTable() {
       commission_amount NUMERIC(12,2) NOT NULL,
 
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-
     );
   `);
 
   await pool.query(`
-    CREATE INDEX IF NOT EXISTS
-    employee_commissions_employee_idx
+    CREATE INDEX IF NOT EXISTS employee_commissions_employee_idx
     ON employee_commissions(employee_id);
   `);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS employee_commissions_referral_idx
+    ON employee_commissions(referral);
+  `);
 }
-
-
-/*
-=========================================
-JSON RESPONSE
-=========================================
-*/
-
-function json(res, status, data) {
-
-  res.status(status);
-
-  res.setHeader(
-    "Content-Type",
-    "application/json"
-  );
-
-  return res.end(
-    JSON.stringify(data)
-  );
-}
-
-
-/*
-=========================================
-MAIN API
-=========================================
-*/
 
 module.exports = async function handler(req, res) {
 
   if (req.method !== "POST") {
-
-    return json(res, 405, {
+    return sendJson(res, 405, {
       success: false,
-      message: "Method not allowed."
+      error: "Method not allowed"
     });
-
   }
-
 
   try {
 
     await ensureCommissionTable();
 
-
-    const body =
-      req.body || {};
-
+    const body = req.body || {};
 
     const transactionId =
-      String(
-        body.transaction_id ||
-        body.transaction_request_id ||
-        ""
-      ).trim();
-
+      String(body.transaction_id || "").trim();
 
     const employeeId =
-      String(
-        body.employeeId ||
-        body.referral ||
-        ""
-      ).trim();
+      String(body.employeeId || "").trim();
 
-
-    /*
-    =====================================
-    VALIDATE TRANSACTION
-    =====================================
-    */
-
-    if (!transactionId) {
-
-      return json(res, 400, {
-        success: false,
-        message:
-          "Missing transaction ID."
-      });
-
-    }
-
-
-    /*
-    =====================================
-    VALIDATE EMPLOYEE
-    =====================================
-    */
+    const referral =
+      String(body.referral || "").trim();
 
     const username =
-      EMPLOYEES[employeeId];
+      String(body.username || "").trim();
 
-
-    if (!username) {
-
-      return json(res, 400, {
+    if (!transactionId) {
+      return sendJson(res, 400, {
         success: false,
-        message:
-          "Invalid employee referral."
+        error: "Missing transaction_id"
       });
-
     }
 
+    if (!employeeId) {
+      return sendJson(res, 400, {
+        success: false,
+        error: "Missing employeeId"
+      });
+    }
+
+    if (!referral) {
+      return sendJson(res, 400, {
+        success: false,
+        error: "Missing referral"
+      });
+    }
 
     /*
-    =====================================
-    FIND COMPLETED PAYMENT
-    =====================================
-    */
+     * IMPORTANT:
+     * We get the payment amount from the payments table.
+     * We DO NOT trust an amount sent by the browser.
+     */
 
-    const paymentResult =
-      await pool.query(
-        `
-        SELECT
-          reference,
-          amount,
-          status,
-          transaction_request_id,
-          transaction_id
-        FROM payments
-        WHERE
-          (
-            transaction_request_id = $1
-            OR transaction_id = $1
-          )
-          AND LOWER(status) IN
-          (
-            'completed',
-            'complete',
-            'paid',
-            'successful',
-            'success'
-          )
-        ORDER BY updated_at DESC
-        LIMIT 1
-        `,
-        [transactionId]
-      );
+    const paymentResult = await pool.query(
+      `
+      SELECT
+        id,
+        reference,
+        amount,
+        status,
+        transaction_request_id,
+        transaction_id,
+        transaction_code
+      FROM payments
+      WHERE
+        transaction_id = $1
+        OR transaction_request_id = $1
+      ORDER BY updated_at DESC
+      LIMIT 1
+      `,
+      [transactionId]
+    );
 
-
-    if (
-      paymentResult.rows.length === 0
-    ) {
-
-      return json(res, 409, {
+    if (paymentResult.rows.length === 0) {
+      return sendJson(res, 404, {
         success: false,
-        message:
-          "Payment is not confirmed."
+        error: "Payment was not found"
       });
-
     }
 
+    const payment = paymentResult.rows[0];
 
-    const payment =
-      paymentResult.rows[0];
+    /*
+     * Commission is created ONLY after confirmed payment.
+     */
 
+    if (String(payment.status).toLowerCase() !== "completed") {
+      return sendJson(res, 400, {
+        success: false,
+        error: "Payment is not completed yet"
+      });
+    }
 
     const paymentAmount =
-      Number(
-        payment.amount
-      );
-
+      Number(payment.amount);
 
     if (
       !Number.isFinite(paymentAmount) ||
       paymentAmount <= 0
     ) {
-
-      return json(res, 400, {
+      return sendJson(res, 400, {
         success: false,
-        message:
-          "Invalid payment amount."
+        error: "Invalid payment amount"
       });
-
     }
-
-
-    /*
-    =====================================
-    CALCULATE 40%
-    =====================================
-    */
 
     const commissionAmount =
       Math.round(
@@ -268,131 +156,108 @@ module.exports = async function handler(req, res) {
         100
       ) / 100;
 
+    /*
+     * UNIQUE transaction_id prevents duplicate commission.
+     */
+
+    const insertResult = await pool.query(
+      `
+      INSERT INTO employee_commissions (
+        transaction_id,
+        reference,
+        employee_id,
+        username,
+        referral,
+        payment_amount,
+        commission_rate,
+        commission_amount
+      )
+      VALUES (
+        $1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6,
+        $7,
+        $8
+      )
+      ON CONFLICT (transaction_id)
+      DO NOTHING
+      RETURNING
+        id,
+        transaction_id,
+        employee_id,
+        username,
+        referral,
+        payment_amount,
+        commission_rate,
+        commission_amount,
+        created_at
+      `,
+      [
+        transactionId,
+        payment.reference || null,
+        employeeId,
+        username || null,
+        referral,
+        paymentAmount,
+        COMMISSION_RATE,
+        commissionAmount
+      ]
+    );
 
     /*
-    =====================================
-    INSERT COMMISSION
-    =====================================
+     * Already processed.
+     */
 
-    transaction_id is UNIQUE.
+    if (insertResult.rows.length === 0) {
 
-    Therefore the same payment
-    cannot create commission twice.
-    =====================================
-    */
+      const existingResult = await pool.query(
+        `
+        SELECT
+          id,
+          transaction_id,
+          employee_id,
+          username,
+          referral,
+          payment_amount,
+          commission_rate,
+          commission_amount,
+          created_at
+        FROM employee_commissions
+        WHERE transaction_id = $1
+        LIMIT 1
+        `,
+        [transactionId]
+      );
 
-    try {
-
-      const insertResult =
-        await pool.query(
-          `
-          INSERT INTO employee_commissions
-          (
-            transaction_id,
-            reference,
-            employee_id,
-            username,
-            payment_amount,
-            commission_rate,
-            commission_amount
-          )
-          VALUES
-          ($1,$2,$3,$4,$5,$6,$7)
-
-          RETURNING
-            id,
-            transaction_id,
-            reference,
-            employee_id,
-            username,
-            payment_amount,
-            commission_rate,
-            commission_amount,
-            created_at
-          `,
-          [
-            transactionId,
-            payment.reference || null,
-            employeeId,
-            username,
-            paymentAmount,
-            COMMISSION_RATE,
-            commissionAmount
-          ]
-        );
-
-
-      return json(res, 201, {
+      return sendJson(res, 200, {
         success: true,
-        duplicate: false,
+        duplicate: true,
+        message: "Commission already recorded",
         commission:
-          insertResult.rows[0]
+          existingResult.rows[0] || null
       });
-
-
-    } catch (insertError) {
-
-      /*
-      ==================================
-      DUPLICATE COMMISSION
-      ==================================
-      */
-
-      if (
-        insertError &&
-        insertError.code === "23505"
-      ) {
-
-        const existing =
-          await pool.query(
-            `
-            SELECT
-              id,
-              transaction_id,
-              reference,
-              employee_id,
-              username,
-              payment_amount,
-              commission_rate,
-              commission_amount,
-              created_at
-            FROM employee_commissions
-            WHERE transaction_id = $1
-            LIMIT 1
-            `,
-            [transactionId]
-          );
-
-
-        return json(res, 200, {
-          success: true,
-          duplicate: true,
-          commission:
-            existing.rows[0] || null
-        });
-
-      }
-
-
-      throw insertError;
-
     }
 
+    return sendJson(res, 200, {
+      success: true,
+      duplicate: false,
+      message: "40% commission recorded successfully",
+      commission: insertResult.rows[0]
+    });
 
   } catch (error) {
 
     console.error(
-      "EMPLOYEE COMMISSION ERROR:",
+      "Employee commission error:",
       error
     );
 
-
-    return json(res, 500, {
+    return sendJson(res, 500, {
       success: false,
-      message:
-        "Could not record employee commission."
+      error: "Failed to process employee commission"
     });
-
   }
-
 };
