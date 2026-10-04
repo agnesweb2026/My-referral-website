@@ -7,7 +7,6 @@
 <title>Employee Dashboard</title>
 
 <style>
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -21,8 +20,7 @@ body{
   min-height:100vh;
 }
 
-button,
-input{
+button,input{
   font-family:inherit;
 }
 
@@ -42,7 +40,6 @@ button{
   align-items:center;
   justify-content:center;
   padding:20px;
-
   background:
     radial-gradient(
       circle at top,
@@ -54,31 +51,22 @@ button{
 .login-box{
   width:100%;
   max-width:420px;
-
   background:#111820;
   border:1px solid #263342;
   border-radius:20px;
-
   padding:30px 22px;
-
-  box-shadow:
-    0 20px 60px rgba(0,0,0,.5);
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
 }
 
 .employee-icon{
   width:68px;
   height:68px;
-
   margin:0 auto 15px;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   border-radius:18px;
-
   background:#16a34a;
-
   font-size:31px;
   font-weight:bold;
 }
@@ -110,13 +98,10 @@ button{
 .field input{
   width:100%;
   padding:14px;
-
   background:#0a1017;
   color:#fff;
-
   border:1px solid #334150;
   border-radius:10px;
-
   outline:none;
   font-size:15px;
 }
@@ -128,9 +113,7 @@ button{
 #loginError{
   min-height:20px;
   margin-bottom:8px;
-
   text-align:center;
-
   color:#ff6262;
   font-size:13px;
 }
@@ -138,13 +121,10 @@ button{
 .login-btn{
   width:100%;
   padding:14px;
-
   border:none;
   border-radius:10px;
-
   background:#16a34a;
   color:#fff;
-
   font-size:16px;
   font-weight:bold;
 }
@@ -159,21 +139,17 @@ button{
   position:sticky;
   top:0;
   z-index:100;
-
   background:#101720;
   border-bottom:1px solid #263341;
-
   padding:14px 15px;
 }
 
 .topbar-inner{
   max-width:1100px;
   margin:auto;
-
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   gap:12px;
 }
 
@@ -189,23 +165,17 @@ button{
 
 .logout-btn{
   border:1px solid #354250;
-
   background:#151d26;
   color:#fff;
-
   padding:9px 13px;
-
   border-radius:9px;
-
   font-size:13px;
 }
 
 .container{
   width:100%;
   max-width:1100px;
-
   margin:auto;
-
   padding:20px 15px 50px;
 }
 
@@ -213,12 +183,9 @@ button{
 
 .profile-card{
   background:#111820;
-
   border:1px solid #263341;
   border-radius:16px;
-
   padding:18px;
-
   margin-bottom:15px;
 }
 
@@ -231,18 +198,13 @@ button{
 .profile-avatar{
   width:55px;
   height:55px;
-
   flex-shrink:0;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   border-radius:15px;
-
   background:#16a34a;
   color:#fff;
-
   font-size:23px;
   font-weight:bold;
 }
@@ -262,27 +224,20 @@ button{
 
 .stats{
   display:grid;
-
-  grid-template-columns:
-    repeat(2,minmax(0,1fr));
-
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
-
   margin-bottom:15px;
 }
 
 .stat-card{
   background:#111820;
-
   border:1px solid #263341;
   border-radius:15px;
-
   padding:17px;
 }
 
 .stat-label{
   color:#8995a3;
-
   font-size:12px;
   margin-bottom:8px;
 }
@@ -308,30 +263,22 @@ button{
   color:#b58cff;
 }
 
-/* SECTION */
+/* SECTIONS */
 
 .section{
   background:#111820;
-
   border:1px solid #263341;
-
   border-radius:15px;
-
   overflow:hidden;
-
   margin-bottom:15px;
 }
 
 .section-header{
   padding:16px;
-
   border-bottom:1px solid #263341;
-
   display:flex;
-
   align-items:center;
   justify-content:space-between;
-
   gap:10px;
 }
 
@@ -347,79 +294,52 @@ button{
 
 .referral-box{
   background:#0c131b;
-
   border:1px solid #263341;
-
   border-radius:12px;
-
   padding:14px;
 }
 
 .referral-label{
   color:#8995a3;
-
   font-size:12px;
-
   margin-bottom:8px;
 }
 
 .referral-link{
   background:#080c12;
-
   border:1px solid #334150;
-
   border-radius:9px;
-
   padding:11px;
-
   color:#dce2e8;
-
   font-size:12px;
-
   word-break:break-all;
-
   line-height:1.5;
-
   margin-bottom:10px;
 }
 
 .copy-btn{
   width:100%;
-
   padding:11px;
-
   border:none;
-
   border-radius:9px;
-
   background:#16a34a;
-
   color:#fff;
-
   font-size:13px;
-
   font-weight:bold;
 }
 
 .copy-message{
   min-height:18px;
-
   text-align:center;
-
   color:#36d675;
-
   font-size:12px;
-
   margin-top:8px;
 }
   /* WITHDRAWAL */
 
 .withdraw-grid{
   display:grid;
-
-  grid-template-columns:
-    repeat(2,minmax(0,1fr));
-
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
 }
 
@@ -433,29 +353,19 @@ button{
 
 .withdraw-field label{
   display:block;
-
   color:#aeb8c4;
-
   font-size:12px;
-
   margin-bottom:7px;
 }
 
 .withdraw-field input{
   width:100%;
-
   padding:13px;
-
   background:#0a1017;
-
   color:#fff;
-
   border:1px solid #334150;
-
   border-radius:9px;
-
   outline:none;
-
   font-size:14px;
 }
 
@@ -465,57 +375,39 @@ button{
 
 .withdraw-balance{
   background:#0c131b;
-
   border:1px solid #263341;
-
   border-radius:10px;
-
   padding:12px;
-
   margin-bottom:14px;
 }
 
 .withdraw-balance-label{
   color:#8995a3;
-
   font-size:11px;
-
   margin-bottom:5px;
 }
 
 .withdraw-balance-value{
   color:#36d675;
-
   font-size:20px;
-
   font-weight:bold;
 }
 
 .withdraw-btn{
   width:100%;
-
   padding:13px;
-
   border:none;
-
   border-radius:9px;
-
   background:#16a34a;
-
   color:#fff;
-
   font-size:14px;
-
   font-weight:bold;
 }
 
 #withdrawMessage{
   min-height:20px;
-
   text-align:center;
-
   font-size:12px;
-
   margin-top:10px;
 }
 
@@ -523,17 +415,11 @@ button{
 
 .notice{
   background:#0c131b;
-
   border:1px solid #263341;
-
   border-radius:10px;
-
   padding:13px;
-
   color:#8995a3;
-
   font-size:12px;
-
   line-height:1.6;
 }
 
@@ -545,23 +431,16 @@ button{
 
 .empty-history{
   padding:35px 15px;
-
   text-align:center;
-
   color:#7f8b98;
-
   font-size:13px;
 }
 
 .history-item{
   background:#0c131b;
-
   border:1px solid #263341;
-
   border-radius:12px;
-
   padding:14px;
-
   margin-bottom:10px;
 }
 
@@ -571,43 +450,31 @@ button{
 
 .history-top{
   display:flex;
-
   align-items:flex-start;
   justify-content:space-between;
-
   gap:10px;
-
   margin-bottom:12px;
 }
 
 .history-amount{
   color:#36d675;
-
   font-size:17px;
-
   font-weight:bold;
 }
 
 .history-date{
   color:#778492;
-
   font-size:11px;
-
   margin-top:4px;
 }
 
 .history-status{
   display:inline-flex;
-
   align-items:center;
   justify-content:center;
-
   padding:6px 9px;
-
   border-radius:20px;
-
   font-size:10px;
-
   font-weight:bold;
 }
 
@@ -628,34 +495,25 @@ button{
 
 .history-details{
   display:grid;
-
-  grid-template-columns:
-    repeat(2,minmax(0,1fr));
-
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:9px;
 }
 
 .history-detail{
   background:#111a23;
-
   border-radius:8px;
-
   padding:9px;
 }
 
 .history-detail-label{
   color:#778492;
-
   font-size:10px;
-
   margin-bottom:4px;
 }
 
 .history-detail-value{
   color:#dce2e8;
-
   font-size:12px;
-
   word-break:break-word;
 }
 
@@ -702,7 +560,6 @@ button{
   }
 
 }
-
 </style>
 </head>
 
@@ -716,9 +573,7 @@ button{
       E
     </div>
 
-    <h1>
-      Employee Login
-    </h1>
+    <h1>Employee Login</h1>
 
     <p class="subtitle">
       Access your referral dashboard
@@ -854,6 +709,7 @@ button{
 
   </div>
 
+
   <div class="stat-card">
 
     <div class="stat-label">
@@ -869,6 +725,7 @@ button{
 
   </div>
 
+
   <div class="stat-card">
 
     <div class="stat-label">
@@ -883,6 +740,7 @@ button{
     </div>
 
   </div>
+
 
   <div class="stat-card">
 
@@ -971,6 +829,7 @@ button{
 
     </div>
 
+
     <div class="withdraw-grid">
 
       <div class="withdraw-field">
@@ -989,6 +848,7 @@ button{
 
       </div>
 
+
       <div class="withdraw-field">
 
         <label for="withdrawAmount">
@@ -1004,6 +864,7 @@ button{
         >
 
       </div>
+
 
       <div class="withdraw-field full">
 
@@ -1077,6 +938,10 @@ button{
 
 
 <script>
+
+/* =========================================
+   EMPLOYEE SETTINGS
+========================================= */
 
 const EMPLOYEE_KEY =
   "employeeSession";
@@ -1167,6 +1032,10 @@ const EMPLOYEES = [
 ];
 
 
+/* =========================================
+   SESSION
+========================================= */
+
 function getCurrentEmployee(){
 
   try{
@@ -1200,6 +1069,10 @@ function saveEmployee(employee){
 
 }
 
+
+/* =========================================
+   LOGIN
+========================================= */
 
 function employeeLogin(){
 
@@ -1282,6 +1155,10 @@ function employeeLogin(){
 }
 
 
+/* =========================================
+   LOGOUT
+========================================= */
+
 function employeeLogout(){
 
   localStorage.removeItem(
@@ -1306,6 +1183,10 @@ function employeeLogout(){
 
 }
 
+
+/* =========================================
+   SHOW DASHBOARD
+========================================= */
 
 function showDashboard(){
 
@@ -1337,6 +1218,10 @@ function showDashboard(){
 }
 
 
+/* =========================================
+   EMPLOYEE FROM URL
+========================================= */
+
 function loadEmployeeFromURL(){
 
   const params =
@@ -1353,6 +1238,7 @@ function loadEmployeeFromURL(){
     return false;
   }
 
+
   const employee =
     EMPLOYEES.find(
       function(item){
@@ -1365,9 +1251,11 @@ function loadEmployeeFromURL(){
       }
     );
 
+
   if(!employee){
     return false;
   }
+
 
   const employeeSession = {
 
@@ -1389,6 +1277,7 @@ function loadEmployeeFromURL(){
 
   };
 
+
   saveEmployee(
     employeeSession
   );
@@ -1398,57 +1287,85 @@ function loadEmployeeFromURL(){
 }
 
 
-function getPaymentRecords(employee){
+/* =========================================
+   NEON COMMISSION
+========================================= */
 
-  const paymentKey =
-    "employeePayments_" +
-    employee.referral;
+async function getCommissionData(employee){
 
   try{
 
-    const records =
-      JSON.parse(
-        localStorage.getItem(
-          paymentKey
-        ) || "[]"
+    const response =
+      await fetch(
+        "/api/employee-commission-list?employeeId=" +
+        encodeURIComponent(
+          employee.id
+        ),
+        {
+          method:"GET",
+          cache:"no-store"
+        }
       );
 
-    return Array.isArray(records)
-      ? records
-      : [];
+
+    if(!response.ok){
+
+      throw new Error(
+        "Commission API failed"
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    return {
+
+      success:true,
+
+      totalCommission:
+        Number(
+          data.totalCommission || 0
+        ),
+
+      records:
+        Array.isArray(
+          data.records
+        )
+          ? data.records
+          : []
+
+    };
+
 
   }catch(error){
 
-    return [];
+    console.error(
+      "Could not load employee commission:",
+      error
+    );
+
+
+    return {
+
+      success:false,
+
+      totalCommission:0,
+
+      records:[]
+
+    };
 
   }
 
 }
 
 
-function calculateEarnings(records){
-
-  return Math.round(
-
-    records.reduce(
-      function(total,item){
-
-        return (
-          total +
-          Number(
-            item.commission || 0
-          )
-        );
-
-      },
-      0
-
-    ) * 100
-
-  ) / 100;
-
-}
-
+/* =========================================
+   WITHDRAWALS
+========================================= */
 
 async function getWithdrawalRequests(){
 
@@ -1463,20 +1380,22 @@ async function getWithdrawalRequests(){
         }
       );
 
+
     if(!response.ok){
-
       return [];
-
     }
+
 
     const data =
       await response.json();
+
 
     return Array.isArray(
       data.requests
     )
       ? data.requests
       : [];
+
 
   }catch(error){
 
@@ -1492,6 +1411,10 @@ async function getWithdrawalRequests(){
 }
 
 
+/* =========================================
+   APPROVED WITHDRAWALS
+========================================= */
+
 function calculateWithdrawn(
   requests,
   employee
@@ -1503,6 +1426,7 @@ function calculateWithdrawn(
       function(request){
 
         return (
+
           String(
             request.employeeId
           ) ===
@@ -1514,6 +1438,7 @@ function calculateWithdrawn(
             request.status || ""
           ).toUpperCase() ===
           "APPROVED"
+
         );
 
       }
@@ -1534,7 +1459,13 @@ function calculateWithdrawn(
     );
 
 }
-  async function loadEmployeeData(){
+
+
+/* =========================================
+   LOAD EMPLOYEE DATA
+========================================= */
+
+async function loadEmployeeData(){
 
   const employee =
     getCurrentEmployee();
@@ -1544,15 +1475,15 @@ function calculateWithdrawn(
   }
 
 
-  const paymentRecords =
-    getPaymentRecords(
+  const commissionData =
+    await getCommissionData(
       employee
     );
 
 
   const earnings =
-    calculateEarnings(
-      paymentRecords
+    Number(
+      commissionData.totalCommission || 0
     );
 
 
@@ -1566,12 +1497,6 @@ function calculateWithdrawn(
       employee
     );
 
-
-  /*
-   PENDING = NO DEDUCTION
-   REJECTED = NO DEDUCTION
-   APPROVED = DEDUCTION
-  */
 
   const available =
     Math.max(
@@ -1686,7 +1611,9 @@ function calculateWithdrawn(
   await loadWithdrawalHistory();
 
 }
-
+  /* =========================================
+   REQUEST WITHDRAWAL
+========================================= */
 
 async function requestWithdrawal(){
 
@@ -1758,20 +1685,30 @@ async function requestWithdrawal(){
   }
 
 
-  const requests =
-    await getWithdrawalRequests();
-
-
-  const paymentRecords =
-    getPaymentRecords(
+  const commissionData =
+    await getCommissionData(
       employee
     );
 
 
+  if(!commissionData.success){
+
+    message.textContent =
+      "Unable to load your commission balance. Please try again.";
+
+    return;
+
+  }
+
+
   const earnings =
-    calculateEarnings(
-      paymentRecords
+    Number(
+      commissionData.totalCommission || 0
     );
+
+
+  const requests =
+    await getWithdrawalRequests();
 
 
   const withdrawn =
@@ -1803,6 +1740,7 @@ async function requestWithdrawal(){
       function(request){
 
         return (
+
           String(
             request.employeeId
           ) ===
@@ -1814,6 +1752,7 @@ async function requestWithdrawal(){
             request.status || ""
           ).toUpperCase() ===
           "PENDING"
+
         );
 
       }
@@ -1870,6 +1809,7 @@ async function requestWithdrawal(){
             JSON.stringify(
               requestData
             )
+
         }
       );
 
@@ -1882,6 +1822,7 @@ async function requestWithdrawal(){
 
       message.textContent =
         data.message ||
+        data.error ||
         "Withdrawal request failed.";
 
       return;
@@ -1922,6 +1863,10 @@ async function requestWithdrawal(){
 
 }
 
+
+/* =========================================
+   WITHDRAWAL HISTORY
+========================================= */
 
 async function loadWithdrawalHistory(){
 
@@ -2058,10 +2003,12 @@ async function loadWithdrawalHistory(){
                   </div>
 
                   <div class="history-detail-value">
+
                     ${
                       request.phone ||
                       "-"
                     }
+
                   </div>
 
                 </div>
@@ -2074,10 +2021,12 @@ async function loadWithdrawalHistory(){
                   </div>
 
                   <div class="history-detail-value">
+
                     ${
                       request.referral ||
                       "-"
                     }
+
                   </div>
 
                 </div>
@@ -2092,8 +2041,14 @@ async function loadWithdrawalHistory(){
       )
       .join("");
 
-    }
-  function copyReferralLink(){
+}
+
+
+/* =========================================
+   COPY REFERRAL LINK
+========================================= */
+
+function copyReferralLink(){
 
   const employee =
     getCurrentEmployee();
@@ -2130,6 +2085,7 @@ async function loadWithdrawalHistory(){
           message.textContent =
             "Referral link copied ✓";
 
+
           setTimeout(
             function(){
 
@@ -2158,6 +2114,10 @@ async function loadWithdrawalHistory(){
 
 }
 
+
+/* =========================================
+   FALLBACK COPY
+========================================= */
 
 function fallbackCopy(text){
 
@@ -2213,7 +2173,9 @@ function fallbackCopy(text){
 }
 
 
-/* AUTO REFRESH */
+/* =========================================
+   AUTO REFRESH
+========================================= */
 
 setInterval(
   async function(){
@@ -2232,7 +2194,9 @@ setInterval(
 );
 
 
-/* START */
+/* =========================================
+   START
+========================================= */
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -2285,7 +2249,9 @@ document.addEventListener(
 );
 
 
-/* ENTER KEY */
+/* =========================================
+   ENTER KEY LOGIN
+========================================= */
 
 document.addEventListener(
   "keydown",
