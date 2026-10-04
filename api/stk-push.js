@@ -6,10 +6,11 @@ function json(res, status, data) {
   return res.end(JSON.stringify(data));
 }
 
-// Prevent the same browser request from repeatedly
-// sending STK prompts within a short period.
-const recentRequests = new Map();
+// =====================================================
+// DUPLICATE PROTECTION
+// =====================================================
 
+const recentRequests = new Map();
 const COOLDOWN_MS = 30 * 1000;
 
 module.exports = async (req, res) => {
@@ -32,9 +33,9 @@ module.exports = async (req, res) => {
     const amount = body.amount;
     const reference = body.reference;
 
-    // =========================
+    // =====================================================
     // PHONE
-    // =========================
+    // =====================================================
 
     const rawPhone = String(phone || "").replace(/\D/g, "");
 
@@ -56,9 +57,9 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================
+    // =====================================================
     // AMOUNT
-    // =========================
+    // =====================================================
 
     const cleanAmount = Number(amount);
 
@@ -74,9 +75,9 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================
+    // =====================================================
     // REFERENCE
-    // =========================
+    // =====================================================
 
     cleanReference = String(reference || "")
       .trim()
@@ -98,9 +99,9 @@ module.exports = async (req, res) => {
       "|" +
       cleanReference;
 
-    // =========================
+    // =====================================================
     // DUPLICATE PROTECTION
-    // =========================
+    // =====================================================
 
     const now = Date.now();
 
@@ -141,9 +142,9 @@ module.exports = async (req, res) => {
       }
     }
 
-    // =========================
+    // =====================================================
     // CHECK DATABASE
-    // =========================
+    // =====================================================
 
     const existingPayment =
       await query(
@@ -165,8 +166,7 @@ module.exports = async (req, res) => {
       const existing =
         existingPayment.rows[0];
 
-      // Same reference cannot be used
-      // with another amount.
+      // Same reference cannot use another amount
       if (
         Number(existing.amount) !==
         cleanAmount
@@ -186,8 +186,7 @@ module.exports = async (req, res) => {
         String(existing.status || "")
           .toLowerCase();
 
-      // Do not send another STK while
-      // the previous one is still pending.
+      // Don't send another prompt while pending
       if (
         existingStatus === "pending" &&
         existing.transaction_request_id
@@ -219,25 +218,29 @@ module.exports = async (req, res) => {
       }
     }
 
-    // =========================
-    // UNIFIEDPAY CREDENTIALS
-    // =========================
+    // =====================================================
+    // LIPARO CREDENTIALS
+    // =====================================================
 
-    const consumerKey =
+    const liparoSecret =
       String(
-        process.env.UNIFIEDPAY_CONSUMER_KEY ||
-          ""
+        process.env.LIPARO_SECRET || ""
       ).trim();
 
-    const consumerSecret =
+    const liparoPasskey =
       String(
-        process.env.UNIFIEDPAY_CONSUMER_SECRET ||
-          ""
+        process.env.LIPARO_PASSKEY || ""
+      ).trim();
+
+    const liparoShortcode =
+      String(
+        process.env.LIPARO_SHORTCODE || ""
       ).trim();
 
     if (
-      !consumerKey ||
-      !consumerSecret
+      !liparoSecret ||
+      !liparoPasskey ||
+      !liparoShortcode
     ) {
       recentRequests.delete(
         requestKey
@@ -246,13 +249,13 @@ module.exports = async (req, res) => {
       return json(res, 500, {
         success: false,
         message:
-          "UnifiedPay credentials are not configured on the server."
+          "Liparo payment credentials are not configured on the server."
       });
     }
 
-    // =========================
+    // =====================================================
     // SAVE PAYMENT AS PENDING
-    // =========================
+    // =====================================================
 
     if (
       existingPayment.rows.length === 0
@@ -297,24 +300,12 @@ module.exports = async (req, res) => {
       );
     }
 
-    // =========================
-    // UNIFIEDPAY STK URL
-    // =========================
+    // =====================================================
+    // LIPARO STK PUSH
+    // =====================================================
 
     const url =
-      "https://unifiedpay.co.ke/auth/cred/" +
-      encodeURIComponent(
-        consumerKey
-      ) +
-      "/" +
-      encodeURIComponent(
-        consumerSecret
-      ) +
-      "/sendstk";
-
-    // =========================
-    // SEND STK PROMPT
-    // =========================
+      "https://api.liparo.co.ke/v1/initiatestk";
 
     let response;
 
@@ -332,10 +323,19 @@ module.exports = async (req, res) => {
           },
 
           body: JSON.stringify({
+            secret_key:
+              liparoSecret,
+
+            passkey:
+              liparoPasskey,
+
+            shortcode:
+              liparoShortcode,
+
             amount:
               cleanAmount,
 
-            msisdn:
+            phone:
               mpesaPhone,
 
             reference:
@@ -345,7 +345,7 @@ module.exports = async (req, res) => {
       );
     } catch (networkError) {
       console.error(
-        "UNIFIEDPAY_NETWORK_ERROR",
+        "LIPARO_NETWORK_ERROR",
         networkError
       );
 
@@ -371,13 +371,13 @@ module.exports = async (req, res) => {
           "Unable to connect to the M-PESA payment service. Please try again shortly.",
 
         code:
-          "UNIFIEDPAY_CONNECTION_ERROR"
+          "LIPARO_CONNECTION_ERROR"
       });
     }
 
-    // =========================
+    // =====================================================
     // READ RESPONSE
-    // =========================
+    // =====================================================
 
     const responseText =
       await response.text();
@@ -396,7 +396,7 @@ module.exports = async (req, res) => {
     }
 
     console.log(
-      "UNIFIEDPAY_STK_RESULT",
+      "LIPARO_STK_RESULT",
       JSON.stringify({
         httpStatus:
           response.status,
@@ -410,32 +410,27 @@ module.exports = async (req, res) => {
         reference:
           cleanReference,
 
-        ResponseCode:
-          data.ResponseCode ||
-          null,
-
         success:
           data.success === true,
 
-        transaction_request_id:
-          data.transaction_request_id ||
+        transaction_id:
+          data.transaction_id ||
           null
       })
     );
 
-    // =========================
+    // =====================================================
     // SUCCESS
-    // =========================
+    // =====================================================
 
     if (
       response.ok &&
-      String(data.ResponseCode) ===
-        "0" &&
-      data.transaction_request_id
+      data.success === true &&
+      data.transaction_id
     ) {
-      const transactionRequestId =
+      const transactionId =
         String(
-          data.transaction_request_id
+          data.transaction_id
         );
 
       await query(
@@ -450,7 +445,7 @@ module.exports = async (req, res) => {
         `,
         [
           cleanReference,
-          transactionRequestId
+          transactionId
         ]
       );
 
@@ -462,13 +457,13 @@ module.exports = async (req, res) => {
           "M-PESA prompt sent successfully.",
 
         paymentId:
-          transactionRequestId,
+          transactionId,
 
         transaction_request_id:
-          transactionRequestId,
+          transactionId,
 
         transaction_id:
-          transactionRequestId,
+          transactionId,
 
         status:
           "Pending",
@@ -478,17 +473,18 @@ module.exports = async (req, res) => {
       });
     }
 
-    // =========================
-    // UNIFIEDPAY TEMPORARY ERROR
-    // =========================
+    // =====================================================
+    // TEMPORARY LIPARO ERROR
+    // =====================================================
 
     if (
+      response.status === 429 ||
       response.status === 502 ||
       response.status === 503 ||
       response.status === 504
     ) {
       console.error(
-        "UNIFIEDPAY_GATEWAY_ERROR",
+        "LIPARO_TEMPORARY_ERROR",
         JSON.stringify({
           httpStatus:
             response.status,
@@ -523,26 +519,25 @@ module.exports = async (req, res) => {
           "M-PESA service is temporarily unavailable. Please try again in a few seconds.",
 
         code:
-          "UNIFIEDPAY_TEMPORARY_ERROR"
+          "LIPARO_TEMPORARY_ERROR"
       });
     }
 
-    // =========================
+    // =====================================================
     // REJECTED
-    // =========================
+    // =====================================================
 
     console.error(
-      "UNIFIEDPAY_STK_REJECTED",
+      "LIPARO_STK_REJECTED",
       JSON.stringify({
         httpStatus:
           response.status,
 
-        ResponseCode:
-          data.ResponseCode ||
+        errorCode:
+          data.error_code ||
           null,
 
-        errorMessage:
-          data.errorMessage ||
+        message:
           data.message ||
           null,
 
@@ -575,20 +570,18 @@ module.exports = async (req, res) => {
         success: false,
 
         message:
-          data.errorMessage ||
           data.message ||
-          "UnifiedPay rejected the payment request.",
+          "Liparo rejected the payment request.",
 
         code:
-          data.ResultCode ||
-          data.ResponseCode ||
+          data.error_code ||
           null
       }
     );
 
   } catch (error) {
     console.error(
-      "UNIFIEDPAY_STK_ERROR",
+      "LIPARO_STK_ERROR",
       error
     );
 
