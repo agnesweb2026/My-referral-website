@@ -24,7 +24,7 @@ const pool = new Pool(poolConfig);
 
 /* =========================================================
    HELPERS
-   ========================================================= */
+========================================================= */
 
 function sendJson(res, status, data) {
   return res.status(status).json(data);
@@ -41,23 +41,36 @@ function makeWithdrawalId() {
     "wd_" +
     Date.now().toString(36) +
     "_" +
-    Math.random()
-      .toString(36)
-      .slice(2, 10)
+    Math.random().toString(36).slice(2, 10)
   );
 }
 
+
+/* =========================================================
+   MAP DATABASE ROW
+========================================================= */
+
 function mapRequest(row) {
+  const employeeName =
+    row.employee_name ||
+    row.name ||
+    row.username ||
+    "Employee";
+
+  const phone =
+    row.mpesa_number ||
+    row.phone ||
+    "";
+
   return {
-    id: row.id,
-    employeeId: row.employee_id,
+    id: String(row.id || ""),
+    employeeId: String(row.employee_id || ""),
     username: row.username || "",
-    name: row.name || "",
+    name: employeeName,
+    employeeName: employeeName,
     referral: row.referral || "",
-    mpesaNumber:
-      row.mpesa_number ||
-      row.phone ||
-      "",
+    mpesaNumber: phone,
+    phone: phone,
     amount: Number(row.amount || 0),
     status: normalizeStatus(row.status),
     createdAt: row.created_at || null,
@@ -68,22 +81,22 @@ function mapRequest(row) {
 
 
 /* =========================================================
-   DATABASE SETUP / REPAIR
-   ========================================================= */
+   ENSURE TABLE / COLUMNS
+========================================================= */
 
 async function ensureWithdrawalTable() {
 
   /*
     IMPORTANT:
-    We DO NOT delete or replace the existing table.
-
-    Your existing database already has withdrawal data.
+    We DO NOT delete the existing table.
+    We DO NOT touch payment tables.
   */
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS withdrawal_requests (
       id VARCHAR(100) PRIMARY KEY,
       employee_id VARCHAR(100) NOT NULL,
+      employee_name VARCHAR(150) NOT NULL,
       username VARCHAR(100),
       name VARCHAR(150),
       referral VARCHAR(100),
@@ -98,12 +111,17 @@ async function ensureWithdrawalTable() {
 
 
   /* =======================================================
-     ADD MISSING COLUMNS
-     ======================================================= */
+     ADD COLUMNS IF THEY DO NOT EXIST
+  ======================================================= */
 
   await pool.query(`
     ALTER TABLE withdrawal_requests
     ADD COLUMN IF NOT EXISTS employee_id VARCHAR(100);
+  `);
+
+  await pool.query(`
+    ALTER TABLE withdrawal_requests
+    ADD COLUMN IF NOT EXISTS employee_name VARCHAR(150);
   `);
 
   await pool.query(`
@@ -156,8 +174,26 @@ async function ensureWithdrawalTable() {
 
 
   /* =======================================================
+     REPAIR OLD ROWS
+  ======================================================= */
+
+  await pool.query(`
+    UPDATE withdrawal_requests
+    SET employee_name =
+      COALESCE(
+        NULLIF(employee_name, ''),
+        NULLIF(name, ''),
+        NULLIF(username, ''),
+        'Employee'
+      )
+    WHERE employee_name IS NULL
+       OR employee_name = '';
+  `);
+
+
+  /* =======================================================
      INDEXES
-     ======================================================= */
+  ======================================================= */
 
   await pool.query(`
     CREATE INDEX IF NOT EXISTS
@@ -175,7 +211,7 @@ async function ensureWithdrawalTable() {
 
 /* =========================================================
    MAIN HANDLER
-   ========================================================= */
+========================================================= */
 
 module.exports = async function handler(req, res) {
 
@@ -185,8 +221,8 @@ module.exports = async function handler(req, res) {
 
 
     /* =====================================================
-       GET
-       ===================================================== */
+       GET REQUESTS
+    ===================================================== */
 
     if (req.method === "GET") {
 
@@ -194,6 +230,7 @@ module.exports = async function handler(req, res) {
         SELECT
           id,
           employee_id,
+          employee_name,
           username,
           name,
           referral,
@@ -215,8 +252,8 @@ module.exports = async function handler(req, res) {
 
 
     /* =====================================================
-       POST - NEW WITHDRAWAL
-       ===================================================== */
+       POST - EMPLOYEE REQUEST WITHDRAWAL
+    ===================================================== */
 
     if (req.method === "POST") {
 
@@ -225,25 +262,34 @@ module.exports = async function handler(req, res) {
 
       const employeeId =
         String(
-          body.employeeId || ""
+          body.employeeId ||
+          body.employee_id ||
+          body.id ||
+          ""
         ).trim();
 
 
       const username =
         String(
-          body.username || ""
+          body.username ||
+          ""
         ).trim();
 
 
-      const name =
+      const employeeName =
         String(
-          body.name || ""
+          body.employeeName ||
+          body.name ||
+          body.employee_name ||
+          username ||
+          "Employee"
         ).trim();
 
 
       const referral =
         String(
-          body.referral || ""
+          body.referral ||
+          ""
         ).trim();
 
 
@@ -262,7 +308,7 @@ module.exports = async function handler(req, res) {
 
       /* ===================================================
          VALIDATION
-         =================================================== */
+      =================================================== */
 
       if (!employeeId) {
 
@@ -298,8 +344,8 @@ module.exports = async function handler(req, res) {
 
 
       /* ===================================================
-         CHECK EXISTING PENDING REQUEST
-         =================================================== */
+         CHECK PENDING REQUEST
+      =================================================== */
 
       const pendingCheck =
         await pool.query(
@@ -307,6 +353,7 @@ module.exports = async function handler(req, res) {
           SELECT
             id,
             employee_id,
+            employee_name,
             username,
             name,
             referral,
@@ -318,7 +365,7 @@ module.exports = async function handler(req, res) {
             processed_at
           FROM withdrawal_requests
           WHERE
-            employee_id = $1::varchar
+            CAST(employee_id AS TEXT) = $1::text
             AND UPPER(
               CAST(status AS TEXT)
             ) = 'PENDING'
@@ -330,9 +377,7 @@ module.exports = async function handler(req, res) {
         );
 
 
-      if (
-        pendingCheck.rows.length > 0
-      ) {
+      if (pendingCheck.rows.length > 0) {
 
         return sendJson(res, 409, {
 
@@ -352,18 +397,18 @@ module.exports = async function handler(req, res) {
 
 
       /* ===================================================
-         CREATE UNIQUE TEXT ID
-         =================================================== */
+         CREATE UNIQUE ID
+      =================================================== */
 
       let withdrawalId =
         makeWithdrawalId();
 
 
-      /*
-        Extremely unlikely collision protection.
-      */
-
-      for (let attempt = 0; attempt < 5; attempt++) {
+      for (
+        let attempt = 0;
+        attempt < 5;
+        attempt++
+      ) {
 
         const existingId =
           await pool.query(
@@ -395,8 +440,12 @@ module.exports = async function handler(req, res) {
 
 
       /* ===================================================
-         INSERT
-         =================================================== */
+         INSERT REQUEST
+         
+         IMPORTANT:
+         employee_name is explicitly inserted because
+         your existing database requires this column.
+      =================================================== */
 
       const insertResult =
         await pool.query(
@@ -404,6 +453,7 @@ module.exports = async function handler(req, res) {
           INSERT INTO withdrawal_requests (
             id,
             employee_id,
+            employee_name,
             username,
             name,
             referral,
@@ -420,7 +470,8 @@ module.exports = async function handler(req, res) {
             $4::varchar,
             $5::varchar,
             $6::varchar,
-            $7::numeric,
+            $7::varchar,
+            $8::numeric,
             'PENDING',
             NOW(),
             NOW()
@@ -428,6 +479,7 @@ module.exports = async function handler(req, res) {
           RETURNING
             id,
             employee_id,
+            employee_name,
             username,
             name,
             referral,
@@ -441,8 +493,9 @@ module.exports = async function handler(req, res) {
           [
             withdrawalId,
             employeeId,
+            employeeName,
             username || null,
-            name || null,
+            employeeName,
             referral || null,
             mpesaNumber,
             amount
@@ -468,8 +521,8 @@ module.exports = async function handler(req, res) {
 
 
     /* =====================================================
-       PUT - APPROVE / REJECT
-       ===================================================== */
+       PUT - ADMIN APPROVE / REJECT
+    ===================================================== */
 
     if (req.method === "PUT") {
 
@@ -491,8 +544,8 @@ module.exports = async function handler(req, res) {
 
 
       /* ===================================================
-         VALIDATE ID
-         =================================================== */
+         VALIDATE REQUEST ID
+      =================================================== */
 
       if (!requestId) {
 
@@ -510,7 +563,7 @@ module.exports = async function handler(req, res) {
 
       /* ===================================================
          VALIDATE STATUS
-         =================================================== */
+      =================================================== */
 
       if (
         requestedStatus !== "APPROVED" &&
@@ -531,7 +584,15 @@ module.exports = async function handler(req, res) {
 
       /* ===================================================
          UPDATE ONLY PENDING REQUEST
-         =================================================== */
+         
+         This makes approval/rejection idempotent.
+
+         APPROVED:
+         dashboard will subtract the approved amount.
+
+         REJECTED:
+         dashboard will NOT subtract the amount.
+      =================================================== */
 
       const updateResult =
         await pool.query(
@@ -553,6 +614,7 @@ module.exports = async function handler(req, res) {
           RETURNING
             id,
             employee_id,
+            employee_name,
             username,
             name,
             referral,
@@ -571,13 +633,12 @@ module.exports = async function handler(req, res) {
 
 
       /* ===================================================
-         UPDATE DID NOT HAPPEN
-         =================================================== */
+         NOTHING UPDATED
+      =================================================== */
 
       if (
         updateResult.rows.length === 0
       ) {
-
 
         const existingResult =
           await pool.query(
@@ -585,6 +646,7 @@ module.exports = async function handler(req, res) {
             SELECT
               id,
               employee_id,
+              employee_name,
               username,
               name,
               referral,
@@ -605,7 +667,9 @@ module.exports = async function handler(req, res) {
           );
 
 
-        /* Request doesn't exist */
+        /* =================================================
+           REQUEST DOES NOT EXIST
+        ================================================= */
 
         if (
           existingResult.rows.length === 0
@@ -623,7 +687,9 @@ module.exports = async function handler(req, res) {
         }
 
 
-        /* Already processed */
+        /* =================================================
+           ALREADY PROCESSED
+        ================================================= */
 
         return sendJson(res, 409, {
 
@@ -644,7 +710,7 @@ module.exports = async function handler(req, res) {
 
       /* ===================================================
          SUCCESS
-         =================================================== */
+      =================================================== */
 
       const updated =
         updateResult.rows[0];
@@ -670,8 +736,8 @@ module.exports = async function handler(req, res) {
 
 
     /* =====================================================
-       OTHER METHODS
-       ===================================================== */
+       METHOD NOT ALLOWED
+    ===================================================== */
 
     return sendJson(res, 405, {
 
@@ -685,14 +751,15 @@ module.exports = async function handler(req, res) {
 
   } catch (error) {
 
-
     console.error(
       "Withdrawal API error:",
       error
     );
 
 
-    /* Duplicate key */
+    /* =====================================================
+       DUPLICATE REQUEST
+    ===================================================== */
 
     if (
       error &&
@@ -710,6 +777,34 @@ module.exports = async function handler(req, res) {
 
     }
 
+
+    /* =====================================================
+       NOT NULL ERROR
+    ===================================================== */
+
+    if (
+      error &&
+      error.code === "23502"
+    ) {
+
+      return sendJson(res, 500, {
+
+        success: false,
+
+        error:
+          "Database requires a missing withdrawal field.",
+
+        detail:
+          error.column || null
+
+      });
+
+    }
+
+
+    /* =====================================================
+       GENERAL ERROR
+    ===================================================== */
 
     return sendJson(res, 500, {
 
