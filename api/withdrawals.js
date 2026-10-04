@@ -47,10 +47,11 @@ function makeWithdrawalId() {
 
 
 /* =========================================================
-   MAP DATABASE ROW
+   MAP REQUEST
 ========================================================= */
 
 function mapRequest(row) {
+
   const employeeName =
     row.employee_name ||
     row.name ||
@@ -58,60 +59,99 @@ function mapRequest(row) {
     "Employee";
 
   const phone =
-    row.mpesa_number ||
     row.phone ||
+    row.mpesa_number ||
     "";
 
   return {
+
     id: String(row.id || ""),
-    employeeId: String(row.employee_id || ""),
-    username: row.username || "",
-    name: employeeName,
-    employeeName: employeeName,
-    referral: row.referral || "",
-    mpesaNumber: phone,
-    phone: phone,
-    amount: Number(row.amount || 0),
-    status: normalizeStatus(row.status),
-    createdAt: row.created_at || null,
-    updatedAt: row.updated_at || null,
-    processedAt: row.processed_at || null
+
+    employeeId:
+      String(row.employee_id || ""),
+
+    username:
+      row.username || "",
+
+    name:
+      employeeName,
+
+    employeeName:
+      employeeName,
+
+    referral:
+      row.referral || "",
+
+    phone:
+      phone,
+
+    mpesaNumber:
+      phone,
+
+    amount:
+      Number(row.amount || 0),
+
+    status:
+      normalizeStatus(row.status),
+
+    createdAt:
+      row.created_at || null,
+
+    updatedAt:
+      row.updated_at || null,
+
+    processedAt:
+      row.processed_at || null
   };
 }
 
 
 /* =========================================================
-   ENSURE TABLE / COLUMNS
+   DATABASE SETUP
 ========================================================= */
 
 async function ensureWithdrawalTable() {
 
-  /*
-    IMPORTANT:
-    We DO NOT delete the existing table.
-    We DO NOT touch payment tables.
-  */
-
   await pool.query(`
     CREATE TABLE IF NOT EXISTS withdrawal_requests (
+
       id VARCHAR(100) PRIMARY KEY,
+
       employee_id VARCHAR(100) NOT NULL,
+
       employee_name VARCHAR(150) NOT NULL,
+
       username VARCHAR(100),
+
       name VARCHAR(150),
+
       referral VARCHAR(100),
+
+      phone VARCHAR(30) NOT NULL,
+
       mpesa_number VARCHAR(30),
+
       amount NUMERIC(12,2),
-      status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
-      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+      status VARCHAR(20)
+        NOT NULL
+        DEFAULT 'PENDING',
+
+      created_at TIMESTAMPTZ
+        NOT NULL
+        DEFAULT NOW(),
+
+      updated_at TIMESTAMPTZ
+        NOT NULL
+        DEFAULT NOW(),
+
       processed_at TIMESTAMPTZ
     );
   `);
 
 
   /* =======================================================
-     ADD COLUMNS IF THEY DO NOT EXIST
+     ADD COLUMNS IF MISSING
   ======================================================= */
 
   await pool.query(`
@@ -137,6 +177,11 @@ async function ensureWithdrawalTable() {
   await pool.query(`
     ALTER TABLE withdrawal_requests
     ADD COLUMN IF NOT EXISTS referral VARCHAR(100);
+  `);
+
+  await pool.query(`
+    ALTER TABLE withdrawal_requests
+    ADD COLUMN IF NOT EXISTS phone VARCHAR(30);
   `);
 
   await pool.query(`
@@ -174,7 +219,7 @@ async function ensureWithdrawalTable() {
 
 
   /* =======================================================
-     REPAIR OLD ROWS
+     REPAIR EXISTING ROWS
   ======================================================= */
 
   await pool.query(`
@@ -191,15 +236,24 @@ async function ensureWithdrawalTable() {
   `);
 
 
-  /* =======================================================
-     INDEXES
-  ======================================================= */
+  await pool.query(`
+    UPDATE withdrawal_requests
+    SET phone =
+      COALESCE(
+        NULLIF(phone, ''),
+        NULLIF(mpesa_number, ''),
+        ''
+      )
+    WHERE phone IS NULL;
+  `);
+
 
   await pool.query(`
     CREATE INDEX IF NOT EXISTS
     withdrawal_requests_employee_idx
     ON withdrawal_requests(employee_id);
   `);
+
 
   await pool.query(`
     CREATE INDEX IF NOT EXISTS
@@ -221,43 +275,53 @@ module.exports = async function handler(req, res) {
 
 
     /* =====================================================
-       GET REQUESTS
+       GET
     ===================================================== */
 
     if (req.method === "GET") {
 
-      const result = await pool.query(`
-        SELECT
-          id,
-          employee_id,
-          employee_name,
-          username,
-          name,
-          referral,
-          mpesa_number,
-          amount,
-          status,
-          created_at,
-          updated_at,
-          processed_at
-        FROM withdrawal_requests
-        ORDER BY created_at DESC
-      `);
+      const result =
+        await pool.query(`
+          SELECT
+            id,
+            employee_id,
+            employee_name,
+            username,
+            name,
+            referral,
+            phone,
+            mpesa_number,
+            amount,
+            status,
+            created_at,
+            updated_at,
+            processed_at
+
+          FROM withdrawal_requests
+
+          ORDER BY created_at DESC
+        `);
+
 
       return sendJson(res, 200, {
+
         success: true,
-        requests: result.rows.map(mapRequest)
+
+        requests:
+          result.rows.map(mapRequest)
+
       });
     }
 
 
     /* =====================================================
-       POST - EMPLOYEE REQUEST WITHDRAWAL
+       POST
     ===================================================== */
 
     if (req.method === "POST") {
 
-      const body = req.body || {};
+      const body =
+        req.body || {};
 
 
       const employeeId =
@@ -279,8 +343,8 @@ module.exports = async function handler(req, res) {
       const employeeName =
         String(
           body.employeeName ||
-          body.name ||
           body.employee_name ||
+          body.name ||
           username ||
           "Employee"
         ).trim();
@@ -293,11 +357,11 @@ module.exports = async function handler(req, res) {
         ).trim();
 
 
-      const mpesaNumber =
+      const phone =
         String(
+          body.phone ||
           body.mpesaNumber ||
           body.mpesa ||
-          body.phone ||
           ""
         ).trim();
 
@@ -313,20 +377,26 @@ module.exports = async function handler(req, res) {
       if (!employeeId) {
 
         return sendJson(res, 400, {
-          success: false,
-          error: "Missing employeeId"
-        });
 
+          success: false,
+
+          error:
+            "Missing employeeId"
+
+        });
       }
 
 
-      if (!mpesaNumber) {
+      if (!phone) {
 
         return sendJson(res, 400, {
-          success: false,
-          error: "Missing M-PESA number"
-        });
 
+          success: false,
+
+          error:
+            "Missing M-PESA number"
+
+        });
       }
 
 
@@ -336,15 +406,18 @@ module.exports = async function handler(req, res) {
       ) {
 
         return sendJson(res, 400, {
-          success: false,
-          error: "Invalid withdrawal amount"
-        });
 
+          success: false,
+
+          error:
+            "Invalid withdrawal amount"
+
+        });
       }
 
 
       /* ===================================================
-         CHECK PENDING REQUEST
+         CHECK PENDING
       =================================================== */
 
       const pendingCheck =
@@ -357,18 +430,24 @@ module.exports = async function handler(req, res) {
             username,
             name,
             referral,
+            phone,
             mpesa_number,
             amount,
             status,
             created_at,
             updated_at,
             processed_at
+
           FROM withdrawal_requests
+
           WHERE
-            CAST(employee_id AS TEXT) = $1::text
+            CAST(employee_id AS TEXT)
+            = $1::text
+
             AND UPPER(
               CAST(status AS TEXT)
             ) = 'PENDING'
+
           LIMIT 1
           `,
           [
@@ -377,7 +456,9 @@ module.exports = async function handler(req, res) {
         );
 
 
-      if (pendingCheck.rows.length > 0) {
+      if (
+        pendingCheck.rows.length > 0
+      ) {
 
         return sendJson(res, 409, {
 
@@ -392,12 +473,11 @@ module.exports = async function handler(req, res) {
             )
 
         });
-
       }
 
 
       /* ===================================================
-         CREATE UNIQUE ID
+         UNIQUE ID
       =================================================== */
 
       let withdrawalId =
@@ -410,12 +490,17 @@ module.exports = async function handler(req, res) {
         attempt++
       ) {
 
-        const existingId =
+        const existing =
           await pool.query(
             `
             SELECT id
+
             FROM withdrawal_requests
-            WHERE CAST(id AS TEXT) = $1::text
+
+            WHERE
+              CAST(id AS TEXT)
+              = $1::text
+
             LIMIT 1
             `,
             [
@@ -425,80 +510,132 @@ module.exports = async function handler(req, res) {
 
 
         if (
-          existingId.rows.length === 0
+          existing.rows.length === 0
         ) {
 
           break;
-
         }
 
 
         withdrawalId =
           makeWithdrawalId();
-
       }
 
 
       /* ===================================================
-         INSERT REQUEST
+         INSERT
          
          IMPORTANT:
-         employee_name is explicitly inserted because
-         your existing database requires this column.
+         We now save BOTH phone and mpesa_number.
       =================================================== */
 
       const insertResult =
         await pool.query(
           `
           INSERT INTO withdrawal_requests (
+
             id,
+
             employee_id,
+
             employee_name,
+
             username,
+
             name,
+
             referral,
+
+            phone,
+
             mpesa_number,
+
             amount,
+
             status,
+
             created_at,
+
             updated_at
+
           )
+
           VALUES (
+
             $1::varchar,
+
             $2::varchar,
+
             $3::varchar,
+
             $4::varchar,
+
             $5::varchar,
+
             $6::varchar,
+
             $7::varchar,
-            $8::numeric,
+
+            $8::varchar,
+
+            $9::numeric,
+
             'PENDING',
+
             NOW(),
+
             NOW()
+
           )
+
           RETURNING
+
             id,
+
             employee_id,
+
             employee_name,
+
             username,
+
             name,
+
             referral,
+
+            phone,
+
             mpesa_number,
+
             amount,
+
             status,
+
             created_at,
+
             updated_at,
+
             processed_at
           `,
           [
+
             withdrawalId,
+
             employeeId,
+
             employeeName,
+
             username || null,
+
             employeeName,
+
             referral || null,
-            mpesaNumber,
+
+            phone,
+
+            phone,
+
             amount
+
           ]
         );
 
@@ -516,7 +653,6 @@ module.exports = async function handler(req, res) {
           )
 
       });
-
     }
 
 
@@ -526,7 +662,8 @@ module.exports = async function handler(req, res) {
 
     if (req.method === "PUT") {
 
-      const body = req.body || {};
+      const body =
+        req.body || {};
 
 
       const requestId =
@@ -543,10 +680,6 @@ module.exports = async function handler(req, res) {
         );
 
 
-      /* ===================================================
-         VALIDATE REQUEST ID
-      =================================================== */
-
       if (!requestId) {
 
         return sendJson(res, 400, {
@@ -557,13 +690,8 @@ module.exports = async function handler(req, res) {
             "Missing withdrawal request id"
 
         });
-
       }
 
-
-      /* ===================================================
-         VALIDATE STATUS
-      =================================================== */
 
       if (
         requestedStatus !== "APPROVED" &&
@@ -578,20 +706,11 @@ module.exports = async function handler(req, res) {
             "Status must be APPROVED or REJECTED"
 
         });
-
       }
 
 
       /* ===================================================
-         UPDATE ONLY PENDING REQUEST
-         
-         This makes approval/rejection idempotent.
-
-         APPROVED:
-         dashboard will subtract the approved amount.
-
-         REJECTED:
-         dashboard will NOT subtract the amount.
+         ONLY PENDING CAN BE PROCESSED
       =================================================== */
 
       const updateResult =
@@ -600,29 +719,51 @@ module.exports = async function handler(req, res) {
           UPDATE withdrawal_requests
 
           SET
-            status = $1::varchar,
-            updated_at = NOW(),
-            processed_at = NOW()
+
+            status =
+              $1::varchar,
+
+            updated_at =
+              NOW(),
+
+            processed_at =
+              NOW()
 
           WHERE
-            CAST(id AS TEXT) = $2::text
+
+            CAST(id AS TEXT)
+            = $2::text
 
             AND UPPER(
               CAST(status AS TEXT)
             ) = 'PENDING'
 
           RETURNING
+
             id,
+
             employee_id,
+
             employee_name,
+
             username,
+
             name,
+
             referral,
+
+            phone,
+
             mpesa_number,
+
             amount,
+
             status,
+
             created_at,
+
             updated_at,
+
             processed_at
           `,
           [
@@ -633,7 +774,7 @@ module.exports = async function handler(req, res) {
 
 
       /* ===================================================
-         NOTHING UPDATED
+         ALREADY PROCESSED / NOT FOUND
       =================================================== */
 
       if (
@@ -644,21 +785,40 @@ module.exports = async function handler(req, res) {
           await pool.query(
             `
             SELECT
+
               id,
+
               employee_id,
+
               employee_name,
+
               username,
+
               name,
+
               referral,
+
+              phone,
+
               mpesa_number,
+
               amount,
+
               status,
+
               created_at,
+
               updated_at,
+
               processed_at
+
             FROM withdrawal_requests
+
             WHERE
-              CAST(id AS TEXT) = $1::text
+
+              CAST(id AS TEXT)
+              = $1::text
+
             LIMIT 1
             `,
             [
@@ -666,10 +826,6 @@ module.exports = async function handler(req, res) {
             ]
           );
 
-
-        /* =================================================
-           REQUEST DOES NOT EXIST
-        ================================================= */
 
         if (
           existingResult.rows.length === 0
@@ -683,13 +839,8 @@ module.exports = async function handler(req, res) {
               "Withdrawal request not found."
 
           });
-
         }
 
-
-        /* =================================================
-           ALREADY PROCESSED
-        ================================================= */
 
         return sendJson(res, 409, {
 
@@ -704,7 +855,6 @@ module.exports = async function handler(req, res) {
             )
 
         });
-
       }
 
 
@@ -731,7 +881,6 @@ module.exports = async function handler(req, res) {
           mapRequest(updated)
 
       });
-
     }
 
 
@@ -758,7 +907,7 @@ module.exports = async function handler(req, res) {
 
 
     /* =====================================================
-       DUPLICATE REQUEST
+       DUPLICATE
     ===================================================== */
 
     if (
@@ -774,12 +923,11 @@ module.exports = async function handler(req, res) {
           "You already have a pending withdrawal request."
 
       });
-
     }
 
 
     /* =====================================================
-       NOT NULL ERROR
+       DATABASE CONSTRAINT ERROR
     ===================================================== */
 
     if (
@@ -798,7 +946,6 @@ module.exports = async function handler(req, res) {
           error.column || null
 
       });
-
     }
 
 
@@ -814,7 +961,5 @@ module.exports = async function handler(req, res) {
         "Server error while processing withdrawal."
 
     });
-
   }
-
 };
