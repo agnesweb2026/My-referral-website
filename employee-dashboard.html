@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Employee Dashboard</title>
 
@@ -39,10 +34,7 @@ button{
   display:none !important;
 }
 
-
-/* =========================
-   LOGIN
-========================= */
+/* LOGIN */
 
 #loginPage{
   min-height:100vh;
@@ -110,16 +102,13 @@ button{
 
 .field label{
   display:block;
-
   color:#aeb8c4;
   font-size:13px;
-
   margin-bottom:7px;
 }
 
 .field input{
   width:100%;
-
   padding:14px;
 
   background:#0a1017;
@@ -129,7 +118,6 @@ button{
   border-radius:10px;
 
   outline:none;
-
   font-size:15px;
 }
 
@@ -139,7 +127,6 @@ button{
 
 #loginError{
   min-height:20px;
-
   margin-bottom:8px;
 
   text-align:center;
@@ -150,7 +137,6 @@ button{
 
 .login-btn{
   width:100%;
-
   padding:14px;
 
   border:none;
@@ -163,10 +149,7 @@ button{
   font-weight:bold;
 }
 
-
-/* =========================
-   DASHBOARD
-========================= */
+/* DASHBOARD */
 
 #dashboardPage{
   min-height:100vh;
@@ -178,7 +161,6 @@ button{
   z-index:100;
 
   background:#101720;
-
   border-bottom:1px solid #263341;
 
   padding:14px 15px;
@@ -189,7 +171,6 @@ button{
   margin:auto;
 
   display:flex;
-
   align-items:center;
   justify-content:space-between;
 
@@ -228,10 +209,7 @@ button{
   padding:20px 15px 50px;
 }
 
-
-/* =========================
-   PROFILE
-========================= */
+/* PROFILE */
 
 .profile-card{
   background:#111820;
@@ -246,9 +224,7 @@ button{
 
 .profile-top{
   display:flex;
-
   align-items:center;
-
   gap:13px;
 }
 
@@ -265,7 +241,6 @@ button{
   border-radius:15px;
 
   background:#16a34a;
-
   color:#fff;
 
   font-size:23px;
@@ -279,25 +254,17 @@ button{
 
 .profile-id{
   color:#8995a3;
-
   font-size:12px;
-
   margin-top:5px;
 }
 
-
-/* =========================
-   STATS
-========================= */
+/* STATS */
 
 .stats{
   display:grid;
 
   grid-template-columns:
-    repeat(
-      2,
-      minmax(0,1fr)
-    );
+    repeat(2,minmax(0,1fr));
 
   gap:12px;
 
@@ -317,13 +284,11 @@ button{
   color:#8995a3;
 
   font-size:12px;
-
   margin-bottom:8px;
 }
 
 .stat-value{
   font-size:22px;
-
   font-weight:bold;
 }
 
@@ -343,10 +308,7 @@ button{
   color:#b58cff;
 }
 
-
-/* =========================
-   SECTION
-========================= */
+/* SECTION */
 
 .section{
   background:#111820;
@@ -381,10 +343,7 @@ button{
   padding:16px;
 }
 
-
-/* =========================
-   REFERRAL
-========================= */
+/* REFERRAL */
 
 .referral-box{
   background:#0c131b;
@@ -453,20 +412,13 @@ button{
 
   margin-top:8px;
 }
-
-
-/* =========================
-   WITHDRAWAL
-========================= */
+  /* WITHDRAWAL */
 
 .withdraw-grid{
   display:grid;
 
   grid-template-columns:
-    repeat(
-      2,
-      minmax(0,1fr)
-    );
+    repeat(2,minmax(0,1fr));
 
   gap:12px;
 }
@@ -557,10 +509,6 @@ button{
   font-weight:bold;
 }
 
-.withdraw-btn:active{
-  transform:scale(.99);
-}
-
 #withdrawMessage{
   min-height:20px;
 
@@ -571,10 +519,7 @@ button{
   margin-top:10px;
 }
 
-
-/* =========================
-   NOTICE
-========================= */
+/* NOTICE */
 
 .notice{
   background:#0c131b;
@@ -592,10 +537,7 @@ button{
   line-height:1.6;
 }
 
-
-/* =========================
-   HISTORY
-========================= */
+/* HISTORY */
 
 .history-list{
   padding:12px;
@@ -670,35 +612,17 @@ button{
 }
 
 .history-status.pending{
-  background:rgba(
-    245,
-    185,
-    66,
-    .12
-  );
-
+  background:rgba(245,185,66,.12);
   color:#f5b942;
 }
 
 .history-status.approved{
-  background:rgba(
-    54,
-    214,
-    117,
-    .12
-  );
-
+  background:rgba(54,214,117,.12);
   color:#36d675;
 }
 
 .history-status.rejected{
-  background:rgba(
-    255,
-    91,
-    91,
-    .12
-  );
-
+  background:rgba(255,91,91,.12);
   color:#ff6464;
 }
 
@@ -706,10 +630,7 @@ button{
   display:grid;
 
   grid-template-columns:
-    repeat(
-      2,
-      minmax(0,1fr)
-    );
+    repeat(2,minmax(0,1fr));
 
   gap:9px;
 }
@@ -738,20 +659,7 @@ button{
   word-break:break-word;
 }
 
-
-/* =========================
-   MOBILE
-========================= */
-
 @media(max-width:600px){
-
-  .stats{
-    grid-template-columns:
-      repeat(
-        2,
-        minmax(0,1fr)
-      );
-  }
 
   .withdraw-grid{
     grid-template-columns:1fr;
@@ -764,10 +672,6 @@ button{
 }
 
 @media(max-width:420px){
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
 
   .stat-card{
     padding:14px;
@@ -800,15 +704,9 @@ button{
 }
 
 </style>
-
 </head>
 
 <body>
-
-
-<!-- =========================
-     LOGIN PAGE
-========================= -->
 
 <div id="loginPage">
 
@@ -826,12 +724,9 @@ button{
       Access your referral dashboard
     </p>
 
-
     <div class="field">
 
-      <label
-        for="employeeUsername"
-      >
+      <label for="employeeUsername">
         Username
       </label>
 
@@ -844,12 +739,9 @@ button{
 
     </div>
 
-
     <div class="field">
 
-      <label
-        for="employeePassword"
-      >
+      <label for="employeePassword">
         Password
       </label>
 
@@ -862,9 +754,7 @@ button{
 
     </div>
 
-
     <div id="loginError"></div>
-
 
     <button
       class="login-btn"
@@ -878,366 +768,319 @@ button{
 </div>
 
 
-<!-- =========================
-     DASHBOARD PAGE
-========================= -->
-
 <div
   id="dashboardPage"
   class="hidden"
 >
 
+<header class="topbar">
 
-  <!-- TOP BAR -->
+  <div class="topbar-inner">
 
-  <header class="topbar">
+    <div class="title-area">
 
-    <div class="topbar-inner">
+      <h1>
+        Employee Dashboard
+      </h1>
 
-      <div class="title-area">
+      <p>
+        Referral & commission management
+      </p>
 
-        <h1>
-          Employee Dashboard
-        </h1>
+    </div>
 
-        <p>
-          Referral & commission management
-        </p>
+    <button
+      class="logout-btn"
+      onclick="employeeLogout()"
+    >
+      Logout
+    </button>
 
-      </div>
+  </div>
+
+</header>
 
 
-      <button
-        class="logout-btn"
-        onclick="employeeLogout()"
+<main class="container">
+
+<section class="profile-card">
+
+  <div class="profile-top">
+
+    <div
+      id="profileAvatar"
+      class="profile-avatar"
+    >
+      E
+    </div>
+
+    <div>
+
+      <div
+        id="profileName"
+        class="profile-name"
       >
-        Logout
-      </button>
-
-    </div>
-
-  </header>
-
-
-  <main class="container">
-
-
-    <!-- PROFILE -->
-
-    <section class="profile-card">
-
-      <div class="profile-top">
-
-        <div
-          id="profileAvatar"
-          class="profile-avatar"
-        >
-          E
-        </div>
-
-        <div>
-
-          <div
-            id="profileName"
-            class="profile-name"
-          >
-            Employee
-          </div>
-
-          <div
-            id="profileId"
-            class="profile-id"
-          >
-            Employee ID
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- STATS -->
-
-    <div class="stats">
-
-
-      <div class="stat-card">
-
-        <div class="stat-label">
-          Total Earnings
-        </div>
-
-        <div
-          id="totalEarnings"
-          class="stat-value"
-        >
-          KSh 0
-        </div>
-
-      </div>
-
-
-      <div class="stat-card">
-
-        <div class="stat-label">
-          Available Balance
-        </div>
-
-        <div
-          id="availableBalance"
-          class="stat-value"
-        >
-          KSh 0
-        </div>
-
-      </div>
-
-
-      <div class="stat-card">
-
-        <div class="stat-label">
-          Total Withdrawn
-        </div>
-
-        <div
-          id="totalWithdrawn"
-          class="stat-value"
-        >
-          KSh 0
-        </div>
-
-      </div>
-
-
-      <div class="stat-card">
-
-        <div class="stat-label">
-          Commission Rate
-        </div>
-
-        <div
-          id="commissionRate"
-          class="stat-value"
-        >
-          25%
-        </div>
-
-      </div>
-
-
-    </div>
-
-
-    <!-- REFERRAL LINK -->
-
-    <section class="section">
-
-      <div class="section-header">
-
-        <h2>
-          Your Referral Link
-        </h2>
-
-      </div>
-
-
-      <div class="section-body">
-
-        <div class="referral-box">
-
-          <div class="referral-label">
-            Share this link with visitors
-          </div>
-
-          <div
-            id="referralLink"
-            class="referral-link"
-          >
-            -
-          </div>
-
-          <button
-            class="copy-btn"
-            onclick="copyReferralLink()"
-          >
-            COPY REFERRAL LINK
-          </button>
-
-          <div
-            id="copyMessage"
-            class="copy-message"
-          ></div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- WITHDRAW -->
-
-    <section class="section">
-
-      <div class="section-header">
-
-        <h2>
-          Withdraw Earnings
-        </h2>
-
-      </div>
-
-
-      <div class="section-body">
-
-        <div class="withdraw-balance">
-
-          <div class="withdraw-balance-label">
-            Available to withdraw
-          </div>
-
-          <div
-            id="withdrawBalance"
-            class="withdraw-balance-value"
-          >
-            KSh 0
-          </div>
-
-        </div>
-
-
-        <div class="withdraw-grid">
-
-
-          <div class="withdraw-field">
-
-            <label
-              for="mpesaNumber"
-            >
-              M-PESA Number
-            </label>
-
-            <input
-              id="mpesaNumber"
-              type="tel"
-              inputmode="numeric"
-              maxlength="10"
-              placeholder="07XXXXXXXX"
-            >
-
-          </div>
-
-
-          <div class="withdraw-field">
-
-            <label
-              for="withdrawAmount"
-            >
-              Amount
-            </label>
-
-            <input
-              id="withdrawAmount"
-              type="number"
-              inputmode="decimal"
-              min="1"
-              placeholder="Enter amount"
-            >
-
-          </div>
-
-
-          <div class="withdraw-field full">
-
-            <button
-              class="withdraw-btn"
-              onclick="requestWithdrawal()"
-            >
-              REQUEST WITHDRAWAL
-            </button>
-
-          </div>
-
-
-        </div>
-
-
-        <div
-          id="withdrawMessage"
-        ></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- NOTICE -->
-
-    <section class="section">
-
-      <div class="section-body">
-
-        <div class="notice">
-
-          Withdrawal requests are reviewed by
-          the administrator. Once approved,
-          the approved amount is deducted from
-          your available balance.
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- HISTORY -->
-
-    <section class="section">
-
-      <div class="section-header">
-
-        <h2>
-          Withdrawal History
-        </h2>
-
+        Employee
       </div>
 
       <div
-        id="historyList"
-        class="history-list"
+        id="profileId"
+        class="profile-id"
       >
+        Employee ID
+      </div>
 
-        <div class="empty-history">
-          No withdrawal requests yet.
-        </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<div class="stats">
+
+  <div class="stat-card">
+
+    <div class="stat-label">
+      Total Earnings
+    </div>
+
+    <div
+      id="totalEarnings"
+      class="stat-value"
+    >
+      KSh 0
+    </div>
+
+  </div>
+
+  <div class="stat-card">
+
+    <div class="stat-label">
+      Available Balance
+    </div>
+
+    <div
+      id="availableBalance"
+      class="stat-value"
+    >
+      KSh 0
+    </div>
+
+  </div>
+
+  <div class="stat-card">
+
+    <div class="stat-label">
+      Total Withdrawn
+    </div>
+
+    <div
+      id="totalWithdrawn"
+      class="stat-value"
+    >
+      KSh 0
+    </div>
+
+  </div>
+
+  <div class="stat-card">
+
+    <div class="stat-label">
+      Commission Rate
+    </div>
+
+    <div
+      id="commissionRate"
+      class="stat-value"
+    >
+      40%
+    </div>
+
+  </div>
+
+</div>
+
+
+<section class="section">
+
+  <div class="section-header">
+
+    <h2>
+      Your Referral Link
+    </h2>
+
+  </div>
+
+  <div class="section-body">
+
+    <div class="referral-box">
+
+      <div class="referral-label">
+        Share this link with visitors
+      </div>
+
+      <div
+        id="referralLink"
+        class="referral-link"
+      >
+        -
+      </div>
+
+      <button
+        class="copy-btn"
+        onclick="copyReferralLink()"
+      >
+        COPY REFERRAL LINK
+      </button>
+
+      <div
+        id="copyMessage"
+        class="copy-message"
+      ></div>
+
+    </div>
+
+  </div>
+
+</section>
+<section class="section">
+
+  <div class="section-header">
+
+    <h2>
+      Withdraw Earnings
+    </h2>
+
+  </div>
+
+  <div class="section-body">
+
+    <div class="withdraw-balance">
+
+      <div class="withdraw-balance-label">
+        Available to withdraw
+      </div>
+
+      <div
+        id="withdrawBalance"
+        class="withdraw-balance-value"
+      >
+        KSh 0
+      </div>
+
+    </div>
+
+    <div class="withdraw-grid">
+
+      <div class="withdraw-field">
+
+        <label for="mpesaNumber">
+          M-PESA Number
+        </label>
+
+        <input
+          id="mpesaNumber"
+          type="tel"
+          inputmode="numeric"
+          maxlength="10"
+          placeholder="07XXXXXXXX"
+        >
 
       </div>
 
-    </section>
+      <div class="withdraw-field">
+
+        <label for="withdrawAmount">
+          Amount
+        </label>
+
+        <input
+          id="withdrawAmount"
+          type="number"
+          inputmode="decimal"
+          min="1"
+          placeholder="Enter amount"
+        >
+
+      </div>
+
+      <div class="withdraw-field full">
+
+        <button
+          class="withdraw-btn"
+          onclick="requestWithdrawal()"
+        >
+          REQUEST WITHDRAWAL
+        </button>
+
+      </div>
+
+    </div>
+
+    <div id="withdrawMessage"></div>
+
+  </div>
+
+</section>
 
 
-  </main>
+<section class="section">
+
+  <div class="section-body">
+
+    <div class="notice">
+
+      Withdrawal requests are reviewed by
+      the administrator.
+
+      A pending request does not reduce
+      your balance.
+
+      Once approved, the approved amount
+      is deducted from your available
+      balance.
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+  <div class="section-header">
+
+    <h2>
+      Withdrawal History
+    </h2>
+
+  </div>
+
+  <div
+    id="historyList"
+    class="history-list"
+  >
+
+    <div class="empty-history">
+      No withdrawal requests yet.
+    </div>
+
+  </div>
+
+</section>
+
+</main>
 
 </div>
 
 
 <script>
-  <script>
-
-/* =========================
-   STORAGE KEYS
-========================= */
 
 const EMPLOYEE_KEY =
   "employeeSession";
 
-
-/* =========================
-   EMPLOYEE ACCOUNTS
-========================= */
 
 const EMPLOYEES = [
 
@@ -1324,10 +1167,6 @@ const EMPLOYEES = [
 ];
 
 
-/* =========================
-   GET CURRENT EMPLOYEE
-========================= */
-
 function getCurrentEmployee(){
 
   try{
@@ -1352,10 +1191,6 @@ function getCurrentEmployee(){
 }
 
 
-/* =========================
-   SAVE EMPLOYEE
-========================= */
-
 function saveEmployee(employee){
 
   localStorage.setItem(
@@ -1365,10 +1200,6 @@ function saveEmployee(employee){
 
 }
 
-
-/* =========================
-   LOGIN
-========================= */
 
 function employeeLogin(){
 
@@ -1422,29 +1253,21 @@ function employeeLogin(){
 
   const employeeSession = {
 
-    id:
-      employee.id,
+    id:employee.id,
 
-    employeeId:
-      employee.id,
+    employeeId:employee.id,
 
-    name:
-      employee.name,
+    name:employee.name,
 
-    employeeName:
-      employee.name,
+    employeeName:employee.name,
 
-    username:
-      employee.username,
+    username:employee.username,
 
-    referral:
-      employee.referral,
+    referral:employee.referral,
 
-    earnings:
-      0,
+    earnings:0,
 
-    withdrawn:
-      0
+    withdrawn:0
 
   };
 
@@ -1459,16 +1282,11 @@ function employeeLogin(){
 }
 
 
-/* =========================
-   LOGOUT
-========================= */
-
 function employeeLogout(){
 
   localStorage.removeItem(
     EMPLOYEE_KEY
   );
-
 
   document
     .getElementById(
@@ -1477,7 +1295,6 @@ function employeeLogout(){
     .classList.add(
       "hidden"
     );
-
 
   document
     .getElementById(
@@ -1489,10 +1306,6 @@ function employeeLogout(){
 
 }
 
-
-/* =========================
-   SHOW DASHBOARD
-========================= */
 
 function showDashboard(){
 
@@ -1503,7 +1316,6 @@ function showDashboard(){
     return;
   }
 
-
   document
     .getElementById(
       "loginPage"
@@ -1511,7 +1323,6 @@ function showDashboard(){
     .classList.add(
       "hidden"
     );
-
 
   document
     .getElementById(
@@ -1521,15 +1332,10 @@ function showDashboard(){
       "hidden"
     );
 
-
   loadEmployeeData();
 
 }
 
-
-/* =========================
-   EMPLOYEE FROM URL
-========================= */
 
 function loadEmployeeFromURL(){
 
@@ -1538,17 +1344,14 @@ function loadEmployeeFromURL(){
       window.location.search
     );
 
-
   const employeeCode =
     params.get(
       "employee"
     );
 
-
   if(!employeeCode){
     return false;
   }
-
 
   const employee =
     EMPLOYEES.find(
@@ -1562,137 +1365,141 @@ function loadEmployeeFromURL(){
       }
     );
 
-
   if(!employee){
     return false;
   }
 
-
   const employeeSession = {
 
-    id:
-      employee.id,
+    id:employee.id,
 
-    employeeId:
-      employee.id,
+    employeeId:employee.id,
 
-    name:
-      employee.name,
+    name:employee.name,
 
-    employeeName:
-      employee.name,
+    employeeName:employee.name,
 
-    username:
-      employee.username,
+    username:employee.username,
 
-    referral:
-      employee.referral,
+    referral:employee.referral,
 
-    earnings:
-      0,
+    earnings:0,
 
-    withdrawn:
-      0
+    withdrawn:0
 
   };
-
 
   saveEmployee(
     employeeSession
   );
-
 
   return true;
 
 }
 
 
-/* =========================
-   LOAD EMPLOYEE DATA
-========================= */
-
-async function loadEmployeeData(){
-
-  const employee =
-    getCurrentEmployee();
-
-
-  if(!employee){
-    return;
-  }
-
-
-  /*
-   PAYMENT RECORDS
-  */
+function getPaymentRecords(employee){
 
   const paymentKey =
     "employeePayments_" +
     employee.referral;
 
-
-  let paymentRecords = [];
-
-
   try{
 
-    paymentRecords =
+    const records =
       JSON.parse(
         localStorage.getItem(
           paymentKey
         ) || "[]"
       );
 
-
-    if(
-      !Array.isArray(
-        paymentRecords
-      )
-    ){
-
-      paymentRecords = [];
-
-    }
+    return Array.isArray(records)
+      ? records
+      : [];
 
   }catch(error){
 
-    paymentRecords = [];
+    return [];
 
   }
 
-
-  /*
-   TOTAL COMMISSION
-  */
-
-  const earnings =
-    Math.round(
-      paymentRecords.reduce(
-        function(total,item){
-
-          return (
-            total +
-            Number(
-              item.commission || 0
-            )
-          );
-
-        },
-        0
-      ) * 100
-    ) / 100;
+}
 
 
-  /*
-   SHARED WITHDRAWAL RECORDS
-  */
+function calculateEarnings(records){
 
-  const requests =
-    await getWithdrawalRequests();
+  return Math.round(
+
+    records.reduce(
+      function(total,item){
+
+        return (
+          total +
+          Number(
+            item.commission || 0
+          )
+        );
+
+      },
+      0
+
+    ) * 100
+
+  ) / 100;
+
+}
 
 
-  const employeeRequests =
-    requests.filter(
+async function getWithdrawalRequests(){
+
+  try{
+
+    const response =
+      await fetch(
+        "/api/withdrawals",
+        {
+          method:"GET",
+          cache:"no-store"
+        }
+      );
+
+    if(!response.ok){
+
+      return [];
+
+    }
+
+    const data =
+      await response.json();
+
+    return Array.isArray(
+      data.requests
+    )
+      ? data.requests
+      : [];
+
+  }catch(error){
+
+    console.error(
+      "Could not load withdrawals:",
+      error
+    );
+
+    return [];
+
+  }
+
+}
+
+
+function calculateWithdrawn(
+  requests,
+  employee
+){
+
+  return requests
+
+    .filter(
       function(request){
 
         return (
@@ -1701,43 +1508,70 @@ async function loadEmployeeData(){
           ) ===
           String(
             employee.id
-          )
-        );
+          ) &&
 
-      }
-    );
-
-
-  /*
-   APPROVED WITHDRAWALS
-  */
-
-  const withdrawn =
-    employeeRequests.reduce(
-      function(total,request){
-
-        if(
           String(
             request.status || ""
           ).toUpperCase() ===
           "APPROVED"
-        ){
+        );
 
-          return (
-            total +
-            Number(
-              request.amount || 0
-            )
-          );
+      }
+    )
 
-        }
+    .reduce(
+      function(total,request){
 
-        return total;
+        return (
+          total +
+          Number(
+            request.amount || 0
+          )
+        );
 
       },
       0
     );
 
+}
+  async function loadEmployeeData(){
+
+  const employee =
+    getCurrentEmployee();
+
+  if(!employee){
+    return;
+  }
+
+
+  const paymentRecords =
+    getPaymentRecords(
+      employee
+    );
+
+
+  const earnings =
+    calculateEarnings(
+      paymentRecords
+    );
+
+
+  const requests =
+    await getWithdrawalRequests();
+
+
+  const withdrawn =
+    calculateWithdrawn(
+      requests,
+      employee
+    );
+
+
+  /*
+   PENDING = NO DEDUCTION
+   REJECTED = NO DEDUCTION
+   APPROVED = DEDUCTION
+  */
 
   const available =
     Math.max(
@@ -1757,10 +1591,6 @@ async function loadEmployeeData(){
     employee
   );
 
-
-  /*
-   PROFILE
-  */
 
   document
     .getElementById(
@@ -1792,10 +1622,6 @@ async function loadEmployeeData(){
       .charAt(0)
       .toUpperCase();
 
-
-  /*
-   STATS
-  */
 
   document
     .getElementById(
@@ -1838,12 +1664,8 @@ async function loadEmployeeData(){
       "commissionRate"
     )
     .textContent =
-      "25%";
+      "40%";
 
-
-  /*
-   REFERRAL LINK
-  */
 
   const referralLink =
     window.location.origin +
@@ -1861,77 +1683,15 @@ async function loadEmployeeData(){
       referralLink;
 
 
-  /*
-   HISTORY
-  */
-
   await loadWithdrawalHistory();
-
-  }
-  /* =========================
-   SHARED WITHDRAWAL API
-========================= */
-
-async function getWithdrawalRequests(){
-
-  try{
-
-    const response =
-      await fetch(
-        "/api/withdrawals",
-        {
-          method:"GET",
-          cache:"no-store"
-        }
-      );
-
-
-    if(!response.ok){
-
-      console.error(
-        "Withdrawal API GET failed:",
-        response.status
-      );
-
-      return [];
-
-    }
-
-
-    const data =
-      await response.json();
-
-
-    return Array.isArray(
-      data.requests
-    )
-      ? data.requests
-      : [];
-
-
-  }catch(error){
-
-    console.error(
-      "Could not load withdrawals:",
-      error
-    );
-
-    return [];
-
-  }
 
 }
 
-
-/* =========================
-   REQUEST WITHDRAWAL
-========================= */
 
 async function requestWithdrawal(){
 
   const employee =
     getCurrentEmployee();
-
 
   if(!employee){
     return;
@@ -1945,7 +1705,6 @@ async function requestWithdrawal(){
 
 
   message.textContent = "";
-
 
   message.style.color =
     "#ff6464";
@@ -1970,10 +1729,6 @@ async function requestWithdrawal(){
     );
 
 
-  /*
-   PHONE VALIDATION
-  */
-
   if(
     !/^07\d{8}$/.test(
       phone
@@ -1987,10 +1742,6 @@ async function requestWithdrawal(){
 
   }
 
-
-  /*
-   AMOUNT VALIDATION
-  */
 
   if(
     !Number.isFinite(
@@ -2007,112 +1758,27 @@ async function requestWithdrawal(){
   }
 
 
-  /*
-   LATEST SHARED REQUESTS
-  */
-
   const requests =
     await getWithdrawalRequests();
 
 
-  /*
-   PAYMENT RECORDS
-  */
+  const paymentRecords =
+    getPaymentRecords(
+      employee
+    );
 
-  const paymentKey =
-    "employeePayments_" +
-    employee.referral;
-
-
-  let paymentRecords = [];
-
-
-  try{
-
-    paymentRecords =
-      JSON.parse(
-        localStorage.getItem(
-          paymentKey
-        ) || "[]"
-      );
-
-
-    if(
-      !Array.isArray(
-        paymentRecords
-      )
-    ){
-
-      paymentRecords = [];
-
-    }
-
-  }catch(error){
-
-    paymentRecords = [];
-
-  }
-
-
-  /*
-   TOTAL EARNINGS
-  */
 
   const earnings =
-    Math.round(
-      paymentRecords.reduce(
-        function(total,item){
+    calculateEarnings(
+      paymentRecords
+    );
 
-          return (
-            total +
-            Number(
-              item.commission || 0
-            )
-          );
-
-        },
-        0
-      ) * 100
-    ) / 100;
-
-
-  /*
-   TOTAL APPROVED WITHDRAWALS
-  */
 
   const withdrawn =
-    requests
-      .filter(
-        function(request){
-
-          return (
-            String(
-              request.employeeId
-            ) ===
-            String(
-              employee.id
-            ) &&
-            String(
-              request.status || ""
-            ).toUpperCase() ===
-            "APPROVED"
-          );
-
-        }
-      )
-      .reduce(
-        function(total,request){
-
-          return (
-            total +
-            Number(
-              request.amount || 0
-            )
-          );
-
-        },
-        0
-      );
+    calculateWithdrawn(
+      requests,
+      employee
+    );
 
 
   const available =
@@ -2122,13 +1788,7 @@ async function requestWithdrawal(){
     );
 
 
-  /*
-   CHECK BALANCE
-  */
-
-  if(
-    amount > available
-  ){
+  if(amount > available){
 
     message.textContent =
       "Insufficient available balance.";
@@ -2137,10 +1797,6 @@ async function requestWithdrawal(){
 
   }
 
-
-  /*
-   CHECK PENDING
-  */
 
   const alreadyPending =
     requests.some(
@@ -2153,6 +1809,7 @@ async function requestWithdrawal(){
           String(
             employee.id
           ) &&
+
           String(
             request.status || ""
           ).toUpperCase() ===
@@ -2172,10 +1829,6 @@ async function requestWithdrawal(){
 
   }
 
-
-  /*
-   CREATE REQUEST
-  */
 
   const requestData = {
 
@@ -2270,15 +1923,10 @@ async function requestWithdrawal(){
 }
 
 
-/* =========================
-   WITHDRAWAL HISTORY
-========================= */
-
 async function loadWithdrawalHistory(){
 
   const employee =
     getCurrentEmployee();
-
 
   if(!employee){
     return;
@@ -2410,12 +2058,10 @@ async function loadWithdrawalHistory(){
                   </div>
 
                   <div class="history-detail-value">
-
                     ${
                       request.phone ||
                       "-"
                     }
-
                   </div>
 
                 </div>
@@ -2428,12 +2074,10 @@ async function loadWithdrawalHistory(){
                   </div>
 
                   <div class="history-detail-value">
-
                     ${
                       request.referral ||
                       "-"
                     }
-
                   </div>
 
                 </div>
@@ -2448,16 +2092,11 @@ async function loadWithdrawalHistory(){
       )
       .join("");
 
-}
-  /* =========================
-   COPY REFERRAL LINK
-========================= */
-
-function copyReferralLink(){
+    }
+  function copyReferralLink(){
 
   const employee =
     getCurrentEmployee();
-
 
   if(!employee){
     return;
@@ -2491,7 +2130,6 @@ function copyReferralLink(){
           message.textContent =
             "Referral link copied ✓";
 
-
           setTimeout(
             function(){
 
@@ -2507,27 +2145,19 @@ function copyReferralLink(){
       .catch(
         function(){
 
-          fallbackCopy(
-            link
-          );
+          fallbackCopy(link);
 
         }
       );
 
   }else{
 
-    fallbackCopy(
-      link
-    );
+    fallbackCopy(link);
 
   }
 
 }
 
-
-/* =========================
-   FALLBACK COPY
-========================= */
 
 function fallbackCopy(text){
 
@@ -2583,16 +2213,13 @@ function fallbackCopy(text){
 }
 
 
-/* =========================
-   AUTO REFRESH
-========================= */
+/* AUTO REFRESH */
 
 setInterval(
   async function(){
 
     const employee =
       getCurrentEmployee();
-
 
     if(employee){
 
@@ -2605,9 +2232,7 @@ setInterval(
 );
 
 
-/* =========================
-   START DASHBOARD
-========================= */
+/* START */
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -2660,9 +2285,7 @@ document.addEventListener(
 );
 
 
-/* =========================
-   ENTER KEY LOGIN
-========================= */
+/* ENTER KEY */
 
 document.addEventListener(
   "keydown",
@@ -2671,9 +2294,7 @@ document.addEventListener(
     if(
       event.key !== "Enter"
     ){
-
       return;
-
     }
 
 
