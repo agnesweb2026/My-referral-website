@@ -22,573 +22,476 @@ if (!connectionString.includes("sslmode=")) {
 const pool = new Pool(poolConfig);
 
 
-// ========================================
-// HELPERS
-// ========================================
+/* =========================================================
+   HELPERS
+========================================================= */
 
-function cleanText(value) {
-  return String(value ?? "").trim();
-}
-
-function validPhone(phone) {
-  return /^07\d{8}$/.test(cleanText(phone));
-}
-
-function validAmount(amount) {
-  const value = Number(amount);
-
-  return (
-    Number.isFinite(value) &&
-    value > 0
-  );
+function sendJson(res, status, data) {
+  return res.status(status).json(data);
 }
 
 
-// ========================================
-// CREATE TABLE
-// ========================================
+function normalizeStatus(status) {
+  return String(status || "")
+    .trim()
+    .toUpperCase();
+}
 
-async function ensureTable() {
+
+function mapRequest(row) {
+  return {
+    id: row.id,
+    employeeId: row.employee_id,
+    username: row.username,
+    name: row.name,
+    referral: row.referral,
+    mpesaNumber: row.mpesa_number,
+    amount: Number(row.amount || 0),
+    status: normalizeStatus(row.status),
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+    processedAt: row.processed_at
+  };
+}
+
+
+/* =========================================================
+   DATABASE TABLE
+========================================================= */
+
+async function ensureWithdrawalTable() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS withdrawal_requests (
-      id VARCHAR(100) PRIMARY KEY,
+      id BIGSERIAL PRIMARY KEY,
 
-      employee_name TEXT NOT NULL,
+      employee_id VARCHAR(100) NOT NULL,
 
-      employee_id TEXT NOT NULL,
+      username VARCHAR(100),
 
-      username TEXT NOT NULL,
+      name VARCHAR(150),
 
-      referral TEXT NOT NULL,
+      referral VARCHAR(100),
+
+      mpesa_number VARCHAR(30) NOT NULL,
 
       amount NUMERIC(12,2) NOT NULL,
 
-      phone VARCHAR(20) NOT NULL,
+      status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
 
-      status VARCHAR(20)
-        NOT NULL
-        DEFAULT 'PENDING',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
-      created_at TIMESTAMPTZ
-        NOT NULL
-        DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
-      processed_at TIMESTAMPTZ,
-
-      processed_by TEXT,
-
-      approved_at TIMESTAMPTZ,
-
-      rejected_at TIMESTAMPTZ
+      processed_at TIMESTAMPTZ
     );
+  `);
 
-    CREATE INDEX IF NOT EXISTS
-      withdrawal_requests_employee_status_idx
-    ON withdrawal_requests(
-      employee_id,
-      status
-    );
 
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS withdrawal_requests_employee_idx
+    ON withdrawal_requests(employee_id);
+  `);
+
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS withdrawal_requests_status_idx
+    ON withdrawal_requests(status);
+  `);
+
+
+  /*
+    Only ONE pending withdrawal per employee.
+  */
+  await pool.query(`
     CREATE UNIQUE INDEX IF NOT EXISTS
-      withdrawal_one_pending_per_employee
+    withdrawal_one_pending_per_employee_idx
     ON withdrawal_requests(employee_id)
     WHERE status = 'PENDING';
   `);
 }
 
 
-// ========================================
-// DATABASE → FRONTEND FORMAT
-// ========================================
+/* =========================================================
+   MAIN HANDLER
+========================================================= */
 
-function mapRequest(row) {
-  return {
-    id: row.id,
-
-    employeeName:
-      row.employee_name,
-
-    employeeId:
-      row.employee_id,
-
-    username:
-      row.username,
-
-    referral:
-      row.referral,
-
-    amount:
-      Number(row.amount),
-
-    phone:
-      row.phone,
-
-    status:
-      row.status,
-
-    createdAt:
-      row.created_at,
-
-    processedAt:
-      row.processed_at,
-
-    processedBy:
-      row.processed_by,
-
-    approvedAt:
-      row.approved_at,
-
-    rejectedAt:
-      row.rejected_at
-  };
-}
-
-
-// ========================================
-// MAIN API
-// ========================================
-
-export default async function handler(req, res) {
-
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "*"
-  );
-
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,POST,PUT,OPTIONS"
-  );
-
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type"
-  );
-
-
-  // ======================================
-  // OPTIONS
-  // ======================================
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
+module.exports = async function handler(req, res) {
 
   try {
 
-    // ====================================
-    // MAKE SURE TABLE EXISTS
-    // ====================================
-
-    await ensureTable();
+    await ensureWithdrawalTable();
 
 
-    // ====================================
-    // GET REQUESTS
-    // ====================================
+    /* =====================================================
+       GET WITHDRAWAL REQUESTS
+    ===================================================== */
 
     if (req.method === "GET") {
 
       const result = await pool.query(`
-        SELECT *
+        SELECT
+          id,
+          employee_id,
+          username,
+          name,
+          referral,
+          mpesa_number,
+          amount,
+          status,
+          created_at,
+          updated_at,
+          processed_at
         FROM withdrawal_requests
         ORDER BY created_at DESC
       `);
 
-      return res.status(200).json({
-        success: true,
 
-        requests:
-          result.rows.map(mapRequest)
+      return sendJson(res, 200, {
+        success: true,
+        requests: result.rows.map(mapRequest)
       });
     }
 
 
-    // ====================================
-    // CREATE WITHDRAWAL REQUEST
-    // ====================================
+    /* =====================================================
+       POST NEW WITHDRAWAL REQUEST
+    ===================================================== */
 
     if (req.method === "POST") {
 
-      const body =
-        typeof req.body === "string"
-          ? JSON.parse(req.body)
-          : req.body || {};
+      const body = req.body || {};
 
-
-      const employeeName =
-        cleanText(
-          body.employeeName
-        );
 
       const employeeId =
-        cleanText(
-          body.employeeId
-        );
+        String(body.employeeId || "")
+          .trim();
+
 
       const username =
-        cleanText(
-          body.username
-        );
+        String(body.username || "")
+          .trim();
+
+
+      const name =
+        String(body.name || "")
+          .trim();
+
 
       const referral =
-        cleanText(
-          body.referral
-        );
+        String(body.referral || "")
+          .trim();
 
-      const phone =
-        cleanText(
-          body.phone
-        );
+
+      const mpesaNumber =
+        String(
+          body.mpesaNumber ||
+          body.mpesa ||
+          body.phone ||
+          ""
+        ).trim();
+
 
       const amount =
         Number(body.amount);
 
 
-      // ----------------------------------
-      // REQUIRED FIELDS
-      // ----------------------------------
+      if (!employeeId) {
+        return sendJson(res, 400, {
+          success: false,
+          error: "Missing employeeId"
+        });
+      }
+
+
+      if (!mpesaNumber) {
+        return sendJson(res, 400, {
+          success: false,
+          error: "Missing M-PESA number"
+        });
+      }
+
 
       if (
-        !employeeName ||
-        !employeeId ||
-        !username ||
-        !referral ||
-        !phone ||
-        !body.amount
+        !Number.isFinite(amount) ||
+        amount <= 0
       ) {
-
-        return res.status(400).json({
+        return sendJson(res, 400, {
           success: false,
-
-          message:
-            "Missing withdrawal information."
+          error: "Invalid withdrawal amount"
         });
       }
 
 
-      // ----------------------------------
-      // VALID AMOUNT
-      // ----------------------------------
+      /*
+        Check if employee already has
+        a pending request.
+      */
 
-      if (!validAmount(amount)) {
-
-        return res.status(400).json({
-          success: false,
-
-          message:
-            "Invalid withdrawal amount."
-        });
-      }
-
-
-      // ----------------------------------
-      // VALID PHONE
-      // ----------------------------------
-
-      if (!validPhone(phone)) {
-
-        return res.status(400).json({
-          success: false,
-
-          message:
-            "Invalid Kenyan phone number."
-        });
-      }
-
-
-      // ----------------------------------
-      // UNIQUE REQUEST ID
-      // ----------------------------------
-
-      const id =
-        "WD-" +
-        Date.now() +
-        "-" +
-        Math.random()
-          .toString(36)
-          .slice(2, 8);
-
-
-      try {
-
-        const result =
-          await pool.query(
-            `
-            INSERT INTO withdrawal_requests
-            (
-              id,
-              employee_name,
-              employee_id,
-              username,
-              referral,
-              amount,
-              phone,
-              status
-            )
-
-            VALUES
-            (
-              $1,
-              $2,
-              $3,
-              $4,
-              $5,
-              $6,
-              $7,
-              'PENDING'
-            )
-
-            RETURNING *
-            `,
-            [
-              id,
-              employeeName,
-              employeeId,
-              username,
-              referral,
-              amount,
-              phone
-            ]
-          );
-
-
-        return res.status(201).json({
-
-          success: true,
-
-          request:
-            mapRequest(
-              result.rows[0]
-            )
-        });
-
-
-      } catch (error) {
-
-        // ==================================
-        // DUPLICATE PENDING REQUEST
-        // ==================================
-
-        if (
-          error &&
-          error.code === "23505"
-        ) {
-
-          return res.status(409).json({
-
-            success: false,
-
-            message:
-              "You already have a pending withdrawal request."
-          });
-        }
-
-        throw error;
-      }
-    }
-
-
-    // ====================================
-    // ADMIN APPROVE / REJECT
-    // ====================================
-
-    if (req.method === "PUT") {
-
-      const body =
-        typeof req.body === "string"
-          ? JSON.parse(req.body)
-          : req.body || {};
-
-
-      const id =
-        cleanText(
-          body.id
+      const pendingCheck =
+        await pool.query(
+          `
+          SELECT
+            id,
+            amount,
+            status
+          FROM withdrawal_requests
+          WHERE
+            employee_id = $1::varchar
+            AND status = 'PENDING'
+          LIMIT 1
+          `,
+          [employeeId]
         );
 
 
-      const requestedStatus =
-        cleanText(
-          body.status
-        ).toUpperCase();
+      if (pendingCheck.rows.length > 0) {
 
-
-      // ----------------------------------
-      // REQUIRED
-      // ----------------------------------
-
-      if (
-        !id ||
-        !requestedStatus
-      ) {
-
-        return res.status(400).json({
-
+        return sendJson(res, 409, {
           success: false,
-
-          message:
-            "Request ID and status are required."
+          error:
+            "You already have a pending withdrawal request."
         });
       }
 
 
-      // ----------------------------------
-      // ONLY APPROVED OR REJECTED
-      // ----------------------------------
+      const insertResult =
+        await pool.query(
+          `
+          INSERT INTO withdrawal_requests (
+            employee_id,
+            username,
+            name,
+            referral,
+            mpesa_number,
+            amount,
+            status
+          )
+          VALUES (
+            $1::varchar,
+            $2::varchar,
+            $3::varchar,
+            $4::varchar,
+            $5::varchar,
+            $6::numeric,
+            'PENDING'
+          )
+          RETURNING
+            id,
+            employee_id,
+            username,
+            name,
+            referral,
+            mpesa_number,
+            amount,
+            status,
+            created_at,
+            updated_at,
+            processed_at
+          `,
+          [
+            employeeId,
+            username || null,
+            name || null,
+            referral || null,
+            mpesaNumber,
+            amount
+          ]
+        );
+
+
+      return sendJson(res, 201, {
+        success: true,
+        message:
+          "Withdrawal request submitted successfully.",
+        request:
+          mapRequest(insertResult.rows[0])
+      });
+    }
+
+
+    /* =====================================================
+       UPDATE WITHDRAWAL
+       ADMIN APPROVE / REJECT
+    ===================================================== */
+
+    if (req.method === "PUT") {
+
+      const body = req.body || {};
+
+
+      const requestId =
+        String(
+          body.id ||
+          body.requestId ||
+          ""
+        ).trim();
+
+
+      const requestedStatus =
+        normalizeStatus(
+          body.status
+        );
+
+
+      if (!requestId) {
+        return sendJson(res, 400, {
+          success: false,
+          error: "Missing withdrawal request id"
+        });
+      }
+
 
       if (
         requestedStatus !== "APPROVED" &&
         requestedStatus !== "REJECTED"
       ) {
-
-        return res.status(400).json({
-
+        return sendJson(res, 400, {
           success: false,
-
-          message:
-            "Invalid withdrawal status."
+          error:
+            "Status must be APPROVED or REJECTED"
         });
       }
 
 
-      const processedAt =
-        new Date();
+      /*
+        IMPORTANT:
 
+        We update ONLY a PENDING request.
 
-      // ==================================
-      // IMPORTANT
-      //
-      // Only PENDING can be changed.
-      //
-      // This prevents:
-      // APPROVED → APPROVED again
-      // REJECTED → APPROVED
-      // double deduction
-      // ==================================
+        This prevents the same withdrawal
+        from being approved/deducted twice.
+      */
 
-      const result =
+      const updateResult =
         await pool.query(
           `
           UPDATE withdrawal_requests
-
           SET
-            status = $1,
-
-            processed_at = $2,
-
-            processed_by = 'admin',
-
-            approved_at =
-              CASE
-                WHEN $1 = 'APPROVED'
-                THEN $2
-                ELSE approved_at
-              END,
-
-            rejected_at =
-              CASE
-                WHEN $1 = 'REJECTED'
-                THEN $2
-                ELSE rejected_at
-              END
-
-          WHERE id = $3
-
-          AND status = 'PENDING'
-
-          RETURNING *
+            status = $1::varchar,
+            updated_at = NOW(),
+            processed_at = NOW()
+          WHERE
+            id = $2::bigint
+            AND status = 'PENDING'::varchar
+          RETURNING
+            id,
+            employee_id,
+            username,
+            name,
+            referral,
+            mpesa_number,
+            amount,
+            status,
+            created_at,
+            updated_at,
+            processed_at
           `,
           [
             requestedStatus,
-            processedAt,
-            id
+            requestId
           ]
         );
 
 
-      // ==================================
-      // REQUEST NOT UPDATED
-      // ==================================
+      /*
+        No row means:
 
-      if (
-        !result.rows.length
-      ) {
+        - request does not exist
+        OR
+        - request was already processed
+      */
 
-        const existing =
+      if (updateResult.rows.length === 0) {
+
+        const existingResult =
           await pool.query(
             `
-            SELECT *
+            SELECT
+              id,
+              employee_id,
+              username,
+              name,
+              referral,
+              mpesa_number,
+              amount,
+              status,
+              created_at,
+              updated_at,
+              processed_at
             FROM withdrawal_requests
-            WHERE id = $1
+            WHERE id = $1::bigint
+            LIMIT 1
             `,
-            [id]
+            [requestId]
           );
 
 
-        // -------------------------------
-        // NOT FOUND
-        // -------------------------------
-
         if (
-          !existing.rows.length
+          existingResult.rows.length === 0
         ) {
-
-          return res.status(404).json({
-
+          return sendJson(res, 404, {
             success: false,
-
-            message:
+            error:
               "Withdrawal request not found."
           });
         }
 
 
-        // -------------------------------
-        // ALREADY PROCESSED
-        // -------------------------------
+        const existing =
+          existingResult.rows[0];
 
-        return res.status(409).json({
 
+        return sendJson(res, 409, {
           success: false,
-
-          message:
-            "This withdrawal has already been processed.",
-
+          error:
+            "This withdrawal request has already been processed.",
           request:
-            mapRequest(
-              existing.rows[0]
-            )
+            mapRequest(existing)
         });
       }
 
 
-      // ==================================
-      // SUCCESS
-      // ==================================
+      const updated =
+        updateResult.rows[0];
 
-      return res.status(200).json({
 
+      /*
+        IMPORTANT:
+
+        Balance is NOT stored here.
+
+        The employee dashboard calculates:
+
+        Available Balance =
+        Total Commission -
+        APPROVED Withdrawals
+
+        Therefore:
+
+        PENDING  = balance unchanged
+        REJECTED = balance unchanged
+        APPROVED = balance reduced
+      */
+
+      return sendJson(res, 200, {
         success: true,
-
+        message:
+          requestedStatus === "APPROVED"
+            ? "Withdrawal approved successfully."
+            : "Withdrawal rejected successfully.",
         request:
-          mapRequest(
-            result.rows[0]
-          )
+          mapRequest(updated)
       });
     }
 
 
-    // ====================================
-    // METHOD NOT ALLOWED
-    // ====================================
+    /* =====================================================
+       METHOD NOT ALLOWED
+    ===================================================== */
 
-    return res.status(405).json({
-
+    return sendJson(res, 405, {
       success: false,
-
-      message:
-        "Method not allowed."
+      error: "Method not allowed"
     });
 
 
@@ -600,12 +503,28 @@ export default async function handler(req, res) {
     );
 
 
-    return res.status(500).json({
+    /*
+      Duplicate pending request can happen
+      because of the unique partial index.
+    */
 
+    if (
+      error &&
+      error.code === "23505"
+    ) {
+
+      return sendJson(res, 409, {
+        success: false,
+        error:
+          "You already have a pending withdrawal request."
+      });
+    }
+
+
+    return sendJson(res, 500, {
       success: false,
-
-      message:
-        "Withdrawal server error."
+      error:
+        "Server error while processing withdrawal."
     });
   }
-    }
+};
