@@ -36,6 +36,17 @@ function normalizeStatus(status) {
     .toUpperCase();
 }
 
+function makeWithdrawalId() {
+  return (
+    "wd_" +
+    Date.now().toString(36) +
+    "_" +
+    Math.random()
+      .toString(36)
+      .slice(2, 10)
+  );
+}
+
 function mapRequest(row) {
   return {
     id: row.id,
@@ -43,7 +54,10 @@ function mapRequest(row) {
     username: row.username || "",
     name: row.name || "",
     referral: row.referral || "",
-    mpesaNumber: row.mpesa_number || "",
+    mpesaNumber:
+      row.mpesa_number ||
+      row.phone ||
+      "",
     amount: Number(row.amount || 0),
     status: normalizeStatus(row.status),
     createdAt: row.created_at || null,
@@ -54,20 +68,21 @@ function mapRequest(row) {
 
 
 /* =========================================================
-   CREATE / REPAIR TABLE
+   DATABASE SETUP / REPAIR
    ========================================================= */
 
 async function ensureWithdrawalTable() {
 
   /*
-    Do NOT delete the existing table.
+    IMPORTANT:
+    We DO NOT delete or replace the existing table.
 
-    We keep all existing withdrawal records.
+    Your existing database already has withdrawal data.
   */
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS withdrawal_requests (
-      id BIGSERIAL PRIMARY KEY,
+      id VARCHAR(100) PRIMARY KEY,
       employee_id VARCHAR(100) NOT NULL,
       username VARCHAR(100),
       name VARCHAR(150),
@@ -82,7 +97,14 @@ async function ensureWithdrawalTable() {
   `);
 
 
-  /* Missing columns from older table versions */
+  /* =======================================================
+     ADD MISSING COLUMNS
+     ======================================================= */
+
+  await pool.query(`
+    ALTER TABLE withdrawal_requests
+    ADD COLUMN IF NOT EXISTS employee_id VARCHAR(100);
+  `);
 
   await pool.query(`
     ALTER TABLE withdrawal_requests
@@ -133,7 +155,9 @@ async function ensureWithdrawalTable() {
   `);
 
 
-  /* Indexes */
+  /* =======================================================
+     INDEXES
+     ======================================================= */
 
   await pool.query(`
     CREATE INDEX IF NOT EXISTS
@@ -146,14 +170,6 @@ async function ensureWithdrawalTable() {
     withdrawal_requests_status_idx
     ON withdrawal_requests(status);
   `);
-
-
-  /*
-    We intentionally do NOT create another ID constraint here.
-
-    Your existing database may use VARCHAR for id.
-    The API below therefore treats request IDs as TEXT.
-  */
 }
 
 
@@ -169,7 +185,7 @@ module.exports = async function handler(req, res) {
 
 
     /* =====================================================
-       GET REQUESTS
+       GET
        ===================================================== */
 
     if (req.method === "GET") {
@@ -199,32 +215,37 @@ module.exports = async function handler(req, res) {
 
 
     /* =====================================================
-       CREATE WITHDRAWAL REQUEST
+       POST - NEW WITHDRAWAL
        ===================================================== */
 
     if (req.method === "POST") {
 
       const body = req.body || {};
 
+
       const employeeId =
         String(
           body.employeeId || ""
         ).trim();
+
 
       const username =
         String(
           body.username || ""
         ).trim();
 
+
       const name =
         String(
           body.name || ""
         ).trim();
 
+
       const referral =
         String(
           body.referral || ""
         ).trim();
+
 
       const mpesaNumber =
         String(
@@ -234,11 +255,14 @@ module.exports = async function handler(req, res) {
           ""
         ).trim();
 
+
       const amount =
         Number(body.amount);
 
 
-      /* Validate employee */
+      /* ===================================================
+         VALIDATION
+         =================================================== */
 
       if (!employeeId) {
 
@@ -250,8 +274,6 @@ module.exports = async function handler(req, res) {
       }
 
 
-      /* Validate M-PESA */
-
       if (!mpesaNumber) {
 
         return sendJson(res, 400, {
@@ -261,8 +283,6 @@ module.exports = async function handler(req, res) {
 
       }
 
-
-      /* Validate amount */
 
       if (
         !Number.isFinite(amount) ||
@@ -277,7 +297,9 @@ module.exports = async function handler(req, res) {
       }
 
 
-      /* Check pending request */
+      /* ===================================================
+         CHECK EXISTING PENDING REQUEST
+         =================================================== */
 
       const pendingCheck =
         await pool.query(
@@ -297,7 +319,9 @@ module.exports = async function handler(req, res) {
           FROM withdrawal_requests
           WHERE
             employee_id = $1::varchar
-            AND UPPER(CAST(status AS TEXT)) = 'PENDING'
+            AND UPPER(
+              CAST(status AS TEXT)
+            ) = 'PENDING'
           LIMIT 1
           `,
           [
@@ -306,34 +330,88 @@ module.exports = async function handler(req, res) {
         );
 
 
-      if (pendingCheck.rows.length > 0) {
+      if (
+        pendingCheck.rows.length > 0
+      ) {
 
         return sendJson(res, 409, {
+
           success: false,
+
           error:
             "You already have a pending withdrawal request.",
+
           request:
             mapRequest(
               pendingCheck.rows[0]
             )
+
         });
 
       }
 
 
-      /* Insert request */
+      /* ===================================================
+         CREATE UNIQUE TEXT ID
+         =================================================== */
+
+      let withdrawalId =
+        makeWithdrawalId();
+
+
+      /*
+        Extremely unlikely collision protection.
+      */
+
+      for (let attempt = 0; attempt < 5; attempt++) {
+
+        const existingId =
+          await pool.query(
+            `
+            SELECT id
+            FROM withdrawal_requests
+            WHERE CAST(id AS TEXT) = $1::text
+            LIMIT 1
+            `,
+            [
+              withdrawalId
+            ]
+          );
+
+
+        if (
+          existingId.rows.length === 0
+        ) {
+
+          break;
+
+        }
+
+
+        withdrawalId =
+          makeWithdrawalId();
+
+      }
+
+
+      /* ===================================================
+         INSERT
+         =================================================== */
 
       const insertResult =
         await pool.query(
           `
           INSERT INTO withdrawal_requests (
+            id,
             employee_id,
             username,
             name,
             referral,
             mpesa_number,
             amount,
-            status
+            status,
+            created_at,
+            updated_at
           )
           VALUES (
             $1::varchar,
@@ -341,8 +419,11 @@ module.exports = async function handler(req, res) {
             $3::varchar,
             $4::varchar,
             $5::varchar,
-            $6::numeric,
-            'PENDING'
+            $6::varchar,
+            $7::numeric,
+            'PENDING',
+            NOW(),
+            NOW()
           )
           RETURNING
             id,
@@ -358,6 +439,7 @@ module.exports = async function handler(req, res) {
             processed_at
           `,
           [
+            withdrawalId,
             employeeId,
             username || null,
             name || null,
@@ -386,12 +468,13 @@ module.exports = async function handler(req, res) {
 
 
     /* =====================================================
-       APPROVE / REJECT
+       PUT - APPROVE / REJECT
        ===================================================== */
 
     if (req.method === "PUT") {
 
       const body = req.body || {};
+
 
       const requestId =
         String(
@@ -400,26 +483,34 @@ module.exports = async function handler(req, res) {
           ""
         ).trim();
 
+
       const requestedStatus =
         normalizeStatus(
           body.status
         );
 
 
-      /* Validate ID */
+      /* ===================================================
+         VALIDATE ID
+         =================================================== */
 
       if (!requestId) {
 
         return sendJson(res, 400, {
+
           success: false,
+
           error:
             "Missing withdrawal request id"
+
         });
 
       }
 
 
-      /* Validate status */
+      /* ===================================================
+         VALIDATE STATUS
+         =================================================== */
 
       if (
         requestedStatus !== "APPROVED" &&
@@ -427,36 +518,38 @@ module.exports = async function handler(req, res) {
       ) {
 
         return sendJson(res, 400, {
+
           success: false,
+
           error:
             "Status must be APPROVED or REJECTED"
+
         });
 
       }
 
 
-      /*
-        IMPORTANT:
-
-        We compare the existing ID as TEXT.
-
-        This fixes:
-        character varying = bigint
-
-        It also works with old VARCHAR IDs.
-      */
+      /* ===================================================
+         UPDATE ONLY PENDING REQUEST
+         =================================================== */
 
       const updateResult =
         await pool.query(
           `
           UPDATE withdrawal_requests
+
           SET
             status = $1::varchar,
             updated_at = NOW(),
             processed_at = NOW()
+
           WHERE
             CAST(id AS TEXT) = $2::text
-            AND UPPER(CAST(status AS TEXT)) = 'PENDING'
+
+            AND UPPER(
+              CAST(status AS TEXT)
+            ) = 'PENDING'
+
           RETURNING
             id,
             employee_id,
@@ -478,16 +571,13 @@ module.exports = async function handler(req, res) {
 
 
       /* ===================================================
-         UPDATE FAILED
+         UPDATE DID NOT HAPPEN
          =================================================== */
 
       if (
         updateResult.rows.length === 0
       ) {
 
-        /*
-          Check whether the request exists.
-        */
 
         const existingResult =
           await pool.query(
@@ -505,7 +595,8 @@ module.exports = async function handler(req, res) {
               updated_at,
               processed_at
             FROM withdrawal_requests
-            WHERE CAST(id AS TEXT) = $1::text
+            WHERE
+              CAST(id AS TEXT) = $1::text
             LIMIT 1
             `,
             [
@@ -514,30 +605,25 @@ module.exports = async function handler(req, res) {
           );
 
 
-        /*
-          Request does not exist.
-        */
+        /* Request doesn't exist */
 
         if (
           existingResult.rows.length === 0
         ) {
 
           return sendJson(res, 404, {
+
             success: false,
+
             error:
               "Withdrawal request not found."
+
           });
 
         }
 
 
-        /*
-          Request exists but is no longer pending.
-        */
-
-        const existing =
-          existingResult.rows[0];
-
+        /* Already processed */
 
         return sendJson(res, 409, {
 
@@ -547,7 +633,9 @@ module.exports = async function handler(req, res) {
             "This withdrawal request has already been processed.",
 
           request:
-            mapRequest(existing)
+            mapRequest(
+              existingResult.rows[0]
+            )
 
         });
 
@@ -568,7 +656,9 @@ module.exports = async function handler(req, res) {
 
         message:
           requestedStatus === "APPROVED"
+
             ? "Withdrawal approved successfully."
+
             : "Withdrawal rejected successfully.",
 
         request:
@@ -580,7 +670,7 @@ module.exports = async function handler(req, res) {
 
 
     /* =====================================================
-       METHOD NOT ALLOWED
+       OTHER METHODS
        ===================================================== */
 
     return sendJson(res, 405, {
@@ -595,15 +685,14 @@ module.exports = async function handler(req, res) {
 
   } catch (error) {
 
+
     console.error(
       "Withdrawal API error:",
       error
     );
 
 
-    /*
-      PostgreSQL duplicate constraint
-    */
+    /* Duplicate key */
 
     if (
       error &&
