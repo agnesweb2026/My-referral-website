@@ -41,6 +41,7 @@ async function saveRequests(requests) {
 }
 
 export default async function handler(req, res) {
+
   res.setHeader(
     "Access-Control-Allow-Origin",
     "*"
@@ -68,7 +69,8 @@ export default async function handler(req, res) {
 
     if (req.method === "GET") {
 
-      const requests = await readRequests();
+      const requests =
+        await readRequests();
 
       return res.status(200).json({
         success: true,
@@ -78,7 +80,7 @@ export default async function handler(req, res) {
 
 
     /* =========================
-       CREATE REQUEST
+       CREATE WITHDRAWAL
     ========================= */
 
     if (req.method === "POST") {
@@ -107,7 +109,8 @@ export default async function handler(req, res) {
       ) {
         return res.status(400).json({
           success: false,
-          message: "Missing withdrawal information."
+          message:
+            "Missing withdrawal information."
         });
       }
 
@@ -120,7 +123,8 @@ export default async function handler(req, res) {
       ) {
         return res.status(400).json({
           success: false,
-          message: "Invalid withdrawal amount."
+          message:
+            "Invalid withdrawal amount."
         });
       }
 
@@ -130,7 +134,8 @@ export default async function handler(req, res) {
       if (!/^07\d{8}$/.test(cleanPhone)) {
         return res.status(400).json({
           success: false,
-          message: "Invalid Kenyan phone number."
+          message:
+            "Invalid Kenyan phone number."
         });
       }
 
@@ -155,6 +160,7 @@ export default async function handler(req, res) {
       }
 
       const newRequest = {
+
         id:
           "WD-" +
           Date.now() +
@@ -186,6 +192,7 @@ export default async function handler(req, res) {
 
         createdAt:
           new Date().toISOString()
+
       };
 
       requests.push(newRequest);
@@ -200,7 +207,6 @@ export default async function handler(req, res) {
 
 
     /* =========================
-       UPDATE REQUEST
        ADMIN APPROVE / REJECT
     ========================= */
 
@@ -256,34 +262,73 @@ export default async function handler(req, res) {
         });
       }
 
+      const currentStatus =
+        String(
+          requests[index].status || ""
+        ).toUpperCase();
+
+
+      /* =========================
+         IMPORTANT ACCOUNTING RULE
+
+         Only PENDING requests can
+         be processed.
+
+         APPROVED stays APPROVED.
+         REJECTED stays REJECTED.
+
+         This prevents double deduction.
+      ========================= */
+
+      if (currentStatus !== "PENDING") {
+
+        return res.status(409).json({
+          success: false,
+          message:
+            "This withdrawal has already been processed.",
+          request:
+            requests[index]
+        });
+      }
+
+
+      const processedAt =
+        new Date().toISOString();
+
       requests[index].status =
         cleanStatus;
 
       requests[index].processedAt =
-        new Date().toISOString();
+        processedAt;
 
       requests[index].processedBy =
         "admin";
 
+
       if (
         cleanStatus === "APPROVED"
       ) {
+
         requests[index].approvedAt =
-          requests[index].processedAt;
+          processedAt;
+
       }
+
 
       await saveRequests(requests);
 
       return res.status(200).json({
         success: true,
-        request: requests[index]
+        request:
+          requests[index]
       });
     }
 
 
     return res.status(405).json({
       success: false,
-      message: "Method not allowed."
+      message:
+        "Method not allowed."
     });
 
   } catch (error) {
@@ -299,4 +344,4 @@ export default async function handler(req, res) {
         "Withdrawal server error."
     });
   }
-      }
+}
