@@ -1,268 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Employee Withdrawal</title>
 
 <style>
-*{box-sizing:border-box}
 
-html,body{
- margin:0;
- padding:0;
- width:100%;
- min-height:100%;
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
 }
 
 body{
- font-family:Arial,Helvetica,sans-serif;
- background:#f4f7fb;
- color:#172033;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
 }
 
 .container{
- width:100%;
- max-width:560px;
- margin:auto;
- padding:18px;
+  width:100%;
+  max-width:560px;
+  margin:auto;
+  padding:18px;
 }
 
 .card{
- width:100%;
- background:#fff;
- border-radius:20px;
- padding:22px;
- margin-bottom:18px;
- box-shadow:0 7px 24px rgba(0,0,0,.08);
+  width:100%;
+  background:#fff;
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 7px 24px rgba(0,0,0,.08);
 }
 
 .header{
- text-align:center;
- margin-bottom:20px;
+  text-align:center;
+  margin-bottom:20px;
 }
 
 .header h1{
- margin:0;
- font-size:30px;
+  margin:0;
+  font-size:30px;
 }
 
 .header p{
- margin:10px 0 0;
- color:#667085;
- font-size:15px;
- line-height:1.5;
+  margin:10px 0 0;
+  color:#667085;
+  font-size:15px;
+  line-height:1.5;
 }
 
 .commission-box{
- margin-top:18px;
- padding:18px;
- border-radius:16px;
- background:#ecfdf3;
- border:1px solid #abefc6;
- text-align:center;
+  margin-top:18px;
+  padding:18px;
+  border-radius:16px;
+  background:#ecfdf3;
+  border:1px solid #abefc6;
+  text-align:center;
 }
 
 .commission-label{
- font-size:14px;
- color:#475467;
+  font-size:14px;
+  color:#475467;
 }
 
 .commission-rate{
- margin-top:5px;
- font-size:34px;
- font-weight:800;
- color:#07883d;
+  margin-top:5px;
+  font-size:34px;
+  font-weight:800;
+  color:#07883d;
 }
 
 .stats{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
 
 .stat{
- background:#f8fafc;
- border-radius:15px;
- padding:16px;
- min-height:105px;
+  background:#f8fafc;
+  border-radius:15px;
+  padding:16px;
+  min-height:105px;
 }
 
 .stat-label{
- color:#667085;
- font-size:13px;
+  color:#667085;
+  font-size:13px;
 }
 
 .stat-value{
- margin-top:9px;
- font-size:22px;
- font-weight:800;
- word-break:break-word;
+  margin-top:9px;
+  font-size:22px;
+  font-weight:800;
+  word-break:break-word;
 }
 
-.available{color:#07883d}
-.withdrawn{color:#344054}
+.available{
+  color:#07883d;
+}
+
+.withdrawn{
+  color:#344054;
+}
 
 .section-title{
- margin:0;
- font-size:22px;
+  margin:0;
+  font-size:22px;
 }
 
 .section-text{
- margin:8px 0 20px;
- color:#667085;
- font-size:14px;
- line-height:1.5;
+  margin:8px 0 20px;
+  color:#667085;
+  font-size:14px;
+  line-height:1.5;
 }
 
 label{
- display:block;
- margin-top:16px;
- margin-bottom:8px;
- font-size:15px;
- font-weight:700;
+  display:block;
+  margin-top:16px;
+  margin-bottom:8px;
+  font-size:15px;
+  font-weight:700;
 }
 
 input{
- width:100%;
- height:54px;
- padding:0 15px;
- border:1px solid #d0d5dd;
- border-radius:13px;
- font-size:17px;
- outline:none;
+  width:100%;
+  height:54px;
+  padding:0 15px;
+  border:1px solid #d0d5dd;
+  border-radius:13px;
+  font-size:17px;
+  outline:none;
 }
 
 input:focus{
- border-color:#07883d;
- box-shadow:0 0 0 3px rgba(7,136,61,.10);
+  border-color:#07883d;
+  box-shadow:0 0 0 3px rgba(7,136,61,.10);
 }
 
 .amount-note{
- margin-top:7px;
- color:#667085;
- font-size:13px;
+  margin-top:7px;
+  color:#667085;
+  font-size:13px;
 }
 
 button{
- width:100%;
- min-height:54px;
- border:0;
- border-radius:13px;
- font-size:16px;
- font-weight:800;
- cursor:pointer;
+  width:100%;
+  min-height:54px;
+  border:0;
+  border-radius:13px;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
 }
 
 .withdraw-button{
- margin-top:20px;
- background:#07883d;
- color:#fff;
+  margin-top:20px;
+  background:#07883d;
+  color:#fff;
 }
 
 .withdraw-button:disabled{
- background:#98a2b3;
- cursor:not-allowed;
+  background:#98a2b3;
+  cursor:not-allowed;
 }
 
 .logout-button{
- margin-top:4px;
- background:#eef2f6;
- color:#344054;
+  margin-top:4px;
+  background:#eef2f6;
+  color:#344054;
 }
 
 .message{
- display:none;
- width:100%;
- margin-top:15px;
- padding:14px;
- border-radius:12px;
- font-size:14px;
- line-height:1.5;
+  display:none;
+  width:100%;
+  margin-top:15px;
+  padding:14px;
+  border-radius:12px;
+  font-size:14px;
+  line-height:1.5;
 }
 
 .message.success{
- display:block;
- background:#ecfdf3;
- color:#067647;
+  display:block;
+  background:#ecfdf3;
+  color:#067647;
 }
 
 .message.error{
- display:block;
- background:#fef3f2;
- color:#b42318;
+  display:block;
+  background:#fef3f2;
+  color:#b42318;
 }
 
 .message.info{
- display:block;
- background:#eff8ff;
- color:#175cd3;
+  display:block;
+  background:#eff8ff;
+  color:#175cd3;
 }
 
 .history-item{
- padding:16px;
- margin-bottom:12px;
- border:1px solid #eaecf0;
- border-radius:15px;
- background:#fff;
+  padding:16px;
+  margin-bottom:12px;
+  border:1px solid #eaecf0;
+  border-radius:15px;
+  background:#fff;
 }
 
 .history-top{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
 }
 
 .history-amount{
- font-size:19px;
- font-weight:800;
+  font-size:19px;
+  font-weight:800;
 }
 
 .status{
- padding:6px 10px;
- border-radius:20px;
- font-size:12px;
- font-weight:800;
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:800;
 }
 
 .status.pending{
- background:#fff7ed;
- color:#b54708;
+  background:#fff7ed;
+  color:#b54708;
 }
 
 .status.approved{
- background:#ecfdf3;
- color:#067647;
+  background:#ecfdf3;
+  color:#067647;
 }
 
 .status.rejected{
- background:#fef3f2;
- color:#b42318;
+  background:#fef3f2;
+  color:#b42318;
 }
 
 .history-info{
- margin-top:10px;
- color:#667085;
- font-size:13px;
- line-height:1.6;
+  margin-top:10px;
+  color:#667085;
+  font-size:13px;
+  line-height:1.6;
 }
 
-.empty,.loading{
- padding:20px;
- text-align:center;
- color:#667085;
- background:#f8fafc;
- border-radius:13px;
+.empty,
+.loading{
+  padding:20px;
+  text-align:center;
+  color:#667085;
+  background:#f8fafc;
+  border-radius:13px;
 }
 
 @media(max-width:380px){
- .container{padding:12px}
- .card{padding:17px}
- .header h1{font-size:26px}
- .stat-value{font-size:19px}
+
+  .container{
+    padding:12px;
+  }
+
+  .card{
+    padding:17px;
+  }
+
+  .header h1{
+    font-size:26px;
+  }
+
+  .stat-value{
+    font-size:19px;
+  }
+
 }
+
 </style>
+
 </head>
 
 <body>
@@ -272,12 +301,16 @@ button{
 <div class="card">
 
 <div class="header">
-<h1>Employee Withdrawal</h1>
+
+<h1>
+Employee Withdrawal
+</h1>
 
 <p>
 Manage your commission balance
 and withdrawal requests.
 </p>
+
 </div>
 
 <div class="commission-box">
@@ -299,29 +332,60 @@ Your Commission Rate
 <div class="stats">
 
 <div class="stat">
-<div class="stat-label">Total Earnings</div>
-<div class="stat-value" id="totalEarnings">
+
+<div class="stat-label">
+Total Earnings
+</div>
+
+<div
+class="stat-value"
+id="totalEarnings"
+>
 KSh 0
 </div>
+
 </div>
 
 <div class="stat">
-<div class="stat-label">Available Balance</div>
-<div class="stat-value available" id="availableBalance">
+
+<div class="stat-label">
+Available Balance
+</div>
+
+<div
+class="stat-value available"
+id="availableBalance"
+>
 KSh 0
 </div>
+
 </div>
 
 <div class="stat">
-<div class="stat-label">Total Withdrawn</div>
-<div class="stat-value withdrawn" id="totalWithdrawn">
+
+<div class="stat-label">
+Total Withdrawn
+</div>
+
+<div
+class="stat-value withdrawn"
+id="totalWithdrawn"
+>
 KSh 0
 </div>
+
 </div>
 
 <div class="stat">
-<div class="stat-label">Commission Rate</div>
-<div class="stat-value available">40%</div>
+
+<div class="stat-label">
+Commission Rate
+</div>
+
+<div class="stat-value available">
+40%
+</div>
+
 </div>
 
 </div>
@@ -367,10 +431,13 @@ placeholder="Enter amount"
 >
 
 <div class="amount-note">
+
 Available:
+
 <strong id="availableNote">
 KSh 0
 </strong>
+
 </div>
 
 <button
@@ -382,9 +449,13 @@ onclick="requestWithdrawal()"
 REQUEST WITHDRAWAL
 </button>
 
-<div id="message" class="message"></div>
+<div
+id="message"
+class="message"
+></div>
 
 </div>
+
 <div class="card">
 
 <h2 class="section-title">
@@ -419,1818 +490,1628 @@ LOG OUT
 
 <script>
 
-/* =====================================================
-   EMPLOYEE ACCOUNTS
-   ===================================================== */
-
 const employees = [
 
 {
- username:"Joshua1",
- password:"123456",
- referral:"REF-A7K2"
+username:"Joshua1",
+password:"123456",
+referral:"REF-A7K2"
 },
 
 {
- username:"Joshua2",
- password:"123456",
- referral:"REF-B4M8"
+username:"Joshua2",
+password:"123456",
+referral:"REF-B4M8"
 },
 
 {
- username:"Joshua3",
- password:"123456",
- referral:"REF-C9P3"
+username:"Joshua3",
+password:"123456",
+referral:"REF-C9P3"
 },
 
 {
- username:"Joshua4",
- password:"123456",
- referral:"REF-D2X6"
+username:"Joshua4",
+password:"123456",
+referral:"REF-D2X6"
 },
 
 {
- username:"Joshua5",
- password:"123456",
- referral:"REF-E5Q1"
+username:"Joshua5",
+password:"123456",
+referral:"REF-E5Q1"
 },
 
 {
- username:"Joshua6",
- password:"123456",
- referral:"REF-F8L4"
+username:"Joshua6",
+password:"123456",
+referral:"REF-F8L4"
 },
 
 {
- username:"Joshua7",
- password:"123456",
- referral:"REF-G3N7"
+username:"Joshua7",
+password:"123456",
+referral:"REF-G3N7"
 },
 
 {
- username:"Joshua8",
- password:"123456",
- referral:"REF-H6R2"
+username:"Joshua8",
+password:"123456",
+referral:"REF-H6R2"
 },
 
 {
- username:"Joshua9",
- password:"123456",
- referral:"REF-J9T5"
+username:"Joshua9",
+password:"123456",
+referral:"REF-J9T5"
 },
 
 {
- username:"Joshua10",
- password:"123456",
- referral:"REF-K4W8"
+username:"Joshua10",
+password:"123456",
+referral:"REF-K4W8"
 }
-
 ];
 
-
-/* =====================================================
-   COMMISSION
-   ===================================================== */
-
 const COMMISSION_RATE = 0.40;
-
-
-/* =====================================================
-   API
-   ===================================================== */
 
 const WITHDRAWAL_API =
 "/api/withdrawals";
 
-
-/* =====================================================
-   GET EMPLOYEE SESSION
-   ===================================================== */
-
 function getEmployee(){
 
- try{
+try{
 
-  const raw =
-    localStorage.getItem(
-      "employeeSession"
-    );
+const raw =
+localStorage.getItem(
+"employeeSession"
+);
 
-  if(!raw){
-    return null;
-  }
+if(!raw){
+return null;
+}
 
-  const data =
-    JSON.parse(raw);
+const data =
+JSON.parse(raw);
 
-  if(
-    !data ||
-    !data.referral
-  ){
-    return null;
-  }
+if(!data || !data.referral){
+return null;
+}
 
-  return data;
+return data;
 
- }catch(error){
+}catch(error){
 
-  console.error(
-    "Employee session error:",
-    error
-  );
+console.error(
+"Employee session error:",
+error
+);
 
-  return null;
- }
+return null;
 
 }
 
+}
 
 const employee =
-  getEmployee();
-
-
-/* =====================================================
-   LOGIN CHECK
-   ===================================================== */
+getEmployee();
 
 if(!employee){
 
- document.body.innerHTML = `
+document.body.innerHTML = `
 
- <div style="
-   max-width:500px;
-   margin:60px auto;
-   padding:25px;
-   text-align:center;
-   font-family:Arial;
- ">
+<div style="
+max-width:500px;
+margin:60px auto;
+padding:25px;
+text-align:center;
+font-family:Arial;
+">
 
- <h2>Employee Login Required</h2>
+<h2>
+Employee Login Required
+</h2>
 
- <p>
- Please login to your employee account first.
- </p>
+<p>
+Please login to your employee account first.
+</p>
 
- <button
- onclick="location.href='employee-login.html'"
- style="
-   background:#07883d;
-   color:white;
-   padding:15px 25px;
-   border:0;
-   border-radius:12px;
-   font-weight:bold;
- "
- >
- EMPLOYEE LOGIN
- </button>
+<button
+onclick="location.href='employee-login.html'"
+style="
+background:#07883d;
+color:white;
+padding:15px 25px;
+border:0;
+border-radius:12px;
+font-weight:bold;
+"
+>
+EMPLOYEE LOGIN
+</button>
 
- </div>
+</div>
 
- `;
+`;
 
 }
-  /* =====================================================
-   MONEY FORMAT
-   ===================================================== */
+ function money(value){
 
-function money(value){
+const number =
+Number(value || 0);
 
- const amount =
-   Number(value) || 0;
-
- return (
-   "KSh " +
-   amount.toLocaleString(
-     "en-KE",
-     {
-       maximumFractionDigits:0
-     }
-   )
- );
+return "KSh " +
+number.toLocaleString(
+"en-KE",
+{
+minimumFractionDigits:0,
+maximumFractionDigits:2
+}
+);
 
 }
 
-
-/* =====================================================
-   MESSAGE
-   ===================================================== */
 
 function showMessage(
- text,
- type
+text,
+type="info"
 ){
 
- const box =
-   document.getElementById(
-     "message"
-   );
+const box =
+document.getElementById(
+"message"
+);
 
- if(!box){
-   return;
- }
+if(!box){
+return;
+}
 
- box.className =
-   "message " + type;
+box.className =
+"message " + type;
 
- box.textContent =
-   text;
+box.textContent =
+text;
 
 }
 
 
-/* =====================================================
-   EMPLOYEE PAYMENTS
-   ===================================================== */
+function clearMessage(){
 
-function getLocalEmployeePayments(){
+const box =
+document.getElementById(
+"message"
+);
 
- if(!employee){
-   return [];
- }
+if(!box){
+return;
+}
 
- const key =
-   "employeePayments_" +
-   employee.referral;
+box.className =
+"message";
 
- try{
-
-  const raw =
-    localStorage.getItem(key);
-
-  if(!raw){
-    return [];
-  }
-
-  const payments =
-    JSON.parse(raw);
-
-  if(
-    !Array.isArray(
-      payments
-    )
-  ){
-    return [];
-  }
-
-  return payments;
-
- }catch(error){
-
-  console.error(
-    "Payment records error:",
-    error
-  );
-
-  return [];
-
- }
+box.textContent =
+"";
 
 }
 
 
-/* =====================================================
-   TOTAL EARNINGS
-   ===================================================== */
+function getPaymentRecords(){
 
-function getEmployeeEarnings(){
+if(!employee){
+return [];
+}
 
- const payments =
-   getLocalEmployeePayments();
+const key =
+"employeePayments_" +
+employee.referral;
 
+try{
 
- return payments.reduce(
-   (
-     total,
-     item
-   ) => {
+const raw =
+localStorage.getItem(key);
 
-     if(!item){
-       return total;
-     }
+if(!raw){
+return [];
+}
 
-     /*
-       Existing payment records are
-       expected to contain commission.
+const records =
+JSON.parse(raw);
 
-       This page displays the employee
-       commission rate as 40%.
-     */
+return Array.isArray(records)
+? records
+: [];
 
-     const commission =
-       Number(
-         item.commission
-       ) || 0;
+}catch(error){
 
-     return (
-       total +
-       commission
-     );
+console.error(
+"Payment records error:",
+error
+);
 
-   },
-   0
- );
+return [];
+
+}
 
 }
 
 
-/* =====================================================
-   FETCH WITHDRAWALS
-   ===================================================== */
+function calculateEarnings(){
 
-async function fetchWithdrawals(){
+const records =
+getPaymentRecords();
 
- try{
+let total = 0;
 
-  const response =
-    await fetch(
-      WITHDRAWAL_API,
-      {
-        method:"GET",
-        headers:{
-          "Accept":
-            "application/json"
-        },
-        cache:"no-store"
-      }
-    );
+records.forEach(
+function(item){
 
+const commission =
+Number(
+item.commission || 0
+);
 
-  if(
-    !response.ok
-  ){
+if(
+Number.isFinite(commission)
+){
+total += commission;
+}
 
-    throw new Error(
-      "Withdrawal API returned " +
-      response.status
-    );
+});
 
-  }
-
-
-  const data =
-    await response.json();
-
-
-  if(
-    Array.isArray(data)
-  ){
-    return data;
-  }
-
-
-  if(
-    Array.isArray(
-      data.requests
-    )
-  ){
-    return data.requests;
-  }
-
-
-  if(
-    Array.isArray(
-      data.withdrawals
-    )
-  ){
-    return data.withdrawals;
-  }
-
-
-  return [];
-
-
- }catch(error){
-
-  console.error(
-    "Could not fetch withdrawals:",
-    error
-  );
-
-  return [];
-
- }
+return Math.round(
+total * 100
+) / 100;
 
 }
 
 
-/* =====================================================
-   EMPLOYEE WITHDRAWALS
-   ===================================================== */
+async function getWithdrawalRequests(){
 
-function filterEmployeeWithdrawals(
- requests
+const response =
+await fetch(
+WITHDRAWAL_API,
+{
+method:"GET",
+cache:"no-store",
+headers:{
+"Accept":
+"application/json"
+}
+}
+);
+
+if(!response.ok){
+
+throw new Error(
+"Server returned HTTP " +
+response.status
+);
+
+}
+
+const data =
+await response.json();
+
+if(
+!data ||
+!Array.isArray(
+data.requests
+)
 ){
 
- if(!employee){
-   return [];
- }
+return [];
 
- return requests.filter(
-   request => {
+}
 
-     if(!request){
-       return false;
-     }
+return data.requests;
 
-     const referral =
-       request.employeeReferral ||
-       request.referral ||
-       request.employee_referral;
+}
 
-     return (
-       String(referral) ===
-       String(employee.referral)
-     );
 
-   }
- );
-
-   }
-  /* =====================================================
-   APPROVED WITHDRAWALS
-   ===================================================== */
-
-function getApprovedWithdrawn(
- requests
+function getEmployeeWithdrawals(
+requests
 ){
 
- return requests
-   .filter(
-     request => {
+if(!employee){
+return [];
+}
 
-       const status =
-         String(
-           request.status || ""
-         ).toUpperCase();
+return requests.filter(
+function(request){
 
-       return (
-         status ===
-         "APPROVED"
-       );
+const sameId =
+String(
+request.employeeId || ""
+) === String(
+employee.employeeId ||
+employee.id ||
+""
+);
 
-     }
-   )
-   .reduce(
-     (
-       total,
-       request
-     ) => {
+const sameReferral =
+String(
+request.referral || ""
+) === String(
+employee.referral || ""
+);
 
-       const amount =
-         Number(
-           request.amount
-         ) || 0;
+const sameUsername =
+String(
+request.username || ""
+).toLowerCase()
+===
+String(
+employee.username || ""
+).toLowerCase();
 
-       return (
-         total +
-         amount
-       );
+return (
+sameId ||
+sameReferral ||
+sameUsername
+);
 
-     },
-     0
-   );
+});
 
 }
 
 
-/* =====================================================
-   AVAILABLE BALANCE
-   ===================================================== */
-
-function calculateAvailableBalance(
- earnings,
- requests
+function getApprovedWithdrawals(
+requests
 ){
 
- /*
-   IMPORTANT:
+const mine =
+getEmployeeWithdrawals(
+requests
+);
 
-   PENDING:
-   does NOT reduce balance.
+return mine.filter(
+function(request){
 
-   REJECTED:
-   does NOT reduce balance.
+return String(
+request.status || ""
+).toUpperCase()
+===
+"APPROVED";
 
-   APPROVED:
-   reduces balance.
- */
-
- const approved =
-   getApprovedWithdrawn(
-     requests
-   );
-
-
- const available =
-   Math.max(
-     0,
-     earnings -
-     approved
-   );
-
-
- return available;
+});
 
 }
 
 
-/* =====================================================
-   UPDATE STATS
-   ===================================================== */
-
-function updateStats(
- earnings,
- approved,
- available
+function calculateApprovedAmount(
+requests
 ){
 
- const total =
-   document.getElementById(
-     "totalEarnings"
-   );
+const approved =
+getApprovedWithdrawals(
+requests
+);
 
- const withdrawn =
-   document.getElementById(
-     "totalWithdrawn"
-   );
+let total = 0;
 
- const balance =
-   document.getElementById(
-     "availableBalance"
-   );
+approved.forEach(
+function(request){
 
- const note =
-   document.getElementById(
-     "availableNote"
-   );
+const amount =
+Number(
+request.amount || 0
+);
 
+if(
+Number.isFinite(amount)
+){
+total += amount;
+}
 
- if(total){
-   total.textContent =
-     money(earnings);
- }
+});
 
- if(withdrawn){
-   withdrawn.textContent =
-     money(approved);
- }
-
- if(balance){
-   balance.textContent =
-     money(available);
- }
-
- if(note){
-   note.textContent =
-     money(available);
- }
+return Math.round(
+total * 100
+) / 100;
 
 }
 
 
-/* =====================================================
-   LOAD DASHBOARD
-   ===================================================== */
+function calculateAvailable(
+earnings,
+approvedAmount
+){
 
-async function loadEmployeeData(){
+return Math.max(
+0,
+Math.round(
+(
+Number(earnings || 0) -
+Number(approvedAmount || 0)
+) * 100
+) / 100
+);
 
- if(!employee){
-   return;
  }
+ async function refreshDashboard(){
 
+if(!employee){
+return;
+}
 
- const earnings =
-   getEmployeeEarnings();
+try{
 
+const earnings =
+calculateEarnings();
 
- const allRequests =
-   await fetchWithdrawals();
+const requests =
+await getWithdrawalRequests();
 
+const mine =
+getEmployeeWithdrawals(
+requests
+);
 
- const employeeRequests =
-   filterEmployeeWithdrawals(
-     allRequests
-   );
+const approvedAmount =
+calculateApprovedAmount(
+requests
+);
 
+const available =
+calculateAvailable(
+earnings,
+approvedAmount
+);
 
- const approved =
-   getApprovedWithdrawn(
-     employeeRequests
-   );
+document.getElementById(
+"totalEarnings"
+).textContent =
+money(earnings);
 
+document.getElementById(
+"totalWithdrawn"
+).textContent =
+money(approvedAmount);
 
- const available =
-   calculateAvailableBalance(
-     earnings,
-     employeeRequests
-   );
+document.getElementById(
+"availableBalance"
+).textContent =
+money(available);
 
+document.getElementById(
+"availableNote"
+).textContent =
+money(available);
 
- updateStats(
-   earnings,
-   approved,
-   available
- );
+renderHistory(mine);
 
+}catch(error){
 
- renderHistory(
-   employeeRequests
- );
+console.error(
+"Dashboard connection error:",
+error
+);
+
+document.getElementById(
+"history"
+).innerHTML = `
+
+<div class="empty">
+
+Unable to load withdrawal
+history right now.
+
+</div>
+
+`;
 
 }
 
+}
 
-/* =====================================================
-   HISTORY
-   ===================================================== */
 
 function renderHistory(
- requests
+requests
 ){
 
- const history =
-   document.getElementById(
-     "history"
-   );
+const history =
+document.getElementById(
+"history"
+);
 
+if(!history){
+return;
+}
 
- if(!history){
-   return;
- }
+if(!requests.length){
 
+history.innerHTML = `
 
- if(!requests.length){
+<div class="empty">
+No withdrawal requests yet.
+</div>
 
-  history.innerHTML = `
-    <div class="empty">
-      No withdrawal requests yet.
-    </div>
-  `;
+`;
 
-  return;
-
- }
-
-
- const sorted =
-   [...requests].sort(
-     (
-       a,
-       b
-     ) => {
-
-       return (
-         new Date(
-           b.createdAt ||
-           b.created_at ||
-           0
-         ) -
-         new Date(
-           a.createdAt ||
-           a.created_at ||
-           0
-         )
-       );
-
-     }
-   );
-
-
- history.innerHTML =
-   sorted.map(
-     request => {
-
-       return createHistoryItem(
-         request
-       );
-
-     }
-   ).join("");
-
-  }
-  /* =====================================================
-   HISTORY ITEM
-   ===================================================== */
-
-function createHistoryItem(
- request
-){
-
- const amount =
-   Number(
-     request.amount
-   ) || 0;
-
-
- const status =
-   String(
-     request.status ||
-     "PENDING"
-   ).toUpperCase();
-
-
- let statusClass =
-   "pending";
-
-
- if(
-   status ===
-   "APPROVED"
- ){
-   statusClass =
-     "approved";
- }
-
-
- if(
-   status ===
-   "REJECTED"
- ){
-   statusClass =
-     "rejected";
- }
-
-
- const phone =
-   request.phone ||
-   request.phoneNumber ||
-   request.phone_number ||
-   "-";
-
-
- const dateValue =
-   request.createdAt ||
-   request.created_at;
-
-
- let date =
-   "-";
-
-
- if(dateValue){
-
-  try{
-
-   date =
-     new Date(
-       dateValue
-     ).toLocaleString();
-
-  }catch(error){
-
-   date =
-     String(dateValue);
-
-  }
-
- }
-
-
- return `
-
- <div class="history-item">
-
-   <div class="history-top">
-
-     <div class="history-amount">
-       ${money(amount)}
-     </div>
-
-     <div class="status ${statusClass}">
-       ${status}
-     </div>
-
-   </div>
-
-   <div class="history-info">
-
-     <div>
-       M-PESA:
-       ${escapeHtml(phone)}
-     </div>
-
-     <div>
-       Requested:
-       ${escapeHtml(date)}
-     </div>
-
-     ${
-       request.processedAt ||
-       request.processed_at
-       ?
-       `
-       <div>
-         Processed:
-         ${escapeHtml(
-           request.processedAt ||
-           request.processed_at
-         )}
-       </div>
-       `
-       :
-       ""
-     }
-
-   </div>
-
- </div>
-
- `;
+return;
 
 }
 
+const sorted =
+[...requests].sort(
+function(a,b){
 
-/* =====================================================
-   ESCAPE HTML
-   ===================================================== */
+const dateA =
+new Date(
+a.createdAt || 0
+).getTime();
+
+const dateB =
+new Date(
+b.createdAt || 0
+).getTime();
+
+return dateB - dateA;
+
+});
+
+history.innerHTML =
+sorted.map(
+function(request){
+
+const status =
+String(
+request.status || "PENDING"
+).toUpperCase();
+
+let statusClass =
+"pending";
+
+if(status === "APPROVED"){
+statusClass = "approved";
+}
+
+if(status === "REJECTED"){
+statusClass = "rejected";
+}
+
+const amount =
+money(
+request.amount
+);
+
+const phone =
+escapeHtml(
+request.phone || ""
+);
+
+const date =
+formatDate(
+request.createdAt
+);
+
+return `
+
+<div class="history-item">
+
+<div class="history-top">
+
+<div class="history-amount">
+${amount}
+</div>
+
+<div class="status ${statusClass}">
+${escapeHtml(status)}
+</div>
+
+</div>
+
+<div class="history-info">
+
+<strong>
+M-PESA:
+</strong>
+${phone}
+
+<br>
+
+<strong>
+Date:
+</strong>
+${date}
+
+<br>
+
+<strong>
+Balance rule:
+</strong>
+
+${
+status === "APPROVED"
+? "Amount deducted"
+: status === "REJECTED"
+? "No deduction"
+: "No deduction yet"
+}
+
+</div>
+
+</div>
+
+`;
+
+}
+).join("");
+
+}
+
 
 function escapeHtml(
- value
+value
 ){
 
- const text =
-   String(
-     value ??
-     ""
-   );
-
-
- return text
-   .replace(
-     /&/g,
-     "&amp;"
-   )
-   .replace(
-     /</g,
-     "&lt;"
-   )
-   .replace(
-     />/g,
-     "&gt;"
-   )
-   .replace(
-     /"/g,
-     "&quot;"
-   )
-   .replace(
-     /'/g,
-     "&#039;"
-   );
+return String(
+value ?? ""
+)
+.replace(
+/&/g,
+"&amp;"
+)
+.replace(
+/</g,
+"&lt;"
+)
+.replace(
+/>/g,
+"&gt;"
+)
+.replace(
+/"/g,
+"&quot;"
+)
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
 
-/* =====================================================
-   VALIDATE PHONE
-   ===================================================== */
-
-function isValidPhone(
- phone
+function formatDate(
+value
 ){
 
- return /^07\d{8}$/.test(
-   phone
- );
+if(!value){
+return "—";
+}
+
+const date =
+new Date(value);
+
+if(
+Number.isNaN(
+date.getTime()
+)
+){
+return "—";
+}
+
+return date.toLocaleString(
+"en-KE",
+{
+dateStyle:"medium",
+timeStyle:"short"
+}
+);
+
+ }
+ function validatePhone(
+phone
+){
+
+return /^07\d{8}$/.test(
+String(phone).trim()
+);
 
 }
 
 
-/* =====================================================
-   VALIDATE AMOUNT
-   ===================================================== */
-
-function isValidAmount(
- amount
+function validateAmount(
+amount
 ){
 
- return (
-   Number.isFinite(amount) &&
-   amount > 0
- );
+const value =
+Number(amount);
 
-     }
-  /* =====================================================
-   CHECK PENDING REQUEST
-   ===================================================== */
-
-function hasPendingRequest(
- requests
-){
-
- return requests.some(
-   request => {
-
-     const status =
-       String(
-         request.status ||
-         ""
-       ).toUpperCase();
-
-     return (
-       status ===
-       "PENDING"
-     );
-
-   }
- );
+return (
+Number.isFinite(value) &&
+value > 0
+);
 
 }
 
 
-/* =====================================================
-   REQUEST WITHDRAWAL
-   ===================================================== */
+function setButtonLoading(
+loading
+){
+
+const button =
+document.getElementById(
+"withdrawButton"
+);
+
+if(!button){
+return;
+}
+
+if(loading){
+
+button.disabled = true;
+
+button.textContent =
+"SUBMITTING...";
+
+}else{
+
+button.disabled = false;
+
+button.textContent =
+"REQUEST WITHDRAWAL";
+
+}
+
+}
+
+
+let withdrawalSubmitting =
+false;
+
 
 async function requestWithdrawal(){
 
- if(!employee){
+if(!employee){
 
-  showMessage(
-    "Employee login is required.",
-    "error"
-  );
+showMessage(
+"Please login as an employee first.",
+"error"
+);
 
-  return;
-
- }
-
-
- const phoneInput =
-   document.getElementById(
-     "phone"
-   );
-
-
- const amountInput =
-   document.getElementById(
-     "amount"
-   );
-
-
- const button =
-   document.getElementById(
-     "withdrawButton"
-   );
-
-
- const phone =
-   phoneInput.value.trim();
-
-
- const amount =
-   Number(
-     amountInput.value
-   );
-
-
- /* PHONE */
-
- if(
-   !isValidPhone(
-     phone
-   )
- ){
-
-  showMessage(
-    "Enter a valid M-PESA number, for example 0712345678.",
-    "error"
-  );
-
-  return;
-
- }
-
-
- /* AMOUNT */
-
- if(
-   !isValidAmount(
-     amount
-   )
- ){
-
-  showMessage(
-    "Enter a valid withdrawal amount.",
-    "error"
-  );
-
-  return;
-
- }
-
-
- /*
-   Refresh server withdrawal data
-   before creating a new request.
- */
-
- button.disabled =
-   true;
-
- button.textContent =
-   "CHECKING...";
-
-
- let allRequests = [];
-
-
- try{
-
-  allRequests =
-    await fetchWithdrawals();
-
- }catch(error){
-
-  button.disabled =
-    false;
-
-  button.textContent =
-    "REQUEST WITHDRAWAL";
-
-  showMessage(
-    "Could not check withdrawal status. Please try again.",
-    "error"
-  );
-
-  return;
-
- }
-
-
- const employeeRequests =
-   filterEmployeeWithdrawals(
-     allRequests
-   );
-
-
- /* PENDING CHECK */
-
- if(
-   hasPendingRequest(
-     employeeRequests
-   )
- ){
-
-  button.disabled =
-    false;
-
-  button.textContent =
-    "REQUEST WITHDRAWAL";
-
-  showMessage(
-    "You already have a pending withdrawal request. Please wait for admin approval.",
-    "info"
-  );
-
-  return;
-
- }
-
-
- /* EARNINGS */
-
- const earnings =
-   getEmployeeEarnings();
-
-
- /* APPROVED ONLY */
-
- const approved =
-   getApprovedWithdrawn(
-     employeeRequests
-   );
-
-
- /* AVAILABLE */
-
- const available =
-   Math.max(
-     0,
-     earnings -
-     approved
-   );
-
-
- /* BALANCE CHECK */
-
- if(
-   amount >
-   available
- ){
-
-  button.disabled =
-    false;
-
-  button.textContent =
-    "REQUEST WITHDRAWAL";
-
-  showMessage(
-    "Insufficient available balance.",
-    "error"
-  );
-
-  return;
-
- }
-
-
- button.textContent =
-   "SUBMITTING...";
-
-
- /*
-   IMPORTANT:
-
-   We are NOT deducting balance here.
-
-   The request is PENDING.
-
-   Only admin APPROVAL will make
-   this amount count as withdrawn.
- */
-
- const payload = {
-
-   employeeUsername:
-     employee.username || "",
-
-   employeeReferral:
-     employee.referral,
-
-   phone:
-     phone,
-
-   amount:
-     amount
-
- };
-
-
- try{
-
-   const response =
-     await fetch(
-       WITHDRAWAL_API,
-       {
-         method:"POST",
-
-         headers:{
-           "Content-Type":
-             "application/json",
-
-           "Accept":
-             "application/json"
-         },
-
-         body:
-           JSON.stringify(
-             payload
-           )
-       }
-     );
-
-
-   const data =
-     await response
-       .json()
-       .catch(
-         () => ({})
-       );
-
-
-   if(
-     !response.ok
-   ){
-
-     throw new Error(
-       data.message ||
-       "Withdrawal request failed."
-     );
-
-   }
-
-
-   phoneInput.value =
-     "";
-
-   amountInput.value =
-     "";
-
-
-   showMessage(
-     "Withdrawal request submitted successfully. Your balance will reduce only after admin approval.",
-     "success"
-   );
-
-
-   await loadEmployeeData();
-
-
- }catch(error){
-
-   console.error(
-     "Withdrawal submission error:",
-     error
-   );
-
-
-   showMessage(
-     error.message ||
-     "Could not submit withdrawal request.",
-     "error"
-   );
-
- }finally{
-
-   button.disabled =
-     false;
-
-   button.textContent =
-     "REQUEST WITHDRAWAL";
-
- }
-
-    }
-  /* =====================================================
-   LOGOUT
-   ===================================================== */
-
-function logoutEmployee(){
-
- try{
-
-  localStorage.removeItem(
-    "employeeSession"
-  );
-
- }catch(error){
-
-  console.error(
-    "Logout error:",
-    error
-  );
-
- }
-
-
- window.location.href =
-   "employee-login.html";
+return;
 
 }
 
 
-/* =====================================================
-   PHONE INPUT CLEANUP
-   ===================================================== */
+if(withdrawalSubmitting){
+
+return;
+
+}
+
 
 const phoneInput =
-  document.getElementById(
-    "phone"
-  );
-
-
-if(phoneInput){
-
- phoneInput.addEventListener(
-   "input",
-   function(){
-
-     this.value =
-       this.value
-         .replace(
-           /\D/g,
-           ""
-         )
-         .slice(
-           0,
-           10
-         );
-
-   }
- );
-
-}
-
-
-/* =====================================================
-   AMOUNT INPUT CLEANUP
-   ===================================================== */
+document.getElementById(
+"phone"
+);
 
 const amountInput =
-  document.getElementById(
-    "amount"
-  );
+document.getElementById(
+"amount"
+);
 
 
-if(amountInput){
-
- amountInput.addEventListener(
-   "input",
-   function(){
-
-     if(
-       Number(
-         this.value
-       ) < 0
-     ){
-
-       this.value =
-         "";
-
-     }
-
-   }
- );
-
-}
+const phone =
+String(
+phoneInput.value || ""
+).trim();
 
 
-/* =====================================================
-   ENTER KEY
-   ===================================================== */
+const amount =
+Number(
+amountInput.value
+);
 
-if(phoneInput){
 
- phoneInput.addEventListener(
-   "keydown",
-   function(event){
+clearMessage();
 
-     if(
-       event.key ===
-       "Enter"
-     ){
 
-       event.preventDefault();
+if(!validatePhone(phone)){
 
-       if(amountInput){
-         amountInput.focus();
-       }
+showMessage(
+"Enter a valid Kenyan M-PESA number, for example 0712345678.",
+"error"
+);
 
-     }
+phoneInput.focus();
 
-   }
- );
+return;
 
 }
 
 
-if(amountInput){
+if(!validateAmount(amount)){
 
- amountInput.addEventListener(
-   "keydown",
-   function(event){
+showMessage(
+"Enter a valid withdrawal amount.",
+"error"
+);
 
-     if(
-       event.key ===
-       "Enter"
-     ){
+amountInput.focus();
 
-       event.preventDefault();
-
-       requestWithdrawal();
-
-     }
-
-   }
- );
+return;
 
 }
 
 
-/* =====================================================
-   INITIAL DATA LOAD
-   ===================================================== */
+withdrawalSubmitting =
+true;
 
-async function startDashboard(){
-
- if(!employee){
-   return;
- }
+setButtonLoading(true);
 
 
- const history =
-   document.getElementById(
-     "history"
-   );
-
-
- if(history){
-
-  history.innerHTML = `
-    <div class="loading">
-      Loading withdrawal history...
-    </div>
-  `;
-
- }
-
-
- await loadEmployeeData();
-
-}
-
-
-startDashboard();
-  /* =====================================================
-   AUTO REFRESH
-   ===================================================== */
+try{
 
 /*
-   This refreshes withdrawal information
-   from the server.
+IMPORTANT:
 
-   It does NOT touch payment APIs,
-   payment protection, STK push,
-   payment callback, or payment status.
+We fetch the latest server
+withdrawals before creating
+a new one.
+
+This prevents another
+pending request for the
+same employee.
 */
 
-let refreshRunning =
-  false;
+const requests =
+await getWithdrawalRequests();
 
 
-async function refreshDashboard(){
-
- if(!employee){
-   return;
- }
-
-
- if(refreshRunning){
-   return;
- }
+const mine =
+getEmployeeWithdrawals(
+requests
+);
 
 
- refreshRunning =
-   true;
+const hasPending =
+mine.some(
+function(request){
 
+return String(
+request.status || ""
+).toUpperCase()
+===
+"PENDING";
 
- try{
+});
 
-   await loadEmployeeData();
+if(hasPending){
 
- }catch(error){
+showMessage(
+"You already have a pending withdrawal request. Wait for admin to process it.",
+"error"
+);
 
-   console.error(
-     "Dashboard refresh error:",
-     error
-   );
-
- }finally{
-
-   refreshRunning =
-     false;
-
- }
+return;
 
 }
 
 
-/*
-   Refresh every 5 seconds.
-*/
+const earnings =
+calculateEarnings();
 
-setInterval(
-  refreshDashboard,
-  5000
+
+const approvedAmount =
+calculateApprovedAmount(
+requests
 );
 
 
-/* =====================================================
-   PAGE VISIBILITY
-   ===================================================== */
-
-document.addEventListener(
-  "visibilitychange",
-  function(){
-
-    if(
-      !document.hidden &&
-      employee
-    ){
-
-      refreshDashboard();
-
-    }
-
-  }
+const available =
+calculateAvailable(
+earnings,
+approvedAmount
 );
 
 
-/* =====================================================
-   SAFETY CHECK
-   ===================================================== */
+if(amount > available){
 
-function verifyEmployeeSession(){
+showMessage(
+"Insufficient available balance. Your balance is " +
+money(available) +
+".",
+"error"
+);
 
- if(!employee){
-
-   window.location.href =
-     "employee-login.html";
-
-   return false;
-
- }
-
- return true;
+return;
 
 }
+ /*
+IMPORTANT ACCOUNTING RULE:
 
+REQUESTING a withdrawal does
+NOT reduce the balance.
 
-/* =====================================================
-   AVAILABLE BALANCE PREVIEW
-   ===================================================== */
+Only an APPROVED withdrawal
+is deducted.
 
-if(amountInput){
-
- amountInput.addEventListener(
-   "input",
-   async function(){
-
-     const amount =
-       Number(
-         this.value
-       );
-
-
-     if(
-       !Number.isFinite(
-         amount
-       ) ||
-       amount <= 0
-     ){
-
-       return;
-
-     }
-
-   }
- );
-
-}
-
-
-/* =====================================================
-   FINAL UI STATE
-   ===================================================== */
-
-function setButtonReady(){
-
- const button =
-   document.getElementById(
-     "withdrawButton"
-   );
-
-
- if(button){
-
-   button.disabled =
-     false;
-
-   button.textContent =
-     "REQUEST WITHDRAWAL";
-
- }
-
-}
-
-
-setButtonReady();
-  /* =====================================================
-   ERROR HANDLING
-   ===================================================== */
-
-window.addEventListener(
-  "error",
-  function(event){
-
-    console.error(
-      "Page error:",
-      event.error ||
-      event.message
-    );
-
-  }
-);
-
-
-/* =====================================================
-   UNHANDLED PROMISE ERRORS
-   ===================================================== */
-
-window.addEventListener(
-  "unhandledrejection",
-  function(event){
-
-    console.error(
-      "Unhandled error:",
-      event.reason
-    );
-
-  }
-);
-
-
-/* =====================================================
-   FINAL BALANCE RULE
-   ===================================================== */
-
-/*
-   ACCOUNTING RULE:
-
-   Total Earnings
-        -
-   APPROVED Withdrawals
-        =
-   Available Balance
-
-
-   PENDING:
-   no deduction.
-
-
-   REJECTED:
-   no deduction.
-
-
-   APPROVED:
-   deduction happens.
-
-
-   This page never changes the
-   employee balance directly.
-
-   The balance is calculated from
-   the withdrawal status returned
-   by /api/withdrawals.
+Therefore we do not change
+local earnings here.
 */
 
 
-function calculateEmployeeBalance(
-  earnings,
-  requests
+const payload = {
+
+employeeName:
+employee.employeeName ||
+employee.name ||
+employee.username ||
+"",
+
+employeeId:
+employee.employeeId ||
+employee.id ||
+employee.referral ||
+"",
+
+username:
+employee.username ||
+"",
+
+referral:
+employee.referral ||
+"",
+
+phone:
+phone,
+
+amount:
+amount
+
+};
+
+
+if(
+!payload.employeeName ||
+!payload.employeeId ||
+!payload.username ||
+!payload.referral
 ){
 
- const approved =
-   requests.filter(
-     request =>
-       String(
-         request.status ||
-         ""
-       ).toUpperCase() ===
-       "APPROVED"
-   );
+showMessage(
+"Employee account information is incomplete. Please login again.",
+"error"
+);
 
-
- const withdrawn =
-   approved.reduce(
-     (
-       total,
-       request
-     ) => {
-
-       return (
-         total +
-         (
-           Number(
-             request.amount
-           ) || 0
-         )
-       );
-
-     },
-     0
-   );
-
-
- return Math.max(
-   0,
-   earnings -
-   withdrawn
- );
+return;
 
 }
 
 
-/* =====================================================
-   PREVENT ACCIDENTAL DOUBLE SUBMISSION
-   ===================================================== */
+const response =
+await fetch(
+WITHDRAWAL_API,
+{
+method:"POST",
 
-let submissionLocked =
-  false;
+headers:{
+"Content-Type":
+"application/json",
 
+"Accept":
+"application/json"
+},
 
-const originalRequestWithdrawal =
-  requestWithdrawal;
-
-
-requestWithdrawal =
-  async function(){
-
-    if(
-      submissionLocked
-    ){
-
-      return;
-
-    }
-
-
-    submissionLocked =
-      true;
-
-
-    try{
-
-      await originalRequestWithdrawal();
-
-    }finally{
-
-      submissionLocked =
-        false;
-
-    }
-
-  };
-
-
-/* =====================================================
-   READY
-   ===================================================== */
-
-console.log(
-  "Employee withdrawal page ready."
+body:
+JSON.stringify(
+payload
+)
+}
 );
 
-console.log(
-  "Commission rate:",
-  "40%"
+
+let data = {};
+
+try{
+
+data =
+await response.json();
+
+}catch(error){
+
+data = {};
+
+}
+
+
+if(!response.ok){
+
+throw new Error(
+data.message ||
+"Withdrawal request failed. Server returned HTTP " +
+response.status
 );
 
-console.log(
-  "Withdrawal API:",
-  WITHDRAWAL_API
+}
+
+
+if(
+!data.success
+){
+
+throw new Error(
+data.message ||
+"Withdrawal request was not accepted."
 );
-  /* =====================================================
-   FINAL STARTUP
-   ===================================================== */
+
+}
+
+
+showMessage(
+"Withdrawal request submitted successfully. Your balance has NOT been reduced. It will be deducted only after admin approval.",
+"success"
+);
+
+
+amountInput.value =
+"";
+
 
 /*
-   Do one final server refresh when
-   the page finishes loading.
+Refresh immediately so
+the new request appears
+as PENDING.
 */
+
+await refreshDashboard();
+
+
+}catch(error){
+
+console.error(
+"Withdrawal request error:",
+error
+);
+
+showMessage(
+error.message ||
+"Connection error. Please try again.",
+"error"
+);
+
+}finally{
+
+withdrawalSubmitting =
+false;
+
+setButtonLoading(false);
+
+}
+
+ }
+ function logoutEmployee(){
+
+localStorage.removeItem(
+"employeeSession"
+);
+
+window.location.href =
+"employee-login.html";
+
+}
+
+
+function normalizeEmployeeSession(){
+
+if(!employee){
+return null;
+}
+
+return {
+
+id:
+employee.id ||
+employee.employeeId ||
+employee.referral,
+
+employeeId:
+employee.employeeId ||
+employee.id ||
+employee.referral,
+
+name:
+employee.name ||
+employee.employeeName ||
+employee.username,
+
+employeeName:
+employee.employeeName ||
+employee.name ||
+employee.username,
+
+username:
+employee.username,
+
+referral:
+employee.referral,
+
+earnings:
+0,
+
+withdrawn:
+0
+
+};
+
+}
+
+
+function ensureEmployeeSession(){
+
+const current =
+getEmployee();
+
+if(!current){
+return false;
+}
+
+
+const normalized =
+normalizeEmployeeSession();
+
+try{
+
+localStorage.setItem(
+"employeeSession",
+JSON.stringify(
+normalized
+)
+);
+
+}catch(error){
+
+console.error(
+"Could not save employee session:",
+error
+);
+
+}
+
+return true;
+
+}
+
+
+function setupInputs(){
+
+const phone =
+document.getElementById(
+"phone"
+);
+
+const amount =
+document.getElementById(
+"amount"
+);
+
+
+if(phone){
+
+phone.addEventListener(
+"input",
+function(){
+
+this.value =
+this.value
+.replace(
+/\D/g,
+""
+)
+.slice(
+0,
+10
+);
+
+}
+);
+
+}
+
+
+if(amount){
+
+amount.addEventListener(
+"input",
+function(){
+
+if(
+Number(this.value) < 0
+){
+this.value = "";
+}
+
+}
+);
+
+}
+
+}
+ function setupKeyboard(){
+
+const phone =
+document.getElementById(
+"phone"
+);
+
+const amount =
+document.getElementById(
+"amount"
+);
+
+
+if(phone){
+
+phone.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key === "Enter"
+){
+
+event.preventDefault();
+
+amount.focus();
+
+}
+
+}
+);
+
+}
+
+
+if(amount){
+
+amount.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key === "Enter"
+){
+
+event.preventDefault();
+
+requestWithdrawal();
+
+}
+
+}
+);
+
+}
+
+}
+
+
+function startup(){
+
+if(!employee){
+
+return;
+
+}
+
+
+ensureEmployeeSession();
+
+setupInputs();
+
+setupKeyboard();
+
+refreshDashboard();
+
+}
+
+
+startup();
+ let refreshTimer =
+null;
+
+
+function startAutoRefresh(){
+
+if(refreshTimer){
+clearInterval(
+refreshTimer
+);
+}
+
+
+refreshTimer =
+setInterval(
+function(){
+
+if(
+document.visibilityState ===
+"visible"
+){
+
+refreshDashboard();
+
+}
+
+},
+5000
+);
+
+}
+
+
+function stopAutoRefresh(){
+
+if(refreshTimer){
+
+clearInterval(
+refreshTimer
+);
+
+refreshTimer =
+null;
+
+}
+
+}
+
+
+document.addEventListener(
+"visibilitychange",
+function(){
+
+if(
+document.visibilityState ===
+"visible"
+){
+
+refreshDashboard();
+
+}else{
+
+stopAutoRefresh();
+
+startAutoRefresh();
+
+}
+
+}
+);
+
 
 window.addEventListener(
-  "load",
-  async function(){
+"online",
+function(){
 
-    if(!employee){
-      return;
-    }
+showMessage(
+"Connection restored. Refreshing withdrawal data...",
+"info"
+);
 
+refreshDashboard();
 
-    try{
-
-      await loadEmployeeData();
-
-    }catch(error){
-
-      console.error(
-        "Final startup error:",
-        error
-      );
-
-    }
-
-  }
+}
 );
 
 
-/*
-   IMPORTANT:
+window.addEventListener(
+"offline",
+function(){
 
-   This file only handles:
+showMessage(
+"No internet connection. Please reconnect before requesting a withdrawal.",
+"error"
+);
 
-   1. Employee commission display
-   2. Employee earnings display
-   3. Withdrawal request
-   4. Withdrawal history
-   5. Available balance calculation
-   6. Admin-approved deduction
+}
+);
 
-   It does NOT modify:
 
-   payment.html
-   mpesa.html
-   api/stk-push.js
-   api/payment-status.js
-   api/payment-callback.js
-   api/liparo-stk.js
-   payment protection
+startAutoRefresh();
+ /*
+=========================================================
+BALANCE ACCOUNTING RULE
+=========================================================
+
+TOTAL EARNINGS
+=
+all employee commission records
+
+TOTAL WITHDRAWN
+=
+APPROVED withdrawal requests only
+
+AVAILABLE BALANCE
+=
+TOTAL EARNINGS
+-
+APPROVED withdrawals
+
+PENDING:
+NO DEDUCTION
+
+REJECTED:
+NO DEDUCTION
+
+APPROVED:
+DEDUCTION
+
+=========================================================
 */
 
+
+function checkBalanceRule(
+earnings,
+requests
+){
+
+const approved =
+calculateApprovedAmount(
+requests
+);
+
+const available =
+calculateAvailable(
+earnings,
+approved
+);
+
+return {
+
+earnings:
+earnings,
+
+approved:
+approved,
+
+available:
+available
+
+};
+
+}
+
+
+/*
+Prevent accidental double clicks.
+*/
+
+const originalRequestWithdrawal =
+requestWithdrawal;
+
+
+window.requestWithdrawal =
+async function(){
+
+if(
+withdrawalSubmitting
+){
+
+return;
+
+}
+
+return originalRequestWithdrawal();
+
+};
+
+
+/*
+Extra safety:
+
+Do not allow a negative
+available balance to appear.
+*/
+
+function safeNumber(
+value
+){
+
+const number =
+Number(value);
+
+if(
+!Number.isFinite(number)
+){
+
+return 0;
+
+}
+
+return number;
+
+}
+
+
+/*
+Make sure the amount field
+never accepts a negative value.
+*/
+
+const amountField =
+document.getElementById(
+"amount"
+);
+
+if(amountField){
+
+amountField.addEventListener(
+"change",
+function(){
+
+const value =
+safeNumber(
+this.value
+);
+
+if(value <= 0){
+
+this.value = "";
+
+}
+
+}
+);
+
+ }
+ /*
+=========================================================
+FINAL STARTUP
+=========================================================
+*/
+
+if(employee){
+
+try{
+
+const current =
+getEmployee();
+
+if(current){
+
+const earnings =
+calculateEarnings();
+
+document.getElementById(
+"totalEarnings"
+).textContent =
+money(earnings);
+
+}
+
+}catch(error){
+
+console.error(
+"Initial employee data error:",
+error
+);
+
+}
+
+}
+
+
+/*
+Do not touch payment.html,
+mpesa.html, STK protection,
+payment callback,
+payment status,
+or payment database.
+
+This file only handles:
+
+Employee commission display
+Withdrawal request
+Withdrawal history
+Approved withdrawal deduction
+=========================================================
+*/
 
 </script>
 
 </body>
+
 </html>
