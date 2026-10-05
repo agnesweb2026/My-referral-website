@@ -1,397 +1,298 @@
 const { query, ensurePaymentTable } = require("./db");
 
-function json(res, status, data) {
-  res.status(status);
-  res.setHeader("Content-Type", "application/json");
-  return res.end(JSON.stringify(data));
-}
-
-module.exports = async (req, res) => {
-  if (req.method !== "POST") {
-    return json(res, 405, {
+module.exports = async function handler(req, res) {
+  if (req.method !== "GET" && req.method !== "POST") {
+    return res.status(405).json({
       success: false,
-      paid: false,
       message: "Method not allowed"
     });
   }
 
   try {
-    const {
-      transaction_id,
-      transaction_request_id
-    } = req.body || {};
+    const PAYLOR_API_KEY = process.env.PAYLOR_API_KEY;
 
-    const transactionId = String(
-      transaction_id ||
-      transaction_request_id ||
-      ""
-    ).trim();
-
-    if (!transactionId) {
-      return json(res, 400, {
+    if (!PAYLOR_API_KEY) {
+      return res.status(500).json({
         success: false,
-        paid: false,
-        message: "Missing transaction ID."
-      });
-    }
-
-    if (transactionId.length > 200) {
-      return json(res, 400, {
-        success: false,
-        paid: false,
-        message: "Invalid transaction ID."
-      });
-    }
-
-    const apiKey =
-      String(process.env.PAYLOR_API_KEY || "").trim();
-
-    if (!apiKey) {
-      return json(res, 500, {
-        success: false,
-        paid: false,
-        message:
-          "Paylor API key is not configured on the server."
+        message: "Paylor API key is not configured on the server"
       });
     }
 
     await ensurePaymentTable();
 
-    // ============================================
-    // 1. CHECK OUR DATABASE FIRST
-    // ============================================
+    // Accept reference from the frontend
+    const reference =
+      req.method === "GET"
+        ? req.query.reference
+        : req.body?.reference;
 
-    const saved = await query(
-      `
-      SELECT
-        reference,
-        amount,
-        phone,
-        status,
-        transaction_request_id,
-        transaction_id,
-        transaction_code
-      FROM payments
-      WHERE
-        transaction_request_id = $1
-        OR transaction_id = $1
-      ORDER BY updated_at DESC
-      LIMIT 1
-      `,
-      [transactionId]
-    );
+    const transactionId =
+      req.method === "GET"
+        ? req.query.transactionId
+        : req.body?.transactionId;
 
-    if (saved.rows.length > 0) {
-      const payment = saved.rows[0];
-
-      const savedStatus = String(
-        payment.status || ""
-      )
-        .trim()
-        .toLowerCase();
-
-      if (
-        savedStatus === "completed" ||
-        savedStatus === "complete" ||
-        savedStatus === "paid" ||
-        savedStatus === "successful" ||
-        savedStatus === "success"
-      ) {
-        return json(res, 200, {
-          success: true,
-          paid: true,
-          status: "Completed",
-
-          transaction_id:
-            payment.transaction_id || transactionId,
-
-          transaction_request_id:
-            payment.transaction_request_id || transactionId,
-
-          amount:
-            payment.amount ?? null,
-
-          phone:
-            payment.phone ?? null,
-
-          reference:
-            payment.reference ?? null,
-
-          message:
-            "Payment completed successfully."
-        });
-      }
-
-      if (
-        savedStatus === "failed" ||
-        savedStatus === "failure" ||
-        savedStatus === "rejected"
-      ) {
-        return json(res, 200, {
-          success: true,
-          paid: false,
-          status: "Failed",
-
-          transaction_id:
-            payment.transaction_id || transactionId,
-
-          transaction_request_id:
-            payment.transaction_request_id || transactionId,
-
-          message: "Payment failed."
-        });
-      }
-
-      if (
-        savedStatus === "cancelled" ||
-        savedStatus === "canceled"
-      ) {
-        return json(res, 200, {
-          success: true,
-          paid: false,
-          status: "Cancelled",
-
-          transaction_id:
-            payment.transaction_id || transactionId,
-
-          transaction_request_id:
-            payment.transaction_request_id || transactionId,
-
-          message: "Payment was cancelled."
-        });
-      }
+    if (!reference && !transactionId) {
+      return res.status(400).json({
+        success: false,
+        message: "reference or transactionId is required"
+      });
     }
 
-    // ============================================
-    // 2. ASK PAYLOR FOR CURRENT TRANSACTION STATUS
-    // ============================================
+    /*
+     * ---------------------------------------------------------
+     * 1. Find our local payment record
+     * ---------------------------------------------------------
+     */
 
-    const response = await fetch(
+    let payment = null;
+
+    if (reference) {
+      const result = await query(
+        `
+        SELECT *
+        FROM payments
+        WHERE reference = $1
+        LIMIT 1
+        `,
+        [reference]
+      );
+
+      payment = result.rows[0] || null;
+    } else if (transactionId) {
+      const result = await query(
+        `
+        SELECT *
+        FROM payments
+        WHERE transaction_request_id = $1
+           OR transaction_id = $1
+        LIMIT 1
+        `,
+        [transactionId]
+      );
+
+      payment = result.rows[0] || null;
+    }
+
+    /*
+     * ---------------------------------------------------------
+     * 2. If already completed locally, trust our DB
+     * ---------------------------------------------------------
+     */
+
+    if (payment && payment.status === "completed") {
+      return res.status(200).json({
+        success: true,
+        paid: true,
+        status: "COMPLETED",
+        reference: payment.reference,
+        transaction_id:
+          payment.transaction_id ||
+          payment.transaction_request_id ||
+          null
+      });
+    }
+
+    /*
+     * ---------------------------------------------------------
+     * 3. Get Paylor transaction ID
+     * ---------------------------------------------------------
+     */
+
+    const paylorTransactionId =
+      transactionId ||
+      payment?.transaction_id ||
+      payment?.transaction_request_id;
+
+    if (!paylorTransactionId) {
+      return res.status(200).json({
+        success: true,
+        paid: false,
+        status: "PENDING",
+        reference: payment?.reference || reference || null
+      });
+    }
+
+    /*
+     * ---------------------------------------------------------
+     * 4. Ask Paylor for current transaction status
+     * ---------------------------------------------------------
+     */
+
+    const paylorResponse = await fetch(
       `https://api.paylorke.com/api/v1/merchants/payments/transactions/${encodeURIComponent(
-        transactionId
+        paylorTransactionId
       )}`,
       {
         method: "GET",
-
         headers: {
-          Authorization: `Bearer ${apiKey}`,
-          Accept: "application/json"
+          Authorization: `Bearer ${PAYLOR_API_KEY}`,
+          "Content-Type": "application/json"
         }
       }
     );
 
-    const responseText = await response.text();
+    const rawText = await paylorResponse.text();
 
-    let data = {};
+    let data;
 
     try {
-      data = responseText
-        ? JSON.parse(responseText)
-        : {};
+      data = JSON.parse(rawText);
     } catch {
-      data = {};
+      data = {
+        message: rawText
+      };
     }
 
-    console.log(
-      "PAYLOR_STATUS_RESULT",
-      JSON.stringify({
-        transaction_id: transactionId,
-        httpStatus: response.status,
-        status: data.status || null,
-        reference: data.reference || null,
-        mpesaReceipt:
-          data.mpesaReceipt || null
-      })
-    );
+    if (!paylorResponse.ok) {
+      console.error("Paylor status error:", paylorResponse.status, data);
 
-    // ============================================
-    // 3. NORMALIZE STATUS
-    // ============================================
+      return res.status(200).json({
+        success: true,
+        paid: false,
+        status: "PENDING",
+        reference: payment?.reference || reference || null,
+        message: "Payment is still being processed"
+      });
+    }
 
-    const status = String(
-      data.status || ""
-    )
-      .trim()
-      .toUpperCase();
+    /*
+     * Paylor response:
+     *
+     * {
+     *   id,
+     *   reference,
+     *   amount,
+     *   status,
+     *   provider,
+     *   providerRef,
+     *   mpesaReceipt
+     * }
+     */
 
-    const completed =
-      status === "COMPLETED" ||
-      status === "CONFIRMED" ||
-      status === "SUCCESS" ||
-      status === "PAID";
+    const paylorStatus = String(
+      data.status || data.transaction?.status || ""
+    ).toUpperCase();
 
-    const failed =
-      status === "FAILED" ||
-      status === "FAILURE" ||
-      status === "REJECTED";
+    const finalReference =
+      data.reference ||
+      data.transaction?.reference ||
+      payment?.reference ||
+      reference ||
+      null;
 
-    const cancelled =
-      status === "CANCELLED" ||
-      status === "CANCELED";
+    const finalTransactionId =
+      data.id ||
+      data.transaction?.id ||
+      paylorTransactionId;
 
-    // ============================================
-    // 4. PAYMENT COMPLETED
-    // ============================================
+    const providerRef =
+      data.providerRef ||
+      data.transaction?.providerRef ||
+      null;
 
-    if (response.ok && completed) {
-      await query(
-        `
-        UPDATE payments
-        SET
-          status = 'completed',
+    const mpesaReceipt =
+      data.mpesaReceipt ||
+      data.transaction?.mpesaReceipt ||
+      null;
 
-          transaction_id =
-            COALESCE(transaction_id, $1),
+    /*
+     * ---------------------------------------------------------
+     * 5. COMPLETED
+     * ---------------------------------------------------------
+     */
 
-          transaction_request_id =
-            COALESCE(transaction_request_id, $1),
+    if (
+      paylorStatus === "COMPLETED" ||
+      paylorStatus === "CONFIRMED" ||
+      paylorStatus === "SUCCESS"
+    ) {
+      if (payment) {
+        await query(
+          `
+          UPDATE payments
+          SET
+            status = 'completed',
+            transaction_id = COALESCE($1, transaction_id),
+            transaction_code = COALESCE($2, transaction_code),
+            updated_at = NOW()
+          WHERE reference = $3
+          `,
+          [
+            finalTransactionId,
+            mpesaReceipt || providerRef,
+            payment.reference
+          ]
+        );
+      }
 
-          transaction_code =
-            COALESCE(transaction_code, $2),
-
-          updated_at = NOW()
-
-        WHERE
-          transaction_request_id = $1
-          OR transaction_id = $1
-        `,
-        [
-          transactionId,
-          data.mpesaReceipt ||
-            data.providerRef ||
-            null
-        ]
-      );
-
-      return json(res, 200, {
+      return res.status(200).json({
         success: true,
         paid: true,
-        status: "Completed",
-
-        transaction_id:
-          data.id || transactionId,
-
-        transaction_request_id:
-          data.id || transactionId,
-
-        amount:
-          data.amount ?? null,
-
-        reference:
-          data.reference ?? null,
-
-        mpesa_receipt:
-          data.mpesaReceipt ?? null,
-
-        message:
-          "Payment completed successfully."
+        status: "COMPLETED",
+        reference: finalReference,
+        transaction_id: finalTransactionId,
+        mpesaReceipt: mpesaReceipt || null
       });
     }
 
-    // ============================================
-    // 5. PAYMENT FAILED
-    // ============================================
+    /*
+     * ---------------------------------------------------------
+     * 6. FAILED / CANCELLED
+     * ---------------------------------------------------------
+     */
 
-    if (failed) {
-      await query(
-        `
-        UPDATE payments
-        SET
-          status = 'failed',
-          updated_at = NOW()
-        WHERE
-          transaction_request_id = $1
-          OR transaction_id = $1
-        `,
-        [transactionId]
-      );
+    if (
+      paylorStatus === "FAILED" ||
+      paylorStatus === "CANCELLED" ||
+      paylorStatus === "CANCELED" ||
+      paylorStatus === "REJECTED"
+    ) {
+      if (payment) {
+        await query(
+          `
+          UPDATE payments
+          SET
+            status = 'failed',
+            transaction_id = COALESCE($1, transaction_id),
+            updated_at = NOW()
+          WHERE reference = $2
+          `,
+          [
+            finalTransactionId,
+            payment.reference
+          ]
+        );
+      }
 
-      return json(res, 200, {
+      return res.status(200).json({
         success: true,
         paid: false,
-        status: "Failed",
-
-        transaction_id: transactionId,
-
-        transaction_request_id:
-          transactionId,
-
-        message:
-          data.message ||
-          "Payment failed."
+        status: paylorStatus,
+        reference: finalReference,
+        transaction_id: finalTransactionId
       });
     }
 
-    // ============================================
-    // 6. PAYMENT CANCELLED
-    // ============================================
+    /*
+     * ---------------------------------------------------------
+     * 7. STILL WAITING
+     * ---------------------------------------------------------
+     */
 
-    if (cancelled) {
-      await query(
-        `
-        UPDATE payments
-        SET
-          status = 'cancelled',
-          updated_at = NOW()
-        WHERE
-          transaction_request_id = $1
-          OR transaction_id = $1
-        `,
-        [transactionId]
-      );
-
-      return json(res, 200, {
-        success: true,
-        paid: false,
-        status: "Cancelled",
-
-        transaction_id: transactionId,
-
-        transaction_request_id:
-          transactionId,
-
-        message:
-          data.message ||
-          "Payment was cancelled."
-      });
-    }
-
-    // ============================================
-    // 7. STILL PENDING
-    // ============================================
-
-    return json(res, 200, {
+    return res.status(200).json({
       success: true,
       paid: false,
-
-      status:
-        data.status || "PENDING",
-
-      transaction_id:
-        data.id || transactionId,
-
-      transaction_request_id:
-        data.id || transactionId,
-
-      reference:
-        data.reference ?? null,
-
-      message:
-        data.message ||
-        "Payment is still pending."
+      status: paylorStatus || "PENDING",
+      reference: finalReference,
+      transaction_id: finalTransactionId
     });
 
   } catch (error) {
-    console.error(
-      "PAYLOR_STATUS_ERROR",
-      error
-    );
+    console.error("PAYLOR PAYMENT STATUS ERROR:", error);
 
-    return json(res, 500, {
+    return res.status(500).json({
       success: false,
-      paid: false,
-      message:
-        "Unable to check the M-PESA payment status."
+      message: "Unable to check payment status"
     });
   }
 };
