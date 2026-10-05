@@ -1,298 +1,577 @@
-const { query, ensurePaymentTable } = require("./db");
+const { pool } = require("./db");
 
-module.exports = async function handler(req, res) {
-  if (req.method !== "GET" && req.method !== "POST") {
-    return res.status(405).json({
-      success: false,
-      message: "Method not allowed"
-    });
+const COMMISSION_RATE = 0.40;
+
+const EMPLOYEE_MAP = {
+
+  joshua1: {
+    id: "REF-A7K2",
+    referral: "REF-A7K2",
+    username: "Joshua1"
+  },
+
+  joshua2: {
+    id: "REF-B4M8",
+    referral: "REF-B4M8",
+    username: "Joshua2"
+  },
+
+  joshua3: {
+    id: "REF-C9P3",
+    referral: "REF-C9P3",
+    username: "Joshua3"
+  },
+
+  joshua4: {
+    id: "REF-D2X6",
+    referral: "REF-D2X6",
+    username: "Joshua4"
+  },
+
+  joshua5: {
+    id: "REF-E5Q1",
+    referral: "REF-E5Q1",
+    username: "Joshua5"
+  },
+
+  joshua6: {
+    id: "REF-F8L4",
+    referral: "REF-F8L4",
+    username: "Joshua6"
+  },
+
+  joshua7: {
+    id: "REF-G3N7",
+    referral: "REF-G3N7",
+    username: "Joshua7"
+  },
+
+  joshua8: {
+    id: "REF-H6R2",
+    referral: "REF-H6R2",
+    username: "Joshua8"
+  },
+
+  joshua9: {
+    id: "REF-J9T5",
+    referral: "REF-J9T5",
+    username: "Joshua9"
+  },
+
+  joshua10: {
+    id: "REF-K4W8",
+    referral: "REF-K4W8",
+    username: "Joshua10"
   }
+
+};
+
+
+async function ensureCommissionTable() {
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS employee_commissions (
+
+      id BIGSERIAL PRIMARY KEY,
+
+      transaction_id VARCHAR(150)
+        UNIQUE NOT NULL,
+
+      reference VARCHAR(100),
+
+      employee_id VARCHAR(100)
+        NOT NULL,
+
+      username VARCHAR(100),
+
+      referral VARCHAR(100)
+        NOT NULL,
+
+      payment_amount NUMERIC(12,2)
+        NOT NULL,
+
+      commission_rate NUMERIC(5,4)
+        NOT NULL DEFAULT 0.40,
+
+      commission_amount NUMERIC(12,2)
+        NOT NULL,
+
+      created_at TIMESTAMPTZ
+        NOT NULL DEFAULT NOW()
+
+    );
+  `);
+
+}
+
+
+function resolveEmployee(value) {
+
+  const raw =
+    String(value || "").trim();
+
+  if (!raw) {
+    return null;
+  }
+
+  const lower =
+    raw.toLowerCase();
+
+
+  if (EMPLOYEE_MAP[lower]) {
+
+    return EMPLOYEE_MAP[lower];
+
+  }
+
+
+  for (
+    const key of Object.keys(EMPLOYEE_MAP)
+  ) {
+
+    const employee =
+      EMPLOYEE_MAP[key];
+
+    if (
+      employee.id.toLowerCase() ===
+      lower
+    ) {
+
+      return employee;
+
+    }
+
+    if (
+      employee.referral.toLowerCase() ===
+      lower
+    ) {
+
+      return employee;
+
+    }
+
+  }
+
+
+  return null;
+}
+
+
+module.exports =
+async function handler(req, res) {
+
+  if (req.method !== "POST") {
+
+    return res.status(405).json({
+
+      success: false,
+
+      error:
+        "Method not allowed"
+
+    });
+
+  }
+
 
   try {
-    const PAYLOR_API_KEY = process.env.PAYLOR_API_KEY;
 
-    if (!PAYLOR_API_KEY) {
-      return res.status(500).json({
-        success: false,
-        message: "Paylor API key is not configured on the server"
-      });
-    }
+    await ensureCommissionTable();
 
-    await ensurePaymentTable();
 
-    // Accept reference from the frontend
-    const reference =
-      req.method === "GET"
-        ? req.query.reference
-        : req.body?.reference;
+    const body =
+      req.body || {};
+
+
+    const employeeValue =
+      String(
+
+        body.employeeId ||
+        body.employee ||
+        body.username ||
+        body.referral ||
+        ""
+
+      ).trim();
+
 
     const transactionId =
-      req.method === "GET"
-        ? req.query.transactionId
-        : req.body?.transactionId;
+      String(
 
-    if (!reference && !transactionId) {
+        body.transaction_id ||
+        body.transactionId ||
+        body.transaction_request_id ||
+        ""
+
+      ).trim();
+
+
+    const reference =
+      String(
+
+        body.reference ||
+        ""
+
+      ).trim();
+
+
+    if (!employeeValue) {
+
       return res.status(400).json({
+
         success: false,
-        message: "reference or transactionId is required"
+
+        error:
+          "Employee ID is required"
+
       });
+
     }
 
-    /*
-     * ---------------------------------------------------------
-     * 1. Find our local payment record
-     * ---------------------------------------------------------
-     */
 
-    let payment = null;
+    if (!transactionId) {
 
-    if (reference) {
-      const result = await query(
-        `
-        SELECT *
-        FROM payments
-        WHERE reference = $1
-        LIMIT 1
-        `,
-        [reference]
+      return res.status(400).json({
+
+        success: false,
+
+        error:
+          "Transaction ID is required"
+
+      });
+
+    }
+
+
+    const employee =
+      resolveEmployee(
+        employeeValue
       );
 
-      payment = result.rows[0] || null;
-    } else if (transactionId) {
-      const result = await query(
+
+    if (!employee) {
+
+      return res.status(400).json({
+
+        success: false,
+
+        error:
+          "Unknown employee"
+
+      });
+
+    }
+
+
+    /*
+    =====================================================
+    FIND CONFIRMED PAYMENT
+    =====================================================
+    */
+
+    const paymentResult =
+      await pool.query(
         `
-        SELECT *
+        SELECT
+
+          reference,
+
+          amount,
+
+          status,
+
+          transaction_request_id,
+
+          transaction_id,
+
+          transaction_code
+
         FROM payments
-        WHERE transaction_request_id = $1
-           OR transaction_id = $1
+
+        WHERE
+
+          transaction_id = $1
+
+          OR transaction_request_id = $1
+
+          OR transaction_code = $1
+
+          OR reference = $2
+
+        ORDER BY updated_at DESC
+
         LIMIT 1
         `,
-        [transactionId]
+        [
+          transactionId,
+          reference
+        ]
       );
 
-      payment = result.rows[0] || null;
-    }
-
-    /*
-     * ---------------------------------------------------------
-     * 2. If already completed locally, trust our DB
-     * ---------------------------------------------------------
-     */
-
-    if (payment && payment.status === "completed") {
-      return res.status(200).json({
-        success: true,
-        paid: true,
-        status: "COMPLETED",
-        reference: payment.reference,
-        transaction_id:
-          payment.transaction_id ||
-          payment.transaction_request_id ||
-          null
-      });
-    }
-
-    /*
-     * ---------------------------------------------------------
-     * 3. Get Paylor transaction ID
-     * ---------------------------------------------------------
-     */
-
-    const paylorTransactionId =
-      transactionId ||
-      payment?.transaction_id ||
-      payment?.transaction_request_id;
-
-    if (!paylorTransactionId) {
-      return res.status(200).json({
-        success: true,
-        paid: false,
-        status: "PENDING",
-        reference: payment?.reference || reference || null
-      });
-    }
-
-    /*
-     * ---------------------------------------------------------
-     * 4. Ask Paylor for current transaction status
-     * ---------------------------------------------------------
-     */
-
-    const paylorResponse = await fetch(
-      `https://api.paylorke.com/api/v1/merchants/payments/transactions/${encodeURIComponent(
-        paylorTransactionId
-      )}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${PAYLOR_API_KEY}`,
-          "Content-Type": "application/json"
-        }
-      }
-    );
-
-    const rawText = await paylorResponse.text();
-
-    let data;
-
-    try {
-      data = JSON.parse(rawText);
-    } catch {
-      data = {
-        message: rawText
-      };
-    }
-
-    if (!paylorResponse.ok) {
-      console.error("Paylor status error:", paylorResponse.status, data);
-
-      return res.status(200).json({
-        success: true,
-        paid: false,
-        status: "PENDING",
-        reference: payment?.reference || reference || null,
-        message: "Payment is still being processed"
-      });
-    }
-
-    /*
-     * Paylor response:
-     *
-     * {
-     *   id,
-     *   reference,
-     *   amount,
-     *   status,
-     *   provider,
-     *   providerRef,
-     *   mpesaReceipt
-     * }
-     */
-
-    const paylorStatus = String(
-      data.status || data.transaction?.status || ""
-    ).toUpperCase();
-
-    const finalReference =
-      data.reference ||
-      data.transaction?.reference ||
-      payment?.reference ||
-      reference ||
-      null;
-
-    const finalTransactionId =
-      data.id ||
-      data.transaction?.id ||
-      paylorTransactionId;
-
-    const providerRef =
-      data.providerRef ||
-      data.transaction?.providerRef ||
-      null;
-
-    const mpesaReceipt =
-      data.mpesaReceipt ||
-      data.transaction?.mpesaReceipt ||
-      null;
-
-    /*
-     * ---------------------------------------------------------
-     * 5. COMPLETED
-     * ---------------------------------------------------------
-     */
 
     if (
-      paylorStatus === "COMPLETED" ||
-      paylorStatus === "CONFIRMED" ||
-      paylorStatus === "SUCCESS"
+      paymentResult.rows.length === 0
     ) {
-      if (payment) {
-        await query(
-          `
-          UPDATE payments
-          SET
-            status = 'completed',
-            transaction_id = COALESCE($1, transaction_id),
-            transaction_code = COALESCE($2, transaction_code),
-            updated_at = NOW()
-          WHERE reference = $3
-          `,
-          [
-            finalTransactionId,
-            mpesaReceipt || providerRef,
-            payment.reference
-          ]
-        );
-      }
 
-      return res.status(200).json({
-        success: true,
-        paid: true,
-        status: "COMPLETED",
-        reference: finalReference,
-        transaction_id: finalTransactionId,
-        mpesaReceipt: mpesaReceipt || null
+      return res.status(400).json({
+
+        success: false,
+
+        error:
+          "Payment not found"
+
       });
+
     }
 
-    /*
-     * ---------------------------------------------------------
-     * 6. FAILED / CANCELLED
-     * ---------------------------------------------------------
-     */
+
+    const payment =
+      paymentResult.rows[0];
+
+
+    const paymentStatus =
+      String(
+        payment.status || ""
+      )
+      .toLowerCase()
+      .trim();
+
+
+    const completed =
+      paymentStatus === "completed" ||
+      paymentStatus === "complete" ||
+      paymentStatus === "paid" ||
+      paymentStatus === "success" ||
+      paymentStatus === "successful";
+
+
+    if (!completed) {
+
+      return res.status(400).json({
+
+        success: false,
+
+        error:
+          "Payment is not completed"
+
+      });
+
+    }
+
+
+    const amount =
+      Number(
+        payment.amount
+      );
+
 
     if (
-      paylorStatus === "FAILED" ||
-      paylorStatus === "CANCELLED" ||
-      paylorStatus === "CANCELED" ||
-      paylorStatus === "REJECTED"
+      !Number.isFinite(amount) ||
+      amount <= 0
     ) {
-      if (payment) {
-        await query(
-          `
-          UPDATE payments
-          SET
-            status = 'failed',
-            transaction_id = COALESCE($1, transaction_id),
-            updated_at = NOW()
-          WHERE reference = $2
-          `,
-          [
-            finalTransactionId,
-            payment.reference
-          ]
-        );
-      }
 
-      return res.status(200).json({
-        success: true,
-        paid: false,
-        status: paylorStatus,
-        reference: finalReference,
-        transaction_id: finalTransactionId
+      return res.status(400).json({
+
+        success: false,
+
+        error:
+          "Invalid confirmed payment amount"
+
       });
+
     }
 
+
     /*
-     * ---------------------------------------------------------
-     * 7. STILL WAITING
-     * ---------------------------------------------------------
-     */
+    =====================================================
+    40% COMMISSION
+    =====================================================
+    */
+
+    const commission =
+      Number(
+        (
+          amount *
+          COMMISSION_RATE
+        ).toFixed(2)
+      );
+
+
+    /*
+    =====================================================
+    INSERT ONCE
+    =====================================================
+    */
+
+    const insert =
+      await pool.query(
+        `
+        INSERT INTO employee_commissions (
+
+          transaction_id,
+
+          reference,
+
+          employee_id,
+
+          username,
+
+          referral,
+
+          payment_amount,
+
+          commission_rate,
+
+          commission_amount
+
+        )
+
+        VALUES (
+
+          $1,
+          $2,
+          $3,
+          $4,
+          $5,
+          $6,
+          $7,
+          $8
+
+        )
+
+        ON CONFLICT (
+          transaction_id
+        )
+
+        DO NOTHING
+
+        RETURNING *
+
+        `,
+        [
+
+          transactionId,
+
+          payment.reference ||
+            reference ||
+            null,
+
+          employee.id,
+
+          employee.username,
+
+          employee.referral,
+
+          amount,
+
+          COMMISSION_RATE,
+
+          commission
+
+        ]
+      );
+
+
+    /*
+    =====================================================
+    ALREADY EXISTS
+    =====================================================
+    */
+
+    if (
+      insert.rows.length === 0
+    ) {
+
+      const existing =
+        await pool.query(
+          `
+          SELECT
+            commission_amount
+          FROM employee_commissions
+          WHERE transaction_id = $1
+          LIMIT 1
+          `,
+          [transactionId]
+        );
+
+
+      return res.status(200).json({
+
+        success: true,
+
+        alreadyRecorded: true,
+
+        employeeId:
+          employee.id,
+
+        username:
+          employee.username,
+
+        commission:
+          existing.rows.length
+            ? Number(
+                existing.rows[0]
+                  .commission_amount || 0
+              )
+            : commission,
+
+        commissionRate:
+          COMMISSION_RATE
+
+      });
+
+    }
+
+
+    /*
+    =====================================================
+    SUCCESS
+    =====================================================
+    */
 
     return res.status(200).json({
+
       success: true,
-      paid: false,
-      status: paylorStatus || "PENDING",
-      reference: finalReference,
-      transaction_id: finalTransactionId
+
+      alreadyRecorded: false,
+
+      employeeId:
+        employee.id,
+
+      username:
+        employee.username,
+
+      referral:
+        employee.referral,
+
+      paymentAmount:
+        amount,
+
+      commissionRate:
+        COMMISSION_RATE,
+
+      commission
+
     });
+
 
   } catch (error) {
-    console.error("PAYLOR PAYMENT STATUS ERROR:", error);
+
+    console.error(
+      "EMPLOYEE COMMISSION ERROR:",
+      error
+    );
+
 
     return res.status(500).json({
+
       success: false,
-      message: "Unable to check payment status"
+
+      error:
+        "Unable to record employee commission"
+
     });
+
   }
+
 };
