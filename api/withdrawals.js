@@ -45,6 +45,36 @@ function makeWithdrawalId() {
   );
 }
 
+function normalizeMpesaPhone(value) {
+  let phone = String(value || "")
+    .replace(/\D/g, "");
+
+  if (
+    phone.startsWith("0") &&
+    phone.length === 10
+  ) {
+    phone =
+      "254" +
+      phone.substring(1);
+  } else if (
+    (phone.startsWith("1") ||
+      phone.startsWith("7")) &&
+    phone.length === 9
+  ) {
+    phone =
+      "254" +
+      phone;
+  }
+
+  if (
+    !/^254(1|7)\d{8}$/.test(phone)
+  ) {
+    return null;
+  }
+
+  return phone;
+}
+
 
 /* =========================================================
    MAP REQUEST
@@ -65,7 +95,8 @@ function mapRequest(row) {
 
   return {
 
-    id: String(row.id || ""),
+    id:
+      String(row.id || ""),
 
     employeeId:
       String(row.employee_id || ""),
@@ -150,10 +181,6 @@ async function ensureWithdrawalTable() {
   `);
 
 
-  /* =======================================================
-     ADD COLUMNS IF MISSING
-  ======================================================= */
-
   await pool.query(`
     ALTER TABLE withdrawal_requests
     ADD COLUMN IF NOT EXISTS employee_id VARCHAR(100);
@@ -218,10 +245,6 @@ async function ensureWithdrawalTable() {
   `);
 
 
-  /* =======================================================
-     REPAIR EXISTING ROWS
-  ======================================================= */
-
   await pool.query(`
     UPDATE withdrawal_requests
     SET employee_name =
@@ -253,7 +276,6 @@ async function ensureWithdrawalTable() {
     withdrawal_requests_employee_idx
     ON withdrawal_requests(employee_id);
   `);
-
 
   await pool.query(`
     CREATE INDEX IF NOT EXISTS
@@ -357,7 +379,7 @@ module.exports = async function handler(req, res) {
         ).trim();
 
 
-      const phone =
+      const rawPhone =
         String(
           body.phone ||
           body.mpesaNumber ||
@@ -366,13 +388,15 @@ module.exports = async function handler(req, res) {
         ).trim();
 
 
+      const phone =
+        normalizeMpesaPhone(
+          rawPhone
+        );
+
+
       const amount =
         Number(body.amount);
 
-
-      /* ===================================================
-         VALIDATION
-      =================================================== */
 
       if (!employeeId) {
 
@@ -394,7 +418,7 @@ module.exports = async function handler(req, res) {
           success: false,
 
           error:
-            "Missing M-PESA number"
+            "Enter a valid M-PESA number starting with 01 or 07"
 
         });
       }
@@ -512,7 +536,6 @@ module.exports = async function handler(req, res) {
         if (
           existing.rows.length === 0
         ) {
-
           break;
         }
 
@@ -524,9 +547,6 @@ module.exports = async function handler(req, res) {
 
       /* ===================================================
          INSERT
-         
-         IMPORTANT:
-         We now save BOTH phone and mpesa_number.
       =================================================== */
 
       const insertResult =
@@ -653,10 +673,8 @@ module.exports = async function handler(req, res) {
           )
 
       });
-    }
-
-
-    /* =====================================================
+}
+        /* =====================================================
        PUT - ADMIN APPROVE / REJECT
     ===================================================== */
 
@@ -710,7 +728,276 @@ module.exports = async function handler(req, res) {
 
 
       /* ===================================================
-         ONLY PENDING CAN BE PROCESSED
+         GET CURRENT REQUEST
+      =================================================== */
+
+      const currentResult =
+        await pool.query(
+          `
+          SELECT
+            id,
+            employee_id,
+            employee_name,
+            username,
+            name,
+            referral,
+            phone,
+            mpesa_number,
+            amount,
+            status,
+            created_at,
+            updated_at,
+            processed_at
+
+          FROM withdrawal_requests
+
+          WHERE
+            CAST(id AS TEXT)
+            = $1::text
+
+          LIMIT 1
+          `,
+          [
+            requestId
+          ]
+        );
+
+
+      if (
+        currentResult.rows.length === 0
+      ) {
+
+        return sendJson(res, 404, {
+
+          success: false,
+
+          error:
+            "Withdrawal request not found."
+
+        });
+      }
+
+
+      const current =
+        currentResult.rows[0];
+
+
+      const currentStatus =
+        normalizeStatus(
+          current.status
+        );
+
+
+      if (
+        currentStatus !== "PENDING"
+      ) {
+
+        return sendJson(res, 409, {
+
+          success: false,
+
+          error:
+            "This withdrawal request has already been processed.",
+
+          request:
+            mapRequest(current)
+
+        });
+      }
+
+
+      /* ===================================================
+         APPROVAL BALANCE CHECK
+
+         Commission = 40%
+
+         Available =
+         Total Commission
+         -
+         Already Approved Withdrawals
+      =================================================== */
+
+      if (
+        requestedStatus === "APPROVED"
+      ) {
+
+        const employeeId =
+          String(
+            current.employee_id || ""
+          ).trim();
+
+
+        const withdrawalAmount =
+          Number(
+            current.amount || 0
+          );
+
+
+        if (
+          !employeeId
+        ) {
+
+          return sendJson(res, 400, {
+
+            success: false,
+
+            error:
+              "Withdrawal has no employee ID."
+
+          });
+        }
+
+
+        if (
+          !Number.isFinite(
+            withdrawalAmount
+          ) ||
+          withdrawalAmount <= 0
+        ) {
+
+          return sendJson(res, 400, {
+
+            success: false,
+
+            error:
+              "Withdrawal amount is invalid."
+
+          });
+        }
+
+
+        /* ===============================================
+           TOTAL EMPLOYEE COMMISSION
+        =============================================== */
+
+        const commissionResult =
+          await pool.query(
+            `
+            SELECT
+              COALESCE(
+                SUM(commission_amount),
+                0
+              ) AS total_commission
+
+            FROM employee_commissions
+
+            WHERE
+              LOWER(
+                CAST(employee_id AS TEXT)
+              )
+              =
+              LOWER($1::text)
+            `,
+            [
+              employeeId
+            ]
+          );
+
+
+        /* ===============================================
+           ALREADY APPROVED WITHDRAWALS
+        =============================================== */
+
+        const withdrawnResult =
+          await pool.query(
+            `
+            SELECT
+              COALESCE(
+                SUM(amount),
+                0
+              ) AS total_withdrawn
+
+            FROM withdrawal_requests
+
+            WHERE
+              LOWER(
+                CAST(employee_id AS TEXT)
+              )
+              =
+              LOWER($1::text)
+
+              AND UPPER(
+                CAST(status AS TEXT)
+              )
+              = 'APPROVED'
+
+              AND CAST(id AS TEXT)
+              <> $2::text
+            `,
+            [
+              employeeId,
+              requestId
+            ]
+          );
+
+
+        const totalCommission =
+          Number(
+            commissionResult.rows[0]
+              ?.total_commission || 0
+          );
+
+
+        const totalWithdrawn =
+          Number(
+            withdrawnResult.rows[0]
+              ?.total_withdrawn || 0
+          );
+
+
+        const availableBalance =
+          totalCommission -
+          totalWithdrawn;
+
+
+        /* ===============================================
+           DO NOT APPROVE ABOVE BALANCE
+        =============================================== */
+
+        if (
+          withdrawalAmount >
+          availableBalance
+        ) {
+
+          return sendJson(res, 400, {
+
+            success: false,
+
+            error:
+              "Insufficient available commission.",
+
+            totalCommission:
+              Number(
+                totalCommission.toFixed(2)
+              ),
+
+            totalWithdrawn:
+              Number(
+                totalWithdrawn.toFixed(2)
+              ),
+
+            availableBalance:
+              Number(
+                Math.max(
+                  0,
+                  availableBalance
+                ).toFixed(2)
+              )
+
+          });
+        }
+      }
+
+
+      /* ===================================================
+         PROCESS REQUEST
+
+         APPROVED:
+         Balance will be reduced by the frontend because
+         approved withdrawals are subtracted from commission.
+
+         REJECTED:
+         Nothing is deducted.
       =================================================== */
 
       const updateResult =
@@ -774,7 +1061,7 @@ module.exports = async function handler(req, res) {
 
 
       /* ===================================================
-         ALREADY PROCESSED / NOT FOUND
+         RACE CONDITION / ALREADY PROCESSED
       =================================================== */
 
       if (
@@ -815,7 +1102,6 @@ module.exports = async function handler(req, res) {
             FROM withdrawal_requests
 
             WHERE
-
               CAST(id AS TEXT)
               = $1::text
 
