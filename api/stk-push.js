@@ -82,7 +82,7 @@ module.exports = async (req, res) => {
     cleanReference = String(reference || "")
       .trim()
       .replace(/[^A-Za-z0-9_-]/g, "")
-      .slice(0, 12);
+      .slice(0, 100);
 
     if (!cleanReference) {
       return json(res, 400, {
@@ -130,7 +130,7 @@ module.exports = async (req, res) => {
       now
     );
 
-    // Cleanup old entries
+    // Cleanup old requests
     if (recentRequests.size > 5000) {
       for (const [key, timestamp] of recentRequests) {
         if (
@@ -154,7 +154,8 @@ module.exports = async (req, res) => {
           amount,
           phone,
           status,
-          transaction_request_id
+          transaction_request_id,
+          transaction_id
         FROM payments
         WHERE reference = $1
         LIMIT 1
@@ -166,7 +167,6 @@ module.exports = async (req, res) => {
       const existing =
         existingPayment.rows[0];
 
-      // Same reference cannot use another amount
       if (
         Number(existing.amount) !==
         cleanAmount
@@ -186,29 +186,71 @@ module.exports = async (req, res) => {
         String(existing.status || "")
           .toLowerCase();
 
-      // Don't send another prompt while pending
+      const existingTransaction =
+        existing.transaction_id ||
+        existing.transaction_request_id;
+
+      // Already completed
       if (
-        existingStatus === "pending" &&
-        existing.transaction_request_id
+        existingStatus === "completed" ||
+        existingStatus === "complete" ||
+        existingStatus === "paid" ||
+        existingStatus === "successful" ||
+        existingStatus === "success"
       ) {
         recentRequests.delete(
           requestKey
         );
 
-        return json(res, 409, {
-          success: false,
-
+        return json(res, 200, {
+          success: true,
+          paid: true,
           message:
-            "This payment request is already pending. Please check your M-PESA phone.",
+            "Payment already completed.",
 
           paymentId:
-            existing.transaction_request_id,
-
-          transaction_request_id:
-            existing.transaction_request_id,
+            existingTransaction,
 
           transaction_id:
-            existing.transaction_request_id,
+            existing.transaction_id ||
+            existingTransaction,
+
+          transaction_request_id:
+            existing.transaction_request_id ||
+            existingTransaction,
+
+          status: "Completed",
+
+          reference:
+            cleanReference
+        });
+      }
+
+      // Already pending
+      if (
+        existingStatus === "pending" &&
+        existingTransaction
+      ) {
+        recentRequests.delete(
+          requestKey
+        );
+
+        return json(res, 200, {
+          success: true,
+
+          message:
+            "M-PESA prompt is already pending. Please check your phone.",
+
+          paymentId:
+            existingTransaction,
+
+          transaction_id:
+            existing.transaction_id ||
+            existingTransaction,
+
+          transaction_request_id:
+            existing.transaction_request_id ||
+            existingTransaction,
 
           status: "Pending",
 
@@ -219,28 +261,22 @@ module.exports = async (req, res) => {
     }
 
     // =====================================================
-    // LIPARO CREDENTIALS
+    // PAYLOR CREDENTIALS
     // =====================================================
 
-    const liparoSecret =
+    const paylorApiKey =
       String(
-        process.env.LIPARO_SECRET || ""
+        process.env.PAYLOR_API_KEY || ""
       ).trim();
 
-    const liparoPasskey =
+    const paylorChannelId =
       String(
-        process.env.LIPARO_PASSKEY || ""
-      ).trim();
-
-    const liparoShortcode =
-      String(
-        process.env.LIPARO_SHORTCODE || ""
+        process.env.PAYLOR_CHANNEL_ID || ""
       ).trim();
 
     if (
-      !liparoSecret ||
-      !liparoPasskey ||
-      !liparoShortcode
+      !paylorApiKey ||
+      !paylorChannelId
     ) {
       recentRequests.delete(
         requestKey
@@ -249,8 +285,27 @@ module.exports = async (req, res) => {
       return json(res, 500, {
         success: false,
         message:
-          "Liparo payment credentials are not configured on the server."
+          "Paylor payment credentials are not configured on the server."
       });
+    }
+
+    // =====================================================
+    // CALLBACK URL
+    // =====================================================
+
+    const host =
+      req.headers.host ||
+      process.env.VERCEL_URL ||
+      "";
+
+    let callbackUrl;
+
+    if (host) {
+      callbackUrl =
+        "https://" +
+        String(host)
+          .replace(/^https?:\/\//, "") +
+        "/api/payment-callback";
     }
 
     // =====================================================
@@ -301,82 +356,46 @@ module.exports = async (req, res) => {
     }
 
     // =====================================================
-    // LIPARO STK PUSH
+    // PAYLOR STK PUSH
     // =====================================================
 
-    const url =
-      "https://api.liparo.co.ke/v1/initiatestk";
+    const payload = {
+      phone: mpesaPhone,
+      amount: cleanAmount,
+      reference: cleanReference,
+      channelId: paylorChannelId
+    };
 
-    let response;
+    if (callbackUrl) {
+      payload.callbackUrl =
+        callbackUrl;
+    }
 
-    try {
-      response = await fetch(
-        url,
+    const response =
+      await fetch(
+        "https://api.paylorke.com/api/v1/merchants/payments/stk-push",
         {
           method: "POST",
 
           headers: {
+            Authorization:
+              "Bearer " +
+              paylorApiKey,
+
             "Content-Type":
               "application/json",
-            "Accept":
+
+            Accept:
               "application/json"
           },
 
-          body: JSON.stringify({
-            secret_key:
-              liparoSecret,
-
-            passkey:
-              liparoPasskey,
-
-            shortcode:
-              liparoShortcode,
-
-            amount:
-              cleanAmount,
-
-            phone:
-              mpesaPhone,
-
-            reference:
-              cleanReference
-          })
+          body:
+            JSON.stringify(payload)
         }
       );
-    } catch (networkError) {
-      console.error(
-        "LIPARO_NETWORK_ERROR",
-        networkError
-      );
-
-      await query(
-        `
-        UPDATE payments
-        SET
-          status = 'failed',
-          updated_at = NOW()
-        WHERE reference = $1
-        `,
-        [cleanReference]
-      );
-
-      recentRequests.delete(
-        requestKey
-      );
-
-      return json(res, 502, {
-        success: false,
-
-        message:
-          "Unable to connect to the M-PESA payment service. Please try again shortly.",
-
-        code:
-          "LIPARO_CONNECTION_ERROR"
-      });
-    }
 
     // =====================================================
-    // READ RESPONSE
+    // READ PAYLOR RESPONSE
     // =====================================================
 
     const responseText =
@@ -385,52 +404,48 @@ module.exports = async (req, res) => {
     let data = {};
 
     try {
-      data = responseText
-        ? JSON.parse(responseText)
-        : {};
+      data =
+        responseText
+          ? JSON.parse(responseText)
+          : {};
     } catch {
       data = {
-        rawResponse:
-          responseText
+        message:
+          responseText ||
+          "Paylor returned an invalid response."
       };
     }
 
     console.log(
-      "LIPARO_STK_RESULT",
+      "PAYLOR_STK_RESULT",
       JSON.stringify({
         httpStatus:
           response.status,
 
-        amount:
-          cleanAmount,
-
-        phone:
-          mpesaPhone,
-
         reference:
           cleanReference,
 
-        success:
-          data.success === true,
+        status:
+          data.status ||
+          null,
 
-        transaction_id:
-          data.transaction_id ||
+        transactionId:
+          data.transactionId ||
           null
       })
     );
 
     // =====================================================
-    // SUCCESS
+    // PAYLOR SUCCESS
     // =====================================================
 
     if (
       response.ok &&
-      data.success === true &&
-      data.transaction_id
+      data.transactionId
     ) {
       const transactionId =
         String(
-          data.transaction_id
+          data.transactionId
         );
 
       await query(
@@ -449,24 +464,28 @@ module.exports = async (req, res) => {
         ]
       );
 
+      recentRequests.delete(
+        requestKey
+      );
+
       return json(res, 200, {
         success: true,
 
         message:
-          data.message ||
           "M-PESA prompt sent successfully.",
 
         paymentId:
           transactionId,
 
-        transaction_request_id:
-          transactionId,
-
         transaction_id:
           transactionId,
 
+        transaction_request_id:
+          transactionId,
+
         status:
-          "Pending",
+          data.status ||
+          "SENT",
 
         reference:
           cleanReference
@@ -474,77 +493,8 @@ module.exports = async (req, res) => {
     }
 
     // =====================================================
-    // TEMPORARY LIPARO ERROR
+    // PAYLOR REJECTED
     // =====================================================
-
-    if (
-      response.status === 429 ||
-      response.status === 502 ||
-      response.status === 503 ||
-      response.status === 504
-    ) {
-      console.error(
-        "LIPARO_TEMPORARY_ERROR",
-        JSON.stringify({
-          httpStatus:
-            response.status,
-
-          reference:
-            cleanReference,
-
-          response:
-            data
-        })
-      );
-
-      await query(
-        `
-        UPDATE payments
-        SET
-          status = 'failed',
-          updated_at = NOW()
-        WHERE reference = $1
-        `,
-        [cleanReference]
-      );
-
-      recentRequests.delete(
-        requestKey
-      );
-
-      return json(res, 502, {
-        success: false,
-
-        message:
-          "M-PESA service is temporarily unavailable. Please try again in a few seconds.",
-
-        code:
-          "LIPARO_TEMPORARY_ERROR"
-      });
-    }
-
-    // =====================================================
-    // REJECTED
-    // =====================================================
-
-    console.error(
-      "LIPARO_STK_REJECTED",
-      JSON.stringify({
-        httpStatus:
-          response.status,
-
-        errorCode:
-          data.error_code ||
-          null,
-
-        message:
-          data.message ||
-          null,
-
-        reference:
-          cleanReference
-      })
-    );
 
     await query(
       `
@@ -565,23 +515,26 @@ module.exports = async (req, res) => {
       res,
       response.status >= 400
         ? response.status
-        : 500,
+        : 502,
       {
         success: false,
 
         message:
           data.message ||
-          "Liparo rejected the payment request.",
+          data.error?.message ||
+          "Paylor rejected the payment request.",
 
         code:
-          data.error_code ||
+          data.error?.code ||
+          data.code ||
           null
       }
     );
 
   } catch (error) {
+
     console.error(
-      "LIPARO_STK_ERROR",
+      "PAYLOR_STK_ERROR",
       error
     );
 
