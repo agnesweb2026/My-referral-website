@@ -1,574 +1,332 @@
+const crypto = require("crypto");
 const { query, ensurePaymentTable } = require("./db");
 
-function json(res, status, data) {
-  res.status(status);
-  res.setHeader("Content-Type", "application/json");
-  return res.end(JSON.stringify(data));
-}
-
-// =====================================================
-// DUPLICATE PROTECTION
-// =====================================================
-
-const recentRequests = new Map();
-const COOLDOWN_MS = 30 * 1000;
-
-module.exports = async (req, res) => {
+module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
-    return json(res, 405, {
+    return res.status(405).json({
       success: false,
       message: "Method not allowed"
     });
   }
 
-  let cleanReference = "";
-  let requestKey = "";
-
   try {
+    const API_KEY = process.env.PAYLOR_API_KEY;
+    const CHANNEL_ID = process.env.PAYLOR_CHANNEL_ID;
+
+    if (!API_KEY) {
+      return res.status(500).json({
+        success: false,
+        message: "Paylor API key is not configured on the server"
+      });
+    }
+
     await ensurePaymentTable();
 
-    const body = req.body || {};
+    const {
+      phone,
+      amount,
+      reference
+    } = req.body || {};
 
-    const phone = body.phone;
-    const amount = body.amount;
-    const reference = body.reference;
-
-    // =====================================================
-    // PHONE
-    // =====================================================
-
-    const rawPhone = String(phone || "").replace(/\D/g, "");
-
-    let mpesaPhone = rawPhone;
-
-    if (/^07\d{8}$/.test(rawPhone)) {
-      mpesaPhone = "254" + rawPhone.substring(1);
-    }
-
-    if (/^2547\d{8}$/.test(rawPhone)) {
-      mpesaPhone = rawPhone;
-    }
-
-    if (!/^2547\d{8}$/.test(mpesaPhone)) {
-      return json(res, 400, {
+    if (!phone || !amount || !reference) {
+      return res.status(400).json({
         success: false,
-        message: "Enter a valid Safaricom M-PESA number.",
-        validation: "phone"
+        message: "phone, amount and reference are required"
       });
     }
 
-    // =====================================================
-    // AMOUNT
-    // =====================================================
+    /*
+     * Normalize phone number
+     */
 
-    const cleanAmount = Number(amount);
+    let cleanPhone = String(phone).replace(/\D/g, "");
 
-    if (
-      !Number.isInteger(cleanAmount) ||
-      cleanAmount < 1 ||
-      cleanAmount > 150000
-    ) {
-      return json(res, 400, {
+    if (cleanPhone.startsWith("0")) {
+      cleanPhone = "254" + cleanPhone.substring(1);
+    }
+
+    if (cleanPhone.startsWith("7") && cleanPhone.length === 9) {
+      cleanPhone = "254" + cleanPhone;
+    }
+
+    if (!/^2547\d{8}$/.test(cleanPhone)) {
+      return res.status(400).json({
         success: false,
-        message: "Invalid payment amount.",
-        validation: "amount"
+        message: "Enter a valid Safaricom number"
       });
     }
 
-    // =====================================================
-    // REFERENCE
-    // =====================================================
+    const paymentAmount = Number(amount);
 
-    cleanReference = String(reference || "")
-      .trim()
-      .replace(/[^A-Za-z0-9_-]/g, "")
-      .slice(0, 100);
-
-    if (!cleanReference) {
-      return json(res, 400, {
+    if (!Number.isFinite(paymentAmount) || paymentAmount <= 0) {
+      return res.status(400).json({
         success: false,
-        message: "Missing payment reference.",
-        validation: "reference"
+        message: "Invalid payment amount"
       });
     }
 
-    requestKey =
-      mpesaPhone +
-      "|" +
-      cleanAmount +
-      "|" +
-      cleanReference;
+    /*
+     * ---------------------------------------------------------
+     * Prevent duplicate reference
+     * ---------------------------------------------------------
+     */
 
-    // =====================================================
-    // DUPLICATE PROTECTION
-    // =====================================================
-
-    const now = Date.now();
-
-    const previousRequest =
-      recentRequests.get(requestKey);
-
-    if (
-      previousRequest &&
-      now - previousRequest < COOLDOWN_MS
-    ) {
-      return json(res, 429, {
-        success: false,
-        message:
-          "A payment request was already sent. Please wait before trying again.",
-        retry_after_seconds:
-          Math.ceil(
-            (COOLDOWN_MS -
-              (now - previousRequest)) /
-              1000
-          )
-      });
-    }
-
-    recentRequests.set(
-      requestKey,
-      now
+    const existing = await query(
+      `
+      SELECT *
+      FROM payments
+      WHERE reference = $1
+      LIMIT 1
+      `,
+      [reference]
     );
 
-    // Cleanup old requests
-    if (recentRequests.size > 5000) {
-      for (const [key, timestamp] of recentRequests) {
-        if (
-          now - timestamp >
-          COOLDOWN_MS
-        ) {
-          recentRequests.delete(key);
-        }
-      }
-    }
+    if (existing.rows.length > 0) {
+      const oldPayment = existing.rows[0];
 
-    // =====================================================
-    // CHECK DATABASE
-    // =====================================================
-
-    const existingPayment =
-      await query(
-        `
-        SELECT
-          id,
-          amount,
-          phone,
-          status,
-          transaction_request_id,
-          transaction_id
-        FROM payments
-        WHERE reference = $1
-        LIMIT 1
-        `,
-        [cleanReference]
-      );
-
-    if (existingPayment.rows.length > 0) {
-      const existing =
-        existingPayment.rows[0];
-
-      if (
-        Number(existing.amount) !==
-        cleanAmount
-      ) {
-        recentRequests.delete(
-          requestKey
-        );
-
-        return json(res, 409, {
-          success: false,
-          message:
-            "This payment reference is already linked to another amount."
-        });
-      }
-
-      const existingStatus =
-        String(existing.status || "")
-          .toLowerCase();
-
-      const existingTransaction =
-        existing.transaction_id ||
-        existing.transaction_request_id;
-
-      // Already completed
-      if (
-        existingStatus === "completed" ||
-        existingStatus === "complete" ||
-        existingStatus === "paid" ||
-        existingStatus === "successful" ||
-        existingStatus === "success"
-      ) {
-        recentRequests.delete(
-          requestKey
-        );
-
-        return json(res, 200, {
+      if (oldPayment.status === "completed") {
+        return res.status(200).json({
           success: true,
           paid: true,
-          message:
-            "Payment already completed.",
-
-          paymentId:
-            existingTransaction,
-
+          status: "COMPLETED",
+          reference: oldPayment.reference,
           transaction_id:
-            existing.transaction_id ||
-            existingTransaction,
-
-          transaction_request_id:
-            existing.transaction_request_id ||
-            existingTransaction,
-
-          status: "Completed",
-
-          reference:
-            cleanReference
+            oldPayment.transaction_id ||
+            oldPayment.transaction_request_id ||
+            null
         });
       }
 
-      // Already pending
       if (
-        existingStatus === "pending" &&
-        existingTransaction
+        oldPayment.status === "pending" &&
+        (
+          oldPayment.transaction_id ||
+          oldPayment.transaction_request_id
+        )
       ) {
-        recentRequests.delete(
-          requestKey
-        );
-
-        return json(res, 200, {
+        return res.status(200).json({
           success: true,
-
-          message:
-            "M-PESA prompt is already pending. Please check your phone.",
-
-          paymentId:
-            existingTransaction,
-
+          paid: false,
+          status: "PENDING",
+          reference: oldPayment.reference,
           transaction_id:
-            existing.transaction_id ||
-            existingTransaction,
-
-          transaction_request_id:
-            existing.transaction_request_id ||
-            existingTransaction,
-
-          status: "Pending",
-
-          reference:
-            cleanReference
+            oldPayment.transaction_id ||
+            oldPayment.transaction_request_id
         });
       }
     }
 
-    // =====================================================
-    // PAYLOR CREDENTIALS
-    // =====================================================
+    /*
+     * ---------------------------------------------------------
+     * Create pending payment
+     * ---------------------------------------------------------
+     */
 
-    const paylorApiKey =
-      String(
-        process.env.PAYLOR_API_KEY || ""
-      ).trim();
+    await query(
+      `
+      INSERT INTO payments (
+        reference,
+        amount,
+        phone,
+        status
+      )
+      VALUES ($1, $2, $3, 'pending')
+      ON CONFLICT (reference)
+      DO UPDATE SET
+        amount = EXCLUDED.amount,
+        phone = EXCLUDED.phone,
+        updated_at = NOW()
+      `,
+      [
+        reference,
+        paymentAmount,
+        cleanPhone
+      ]
+    );
 
-    const paylorChannelId =
-      String(
-        process.env.PAYLOR_CHANNEL_ID || ""
-      ).trim();
-
-    if (
-      !paylorApiKey ||
-      !paylorChannelId
-    ) {
-      recentRequests.delete(
-        requestKey
-      );
-
-      return json(res, 500, {
-        success: false,
-        message:
-          "Paylor payment credentials are not configured on the server."
-      });
-    }
-
-    // =====================================================
-    // CALLBACK URL
-    // =====================================================
+    /*
+     * ---------------------------------------------------------
+     * Callback URL
+     * ---------------------------------------------------------
+     */
 
     const host =
+      req.headers["x-forwarded-host"] ||
       req.headers.host ||
-      process.env.VERCEL_URL ||
-      "";
+      process.env.VERCEL_URL;
 
-    let callbackUrl;
+    const protocol =
+      req.headers["x-forwarded-proto"] ||
+      "https";
 
-    if (host) {
-      callbackUrl =
-        "https://" +
-        String(host)
-          .replace(/^https?:\/\//, "") +
-        "/api/payment-callback";
-    }
+    const callbackUrl =
+      `${protocol}://${host}/api/payment-callback`;
 
-    // =====================================================
-    // SAVE PAYMENT AS PENDING
-    // =====================================================
+    /*
+     * ---------------------------------------------------------
+     * Idempotency key
+     * ---------------------------------------------------------
+     */
 
-    if (
-      existingPayment.rows.length === 0
-    ) {
-      await query(
-        `
-        INSERT INTO payments
-        (
-          reference,
-          amount,
-          phone,
-          status
-        )
-        VALUES
-        ($1, $2, $3, 'pending')
-        `,
-        [
-          cleanReference,
-          cleanAmount,
-          mpesaPhone
-        ]
-      );
-    } else {
-      await query(
-        `
-        UPDATE payments
-        SET
-          phone = $2,
-          amount = $3,
-          status = 'pending',
-          transaction_request_id = NULL,
-          transaction_id = NULL,
-          transaction_code = NULL,
-          updated_at = NOW()
-        WHERE reference = $1
-        `,
-        [
-          cleanReference,
-          mpesaPhone,
-          cleanAmount
-        ]
-      );
-    }
+    const idempotencyKey = crypto
+      .createHash("sha256")
+      .update(`${reference}:${cleanPhone}:${paymentAmount}`)
+      .digest("hex");
 
-    // =====================================================
-    // PAYLOR STK PUSH
-    // =====================================================
+    /*
+     * ---------------------------------------------------------
+     * Paylor STK Push
+     * ---------------------------------------------------------
+     */
 
     const payload = {
-      phone: mpesaPhone,
-      amount: cleanAmount,
-      reference: cleanReference,
-      channelId: paylorChannelId
+      phone: cleanPhone,
+      amount: paymentAmount,
+      reference: reference,
+      callbackUrl: callbackUrl
     };
 
-    if (callbackUrl) {
-      payload.callbackUrl =
-        callbackUrl;
+    if (CHANNEL_ID) {
+      payload.channelId = CHANNEL_ID;
     }
 
-    const response =
-      await fetch(
-        "https://api.paylorke.com/api/v1/merchants/payments/stk-push",
-        {
-          method: "POST",
+    const response = await fetch(
+      "https://api.paylorke.com/api/v1/merchants/payments/stk-push",
+      {
+        method: "POST",
 
-          headers: {
-            Authorization:
-              "Bearer " +
-              paylorApiKey,
+        headers: {
+          "Authorization": `Bearer ${API_KEY}`,
+          "Content-Type": "application/json",
+          "Idempotency-Key": idempotencyKey
+        },
 
-            "Content-Type":
-              "application/json",
+        body: JSON.stringify(payload)
+      }
+    );
 
-            Accept:
-              "application/json"
-          },
+    const rawText = await response.text();
 
-          body:
-            JSON.stringify(payload)
-        }
-      );
-
-    // =====================================================
-    // READ PAYLOR RESPONSE
-    // =====================================================
-
-    const responseText =
-      await response.text();
-
-    let data = {};
+    let data;
 
     try {
-      data =
-        responseText
-          ? JSON.parse(responseText)
-          : {};
+      data = JSON.parse(rawText);
     } catch {
       data = {
-        message:
-          responseText ||
-          "Paylor returned an invalid response."
+        message: rawText
       };
     }
 
-    console.log(
-      "PAYLOR_STK_RESULT",
-      JSON.stringify({
-        httpStatus:
-          response.status,
+    /*
+     * ---------------------------------------------------------
+     * Paylor error
+     * ---------------------------------------------------------
+     */
 
-        reference:
-          cleanReference,
-
-        status:
-          data.status ||
-          null,
-
-        transactionId:
-          data.transactionId ||
-          null
-      })
-    );
-
-    // =====================================================
-    // PAYLOR SUCCESS
-    // =====================================================
-
-    if (
-      response.ok &&
-      data.transactionId
-    ) {
-      const transactionId =
-        String(
-          data.transactionId
-        );
-
-      await query(
-        `
-        UPDATE payments
-        SET
-          status = 'pending',
-          transaction_request_id = $2,
-          transaction_id = $2,
-          updated_at = NOW()
-        WHERE reference = $1
-        `,
-        [
-          cleanReference,
-          transactionId
-        ]
+    if (!response.ok) {
+      console.error(
+        "PAYLOR STK ERROR:",
+        response.status,
+        data
       );
 
-      recentRequests.delete(
-        requestKey
-      );
-
-      return json(res, 200, {
-        success: true,
-
+      return res.status(response.status).json({
+        success: false,
         message:
-          "M-PESA prompt sent successfully.",
-
-        paymentId:
-          transactionId,
-
-        transaction_id:
-          transactionId,
-
-        transaction_request_id:
-          transactionId,
-
-        status:
-          data.status ||
-          "SENT",
-
-        reference:
-          cleanReference
+          data?.error?.message ||
+          data?.message ||
+          "Unable to send M-Pesa prompt",
+        code:
+          data?.error?.code ||
+          null
       });
     }
 
-    // =====================================================
-    // PAYLOR REJECTED
-    // =====================================================
+    /*
+     * ---------------------------------------------------------
+     * Paylor success
+     * ---------------------------------------------------------
+     *
+     * Expected:
+     *
+     * {
+     *   transactionId: "...",
+     *   status: "SENT"
+     * }
+     */
+
+    const transactionId =
+      data.transactionId ||
+      data.id ||
+      data.transaction?.id ||
+      null;
+
+    const status =
+      String(
+        data.status ||
+        data.transaction?.status ||
+        "SENT"
+      ).toUpperCase();
+
+    if (!transactionId) {
+      console.error(
+        "Paylor returned no transactionId:",
+        data
+      );
+
+      return res.status(502).json({
+        success: false,
+        message: "Paylor did not return a transaction ID"
+      });
+    }
+
+    /*
+     * ---------------------------------------------------------
+     * Save Paylor transaction ID
+     * ---------------------------------------------------------
+     */
 
     await query(
       `
       UPDATE payments
       SET
-        status = 'failed',
+        transaction_id = $1,
+        status = 'pending',
         updated_at = NOW()
-      WHERE reference = $1
+      WHERE reference = $2
       `,
-      [cleanReference]
+      [
+        transactionId,
+        reference
+      ]
     );
 
-    recentRequests.delete(
-      requestKey
-    );
+    /*
+     * ---------------------------------------------------------
+     * Return to payment.html
+     * ---------------------------------------------------------
+     */
 
-    return json(
-      res,
-      response.status >= 400
-        ? response.status
-        : 502,
-      {
-        success: false,
-
-        message:
-          data.message ||
-          data.error?.message ||
-          "Paylor rejected the payment request.",
-
-        code:
-          data.error?.code ||
-          data.code ||
-          null
-      }
-    );
+    return res.status(200).json({
+      success: true,
+      paid: false,
+      status: status,
+      reference: reference,
+      transaction_id: transactionId,
+      paymentId: transactionId,
+      transaction_request_id: transactionId,
+      message: "M-Pesa prompt sent successfully"
+    });
 
   } catch (error) {
-
     console.error(
-      "PAYLOR_STK_ERROR",
+      "PAYLOR STK PUSH ERROR:",
       error
     );
 
-    if (requestKey) {
-      recentRequests.delete(
-        requestKey
-      );
-    }
-
-    if (cleanReference) {
-      try {
-        await query(
-          `
-          UPDATE payments
-          SET
-            status = 'failed',
-            updated_at = NOW()
-          WHERE reference = $1
-          `,
-          [cleanReference]
-        );
-      } catch (dbError) {
-        console.error(
-          "PAYMENT_DB_UPDATE_ERROR",
-          dbError
-        );
-      }
-    }
-
-    return json(res, 500, {
+    return res.status(500).json({
       success: false,
-
-      message:
-        "Unable to start the M-PESA prompt."
+      message: "Unable to start M-Pesa payment"
     });
   }
 };
