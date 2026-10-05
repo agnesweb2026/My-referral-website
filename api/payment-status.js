@@ -1,72 +1,176 @@
-const { query, ensurePaymentTable, pool } = require("./db");
+const {
+  query,
+  ensurePaymentTable,
+  pool
+} = require("./db");
+
 
 const COMMISSION_RATE = 0.40;
 
+
 const EMPLOYEE_MAP = {
-  joshua1: { id: "REF-A7K2", referral: "REF-A7K2", username: "Joshua1" },
-  joshua2: { id: "REF-B4M8", referral: "REF-B4M8", username: "Joshua2" },
-  joshua3: { id: "REF-C9P3", referral: "REF-C9P3", username: "Joshua3" },
-  joshua4: { id: "REF-D2X6", referral: "REF-D2X6", username: "Joshua4" },
-  joshua5: { id: "REF-E5Q1", referral: "REF-E5Q1", username: "Joshua5" },
-  joshua6: { id: "REF-F8L4", referral: "REF-F8L4", username: "Joshua6" },
-  joshua7: { id: "REF-G3N7", referral: "REF-G3N7", username: "Joshua7" },
-  joshua8: { id: "REF-H6R2", referral: "REF-H6R2", username: "Joshua8" },
-  joshua9: { id: "REF-J9T5", referral: "REF-J9T5", username: "Joshua9" },
-  joshua10: { id: "REF-K4W8", referral: "REF-K4W8", username: "Joshua10" }
+
+  joshua1: {
+    id: "REF-A7K2",
+    referral: "REF-A7K2",
+    username: "Joshua1"
+  },
+
+  joshua2: {
+    id: "REF-B4M8",
+    referral: "REF-B4M8",
+    username: "Joshua2"
+  },
+
+  joshua3: {
+    id: "REF-C9P3",
+    referral: "REF-C9P3",
+    username: "Joshua3"
+  },
+
+  joshua4: {
+    id: "REF-D2X6",
+    referral: "REF-D2X6",
+    username: "Joshua4"
+  },
+
+  joshua5: {
+    id: "REF-E5Q1",
+    referral: "REF-E5Q1",
+    username: "Joshua5"
+  },
+
+  joshua6: {
+    id: "REF-F8L4",
+    referral: "REF-F8L4",
+    username: "Joshua6"
+  },
+
+  joshua7: {
+    id: "REF-G3N7",
+    referral: "REF-G3N7",
+    username: "Joshua7"
+  },
+
+  joshua8: {
+    id: "REF-H6R2",
+    referral: "REF-H6R2",
+    username: "Joshua8"
+  },
+
+  joshua9: {
+    id: "REF-J9T5",
+    referral: "REF-J9T5",
+    username: "Joshua9"
+  },
+
+  joshua10: {
+    id: "REF-K4W8",
+    referral: "REF-K4W8",
+    username: "Joshua10"
+  }
 };
 
-function resolveEmployee(value) {
-  const raw = String(value || "").trim().toLowerCase();
 
-  if (!raw) return null;
+function resolveEmployee(value) {
+
+  const raw =
+    String(value || "")
+      .trim()
+      .toLowerCase();
+
+
+  if (!raw) {
+    return null;
+  }
+
 
   if (EMPLOYEE_MAP[raw]) {
     return EMPLOYEE_MAP[raw];
   }
 
-  for (const key of Object.keys(EMPLOYEE_MAP)) {
-    const employee = EMPLOYEE_MAP[key];
+
+  for (
+    const key of Object.keys(EMPLOYEE_MAP)
+  ) {
+
+    const employee =
+      EMPLOYEE_MAP[key];
+
 
     if (
       employee.id.toLowerCase() === raw ||
       employee.referral.toLowerCase() === raw
     ) {
+
       return employee;
     }
   }
 
+
   return null;
 }
 
-function resolveEmployeeFromReference(reference) {
-  const ref = String(reference || "").toUpperCase();
 
-  for (const key of Object.keys(EMPLOYEE_MAP)) {
-    const employee = EMPLOYEE_MAP[key];
+function resolveEmployeeFromReference(
+  reference
+) {
 
-    const id = employee.id.toUpperCase();
-    const referral = employee.referral.toUpperCase();
+  const ref =
+    String(reference || "")
+      .toUpperCase();
+
+
+  for (
+    const key of Object.keys(EMPLOYEE_MAP)
+  ) {
+
+    const employee =
+      EMPLOYEE_MAP[key];
+
+
+    const id =
+      employee.id.toUpperCase();
+
+    const referral =
+      employee.referral.toUpperCase();
+
+
+    const cleanId =
+      id.replace(
+        /[^A-Z0-9]/g,
+        ""
+      );
+
+    const cleanReferral =
+      referral.replace(
+        /[^A-Z0-9]/g,
+        ""
+      );
+
 
     if (
-      ref.includes(id.replace(/[^A-Z0-9]/g, "")) ||
-      ref.includes(referral.replace(/[^A-Z0-9]/g, ""))
+      ref.includes(cleanId) ||
+      ref.includes(cleanReferral) ||
+      ref.includes(
+        key.toUpperCase()
+      )
     ) {
-      return employee;
-    }
 
-    const username = key.toUpperCase();
-
-    if (ref.includes(username)) {
       return employee;
     }
   }
 
+
   return null;
 }
 
+
 async function ensureCommissionTable() {
+
   await pool.query(`
     CREATE TABLE IF NOT EXISTS employee_commissions (
+
       id BIGSERIAL PRIMARY KEY,
 
       transaction_id VARCHAR(150)
@@ -93,152 +197,221 @@ async function ensureCommissionTable() {
 
       created_at TIMESTAMPTZ
         NOT NULL DEFAULT NOW()
+
     );
   `);
 }
 
-module.exports = async function handler(req, res) {
+
+module.exports = async function handler(
+  req,
+  res
+) {
 
   if (req.method !== "POST") {
+
     return res.status(405).json({
       success: false,
-      message: "Method not allowed"
+      message:
+        "Method not allowed"
     });
   }
+
 
   try {
 
     await ensurePaymentTable();
+
     await ensureCommissionTable();
 
-    const body = req.body || {};
 
-    const transactionId = String(
-      body.transaction_id ||
-      body.transactionId ||
-      body.transaction_request_id ||
-      ""
-    ).trim();
+    const body =
+      req.body || {};
 
-    const reference = String(
-      body.reference ||
-      ""
-    ).trim();
 
-    const employeeValue = String(
-      body.employeeId ||
-      body.employee ||
-      body.username ||
-      body.referral ||
-      ""
-    ).trim();
+    const transactionId =
+      String(
+        body.transaction_id ||
+        body.transactionId ||
+        body.transaction_request_id ||
+        ""
+      ).trim();
+
+
+    const reference =
+      String(
+        body.reference ||
+        ""
+      ).trim();
+
+
+    const employeeValue =
+      String(
+        body.employeeId ||
+        body.employee ||
+        body.username ||
+        body.referral ||
+        ""
+      ).trim();
+
 
     if (!transactionId) {
+
       return res.status(400).json({
+
         success: false,
+
         paid: false,
-        message: "Transaction ID is required"
+
+        message:
+          "Transaction ID is required"
       });
     }
 
+
     /*
-    ========================================
-    EMPLOYEE RESOLUTION
-    ========================================
+    =====================================================
+    EMPLOYEE
+    =====================================================
     */
 
     let employee =
-      resolveEmployee(employeeValue);
+      resolveEmployee(
+        employeeValue
+      );
 
-    if (!employee && reference) {
+
+    if (
+      !employee &&
+      reference
+    ) {
+
       employee =
-        resolveEmployeeFromReference(reference);
+        resolveEmployeeFromReference(
+          reference
+        );
     }
 
+
     /*
-    ========================================
-    FIND LOCAL PAYMENT
-    ========================================
+    =====================================================
+    LOCAL PAYMENT
+    =====================================================
     */
 
-    const localResult = await query(
-      `
-      SELECT
-        reference,
-        amount,
-        status,
-        transaction_request_id,
-        transaction_id,
-        transaction_code
-      FROM payments
-      WHERE
-        transaction_id = $1
-        OR transaction_request_id = $1
-        OR reference = $2
-      ORDER BY updated_at DESC
-      LIMIT 1
-      `,
-      [
-        transactionId,
-        reference || null
-      ]
-    );
+    const localResult =
+      await query(
+        `
+        SELECT
+          reference,
+          amount,
+          phone,
+          status,
+          transaction_request_id,
+          transaction_id,
+          transaction_code
 
-    let payment =
-      localResult.rows[0] || null;
+        FROM payments
+
+        WHERE
+          transaction_id = $1
+          OR transaction_request_id = $1
+          OR reference = $2
+
+        ORDER BY updated_at DESC
+
+        LIMIT 1
+        `,
+        [
+          transactionId,
+          reference || null
+        ]
+      );
+
+
+    const payment =
+      localResult.rows[0] ||
+      null;
+
 
     /*
-    ========================================
-    PAYLOR TRANSACTION VERIFICATION
-    ========================================
-
-    IMPORTANT:
-    We do NOT trust the browser saying paid.
-    We ask Paylor directly.
-    ========================================
+    =====================================================
+    PAYLOR STATUS
+    =====================================================
     */
 
     const API_KEY =
       process.env.PAYLOR_API_KEY;
 
+
     if (!API_KEY) {
+
       return res.status(500).json({
+
         success: false,
+
         paid: false,
+
         message:
           "Paylor API key is not configured on the server"
       });
     }
 
-    const paylorResponse = await fetch(
-      "https://api.paylorke.com/api/v1/merchants/payments/transactions/" +
-      encodeURIComponent(transactionId),
-      {
-        method: "GET",
-        headers: {
-          "Authorization":
-            `Bearer ${API_KEY}`,
-          "Content-Type":
-            "application/json",
-          "Accept":
-            "application/json"
+
+    const paylorResponse =
+      await fetch(
+
+        "https://api.paylorke.com/api/v1/merchants/payments/transactions/" +
+        encodeURIComponent(
+          transactionId
+        ),
+
+        {
+          method: "GET",
+
+          headers: {
+
+            "Authorization":
+              `Bearer ${API_KEY}`,
+
+            "Content-Type":
+              "application/json",
+
+            "Accept":
+              "application/json"
+          }
         }
-      }
-    );
+      );
+
 
     const rawText =
       await paylorResponse.text();
 
+
     let paylorData;
 
+
     try {
+
       paylorData =
-        JSON.parse(rawText);
+        JSON.parse(
+          rawText
+        );
+
     } catch {
+
       paylorData = {
-        message: rawText
+        message:
+          rawText
       };
     }
+
+
+    /*
+    =====================================================
+    PAYLOR TEMPORARY ERROR
+    =====================================================
+    */
 
     if (!paylorResponse.ok) {
 
@@ -248,25 +421,27 @@ module.exports = async function handler(req, res) {
         paylorData
       );
 
-      /*
-      If Paylor temporarily fails,
-      DO NOT mark payment failed.
-      Keep waiting.
-      */
 
       return res.status(200).json({
+
         success: true,
+
         paid: false,
-        status: "PENDING",
+
+        status:
+          "PENDING",
+
         message:
           "Payment is still being verified"
       });
     }
 
+
     const paylorTransaction =
       paylorData.transaction ||
       paylorData.data ||
       paylorData;
+
 
     const paylorStatus =
       String(
@@ -274,8 +449,9 @@ module.exports = async function handler(req, res) {
         paylorData.status ||
         ""
       )
-      .toUpperCase()
-      .trim();
+        .toUpperCase()
+        .trim();
+
 
     const paylorReference =
       paylorTransaction.reference ||
@@ -283,107 +459,213 @@ module.exports = async function handler(req, res) {
       reference ||
       "";
 
+
     const paylorAmount =
       Number(
         paylorTransaction.amount ||
         paylorData.amount ||
-        (payment && payment.amount) ||
+        (payment &&
+          payment.amount) ||
         0
       );
 
+
     /*
-    ========================================
-    NOT COMPLETED
-    ========================================
+    =====================================================
+    FAILED / CANCELLED
+    =====================================================
     */
 
-    if (paylorStatus !== "COMPLETED") {
+    if (
+      paylorStatus === "FAILED" ||
+      paylorStatus === "CANCELLED" ||
+      paylorStatus === "CANCELED" ||
+      paylorStatus === "REJECTED"
+    ) {
 
-      if (
-        paylorStatus === "FAILED" ||
-        paylorStatus === "CANCELLED" ||
-        paylorStatus === "CANCELED" ||
-        paylorStatus === "REJECTED"
-      ) {
+      /*
+      UPDATE PAYMENT
+      */
 
-        await query(
-          `
-          UPDATE payments
-          SET
-            status = 'failed',
-            updated_at = NOW()
-          WHERE
-            transaction_id = $1
-            OR transaction_request_id = $1
-          `,
-          [transactionId]
-        );
+      await query(
+        `
+        UPDATE payments
 
-        return res.status(200).json({
-          success: true,
-          paid: false,
-          status: paylorStatus,
-          message:
-            "M-PESA payment was not completed"
-        });
-      }
+        SET
+          status = 'failed',
+          updated_at = NOW()
+
+        WHERE
+          transaction_id = $1
+          OR transaction_request_id = $1
+        `,
+        [
+          transactionId
+        ]
+      );
+
+
+      /*
+      UPDATE PAYMENT ATTEMPT
+      */
+
+      await query(
+        `
+        UPDATE payment_attempts
+
+        SET
+          status = $1,
+          transaction_id = $2,
+          updated_at = NOW()
+
+        WHERE
+          transaction_id = $2
+
+          OR reference = $3
+        `,
+        [
+          paylorStatus === "CANCELLED" ||
+          paylorStatus === "CANCELED"
+            ? "cancelled"
+            : paylorStatus.toLowerCase(),
+
+          transactionId,
+
+          paylorReference
+        ]
+      );
+
 
       return res.status(200).json({
+
         success: true,
+
         paid: false,
+
         status:
-          paylorStatus || "PENDING",
+          paylorStatus,
+
+        message:
+          "M-PESA payment was not completed"
+      });
+    }
+
+
+    /*
+    =====================================================
+    STILL PENDING
+    =====================================================
+    */
+
+    if (
+      paylorStatus !== "COMPLETED"
+    ) {
+
+      return res.status(200).json({
+
+        success: true,
+
+        paid: false,
+
+        status:
+          paylorStatus ||
+          "PENDING",
+
         message:
           "Waiting for M-PESA payment"
       });
     }
 
+
     /*
-    ========================================
+    =====================================================
     PAYMENT COMPLETED
-    ========================================
+    =====================================================
     */
 
     const finalReference =
       paylorReference ||
-      (payment && payment.reference) ||
+      (
+        payment &&
+        payment.reference
+      ) ||
       reference;
+
 
     const finalAmount =
       paylorAmount ||
       Number(
-        payment && payment.amount
+        payment &&
+        payment.amount
       );
 
+
+    /*
+    =====================================================
+    SERVER-SIDE AMOUNT CHECK
+    =====================================================
+    */
+
+    const ALLOWED_AMOUNTS = [
+      95,
+      138,
+      207,
+      253,
+      299,
+      393
+    ];
+
+
     if (
-      !Number.isFinite(finalAmount) ||
-      finalAmount <= 0
+      !ALLOWED_AMOUNTS.includes(
+        Math.round(
+          finalAmount
+        )
+      )
     ) {
+
+      console.error(
+        "INVALID COMPLETED PAYMENT AMOUNT:",
+        finalAmount,
+        transactionId
+      );
+
+
       return res.status(400).json({
+
         success: false,
+
         paid: false,
+
         message:
           "Invalid confirmed payment amount"
       });
     }
 
+
     /*
-    ========================================
-    UPDATE LOCAL PAYMENT
-    ========================================
+    =====================================================
+    UPDATE PAYMENT
+    =====================================================
     */
 
     await query(
       `
       UPDATE payments
+
       SET
         status = 'completed',
+
         transaction_id = $1,
-        transaction_request_id = COALESCE(
-          transaction_request_id,
-          $1
-        ),
+
+        transaction_request_id =
+          COALESCE(
+            transaction_request_id,
+            $1
+          ),
+
         updated_at = NOW()
+
       WHERE
         reference = $2
         OR transaction_id = $1
@@ -395,10 +677,37 @@ module.exports = async function handler(req, res) {
       ]
     );
 
+
     /*
-    ========================================
+    =====================================================
+    MARK PAYMENT ATTEMPT COMPLETED
+    =====================================================
+    */
+
+    await query(
+      `
+      UPDATE payment_attempts
+
+      SET
+        status = 'completed',
+        transaction_id = $1,
+        updated_at = NOW()
+
+      WHERE
+        transaction_id = $1
+        OR reference = $2
+      `,
+      [
+        transactionId,
+        finalReference
+      ]
+    );
+
+
+    /*
+    =====================================================
     40% COMMISSION
-    ========================================
+    =====================================================
     */
 
     if (employee) {
@@ -411,14 +720,11 @@ module.exports = async function handler(req, res) {
           ).toFixed(2)
         );
 
-      /*
-      UNIQUE transaction_id prevents
-      duplicate commission.
-      */
 
       await pool.query(
         `
-        INSERT INTO employee_commissions (
+        INSERT INTO employee_commissions
+        (
           transaction_id,
           reference,
           employee_id,
@@ -428,7 +734,9 @@ module.exports = async function handler(req, res) {
           commission_rate,
           commission_amount
         )
-        VALUES (
+
+        VALUES
+        (
           $1,
           $2,
           $3,
@@ -438,22 +746,33 @@ module.exports = async function handler(req, res) {
           $7,
           $8
         )
+
         ON CONFLICT (
           transaction_id
         )
+
         DO NOTHING
         `,
         [
           transactionId,
-          finalReference || null,
+
+          finalReference ||
+            null,
+
           employee.id,
+
           employee.username,
+
           employee.referral,
+
           finalAmount,
+
           COMMISSION_RATE,
+
           commission
         ]
       );
+
 
       console.log(
         "40% COMMISSION RECORDED:",
@@ -469,30 +788,39 @@ module.exports = async function handler(req, res) {
         finalReference,
         transactionId
       );
-
     }
 
+
     /*
-    ========================================
+    =====================================================
     FINAL SUCCESS
-    ========================================
+    =====================================================
     */
 
     return res.status(200).json({
+
       success: true,
+
       paid: true,
-      status: "COMPLETED",
+
+      status:
+        "COMPLETED",
+
       transaction_id:
         transactionId,
+
       reference:
         finalReference,
+
       amount:
         finalAmount,
+
       employee:
         employee
           ? employee.username
           : null
     });
+
 
   } catch (error) {
 
@@ -501,16 +829,16 @@ module.exports = async function handler(req, res) {
       error
     );
 
-    /*
-    IMPORTANT:
-    Server error must NOT falsely
-    tell the customer that payment failed.
-    */
 
     return res.status(200).json({
+
       success: true,
+
       paid: false,
-      status: "PENDING",
+
+      status:
+        "PENDING",
+
       message:
         "Payment is still being verified"
     });
