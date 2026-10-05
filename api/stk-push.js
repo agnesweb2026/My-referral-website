@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+
 const {
   query,
   ensurePaymentTable
@@ -7,33 +8,12 @@ const {
 
 /*
 =========================================================
-PAYLOR STK PUSH
-=========================================================
-
-SUPPORTED NUMBERS:
-
-01XXXXXXXX
-07XXXXXXXX
-
-2541XXXXXXXX
-2547XXXXXXXX
-
-ALSO ACCEPTS:
-
-1XXXXXXXX
-7XXXXXXXX
-
+PAYLOR STK PUSH + PAYMENT ABUSE PROTECTION
 =========================================================
 */
 
 
 module.exports = async function handler(req, res) {
-
-  /*
-  =======================================================
-  METHOD
-  =======================================================
-  */
 
   if (req.method !== "POST") {
 
@@ -160,7 +140,7 @@ module.exports = async function handler(req, res) {
 
   /*
   =======================================================
-  REFERENCE LENGTH PROTECTION
+  CLEAN REFERENCE
   =======================================================
   */
 
@@ -188,24 +168,6 @@ module.exports = async function handler(req, res) {
   =======================================================
   PHONE NORMALIZATION
   =======================================================
-
-  01XXXXXXXX
-       ↓
-  2541XXXXXXXX
-
-  07XXXXXXXX
-       ↓
-  2547XXXXXXXX
-
-  1XXXXXXXX
-       ↓
-  2541XXXXXXXX
-
-  7XXXXXXXX
-       ↓
-  2547XXXXXXXX
-
-  =======================================================
   */
 
   let cleanPhone =
@@ -213,12 +175,6 @@ module.exports = async function handler(req, res) {
       .replace(/\D/g, "")
       .trim();
 
-
-  /*
-  -------------------------------------------------------
-  01XXXXXXXX / 07XXXXXXXX
-  -------------------------------------------------------
-  */
 
   if (
     cleanPhone.startsWith("0") &&
@@ -231,12 +187,6 @@ module.exports = async function handler(req, res) {
 
   }
 
-
-  /*
-  -------------------------------------------------------
-  1XXXXXXXX / 7XXXXXXXX
-  -------------------------------------------------------
-  */
 
   if (
     (
@@ -257,13 +207,6 @@ module.exports = async function handler(req, res) {
   =======================================================
   FINAL SAFARICOM VALIDATION
   =======================================================
-
-  ACCEPT ONLY:
-
-  2541XXXXXXXX
-  2547XXXXXXXX
-
-  =======================================================
   */
 
   if (
@@ -281,30 +224,55 @@ module.exports = async function handler(req, res) {
   }
 
 
-  /*
-  =======================================================
-  AMOUNT
-  =======================================================
-  */
-
   const paymentAmount =
     Math.round(amount);
 
 
   /*
   =======================================================
-  EXISTING PAYMENT PROTECTION
+  CLIENT IP
   =======================================================
+  */
 
-  If the same reference already exists:
+  let clientIp =
+    "unknown";
 
-  COMPLETED
-      → do not charge again
 
-  PENDING
-      → return the existing transaction
+  try {
 
-  This helps prevent duplicate STK prompts.
+    const forwarded =
+      req.headers["x-forwarded-for"];
+
+    const realIp =
+      req.headers["x-real-ip"];
+
+
+    if (forwarded) {
+
+      clientIp =
+        String(forwarded)
+          .split(",")[0]
+          .trim();
+
+    } else if (realIp) {
+
+      clientIp =
+        String(realIp)
+          .trim();
+
+    }
+
+  } catch (error) {
+
+    clientIp =
+      "unknown";
+
+  }
+
+
+  /*
+  =======================================================
+  EXISTING REFERENCE PROTECTION
   =======================================================
   */
 
@@ -322,11 +290,16 @@ module.exports = async function handler(req, res) {
           transaction_request_id,
           transaction_id,
           transaction_code
+
         FROM payments
+
         WHERE reference = $1
+
         LIMIT 1
         `,
-        [cleanReference]
+        [
+          cleanReference
+        ]
       );
 
 
@@ -341,12 +314,14 @@ module.exports = async function handler(req, res) {
 
       /*
       ---------------------------------------------------
-      ALREADY PAID
+      ALREADY COMPLETED
       ---------------------------------------------------
       */
 
       if (
-        String(existing.status || "")
+        String(
+          existing.status || ""
+        )
           .toLowerCase()
           .includes("complet")
       ) {
@@ -378,10 +353,7 @@ module.exports = async function handler(req, res) {
 
       /*
       ---------------------------------------------------
-      EXISTING PENDING TRANSACTION
-      ---------------------------------------------------
-
-      Do not create another prompt.
+      EXISTING PENDING
       ---------------------------------------------------
       */
 
@@ -411,7 +383,8 @@ module.exports = async function handler(req, res) {
             existing.reference,
 
           status:
-            existing.status || "pending",
+            existing.status ||
+            "pending",
 
           message:
             "An M-PESA payment request is already pending for this payment."
@@ -434,6 +407,443 @@ module.exports = async function handler(req, res) {
 
   /*
   =======================================================
+  ACTIVE PENDING PAYMENT FOR SAME PHONE
+  =======================================================
+  */
+
+  try {
+
+    const pendingResult =
+      await query(
+        `
+        SELECT
+          reference,
+          transaction_id,
+          transaction_request_id,
+          status,
+          created_at
+
+        FROM payments
+
+        WHERE phone = $1
+
+        AND LOWER(status) = 'pending'
+
+        AND created_at >
+          NOW() - INTERVAL '15 minutes'
+
+        ORDER BY created_at DESC
+
+        LIMIT 1
+        `,
+        [
+          cleanPhone
+        ]
+      );
+
+
+    if (
+      pendingResult.rows &&
+      pendingResult.rows.length > 0
+    ) {
+
+      const pending =
+        pendingResult.rows[0];
+
+      const transaction =
+        pending.transaction_id ||
+        pending.transaction_request_id;
+
+
+      if (transaction) {
+
+        return res.status(429).json({
+
+          success: false,
+
+          blocked: true,
+
+          reason:
+            "pending_payment",
+
+          message:
+            "An M-PESA payment request is already pending for this number. Please complete it first.",
+
+          transaction_id:
+            transaction,
+
+          reference:
+            pending.reference
+
+        });
+
+      }
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "PENDING PAYMENT CHECK ERROR:",
+      error
+    );
+
+  }
+
+
+  /*
+  =======================================================
+  60 SECOND PHONE COOLDOWN
+  =======================================================
+  */
+
+  try {
+
+    const cooldownResult =
+      await query(
+        `
+        SELECT
+          created_at
+
+        FROM payment_attempts
+
+        WHERE phone = $1
+
+        AND created_at >
+          NOW() - INTERVAL '60 seconds'
+
+        ORDER BY created_at DESC
+
+        LIMIT 1
+        `,
+        [
+          cleanPhone
+        ]
+      );
+
+
+    if (
+      cooldownResult.rows &&
+      cooldownResult.rows.length > 0
+    ) {
+
+      const lastAttempt =
+        new Date(
+          cooldownResult.rows[0].created_at
+        );
+
+
+      const secondsPassed =
+        Math.floor(
+          (
+            Date.now() -
+            lastAttempt.getTime()
+          ) / 1000
+        );
+
+
+      const waitSeconds =
+        Math.max(
+          1,
+          60 - secondsPassed
+        );
+
+
+      return res.status(429).json({
+
+        success: false,
+
+        blocked: true,
+
+        reason:
+          "phone_cooldown",
+
+        retry_after:
+          waitSeconds,
+
+        message:
+          `Please wait ${waitSeconds} seconds before requesting another M-PESA prompt.`
+
+      });
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "PHONE COOLDOWN CHECK ERROR:",
+      error
+    );
+
+  }
+
+
+  /*
+  =======================================================
+  MAX 3 PHONE ATTEMPTS / 10 MINUTES
+  =======================================================
+  */
+
+  try {
+
+    const phoneAttemptsResult =
+      await query(
+        `
+        SELECT
+          COUNT(*) AS total
+
+        FROM payment_attempts
+
+        WHERE phone = $1
+
+        AND created_at >
+          NOW() - INTERVAL '10 minutes'
+        `,
+        [
+          cleanPhone
+        ]
+      );
+
+
+    const totalPhoneAttempts =
+      Number(
+        phoneAttemptsResult.rows[0]?.total || 0
+      );
+
+
+    if (
+      totalPhoneAttempts >= 3
+    ) {
+
+      return res.status(429).json({
+
+        success: false,
+
+        blocked: true,
+
+        reason:
+          "phone_rate_limit",
+
+        message:
+          "Too many payment attempts for this number. Please wait and try again later."
+
+      });
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "PHONE RATE LIMIT CHECK ERROR:",
+      error
+    );
+
+  }
+
+
+  /*
+  =======================================================
+  MAX 10 IP ATTEMPTS / 10 MINUTES
+  =======================================================
+  */
+
+  if (
+    clientIp &&
+    clientIp !== "unknown"
+  ) {
+
+    try {
+
+      const ipAttemptsResult =
+        await query(
+          `
+          SELECT
+            COUNT(*) AS total
+
+          FROM payment_attempts
+
+          WHERE ip_address = $1
+
+          AND created_at >
+            NOW() - INTERVAL '10 minutes'
+          `,
+          [
+            clientIp
+          ]
+        );
+
+
+      const totalIpAttempts =
+        Number(
+          ipAttemptsResult.rows[0]?.total || 0
+        );
+
+
+      if (
+        totalIpAttempts >= 10
+      ) {
+
+        return res.status(429).json({
+
+          success: false,
+
+          blocked: true,
+
+          reason:
+            "ip_rate_limit",
+
+          message:
+            "Too many payment requests from this connection. Please wait and try again."
+
+        });
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "IP RATE LIMIT CHECK ERROR:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /*
+  =======================================================
+  MAX 3 FAILED ATTEMPTS / 10 MINUTES
+  =======================================================
+  */
+
+  try {
+
+    const failedResult =
+      await query(
+        `
+        SELECT
+          COUNT(*) AS total
+
+        FROM payment_attempts
+
+        WHERE phone = $1
+
+        AND status IN
+        (
+          'failed',
+          'cancelled',
+          'canceled',
+          'rejected'
+        )
+
+        AND created_at >
+          NOW() - INTERVAL '10 minutes'
+        `,
+        [
+          cleanPhone
+        ]
+      );
+
+
+    const failedAttempts =
+      Number(
+        failedResult.rows[0]?.total || 0
+      );
+
+
+    if (
+      failedAttempts >= 3
+    ) {
+
+      return res.status(429).json({
+
+        success: false,
+
+        blocked: true,
+
+        reason:
+          "failed_attempt_limit",
+
+        message:
+          "Too many failed or cancelled payment attempts. Please wait before trying again."
+
+      });
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "FAILED ATTEMPT CHECK ERROR:",
+      error
+    );
+
+  }
+
+
+  /*
+  =======================================================
+  RECORD PAYMENT ATTEMPT
+  =======================================================
+  */
+
+  let attemptId =
+    null;
+
+
+  try {
+
+    const attemptResult =
+      await query(
+        `
+        INSERT INTO payment_attempts
+        (
+          phone,
+          ip_address,
+          reference,
+          amount,
+          status,
+          created_at,
+          updated_at
+        )
+
+        VALUES
+        (
+          $1,
+          $2,
+          $3,
+          $4,
+          'pending',
+          NOW(),
+          NOW()
+        )
+
+        RETURNING id
+        `,
+        [
+          cleanPhone,
+          clientIp,
+          cleanReference,
+          paymentAmount
+        ]
+      );
+
+
+    attemptId =
+      attemptResult.rows[0]?.id ||
+      null;
+
+  } catch (error) {
+
+    console.error(
+      "SAVE PAYMENT ATTEMPT ERROR:",
+      error
+    );
+
+        }
+    /*
+  =======================================================
   PAYLOR CALLBACK URL
   =======================================================
   */
@@ -441,7 +851,8 @@ module.exports = async function handler(req, res) {
   const callbackUrl =
     `${
       process.env.VERCEL_URL
-        ? "https://" + process.env.VERCEL_URL
+        ? "https://" +
+          process.env.VERCEL_URL
         : ""
     }/api/payment-callback`;
 
@@ -449,12 +860,6 @@ module.exports = async function handler(req, res) {
   /*
   =======================================================
   IDEMPOTENCY KEY
-  =======================================================
-
-  Same reference + same phone + same amount
-  produces the same key.
-
-  This protects against duplicate requests.
   =======================================================
   */
 
@@ -486,6 +891,7 @@ module.exports = async function handler(req, res) {
         created_at,
         updated_at
       )
+
       VALUES
       (
         $1,
@@ -495,7 +901,9 @@ module.exports = async function handler(req, res) {
         NOW(),
         NOW()
       )
+
       ON CONFLICT(reference)
+
       DO UPDATE SET
         amount = EXCLUDED.amount,
         phone = EXCLUDED.phone,
@@ -515,10 +923,45 @@ module.exports = async function handler(req, res) {
       error
     );
 
+
+    if (attemptId) {
+
+      try {
+
+        await query(
+          `
+          UPDATE payment_attempts
+
+          SET
+            status = 'failed',
+            updated_at = NOW()
+
+          WHERE id = $1
+          `,
+          [
+            attemptId
+          ]
+        );
+
+      } catch (updateError) {
+
+        console.error(
+          "ATTEMPT UPDATE ERROR:",
+          updateError
+        );
+
+      }
+
+    }
+
+
     return res.status(500).json({
+
       success: false,
+
       message:
         "Unable to create payment record"
+
     });
 
   }
@@ -589,7 +1032,9 @@ module.exports = async function handler(req, res) {
       await paylorResponse.text();
 
 
-    let data = {};
+    let data =
+      {};
+
 
     try {
 
@@ -600,7 +1045,8 @@ module.exports = async function handler(req, res) {
 
     } catch (error) {
 
-      data = {};
+      data =
+        {};
 
     }
 
@@ -620,23 +1066,21 @@ module.exports = async function handler(req, res) {
       );
 
 
-      /*
-      -----------------------------------------------
-      MARK PAYMENT FAILED
-      -----------------------------------------------
-      */
-
       try {
 
         await query(
           `
           UPDATE payments
+
           SET
             status = 'failed',
             updated_at = NOW()
+
           WHERE reference = $1
           `,
-          [cleanReference]
+          [
+            cleanReference
+          ]
         );
 
       } catch (dbError) {
@@ -650,9 +1094,43 @@ module.exports = async function handler(req, res) {
 
 
       /*
-      -----------------------------------------------
-      PAYLOR ERROR RESPONSE
-      -----------------------------------------------
+      MARK ATTEMPT FAILED
+      */
+
+      if (attemptId) {
+
+        try {
+
+          await query(
+            `
+            UPDATE payment_attempts
+
+            SET
+              status = 'failed',
+              updated_at = NOW()
+
+            WHERE id = $1
+            `,
+            [
+              attemptId
+            ]
+          );
+
+        } catch (dbError) {
+
+          console.error(
+            "FAILED ATTEMPT UPDATE ERROR:",
+            dbError
+          );
+
+        }
+
+      }
+
+
+      /*
+      IMPORTANT:
+      NO AUTOMATIC RETRY
       */
 
       return res.status(
@@ -708,12 +1186,16 @@ module.exports = async function handler(req, res) {
         await query(
           `
           UPDATE payments
+
           SET
             status = 'failed',
             updated_at = NOW()
+
           WHERE reference = $1
           `,
-          [cleanReference]
+          [
+            cleanReference
+          ]
         );
 
       } catch (dbError) {
@@ -722,6 +1204,37 @@ module.exports = async function handler(req, res) {
           "PAYMENT UPDATE ERROR:",
           dbError
         );
+
+      }
+
+
+      if (attemptId) {
+
+        try {
+
+          await query(
+            `
+            UPDATE payment_attempts
+
+            SET
+              status = 'failed',
+              updated_at = NOW()
+
+            WHERE id = $1
+            `,
+            [
+              attemptId
+            ]
+          );
+
+        } catch (dbError) {
+
+          console.error(
+            "ATTEMPT UPDATE ERROR:",
+            dbError
+          );
+
+        }
 
       }
 
@@ -749,11 +1262,13 @@ module.exports = async function handler(req, res) {
       await query(
         `
         UPDATE payments
+
         SET
           transaction_request_id = $1,
           transaction_id = $1,
           status = 'pending',
           updated_at = NOW()
+
         WHERE reference = $2
         `,
         [
@@ -770,10 +1285,47 @@ module.exports = async function handler(req, res) {
       );
 
       /*
-      IMPORTANT:
-      The prompt may already have been sent,
-      so do not automatically send another prompt.
+      DO NOT SEND ANOTHER PROMPT.
       */
+
+    }
+
+
+    /*
+    =====================================================
+    UPDATE ATTEMPT
+    =====================================================
+    */
+
+    if (attemptId) {
+
+      try {
+
+        await query(
+          `
+          UPDATE payment_attempts
+
+          SET
+            status = 'pending',
+            transaction_id = $1,
+            updated_at = NOW()
+
+          WHERE id = $2
+          `,
+          [
+            String(transactionId),
+            attemptId
+          ]
+        );
+
+      } catch (error) {
+
+        console.error(
+          "ATTEMPT TRANSACTION UPDATE ERROR:",
+          error
+        );
+
+      }
 
     }
 
@@ -798,7 +1350,8 @@ module.exports = async function handler(req, res) {
         cleanReference,
 
       status:
-        data.status || "SENT",
+        data.status ||
+        "SENT",
 
       message:
         "M-PESA prompt sent successfully"
@@ -817,12 +1370,41 @@ module.exports = async function handler(req, res) {
     /*
     =====================================================
     IMPORTANT:
-    DO NOT AUTOMATICALLY RETRY STK PUSH
-    =====================================================
 
-    This prevents accidental duplicate prompts.
+    DO NOT AUTOMATICALLY RETRY STK PUSH.
     =====================================================
     */
+
+    if (attemptId) {
+
+      try {
+
+        await query(
+          `
+          UPDATE payment_attempts
+
+          SET
+            status = 'failed',
+            updated_at = NOW()
+
+          WHERE id = $1
+          `,
+          [
+            attemptId
+          ]
+        );
+
+      } catch (dbError) {
+
+        console.error(
+          "ATTEMPT FAILURE UPDATE ERROR:",
+          dbError
+        );
+
+      }
+
+    }
+
 
     return res.status(502).json({
 
