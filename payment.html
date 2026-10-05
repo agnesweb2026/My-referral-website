@@ -6,71 +6,23 @@
 <title>M-PESA PAYMENT</title>
 
 <style>
-*{
- box-sizing:border-box;
- -webkit-tap-highlight-color:transparent
-}
-
-html,body{
- margin:0;
- padding:0;
- width:100%;
- min-height:100%;
- font-family:Arial,Helvetica,sans-serif;
- background:#050505;
- color:#fff
-}
-
-body{
- overflow-x:hidden
-}
-
-.hidden{
- display:none!important
-}
-
-button,input{
- font-family:inherit
-}
-
-button{
- cursor:pointer
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#050505;color:#fff}
+body{overflow-x:hidden}
+.hidden{display:none!important}
+button,input{font-family:inherit}
+button{cursor:pointer}
 
 .page{
  min-height:100vh;
  padding:22px 14px 40px;
- background:
- radial-gradient(
- circle at top,
- #202020 0%,
- #0b0b0b 45%,
- #030303 100%
- )
+ background:radial-gradient(circle at top,#202020 0%,#0b0b0b 45%,#030303 100%)
 }
+.wrap{width:100%;max-width:520px;margin:auto}
 
-.wrap{
- width:100%;
- max-width:520px;
- margin:auto
-}
-
-.header{
- text-align:center;
- margin-bottom:22px
-}
-
-.header h1{
- margin:5px 0 8px;
- font-size:30px;
- font-weight:900
-}
-
-.header p{
- margin:0;
- color:#999;
- font-size:14px
-}
+.header{text-align:center;margin-bottom:22px}
+.header h1{margin:5px 0 8px;font-size:30px;font-weight:900}
+.header p{margin:0;color:#999;font-size:14px}
 
 .secure{
  display:inline-flex;
@@ -96,32 +48,16 @@ button{
  border:1px solid #292929;
  border-radius:18px;
  padding:18px 13px;
- background:
- linear-gradient(
- 145deg,
- #171717,
- #0c0c0c
- );
+ background:linear-gradient(145deg,#171717,#0c0c0c);
  overflow:hidden;
  transition:.2s ease
 }
-
-.package:active{
- transform:scale(.97)
-}
-
+.package:active{transform:scale(.97)}
 .package.selected{
  border:2px solid #fff;
- background:
- linear-gradient(
- 145deg,
- #222,
- #101010
- );
- box-shadow:
- 0 0 22px rgba(255,255,255,.10)
+ background:linear-gradient(145deg,#222,#101010);
+ box-shadow:0 0 22px rgba(255,255,255,.10)
 }
-
 .badge{
  position:absolute;
  top:9px;
@@ -133,34 +69,11 @@ button{
  font-size:9px;
  font-weight:900
 }
-
-.minutes{
- margin-top:3px;
- font-size:24px;
- font-weight:900
-}
-
-.label{
- margin-top:2px;
- color:#aaa;
- font-size:12px
-}
-
-.price{
- margin-top:14px;
- font-size:21px;
- font-weight:900
-}
-
-.select-text{
- margin-top:10px;
- color:#888;
- font-size:11px
-}
-
-.package.selected .select-text{
- color:#fff
-}
+.minutes{margin-top:3px;font-size:24px;font-weight:900}
+.label{margin-top:2px;color:#aaa;font-size:12px}
+.price{margin-top:14px;font-size:21px;font-weight:900}
+.select-text{margin-top:10px;color:#888;font-size:11px}
+.package.selected .select-text{color:#fff}
 
 .selected-box{
  margin-top:18px;
@@ -170,31 +83,17 @@ button{
  border:1px solid #292929;
  text-align:center
 }
+.selected-title{color:#999;font-size:12px}
+.selected-value{margin-top:5px;font-size:21px;font-weight:900}
 
-.selected-title{
- color:#999;
- font-size:12px
-}
-
-.selected-value{
- margin-top:5px;
- font-size:21px;
- font-weight:900
-}
-  .payment-card{
+.payment-card{
  margin-top:14px;
  padding:20px;
  border-radius:19px;
  background:#111;
  border:1px solid #292929
 }
-
-.payment-title{
- text-align:center;
- font-size:20px;
- font-weight:900
-}
-
+.payment-title{text-align:center;font-size:20px;font-weight:900}
 .payment-subtitle{
  text-align:center;
  color:#999;
@@ -202,7 +101,6 @@ button{
  line-height:1.5;
  margin-top:7px
 }
-
 .phone-label{
  display:block;
  margin-top:18px;
@@ -211,7 +109,6 @@ button{
  font-size:12px;
  font-weight:700
 }
-
 .phone-input{
  width:100%;
  border:1px solid #333;
@@ -222,16 +119,8 @@ button{
  font-size:16px;
  outline:none
 }
-
-.phone-input:focus{
- border-color:#fff
-}
-
-.phone-hint{
- margin-top:7px;
- color:#777;
- font-size:11px
-}
+.phone-input:focus{border-color:#fff}
+.phone-hint{margin-top:7px;color:#777;font-size:11px}
 
 .prompt-button{
  width:100%;
@@ -244,15 +133,8 @@ button{
  font-size:16px;
  font-weight:900
 }
-
-.prompt-button:active{
- transform:scale(.98)
-}
-
-.prompt-button:disabled{
- opacity:.55;
- cursor:not-allowed
-}
+.prompt-button:active{transform:scale(.98)}
+.prompt-button:disabled{opacity:.55;cursor:not-allowed}
 
 .status-card{
  margin-top:15px;
@@ -262,7 +144,6 @@ button{
  border:1px solid #292929;
  text-align:center
 }
-
 .status-icon{
  width:54px;
  height:54px;
@@ -274,18 +155,8 @@ button{
  background:#202020;
  font-size:25px
 }
-
-.status-title{
- font-size:19px;
- font-weight:900
-}
-
-.status-text{
- margin-top:8px;
- color:#999;
- font-size:13px;
- line-height:1.5
-}
+.status-title{font-size:19px;font-weight:900}
+.status-text{margin-top:8px;color:#999;font-size:13px;line-height:1.5}
 
 .spinner{
  width:30px;
@@ -296,12 +167,7 @@ button{
  border-radius:50%;
  animation:spin .8s linear infinite
 }
-
-@keyframes spin{
- to{
-  transform:rotate(360deg)
- }
-}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 .failed-card{
  margin-top:15px;
@@ -311,7 +177,6 @@ button{
  border:1px solid #3a1b1b;
  text-align:center
 }
-
 .failed-icon{
  width:55px;
  height:55px;
@@ -325,19 +190,8 @@ button{
  font-size:26px;
  font-weight:900
 }
-
-.failed-title{
- font-size:21px;
- font-weight:900
-}
-
-.failed-text{
- margin-top:9px;
- color:#999;
- font-size:13px;
- line-height:1.5
-}
-
+.failed-title{font-size:21px;font-weight:900}
+.failed-text{margin-top:9px;color:#999;font-size:13px;line-height:1.5}
 .retry-button{
  width:100%;
  margin-top:18px;
@@ -348,12 +202,9 @@ button{
  color:#000;
  font-weight:900
 }
-  #liveScreen{
- min-height:100vh;
- background:#000;
- color:#fff
-}
 
+/* LIVE */
+#liveScreen{min-height:100vh;background:#000;color:#fff}
 .live-header{
  height:55px;
  padding:0 14px;
@@ -363,15 +214,7 @@ button{
  background:#090909;
  border-bottom:1px solid #202020
 }
-
-.live-title{
- display:flex;
- align-items:center;
- gap:7px;
- font-size:16px;
- font-weight:900
-}
-
+.live-title{display:flex;align-items:center;gap:7px;font-size:16px;font-weight:900}
 .red-dot{
  width:9px;
  height:9px;
@@ -379,11 +222,7 @@ button{
  background:#ff2020;
  box-shadow:0 0 12px #ff2020
 }
-
-.viewer-count{
- color:#aaa;
- font-size:12px
-}
+.viewer-count{color:#aaa;font-size:12px}
 
 .live-layout{
  width:100%;
@@ -401,7 +240,6 @@ button{
  overflow:hidden;
  min-height:400px
 }
-
 .chat-title{
  padding:9px;
  border-bottom:1px solid #1d1d1d;
@@ -409,23 +247,14 @@ button{
  font-size:11px;
  font-weight:700
 }
-
 .chat-message{
  padding:6px 8px;
  font-size:10px;
  line-height:1.25;
  border-bottom:1px solid #141414
 }
-
-.chat-name{
- font-weight:800;
- color:#fff;
- margin-right:3px
-}
-
-.chat-text{
- color:#aaa
-}
+.chat-name{font-weight:800;color:#fff;margin-right:3px}
+.chat-text{color:#aaa}
 
 .video-area{
  position:relative;
@@ -435,7 +264,6 @@ button{
  border-radius:8px;
  overflow:hidden
 }
-
 #liveVideo{
  width:100%;
  height:100%;
@@ -444,7 +272,6 @@ button{
  display:block;
  background:#000
 }
-
 .video-live-badge{
  position:absolute;
  top:12px;
@@ -460,7 +287,6 @@ button{
  font-size:11px;
  font-weight:900
 }
-
 .video-live-badge span{
  width:6px;
  height:6px;
@@ -468,32 +294,18 @@ button{
  border-radius:50%;
  animation:livePulse 1s infinite
 }
-
 @keyframes livePulse{
- 0%,100%{
-  opacity:1;
-  transform:scale(1)
- }
- 50%{
-  opacity:.4;
-  transform:scale(.7)
- }
+ 0%,100%{opacity:1;transform:scale(1)}
+ 50%{opacity:.4;transform:scale(.7)}
 }
-  .bottom-live-bar{
+
+.bottom-live-bar{
  height:60px;
  padding:8px;
  background:#090909;
  border-top:1px solid #202020
 }
-
-.center-chat{
- width:100%;
- max-width:700px;
- margin:auto;
- display:flex;
- gap:7px
-}
-
+.center-chat{width:100%;max-width:700px;margin:auto;display:flex;gap:7px}
 .center-chat input{
  flex:1;
  min-width:0;
@@ -504,7 +316,6 @@ button{
  padding:12px;
  outline:none
 }
-
 .center-chat button{
  border:0;
  border-radius:12px;
@@ -524,7 +335,6 @@ button{
  background:rgba(0,0,0,.75);
  padding:20px
 }
-
 .permission-card{
  width:100%;
  max-width:330px;
@@ -535,24 +345,9 @@ button{
  text-align:center;
  box-shadow:0 20px 60px rgba(0,0,0,.7)
 }
-
-.permission-icon{
- font-size:43px;
- margin-bottom:13px
-}
-
-.permission-title{
- font-size:19px;
- font-weight:900
-}
-
-.permission-text{
- color:#999;
- font-size:13px;
- line-height:1.5;
- margin:10px 0 18px
-}
-
+.permission-icon{font-size:43px;margin-bottom:13px}
+.permission-title{font-size:19px;font-weight:900}
+.permission-text{color:#999;font-size:13px;line-height:1.5;margin:10px 0 18px}
 .permission-button{
  width:100%;
  border:0;
@@ -578,7 +373,6 @@ button{
  justify-content:center;
  padding:15px
 }
-
 .video-error button{
  border:0;
  padding:12px 20px;
@@ -589,257 +383,113 @@ button{
 }
 
 @media(max-width:700px){
-
- .live-layout{
-  grid-template-columns:1fr
- }
-
- .chat-panel{
-  display:none
- }
-
- .video-area{
-  min-height:calc(100vh - 115px)
- }
-
- #liveVideo{
-  min-height:calc(100vh - 115px)
- }
+ .live-layout{grid-template-columns:1fr}
+ .chat-panel{display:none}
+ .video-area{min-height:calc(100vh - 115px)}
+ #liveVideo{min-height:calc(100vh - 115px)}
 }
-
 @media(max-width:500px){
-
- .packages{
-  gap:9px
- }
-
- .package{
-  padding:16px 10px
- }
-
- .minutes{
-  font-size:21px
- }
-
- .price{
-  font-size:18px
- }
+ .packages{gap:9px}
+ .package{padding:16px 10px}
+ .minutes{font-size:21px}
+ .price{font-size:18px}
 }
-
 </style>
 </head>
 
 <body>
 
 <section id="paymentPage" class="page">
-
 <div class="wrap">
 
 <div class="header">
-
 <h1>M-PESA PAYMENT</h1>
-
-<p>
-Choose your minutes and pay securely.
-</p>
-
-<div class="secure">
-🔒 Secure M-PESA payment
-</div>
-
+<p>Choose your minutes and pay securely.</p>
+<div class="secure">🔒 Secure M-PESA payment</div>
 </div>
 
 <div class="packages">
 
-<div
-class="package selected"
+<div class="package selected"
 data-minutes="30"
 data-price="95"
-onclick="selectPackage(this)"
->
-
-<div class="minutes">
-30
+onclick="selectPackage(this)">
+<div class="minutes">30</div>
+<div class="label">MINUTES</div>
+<div class="price">KSh 95</div>
+<div class="select-text">Tap to select</div>
 </div>
 
-<div class="label">
-MINUTES
-</div>
-
-<div class="price">
-KSh 95
-</div>
-
-<div class="select-text">
-Tap to select
-</div>
-
-</div>
-
-<div
-class="package"
+<div class="package"
 data-minutes="55"
 data-price="138"
-onclick="selectPackage(this)"
->
-
-<div class="minutes">
-55
+onclick="selectPackage(this)">
+<div class="minutes">55</div>
+<div class="label">MINUTES</div>
+<div class="price">KSh 138</div>
+<div class="select-text">Tap to select</div>
 </div>
 
-<div class="label">
-MINUTES
-</div>
-
-<div class="price">
-KSh 138
-</div>
-
-<div class="select-text">
-Tap to select
-</div>
-
-</div>
-<div
-class="package"
+<div class="package"
 data-minutes="73"
 data-price="207"
-onclick="selectPackage(this)"
->
-
-<div class="badge">
-POPULAR
+onclick="selectPackage(this)">
+<div class="badge">POPULAR</div>
+<div class="minutes">73</div>
+<div class="label">MINUTES</div>
+<div class="price">KSh 207</div>
+<div class="select-text">Tap to select</div>
 </div>
 
-<div class="minutes">
-73
-</div>
-
-<div class="label">
-MINUTES
-</div>
-
-<div class="price">
-KSh 207
-</div>
-
-<div class="select-text">
-Tap to select
-</div>
-
-</div>
-
-<div
-class="package"
+<div class="package"
 data-minutes="95"
 data-price="253"
-onclick="selectPackage(this)"
->
-
-<div class="minutes">
-95
+onclick="selectPackage(this)">
+<div class="minutes">95</div>
+<div class="label">MINUTES</div>
+<div class="price">KSh 253</div>
+<div class="select-text">Tap to select</div>
 </div>
 
-<div class="label">
-MINUTES
-</div>
-
-<div class="price">
-KSh 253
-</div>
-
-<div class="select-text">
-Tap to select
-</div>
-
-</div>
-
-<div
-class="package"
+<div class="package"
 data-minutes="105"
 data-price="299"
-onclick="selectPackage(this)"
->
-
-<div class="minutes">
-105
+onclick="selectPackage(this)">
+<div class="minutes">105</div>
+<div class="label">MINUTES</div>
+<div class="price">KSh 299</div>
+<div class="select-text">Tap to select</div>
 </div>
 
-<div class="label">
-MINUTES
-</div>
-
-<div class="price">
-KSh 299
-</div>
-
-<div class="select-text">
-Tap to select
-</div>
-
-</div>
-
-<div
-class="package"
+<div class="package"
 data-minutes="166"
 data-price="393"
-onclick="selectPackage(this)"
->
-
-<div class="badge">
-HOT
-</div>
-
-<div class="minutes">
-166
-</div>
-
-<div class="label">
-MINUTES
-</div>
-
-<div class="price">
-KSh 393
-</div>
-
-<div class="select-text">
-Tap to select
-</div>
-
+onclick="selectPackage(this)">
+<div class="badge">HOT</div>
+<div class="minutes">166</div>
+<div class="label">MINUTES</div>
+<div class="price">KSh 393</div>
+<div class="select-text">Tap to select</div>
 </div>
 
 </div>
 
 <div class="selected-box">
-
-<div class="selected-title">
-SELECTED PACKAGE
-</div>
-
-<div
-id="selectedValue"
-class="selected-value"
->
+<div class="selected-title">SELECTED PACKAGE</div>
+<div id="selectedValue" class="selected-value">
 30 Minutes — KSh 95
 </div>
-
 </div>
 
 <div class="payment-card">
 
-<div class="payment-title">
-Pay with M-PESA
-</div>
+<div class="payment-title">Pay with M-PESA</div>
 
 <div class="payment-subtitle">
-Enter your Safaricom number and we will
-send an M-PESA payment prompt to your phone.
+Enter your Safaricom number and we will send an M-PESA payment prompt to your phone.
 </div>
 
-<label
-class="phone-label"
-for="phoneInput"
->
+<label class="phone-label" for="phoneInput">
 Safaricom M-PESA Number
 </label>
 
@@ -849,122 +499,58 @@ class="phone-input"
 type="tel"
 inputmode="numeric"
 maxlength="13"
-placeholder="07XXXXXXXX"
-autocomplete="tel"
->
+placeholder="01XXXXXXXX or 07XXXXXXXX"
+autocomplete="tel">
 
 <div class="phone-hint">
-Example: 0712345678
+Accepted: 01XXXXXXXX, 07XXXXXXXX, 2541XXXXXXXX or 2547XXXXXXXX
 </div>
 
 <button
 id="promptButton"
 class="prompt-button"
-onclick="sendMpesaPrompt()"
->
+onclick="sendMpesaPrompt()">
 💳 SEND M-PESA PROMPT
 </button>
 
 </div>
 
-<div
-id="statusCard"
-class="status-card hidden"
->
-
-<div
-id="statusSpinner"
-class="spinner"
-></div>
-
-<div
-id="statusIcon"
-class="status-icon hidden"
->
-✓
+<div id="statusCard" class="status-card hidden">
+<div id="statusSpinner" class="spinner"></div>
+<div id="statusIcon" class="status-icon hidden">✓</div>
+<div id="statusTitle" class="status-title">Check your phone</div>
+<div id="statusText" class="status-text">
+Enter your M-PESA PIN on the prompt sent to your phone.
+</div>
 </div>
 
-<div
-id="statusTitle"
-class="status-title"
->
-Check your phone
-</div>
-
-<div
-id="statusText"
-class="status-text"
->
-Enter your M-PESA PIN on the prompt
-sent to your phone.
-</div>
-
-</div>
-
-<div
-id="failedCard"
-class="failed-card hidden"
->
-
-<div class="failed-icon">
-!
-</div>
-
-<div class="failed-title">
-No payment is done
-</div>
-
-<div
-id="failedText"
-class="failed-text"
->
+<div id="failedCard" class="failed-card hidden">
+<div class="failed-icon">!</div>
+<div class="failed-title">No payment is done</div>
+<div id="failedText" class="failed-text">
 We could not confirm your M-PESA payment.
 </div>
-
-<button
-class="retry-button"
-onclick="resetPayment()"
->
-TRY AGAIN
-</button>
-
+<button class="retry-button" onclick="resetPayment()">TRY AGAIN</button>
 </div>
 
 </div>
-
 </section>
 
-<section
-id="liveScreen"
-class="hidden"
->
+<section id="liveScreen" class="hidden">
 
 <div class="live-header">
-
 <div class="live-title">
-
 <span class="red-dot"></span>
-
 LIVE
-
 </div>
-
-<div class="viewer-count">
-● Live now
-</div>
-
+<div class="viewer-count">● Live now</div>
 </div>
 
 <div class="live-layout">
 
 <div class="chat-panel">
-
-<div class="chat-title">
-Live chat
-</div>
-
+<div class="chat-title">Live chat</div>
 <div id="leftChatMessages"></div>
-
 </div>
 
 <div class="video-area">
@@ -973,97 +559,64 @@ Live chat
 id="liveVideo"
 playsinline
 webkit-playsinline
-preload="auto"
-></video>
+preload="auto">
+</video>
 
 <div class="video-live-badge">
-
 <span></span>
-
 LIVE
-
 </div>
 
-<div
-id="videoOverlay"
-class="video-overlay"
->
+<div id="videoOverlay" class="video-overlay">
 
 <div class="permission-card">
+<div class="permission-icon">📹</div>
 
-<div class="permission-icon">
-📹
-</div>
-
-<div
-id="permissionTitle"
-class="permission-title"
->
+<div id="permissionTitle" class="permission-title">
 Camera permission required
 </div>
 
-<div
-id="permissionText"
-class="permission-text"
->
-Allow camera and microphone access
-to continue.
+<div id="permissionText" class="permission-text">
+Allow camera and microphone access to continue.
 </div>
 
 <button
 id="permissionButton"
 class="permission-button"
-onclick="requestCameraPermission()"
->
+onclick="requestCameraPermission()">
 CONTINUE
 </button>
-
 </div>
 
 </div>
 
-<div
-id="videoError"
-class="video-error hidden"
-></div>
+<div id="videoError" class="video-error hidden"></div>
 
 </div>
 
 <div class="chat-panel">
-
-<div class="chat-title">
-Live chat
-</div>
-
+<div class="chat-title">Live chat</div>
 <div id="rightChatMessages"></div>
-
 </div>
 
 </div>
 
 <div class="bottom-live-bar">
-
 <div class="center-chat">
 
 <input
 id="centerChatInput"
 type="text"
 placeholder="Say something..."
-autocomplete="off"
->
+autocomplete="off">
 
-<button
-onclick="sendCenterMessage()"
->
-SEND
-</button>
+<button onclick="sendCenterMessage()">SEND</button>
 
 </div>
-
 </div>
 
-</section>
-<script>
+ </section>
+ <script>
 
 const LIVE_VIDEO_URL =
 "IMG_20261001_112122_071.mp4";
@@ -1072,6 +625,7 @@ let selectedMinutes = 30;
 let selectedPrice = 95;
 
 let transactionId = "";
+let paymentReference = "";
 
 let statusTimer = null;
 let statusAttempts = 0;
@@ -1082,16 +636,12 @@ let permissionStream = null;
 let videoEndedTimer = null;
 
 
-/*
-========================================
-EMPLOYEE / REFERRAL
-========================================
-*/
+/* ================================
+   EMPLOYEE / REFERRAL
+================================ */
 
 const urlParams =
-new URLSearchParams(
-window.location.search
-);
+new URLSearchParams(window.location.search);
 
 const employee =
 urlParams.get("employee") || "";
@@ -1100,200 +650,177 @@ const ref =
 urlParams.get("ref") || "";
 
 
-/*
-========================================
-ELEMENTS
-========================================
-*/
+/* ================================
+   ELEMENTS
+================================ */
 
 const paymentPage =
-document.getElementById(
-"paymentPage"
-);
+document.getElementById("paymentPage");
 
 const liveScreen =
-document.getElementById(
-"liveScreen"
-);
+document.getElementById("liveScreen");
 
 const selectedValue =
-document.getElementById(
-"selectedValue"
-);
+document.getElementById("selectedValue");
 
 const phoneInput =
-document.getElementById(
-"phoneInput"
-);
+document.getElementById("phoneInput");
 
 const promptButton =
-document.getElementById(
-"promptButton"
-);
+document.getElementById("promptButton");
 
 const statusCard =
-document.getElementById(
-"statusCard"
-);
+document.getElementById("statusCard");
 
 const statusSpinner =
-document.getElementById(
-"statusSpinner"
-);
+document.getElementById("statusSpinner");
 
 const statusIcon =
-document.getElementById(
-"statusIcon"
-);
+document.getElementById("statusIcon");
 
 const statusTitle =
-document.getElementById(
-"statusTitle"
-);
+document.getElementById("statusTitle");
 
 const statusText =
-document.getElementById(
-"statusText"
-);
+document.getElementById("statusText");
 
 const failedCard =
-document.getElementById(
-"failedCard"
-);
+document.getElementById("failedCard");
 
 const failedText =
-document.getElementById(
-"failedText"
-);
+document.getElementById("failedText");
 
 const liveVideo =
-document.getElementById(
-"liveVideo"
-);
+document.getElementById("liveVideo");
 
 const videoOverlay =
-document.getElementById(
-"videoOverlay"
-);
+document.getElementById("videoOverlay");
 
 const permissionTitle =
-document.getElementById(
-"permissionTitle"
-);
+document.getElementById("permissionTitle");
 
 const permissionText =
-document.getElementById(
-"permissionText"
-);
+document.getElementById("permissionText");
 
 const permissionButton =
-document.getElementById(
-"permissionButton"
-);
+document.getElementById("permissionButton");
 
 const videoError =
-document.getElementById(
-"videoError"
-);
+document.getElementById("videoError");
 
 
-/*
-========================================
-PACKAGE SELECTION
-========================================
-*/
+/* ================================
+   PACKAGE SELECTION
+================================ */
 
 function selectPackage(element){
 
-if(
-!statusCard.classList.contains(
-"hidden"
-)
-){
+if(!statusCard.classList.contains("hidden")){
 return;
 }
 
-if(
-!failedCard.classList.contains(
-"hidden"
-)
-){
+if(!failedCard.classList.contains("hidden")){
 return;
 }
 
-document
-.querySelectorAll(".package")
-.forEach(function(item){
-
-item.classList.remove(
-"selected"
-);
-
+document.querySelectorAll(".package").forEach(function(item){
+item.classList.remove("selected");
 });
 
-element.classList.add(
-"selected"
-);
+element.classList.add("selected");
 
 selectedMinutes =
-Number(
-element.dataset.minutes
-);
+Number(element.dataset.minutes);
 
 selectedPrice =
-Number(
-element.dataset.price
-);
+Number(element.dataset.price);
 
 selectedValue.textContent =
 selectedMinutes +
 " Minutes — KSh " +
 selectedPrice;
-
 }
 
 
-/*
-========================================
-PHONE
-========================================
-*/
+/* ================================
+   PHONE CLEANING
+================================ */
 
 function cleanPhone(value){
 
-return String(
-value || ""
-)
+return String(value || "")
 .replace(/\D/g,"")
 .trim();
 
 }
 
+
+/*
+ACCEPT:
+
+01XXXXXXXX
+07XXXXXXXX
+2541XXXXXXXX
+2547XXXXXXXX
+1XXXXXXXX
+7XXXXXXXX
+*/
+
 function normalizePhone(value){
 
-const raw =
-cleanPhone(value);
+const raw = cleanPhone(value);
 
-if(
-/^07\d{8}$/.test(raw)
-){
+
+/* 01XXXXXXXX */
+
+if(/^01\d{8}$/.test(raw)){
 
 return "254" +
 raw.substring(1);
 
 }
 
-if(
-/^2547\d{8}$/.test(raw)
-){
+
+/* 07XXXXXXXX */
+
+if(/^07\d{8}$/.test(raw)){
+
+return "254" +
+raw.substring(1);
+
+}
+
+
+/* 2541XXXXXXXX */
+
+if(/^2541\d{8}$/.test(raw)){
 
 return raw;
 
 }
 
-if(
-/^7\d{8}$/.test(raw)
-){
+
+/* 2547XXXXXXXX */
+
+if(/^2547\d{8}$/.test(raw)){
+
+return raw;
+
+}
+
+
+/* 1XXXXXXXX */
+
+if(/^1\d{8}$/.test(raw)){
+
+return "254" + raw;
+
+}
+
+
+/* 7XXXXXXXX */
+
+if(/^7\d{8}$/.test(raw)){
 
 return "254" + raw;
 
@@ -1304,14 +831,9 @@ return "";
 }
 
 
-/*
-========================================
-UNIQUE PAYMENT REFERENCE
-========================================
-
-PROTECTION KEPT
-========================================
-*/
+/* ================================
+   UNIQUE PAYMENT REFERENCE
+================================ */
 
 function createReference(){
 
@@ -1322,10 +844,7 @@ ref ||
 
 const cleanPrefix =
 String(prefix)
-.replace(
-/[^A-Za-z0-9]/g,
-""
-)
+.replace(/[^A-Za-z0-9]/g,"")
 .slice(0,8);
 
 const randomPart =
@@ -1337,24 +856,16 @@ Math.random() * 900000
 return (
 "LIVE" +
 cleanPrefix +
-Date.now()
-.toString()
-.slice(-6) +
-randomPart
-.toString()
-.slice(-4)
-)
-.slice(0,20);
+Date.now().toString().slice(-6) +
+randomPart.toString().slice(-4)
+).slice(0,20);
 
 }
-  /*
-========================================
-SEND M-PESA PROMPT
-========================================
 
-PAYMENT PROTECTION KEPT
-========================================
-*/
+
+/* ================================
+   SEND M-PESA PROMPT
+================================ */
 
 async function sendMpesaPrompt(){
 
@@ -1363,45 +874,43 @@ return;
 }
 
 const phone =
-normalizePhone(
-phoneInput.value
-);
+normalizePhone(phoneInput.value);
 
 if(!phone){
 
 phoneInput.focus();
 
 showFailed(
-"Enter a valid Safaricom M-PESA number."
+"Enter a valid M-PESA number starting with 01 or 07."
 );
 
 return;
 }
 
+
+/*
+SAVE THE SAME REFERENCE
+FOR PAYMENT STATUS + COMMISSION
+*/
+
 const reference =
 createReference();
 
-promptButton.disabled =
-true;
+paymentReference =
+reference;
+
+promptButton.disabled = true;
 
 promptButton.textContent =
 "SENDING PROMPT...";
 
-failedCard.classList.add(
-"hidden"
-);
+failedCard.classList.add("hidden");
 
-statusCard.classList.remove(
-"hidden"
-);
+statusCard.classList.remove("hidden");
 
-statusSpinner.classList.remove(
-"hidden"
-);
+statusSpinner.classList.remove("hidden");
 
-statusIcon.classList.add(
-"hidden"
-);
+statusIcon.classList.add("hidden");
 
 statusTitle.textContent =
 "Sending M-PESA prompt";
@@ -1412,14 +921,12 @@ statusText.textContent =
 try{
 
 const response =
-await fetch(
-"/api/stk-push",
-{
+await fetch("/api/stk-push",{
+
 method:"POST",
 
 headers:{
-"Content-Type":
-"application/json"
+"Content-Type":"application/json"
 },
 
 body:JSON.stringify({
@@ -1432,12 +939,10 @@ reference:reference
 
 })
 
-}
-);
+});
 
 const data =
-await response.json()
-.catch(function(){
+await response.json().catch(function(){
 
 return {};
 
@@ -1445,10 +950,7 @@ return {};
 
 
 /*
-========================================
-PROTECTION:
 TRANSACTION ID REQUIRED
-========================================
 */
 
 if(
@@ -1489,7 +991,7 @@ startPaymentStatusCheck();
 }catch(error){
 
 console.error(
-"STK ERROR",
+"STK ERROR:",
 error
 );
 
@@ -1502,11 +1004,9 @@ showFailed(
 }
 
 
-/*
-========================================
-STATUS CHECK
-========================================
-*/
+/* ================================
+   PAYMENT STATUS TIMER
+================================ */
 
 function startPaymentStatusCheck(){
 
@@ -1528,9 +1028,7 @@ function stopStatusCheck(){
 
 if(statusTimer){
 
-clearInterval(
-statusTimer
-);
+clearInterval(statusTimer);
 
 statusTimer = null;
 
@@ -1539,11 +1037,9 @@ statusTimer = null;
 }
 
 
-/*
-========================================
-PAYMENT STATUS
-========================================
-*/
+/* ================================
+   CHECK PAYMENT STATUS
+================================ */
 
 async function checkPaymentStatus(){
 
@@ -1552,12 +1048,6 @@ return;
 }
 
 statusAttempts++;
-
-
-/*
-40 × 3 seconds
-≈ 2 MINUTES
-*/
 
 if(statusAttempts > 40){
 
@@ -1574,15 +1064,26 @@ return;
 try{
 
 const response =
-await fetch(
-"/api/payment-status",
-{
+await fetch("/api/payment-status",{
+
 method:"POST",
 
 headers:{
-"Content-Type":
-"application/json"
+"Content-Type":"application/json"
 },
+
+/*
+IMPORTANT:
+
+SEND:
+transaction
+reference
+employee
+ref
+
+SO COMMISSION CAN BE CONNECTED
+TO THE CORRECT EMPLOYEE.
+*/
 
 body:JSON.stringify({
 
@@ -1590,16 +1091,23 @@ transaction_id:
 transactionId,
 
 transaction_request_id:
-transactionId
+transactionId,
+
+reference:
+paymentReference,
+
+employee:
+employee,
+
+ref:
+ref
 
 })
 
-}
-);
+});
 
 const data =
-await response.json()
-.catch(function(){
+await response.json().catch(function(){
 
 return {};
 
@@ -1607,16 +1115,8 @@ return {};
 
 
 /*
-========================================
-MOST IMPORTANT PROTECTION
-========================================
-
-VIDEO NEVER OPENS UNTIL:
-
-success === true
-AND
-paid === true
-========================================
+ONLY OPEN VIDEO
+AFTER VERIFIED PAYMENT
 */
 
 if(
@@ -1632,11 +1132,12 @@ return;
 
 }
 
+
 const currentStatus =
 String(
 data.status || ""
-)
-.toLowerCase();
+).toLowerCase();
+
 
 if(
 currentStatus === "failed" ||
@@ -1655,6 +1156,7 @@ return;
 
 }
 
+
 statusTitle.textContent =
 "Waiting for payment";
 
@@ -1664,7 +1166,7 @@ statusText.textContent =
 }catch(error){
 
 console.log(
-"STATUS CHECK ERROR",
+"STATUS CHECK ERROR:",
 error
 );
 
@@ -1676,28 +1178,19 @@ statusText.textContent =
 }
 
 
-/*
-========================================
-PAYMENT CONFIRMED
-========================================
-*/
+/* ================================
+   PAYMENT CONFIRMED
+================================ */
 
 async function paymentConfirmed(){
 
-statusCard.classList.remove(
-"hidden"
-);
+statusCard.classList.remove("hidden");
 
-statusSpinner.classList.add(
-"hidden"
-);
+statusSpinner.classList.add("hidden");
 
-statusIcon.classList.remove(
-"hidden"
-);
+statusIcon.classList.remove("hidden");
 
-statusIcon.textContent =
-"✓";
+statusIcon.textContent = "✓";
 
 statusTitle.textContent =
 "Payment confirmed";
@@ -1705,17 +1198,13 @@ statusTitle.textContent =
 statusText.textContent =
 "Payment successful. Opening your live video...";
 
-promptButton.disabled =
-true;
+promptButton.disabled = true;
 
 
 /*
-========================================
-40% COMMISSION
-========================================
-
-ONLY AFTER VERIFIED PAYMENT.
-========================================
+================================
+40% EMPLOYEE COMMISSION
+================================
 */
 
 if(employee || ref){
@@ -1723,14 +1212,12 @@ if(employee || ref){
 try{
 
 const commissionResponse =
-await fetch(
-"/api/employee-commission",
-{
+await fetch("/api/employee-commission",{
+
 method:"POST",
 
 headers:{
-"Content-Type":
-"application/json"
+"Content-Type":"application/json"
 },
 
 body:JSON.stringify({
@@ -1746,12 +1233,10 @@ employee || ref
 
 })
 
-}
-);
+});
 
 const commissionData =
-await commissionResponse.json()
-.catch(function(){
+await commissionResponse.json().catch(function(){
 
 return {};
 
@@ -1762,15 +1247,7 @@ console.log(
 commissionData
 );
 
-
-/*
-Commission failure does NOT cancel
-an already confirmed payment.
-*/
-
-if(
-!commissionResponse.ok
-){
+if(!commissionResponse.ok){
 
 console.error(
 "Commission recording failed:",
@@ -1782,7 +1259,7 @@ commissionData
 }catch(error){
 
 console.error(
-"COMMISSION RECORDING ERROR:",
+"COMMISSION ERROR:",
 error
 );
 
@@ -1792,45 +1269,33 @@ error
 
 
 /*
-========================================
-OPEN LIVE
-========================================
+OPEN LIVE ONLY AFTER PAYMENT CONFIRMATION
 */
 
-setTimeout(
-function(){
+setTimeout(function(){
 
 openLiveAfterPayment();
 
-},
-1200
-);
+},1200);
 
-  }
-  /*
-========================================
-FAILED PAYMENT
-========================================
-*/
+}
+  /* ================================
+   FAILED PAYMENT
+================================ */
 
 function showFailed(message){
 
 stopStatusCheck();
 
-statusCard.classList.add(
-"hidden"
-);
+statusCard.classList.add("hidden");
 
-failedCard.classList.remove(
-"hidden"
-);
+failedCard.classList.remove("hidden");
 
 failedText.textContent =
 message ||
 "We could not confirm your M-PESA payment.";
 
-promptButton.disabled =
-false;
+promptButton.disabled = false;
 
 promptButton.textContent =
 "💳 SEND M-PESA PROMPT";
@@ -1838,11 +1303,9 @@ promptButton.textContent =
 }
 
 
-/*
-========================================
-TRY AGAIN
-========================================
-*/
+/* ================================
+   TRY AGAIN
+================================ */
 
 function resetPayment(){
 
@@ -1850,18 +1313,15 @@ stopStatusCheck();
 
 transactionId = "";
 
+paymentReference = "";
+
 statusAttempts = 0;
 
-statusCard.classList.add(
-"hidden"
-);
+statusCard.classList.add("hidden");
 
-failedCard.classList.add(
-"hidden"
-);
+failedCard.classList.add("hidden");
 
-promptButton.disabled =
-false;
+promptButton.disabled = false;
 
 promptButton.textContent =
 "💳 SEND M-PESA PROMPT";
@@ -1873,29 +1333,19 @@ phoneInput.focus();
 }
 
 
-/*
-========================================
-OPEN LIVE AFTER PAYMENT
-========================================
-*/
+/* ================================
+   OPEN LIVE
+================================ */
 
 function openLiveAfterPayment(){
 
-paymentPage.classList.add(
-"hidden"
-);
+paymentPage.classList.add("hidden");
 
-failedCard.classList.add(
-"hidden"
-);
+failedCard.classList.add("hidden");
 
-statusCard.classList.add(
-"hidden"
-);
+statusCard.classList.add("hidden");
 
-liveScreen.classList.remove(
-"hidden"
-);
+liveScreen.classList.remove("hidden");
 
 liveStarted = true;
 
@@ -1907,16 +1357,13 @@ showVideoOverlay(
 }
 
 
-/*
-========================================
-CAMERA PERMISSION
-========================================
-*/
+/* ================================
+   CAMERA PERMISSION
+================================ */
 
 async function requestCameraPermission(){
 
-permissionButton.disabled =
-true;
+permissionButton.disabled = true;
 
 permissionButton.textContent =
 "ALLOWING...";
@@ -1926,8 +1373,7 @@ if(
 !navigator.mediaDevices.getUserMedia
 ){
 
-permissionButton.disabled =
-false;
+permissionButton.disabled = false;
 
 permissionButton.textContent =
 "CONTINUE";
@@ -1975,8 +1421,7 @@ console.log(
 error
 );
 
-permissionButton.disabled =
-false;
+permissionButton.disabled = false;
 
 permissionButton.textContent =
 "CONTINUE";
@@ -2000,20 +1445,13 @@ startLiveChat();
 }
 
 
-/*
-========================================
-VIDEO OVERLAY
-========================================
-*/
+/* ================================
+   VIDEO OVERLAY
+================================ */
 
-function showVideoOverlay(
-title,
-text
-){
+function showVideoOverlay(title,text){
 
-videoOverlay.classList.remove(
-"hidden"
-);
+videoOverlay.classList.remove("hidden");
 
 permissionTitle.textContent =
 title;
@@ -2021,8 +1459,7 @@ title;
 permissionText.textContent =
 text;
 
-permissionButton.disabled =
-false;
+permissionButton.disabled = false;
 
 permissionButton.textContent =
 "CONTINUE";
@@ -2034,30 +1471,22 @@ requestCameraPermission;
 
 function hideVideoOverlay(){
 
-videoOverlay.classList.add(
-"hidden"
-);
+videoOverlay.classList.add("hidden");
 
 }
 
 
-/*
-========================================
-START VIDEO
-========================================
-*/
+/* ================================
+   START VIDEO
+================================ */
 
 function startLiveVideo(){
 
-videoError.classList.add(
-"hidden"
-);
+videoError.classList.add("hidden");
 
 if(videoEndedTimer){
 
-clearTimeout(
-videoEndedTimer
-);
+clearTimeout(videoEndedTimer);
 
 videoEndedTimer = null;
 
@@ -2066,14 +1495,11 @@ videoEndedTimer = null;
 liveVideo.src =
 LIVE_VIDEO_URL;
 
-liveVideo.controls =
-false;
+liveVideo.controls = false;
 
-liveVideo.muted =
-false;
+liveVideo.muted = false;
 
-liveVideo.playsInline =
-true;
+liveVideo.playsInline = true;
 
 liveVideo.load();
 
@@ -2082,12 +1508,10 @@ liveVideo.play();
 
 if(
 playPromise &&
-typeof playPromise.catch ===
-"function"
+typeof playPromise.catch === "function"
 ){
 
-playPromise.catch(
-function(){
+playPromise.catch(function(){
 
 showVideoOverlay(
 "Tap to continue",
@@ -2107,31 +1531,26 @@ attempt &&
 attempt.catch
 ){
 
-attempt.catch(
-function(){
+attempt.catch(function(){
 
 showNetworkError();
 
-}
-);
+});
 
 }
 
 };
 
-}
-);
+});
 
 }
 
 }
 
 
-/*
-========================================
-VIDEO ENDED
-========================================
-*/
+/* ================================
+   VIDEO ENDED
+================================ */
 
 liveVideo.addEventListener(
 "ended",
@@ -2141,31 +1560,24 @@ liveVideo.pause();
 
 if(videoEndedTimer){
 
-clearTimeout(
-videoEndedTimer
-);
+clearTimeout(videoEndedTimer);
 
 }
 
 videoEndedTimer =
-setTimeout(
-function(){
+setTimeout(function(){
 
 showNetworkError();
 
-},
-5000
-);
+},5000);
 
 }
 );
 
 
-/*
-========================================
-VIDEO ERROR
-========================================
-*/
+/* ================================
+   VIDEO ERROR
+================================ */
 
 liveVideo.addEventListener(
 "error",
@@ -2179,17 +1591,15 @@ showNetworkError();
 
 }
 );
-  /*
-========================================
-NETWORK ERROR
-========================================
-*/
+
+
+/* ================================
+   NETWORK ERROR
+================================ */
 
 function showNetworkError(){
 
-videoError.classList.remove(
-"hidden"
-);
+videoError.classList.remove("hidden");
 
 videoError.innerHTML = `
 
@@ -2225,11 +1635,9 @@ RELOAD PAGE
 }
 
 
-/*
-========================================
-RELOAD VIDEO
-========================================
-*/
+/* ================================
+   RELOAD VIDEO
+================================ */
 
 function reloadLivePage(){
 
@@ -2269,8 +1677,7 @@ Please wait...
 
 `;
 
-setTimeout(
-function(){
+setTimeout(function(){
 
 videoError.innerHTML = `
 
@@ -2298,35 +1705,26 @@ Unable to reload the live video.
 
 `;
 
-setTimeout(
-function(){
+setTimeout(function(){
 
 returnToPackages();
 
-},
-1200
-);
+},1200);
 
-},
-10000
-);
+},10000);
 
 }
 
 
-/*
-========================================
-RETURN TO PACKAGES
-========================================
-*/
+/* ================================
+   RETURN TO PACKAGES
+================================ */
 
 function returnToPackages(){
 
 if(videoEndedTimer){
 
-clearTimeout(
-videoEndedTimer
-);
+clearTimeout(videoEndedTimer);
 
 videoEndedTimer = null;
 
@@ -2336,9 +1734,7 @@ try{
 
 liveVideo.pause();
 
-liveVideo.removeAttribute(
-"src"
-);
+liveVideo.removeAttribute("src");
 
 liveVideo.load();
 
@@ -2347,9 +1743,7 @@ liveVideo.load();
 
 if(chatTimer){
 
-clearInterval(
-chatTimer
-);
+clearInterval(chatTimer);
 
 chatTimer = null;
 
@@ -2357,32 +1751,23 @@ chatTimer = null;
 
 liveStarted = false;
 
-liveScreen.classList.add(
-"hidden"
-);
+liveScreen.classList.add("hidden");
 
-paymentPage.classList.remove(
-"hidden"
-);
+paymentPage.classList.remove("hidden");
 
-statusCard.classList.add(
-"hidden"
-);
+statusCard.classList.add("hidden");
 
-failedCard.classList.add(
-"hidden"
-);
+failedCard.classList.add("hidden");
 
-videoError.classList.add(
-"hidden"
-);
+videoError.classList.add("hidden");
 
 transactionId = "";
 
+paymentReference = "";
+
 statusAttempts = 0;
 
-promptButton.disabled =
-false;
+promptButton.disabled = false;
 
 promptButton.textContent =
 "💳 SEND M-PESA PROMPT";
@@ -2400,14 +1785,11 @@ behavior:"smooth"
 }
 
 
-/*
-========================================
-CHAT DATA
-========================================
-*/
+/* ================================
+   CHAT DATA
+================================ */
 
 const chatNames = [
-
 "Sarah",
 "Linda",
 "Aisha",
@@ -2420,11 +1802,9 @@ const chatNames = [
 "Lucy",
 "Nelly",
 "Maya"
-
 ];
 
 const chatMessages = [
-
 "Hi ❤️",
 "Hello everyone",
 "So nice here 😍",
@@ -2437,15 +1817,13 @@ const chatMessages = [
 "Nice to meet you",
 "Wow 😍",
 "Hello beautiful"
-
 ];
 
 function randomItem(array){
 
 return array[
 Math.floor(
-Math.random() *
-array.length
+Math.random() * array.length
 )
 ];
 
@@ -2454,16 +1832,16 @@ array.length
 function escapeHTML(text){
 
 const div =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
-div.textContent =
-text;
+div.textContent = text;
 
 return div.innerHTML;
 
-}
+ }
+  /* ================================
+   CREATE CHAT MESSAGE
+================================ */
 
 function createChatMessage(){
 
@@ -2474,9 +1852,7 @@ const message =
 randomItem(chatMessages);
 
 const div =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 div.className =
 "chat-message";
@@ -2492,6 +1868,11 @@ escapeHTML(message) +
 return div;
 
 }
+
+
+/* ================================
+   ADD CHAT MESSAGE
+================================ */
 
 function addChatMessage(){
 
@@ -2517,9 +1898,7 @@ right.appendChild(
 createChatMessage()
 );
 
-while(
-left.children.length > 12
-){
+while(left.children.length > 12){
 
 left.removeChild(
 left.firstChild
@@ -2527,9 +1906,7 @@ left.firstChild
 
 }
 
-while(
-right.children.length > 12
-){
+while(right.children.length > 12){
 
 right.removeChild(
 right.firstChild
@@ -2537,28 +1914,25 @@ right.firstChild
 
 }
 
-  }
-  /*
-========================================
-START CHAT
-========================================
-*/
+}
+
+
+/* ================================
+   START CHAT
+================================ */
 
 function startLiveChat(){
 
 if(chatTimer){
 
-clearInterval(
-chatTimer
-);
+clearInterval(chatTimer);
 
 }
 
 addChatMessage();
 
 chatTimer =
-setInterval(
-function(){
+setInterval(function(){
 
 if(liveStarted){
 
@@ -2566,18 +1940,14 @@ addChatMessage();
 
 }
 
-},
-2800
-);
+},2800);
 
 }
 
 
-/*
-========================================
-CENTER CHAT
-========================================
-*/
+/* ================================
+   CENTER CHAT
+================================ */
 
 function sendCenterMessage(){
 
@@ -2607,9 +1977,7 @@ return;
 }
 
 const div =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 div.className =
 "chat-message";
@@ -2622,9 +1990,7 @@ escapeHTML(message) +
 
 left.appendChild(div);
 
-while(
-left.children.length > 12
-){
+while(left.children.length > 12){
 
 left.removeChild(
 left.firstChild
@@ -2638,6 +2004,11 @@ left.scrollHeight;
 input.value = "";
 
 }
+
+
+/* ================================
+   CENTER CHAT ENTER
+================================ */
 
 const centerInput =
 document.getElementById(
@@ -2658,17 +2029,14 @@ sendCenterMessage();
 
 }
 
-}
-);
+});
 
 }
 
 
-/*
-========================================
-PHONE INPUT
-========================================
-*/
+/* ================================
+   PHONE INPUT
+================================ */
 
 phoneInput.addEventListener(
 "input",
@@ -2683,24 +2051,37 @@ this.value.replace(
 if(value.length > 13){
 
 value =
-value.substring(
-0,
-13
-);
+value.substring(0,13);
 
 }
 
-this.value =
-value;
+this.value = value;
 
 });
 
 
-/*
-========================================
-CLEANUP
-========================================
-*/
+/* ================================
+   PHONE ENTER KEY
+================================ */
+
+phoneInput.addEventListener(
+"keydown",
+function(event){
+
+if(event.key === "Enter"){
+
+event.preventDefault();
+
+sendMpesaPrompt();
+
+}
+
+});
+
+
+/* ================================
+   CLEANUP
+================================ */
 
 window.addEventListener(
 "beforeunload",
@@ -2710,9 +2091,7 @@ stopStatusCheck();
 
 if(chatTimer){
 
-clearInterval(
-chatTimer
-);
+clearInterval(chatTimer);
 
 chatTimer = null;
 
@@ -2720,9 +2099,7 @@ chatTimer = null;
 
 if(videoEndedTimer){
 
-clearTimeout(
-videoEndedTimer
-);
+clearTimeout(videoEndedTimer);
 
 videoEndedTimer = null;
 
@@ -2732,13 +2109,11 @@ if(permissionStream){
 
 permissionStream
 .getTracks()
-.forEach(
-function(track){
+.forEach(function(track){
 
 track.stop();
 
-}
-);
+});
 
 permissionStream = null;
 
@@ -2754,15 +2129,12 @@ liveVideo.pause();
 
 }
 
-}
-);
+});
 
 
-/*
-========================================
-VISIBILITY
-========================================
-*/
+/* ================================
+   VISIBILITY
+================================ */
 
 document.addEventListener(
 "visibilitychange",
@@ -2786,9 +2158,7 @@ liveStarted &&
 liveVideo &&
 liveVideo.src &&
 !liveVideo.ended &&
-videoError.classList.contains(
-"hidden"
-)
+videoError.classList.contains("hidden")
 ){
 
 const promise =
@@ -2799,9 +2169,7 @@ promise &&
 promise.catch
 ){
 
-promise.catch(
-function(){}
-);
+promise.catch(function(){});
 
 }
 
@@ -2809,37 +2177,28 @@ function(){}
 
 }
 
-}
-);
+});
 
 
-/*
-========================================
-INITIAL PACKAGE
-========================================
-*/
+/* ================================
+   INITIAL PACKAGE
+================================ */
 
 document.addEventListener(
 "DOMContentLoaded",
 function(){
 
 const firstPackage =
-document.querySelector(
-".package"
-);
+document.querySelector(".package");
 
 if(firstPackage){
 
-selectPackage(
-firstPackage
-);
+selectPackage(firstPackage);
 
 }
 
-}
-);
+});
 
 </script>
-
 </body>
 </html>
