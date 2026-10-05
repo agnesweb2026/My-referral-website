@@ -2,82 +2,70 @@ const { pool } = require("./db");
 
 const COMMISSION_RATE = 0.40;
 
-/*
-==================================================
-EMPLOYEE MAPPING
-==================================================
-Joshua username -> dashboard employee ID
-==================================================
-*/
-
 const EMPLOYEE_MAP = {
-  "joshua1": {
+
+  joshua1: {
     id: "REF-A7K2",
     referral: "REF-A7K2",
     username: "Joshua1"
   },
 
-  "joshua2": {
+  joshua2: {
     id: "REF-B4M8",
     referral: "REF-B4M8",
     username: "Joshua2"
   },
 
-  "joshua3": {
+  joshua3: {
     id: "REF-C9P3",
     referral: "REF-C9P3",
     username: "Joshua3"
   },
 
-  "joshua4": {
+  joshua4: {
     id: "REF-D2X6",
     referral: "REF-D2X6",
     username: "Joshua4"
   },
 
-  "joshua5": {
+  joshua5: {
     id: "REF-E5Q1",
     referral: "REF-E5Q1",
     username: "Joshua5"
   },
 
-  "joshua6": {
+  joshua6: {
     id: "REF-F8L4",
     referral: "REF-F8L4",
     username: "Joshua6"
   },
 
-  "joshua7": {
+  joshua7: {
     id: "REF-G3N7",
     referral: "REF-G3N7",
     username: "Joshua7"
   },
 
-  "joshua8": {
+  joshua8: {
     id: "REF-H6R2",
     referral: "REF-H6R2",
     username: "Joshua8"
   },
 
-  "joshua9": {
+  joshua9: {
     id: "REF-J9T5",
     referral: "REF-J9T5",
     username: "Joshua9"
   },
 
-  "joshua10": {
+  joshua10: {
     id: "REF-K4W8",
     referral: "REF-K4W8",
     username: "Joshua10"
   }
+
 };
 
-
-/*
-==================================================
-CREATE COMMISSION TABLE
-==================================================
-*/
 
 async function ensureCommissionTable() {
 
@@ -117,12 +105,6 @@ async function ensureCommissionTable() {
 }
 
 
-/*
-==================================================
-RESOLVE EMPLOYEE
-==================================================
-*/
-
 function resolveEmployee(value) {
 
   const raw =
@@ -132,9 +114,16 @@ function resolveEmployee(value) {
     return null;
   }
 
-  /*
-  Already using REF-XXXX
-  */
+  const lower =
+    raw.toLowerCase();
+
+
+  if (EMPLOYEE_MAP[lower]) {
+
+    return EMPLOYEE_MAP[lower];
+
+  }
+
 
   for (
     const key of Object.keys(EMPLOYEE_MAP)
@@ -145,7 +134,7 @@ function resolveEmployee(value) {
 
     if (
       employee.id.toLowerCase() ===
-      raw.toLowerCase()
+      lower
     ) {
 
       return employee;
@@ -154,7 +143,7 @@ function resolveEmployee(value) {
 
     if (
       employee.referral.toLowerCase() ===
-      raw.toLowerCase()
+      lower
     ) {
 
       return employee;
@@ -164,41 +153,22 @@ function resolveEmployee(value) {
   }
 
 
-  /*
-  Using Joshua1 / Joshua2 etc.
-  */
-
-  const byUsername =
-    EMPLOYEE_MAP[
-      raw.toLowerCase()
-    ];
-
-  if (byUsername) {
-    return byUsername;
-  }
-
-
   return null;
-
 }
 
 
-/*
-==================================================
-MAIN API
-==================================================
-*/
-
-module.exports = async function handler(
-  req,
-  res
-) {
+module.exports =
+async function handler(req, res) {
 
   if (req.method !== "POST") {
 
     return res.status(405).json({
+
       success: false,
-      error: "Method not allowed"
+
+      error:
+        "Method not allowed"
+
     });
 
   }
@@ -213,41 +183,47 @@ module.exports = async function handler(
       req.body || {};
 
 
-    const suppliedEmployee =
+    const employeeValue =
       String(
+
         body.employeeId ||
         body.employee ||
         body.username ||
         body.referral ||
         ""
-      ).trim();
 
-
-    const suppliedReferral =
-      String(
-        body.referral || ""
       ).trim();
 
 
     const transactionId =
       String(
+
         body.transaction_id ||
         body.transactionId ||
+        body.transaction_request_id ||
         ""
+
       ).trim();
 
 
     const reference =
       String(
-        body.reference || ""
+
+        body.reference ||
+        ""
+
       ).trim();
 
 
-    if (!suppliedEmployee) {
+    if (!employeeValue) {
 
       return res.status(400).json({
+
         success: false,
-        error: "Employee ID is required"
+
+        error:
+          "Employee ID is required"
+
       });
 
     }
@@ -256,42 +232,41 @@ module.exports = async function handler(
     if (!transactionId) {
 
       return res.status(400).json({
+
         success: false,
-        error: "Transaction ID is required"
+
+        error:
+          "Transaction ID is required"
+
       });
 
     }
 
 
-    /*
-    ==============================================
-    RESOLVE CANONICAL EMPLOYEE
-    ==============================================
-    */
-
     const employee =
       resolveEmployee(
-        suppliedEmployee
-      ) ||
-      resolveEmployee(
-        suppliedReferral
+        employeeValue
       );
 
 
     if (!employee) {
 
       return res.status(400).json({
+
         success: false,
-        error: "Unknown employee"
+
+        error:
+          "Unknown employee"
+
       });
 
     }
 
 
     /*
-    ==============================================
-    VERIFY PAYMENT
-    ==============================================
+    =====================================================
+    FIND CONFIRMED PAYMENT
+    =====================================================
     */
 
     const paymentResult =
@@ -317,9 +292,9 @@ module.exports = async function handler(
 
           transaction_id = $1
 
-          OR transaction_code = $1
-
           OR transaction_request_id = $1
+
+          OR transaction_code = $1
 
           OR reference = $2
 
@@ -339,8 +314,12 @@ module.exports = async function handler(
     ) {
 
       return res.status(400).json({
+
         success: false,
-        error: "Payment not found"
+
+        error:
+          "Payment not found"
+
       });
 
     }
@@ -350,21 +329,15 @@ module.exports = async function handler(
       paymentResult.rows[0];
 
 
-    /*
-    ==============================================
-    PAYMENT MUST BE CONFIRMED
-    ==============================================
-    */
-
     const paymentStatus =
       String(
         payment.status || ""
       )
-      .trim()
-      .toLowerCase();
+      .toLowerCase()
+      .trim();
 
 
-    const paymentCompleted =
+    const completed =
       paymentStatus === "completed" ||
       paymentStatus === "complete" ||
       paymentStatus === "paid" ||
@@ -372,66 +345,65 @@ module.exports = async function handler(
       paymentStatus === "successful";
 
 
-    if (!paymentCompleted) {
+    if (!completed) {
 
       return res.status(400).json({
+
         success: false,
-        error: "Payment is not completed"
+
+        error:
+          "Payment is not completed"
+
       });
 
     }
 
 
-    /*
-    ==============================================
-    USE DATABASE PAYMENT AMOUNT
-    ==============================================
-    */
-
-    const confirmedAmount =
+    const amount =
       Number(
         payment.amount
       );
 
 
     if (
-      !Number.isFinite(
-        confirmedAmount
-      ) ||
-      confirmedAmount <= 0
+      !Number.isFinite(amount) ||
+      amount <= 0
     ) {
 
       return res.status(400).json({
+
         success: false,
+
         error:
           "Invalid confirmed payment amount"
+
       });
 
     }
 
 
     /*
-    ==============================================
+    =====================================================
     40% COMMISSION
-    ==============================================
+    =====================================================
     */
 
     const commission =
       Number(
         (
-          confirmedAmount *
+          amount *
           COMMISSION_RATE
         ).toFixed(2)
       );
 
 
     /*
-    ==============================================
-    INSERT COMMISSION
-    ==============================================
+    =====================================================
+    INSERT ONCE
+    =====================================================
     */
 
-    const insertResult =
+    const insert =
       await pool.query(
         `
         INSERT INTO employee_commissions (
@@ -474,13 +446,15 @@ module.exports = async function handler(
         DO NOTHING
 
         RETURNING *
+
         `,
         [
 
           transactionId,
 
           payment.reference ||
-            reference,
+            reference ||
+            null,
 
           employee.id,
 
@@ -488,7 +462,7 @@ module.exports = async function handler(
 
           employee.referral,
 
-          confirmedAmount,
+          amount,
 
           COMMISSION_RATE,
 
@@ -499,13 +473,13 @@ module.exports = async function handler(
 
 
     /*
-    ==============================================
-    DUPLICATE PAYMENT
-    ==============================================
+    =====================================================
+    ALREADY EXISTS
+    =====================================================
     */
 
     if (
-      insertResult.rows.length === 0
+      insert.rows.length === 0
     ) {
 
       const existing =
@@ -550,9 +524,9 @@ module.exports = async function handler(
 
 
     /*
-    ==============================================
+    =====================================================
     SUCCESS
-    ==============================================
+    =====================================================
     */
 
     return res.status(200).json({
@@ -571,7 +545,7 @@ module.exports = async function handler(
         employee.referral,
 
       paymentAmount:
-        confirmedAmount,
+        amount,
 
       commissionRate:
         COMMISSION_RATE,
@@ -584,7 +558,7 @@ module.exports = async function handler(
   } catch (error) {
 
     console.error(
-      "Employee commission error:",
+      "EMPLOYEE COMMISSION ERROR:",
       error
     );
 
