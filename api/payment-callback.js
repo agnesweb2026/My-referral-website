@@ -1,336 +1,242 @@
 const crypto = require("crypto");
 const { query, ensurePaymentTable } = require("./db");
 
-function json(res, status, data) {
-  res.status(status);
-  res.setHeader("Content-Type", "application/json");
-  return res.end(JSON.stringify(data));
-}
-
-module.exports = async (req, res) => {
+module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
-    return json(res, 405, {
+    return res.status(405).json({
       success: false,
       message: "Method not allowed"
     });
   }
 
   try {
-    const consumerSecret = String(
-      process.env.UNIFIEDPAY_CONSUMER_SECRET || ""
-    ).trim();
+    const secret = process.env.PAYLOR_WEBHOOK_SECRET;
 
-    if (!consumerSecret) {
-      return json(res, 500, {
+    if (!secret) {
+      console.error("PAYLOR_WEBHOOK_SECRET is missing");
+
+      return res.status(500).json({
         success: false,
-        message: "Callback secret is not configured."
-      });
-    }
-
-    let rawBody = "";
-
-    if (typeof req.body === "string") {
-      rawBody = req.body;
-    } else if (req.body) {
-      rawBody = JSON.stringify(req.body);
-    }
-
-    const receivedSignature = String(
-      req.headers["x-unifiedpay-signature"] || ""
-    ).trim();
-
-    if (!receivedSignature) {
-      return json(res, 401, {
-        success: false,
-        message: "Missing callback signature."
-      });
-    }
-
-    const expectedSignature =
-      "sha256=" +
-      crypto
-        .createHmac("sha256", consumerSecret)
-        .update(rawBody)
-        .digest("hex");
-
-    const receivedBuffer =
-      Buffer.from(receivedSignature);
-
-    const expectedBuffer =
-      Buffer.from(expectedSignature);
-
-    if (
-      receivedBuffer.length !==
-        expectedBuffer.length ||
-      !crypto.timingSafeEqual(
-        receivedBuffer,
-        expectedBuffer
-      )
-    ) {
-      return json(res, 401, {
-        success: false,
-        message: "Invalid callback signature."
-      });
-    }
-
-    let data;
-
-    try {
-      data = JSON.parse(rawBody);
-    } catch {
-      return json(res, 400, {
-        success: false,
-        message: "Invalid callback JSON."
-      });
-    }
-
-    const event = String(
-      data.event ||
-      req.headers["x-unifiedpay-event"] ||
-      ""
-    ).trim();
-
-    const transactionId = String(
-      data.transaction_request_id || ""
-    ).trim();
-
-    const transactionStatus = String(
-      data.TransactionStatus || ""
-    ).trim();
-
-    const transactionCode = String(
-      data.TransactionCode || ""
-    ).trim();
-
-    const reference = String(
-      data.TransactionReference || ""
-    ).trim();
-
-    console.log(
-      "UNIFIEDPAY_CALLBACK",
-      JSON.stringify({
-        event,
-        transaction_request_id:
-          transactionId,
-        status:
-          transactionStatus,
-        code:
-          transactionCode,
-        reference
-      })
-    );
-
-    if (!transactionId) {
-      return json(res, 400, {
-        success: false,
-        message:
-          "Missing transaction request ID."
+        message: "Paylor webhook secret is not configured"
       });
     }
 
     await ensurePaymentTable();
 
     /*
-    ==========================================
-    PAYMENT COMPLETED
-    ==========================================
-    */
+     * Vercel may already give us req.body.
+     * Paylor signs the EXACT raw JSON bytes.
+     *
+     * If req.rawBody exists, use it.
+     * Otherwise reconstruct the body consistently.
+     */
+
+    let rawBody;
+
+    if (req.rawBody) {
+      rawBody = Buffer.isBuffer(req.rawBody)
+        ? req.rawBody
+        : Buffer.from(req.rawBody);
+    } else if (typeof req.body === "string") {
+      rawBody = Buffer.from(req.body);
+    } else {
+      rawBody = Buffer.from(JSON.stringify(req.body || {}));
+    }
+
+    const signature =
+      req.headers["x-webhook-signature"] ||
+      req.headers["X-Webhook-Signature"];
+
+    if (!signature) {
+      console.error("Missing Paylor webhook signature");
+
+      return res.status(401).json({
+        success: false,
+        message: "Missing webhook signature"
+      });
+    }
+
+    /*
+     * Paylor:
+     * HMAC SHA-256 of the exact raw request body
+     */
+
+    const expectedSignature = crypto
+      .createHmac("sha256", secret)
+      .update(rawBody)
+      .digest("hex");
+
+    /*
+     * Timing-safe comparison
+     */
+
+    const providedBuffer = Buffer.from(String(signature));
+    const expectedBuffer = Buffer.from(expectedSignature);
 
     if (
-      event === "transaction.completed" &&
-      transactionStatus.toLowerCase() ===
-        "completed" &&
-      transactionCode === "0"
+      providedBuffer.length !== expectedBuffer.length ||
+      !crypto.timingSafeEqual(
+        providedBuffer,
+        expectedBuffer
+      )
     ) {
+      console.error("Invalid Paylor webhook signature");
 
+      return res.status(401).json({
+        success: false,
+        message: "Invalid webhook signature"
+      });
+    }
+
+    const body =
+      typeof req.body === "object"
+        ? req.body
+        : JSON.parse(rawBody.toString("utf8"));
+
+    const event = body.event;
+    const transaction = body.transaction || {};
+
+    const reference =
+      transaction.reference ||
+      body.reference ||
+      transaction.merchantReference ||
+      body.merchantReference;
+
+    const transactionId =
+      transaction.id ||
+      body.transactionId ||
+      body.id ||
+      null;
+
+    const providerRef =
+      transaction.providerRef ||
+      body.providerRef ||
+      null;
+
+    const mpesaReceipt =
+      transaction.mpesaReceipt ||
+      transaction.metadata?.mpesaReceipt ||
+      body.mpesaReceipt ||
+      null;
+
+    const status = String(
+      transaction.status ||
+      body.status ||
+      ""
+    ).toUpperCase();
+
+    if (!reference) {
+      console.error("Paylor webhook has no payment reference");
+
+      return res.status(200).json({
+        received: true,
+        processed: false
+      });
+    }
+
+    /*
+     * PAYMENT SUCCESS
+     */
+
+    if (
+      event === "payment.success" ||
+      status === "COMPLETED" ||
+      status === "CONFIRMED"
+    ) {
       await query(
         `
         UPDATE payments
         SET
           status = 'completed',
-          transaction_request_id = $1,
-          transaction_id = $1,
-          transaction_code = $2,
+          transaction_id = COALESCE($1, transaction_id),
+          transaction_code = COALESCE($2, transaction_code),
           updated_at = NOW()
-        WHERE
-          transaction_request_id = $1
-          OR reference = $3
+        WHERE reference = $3
         `,
         [
           transactionId,
-          transactionCode,
+          mpesaReceipt || providerRef,
           reference
         ]
       );
 
       console.log(
-        "UNIFIEDPAY_PAYMENT_COMPLETED",
-        JSON.stringify({
-          transaction_request_id:
-            transactionId,
-          reference,
-          amount:
-            data.TransactionAmount ||
-            null,
-          receipt:
-            data.TransactionReceipt ||
-            null
-        })
+        "PAYLOR PAYMENT COMPLETED:",
+        reference,
+        transactionId,
+        mpesaReceipt
       );
 
-      return json(res, 200, {
-        success: true,
+      return res.status(200).json({
         received: true,
-        paid: true,
-        status: "Completed",
-        transaction_request_id:
-          transactionId
+        processed: true,
+        paid: true
       });
     }
 
     /*
-    ==========================================
-    PAYMENT FAILED
-    ==========================================
-    */
+     * PAYMENT FAILED
+     */
 
     if (
-      event === "transaction.failed"
+      event === "payment.failed" ||
+      status === "FAILED" ||
+      status === "CANCELLED" ||
+      status === "CANCELED" ||
+      status === "REJECTED"
     ) {
-
       await query(
         `
         UPDATE payments
         SET
           status = 'failed',
-          transaction_request_id =
-            COALESCE(
-              transaction_request_id,
-              $1
-            ),
-          transaction_id =
-            COALESCE(
-              transaction_id,
-              $1
-            ),
-          transaction_code = $2,
+          transaction_id = COALESCE($1, transaction_id),
           updated_at = NOW()
-        WHERE
-          transaction_request_id = $1
-          OR reference = $3
+        WHERE reference = $2
         `,
         [
           transactionId,
-          transactionCode,
           reference
         ]
       );
-
-      return json(res, 200, {
-        success: true,
-        received: true,
-        paid: false,
-        status: "Failed",
-        transaction_request_id:
-          transactionId
-      });
-    }
-
-    /*
-    ==========================================
-    PAYMENT CANCELLED
-    ==========================================
-    */
-
-    if (
-      event === "transaction.cancelled"
-    ) {
-
-      await query(
-        `
-        UPDATE payments
-        SET
-          status = 'cancelled',
-          transaction_request_id =
-            COALESCE(
-              transaction_request_id,
-              $1
-            ),
-          transaction_id =
-            COALESCE(
-              transaction_id,
-              $1
-            ),
-          transaction_code = $2,
-          updated_at = NOW()
-        WHERE
-          transaction_request_id = $1
-          OR reference = $3
-        `,
-        [
-          transactionId,
-          transactionCode,
-          reference
-        ]
-      );
-
-      return json(res, 200, {
-        success: true,
-        received: true,
-        paid: false,
-        status: "Cancelled",
-        transaction_request_id:
-          transactionId
-      });
-    }
-
-    /*
-    ==========================================
-    UNIFIEDPAY TEST CALLBACK
-    ==========================================
-    */
-
-    if (event === "test") {
 
       console.log(
-        "UNIFIEDPAY_TEST_CALLBACK_RECEIVED"
+        "PAYLOR PAYMENT FAILED:",
+        reference
       );
 
-      return json(res, 200, {
-        success: true,
+      return res.status(200).json({
         received: true,
-        test: true
+        processed: true,
+        paid: false
       });
     }
 
     /*
-    ==========================================
-    OTHER EVENTS
-    ==========================================
-    */
+     * OTHER EVENTS
+     */
 
-    return json(res, 200, {
-      success: true,
+    console.log(
+      "PAYLOR WEBHOOK RECEIVED:",
+      event,
+      reference,
+      status
+    );
+
+    return res.status(200).json({
       received: true,
-      paid: false,
-      status:
-        transactionStatus ||
-        "Unknown",
-      transaction_request_id:
-        transactionId
+      processed: false
     });
 
   } catch (error) {
-
     console.error(
-      "UNIFIEDPAY_CALLBACK_ERROR",
+      "PAYLOR WEBHOOK ERROR:",
       error
     );
 
-    return json(res, 500, {
+    return res.status(500).json({
       success: false,
-      message:
-        "Callback processing failed."
+      message: "Webhook processing failed"
     });
   }
 };
