@@ -17,8 +17,8 @@ module.exports = async (req, res) => {
 
   try {
     const {
-      transaction_request_id,
-      transaction_id
+      transaction_id,
+      transaction_request_id
     } = req.body || {};
 
     const transactionId = String(
@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
       });
     }
 
-    if (transactionId.length > 150) {
+    if (transactionId.length > 200) {
       return json(res, 400, {
         success: false,
         paid: false,
@@ -43,44 +43,23 @@ module.exports = async (req, res) => {
       });
     }
 
-    await ensurePaymentTable();
+    const apiKey =
+      String(process.env.PAYLOR_API_KEY || "").trim();
 
-    // =====================================================
-    // LIPARO CREDENTIALS
-    // =====================================================
-
-    const liparoSecret =
-      String(
-        process.env.LIPARO_SECRET || ""
-      ).trim();
-
-    const liparoPasskey =
-      String(
-        process.env.LIPARO_PASSKEY || ""
-      ).trim();
-
-    const liparoShortcode =
-      String(
-        process.env.LIPARO_SHORTCODE || ""
-      ).trim();
-
-    if (
-      !liparoSecret ||
-      !liparoPasskey ||
-      !liparoShortcode
-    ) {
+    if (!apiKey) {
       return json(res, 500, {
         success: false,
         paid: false,
         message:
-          "Liparo payment credentials are not configured on the server."
+          "Paylor API key is not configured on the server."
       });
     }
 
-    // =====================================================
-    // STEP 1
-    // CHECK OUR DATABASE FIRST
-    // =====================================================
+    await ensurePaymentTable();
+
+    // ============================================
+    // 1. CHECK OUR DATABASE FIRST
+    // ============================================
 
     const saved = await query(
       `
@@ -103,19 +82,13 @@ module.exports = async (req, res) => {
     );
 
     if (saved.rows.length > 0) {
-      const payment =
-        saved.rows[0];
+      const payment = saved.rows[0];
 
-      const savedStatus =
-        String(
-          payment.status || ""
-        )
-          .trim()
-          .toLowerCase();
-
-      // ===================================================
-      // ALREADY PAID
-      // ===================================================
+      const savedStatus = String(
+        payment.status || ""
+      )
+        .trim()
+        .toLowerCase();
 
       if (
         savedStatus === "completed" ||
@@ -130,12 +103,10 @@ module.exports = async (req, res) => {
           status: "Completed",
 
           transaction_id:
-            payment.transaction_id ||
-            transactionId,
+            payment.transaction_id || transactionId,
 
           transaction_request_id:
-            payment.transaction_request_id ||
-            transactionId,
+            payment.transaction_request_id || transactionId,
 
           amount:
             payment.amount ?? null,
@@ -151,10 +122,6 @@ module.exports = async (req, res) => {
         });
       }
 
-      // ===================================================
-      // FAILED
-      // ===================================================
-
       if (
         savedStatus === "failed" ||
         savedStatus === "failure" ||
@@ -166,21 +133,14 @@ module.exports = async (req, res) => {
           status: "Failed",
 
           transaction_id:
-            payment.transaction_id ||
-            transactionId,
+            payment.transaction_id || transactionId,
 
           transaction_request_id:
-            payment.transaction_request_id ||
-            transactionId,
+            payment.transaction_request_id || transactionId,
 
-          message:
-            "Payment failed."
+          message: "Payment failed."
         });
       }
-
-      // ===================================================
-      // CANCELLED
-      // ===================================================
 
       if (
         savedStatus === "cancelled" ||
@@ -192,56 +152,35 @@ module.exports = async (req, res) => {
           status: "Cancelled",
 
           transaction_id:
-            payment.transaction_id ||
-            transactionId,
+            payment.transaction_id || transactionId,
 
           transaction_request_id:
-            payment.transaction_request_id ||
-            transactionId,
+            payment.transaction_request_id || transactionId,
 
-          message:
-            "Payment was cancelled."
+          message: "Payment was cancelled."
         });
       }
     }
 
-    // =====================================================
-    // STEP 2
-    // ASK LIPARO FOR CURRENT STATUS
-    // =====================================================
+    // ============================================
+    // 2. ASK PAYLOR FOR CURRENT TRANSACTION STATUS
+    // ============================================
 
-    const response =
-      await fetch(
-        "https://api.liparo.co.ke/v1/checktransaction",
-        {
-          method: "POST",
+    const response = await fetch(
+      `https://api.paylorke.com/api/v1/merchants/payments/transactions/${encodeURIComponent(
+        transactionId
+      )}`,
+      {
+        method: "GET",
 
-          headers: {
-            "Content-Type":
-              "application/json",
-
-            "Accept":
-              "application/json"
-          },
-
-          body: JSON.stringify({
-            secret_key:
-              liparoSecret,
-
-            passkey:
-              liparoPasskey,
-
-            shortcode:
-              liparoShortcode,
-
-            transaction_id:
-              transactionId
-          })
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          Accept: "application/json"
         }
-      );
+      }
+    );
 
-    const responseText =
-      await response.text();
+    const responseText = await response.text();
 
     let data = {};
 
@@ -250,96 +189,65 @@ module.exports = async (req, res) => {
         ? JSON.parse(responseText)
         : {};
     } catch {
-      data = {
-        success: false,
-
-        message:
-          responseText ||
-          "Liparo returned an invalid response."
-      };
+      data = {};
     }
 
     console.log(
-      "LIPARO_STATUS_RESULT",
+      "PAYLOR_STATUS_RESULT",
       JSON.stringify({
-        transaction_id:
-          transactionId,
-
-        httpStatus:
-          response.status,
-
-        status:
-          data.status ||
-          null,
-
-        success:
-          data.success === true,
-
-        receipt:
-          data.mpesa_receipt ||
-          null
+        transaction_id: transactionId,
+        httpStatus: response.status,
+        status: data.status || null,
+        reference: data.reference || null,
+        mpesaReceipt:
+          data.mpesaReceipt || null
       })
     );
 
-    // =====================================================
-    // NORMALIZE STATUS
-    // =====================================================
+    // ============================================
+    // 3. NORMALIZE STATUS
+    // ============================================
 
-    const status =
-      String(
-        data.status || ""
-      )
-        .trim()
-        .toLowerCase();
+    const status = String(
+      data.status || ""
+    )
+      .trim()
+      .toUpperCase();
 
     const completed =
-      status === "completed" ||
-      status === "complete" ||
-      status === "successful" ||
-      status === "success" ||
-      status === "paid";
+      status === "COMPLETED" ||
+      status === "CONFIRMED" ||
+      status === "SUCCESS" ||
+      status === "PAID";
 
     const failed =
-      status === "failed" ||
-      status === "failure" ||
-      status === "rejected";
+      status === "FAILED" ||
+      status === "FAILURE" ||
+      status === "REJECTED";
 
     const cancelled =
-      status === "cancelled" ||
-      status === "canceled";
+      status === "CANCELLED" ||
+      status === "CANCELED";
 
-    // =====================================================
-    // PAYMENT COMPLETED
-    // =====================================================
+    // ============================================
+    // 4. PAYMENT COMPLETED
+    // ============================================
 
-    if (
-      response.ok &&
-      data.success === true &&
-      completed
-    ) {
+    if (response.ok && completed) {
       await query(
         `
         UPDATE payments
         SET
           status = 'completed',
 
-          transaction_request_id =
-            COALESCE(
-              transaction_request_id,
-              $1
-            ),
-
           transaction_id =
-            COALESCE(
-              transaction_id,
-              $1
-            ),
+            COALESCE(transaction_id, $1),
+
+          transaction_request_id =
+            COALESCE(transaction_request_id, $1),
 
           transaction_code =
-            COALESCE(
-              transaction_code,
-              $2
-            ),
+            COALESCE(transaction_code, $2),
 
           updated_at = NOW()
 
@@ -349,10 +257,9 @@ module.exports = async (req, res) => {
         `,
         [
           transactionId,
-
-          data.mpesa_receipt ||
-            data.transaction_code ||
-            "0"
+          data.mpesaReceipt ||
+            data.providerRef ||
+            null
         ]
       );
 
@@ -362,37 +269,28 @@ module.exports = async (req, res) => {
         status: "Completed",
 
         transaction_id:
-          transactionId,
+          data.id || transactionId,
 
         transaction_request_id:
-          transactionId,
+          data.id || transactionId,
 
         amount:
-          data.amount ??
-          null,
-
-        phone:
-          data.phone ??
-          null,
+          data.amount ?? null,
 
         reference:
-          data.reference ??
-          null,
+          data.reference ?? null,
 
         mpesa_receipt:
-          data.mpesa_receipt ??
-          null,
+          data.mpesaReceipt ?? null,
 
         message:
-          data.result_desc ||
-          data.message ||
           "Payment completed successfully."
       });
     }
 
-    // =====================================================
-    // PAYMENT FAILED
-    // =====================================================
+    // ============================================
+    // 5. PAYMENT FAILED
+    // ============================================
 
     if (failed) {
       await query(
@@ -413,22 +311,20 @@ module.exports = async (req, res) => {
         paid: false,
         status: "Failed",
 
-        transaction_id:
-          transactionId,
+        transaction_id: transactionId,
 
         transaction_request_id:
           transactionId,
 
         message:
-          data.result_desc ||
           data.message ||
           "Payment failed."
       });
     }
 
-    // =====================================================
-    // PAYMENT CANCELLED
-    // =====================================================
+    // ============================================
+    // 6. PAYMENT CANCELLED
+    // ============================================
 
     if (cancelled) {
       await query(
@@ -449,53 +345,51 @@ module.exports = async (req, res) => {
         paid: false,
         status: "Cancelled",
 
-        transaction_id:
-          transactionId,
+        transaction_id: transactionId,
 
         transaction_request_id:
           transactionId,
 
         message:
-          data.result_desc ||
           data.message ||
           "Payment was cancelled."
       });
     }
 
-    // =====================================================
-    // STILL PENDING
-    // =====================================================
+    // ============================================
+    // 7. STILL PENDING
+    // ============================================
 
     return json(res, 200, {
       success: true,
       paid: false,
 
       status:
-        data.status ||
-        "Pending",
+        data.status || "PENDING",
 
       transaction_id:
-        transactionId,
+        data.id || transactionId,
 
       transaction_request_id:
-        transactionId,
+        data.id || transactionId,
+
+      reference:
+        data.reference ?? null,
 
       message:
-        data.result_desc ||
         data.message ||
         "Payment is still pending."
     });
 
   } catch (error) {
     console.error(
-      "LIPARO_STATUS_ERROR",
+      "PAYLOR_STATUS_ERROR",
       error
     );
 
     return json(res, 500, {
       success: false,
       paid: false,
-
       message:
         "Unable to check the M-PESA payment status."
     });
