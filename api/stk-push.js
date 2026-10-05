@@ -8,20 +8,18 @@ const {
 
 /*
 =========================================================
-PAYLOR STK PUSH + PAYMENT ABUSE PROTECTION
+PAYLOR STK PUSH
+PAYMENT PROTECTION
 =========================================================
 */
-
 
 module.exports = async function handler(req, res) {
 
   if (req.method !== "POST") {
-
     return res.status(405).json({
       success: false,
       message: "Method not allowed"
     });
-
   }
 
 
@@ -39,13 +37,11 @@ module.exports = async function handler(req, res) {
 
 
   if (!apiKey || !channelId) {
-
     return res.status(500).json({
       success: false,
       message:
         "Paylor credentials are not configured on the server"
     });
-
   }
 
 
@@ -71,7 +67,6 @@ module.exports = async function handler(req, res) {
       message:
         "Payment database is not available"
     });
-
   }
 
 
@@ -103,38 +98,63 @@ module.exports = async function handler(req, res) {
   */
 
   if (!phone) {
-
     return res.status(400).json({
       success: false,
       message:
         "M-PESA phone number is required"
     });
-
   }
 
 
-  if (
-    !Number.isFinite(amount) ||
-    amount <= 0
-  ) {
-
+  if (!Number.isFinite(amount)) {
     return res.status(400).json({
       success: false,
       message:
         "A valid payment amount is required"
     });
+  }
 
+
+  /*
+  =======================================================
+  ALLOWED PACKAGE AMOUNTS
+  =======================================================
+  */
+
+  const ALLOWED_AMOUNTS = [
+    95,
+    138,
+    207,
+    253,
+    299,
+    393
+  ];
+
+
+  const paymentAmount =
+    Math.round(amount);
+
+
+  if (
+    !ALLOWED_AMOUNTS.includes(
+      paymentAmount
+    )
+  ) {
+
+    return res.status(400).json({
+      success: false,
+      message:
+        "Invalid payment package"
+    });
   }
 
 
   if (!reference) {
-
     return res.status(400).json({
       success: false,
       message:
         "Payment reference is required"
     });
-
   }
 
 
@@ -154,13 +174,11 @@ module.exports = async function handler(req, res) {
 
 
   if (!cleanReference) {
-
     return res.status(400).json({
       success: false,
       message:
         "Invalid payment reference"
     });
-
   }
 
 
@@ -176,6 +194,10 @@ module.exports = async function handler(req, res) {
       .trim();
 
 
+  /*
+  01XXXXXXXX / 07XXXXXXXX
+  */
+
   if (
     cleanPhone.startsWith("0") &&
     cleanPhone.length === 10
@@ -184,9 +206,12 @@ module.exports = async function handler(req, res) {
     cleanPhone =
       "254" +
       cleanPhone.substring(1);
-
   }
 
+
+  /*
+  1XXXXXXXX / 7XXXXXXXX
+  */
 
   if (
     (
@@ -199,7 +224,6 @@ module.exports = async function handler(req, res) {
     cleanPhone =
       "254" +
       cleanPhone;
-
   }
 
 
@@ -220,12 +244,7 @@ module.exports = async function handler(req, res) {
       message:
         "Enter a valid Safaricom M-PESA number starting with 01 or 07"
     });
-
   }
-
-
-  const paymentAmount =
-    Math.round(amount);
 
 
   /*
@@ -236,7 +255,6 @@ module.exports = async function handler(req, res) {
 
   let clientIp =
     "unknown";
-
 
   try {
 
@@ -259,20 +277,18 @@ module.exports = async function handler(req, res) {
       clientIp =
         String(realIp)
           .trim();
-
     }
 
   } catch (error) {
 
     clientIp =
       "unknown";
-
   }
 
 
   /*
   =======================================================
-  EXISTING REFERENCE PROTECTION
+  EXISTING REFERENCE CHECK
   =======================================================
   */
 
@@ -345,15 +361,13 @@ module.exports = async function handler(req, res) {
 
           status:
             "COMPLETED"
-
         });
-
       }
 
 
       /*
       ---------------------------------------------------
-      EXISTING PENDING
+      ALREADY PENDING
       ---------------------------------------------------
       */
 
@@ -388,11 +402,8 @@ module.exports = async function handler(req, res) {
 
           message:
             "An M-PESA payment request is already pending for this payment."
-
         });
-
       }
-
     }
 
   } catch (error) {
@@ -401,13 +412,12 @@ module.exports = async function handler(req, res) {
       "EXISTING PAYMENT CHECK ERROR:",
       error
     );
-
   }
 
 
   /*
   =======================================================
-  ACTIVE PENDING PAYMENT FOR SAME PHONE
+  ACTIVE PENDING PAYMENT
   =======================================================
   */
 
@@ -474,11 +484,8 @@ module.exports = async function handler(req, res) {
 
           reference:
             pending.reference
-
         });
-
       }
-
     }
 
   } catch (error) {
@@ -487,7 +494,6 @@ module.exports = async function handler(req, res) {
       "PENDING PAYMENT CHECK ERROR:",
       error
     );
-
   }
 
 
@@ -563,9 +569,7 @@ module.exports = async function handler(req, res) {
 
         message:
           `Please wait ${waitSeconds} seconds before requesting another M-PESA prompt.`
-
       });
-
     }
 
   } catch (error) {
@@ -574,7 +578,6 @@ module.exports = async function handler(req, res) {
       "PHONE COOLDOWN CHECK ERROR:",
       error
     );
-
   }
 
 
@@ -626,9 +629,7 @@ module.exports = async function handler(req, res) {
 
         message:
           "Too many payment attempts for this number. Please wait and try again later."
-
       });
-
     }
 
   } catch (error) {
@@ -637,7 +638,6 @@ module.exports = async function handler(req, res) {
       "PHONE RATE LIMIT CHECK ERROR:",
       error
     );
-
   }
 
 
@@ -694,9 +694,7 @@ module.exports = async function handler(req, res) {
 
           message:
             "Too many payment requests from this connection. Please wait and try again."
-
         });
-
       }
 
     } catch (error) {
@@ -705,9 +703,7 @@ module.exports = async function handler(req, res) {
         "IP RATE LIMIT CHECK ERROR:",
         error
       );
-
     }
-
   }
 
 
@@ -729,8 +725,7 @@ module.exports = async function handler(req, res) {
 
         WHERE phone = $1
 
-        AND status IN
-        (
+        AND status IN (
           'failed',
           'cancelled',
           'canceled',
@@ -767,9 +762,7 @@ module.exports = async function handler(req, res) {
 
         message:
           "Too many failed or cancelled payment attempts. Please wait before trying again."
-
       });
-
     }
 
   } catch (error) {
@@ -778,7 +771,6 @@ module.exports = async function handler(req, res) {
       "FAILED ATTEMPT CHECK ERROR:",
       error
     );
-
   }
 
 
@@ -834,6 +826,16 @@ module.exports = async function handler(req, res) {
       attemptResult.rows[0]?.id ||
       null;
 
+
+    if (!attemptId) {
+
+      return res.status(500).json({
+        success: false,
+        message:
+          "Unable to record payment attempt"
+      });
+    }
+
   } catch (error) {
 
     console.error(
@@ -841,8 +843,15 @@ module.exports = async function handler(req, res) {
       error
     );
 
-        }
-    /*
+    return res.status(500).json({
+      success: false,
+      message:
+        "Payment protection is temporarily unavailable"
+    });
+  }
+
+
+  /*
   =======================================================
   PAYLOR CALLBACK URL
   =======================================================
@@ -924,50 +933,46 @@ module.exports = async function handler(req, res) {
     );
 
 
-    if (attemptId) {
+    try {
 
-      try {
+      await query(
+        `
+        UPDATE payment_attempts
 
-        await query(
-          `
-          UPDATE payment_attempts
+        SET
+          status = 'failed',
+          updated_at = NOW()
 
-          SET
-            status = 'failed',
-            updated_at = NOW()
+        WHERE id = $1
+        `,
+        [
+          attemptId
+        ]
+      );
 
-          WHERE id = $1
-          `,
-          [
-            attemptId
-          ]
-        );
+    } catch (updateError) {
 
-      } catch (updateError) {
-
-        console.error(
-          "ATTEMPT UPDATE ERROR:",
-          updateError
-        );
-
-      }
-
+      console.error(
+        "ATTEMPT UPDATE ERROR:",
+        updateError
+      );
     }
 
 
     return res.status(500).json({
-
       success: false,
-
       message:
         "Unable to create payment record"
-
     });
-
   }
 
 
   /*
+  =======================================================
+  PART 2 CONTINUES DIRECTLY BELOW
+  =======================================================
+  */
+    /*
   =======================================================
   PAYLOR STK PUSH
   =======================================================
@@ -992,7 +997,6 @@ module.exports = async function handler(req, res) {
 
             "Idempotency-Key":
               idempotencyKey
-
           },
 
           body:
@@ -1015,18 +1019,10 @@ module.exports = async function handler(req, res) {
 
               callbackUrl:
                 callbackUrl
-
             })
-
         }
       );
 
-
-    /*
-    =====================================================
-    PAYLOR RESPONSE
-    =====================================================
-    */
 
     const responseText =
       await paylorResponse.text();
@@ -1034,7 +1030,6 @@ module.exports = async function handler(req, res) {
 
     let data =
       {};
-
 
     try {
 
@@ -1047,7 +1042,6 @@ module.exports = async function handler(req, res) {
 
       data =
         {};
-
     }
 
 
@@ -1066,72 +1060,37 @@ module.exports = async function handler(req, res) {
       );
 
 
-      try {
+      await query(
+        `
+        UPDATE payments
 
-        await query(
-          `
-          UPDATE payments
+        SET
+          status = 'failed',
+          updated_at = NOW()
 
-          SET
-            status = 'failed',
-            updated_at = NOW()
-
-          WHERE reference = $1
-          `,
-          [
-            cleanReference
-          ]
-        );
-
-      } catch (dbError) {
-
-        console.error(
-          "FAILED PAYMENT UPDATE ERROR:",
-          dbError
-        );
-
-      }
+        WHERE reference = $1
+        `,
+        [
+          cleanReference
+        ]
+      );
 
 
-      /*
-      MARK ATTEMPT FAILED
-      */
+      await query(
+        `
+        UPDATE payment_attempts
 
-      if (attemptId) {
+        SET
+          status = 'failed',
+          updated_at = NOW()
 
-        try {
+        WHERE id = $1
+        `,
+        [
+          attemptId
+        ]
+      );
 
-          await query(
-            `
-            UPDATE payment_attempts
-
-            SET
-              status = 'failed',
-              updated_at = NOW()
-
-            WHERE id = $1
-            `,
-            [
-              attemptId
-            ]
-          );
-
-        } catch (dbError) {
-
-          console.error(
-            "FAILED ATTEMPT UPDATE ERROR:",
-            dbError
-          );
-
-        }
-
-      }
-
-
-      /*
-      IMPORTANT:
-      NO AUTOMATIC RETRY
-      */
 
       return res.status(
         paylorResponse.status || 502
@@ -1146,9 +1105,7 @@ module.exports = async function handler(req, res) {
 
         provider_status:
           paylorResponse.status
-
       });
-
     }
 
 
@@ -1167,12 +1124,6 @@ module.exports = async function handler(req, res) {
       null;
 
 
-    /*
-    =====================================================
-    NO TRANSACTION ID
-    =====================================================
-    */
-
     if (!transactionId) {
 
       console.error(
@@ -1181,62 +1132,36 @@ module.exports = async function handler(req, res) {
       );
 
 
-      try {
+      await query(
+        `
+        UPDATE payments
 
-        await query(
-          `
-          UPDATE payments
+        SET
+          status = 'failed',
+          updated_at = NOW()
 
-          SET
-            status = 'failed',
-            updated_at = NOW()
-
-          WHERE reference = $1
-          `,
-          [
-            cleanReference
-          ]
-        );
-
-      } catch (dbError) {
-
-        console.error(
-          "PAYMENT UPDATE ERROR:",
-          dbError
-        );
-
-      }
+        WHERE reference = $1
+        `,
+        [
+          cleanReference
+        ]
+      );
 
 
-      if (attemptId) {
+      await query(
+        `
+        UPDATE payment_attempts
 
-        try {
+        SET
+          status = 'failed',
+          updated_at = NOW()
 
-          await query(
-            `
-            UPDATE payment_attempts
-
-            SET
-              status = 'failed',
-              updated_at = NOW()
-
-            WHERE id = $1
-            `,
-            [
-              attemptId
-            ]
-          );
-
-        } catch (dbError) {
-
-          console.error(
-            "ATTEMPT UPDATE ERROR:",
-            dbError
-          );
-
-        }
-
-      }
+        WHERE id = $1
+        `,
+        [
+          attemptId
+        ]
+      );
 
 
       return res.status(502).json({
@@ -1245,9 +1170,7 @@ module.exports = async function handler(req, res) {
 
         message:
           "Paylor did not return a transaction ID"
-
       });
-
     }
 
 
@@ -1283,50 +1206,40 @@ module.exports = async function handler(req, res) {
         "SAVE TRANSACTION ERROR:",
         error
       );
-
-      /*
-      DO NOT SEND ANOTHER PROMPT.
-      */
-
     }
 
 
     /*
     =====================================================
-    UPDATE ATTEMPT
+    UPDATE PAYMENT ATTEMPT
     =====================================================
     */
 
-    if (attemptId) {
+    try {
 
-      try {
+      await query(
+        `
+        UPDATE payment_attempts
 
-        await query(
-          `
-          UPDATE payment_attempts
+        SET
+          status = 'pending',
+          transaction_id = $1,
+          updated_at = NOW()
 
-          SET
-            status = 'pending',
-            transaction_id = $1,
-            updated_at = NOW()
+        WHERE id = $2
+        `,
+        [
+          String(transactionId),
+          attemptId
+        ]
+      );
 
-          WHERE id = $2
-          `,
-          [
-            String(transactionId),
-            attemptId
-          ]
-        );
+    } catch (error) {
 
-      } catch (error) {
-
-        console.error(
-          "ATTEMPT TRANSACTION UPDATE ERROR:",
-          error
-        );
-
-      }
-
+      console.error(
+        "ATTEMPT TRANSACTION UPDATE ERROR:",
+        error
+      );
     }
 
 
@@ -1355,7 +1268,6 @@ module.exports = async function handler(req, res) {
 
       message:
         "M-PESA prompt sent successfully"
-
     });
 
 
@@ -1368,41 +1280,66 @@ module.exports = async function handler(req, res) {
 
 
     /*
-    =====================================================
-    IMPORTANT:
-
-    DO NOT AUTOMATICALLY RETRY STK PUSH.
-    =====================================================
+    -----------------------------------------------------
+    MARK ATTEMPT FAILED
+    -----------------------------------------------------
     */
 
-    if (attemptId) {
+    try {
 
-      try {
+      await query(
+        `
+        UPDATE payment_attempts
 
-        await query(
-          `
-          UPDATE payment_attempts
+        SET
+          status = 'failed',
+          updated_at = NOW()
 
-          SET
-            status = 'failed',
-            updated_at = NOW()
+        WHERE id = $1
+        `,
+        [
+          attemptId
+        ]
+      );
 
-          WHERE id = $1
-          `,
-          [
-            attemptId
-          ]
-        );
+    } catch (dbError) {
 
-      } catch (dbError) {
+      console.error(
+        "ATTEMPT FAILURE UPDATE ERROR:",
+        dbError
+      );
+    }
 
-        console.error(
-          "ATTEMPT FAILURE UPDATE ERROR:",
-          dbError
-        );
 
-      }
+    /*
+    -----------------------------------------------------
+    MARK PAYMENT FAILED
+    -----------------------------------------------------
+    */
 
+    try {
+
+      await query(
+        `
+        UPDATE payments
+
+        SET
+          status = 'failed',
+          updated_at = NOW()
+
+        WHERE reference = $1
+        `,
+        [
+          cleanReference
+        ]
+      );
+
+    } catch (dbError) {
+
+      console.error(
+        "PAYMENT FAILURE UPDATE ERROR:",
+        dbError
+      );
     }
 
 
@@ -1412,9 +1349,6 @@ module.exports = async function handler(req, res) {
 
       message:
         "Unable to connect to Paylor. Please try again."
-
     });
-
   }
-
 };
