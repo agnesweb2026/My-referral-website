@@ -5,7 +5,7 @@ const {
 } = require("./db");
 
 
-const COMMISSION_RATE = 0.40;
+const COMMISSION_RATE = 0.25;
 
 
 const EMPLOYEE_MAP = {
@@ -706,7 +706,7 @@ module.exports = async function handler(
 
     /*
     =====================================================
-    40% COMMISSION
+    25% COMMISSION
     =====================================================
     */
 
@@ -775,7 +775,7 @@ module.exports = async function handler(
 
 
       console.log(
-        "40% COMMISSION RECORDED:",
+        "25% COMMISSION RECORDED:",
         employee.username,
         commission,
         transactionId
