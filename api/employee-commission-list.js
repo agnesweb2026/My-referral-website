@@ -1,6 +1,6 @@
 const { pool } = require("./db");
 
-const COMMISSION_RATE = 0.40;
+const COMMISSION_RATE = 0.25;
 
 
 /*
@@ -53,7 +53,7 @@ async function ensureCommissionTable() {
         NOT NULL,
 
       commission_rate NUMERIC(5,4)
-        NOT NULL DEFAULT 0.40,
+        NOT NULL DEFAULT 0.25,
 
       commission_amount NUMERIC(12,2)
         NOT NULL,
