@@ -1,6 +1,6 @@
 const { pool } = require("./db");
 
-const COMMISSION_RATE = 0.30;
+const COMMISSION_RATE = 0.25;
 
 const EMPLOYEE_MAP = {
 
@@ -91,7 +91,7 @@ async function ensureCommissionTable() {
         NOT NULL,
 
       commission_rate NUMERIC(5,4)
-        NOT NULL DEFAULT 0.30,
+        NOT NULL DEFAULT 0.25,
 
       commission_amount NUMERIC(12,2)
         NOT NULL,
@@ -384,7 +384,7 @@ async function handler(req, res) {
 
     /*
     =====================================================
-    30% COMMISSION
+    25% COMMISSION
     =====================================================
     */
 
