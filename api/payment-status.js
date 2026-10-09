@@ -68,7 +68,7 @@ const EMPLOYEE_MAP = {
     id: "REF-K4W8",
     referral: "REF-K4W8",
     username: "Joshua10"
-  }
+  },
  joshua11: {
 id: "REF-L5N2",
 referral: "REF-L5N2",
