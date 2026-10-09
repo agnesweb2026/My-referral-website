@@ -69,6 +69,56 @@ const EMPLOYEE_MAP = {
     referral: "REF-K4W8",
     username: "Joshua10"
   }
+ joshua11: {
+id: "REF-L5N2",
+referral: "REF-L5N2",
+username: "Joshua11"
+},
+joshua12: {
+id: "REF-M8Q4",
+referral: "REF-M8Q4",
+username: "Joshua12"
+},
+joshua13: {
+id: "REF-N3T7",
+referral: "REF-N3T7",
+username: "Joshua13"
+},
+joshua14: {
+id: "REF-P6V1",
+referral: "REF-P6V1",
+username: "Joshua14"
+},
+joshua15: {
+id: "REF-Q2W9",
+referral: "REF-Q2W9",
+username: "Joshua15"
+},
+joshua16: {
+id: "REF-R7X3",
+referral: "REF-R7X3",
+username: "Joshua16"
+},
+joshua17: {
+id: "REF-S4Y6",
+referral: "REF-S4Y6",
+username: "Joshua17"
+},
+joshua18: {
+id: "REF-T9Z2",
+referral: "REF-T9Z2",
+username: "Joshua18"
+},
+joshua19: {
+id: "REF-U5A8",
+referral: "REF-U5A8",
+username: "Joshua19"
+},
+joshua20: {
+id: "REF-V2B4",
+referral: "REF-V2B4",
+username: "Joshua20"
+} 
 };
 
 
