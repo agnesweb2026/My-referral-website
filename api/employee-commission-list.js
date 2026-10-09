@@ -20,6 +20,16 @@ const EMPLOYEE_MAP = {
   "joshua8": "REF-H6R2",
   "joshua9": "REF-J9T5",
   "joshua10": "REF-K4W8"
+  "joshua11": "REF-L5N2",
+"joshua12": "REF-M8Q4",
+"joshua13": "REF-N3T7",
+"joshua14": "REF-P6V1",
+"joshua15": "REF-Q2W9",
+"joshua16": "REF-R7X3",
+"joshua17": "REF-S4Y6",
+"joshua18": "REF-T9Z2",
+"joshua19": "REF-U5A8",
+"joshua20": "REF-V2B4"
 };
 
 
