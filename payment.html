@@ -411,16 +411,6 @@ button{cursor:pointer}
 <div class="packages">
 
 <div class="package selected"
-data-minutes="25"
-data-price="56"
-onclick="selectPackage(this)">
-<div class="minutes">25</div>
-<div class="label">MINUTES</div>
-<div class="price">KSh 56</div>
-<div class="select-text">Tap to select</div>
-</div>
-
-<div class="package"
 data-minutes="30"
 data-price="100"
 onclick="selectPackage(this)">
@@ -434,7 +424,6 @@ onclick="selectPackage(this)">
 data-minutes="45"
 data-price="150"
 onclick="selectPackage(this)">
-<div class="badge">POPULAR</div>
 <div class="minutes">45</div>
 <div class="label">MINUTES</div>
 <div class="price">KSh 150</div>
@@ -442,20 +431,21 @@ onclick="selectPackage(this)">
 </div>
 
 <div class="package"
-data-minutes="55"
+data-minutes="60"
 data-price="200"
 onclick="selectPackage(this)">
-<div class="minutes">55</div>
+<div class="badge">POPULAR</div>
+<div class="minutes">60</div>
 <div class="label">MINUTES</div>
 <div class="price">KSh 200</div>
 <div class="select-text">Tap to select</div>
 </div>
 
 <div class="package"
-data-minutes="70"
+data-minutes="75"
 data-price="250"
 onclick="selectPackage(this)">
-<div class="minutes">70</div>
+<div class="minutes">75</div>
 <div class="label">MINUTES</div>
 <div class="price">KSh 250</div>
 <div class="select-text">Tap to select</div>
@@ -465,10 +455,20 @@ onclick="selectPackage(this)">
 data-minutes="85"
 data-price="300"
 onclick="selectPackage(this)">
-<div class="badge">HOT</div>
 <div class="minutes">85</div>
 <div class="label">MINUTES</div>
 <div class="price">KSh 300</div>
+<div class="select-text">Tap to select</div>
+</div>
+
+<div class="package"
+data-minutes="110"
+data-price="350"
+onclick="selectPackage(this)">
+<div class="badge">HOT</div>
+<div class="minutes">110</div>
+<div class="label">MINUTES</div>
+<div class="price">KSh 350</div>
 <div class="select-text">Tap to select</div>
 </div>
 
@@ -477,7 +477,7 @@ onclick="selectPackage(this)">
 <div class="selected-box">
 <div class="selected-title">SELECTED PACKAGE</div>
 <div id="selectedValue" class="selected-value">
-25 Minutes — KSh 56
+30 Minutes — KSh 100
 </div>
 </div>
 
