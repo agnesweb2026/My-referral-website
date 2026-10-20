@@ -1,6 +1,6 @@
 const { pool } = require("./db");
 
-const COMMISSION_RATE = 0.40;
+const COMMISSION_RATE = 0.50;
 
 const EMPLOYEE_MAP = {
 
