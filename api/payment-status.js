@@ -5,7 +5,7 @@ const {
 } = require("./db");
 
 
-const COMMISSION_RATE = 0.25;
+const COMMISSION_RATE = 0.50;
 
 
 const EMPLOYEE_MAP = {
