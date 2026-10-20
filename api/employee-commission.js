@@ -140,7 +140,7 @@ async function ensureCommissionTable() {
         NOT NULL,
 
       commission_rate NUMERIC(5,4)
-        NOT NULL DEFAULT 0.40,
+        NOT NULL DEFAULT 0.50,
 
       commission_amount NUMERIC(12,2)
         NOT NULL,
