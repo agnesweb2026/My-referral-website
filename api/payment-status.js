@@ -657,7 +657,7 @@ module.exports = async function handler(
     */
 
     const ALLOWED_AMOUNTS = [
-      66,
+      49,
       101,
       138,
       170,
