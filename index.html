@@ -927,8 +927,8 @@ function openPaymentPage(){
 /* 32 IMAGES */
 
 const imageFiles = [
-
-  "1785179340825 (1).jpg",
+  
+"1785179340825 (1).jpg",
   "1785179340825.jpg",
   "1785179362758.jpg",
   "1785179915649.jpg",
@@ -1833,7 +1833,11 @@ function startVideoChats(){
   addVideoChat();
 
   videoChatTimer =
-    setInterval(addVideoChat,2300);
+    setInterval(addV
+  
+
+                
+ideoChat,2300);
 
 }
 
@@ -1981,214 +1985,7 @@ document.addEventListener(
 );
 
 
-/* BACKGROUND MUSIC - ADDED */
-
-const LIVE_MUSIC_FILES = [
-
-  "Aslay-Moyo Kiburi(Official Music Video)(MP3_128K).mp3",
-
-  "IYANII_-_HALLELUJAH__OFFICIAL_4K_VIDEO_(48k).mp3",
-
-  "Mapenzi Bila Pombe (uliskia wapi)  B Classic 006 x Rekles  (Official Music Video) ( 256kbps cbr )-1.mp3",
-
-  "Prince Indah - Berna  (Official Audio) sms SKIZA 9846035 to 811_1768500624625.mp3.m4a"
-
-];
-
-const LIVE_MUSIC_LAST_KEY =
-  "livePhotosLastMusic";
-
-const livePhotosMusic = new Audio();
-
-livePhotosMusic.loop = true;
-livePhotosMusic.volume = 0.5;
-
-let currentLiveMusic = "";
-
-function startLivePhotosMusic(){
-
-  const previousMusic =
-    localStorage.getItem(LIVE_MUSIC_LAST_KEY);
-
-  let availableMusic =
-    LIVE_MUSIC_FILES.filter(
-      file => file !== previousMusic
-    );
-
-  if(availableMusic.length === 0){
-    availableMusic = LIVE_MUSIC_FILES;
-  }
-
-  currentLiveMusic =
-    availableMusic[
-      Math.floor(
-        Math.random() * availableMusic.length
-      )
-    ];
-
-  localStorage.setItem(
-    LIVE_MUSIC_LAST_KEY,
-    currentLiveMusic
-  );
-
-  livePhotosMusic.src =
-    IMAGE_BASE +
-    encodeURIComponent(currentLiveMusic);
-
-  livePhotosMusic.load();
-
-  livePhotosMusic.play().catch(function(){
-
-    // Browser may require a screen tap.
-
-  });
-
-}
-
-function stopLivePhotosMusic(){
-
-  livePhotosMusic.pause();
-
-  livePhotosMusic.currentTime = 0;
-
-}
-
-
-/* MUSIC WHEN LIVE PHOTOS OPENS */
-
-const liveMusicObserver =
-  new MutationObserver(function(){
-
-    if(!photosPage.classList.contains("hidden")){
-
-
-<script>
-/* VINYL RECORD + HOLLOW ROOM SOUND EFFECT */
-
-const music = new Audio();
-music.loop = true;
-music.volume = 1;
-
-let audioCtx;
-let musicSource;
-let musicMaster;
-let hissGain;
-let hissSource;
-
-function createVinylSound() {
-  const AudioContextClass =
-    window.AudioContext || window.webkitAudioContext;
-
-  if (!AudioContextClass) return;
-
-  if (!audioCtx) {
-    audioCtx = new AudioContextClass();
-
-    musicSource = audioCtx.createMediaElementSource(music);
-
-    // Warm, old-record sound
-    const lowPass = audioCtx.createBiquadFilter();
-    lowPass.type = "lowpass";
-    lowPass.frequency.value = 4300;
-    lowPass.Q.value = 0.55;
-
-    const warmth = audioCtx.createBiquadFilter();
-    warmth.type = "lowshelf";
-    warmth.frequency.value = 180;
-    warmth.gain.value = 2.5;
-
-    const dry = audioCtx.createGain();
-    dry.gain.value = 0.48;
-
-    // Distant room echo
-    const delay = audioCtx.createDelay(1);
-    delay.delayTime.value = 0.29;
-
-    const feedback = audioCtx.createGain();
-    feedback.gain.value = 0.23;
-
-    const echoTone = audioCtx.createBiquadFilter();
-    echoTone.type = "lowpass";
-    echoTone.frequency.value = 2600;
-
-    const echoVolume = audioCtx.createGain();
-    echoVolume.gain.value = 0.22;
-
-    // Hollow room reverb
-    const room = audioCtx.createConvolver();
-    const length = audioCtx.sampleRate * 2.8;
-    const impulse = audioCtx.createBuffer(
-      2, length, audioCtx.sampleRate
-    );
-
-    for (let channel = 0; channel < 2; channel++) {
-      const data = impulse.getChannelData(channel);
-
-      for (let i = 0; i < length; i++) {
-        const fade = 1 - i / length;
-        data[i] =
-          (Math.random() * 2 - 1) *
-          Math.pow(fade, 2.8) * 0.45;
-      }
-    }
-
-    room.buffer = impulse;
-
-    const roomVolume = audioCtx.createGain();
-    roomVolume.gain.value = 0.30;
-
-    musicMaster = audioCtx.createGain();
-    musicMaster.gain.value = 0.72;
-
-    musicSource.connect(lowPass);
-    lowPass.connect(warmth);
-
-    warmth.connect(dry);
-    dry.connect(musicMaster);
-
-    warmth.connect(delay);
-    delay.connect(echoTone);
-    echoTone.connect(echoVolume);
-    echoVolume.connect(musicMaster);
-
-    echoVolume.connect(feedback);
-    feedback.connect(delay);
-
-    warmth.connect(room);
-    room.connect(roomVolume);
-    roomVolume.connect(musicMaster);
-
-    musicMaster.connect(audioCtx.destination);
-
-    // Soft vinyl hiss / shhhhh
-    const noiseBuffer = audioCtx.createBuffer(
-      1, audioCtx.sampleRate * 3, audioCtx.sampleRate
-    );
-
-    const noiseData = noiseBuffer.getChannelData(0);
-
-    for (let i = 0; i < noiseData.length; i++) {
-      noiseData[i] = (Math.random() * 2 - 1) * 0.35;
-    }
-
-    hissSource = audioCtx.createBufferSource();
-    hissSource.buffer = noiseBuffer;
-    hissSource.loop = true;
-
-    const hissFilter = audioCtx.createBiquadFilter();
-    hissFilter.type = "highpass";
-    hissFilter.frequency.value = 1800;
-
-    hissGain = audioCtx.createGain();
-    hissGain.gain.value = 0.012;
-
-    hissSource.connect(hissFilter);
-    hissFilter.connect(hissGain);
-    hissGain.connect(audioCtx.destination);
-
-
-  
-/* BACKGROUND MUSIC - VINYL RECORD / DISTANT HOLLOW ROOM */
+/* LIVE PHOTOS BACKGROUND MUSIC - VINYL / HOLLOW ROOM */
 
 const LIVE_MUSIC_FILES = [
   "Aslay-Moyo Kiburi(Official Music Video)(MP3_128K).mp3",
@@ -2204,114 +2001,94 @@ livePhotosMusic.preload = "auto";
 livePhotosMusic.volume = 1;
 
 let currentLiveMusic = "";
-let liveMusicStarted = false;
 let liveMusicAudioContext = null;
+let liveMusicStarted = false;
 let liveMusicHissGain = null;
 
 function createVinylRoomSound() {
-  const AudioContextClass =
-    window.AudioContext || window.webkitAudioContext;
-
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextClass) return;
 
   if (!liveMusicAudioContext) {
     liveMusicAudioContext = new AudioContextClass();
 
-    const source =
-      liveMusicAudioContext.createMediaElementSource(livePhotosMusic);
+    const source = liveMusicAudioContext.createMediaElementSource(livePhotosMusic);
 
     const lowPass = liveMusicAudioContext.createBiquadFilter();
     lowPass.type = "lowpass";
     lowPass.frequency.value = 4300;
-    lowPass.Q.value = 0.55;
 
     const warmth = liveMusicAudioContext.createBiquadFilter();
     warmth.type = "lowshelf";
     warmth.frequency.value = 180;
-    warmth.gain.value = 2.5;
+    warmth.gain.value = 2;
 
-    const dryGain = liveMusicAudioContext.createGain();
-    dryGain.gain.value = 0.48;
+    const dry = liveMusicAudioContext.createGain();
+    dry.gain.value = 0.48;
 
     const delay = liveMusicAudioContext.createDelay(1);
     delay.delayTime.value = 0.29;
 
     const feedback = liveMusicAudioContext.createGain();
-    feedback.gain.value = 0.23;
+    feedback.gain.value = 0.18;
 
-    const echoTone = liveMusicAudioContext.createBiquadFilter();
-    echoTone.type = "lowpass";
-    echoTone.frequency.value = 2600;
+    const echoFilter = liveMusicAudioContext.createBiquadFilter();
+    echoFilter.type = "lowpass";
+    echoFilter.frequency.value = 2500;
 
     const echoGain = liveMusicAudioContext.createGain();
-    echoGain.gain.value = 0.22;
+    echoGain.gain.value = 0.18;
 
-    const convolver = liveMusicAudioContext.createConvolver();
-    const impulseLength =
-      Math.floor(liveMusicAudioContext.sampleRate * 2.8);
-
+    const room = liveMusicAudioContext.createConvolver();
+    const impulseLength = Math.floor(liveMusicAudioContext.sampleRate * 2.4);
     const impulse = liveMusicAudioContext.createBuffer(
       2, impulseLength, liveMusicAudioContext.sampleRate
     );
 
     for (let channel = 0; channel < 2; channel++) {
       const data = impulse.getChannelData(channel);
-
       for (let i = 0; i < impulseLength; i++) {
-        const fade = 1 - i / impulseLength;
-        data[i] =
-          (Math.random() * 2 - 1) *
-          Math.pow(fade, 2.8) * 0.45;
+        data[i] = (Math.random() * 2 - 1) *
+          Math.pow(1 - i / impulseLength, 2.8) * 0.35;
       }
     }
-
-    convolver.buffer = impulse;
+    room.buffer = impulse;
 
     const roomGain = liveMusicAudioContext.createGain();
-    roomGain.gain.value = 0.30;
+    roomGain.gain.value = 0.22;
 
-    const masterGain = liveMusicAudioContext.createGain();
-    masterGain.gain.value = 0.72;
+    const master = liveMusicAudioContext.createGain();
+    master.gain.value = 0.72;
 
     source.connect(lowPass);
     lowPass.connect(warmth);
-
-    warmth.connect(dryGain);
-    dryGain.connect(masterGain);
+    warmth.connect(dry);
+    dry.connect(master);
 
     warmth.connect(delay);
-    delay.connect(echoTone);
-    echoTone.connect(echoGain);
-    echoGain.connect(masterGain);
-
+    delay.connect(echoFilter);
+    echoFilter.connect(echoGain);
+    echoGain.connect(master);
     echoGain.connect(feedback);
     feedback.connect(delay);
 
-    warmth.connect(convolver);
-    convolver.connect(roomGain);
-    roomGain.connect(masterGain);
-
-    masterGain.connect(liveMusicAudioContext.destination);
-
-    // Soft vinyl hiss
-    const noiseLength =
-      liveMusicAudioContext.sampleRate * 3;
+    warmth.connect(room);
+    room.connect(roomGain);
+    roomGain.connect(master);
+    master.connect(liveMusicAudioContext.destination);
 
     const noiseBuffer = liveMusicAudioContext.createBuffer(
-      1, noiseLength, liveMusicAudioContext.sampleRate
+      1, liveMusicAudioContext.sampleRate * 3,
+      liveMusicAudioContext.sampleRate
     );
-
-    const noiseData = noiseBuffer.getChannelData(0);
-
-    for (let i = 0; i < noiseLength; i++) {
-      noiseData[i] = (Math.random() * 2 - 1) * 0.35;
+    const noise = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < noise.length; i++) {
+      noise[i] = (Math.random() * 2 - 1) * 0.28;
     }
 
-    const noiseSource =
-      liveMusicAudioContext.createBufferSource();
-
-    noiseSource.buffer = noiseBuffer;
-    noiseSource.loop = true;
+    const hissSource = liveMusicAudioContext.createBufferSource();
+    hissSource.buffer = noiseBuffer;
+    hissSource.loop = true;
 
     const hissFilter = liveMusicAudioContext.createBiquadFilter();
     hissFilter.type = "highpass";
@@ -2320,95 +2097,84 @@ function createVinylRoomSound() {
     liveMusicHissGain = liveMusicAudioContext.createGain();
     liveMusicHissGain.gain.value = 0;
 
-    noiseSource.connect(hissFilter);
+    hissSource.connect(hissFilter);
     hissFilter.connect(liveMusicHissGain);
     liveMusicHissGain.connect(liveMusicAudioContext.destination);
-
-    noiseSource.start();
+    hissSource.start();
   }
 
   if (liveMusicAudioContext.state === "suspended") {
     liveMusicAudioContext.resume().catch(function () {});
   }
-
-  if (liveMusicHissGain) {
-    liveMusicHissGain.gain.setTargetAtTime(
-      0.012,
-      liveMusicAudioContext.currentTime,
-      0.1
-    );
-  }
 }
 
 function startLivePhotosMusic() {
   if (!currentLiveMusic) {
-    const previousMusic =
-      localStorage.getItem(LIVE_MUSIC_LAST_KEY);
+    let previous = "";
+    try {
+      previous = localStorage.getItem(LIVE_MUSIC_LAST_KEY) || "";
+    } catch (error) {}
 
-    let availableMusic = LIVE_MUSIC_FILES.filter(function (file) {
-      return file !== previousMusic;
+    let choices = LIVE_MUSIC_FILES.filter(function (file) {
+      return file !== previous;
     });
+    if (!choices.length) choices = LIVE_MUSIC_FILES.slice();
 
-    if (availableMusic.length === 0) {
-      availableMusic = LIVE_MUSIC_FILES.slice();
-    }
+    currentLiveMusic = choices[Math.floor(Math.random() * choices.length)];
+    try {
+      localStorage.setItem(LIVE_MUSIC_LAST_KEY, currentLiveMusic);
+    } catch (error) {}
 
-    currentLiveMusic =
-      availableMusic[Math.floor(Math.random() * availableMusic.length)];
-
-    localStorage.setItem(LIVE_MUSIC_LAST_KEY, currentLiveMusic);
-
-    livePhotosMusic.src =
-      IMAGE_BASE + encodeURIComponent(currentLiveMusic);
-
+    livePhotosMusic.src = IMAGE_BASE + encodeURIComponent(currentLiveMusic);
     livePhotosMusic.load();
   }
 
-  createVinylRoomSound();
+  try {
+    createVinylRoomSound();
+    if (liveMusicAudioContext && liveMusicHissGain) {
+      liveMusicHissGain.gain.setTargetAtTime(
+        0.01, liveMusicAudioContext.currentTime, 0.12
+      );
+    }
 
-  function playSelectedTrack() {
-    livePhotosMusic.play().then(function () {
-      liveMusicStarted = true;
-    }).catch(function () {
-      liveMusicStarted = false;
-    });
-  }
+    const playAudio = function () {
+      livePhotosMusic.play().then(function () {
+        liveMusicStarted = true;
+      }).catch(function () {
+        liveMusicStarted = false;
+      });
+    };
 
-  if (
-    liveMusicAudioContext &&
-    liveMusicAudioContext.state === "suspended"
-  ) {
-    liveMusicAudioContext.resume().then(
-      playSelectedTrack,
-      playSelectedTrack
-    );
-  } else {
-    playSelectedTrack();
+    if (liveMusicAudioContext &&
+        liveMusicAudioContext.state === "suspended") {
+      liveMusicAudioContext.resume().then(playAudio).catch(playAudio);
+    } else {
+      playAudio();
+    }
+  } catch (error) {
+    liveMusicStarted = false;
   }
 }
 
 function stopLivePhotosMusic() {
   livePhotosMusic.pause();
-  livePhotosMusic.currentTime = 0;
+  try {
+    livePhotosMusic.currentTime = 0;
+  } catch (error) {}
+
   liveMusicStarted = false;
   currentLiveMusic = "";
 
   if (liveMusicAudioContext && liveMusicHissGain) {
     liveMusicHissGain.gain.setTargetAtTime(
-      0,
-      liveMusicAudioContext.currentTime,
-      0.05
+      0, liveMusicAudioContext.currentTime, 0.08
     );
   }
 }
 
-/* MUSIC ONLY WHEN LIVE PHOTOS IS OPEN */
-
 const liveMusicObserver = new MutationObserver(function () {
   if (!photosPage.classList.contains("hidden")) {
-    if (!liveMusicStarted && livePhotosMusic.paused) {
-      startLivePhotosMusic();
-    }
+    if (livePhotosMusic.paused) startLivePhotosMusic();
   } else {
     stopLivePhotosMusic();
   }
@@ -2419,16 +2185,11 @@ liveMusicObserver.observe(photosPage, {
   attributeFilter: ["class"]
 });
 
-/* ANDROID TAP FALLBACK */
-
 photosPage.addEventListener("click", function () {
-  if (!photosPage.classList.contains("hidden")) {
-    if (!liveMusicStarted || livePhotosMusic.paused) {
-      startLivePhotosMusic();
-    }
+  if (!photosPage.classList.contains("hidden") && livePhotosMusic.paused) {
+    startLivePhotosMusic();
   }
 });
-    
 
 /* INITIAL WEBSITE */
 
@@ -2519,4 +2280,7 @@ window.addEventListener(
 </html>
 
   
-      
+
+
+
+  
