@@ -2061,53 +2061,170 @@ const liveMusicObserver =
 
     if(!photosPage.classList.contains("hidden")){
 
-      if(!currentLiveMusic){
 
-        startLivePhotosMusic();
+<script>
+/* VINYL RECORD + HOLLOW ROOM SOUND EFFECT */
 
-      }else if(livePhotosMusic.paused){
+const music = new Audio();
+music.loop = true;
+music.volume = 1;
 
-        livePhotosMusic.play().catch(function(){});
+let audioCtx;
+let musicSource;
+let musicMaster;
+let hissGain;
+let hissSource;
 
+function createVinylSound() {
+  const AudioContextClass =
+    window.AudioContext || window.webkitAudioContext;
+
+  if (!AudioContextClass) return;
+
+  if (!audioCtx) {
+    audioCtx = new AudioContextClass();
+
+    musicSource = audioCtx.createMediaElementSource(music);
+
+    // Warm, old-record sound
+    const lowPass = audioCtx.createBiquadFilter();
+    lowPass.type = "lowpass";
+    lowPass.frequency.value = 4300;
+    lowPass.Q.value = 0.55;
+
+    const warmth = audioCtx.createBiquadFilter();
+    warmth.type = "lowshelf";
+    warmth.frequency.value = 180;
+    warmth.gain.value = 2.5;
+
+    const dry = audioCtx.createGain();
+    dry.gain.value = 0.48;
+
+    // Distant room echo
+    const delay = audioCtx.createDelay(1);
+    delay.delayTime.value = 0.29;
+
+    const feedback = audioCtx.createGain();
+    feedback.gain.value = 0.23;
+
+    const echoTone = audioCtx.createBiquadFilter();
+    echoTone.type = "lowpass";
+    echoTone.frequency.value = 2600;
+
+    const echoVolume = audioCtx.createGain();
+    echoVolume.gain.value = 0.22;
+
+    // Hollow room reverb
+    const room = audioCtx.createConvolver();
+    const length = audioCtx.sampleRate * 2.8;
+    const impulse = audioCtx.createBuffer(
+      2, length, audioCtx.sampleRate
+    );
+
+    for (let channel = 0; channel < 2; channel++) {
+      const data = impulse.getChannelData(channel);
+
+      for (let i = 0; i < length; i++) {
+        const fade = 1 - i / length;
+        data[i] =
+          (Math.random() * 2 - 1) *
+          Math.pow(fade, 2.8) * 0.45;
       }
-
-    }else{
-
-      stopLivePhotosMusic();
-
-      currentLiveMusic = "";
-
     }
 
+    room.buffer = impulse;
+
+    const roomVolume = audioCtx.createGain();
+    roomVolume.gain.value = 0.30;
+
+    musicMaster = audioCtx.createGain();
+    musicMaster.gain.value = 0.72;
+
+    musicSource.connect(lowPass);
+    lowPass.connect(warmth);
+
+    warmth.connect(dry);
+    dry.connect(musicMaster);
+
+    warmth.connect(delay);
+    delay.connect(echoTone);
+    echoTone.connect(echoVolume);
+    echoVolume.connect(musicMaster);
+
+    echoVolume.connect(feedback);
+    feedback.connect(delay);
+
+    warmth.connect(room);
+    room.connect(roomVolume);
+    roomVolume.connect(musicMaster);
+
+    musicMaster.connect(audioCtx.destination);
+
+    // Soft vinyl hiss / shhhhh
+    const noiseBuffer = audioCtx.createBuffer(
+      1, audioCtx.sampleRate * 3, audioCtx.sampleRate
+    );
+
+    const noiseData = noiseBuffer.getChannelData(0);
+
+    for (let i = 0; i < noiseData.length; i++) {
+      noiseData[i] = (Math.random() * 2 - 1) * 0.35;
+    }
+
+    hissSource = audioCtx.createBufferSource();
+    hissSource.buffer = noiseBuffer;
+    hissSource.loop = true;
+
+    const hissFilter = audioCtx.createBiquadFilter();
+    hissFilter.type = "highpass";
+    hissFilter.frequency.value = 1800;
+
+    hissGain = audioCtx.createGain();
+    hissGain.gain.value = 0.012;
+
+    hissSource.connect(hissFilter);
+    hissFilter.connect(hissGain);
+    hissGain.connect(audioCtx.destination);
+
+    hissSource.start();
+  }
+
+  if (audioCtx.state === "suspended") {
+    audioCtx.resume().catch(() => {});
+  }
+
+  if (hissGain) {
+    hissGain.gain.setTargetAtTime(
+      0.012, audioCtx.currentTime, 0.1
+    );
+  }
+}
+
+// Call this when LIVE Photos opens
+function playVinylMusic(filePath) {
+  createVinylSound();
+
+  music.src = filePath;
+  music.load();
+
+  music.play().catch(() => {
+    // A visitor may need to tap the screen on Android.
   });
+}
 
-liveMusicObserver.observe(
-  photosPage,
-  {
-    attributes:true,
-    attributeFilter:["class"]
+// Call this when LIVE Photos closes
+function stopVinylMusic() {
+  music.pause();
+  music.currentTime = 0;
+
+  if (audioCtx && hissGain) {
+    hissGain.gain.setTargetAtTime(
+      0, audioCtx.currentTime, 0.05
+    );
   }
-);
-
-
-/* ANDROID AUTOPLAY FALLBACK */
-
-photosPage.addEventListener(
-  "click",
-  function(){
-
-    if(
-      !photosPage.classList.contains("hidden") &&
-      livePhotosMusic.paused
-    ){
-
-      livePhotosMusic.play().catch(function(){});
-
-    }
-
-  }
-);
-
+}
+</script>
+  
 
 /* INITIAL WEBSITE */
 
