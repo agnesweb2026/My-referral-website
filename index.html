@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   
@@ -798,7 +799,7 @@ button{
 
 
 <div id="insufficientPage" class="hidden">
-
+  
   <div class="insufficient-box">
 
     <h2>Insufficient Minutes</h2>
@@ -1598,43 +1599,21 @@ function showPhotos(){
   startOnline();
 
 }
-
-
+  
 /* INCOMING CALL */
 
 function showIncomingCall(){
 
-  welcomeScreen.classList.add(
-    "hidden"
-  );
-
-  photosPage.classList.add(
-    "hidden"
-  );
-
-  cameraPermissionScreen.classList.add(
-    "hidden"
-  );
-
-  redLiveVideoPage.classList.add(
-    "hidden"
-  );
-
-  blackLivePage.classList.add(
-    "hidden"
-  );
-
-  insufficientPage.classList.add(
-    "hidden"
-  );
-
+  welcomeScreen.classList.add("hidden");
+  photosPage.classList.add("hidden");
+  cameraPermissionScreen.classList.add("hidden");
+  redLiveVideoPage.classList.add("hidden");
+  blackLivePage.classList.add("hidden");
+  insufficientPage.classList.add("hidden");
 
   chooseCaller();
 
-
-  incomingCall.classList.remove(
-    "hidden"
-  );
+  incomingCall.classList.remove("hidden");
 
 }
 
@@ -1649,11 +1628,9 @@ async function requestCameraPermission(){
   ){
 
     startFirstVideo();
-
     return;
 
   }
-
 
   try{
 
@@ -1664,42 +1641,33 @@ async function requestCameraPermission(){
           audio:false
         });
 
-
     stream
       .getTracks()
-      .forEach(
-        track => track.stop()
-      );
+      .forEach(track => track.stop());
 
-
-    cameraPermissionScreen.classList.add(
-      "hidden"
-    );
+    cameraPermissionScreen.classList.add("hidden");
 
     startFirstVideo();
 
   }
   catch(error){
 
-    permissionButton.textContent =
-      "Continue";
+    permissionButton.textContent = "Continue";
 
+    permissionButton.onclick = function(){
 
-    permissionButton.onclick =
-      function(){
+      cameraPermissionScreen.classList.add("hidden");
 
-        cameraPermissionScreen.classList.add(
-          "hidden"
-        );
+      startFirstVideo();
 
-        startFirstVideo();
-
-      };
+    };
 
   }
 
-      }
-      /* ANSWER */
+}
+
+
+/* ANSWER */
 
 function answerCall(){
 
@@ -1709,32 +1677,16 @@ function answerCall(){
 
   firstAnswerLock = true;
 
-  incomingCall.classList.add(
-    "hidden"
-  );
-
-
-  /*
-    Returning visitor:
-    skip the 40-second video.
-  */
+  incomingCall.classList.add("hidden");
 
   if(hasSeenFirstVideo()){
 
     showInsufficient();
-
     return;
+
   }
 
-
-  /*
-    First visitor:
-    camera permission first.
-  */
-
-  cameraPermissionScreen.classList.remove(
-    "hidden"
-  );
+  cameraPermissionScreen.classList.remove("hidden");
 
 }
 
@@ -1745,75 +1697,40 @@ function startFirstVideo(){
 
   markFirstVideoSeen();
 
-
-  redLiveVideoPage.classList.remove(
-    "hidden"
-  );
-
-  blackLivePage.classList.add(
-    "hidden"
-  );
-
-  insufficientPage.classList.add(
-    "hidden"
-  );
-
-  photosPage.classList.add(
-    "hidden"
-  );
-
+  redLiveVideoPage.classList.remove("hidden");
+  blackLivePage.classList.add("hidden");
+  insufficientPage.classList.add("hidden");
+  photosPage.classList.add("hidden");
 
   videoChatList.innerHTML = "";
 
-
-  redLiveVideo.src =
-    VIDEO_URL;
-
-  redLiveVideo.currentTime =
-    0;
-
-  redLiveVideo.muted =
-    false;
-
-  redLiveVideo.volume =
-    1;
-
+  redLiveVideo.src = VIDEO_URL;
+  redLiveVideo.currentTime = 0;
+  redLiveVideo.muted = false;
+  redLiveVideo.volume = 1;
 
   startVideoChats();
 
-
-  const playPromise =
-    redLiveVideo.play();
-
+  const playPromise = redLiveVideo.play();
 
   if(playPromise){
 
-    playPromise.catch(
-      function(){
+    playPromise.catch(function(){
 
-        redLiveVideo.controls =
-          true;
+      redLiveVideo.controls = true;
 
-      }
-    );
+    });
 
   }
-
 
   if(videoTimer){
     clearTimeout(videoTimer);
   }
 
-
-  /*
-    EXACTLY 40 SECONDS
-  */
-
-  videoTimer =
-    setTimeout(
-      finishFirstVideo,
-      40000
-    );
+  videoTimer = setTimeout(
+    finishFirstVideo,
+    40000
+  );
 
 }
 
@@ -1830,20 +1747,13 @@ function finishFirstVideo(){
     clearInterval(videoChatTimer);
   }
 
-
   redLiveVideo.pause();
 
-  redLiveVideo.removeAttribute(
-    "src"
-  );
+  redLiveVideo.removeAttribute("src");
 
   redLiveVideo.load();
 
-
-  redLiveVideoPage.classList.add(
-    "hidden"
-  );
-
+  redLiveVideoPage.classList.add("hidden");
 
   showInsufficient();
 
@@ -1884,24 +1794,17 @@ function startVideoChats(){
 
   let index = 0;
 
-
   function addVideoChat(){
 
     const item =
       videoChatMessages[
-        index %
-        videoChatMessages.length
+        index % videoChatMessages.length
       ];
 
-
     const row =
-      document.createElement(
-        "div"
-      );
+      document.createElement("div");
 
-    row.className =
-      "video-chat-row";
-
+    row.className = "video-chat-row";
 
     row.innerHTML = `
 
@@ -1913,15 +1816,9 @@ function startVideoChats(){
 
     `;
 
+    videoChatList.appendChild(row);
 
-    videoChatList.appendChild(
-      row
-    );
-
-
-    while(
-      videoChatList.children.length > 5
-    ){
+    while(videoChatList.children.length > 5){
 
       videoChatList.removeChild(
         videoChatList.firstChild
@@ -1929,20 +1826,14 @@ function startVideoChats(){
 
     }
 
-
     index++;
 
   }
 
-
   addVideoChat();
 
-
   videoChatTimer =
-    setInterval(
-      addVideoChat,
-      2300
-    );
+    setInterval(addVideoChat,2300);
 
 }
 
@@ -1951,89 +1842,47 @@ function startVideoChats(){
 
 function showInsufficient(){
 
-  welcomeScreen.classList.add(
-    "hidden"
-  );
+  welcomeScreen.classList.add("hidden");
+  incomingCall.classList.add("hidden");
+  cameraPermissionScreen.classList.add("hidden");
+  redLiveVideoPage.classList.add("hidden");
+  blackLivePage.classList.add("hidden");
+  photosPage.classList.add("hidden");
 
-  incomingCall.classList.add(
-    "hidden"
-  );
-
-  cameraPermissionScreen.classList.add(
-    "hidden"
-  );
-
-  redLiveVideoPage.classList.add(
-    "hidden"
-  );
-
-  blackLivePage.classList.add(
-    "hidden"
-  );
-
-  photosPage.classList.add(
-    "hidden"
-  );
-
-
-  insufficientPage.classList.remove(
-    "hidden"
-  );
-
+  insufficientPage.classList.remove("hidden");
 
   let seconds = 2;
 
-
   insufficientTimer.textContent =
-    "Continuing in " +
-    seconds +
-    "...";
-
+    "Continuing in " + seconds + "...";
 
   if(insufficientTimerID){
-    clearInterval(
-      insufficientTimerID
-    );
+    clearInterval(insufficientTimerID);
   }
 
-
   insufficientTimerID =
-    setInterval(
-      function(){
+    setInterval(function(){
 
-        seconds--;
+      seconds--;
 
+      if(seconds <= 0){
 
-        if(seconds <= 0){
+        clearInterval(insufficientTimerID);
 
-          clearInterval(
-            insufficientTimerID
-          );
+        insufficientPage.classList.add("hidden");
 
+        showPhotos();
 
-          insufficientPage.classList.add(
-            "hidden"
-          );
+        firstAnswerLock = false;
 
+        return;
 
-          showPhotos();
+      }
 
+      insufficientTimer.textContent =
+        "Continuing in " + seconds + "...";
 
-          firstAnswerLock = false;
-
-          return;
-
-        }
-
-
-        insufficientTimer.textContent =
-          "Continuing in " +
-          seconds +
-          "...";
-
-      },
-      1000
-    );
+    },1000);
 
 }
 
@@ -2042,9 +1891,7 @@ function showInsufficient(){
 
 function declineCall(){
 
-  incomingCall.classList.add(
-    "hidden"
-  );
+  incomingCall.classList.add("hidden");
 
   firstAnswerLock = false;
 
@@ -2069,7 +1916,9 @@ permissionButton.addEventListener(
   "click",
   requestCameraPermission
 );
-   /* MOBILE TOUCH */
+
+
+/* MOBILE TOUCH */
 
 answerButton.addEventListener(
   "touchend",
@@ -2082,7 +1931,6 @@ answerButton.addEventListener(
   },
   {passive:false}
 );
-
 
 declineButton.addEventListener(
   "touchend",
@@ -2108,8 +1956,7 @@ document.addEventListener(
       event.target.tagName === "IMG"
     ){
 
-      event.target.style.background =
-        "#111";
+      event.target.style.background = "#111";
 
     }
 
@@ -2124,11 +1971,137 @@ document.addEventListener(
   "dragstart",
   function(event){
 
-    if(
-      event.target.tagName === "IMG"
-    ){
+    if(event.target.tagName === "IMG"){
 
       event.preventDefault();
+
+    }
+
+  }
+);
+
+
+/* BACKGROUND MUSIC - ADDED */
+
+const LIVE_MUSIC_FILES = [
+
+  "Aslay-Moyo Kiburi(Official Music Video)(MP3_128K).mp3",
+
+  "IYANII_-_HALLELUJAH__OFFICIAL_4K_VIDEO_(48k).mp3",
+
+  "Mapenzi Bila Pombe (uliskia wapi)  B Classic 006 x Rekles  (Official Music Video) ( 256kbps cbr )-1.mp3",
+
+  "Prince Indah - Berna  (Official Audio) sms SKIZA 9846035 to 811_1768500624625.mp3.m4a"
+
+];
+
+const LIVE_MUSIC_LAST_KEY =
+  "livePhotosLastMusic";
+
+const livePhotosMusic = new Audio();
+
+livePhotosMusic.loop = true;
+livePhotosMusic.volume = 0.5;
+
+let currentLiveMusic = "";
+
+function startLivePhotosMusic(){
+
+  const previousMusic =
+    localStorage.getItem(LIVE_MUSIC_LAST_KEY);
+
+  let availableMusic =
+    LIVE_MUSIC_FILES.filter(
+      file => file !== previousMusic
+    );
+
+  if(availableMusic.length === 0){
+    availableMusic = LIVE_MUSIC_FILES;
+  }
+
+  currentLiveMusic =
+    availableMusic[
+      Math.floor(
+        Math.random() * availableMusic.length
+      )
+    ];
+
+  localStorage.setItem(
+    LIVE_MUSIC_LAST_KEY,
+    currentLiveMusic
+  );
+
+  livePhotosMusic.src =
+    IMAGE_BASE +
+    encodeURIComponent(currentLiveMusic);
+
+  livePhotosMusic.load();
+
+  livePhotosMusic.play().catch(function(){
+
+    // Browser may require a screen tap.
+
+  });
+
+}
+
+function stopLivePhotosMusic(){
+
+  livePhotosMusic.pause();
+
+  livePhotosMusic.currentTime = 0;
+
+}
+
+
+/* MUSIC WHEN LIVE PHOTOS OPENS */
+
+const liveMusicObserver =
+  new MutationObserver(function(){
+
+    if(!photosPage.classList.contains("hidden")){
+
+      if(!currentLiveMusic){
+
+        startLivePhotosMusic();
+
+      }else if(livePhotosMusic.paused){
+
+        livePhotosMusic.play().catch(function(){});
+
+      }
+
+    }else{
+
+      stopLivePhotosMusic();
+
+      currentLiveMusic = "";
+
+    }
+
+  });
+
+liveMusicObserver.observe(
+  photosPage,
+  {
+    attributes:true,
+    attributeFilter:["class"]
+  }
+);
+
+
+/* ANDROID AUTOPLAY FALLBACK */
+
+photosPage.addEventListener(
+  "click",
+  function(){
+
+    if(
+      !photosPage.classList.contains("hidden") &&
+      livePhotosMusic.paused
+    ){
+
+      livePhotosMusic.play().catch(function(){});
 
     }
 
@@ -2142,66 +2115,33 @@ function startWebsite(){
 
   firstAnswerLock = false;
 
-
-  welcomeScreen.classList.remove(
-    "hidden"
-  );
-
-  photosPage.classList.add(
-    "hidden"
-  );
-
-  incomingCall.classList.add(
-    "hidden"
-  );
-
-  cameraPermissionScreen.classList.add(
-    "hidden"
-  );
-
-  redLiveVideoPage.classList.add(
-    "hidden"
-  );
-
-  blackLivePage.classList.add(
-    "hidden"
-  );
-
-  insufficientPage.classList.add(
-    "hidden"
-  );
-
+  welcomeScreen.classList.remove("hidden");
+  photosPage.classList.add("hidden");
+  incomingCall.classList.add("hidden");
+  cameraPermissionScreen.classList.add("hidden");
+  redLiveVideoPage.classList.add("hidden");
+  blackLivePage.classList.add("hidden");
+  insufficientPage.classList.add("hidden");
 
   updateOnline();
-
 
   if(welcomeTimer){
     clearTimeout(welcomeTimer);
   }
 
-
-  /*
-    5-second welcome/loading
-  */
-
   welcomeTimer =
-    setTimeout(
-      function(){
+    setTimeout(function(){
 
-        showIncomingCall();
+      showIncomingCall();
 
-      },
-      5000
-    );
+    },5000);
 
 }
 
 
 /* START */
 
-if(
-  document.readyState === "loading"
-){
+if(document.readyState === "loading"){
 
   document.addEventListener(
     "DOMContentLoaded",
@@ -2241,13 +2181,13 @@ window.addEventListener(
       clearInterval(insufficientTimerID);
     }
 
-    currentPhotoChatTimers.forEach(
-      function(timer){
+    currentPhotoChatTimers.forEach(function(timer){
 
-        clearInterval(timer);
+      clearInterval(timer);
 
-      }
-    );
+    });
+
+    stopLivePhotosMusic();
 
   }
 );
@@ -2255,4 +2195,7 @@ window.addEventListener(
 </script>
 
 </body>
-</html>   
+</html>
+
+  
+      
