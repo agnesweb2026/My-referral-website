@@ -1994,8 +1994,9 @@ const LIVE_MUSIC_FILES = [
   "Prince Indah - Berna  (Official Audio) sms SKIZA 9846035 to 811_1768500624625.mp3.m4a"
 ];
 
-const LIVE_MUSIC_LAST_KEY = "livePhotosLastMusic";
 const livePhotosMusic = new Audio();
+
+livePhotosMusic.crossOrigin = "anonymous";
 livePhotosMusic.loop = true;
 livePhotosMusic.preload = "auto";
 livePhotosMusic.volume = 1;
