@@ -122,12 +122,12 @@ module.exports = async function handler(req, res) {
   */
 
   const ALLOWED_AMOUNTS = [
-    77,
-    101,
-    138,
-    170,
+    97,
+    150,
     199,
-    238
+    248,
+    299,
+    347
   ];
 
 
