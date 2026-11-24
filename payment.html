@@ -414,47 +414,49 @@ button{cursor:pointer}
 <p>Choose your minutes and pay securely.</p>
 <div class="secure">🔒 Secure M-PESA payment</div>
 </div>
-
 <div class="packages">
 
-<div class="package selected"
-data-minutes="1 day active"
-data-price="100"
-onclick="selectPackage(this)">
-<div class="minutes">1 day</div>
-<div class="label">1 day active</div>
-<div class="price">KSh 100</div>
-<div class="select-text">Tap to select</div>
-</div>
+  <div class="package selected"
+       data-label="Weekly Subscription"
+       data-duration="7 Days"
+       data-price="300"
+       onclick="selectPackage(this)">
 
-<div class="package"
-data-minutes="3 days subscription"
-data-price="229"
-onclick="selectPackage(this)">
-<div class="minutes">3 day</div>
-<div class="label">3 days subscription</div>
-<div class="price">KSh 229</div>
-<div class="select-text">Tap to select</div>
-</div>
+    <div class="badge">WEEKLY</div>
+    <div class="minutes">7 Days</div>
+    <div class="label">WEEKLY SUBSCRIPTION</div>
+    <div class="price">KSh 300</div>
+    <div class="select-text">Tap to select</div>
 
-<div class="package"
-data-minutes="7 days"
-data-price="300"
-onclick="selectPackage(this)">
-<div class="badge">POPULAR</div>
-<div class="minutes">7 days subscription</div>
-<div class="label">7 days subscription</div>
-<div class="price">KSh 300</div>
-<div class="select-text">Tap to select</div>
-</div>
+  </div>
 
-</div>
+  <div class="package"
+       data-label="3 Days Active"
+       data-duration="3 Days"
+       data-price="199"
+       onclick="selectPackage(this)">
 
-<div class="selected-box">
-<div class="selected-title">SELECTED PACKAGE</div>
-<div id="selectedValue" class="selected-value">
-1 day  — KSh 100
-</div>
+    <div class="badge">POPULAR</div>
+    <div class="minutes">3 Days</div>
+    <div class="label">ACTIVE FOR 3 DAYS</div>
+    <div class="price">KSh 199</div>
+    <div class="select-text">Tap to select</div>
+
+  </div>
+
+  <div class="package"
+       data-label="1 Day Active"
+       data-duration="1 Day"
+       data-price="100"
+       onclick="selectPackage(this)">
+
+    <div class="minutes">1 Day</div>
+    <div class="label">ACTIVE FOR 1 DAY</div>
+    <div class="price">KSh 100</div>
+    <div class="select-text">Tap to select</div>
+
+  </div>
+
 </div>
 
 <div class="payment-card">
