@@ -118,15 +118,13 @@ module.exports = async function handler(req, res) {
   /*
   =======================================================
   ALLOWED PACKAGE AMOUNTS
-  =======================================================
-  */
-
-  const ALLOWED_AMOUNTS
+  ==============================================
+  
+const ALLOWED_AMOUNTS = [
   300,
   199,
   100
 ];
-
 
   const paymentAmount =
     Math.round(amount);
