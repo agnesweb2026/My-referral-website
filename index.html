@@ -1,7 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  
+
 <style>
 /* Hide live-chat messages and controls only */
 .photo-chat,
@@ -9,7 +8,7 @@
   display: none !important;
 }
 </style>
-  
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -611,8 +610,16 @@ button{
 }
 
 .black-live-text{
-  color:#777;
-  font-size:14px;
+  position:absolute;
+  top:16px;
+  left:50%;
+  transform:translateX(-50%);
+  width:70%;
+  text-align:center;
+  color:#fff;
+  font-size:17px;
+  font-weight:800;
+  text-shadow:0 0 10px #00ff88;
 }
 
 /* INSUFFICIENT */
@@ -763,8 +770,7 @@ button{
     </div>
 
     <div class="video-actions">
-
-      <button class="video-action-button" type="button">
+            <button class="video-action-button" type="button">
         👍 Like
       </button>
 
@@ -799,7 +805,7 @@ button{
 
 
 <div id="insufficientPage" class="hidden">
-  
+
   <div class="insufficient-box">
 
     <h2>No Subscription Done</h2>
@@ -875,6 +881,9 @@ const redLiveVideo =
 const blackLivePage =
   document.getElementById("blackLivePage");
 
+const blackLiveText =
+  document.querySelector(".black-live-text");
+
 const insufficientPage =
   document.getElementById("insufficientPage");
 
@@ -927,7 +936,7 @@ function openPaymentPage(){
 /* 32 IMAGES */
 
 const imageFiles = [
-  
+
 "1785179340825 (1).jpg",
   "1785179340825.jpg",
   "1785179362758.jpg",
@@ -1047,6 +1056,8 @@ let welcomeTimer = null;
 let videoTimer = null;
 let insufficientTimerID = null;
 let videoChatTimer = null;
+let photoPreviewTimer = null;
+let photoSubscriptionTimer = null;
 let firstAnswerLock = false;
 
 let currentPhotoChatTimers = [];
@@ -1216,7 +1227,7 @@ function getPhotoChat(index){
     }
 
   ];
-      }
+}
       /* CREATE PHOTOS */
 
 function createPhotos(){
@@ -1406,9 +1417,7 @@ function createPhotos(){
       card.addEventListener(
         "click",
         function(){
-
-          openPaymentPage();
-
+          openPhotoPreview(profile[0]);
         }
       );
 
@@ -1535,7 +1544,7 @@ function startIndividualChat(
       const timer =
         setInterval(
           updateChat,
-          interval
+                    interval
         );
 
 
@@ -1602,7 +1611,37 @@ function showPhotos(){
   startLivePhotosMusic();
 
 }
-  
+
+/* PHOTO TAP PREVIEW -> NO SUBSCRIPTION -> PACKAGES */
+
+function openPhotoPreview(photoName){
+  if(photoPreviewTimer) clearTimeout(photoPreviewTimer);
+  if(photoSubscriptionTimer) clearTimeout(photoSubscriptionTimer);
+  if(insufficientTimerID) clearInterval(insufficientTimerID);
+
+  welcomeScreen.classList.add("hidden");
+  photosPage.classList.add("hidden");
+  incomingCall.classList.add("hidden");
+  cameraPermissionScreen.classList.add("hidden");
+  redLiveVideoPage.classList.add("hidden");
+  insufficientPage.classList.add("hidden");
+
+  blackLiveText.textContent = photoName;
+  blackLivePage.classList.remove("hidden");
+
+  photoPreviewTimer = setTimeout(function(){
+    blackLivePage.classList.add("hidden");
+    insufficientPage.classList.remove("hidden");
+    insufficientTimer.textContent = "Opening packages...";
+
+    photoSubscriptionTimer = setTimeout(function(){
+      insufficientPage.classList.add("hidden");
+      openPaymentPage();
+    }, 2000);
+  }, 2000);
+}
+
+
 /* INCOMING CALL */
 
 function showIncomingCall(){
@@ -1833,12 +1872,12 @@ function startVideoChats(){
 
   addVideoChat();
 
-  
+
   videoChatTimer =
     setInterval(addVideoChat, 2300);
 
 }
-  
+
 
 /* INSUFFICIENT */
 
@@ -2271,9 +2310,4 @@ window.addEventListener(
 
 </body>
 </html>
-
-  
-
-
-
-  
+          
