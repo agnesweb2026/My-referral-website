@@ -122,10 +122,10 @@ module.exports = async function handler(req, res) {
   */
 
   const ALLOWED_AMOUNTS
-    300,
-    199,
-    100
-  ];
+  300,
+  199,
+  100
+];
 
 
   const paymentAmount =
