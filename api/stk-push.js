@@ -1,10 +1,10 @@
+
 const crypto = require("crypto");
 
 const {
   query,
   ensurePaymentTable
 } = require("./db");
-
 
 /*
 =========================================================
@@ -22,7 +22,6 @@ module.exports = async function handler(req, res) {
     });
   }
 
-
   /*
   =======================================================
   PAYLOR CREDENTIALS
@@ -35,7 +34,6 @@ module.exports = async function handler(req, res) {
   const channelId =
     process.env.PAYLOR_CHANNEL_ID;
 
-
   if (!apiKey || !channelId) {
     return res.status(500).json({
       success: false,
@@ -44,7 +42,6 @@ module.exports = async function handler(req, res) {
     });
   }
 
-
   /*
   =======================================================
   DATABASE
@@ -52,11 +49,8 @@ module.exports = async function handler(req, res) {
   */
 
   try {
-
     await ensurePaymentTable();
-
   } catch (error) {
-
     console.error(
       "DATABASE SETUP ERROR:",
       error
@@ -68,7 +62,6 @@ module.exports = async function handler(req, res) {
         "Payment database is not available"
     });
   }
-
 
   /*
   =======================================================
@@ -90,7 +83,6 @@ module.exports = async function handler(req, res) {
       body.reference || ""
     ).trim();
 
-
   /*
   =======================================================
   BASIC VALIDATION
@@ -105,7 +97,6 @@ module.exports = async function handler(req, res) {
     });
   }
 
-
   if (!Number.isFinite(amount)) {
     return res.status(400).json({
       success: false,
@@ -114,35 +105,32 @@ module.exports = async function handler(req, res) {
     });
   }
 
-
   /*
   =======================================================
   ALLOWED PACKAGE AMOUNTS
-  ==============================================
-  
-const ALLOWED_AMOUNTS = [
-  300,
-  199,
-  100
-];
+  =======================================================
+  */
+
+  const ALLOWED_AMOUNTS = [
+    300,
+    199,
+    100
+  ];
 
   const paymentAmount =
     Math.round(amount);
-
 
   if (
     !ALLOWED_AMOUNTS.includes(
       paymentAmount
     )
   ) {
-
     return res.status(400).json({
       success: false,
       message:
         "Invalid payment package"
     });
   }
-
 
   if (!reference) {
     return res.status(400).json({
@@ -151,7 +139,6 @@ const ALLOWED_AMOUNTS = [
         "Payment reference is required"
     });
   }
-
 
   /*
   =======================================================
@@ -167,7 +154,6 @@ const ALLOWED_AMOUNTS = [
       )
       .slice(0, 100);
 
-
   if (!cleanReference) {
     return res.status(400).json({
       success: false,
@@ -175,7 +161,6 @@ const ALLOWED_AMOUNTS = [
         "Invalid payment reference"
     });
   }
-
 
   /*
   =======================================================
@@ -188,25 +173,14 @@ const ALLOWED_AMOUNTS = [
       .replace(/\D/g, "")
       .trim();
 
-
-  /*
-  01XXXXXXXX / 07XXXXXXXX
-  */
-
   if (
     cleanPhone.startsWith("0") &&
     cleanPhone.length === 10
   ) {
-
     cleanPhone =
       "254" +
       cleanPhone.substring(1);
   }
-
-
-  /*
-  1XXXXXXXX / 7XXXXXXXX
-  */
 
   if (
     (
@@ -215,12 +189,10 @@ const ALLOWED_AMOUNTS = [
     ) &&
     cleanPhone.length === 9
   ) {
-
     cleanPhone =
       "254" +
       cleanPhone;
   }
-
 
   /*
   =======================================================
@@ -233,14 +205,12 @@ const ALLOWED_AMOUNTS = [
       cleanPhone
     )
   ) {
-
     return res.status(400).json({
       success: false,
       message:
         "Enter a valid Safaricom M-PESA number starting with 01 or 07"
     });
   }
-
 
   /*
   =======================================================
@@ -252,34 +222,26 @@ const ALLOWED_AMOUNTS = [
     "unknown";
 
   try {
-
     const forwarded =
       req.headers["x-forwarded-for"];
 
     const realIp =
       req.headers["x-real-ip"];
 
-
     if (forwarded) {
-
       clientIp =
         String(forwarded)
           .split(",")[0]
           .trim();
-
     } else if (realIp) {
-
       clientIp =
         String(realIp)
           .trim();
     }
-
   } catch (error) {
-
     clientIp =
       "unknown";
   }
-
 
   /*
   =======================================================
@@ -288,7 +250,6 @@ const ALLOWED_AMOUNTS = [
   */
 
   try {
-
     const existingResult =
       await query(
         `
@@ -313,21 +274,12 @@ const ALLOWED_AMOUNTS = [
         ]
       );
 
-
     if (
       existingResult.rows &&
       existingResult.rows.length > 0
     ) {
-
       const existing =
         existingResult.rows[0];
-
-
-      /*
-      ---------------------------------------------------
-      ALREADY COMPLETED
-      ---------------------------------------------------
-      */
 
       if (
         String(
@@ -336,13 +288,9 @@ const ALLOWED_AMOUNTS = [
           .toLowerCase()
           .includes("complet")
       ) {
-
         return res.status(200).json({
-
           success: true,
-
           paid: true,
-
           reused: true,
 
           transaction_id:
@@ -359,27 +307,16 @@ const ALLOWED_AMOUNTS = [
         });
       }
 
-
-      /*
-      ---------------------------------------------------
-      ALREADY PENDING
-      ---------------------------------------------------
-      */
-
       if (
         existing.transaction_id ||
         existing.transaction_request_id
       ) {
-
         const existingTransaction =
           existing.transaction_id ||
           existing.transaction_request_id;
 
-
         return res.status(200).json({
-
           success: true,
-
           reused: true,
 
           transaction_id:
@@ -400,15 +337,12 @@ const ALLOWED_AMOUNTS = [
         });
       }
     }
-
   } catch (error) {
-
     console.error(
       "EXISTING PAYMENT CHECK ERROR:",
       error
     );
   }
-
 
   /*
   =======================================================
@@ -417,7 +351,6 @@ const ALLOWED_AMOUNTS = [
   */
 
   try {
-
     const pendingResult =
       await query(
         `
@@ -446,12 +379,10 @@ const ALLOWED_AMOUNTS = [
         ]
       );
 
-
     if (
       pendingResult.rows &&
       pendingResult.rows.length > 0
     ) {
-
       const pending =
         pendingResult.rows[0];
 
@@ -459,13 +390,9 @@ const ALLOWED_AMOUNTS = [
         pending.transaction_id ||
         pending.transaction_request_id;
 
-
       if (transaction) {
-
         return res.status(429).json({
-
           success: false,
-
           blocked: true,
 
           reason:
@@ -482,15 +409,12 @@ const ALLOWED_AMOUNTS = [
         });
       }
     }
-
   } catch (error) {
-
     console.error(
       "PENDING PAYMENT CHECK ERROR:",
       error
     );
   }
-
 
   /*
   =======================================================
@@ -499,7 +423,6 @@ const ALLOWED_AMOUNTS = [
   */
 
   try {
-
     const cooldownResult =
       await query(
         `
@@ -522,17 +445,14 @@ const ALLOWED_AMOUNTS = [
         ]
       );
 
-
     if (
       cooldownResult.rows &&
       cooldownResult.rows.length > 0
     ) {
-
       const lastAttempt =
         new Date(
           cooldownResult.rows[0].created_at
         );
-
 
       const secondsPassed =
         Math.floor(
@@ -542,18 +462,14 @@ const ALLOWED_AMOUNTS = [
           ) / 1000
         );
 
-
       const waitSeconds =
         Math.max(
           1,
           60 - secondsPassed
         );
 
-
       return res.status(429).json({
-
         success: false,
-
         blocked: true,
 
         reason:
@@ -566,15 +482,12 @@ const ALLOWED_AMOUNTS = [
           `Please wait ${waitSeconds} seconds before requesting another M-PESA prompt.`
       });
     }
-
   } catch (error) {
-
     console.error(
       "PHONE COOLDOWN CHECK ERROR:",
       error
     );
   }
-
 
   /*
   =======================================================
@@ -583,7 +496,6 @@ const ALLOWED_AMOUNTS = [
   */
 
   try {
-
     const phoneAttemptsResult =
       await query(
         `
@@ -602,21 +514,16 @@ const ALLOWED_AMOUNTS = [
         ]
       );
 
-
     const totalPhoneAttempts =
       Number(
         phoneAttemptsResult.rows[0]?.total || 0
       );
 
-
     if (
       totalPhoneAttempts >= 3
     ) {
-
       return res.status(429).json({
-
         success: false,
-
         blocked: true,
 
         reason:
@@ -626,15 +533,12 @@ const ALLOWED_AMOUNTS = [
           "Too many payment attempts for this number. Please wait and try again later."
       });
     }
-
   } catch (error) {
-
     console.error(
       "PHONE RATE LIMIT CHECK ERROR:",
       error
     );
   }
-
 
   /*
   =======================================================
@@ -646,9 +550,7 @@ const ALLOWED_AMOUNTS = [
     clientIp &&
     clientIp !== "unknown"
   ) {
-
     try {
-
       const ipAttemptsResult =
         await query(
           `
@@ -667,21 +569,16 @@ const ALLOWED_AMOUNTS = [
           ]
         );
 
-
       const totalIpAttempts =
         Number(
           ipAttemptsResult.rows[0]?.total || 0
         );
 
-
       if (
         totalIpAttempts >= 10
       ) {
-
         return res.status(429).json({
-
           success: false,
-
           blocked: true,
 
           reason:
@@ -691,16 +588,13 @@ const ALLOWED_AMOUNTS = [
             "Too many payment requests from this connection. Please wait and try again."
         });
       }
-
     } catch (error) {
-
       console.error(
         "IP RATE LIMIT CHECK ERROR:",
         error
       );
     }
   }
-
 
   /*
   =======================================================
@@ -709,7 +603,6 @@ const ALLOWED_AMOUNTS = [
   */
 
   try {
-
     const failedResult =
       await query(
         `
@@ -735,21 +628,16 @@ const ALLOWED_AMOUNTS = [
         ]
       );
 
-
     const failedAttempts =
       Number(
         failedResult.rows[0]?.total || 0
       );
 
-
     if (
       failedAttempts >= 3
     ) {
-
       return res.status(429).json({
-
         success: false,
-
         blocked: true,
 
         reason:
@@ -759,15 +647,12 @@ const ALLOWED_AMOUNTS = [
           "Too many failed or cancelled payment attempts. Please wait before trying again."
       });
     }
-
   } catch (error) {
-
     console.error(
       "FAILED ATTEMPT CHECK ERROR:",
       error
     );
   }
-
 
   /*
   =======================================================
@@ -778,9 +663,7 @@ const ALLOWED_AMOUNTS = [
   let attemptId =
     null;
 
-
   try {
-
     const attemptResult =
       await query(
         `
@@ -816,23 +699,18 @@ const ALLOWED_AMOUNTS = [
         ]
       );
 
-
     attemptId =
       attemptResult.rows[0]?.id ||
       null;
 
-
     if (!attemptId) {
-
       return res.status(500).json({
         success: false,
         message:
           "Unable to record payment attempt"
       });
     }
-
   } catch (error) {
-
     console.error(
       "SAVE PAYMENT ATTEMPT ERROR:",
       error
@@ -844,7 +722,6 @@ const ALLOWED_AMOUNTS = [
         "Payment protection is temporarily unavailable"
     });
   }
-
 
   /*
   =======================================================
@@ -860,7 +737,6 @@ const ALLOWED_AMOUNTS = [
         : ""
     }/api/payment-callback`;
 
-
   /*
   =======================================================
   IDEMPOTENCY KEY
@@ -875,7 +751,6 @@ const ALLOWED_AMOUNTS = [
       )
       .digest("hex");
 
-
   /*
   =======================================================
   SAVE PENDING PAYMENT
@@ -883,7 +758,6 @@ const ALLOWED_AMOUNTS = [
   */
 
   try {
-
     await query(
       `
       INSERT INTO payments
@@ -919,17 +793,13 @@ const ALLOWED_AMOUNTS = [
         cleanPhone
       ]
     );
-
   } catch (error) {
-
     console.error(
       "SAVE PENDING PAYMENT ERROR:",
       error
     );
 
-
     try {
-
       await query(
         `
         UPDATE payment_attempts
@@ -944,15 +814,12 @@ const ALLOWED_AMOUNTS = [
           attemptId
         ]
       );
-
     } catch (updateError) {
-
       console.error(
         "ATTEMPT UPDATE ERROR:",
         updateError
       );
     }
-
 
     return res.status(500).json({
       success: false,
@@ -960,14 +827,8 @@ const ALLOWED_AMOUNTS = [
         "Unable to create payment record"
     });
   }
-
-
+    
   /*
-  =======================================================
-  PART 2 CONTINUES DIRECTLY BELOW
-  =======================================================
-  */
-    /*
   =======================================================
   PAYLOR STK PUSH
   =======================================================
@@ -1347,3 +1208,4 @@ const ALLOWED_AMOUNTS = [
     });
   }
 };
+        
